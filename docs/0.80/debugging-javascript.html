@@ -1,0 +1,470 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>JavaScript Debugging · React Native for Windows</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="![Architecture](https://img.shields.io/badge/architecture-needs_review-red)"/><meta name="docsearch:version" content="0.80"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="JavaScript Debugging · React Native for Windows"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="![Architecture](https://img.shields.io/badge/architecture-needs_review-red)"/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="stylesheet" href="/react-native-windows/css/code-block-buttons.css"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/react-native-windows/js/code-block-buttons.js"></script><script type="text/javascript" src="/react-native-windows/js/nav-buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows"/><h2 class="headerTitleWithLogo">React Native for Windows</h2></a><a href="/react-native-windows/versions"><h3>0.80</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/react-native-windows/docs/0.80/getting-started" target="_self">Docs</a></li><li class=""><a href="/react-native-windows/docs/0.80/flyout-component" target="_self">APIs</a></li><li class=""><a href="https://devblogs.microsoft.com/react-native/" target="_self">Blog</a></li><li class=""><a href="/react-native-windows/resources" target="_self">Resources</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/main/samples" target="_self">Samples</a></li><li class=""><a href="/react-native-windows/support" target="_self">Support</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Troubleshooting</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">The Basics<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/getting-started">Get Started with Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/rnw-dependencies">System Requirements</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/react-native-windows-cli">React Native Windows CLI</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/parity-status">React Native Windows Components and APIs</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/config">React Native Config Schema</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/windowsbrush-and-theme">Using PlatformColor and Responding to Themes</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/releases">Release Strategy</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/platform">Platform Detection</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/upgrade-app">Upgrading App to Latest Version of React Native Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/migration-guide">Migration Guide</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/setup-ci">Setup Continuous Integration Pipeline for an RNW App</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/app-publishing">Publishing a React Native Windows App to the Microsoft Store</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/supported-community-modules">Supported Community Modules</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">CLI Commands<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/autolink-windows-cli">react-native autolink-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/codegen-windows-cli">react-native codegen-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/init-windows-cli">react-native init-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/run-windows-cli">react-native run-windows</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Native Development<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-platform">Overview</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-platform-getting-started">Getting Started</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-platform-modules">Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-platform-components">Native Components (Fabric)</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-platform-components-paper">Native Components (Paper)</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-platform-using">Using Native Libraries</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Advanced Topics<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/win10-vm">Developing Windows apps on a non-Windows PC</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/hermes">Hermes on Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/NuGet">Using Microsoft.ReactNative NuGet packages</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Troubleshooting<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem navListItemActive"><a class="navItem" href="/react-native-windows/docs/0.80/debugging-javascript">JavaScript Debugging</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/metro-config-out-tree-platforms">Metro config for out of tree platforms</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Legacy Docs<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Native Modules</h4><ul><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules">Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/view-managers">Native UI Components</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-setup">Native Module Setup</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-vs-turbo-modules">Native Modules vs Turbo Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-using">Using Community Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-autolinking">Autolinking Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-advanced">Native Modules (Advanced)</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-troubleshooting">Troubleshooting Native Modules</a></li></ul></div><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Native Development</h4><ul><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-code">Working with native code on Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-code-language-choice">Choosing C++ or C# for native code</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-marshalling-data">Marshaling Data</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-async">Using Asynchronous Windows APIs</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-jsvalue">Using JSValue</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-csharp-codegen">Compile time code generation for C#</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/customizing-SDK-versions">Customizing SDK versions</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/managing-cpp-deps">Managing C++ dependencies</a></li></ul></div></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/main/docs/debugging-javascript.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">JavaScript Debugging</h1></header><article><div><span><p><img src="https://img.shields.io/badge/architecture-needs_review-red" alt="Architecture"></p>
+<blockquote>
+<p><strong>Architecture Review Needed:</strong> This documentation was written to support development against React Native's &quot;Old&quot; or &quot;Legacy&quot; Architecture. It <em>may or may not</em> be directly applicable to New Architecture development and needs to be reviewed and potentially updated. For information on React Native architectures in React Native Windows, see <a href="/react-native-windows/docs/0.80/new-architecture">New vs. Old Architecture</a>.</p>
+</blockquote>
+<p>This page details how to debug the JavaScript code in your RNW applications, including which tools are supported in which scenarios. You have two different options: <em>Direct Debugging</em> and <em>Web Debugging</em>.</p>
+<blockquote>
+<p>Unless stated otherwise, each of the debugging scenarios detailed below assume you're loading your JS bundle from the Metro Packager, not loading a prebuilt bundle file.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="direct-debugging"></a><a href="#direct-debugging" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Direct Debugging</h2>
+<p><em>Direct Debugging</em> is the new JS debugging solution for RN and is the default solution enabled in new RNW projects.</p>
+<p>Rather than running your app's JS code on an external JS engine (as with Web Debugging), with Direct Debugging you run your app's code on its embedded engine (as normal). You are then able to attach your debugger directly to the embedded engine.</p>
+<blockquote>
+<p>Direct Debugging requires the Metro Packager, as Metro provides keys parts of the debugging experience such as JS source mapping.</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="direct-debugging-tool-support"></a><a href="#direct-debugging-tool-support" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Direct Debugging Tool Support</h3>
+<table>
+<thead>
+<tr><th style="text-align:left">JavaScript Engine</th><th style="text-align:center">Edge Developer Tools</th><th style="text-align:center">Visual Studio</th><th style="text-align:center">Visual Studio Code</th><th style="text-align:center">Visual Studio Code<br/> w/ React Native Tools</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Hermes (Default)</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td></tr>
+<tr><td style="text-align:left">Chakra</td><td style="text-align:center">🟥</td><td style="text-align:center">✅</td><td style="text-align:center">🟥</td><td style="text-align:center">🟥</td></tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Important:</strong> Some versions of Hermes have <a href="https://github.com/microsoft/react-native-windows/issues/12982">known issues with direct debugging</a> that may be fixed, at which point this warning can be removed. In the meantime, <strong>we recommend using Web Debugging</strong>.</p>
+</blockquote>
+<blockquote>
+<p><strong>Important:</strong> Direct Debugging is relatively new and may still have some rough edges, depending on your choice of engine and debugger. See <a href="#web-vs-direct-debugging">Web vs. Direct Debugging</a> for details.</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="step-1-enable-direct-debugging"></a><a href="#step-1-enable-direct-debugging" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Step 1: Enable Direct Debugging</h3>
+<p>You have two options to enable Direct Debugging: at compile-time in your app's native code or at runtime via the in-app Developer Menu.</p>
+<h4><a class="anchor" aria-hidden="true" id="option-1-setting-usedirectdebugger-in-your-native-code"></a><a href="#option-1-setting-usedirectdebugger-in-your-native-code" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Option 1: Setting <code>UseDirectDebugger</code> in your native code</h4>
+<p>Direct Debugging can be enabled by setting <code>UseDirectDebugger</code> property of your app's <code>InstanceSettings</code> during startup.</p>
+<div class="tabs"><div class="nav-tabs"><div id="tab-group-111-tab-112" class="nav-link active" data-group="group_111" data-tab="tab-group-111-content-112">C++</div><div id="tab-group-111-tab-113" class="nav-link" data-group="group_111" data-tab="tab-group-111-content-113">C#</div></div><div class="tab-content"><div id="tab-group-111-content-112" class="tab-pane active" data-group="group_111" tabindex="-1"><div><span><h5><a class="anchor" aria-hidden="true" id="modifying-your-c-rnw-app"></a><a href="#modifying-your-c-rnw-app" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Modifying your C++ RNW app</h5>
+<ol>
+<li>You'll want to edit your <code>App</code>'s constructor in <code>App.cpp</code> with:</li>
+</ol>
+<pre><code class="hljs css language-c++">InstanceSettings().UseWebDebugger(<span class="hljs-literal">false</span>);<br />InstanceSettings().UseDirectDebugger(<span class="hljs-literal">true</span>);<br /></code></pre>
+</span></div></div><div id="tab-group-111-content-113" class="tab-pane" data-group="group_111" tabindex="-1"><div><span><h5><a class="anchor" aria-hidden="true" id="modifying-your-c-rnw-app"></a><a href="#modifying-your-c-rnw-app" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Modifying your C# RNW app</h5>
+<ol>
+<li>You'll want to edit your <code>App</code>'s constructor in <code>App.xaml.cs</code> with:</li>
+</ol>
+<pre><code class="hljs css language-csharp">InstanceSettings<span class="token punctuation">.</span>UseWebDebugger <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span><br />InstanceSettings<span class="token punctuation">.</span>UseDirectDebugger <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span><br /></code></pre>
+</span></div></div></div></div>
+<ol start="2">
+<li>Then simply re-build and launch your RNW app as usual.</li>
+</ol>
+<blockquote>
+<p>For a new RNW app <code>UseDirectDebugger</code> defaults to <code>true</code> for Debug builds, and <code>false</code> for Release builds.</p>
+</blockquote>
+<h4><a class="anchor" aria-hidden="true" id="option-2-using-the-developer-menu"></a><a href="#option-2-using-the-developer-menu" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Option 2: Using the Developer Menu</h4>
+<p>Direct Debugging can also be enabled at runtime via the in-app Developer Menu.</p>
+<ol>
+<li>With your RNW app running, press <code>Ctrl+Shift+D</code> to invoke the Developer Menu</li>
+<li>Click <em>Enable Direct JS Debugging</em></li>
+</ol>
+<p>The app then should automatically refresh with Direct Debugging enabled.</p>
+<h3><a class="anchor" aria-hidden="true" id="step-2-connect-a-debugger"></a><a href="#step-2-connect-a-debugger" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Step 2: Connect a debugger</h3>
+<p>The next step is to connect with your chosen debugger.</p>
+<div class="tabs"><div class="nav-tabs"><div id="tab-group-114-tab-115" class="nav-link active" data-group="group_114" data-tab="tab-group-114-content-115">Edge DevTools</div><div id="tab-group-114-tab-116" class="nav-link" data-group="group_114" data-tab="tab-group-114-content-116">Visual Studio</div><div id="tab-group-114-tab-117" class="nav-link" data-group="group_114" data-tab="tab-group-114-content-117">VS Code</div><div id="tab-group-114-tab-118" class="nav-link" data-group="group_114" data-tab="tab-group-114-content-118">VS Code w/ React Native Tools</div></div><div class="tab-content"><div id="tab-group-114-content-115" class="tab-pane active" data-group="group_114" tabindex="-1"><div><span><h4><a class="anchor" aria-hidden="true" id="using-the-edge-developer-tools"></a><a href="#using-the-edge-developer-tools" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using the Edge Developer Tools</h4>
+<p>You can direct debug RNW apps using the Hermes JS engine with Edge by using the <a href="https://learn.microsoft.com/en-us/microsoft-edge/devtools-guide-chromium/">Edge Developer Tools</a>.</p>
+<blockquote>
+<p>If you use Chrome, the process is similar for using the <a href="https://developer.chrome.com/docs/devtools/">Chrome Developer Tools</a>.</p>
+</blockquote>
+<ol>
+<li>Launch your RNW app (with Direct Debugging enabled and Metro running)</li>
+<li>In Edge, open the URL <code>edge://inspect</code></li>
+<li>Make sure the box for <em>Discover network targets</em> is checked</li>
+<li>Click the <em>Configure...</em> button next to <em>Discover network targets</em></li>
+<li>Under <em>Target discovery settings</em> add an entry for <code>localhost:8081</code> and click <em>Done</em></li>
+<li>Refresh the <code>edge://inspect</code> page</li>
+</ol>
+<blockquote>
+<p>Watch for a <em>Hermes React Native</em> entry to appear in the <em>Remote Target</em> section at the bottom of the page. Note that the <em>Remote Target</em> section itself may be hidden until a valid target is detected.</p>
+</blockquote>
+<ol start="7">
+<li>Click on the <em>inspect</em> link under the <em>Hermes React Native</em> entry</li>
+</ol>
+<p>You should now be able to debug your RNW application. To set breakpoints you'll first need to find your app's JS source files via Metro's source map.</p>
+<ol>
+<li>Click on the <em>Sources</em> tab</li>
+<li>Press <code>Ctrl+P</code> to invoke the <em>Open</em> pop-up</li>
+<li>Find your target source file (manually or by typing its name) and open it</li>
+</ol>
+<blockquote>
+<p>Make sure that the file you open is being sourced from the source map from Metro, i.e. the file entry is tagged with <code>localhost:8081</code> under the file name</p>
+</blockquote>
+<p>You should now be able to set breakpoints in your app's JS source files.</p>
+<blockquote>
+<p><strong>Important:</strong> The <em>Filesystem</em> tab in the left sidebar normally lets you add you app's source folders to the &quot;workspace&quot; for easy browsing. However, files opened from the workspace will not allow you to set breakpoints correctly. You <strong>must</strong> open your app's source via the <code>Ctrl+P</code> method above for breakpoints to work.</p>
+<p>If you're trying to set a breakpoint and it's not working, double-check that the open file was opened via the source map. The tab's title should appear as an absolute file name, and its tool-tip should show the real path prefixed with <code>http://localhost:8081/</code>.</p>
+</blockquote>
+</span></div></div><div id="tab-group-114-content-116" class="tab-pane" data-group="group_114" tabindex="-1"><div><span><h4><a class="anchor" aria-hidden="true" id="using-visual-studio-chakra"></a><a href="#using-visual-studio-chakra" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using Visual Studio (Chakra)</h4>
+<p>You can direct debug RNW apps using the (default) Chakra JS engine with <a href="https://visualstudio.microsoft.com/">Visual Studio</a>'s built-in Script debugger.</p>
+<ol>
+<li><p>Make sure you have Visual Studio installed</p></li>
+<li><p>Open your project's Visual Studio solution file (i.e. <code>MyApp.sln</code>)</p></li>
+<li><p><strong>Option A:</strong> Let Visual Studio launch the app and start debugging</p>
+<ol>
+<li>Make sure that Metro is already running (i.e. <code>npx react-native start</code>)</li>
+<li>Make sure the desired <em>Configuration</em> (i.e. <code>Debug</code>) and <em>Platform</em> (i.e. <code>x64</code>) of your native app by setting the drop-downs in Visual Studio's top command bar</li>
+<li>In <em>Solution Explorer</em> right-click on your native app's project (i.e. <code>MyApp (Universal Windows)</code>) and select <em>Properties</em>
+<ol>
+<li>For C++ RNW apps, open the <em>Configuration Properties &gt; Debugging</em> page, set the <em>Debugger Type</em> to <em>Script Only</em>, then click <em>OK</em></li>
+<li>For C# RNW apps, open the <em>Debug</em> tab, set the <em>Debugger type &gt; Application process</em> to <em>Script</em>, then close the properties</li>
+</ol></li>
+<li>Click on <em>Debug</em> in the menu bar and select <em>Start Debugging</em></li>
+</ol></li>
+<li><p><strong>Option B:</strong> Attach Visual Studio to the app that's already running</p>
+<ol>
+<li>Make sure that your native app and Metro is already running (i.e. using the <a href="/react-native-windows/docs/0.80/run-windows-cli">run-windows command</a>)</li>
+<li>Click on <em>Debug</em> in Visual Studio's menu bar and select <em>Attach to Process...</em></li>
+<li>Find and select the native process for your app (not Metro)</li>
+<li>Make sure <em>Attach to:</em> is set to <em>Automatic: Script code</em> or <em>Script code</em></li>
+</ol>
+<blockquote>
+<p>If <em>Attach to:</em> is set to something else, double check that <em>Script</em> is present in the <em>Type</em> column for your app's process. If it isn't, make sure you've enabled Direct Debugging in your app, and click the <em>Refresh</em> button. If <em>Script</em> is present under <em>Type</em> but not in <em>Attach to:</em>, click on the <em>Select...</em> button and try manually checking <em>Debug these code types: &gt; Script</em>.</p>
+</blockquote>
+<ol start="5">
+<li>Click on the <em>Attach</em> button</li>
+</ol></li>
+</ol>
+<p>Once everything is running, you should be able to debug your RNW application. To set breakpoints, simply do so in your app's JS source files directly in Visual Studio.</p>
+<p>To see your app's JS source in Visual Studio, you can either:</p>
+<ol>
+<li>Open the files directly (via <em>Open &gt; File...</em> in the <em>File</em> menu or by pressing <code>Ctrl+O</code>) OR</li>
+<li>Looking for the files in the <em>Solution Explorer</em> sidebar under <em><code>Solution 'MyApp'</code> &gt; <code>Script Documents</code> &gt; <code>file://...</code> &gt; <code>script block</code> &gt; <code>http://localhost:8081/...</code></em></li>
+</ol>
+<h4><a class="anchor" aria-hidden="true" id="using-visual-studio-hermes"></a><a href="#using-visual-studio-hermes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using Visual Studio (Hermes)</h4>
+<p>You can direct debug RNW apps using the Hermes JS engine with <a href="https://visualstudio.microsoft.com/">Visual Studio</a> with the debugger from the <em>Node.js development</em> workload.</p>
+<ol>
+<li>Make sure you have Visual Studio installed with the <em>Node.js development</em> workload</li>
+<li>Start Visual Studio without a solution file (<em>Continue without code</em>)</li>
+</ol>
+<blockquote>
+<p><strong>Important:</strong> You should not have a solution file opened. There's a <a href="https://github.com/microsoft/react-native-windows/issues/12842">known issue with trying to debug JS with your project's solution opened</a> that may be fixed, at which point this warning can be removed.</p>
+</blockquote>
+<ol start="3">
+<li><strong>Option A:</strong> Let Visual Studio launch the app and start debugging</li>
+</ol>
+<blockquote>
+<p><strong>Important:</strong> Launching the app and starting direct debug with Hermes isn't supported in Visual Studio.</p>
+</blockquote>
+<ol start="4">
+<li><p><strong>Option B:</strong> Attach Visual Studio to the app that's already running</p>
+<ol>
+<li>Make sure that your native app and Metro is already running (i.e. using the <a href="/react-native-windows/docs/0.80/run-windows-cli">run-windows command</a>)</li>
+<li>Click on <em>Debug</em> in Visual Studio's menu bar and select <em>Attach to Process...</em></li>
+<li>Make sure <em>Connection type:</em> is set to <em>JavaScript and TypeScript (Chrome DevTools/V8 Inspector)</em></li>
+</ol>
+<blockquote>
+<p>If you don't see <em>JavaScript and TypeScript (Chrome DevTools/V8 Inspector)</em>, make sure you've installed the <em>Node.js development</em> workload for your version of Visual Studio.</p>
+</blockquote>
+<ol start="4">
+<li>Make sure <em>Connection target:</em> is set to <code>http://localhost:8081</code></li>
+<li>Make sure <em>Attach to:</em> is set to <em>JavaScript and TypeScript</em></li>
+<li>Find and select the <em>Hermes</em> from the process list</li>
+</ol>
+<blockquote>
+<p>If you don't see <em>Hermes</em> in the list, open a browser and navigate to <code>http://localhost:8081/json</code>. Copy the value of <code>webSocketDebuggerUrl</code> (i.e. something like <code>ws://[::1]:8081/inspector/debug?device=0&amp;page=1</code>) and use that as the <em>Connection target</em> instead.</p>
+</blockquote>
+<ol start="7">
+<li>Click on the <em>Attach</em> button</li>
+</ol></li>
+</ol>
+<p>Once everything is running, you should be able to debug your RNW application. To set breakpoints, simply do so in your app's JS source files directly in Visual Studio.</p>
+<p>To see your app's JS source in Visual Studio, you can either:</p>
+<ol>
+<li>Open the files directly (via <em>Open &gt; File...</em> in the <em>File</em> menu or by pressing <code>Ctrl+O</code>) OR</li>
+<li>Looking for the files in the <em>Solution Explorer</em> sidebar under <em><code>Solution 'MyApp'</code> &gt; <code>Script Documents</code></em></li>
+</ol>
+</span></div></div><div id="tab-group-114-content-117" class="tab-pane" data-group="group_114" tabindex="-1"><div><span><h4><a class="anchor" aria-hidden="true" id="using-visual-studio-code"></a><a href="#using-visual-studio-code" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using Visual Studio Code</h4>
+<p>You can direct debug RNW apps using the Hermes JS engine with <a href="http://code.visualstudio.com/">VS Code</a>'s built-in Node.js debugger.</p>
+<ol>
+<li>Make sure you have VS Code installed</li>
+<li>Open your project's root folder in VS Code</li>
+<li>Click on <em>Run</em> in VS Code's menu bar and select <em>Add Configuration...</em></li>
+<li><strong>Option A:</strong> Let VS Code launch everything and start debugging</li>
+</ol>
+<blockquote>
+<p><strong>Important:</strong> Launching everything and starting debugging isn't supported with VS Code's built-in Node.js debugger.</p>
+</blockquote>
+<ol start="5">
+<li><p><strong>Option B:</strong> Attach VS Code to Metro that's already running</p>
+<ol>
+<li>Depending on whether or not you already have a <code>launch.json</code> file, the drop-down will let you select <em>Node.js: Attach</em> (if it's available) or just <em>Node.js</em></li>
+</ol>
+<blockquote>
+<p>If you don't see <em>Node.js</em>, try again without a code file opened in the editor.</p>
+</blockquote>
+<ol start="2">
+<li>A new (possibly incorrect) entry should appear in your <code>launch.json</code> file. The config will need to look like this (the <code>name</code> doesn't matter) to debug properly:</li>
+</ol>
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Attach"</span><span class="token punctuation">,</span><br />    <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">8081</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span><span class="token punctuation">,</span><br />    <span class="token property">"skipFiles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br />        <span class="token string">"&lt;node_internals>/**"</span><br />    <span class="token punctuation">]</span><span class="token punctuation">,</span><br />    <span class="token property">"outFiles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br />        <span class="token string">"${workspaceFolder}/**/*"</span><br />    <span class="token punctuation">]</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"node"</span><br /><span class="token punctuation">}</span><br /></code></pre>
+<ol start="3">
+<li>Make sure that your native app and Metro is already running (i.e. using the <a href="/react-native-windows/docs/0.80/run-windows-cli">run-windows command</a>)</li>
+<li>Open the <em>Run and Debug</em> sidebar by clicking on the button in the sidebar or by pressing <code>Ctrl+Shift+D</code></li>
+<li>Make sure the new config is selected at the top of the <em>Run and Debug</em> sidebar</li>
+<li>Click on the ▶️ button or press <code>F5</code> in VS Code</li>
+</ol>
+<blockquote>
+<p>Watch the <em>Call Stack</em> panel in the sidebar for <em>Attach: Remote Process</em> to indicate a successful debugger connection. Note, it may take VS Code a minute to scan your source before breakpoints will work properly.</p>
+</blockquote></li>
+</ol>
+<p>Once everything is running, you should be able to debug your RNW application. To set breakpoints, simply do so in your app's JS source files directly in VS Code.</p>
+<blockquote>
+<p>Remember to save <code>launch.json</code> so you can reuse this debugging configuration in the future.</p>
+</blockquote>
+</span></div></div><div id="tab-group-114-content-118" class="tab-pane" data-group="group_114" tabindex="-1"><div><span><h4><a class="anchor" aria-hidden="true" id="using-visual-studio-code-with-the-react-native-tools"></a><a href="#using-visual-studio-code-with-the-react-native-tools" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using Visual Studio Code with the React Native Tools</h4>
+<p>You can direct debug RNW apps using the Hermes JS engine with <a href="http://code.visualstudio.com/">VS Code</a> using the <a href="https://marketplace.visualstudio.com/items?itemName=msjsdiag.vscode-react-native">React Native Tools</a> extension.</p>
+<ol>
+<li>Make sure you have VS Code and the React Native Tools extension installed</li>
+<li>Open your project's root folder in VS Code</li>
+<li>Click on <em>Run</em> in VS Code's menu bar and select <em>Add Configuration...</em> then <em>React Native</em></li>
+</ol>
+<blockquote>
+<p>If you don't see <em>React Native</em>, try again without a code file opened in the editor.</p>
+</blockquote>
+<ol start="4">
+<li><p><strong>Option A:</strong> Let VS Code launch everything and start debugging</p>
+<ol>
+<li>Depending on whether or not you already have a <code>launch.json</code> file, the drop-down will either:
+<ol>
+<li>Provide a list of debug configurations. Check the box for <em>Debug Windows Hermes -Experimental</em> and click <em>OK</em>. OR</li>
+<li>Guide you through a series of prompts. Select <em>Debug application</em>, <em>Windows</em>, <em>Application in direct mode(Hermes)</em>.</li>
+</ol></li>
+<li>A new (possibly incorrect) entry should appear in your <code>launch.json</code> file. The config will need to look like this (the <code>name</code> doesn't matter) to debug properly:</li>
+</ol>
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Debug Windows Hermes - Experimental"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnativedirect"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span><br />    <span class="token property">"platform"</span><span class="token operator">:</span> <span class="token string">"windows"</span><br /><span class="token punctuation">}</span><br /></code></pre>
+<ol start="3">
+<li>Make sure that Metro and your native app are <strong>not</strong> already running</li>
+<li>Open the <em>Run and Debug</em> sidebar by clicking on the button in the sidebar or by pressing <code>Ctrl+Shift+D</code></li>
+<li>Make sure the new config is selected at the top of the <em>Run and Debug</em> sidebar</li>
+<li>Click on the ▶️ button or press <code>F5</code> in VS Code</li>
+</ol>
+<blockquote>
+<p>Watch VS Code's <em>Debug Console</em> output for a successful debugger connection. This can be very slow, but VS Code should automatically launch Metro, establish the debugger connection, then launch your native app to download the bundle.</p>
+</blockquote></li>
+<li><p><strong>Option B:</strong> Attach VS Code to Metro that's already running</p>
+<ol>
+<li>Depending on whether or not you already have a <code>launch.json</code> file, the drop-down will either:
+<ol>
+<li>Provide a list of debug configurations. Check the box for <em>Attach to Hermes application</em> and click <em>OK</em>. OR</li>
+<li>Guide you through a series of prompts. Select <em>Attach to application</em>, <em>Application in direct mode(Hermes)</em>, <em>Hermes engine</em>, <code>localhost</code>, <code>8081</code>.</li>
+</ol></li>
+<li>A new (possibly incorrect) entry should appear in your <code>launch.json</code> file. The config will need to look like this (the <code>name</code> doesn't matter) to debug properly:</li>
+</ol>
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Attach to Hermes application - Experimental"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnativedirect"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span><br /><span class="token punctuation">}</span><br /></code></pre>
+<ol start="3">
+<li>Make sure that your native app and Metro is already running (i.e. using the <a href="/react-native-windows/docs/0.80/run-windows-cli">run-windows command</a>)</li>
+<li>Open the <em>Run and Debug</em> sidebar by clicking on the button in the sidebar or by pressing <code>Ctrl+Shift+D</code></li>
+<li>Make sure the new config is selected at the top of the <em>Run and Debug</em> sidebar</li>
+<li>Click on the ▶️ button or press <code>F5</code> in VS Code</li>
+</ol>
+<blockquote>
+<p>Watch the <em>Call Stack</em> panel in the sidebar for <em>Attach: Remote Process</em> to indicate a successful debugger connection.</p>
+</blockquote></li>
+</ol>
+<p>Once everything is running, you should be able to debug your RNW application. To set breakpoints, simply do so in your app's JS source files directly in VS Code.</p>
+<blockquote>
+<p>Remember to save <code>launch.json</code> so you can reuse this debugging configuration in the future.</p>
+</blockquote>
+</span></div></div></div></div>
+<h2><a class="anchor" aria-hidden="true" id="web-debugging"></a><a href="#web-debugging" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Web Debugging</h2>
+<p><em>Web Debugging</em> (also referred to as <em>Remote JS Debugging</em>) was the original JS debugging solution for RN and RNW projects.</p>
+<p>It works by running your app's JS code within the JS engine of an external process, usually a web browser such as Edge (or Chrome). You're then able to debug your app using the development tools of that external process, i.e. the browser's web development tools.</p>
+<blockquote>
+<p>Web Debugging requires the Metro Packager, as Metro proxies the connection between your native Windows app and the remote JS engine.</p>
+</blockquote>
+<blockquote>
+<p><strong>Important:</strong> Web Debugging was officially marked as deprecated in RN 0.73 and will be removed in a later release.</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="web-debugging-tool-support"></a><a href="#web-debugging-tool-support" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Web Debugging Tool Support</h3>
+<table>
+<thead>
+<tr><th style="text-align:left">JavaScript Engine</th><th style="text-align:center">Edge Developer Tools</th><th style="text-align:center">Visual Studio Code<br/> w/ React Native Tools</th></tr>
+</thead>
+<tbody>
+<tr><td style="text-align:left">Hermes (Default)</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td></tr>
+<tr><td style="text-align:left">Chakra</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td></tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Important:</strong> As your code is run in the remote JS engine, the app's embedded engine is not used. This can cause your released app to behave differently when it <em>is</em> using the embedded engine. See <a href="#web-vs-direct-debugging">Web vs. Direct Debugging</a> for details.</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="step-1-enable-web-debugging"></a><a href="#step-1-enable-web-debugging" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Step 1: Enable Web Debugging</h3>
+<p>Web Debugging can be enabled by setting <code>UseWebDebugger</code> property of your app's <code>InstanceSettings</code> during startup.</p>
+<div class="tabs"><div class="nav-tabs"><div id="tab-group-119-tab-120" class="nav-link active" data-group="group_119" data-tab="tab-group-119-content-120">C#</div><div id="tab-group-119-tab-121" class="nav-link" data-group="group_119" data-tab="tab-group-119-content-121">C++</div></div><div class="tab-content"><div id="tab-group-119-content-120" class="tab-pane active" data-group="group_119" tabindex="-1"><div><span><h4><a class="anchor" aria-hidden="true" id="modifying-your-c-rnw-app"></a><a href="#modifying-your-c-rnw-app" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Modifying your C# RNW app</h4>
+<ol>
+<li>You'll want to edit your <code>App</code>'s constructor in <code>App.xaml.cs</code> with:</li>
+</ol>
+<pre><code class="hljs css language-csharp">InstanceSettings<span class="token punctuation">.</span>UseWebDebugger <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span><br />InstanceSettings<span class="token punctuation">.</span>UseDirectDebugger <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span><br /></code></pre>
+</span></div></div><div id="tab-group-119-content-121" class="tab-pane" data-group="group_119" tabindex="-1"><div><span><h4><a class="anchor" aria-hidden="true" id="modifying-your-c-rnw-app"></a><a href="#modifying-your-c-rnw-app" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Modifying your C++ RNW app</h4>
+<ol>
+<li>You'll want to edit your <code>App</code>'s constructor in <code>App.cpp</code> with:</li>
+</ol>
+<pre><code class="hljs css language-c++">InstanceSettings().UseWebDebugger(<span class="hljs-literal">true</span>);<br />InstanceSettings().UseDirectDebugger(<span class="hljs-literal">false</span>);<br /></code></pre>
+</span></div></div></div></div>
+<ol start="2">
+<li>Then simply re-build and launch your RNW app as usual.</li>
+</ol>
+<blockquote>
+<p>Unless otherwise specified, for a new RNW app, <code>UseWebDebugger</code> defaults to <code>false</code>.</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="step-2-connect-a-debugger-1"></a><a href="#step-2-connect-a-debugger-1" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Step 2: Connect a debugger</h3>
+<p>The next step is to connect to Metro with your chosen debugger / development tools.</p>
+<blockquote>
+<p>This must happen before the native app attempts to download the JS bundle from Metro. If a debugger is not already attached, Metro will automatically attempt to set up the Edge Developer Tools.</p>
+</blockquote>
+<div class="tabs"><div class="nav-tabs"><div id="tab-group-122-tab-123" class="nav-link active" data-group="group_122" data-tab="tab-group-122-content-123">Edge DevTools</div><div id="tab-group-122-tab-124" class="nav-link" data-group="group_122" data-tab="tab-group-122-content-124">VS Code w/ React Native Tools</div></div><div class="tab-content"><div id="tab-group-122-content-123" class="tab-pane active" data-group="group_122" tabindex="-1"><div><span><h4><a class="anchor" aria-hidden="true" id="using-the-edge-developer-tools"></a><a href="#using-the-edge-developer-tools" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using the Edge Developer Tools</h4>
+<p>You can web debug within Edge by using the <a href="https://learn.microsoft.com/en-us/microsoft-edge/devtools-guide-chromium/">Edge Developer Tools</a>.</p>
+<blockquote>
+<p>If you use Chrome, the process is similar for using the <a href="https://developer.chrome.com/docs/devtools/">Chrome Developer Tools</a>.</p>
+</blockquote>
+<ol>
+<li>Launch your RNW app (with Web Debugging enabled and Metro running)</li>
+<li>In Edge, open the URL <a href="http://localhost:8081/debugger-ui/">http://localhost:8081/debugger-ui/</a></li>
+</ol>
+<blockquote>
+<p>Metro may have already opened it, look for a <em>React Native Debugger</em> tab.</p>
+</blockquote>
+<ol start="3">
+<li>Press <code>Ctrl+Shift+J</code> on the page to launch the Developer Tools</li>
+</ol>
+<p>You should now be able to debug your RNW application. To set breakpoints you'll find your app's JS source files in the <em>Sources</em> tab under <em><code>debuggerWorker.js</code> &gt; <code>localhost:8081</code> &gt; <code>src/ui</code></em>.</p>
+</span></div></div><div id="tab-group-122-content-124" class="tab-pane" data-group="group_122" tabindex="-1"><div><span><h4><a class="anchor" aria-hidden="true" id="using-visual-studio-code-with-the-react-native-tools"></a><a href="#using-visual-studio-code-with-the-react-native-tools" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using Visual Studio Code with the React Native Tools</h4>
+<p>You can web debug within <a href="http://code.visualstudio.com/">VS Code</a> by using the <a href="https://marketplace.visualstudio.com/items?itemName=msjsdiag.vscode-react-native">React Native Tools</a> extension.</p>
+<blockquote>
+<p><strong>Important</strong>: You will not be able to connect VS Code to Metro if the Edge Developer Tools (or another debugger) is already connected. So double check you don't have any previous <em>React Native Debugger</em> browser tabs open before running these steps.</p>
+</blockquote>
+<ol>
+<li>Make sure you have VS Code and the React Native Tools extension installed</li>
+<li>Open your project's root folder in VS Code</li>
+<li>Click on <em>Run</em> in VS Code's menu bar and select <em>Add Configuration...</em> then <em>React Native</em></li>
+</ol>
+<blockquote>
+<p>If you don't see <em>React Native</em>, try again without a code file opened in the editor.</p>
+</blockquote>
+<ol start="4">
+<li><p><strong>Option A:</strong> Let VS Code launch everything and start debugging</p>
+<ol>
+<li>Depending on whether or not you already have a <code>launch.json</code> file, the drop-down will either:
+<ol>
+<li>Provide a list of debug configurations. Check the box for <em>Debug Windows</em> and click <em>OK</em>. OR</li>
+<li>Guide you through a series of prompts. Select <em>Debug application</em>, <em>Windows</em>, <em>Classic application</em>.</li>
+</ol></li>
+<li>A new (possibly incorrect) entry should appear in your <code>launch.json</code> file. The config will need to look like this (the <code>name</code> doesn't matter) to debug properly:</li>
+</ol>
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Debug Windows"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnative"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span><br />    <span class="token property">"platform"</span><span class="token operator">:</span> <span class="token string">"windows"</span><br /><span class="token punctuation">}</span><br /></code></pre>
+<ol start="3">
+<li>Make sure that Metro, your native app, and/or any browser Developer Tools are <strong>not</strong> already running</li>
+<li>Make sure the new config is selected at the top of the <em>Run and Debug</em> sidebar</li>
+<li>Click on the ▶️ button or press <code>F5</code> in VS Code</li>
+</ol>
+<blockquote>
+<p>Watch VS Code's <em>Debug Console</em> output for a successful debugger connection. This can be very slow, but VS Code should automatically launch Metro, establish the debugger connection, then launch your native app to download the bundle.</p>
+</blockquote></li>
+<li><p><strong>Option B:</strong> Attach VS Code to Metro that's already running</p>
+<ol>
+<li>Depending on whether or not you already have a <code>launch.json</code> file, the drop-down will either:
+<ol>
+<li>Provide a list of debug configurations. Check the box for <em>Attach to packager</em> and click <em>OK</em>. OR</li>
+<li>Guide you through a series of prompts. Select <em>Attach to application</em>, <em>Classic application</em>, <code>localhost</code>, <code>8081</code>.</li>
+</ol></li>
+<li>A new (possibly incorrect) entry should appear in your <code>launch.json</code> file. The config will need to look like this (the <code>name</code> doesn't matter) to debug properly:</li>
+</ol>
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Attach to packager"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnative"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span><br /><span class="token punctuation">}</span><br /></code></pre>
+<ol start="3">
+<li>Make sure that only Metro is already running (i.e. <code>npx react-native start</code>)</li>
+<li>Make sure the new config is selected at the top of the <em>Run and Debug</em> sidebar</li>
+<li>Click on the ▶️ button or press <code>F5</code> in VS Code</li>
+</ol>
+<blockquote>
+<p>Watch VS Code's <em>Debug Console</em> output for a successful debugger connection.</p>
+</blockquote>
+<ol start="6">
+<li>Manually launch your native app</li>
+</ol></li>
+</ol>
+<p>Once everything is running, you should be able to debug your RNW application. To set breakpoints, simply do so in your app's JS source files directly in VS Code.</p>
+<blockquote>
+<p>Remember to save <code>launch.json</code> so you can reuse this debugging configuration in the future.</p>
+</blockquote>
+<blockquote>
+<p><em>Important:</em> If you're having difficulty getting VS Code to connect with Web Debugging, double check you're not running any part of RNW (watch out for rogue <code>node.exe</code> processes) before starting the steps above.</p>
+</blockquote>
+</span></div></div></div></div>
+<h2><a class="anchor" aria-hidden="true" id="web-vs-direct-debugging"></a><a href="#web-vs-direct-debugging" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Web vs. Direct Debugging</h2>
+<p>As mentioned above, RNW supports both Web and Direct Debugging, and it's worth knowing when to use each.</p>
+<p>Web Debugging is the older, more well-established of the two debugging solutions. It relies on the powerful in-browser debugging tools already familiar to web developers. This reinforces RN's purpose of enabling web developers to build native apps with web technologies.</p>
+<p>However, Web Debugging is not without its limitations. The primary problem is that JS can behave slightly differently when running in different JS engines. As such, by developing (and testing) your app while using a browser to run the JS, you might miss bugs or other issues that only manifest when running your app normally with the embedded JS engine.</p>
+<p>This requires developers to double check all of their app's functionality in the release build, or risk situations where customers find bugs in production that aren't reproducible when using Web Debugging.</p>
+<p>Furthermore, some parts of RN, such as synchronous calls to native module methods, only work when running on the embedded JS engine. Such native methods won't work when using Web Debugging.</p>
+<p>With Direct Debugging, you're debugging your JS code in the same engine you ship with your final app. This removes that class of bugs caused by using a different engine while in development.</p>
+<p>However, Direct Debugging has its own limitations too. It is newer and therefore more likely to have setup and stability issues. Furthermore, the JS debugger you want to use might not support the JS engine you want your app to use.</p>
+<p>It is important to note, that while Web Debugging may be a sufficient for your needs now, both the RN and RNW teams are focusing future investment into the Direct Debugging experience.</p>
+<h2><a class="anchor" aria-hidden="true" id="other-tools"></a><a href="#other-tools" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Other Tools</h2>
+<p>Here are some other tools you find useful while debugging your RNW apps.</p>
+<h3><a class="anchor" aria-hidden="true" id="react-developer-tools"></a><a href="#react-developer-tools" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>React Developer Tools</h3>
+<p>The <a href="https://beta.reactjs.org/learn/react-developer-tools">React Developer Tools</a> can be used to inspect your app's React component hierarchy and perform performance profiling. It works in conjunction with either Web or Direct Debugging.</p>
+<ol>
+<li>Launch your RNW app (with Metro running)</li>
+<li>Run <code>npx react-devtools</code> from the command line</li>
+<li>With your RNW app running, press <code>Ctrl+Shift+D</code> to invoke the Developer Menu</li>
+</ol>
+<p>The React Developer Tools should detect the Developer Menu opening and automatically attach to your app.</p>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 14/5/2025</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/react-native-windows/docs/0.80/NuGet"><span class="arrow-prev">← </span><span class="function-name-prevnext">Using Microsoft.ReactNative NuGet packages</span></a><a class="docs-next button" href="/react-native-windows/docs/0.80/metro-config-out-tree-platforms"><span>Metro config for out of tree platforms</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#direct-debugging">Direct Debugging</a><ul class="toc-headings"><li><a href="#direct-debugging-tool-support">Direct Debugging Tool Support</a></li><li><a href="#step-1-enable-direct-debugging">Step 1: Enable Direct Debugging</a></li><li><a href="#step-2-connect-a-debugger">Step 2: Connect a debugger</a></li></ul></li><li><a href="#web-debugging">Web Debugging</a><ul class="toc-headings"><li><a href="#web-debugging-tool-support">Web Debugging Tool Support</a></li><li><a href="#step-1-enable-web-debugging">Step 1: Enable Web Debugging</a></li><li><a href="#step-2-connect-a-debugger-1">Step 2: Connect a debugger</a></li></ul></li><li><a href="#web-vs-direct-debugging">Web vs. Direct Debugging</a></li><li><a href="#other-tools">Other Tools</a><ul class="toc-headings"><li><a href="#react-developer-tools">React Developer Tools</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="https://reactnative.dev/docs/getting-started">Getting Started</a><a href="https://reactnative.dev/docs/tutorial">Tutorial</a><a href="https://reactnative.dev/docs/components-and-apis">Components and APIs</a><a href="https://reactnative.dev/docs/more-resources">More Resources</a></div><div><h5>React Native for Windows Docs</h5><div style="color:white;font-weight:500;font-size:16px"><a href="/react-native-windows/docs/getting-started">Get Started with Windows</a></div><a href="/react-native-windows/docs/parity-status">React Native Windows Components and APIs</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a></div><div><h5>Connect With Us On</h5><a href="https://devblogs.microsoft.com/react-native/">Blog</a><a href="https://twitter.com/ReactNativeMSFT" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/main/samples" target="_blank">Samples</a></div></section></footer></div></body></html>

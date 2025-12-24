@@ -1,0 +1,165 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Using PlatformColor and Responding to Themes · React Native for Windows</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="![Architecture](https://img.shields.io/badge/architecture-needs_review-red)"/><meta name="docsearch:version" content="0.80"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Using PlatformColor and Responding to Themes · React Native for Windows"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="![Architecture](https://img.shields.io/badge/architecture-needs_review-red)"/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="stylesheet" href="/react-native-windows/css/code-block-buttons.css"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/react-native-windows/js/code-block-buttons.js"></script><script type="text/javascript" src="/react-native-windows/js/nav-buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows"/><h2 class="headerTitleWithLogo">React Native for Windows</h2></a><a href="/react-native-windows/versions"><h3>0.80</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/react-native-windows/docs/0.80/getting-started" target="_self">Docs</a></li><li class=""><a href="/react-native-windows/docs/0.80/flyout-component" target="_self">APIs</a></li><li class=""><a href="https://devblogs.microsoft.com/react-native/" target="_self">Blog</a></li><li class=""><a href="/react-native-windows/resources" target="_self">Resources</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/main/samples" target="_self">Samples</a></li><li class=""><a href="/react-native-windows/support" target="_self">Support</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>The Basics</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">The Basics<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/getting-started">Get Started with Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/rnw-dependencies">System Requirements</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/react-native-windows-cli">React Native Windows CLI</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/parity-status">React Native Windows Components and APIs</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/config">React Native Config Schema</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/react-native-windows/docs/0.80/windowsbrush-and-theme">Using PlatformColor and Responding to Themes</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/releases">Release Strategy</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/platform">Platform Detection</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/upgrade-app">Upgrading App to Latest Version of React Native Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/migration-guide">Migration Guide</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/setup-ci">Setup Continuous Integration Pipeline for an RNW App</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/app-publishing">Publishing a React Native Windows App to the Microsoft Store</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/supported-community-modules">Supported Community Modules</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">CLI Commands<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/autolink-windows-cli">react-native autolink-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/codegen-windows-cli">react-native codegen-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/init-windows-cli">react-native init-windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/run-windows-cli">react-native run-windows</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Native Development<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-platform">Overview</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-platform-getting-started">Getting Started</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-platform-modules">Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-platform-components">Native Components (Fabric)</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-platform-components-paper">Native Components (Paper)</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-platform-using">Using Native Libraries</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Advanced Topics<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/win10-vm">Developing Windows apps on a non-Windows PC</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/hermes">Hermes on Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/NuGet">Using Microsoft.ReactNative NuGet packages</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Troubleshooting<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/debugging-javascript">JavaScript Debugging</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/metro-config-out-tree-platforms">Metro config for out of tree platforms</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Legacy Docs<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Native Modules</h4><ul><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules">Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/view-managers">Native UI Components</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-setup">Native Module Setup</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-vs-turbo-modules">Native Modules vs Turbo Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-using">Using Community Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-autolinking">Autolinking Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-advanced">Native Modules (Advanced)</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-troubleshooting">Troubleshooting Native Modules</a></li></ul></div><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Native Development</h4><ul><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-code">Working with native code on Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-code-language-choice">Choosing C++ or C# for native code</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-marshalling-data">Marshaling Data</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-async">Using Asynchronous Windows APIs</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-jsvalue">Using JSValue</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/native-modules-csharp-codegen">Compile time code generation for C#</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/customizing-SDK-versions">Customizing SDK versions</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.80/managing-cpp-deps">Managing C++ dependencies</a></li></ul></div></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/main/docs/windowsbrush-and-theme.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Using PlatformColor and Responding to Themes</h1></header><article><div><span><p><img src="https://img.shields.io/badge/architecture-needs_review-red" alt="Architecture"></p>
+<blockquote>
+<p><strong>Architecture Review Needed:</strong> This documentation was written to support development against React Native's &quot;Old&quot; or &quot;Legacy&quot; Architecture. It <em>may or may not</em> be directly applicable to New Architecture development and needs to be reviewed and potentially updated. For information on React Native architectures in React Native Windows, see <a href="/react-native-windows/docs/0.80/new-architecture">New vs. Old Architecture</a>.</p>
+</blockquote>
+<h2><a class="anchor" aria-hidden="true" id="overview"></a><a href="#overview" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Overview</h2>
+<p>Windows supports two unique native styling/theming behaviors: one being the dark and light theme changes and the other being adaptive brushes and system colors. This article will show you how to set up your app to listen to theme changes and use the Windows brushes when and where you want.</p>
+<h3><a class="anchor" aria-hidden="true" id="setting-up-and-handling-theme-changed-events"></a><a href="#setting-up-and-handling-theme-changed-events" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setting up and handling theme changed events</h3>
+<p>In this example, we'll look at three things:</p>
+<ul>
+<li>How to set up your React Native app to be style and event sensitive to the system themes</li>
+<li>How to switch styles when a theme change has occurred</li>
+<li>Handling a theme changed event</li>
+</ul>
+<h4><a class="anchor" aria-hidden="true" id="using-hooks-to-be-sensitive-to-theme-changes"></a><a href="#using-hooks-to-be-sensitive-to-theme-changes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using hooks to be sensitive to theme changes</h4>
+<p>First import the <code>useColorScheme</code> hook into your React Native app.</p>
+<pre><code class="hljs css language-JSX"><span class="hljs-keyword">import</span> { useColorScheme } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-native'</span>
+</code></pre>
+<pre><code class="hljs css language-JSX"> <span class="hljs-keyword">const</span> MyAppComponent = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+        <span class="hljs-keyword">const</span> colorScheme = useColorScheme();
+        <span class="hljs-keyword">return</span> (
+          <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">title</span>=<span class="hljs-string">'click me'</span> <span class="hljs-attr">color</span>=<span class="hljs-string">{colorScheme</span> === <span class="hljs-string">'dark'</span> ? '<span class="hljs-attr">grey</span>' <span class="hljs-attr">:</span> '<span class="hljs-attr">orange</span>'}/&gt;</span></span>
+        );
+      };
+</code></pre>
+<blockquote>
+<p>Note: <code>useColorScheme()</code> will always return 'light' when remote debugging.</p>
+</blockquote>
+<h4><a class="anchor" aria-hidden="true" id="setting-up-your-app-to-be-sensitive-to-theme-changes-without-hooks"></a><a href="#setting-up-your-app-to-be-sensitive-to-theme-changes-without-hooks" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Setting up your app to be sensitive to theme changes without hooks</h4>
+<p>First import the <code>Appearance</code> API into your React Native app.</p>
+<pre><code class="hljs css language-JSX"><span class="hljs-keyword">import</span> { Appearance } <span class="hljs-keyword">from</span> <span class="hljs-string">'react-native'</span>
+</code></pre>
+<p>Create a local variable to use in a style conditional or to reference elsewhere, and then supply mounting functions to ensure that you are listening to the theme change events correctly.</p>
+<pre><code class="hljs css language-JSX"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyAppClass</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Component</span> </span>{
+  state = {
+    <span class="hljs-attr">currentTheme</span>: Appearance.getColorScheme()
+  };
+
+  componentDidMount() {
+    Appearance.addChangeListener(<span class="hljs-keyword">this</span>.onAppThemeChanged);
+  };
+
+  componentWillUnmount() {
+    Appearance.addChangeListener(<span class="hljs-keyword">this</span>.onAppThemeChanged);
+  };
+
+  onAppThemeChanged = <span class="hljs-function">(<span class="hljs-params">theme</span>) =&gt;</span> {
+    <span class="hljs-keyword">const</span> currentTheme = theme;
+    <span class="hljs-keyword">this</span>.setState({currentTheme});
+  };
+
+  render() {
+    &lt;Button title=<span class="hljs-string">'click me'</span> color={<span class="hljs-keyword">this</span>.state.currentTheme === <span class="hljs-string">'dark'</span> ? <span class="hljs-string">'grey'</span> : <span class="hljs-string">'orange'</span>}/&gt;
+  }
+}
+</code></pre>
+<blockquote>
+<p>Note: <code>getColorScheme()</code> will always return 'light' when remote debugging.</p>
+</blockquote>
+<h3><a class="anchor" aria-hidden="true" id="using-windows-defined-theme-brushes"></a><a href="#using-windows-defined-theme-brushes" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using Windows-defined theme brushes</h3>
+<p>The following examples cover how to access and use the Windows system theme brushes and apply them in your styles.  For more information on Windows XAML theme resources see:
+<a href="https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-theme-resources">https://docs.microsoft.com/en-us/windows/uwp/design/controls-and-patterns/xaml-theme-resources</a></p>
+<p>Any brush/color value within your apps native <code>ResourceDictionary</code>, either from the system, or custom native resources, are available using <code>PlatformColor</code>.</p>
+<h4><a class="anchor" aria-hidden="true" id="using-theme-brushes-in-a-style"></a><a href="#using-theme-brushes-in-a-style" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using theme brushes in a style</h4>
+<pre><code class="hljs css language-JSX"><span class="hljs-keyword">const</span> styles = StyleSheet.create({
+  <span class="hljs-attr">title</span>: {
+    <span class="hljs-attr">fontSize</span>: <span class="hljs-number">19</span>,
+    <span class="hljs-attr">fontWeight</span>: <span class="hljs-string">'bold'</span>,
+    <span class="hljs-attr">color</span>: PlatformColor(<span class="hljs-string">'SystemControlPageTextBaseHighBrush'</span>)
+  },
+});
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="applying-a-system-accent-color-variant"></a><a href="#applying-a-system-accent-color-variant" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Applying a system accent color variant</h4>
+<p>In Windows, there are algorithmically generated accent colors - dubbed Light or Dark 1, 2, and 3. This example covers what it would look like to apply that using the <code>windowsbrush</code> object.</p>
+<pre><code class="hljs css language-JSX"><span class="hljs-keyword">const</span> styles = StyleSheet.create({
+  <span class="hljs-attr">title</span>: {
+    <span class="hljs-attr">fontSize</span>: <span class="hljs-number">19</span>,
+    <span class="hljs-attr">fontWeight</span>: <span class="hljs-string">'bold'</span>,
+    <span class="hljs-attr">color</span>: PlatformColor(<span class="hljs-string">'SystemAccentColorLight3'</span>)
+  },
+});
+</code></pre>
+<p><strong>Note:</strong> That the system accent colors are <code>Color</code> objects at the native layer, whereas the other examples showed the use of theme brushes are <code>SolidColorBrush</code> objects. This means that the <code>SolidColorBrushes</code> will adapt automatically based on the Theme (Light, Dark or High Contrast), while the <code>Colors</code> will remain static.</p>
+<h3><a class="anchor" aria-hidden="true" id="using-platformcolor-to-access-reveal-and-acrylic"></a><a href="#using-platformcolor-to-access-reveal-and-acrylic" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using <code>PlatformColor</code> to access Reveal and Acrylic</h3>
+<p>The <code>PlatformColor</code> API provides access to Reveal and Acrylic through JavaScript, on Windows devices that support these features.</p>
+<h4><a class="anchor" aria-hidden="true" id="using-system-acrylic"></a><a href="#using-system-acrylic" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Using System Acrylic</h4>
+<p>The <code>PlatformColor</code> API gives you access to all of the system acrylic brushes which can be accessed by resource name. Simply provide the resource brush name string in the component's style and it will be applied accordingly.</p>
+<p><img src="/react-native-windows/docs/assets/rnw-acrylic-surface.png" alt="AcrylicBrush"></p>
+<pre><code class="hljs css language-JSX"><span class="hljs-keyword">const</span> styles = StyleSheet.create({
+  <span class="hljs-attr">viewcomponent</span>: {
+    <span class="hljs-attr">backgroundColor</span>: PlatformColor(<span class="hljs-string">'SystemControlAcrylicWindowBrush'</span>)
+  },
+});
+</code></pre>
+<h4><a class="anchor" aria-hidden="true" id="applying-reveal-highlight"></a><a href="#applying-reveal-highlight" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Applying Reveal Highlight</h4>
+<p>Reveal can be applied to surfaces exactly the same way that Acrylic and other system brushes are.</p>
+<p><img src="/react-native-windows/docs/assets/reveal-surface-animation.gif" alt="RevealBrush"></p>
+<pre><code class="hljs css language-JSX"><span class="hljs-keyword">const</span> styles = StyleSheet.create({
+  <span class="hljs-attr">viewcomponent</span>: {
+    <span class="hljs-attr">backgroundColor</span>: PlatformColor(<span class="hljs-string">'SystemControlBackgroundAccentRevealBorderBrush'</span>)
+  },
+});
+</code></pre>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 14/5/2025</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/react-native-windows/docs/0.80/config"><span class="arrow-prev">← </span><span>React Native Config Schema</span></a><a class="docs-next button" href="/react-native-windows/docs/0.80/releases"><span>Release Strategy</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#overview">Overview</a><ul class="toc-headings"><li><a href="#setting-up-and-handling-theme-changed-events">Setting up and handling theme changed events</a></li><li><a href="#using-windows-defined-theme-brushes">Using Windows-defined theme brushes</a></li><li><a href="#using-platformcolor-to-access-reveal-and-acrylic">Using <code>PlatformColor</code> to access Reveal and Acrylic</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="https://reactnative.dev/docs/getting-started">Getting Started</a><a href="https://reactnative.dev/docs/tutorial">Tutorial</a><a href="https://reactnative.dev/docs/components-and-apis">Components and APIs</a><a href="https://reactnative.dev/docs/more-resources">More Resources</a></div><div><h5>React Native for Windows Docs</h5><div style="color:white;font-weight:500;font-size:16px"><a href="/react-native-windows/docs/getting-started">Get Started with Windows</a></div><a href="/react-native-windows/docs/parity-status">React Native Windows Components and APIs</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a></div><div><h5>Connect With Us On</h5><a href="https://devblogs.microsoft.com/react-native/">Blog</a><a href="https://twitter.com/ReactNativeMSFT" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/main/samples" target="_blank">Samples</a></div></section></footer></div></body></html>
