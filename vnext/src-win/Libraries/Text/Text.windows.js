@@ -48,22 +48,24 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     ref: forwardedRef,
     accessible,
     accessibilityLabel,
-    accessibilityLevel, // Windows
-    accessibilityPosInSet, // Windows
-    accessibilitySetSize, // Windows
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
     'aria-checked': ariaChecked,
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
-    'aria-multiselectable': ariaMultiselectable, // Windows
-    'aria-required': ariaRequired, // Windows
     'aria-label': ariaLabel,
-    'aria-level': ariaLevel, // Windows
-    'aria-posinset': ariaPosinset, // Windows
-    'aria-setsize': ariaSetsize, // Windows
-    'aria-readonly': ariaReadOnly, //Windows
+    // #[Windows properties
+    'aria-multiselectable': ariaMultiselectable,
+    'aria-required': ariaRequired,
+    'aria-level': ariaLevel,
+    'aria-posinset': ariaPosinset,
+    'aria-setsize': ariaSetsize,
+    'aria-readonly': ariaReadOnly,
+    accessibilityLevel,
+    accessibilityPosInSet,
+    accessibilitySetSize,
+    // #]Windows properties
     'aria-selected': ariaSelected,
     children,
     ellipsizeMode,
@@ -95,9 +97,11 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       ...NativeTextProps,
     };
     const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-    const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Windows
-    const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet; // Windows
-    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Windows
+    // #[Windows
+    const _accessibilityLevel = ariaLevel ?? accessibilityLevel;
+    const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet;
+    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize;
+    // #]Windows
 
     let _accessibilityState: ?TextProps['accessibilityState'] =
       accessibilityState;
@@ -107,9 +111,11 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       ariaDisabled != null ||
       ariaExpanded != null ||
       ariaSelected != null ||
-      ariaReadOnly != null || // Windows
-      ariaMultiselectable != null || // Windows
-      ariaRequired != null // Windows
+      // #[Windows properties
+      ariaReadOnly != null ||
+      ariaMultiselectable != null ||
+      ariaRequired != null
+      // #]Windows properties
     ) {
       if (_accessibilityState != null) {
         _accessibilityState = {
@@ -118,10 +124,12 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           disabled: ariaDisabled ?? _accessibilityState.disabled,
           expanded: ariaExpanded ?? _accessibilityState.expanded,
           selected: ariaSelected ?? _accessibilityState.selected,
-          readOnly: ariaReadOnly ?? _accessibilityState.readOnly, // Windows
+          // #[Windows
+          readOnly: ariaReadOnly ?? _accessibilityState.readOnly,
           multiselectable:
-            ariaMultiselectable ?? _accessibilityState.multiselectable, // Windows
-          required: ariaRequired ?? _accessibilityState.required, // Windows
+            ariaMultiselectable ?? _accessibilityState.multiselectable,
+          required: ariaRequired ?? _accessibilityState.required,
+          // #]Windows
         };
       } else {
         _accessibilityState = {
@@ -130,9 +138,11 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           disabled: ariaDisabled,
           expanded: ariaExpanded,
           selected: ariaSelected,
-          readOnly: ariaReadOnly, // Windows
-          multiselectable: ariaMultiselectable, // Windows
-          required: ariaRequired, // Windows
+          // #[Windows
+          readOnly: ariaReadOnly,
+          multiselectable: ariaMultiselectable,
+          required: ariaRequired,
+          // #]Windows
         };
       }
     }
@@ -345,22 +355,24 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     ref: forwardedRef,
     accessible,
     accessibilityLabel,
-    accessibilityLevel, // Windows
-    accessibilityPosInSet, // Windows
-    accessibilitySetSize, // Windows
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
     'aria-checked': ariaChecked,
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
+    'aria-label': ariaLabel,
+    // #[Windows
     'aria-multiselectable': ariaMultiselectable, // Windows
     'aria-required': ariaRequired, // Windows
-    'aria-label': ariaLabel,
     'aria-level': ariaLevel, // Windows
     'aria-posinset': ariaPosinset, // Windows
     'aria-setsize': ariaSetsize, // Windows
     'aria-readonly': ariaReadOnly, //Windows
+    accessibilityLevel, // Windows
+    accessibilityPosInSet, // Windows
+    accessibilitySetSize, // Windows
+    // #]Windows
     'aria-selected': ariaSelected,
     children,
     ellipsizeMode,
@@ -401,9 +413,11 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       ariaDisabled != null ||
       ariaExpanded != null ||
       ariaSelected != null ||
+      // #[Windows
       ariaReadOnly != null || // Windows
       ariaMultiselectable != null || // Windows
       ariaRequired != null // Windows
+      // #]Windows
     ) {
       if (_accessibilityState != null) {
         _accessibilityState = {
@@ -412,10 +426,12 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           disabled: ariaDisabled ?? _accessibilityState.disabled,
           expanded: ariaExpanded ?? _accessibilityState.expanded,
           selected: ariaSelected ?? _accessibilityState.selected,
+          // #[Windows
           readOnly: ariaReadOnly ?? _accessibilityState.readOnly, // Windows
           multiselectable:
             ariaMultiselectable ?? _accessibilityState.multiselectable, // Windows
           required: ariaRequired ?? _accessibilityState.required, // Windows
+          // #]Windows
         };
       } else {
         _accessibilityState = {
@@ -424,9 +440,11 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           disabled: ariaDisabled,
           expanded: ariaExpanded,
           selected: ariaSelected,
+          // #[Windows
           readOnly: ariaReadOnly, // Windows
           multiselectable: ariaMultiselectable, // Windows
           required: ariaRequired, // Windows
+          // #]Windows
         };
       }
     }
@@ -504,10 +522,12 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
               ...restProps,
               accessibilityLabel: _accessibilityLabel,
               accessibilityState: _accessibilityState,
+              // #[Windows
               accessibilityLevel: _accessibilityLevel, // Windows
               accessibilityPosInSet: _accessibilityPosInSet, // Windows
               accessibilitySetSize: _accessibilitySetSize, // Windows
               ellipsizeMode: ellipsizeMode ?? 'tail', // Windows
+              // #]Windows
               nativeID: _nativeID,
               numberOfLines: _numberOfLines,
               selectable: _selectable,
@@ -613,9 +633,11 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           {...restProps}
           accessibilityLabel={_accessibilityLabel}
           accessibilityState={_accessibilityState}
+          // #[Windows
           accessibilityLevel={_accessibilityLevel} // Windows
           accessibilityPosInSet={_accessibilityPosInSet} // Windows
           accessibilitySetSize={_accessibilitySetSize} // Windows
+          // #]Windows
           accessible={_accessible}
           allowFontScaling={allowFontScaling !== false}
           disabled={_disabled}
