@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Fri, 19 Dec 2025 06:34:05 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 24 Dec 2025 06:32:41 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1023
+
+Wed, 24 Dec 2025 06:32:41 GMT
+
+### Changes
+
+- bump hermes to 0.0.0-2512.22001-bc3d0ed7 (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1023
 
 ## 0.0.0-canary.1022
 
