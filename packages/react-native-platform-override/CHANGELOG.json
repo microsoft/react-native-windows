@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Thu, 25 Dec 2025 06:39:17 GMT",
+      "version": "0.0.0-canary.1017",
+      "tag": "react-native-platform-override_v0.0.0-canary.1017",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "857247f5f8dd3bae2c02ad266dc4ff6f9d6f2579",
+            "comment": "Bump Jsi Version to 21"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 03 Dec 2025 06:40:45 GMT",
       "version": "0.0.0-canary.1016",
       "tag": "react-native-platform-override_v0.0.0-canary.1016",

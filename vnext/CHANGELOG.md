@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 24 Dec 2025 06:32:41 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 25 Dec 2025 06:39:17 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1024
+
+Thu, 25 Dec 2025 06:39:17 GMT
+
+### Changes
+
+- Integrate 0.82.0-nightly-20250821-0ef21bf8a (66076509+vineethkuttan@users.noreply.github.com)
+- Bump Jsi Version to 21 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1017
 
 ## 0.0.0-canary.1023
 
