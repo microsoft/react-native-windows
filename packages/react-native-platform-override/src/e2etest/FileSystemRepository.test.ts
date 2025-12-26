@@ -119,7 +119,6 @@ test('deleteFile - Exists', async () => {
 
 test('deleteFile - Does Not Exist', async () => {
   await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async repo => {
-     
     await expect(repo.deleteFile('nope')).rejects.toThrow();
   });
 });
