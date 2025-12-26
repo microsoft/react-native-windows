@@ -33,7 +33,7 @@
     "@react-native/community-cli-plugin": "0.82.0-nightly-20250902-9731e8ebc",
     "@react-native/gradle-plugin": "0.82.0-nightly-20250902-9731e8ebc",
     "@react-native/js-polyfills": "0.82.0-nightly-20250902-9731e8ebc",
-    "@react-native/new-app-screen": "0.82.0-nightly-20250821-0ef21bf8a",
+    "@react-native/new-app-screen": "0.82.0-nightly-20250902-9731e8ebc",
     "@react-native/normalize-colors": "0.82.0-nightly-20250902-9731e8ebc",
     "@react-native/virtualized-lists": "0.82.0-nightly-20250902-9731e8ebc",
     "abort-controller": "^3.0.0",

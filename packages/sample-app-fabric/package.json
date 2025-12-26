@@ -12,7 +12,7 @@
     "bundle": "rnw-scripts prepareBundle && npx @react-native-community/cli bundle --platform windows --entry-file App.tsx --bundle-output windows/SampleAppFabric/Bundle/app.windows.bundle --assets-dest windows/SampleAppFabric/Bundle"
   },
   "dependencies": {
-    "@react-native/new-app-screen": "0.82.0-nightly-20250821-0ef21bf8a",
+    "@react-native/new-app-screen": "0.82.0-nightly-20250902-9731e8ebc",
     "@types/react": "^19.1.1",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
