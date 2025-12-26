@@ -172,6 +172,7 @@ let BaseImage: AbstractImageIOS = ({
     'aria-multiselectable': ariaMultiselectable, // Win32
     'aria-required': ariaRequired, // Win32
     'aria-selected': ariaSelected,
+    'aria-hidden': ariaHidden,
     src,
     ...restProps
   } = props;
@@ -186,6 +187,10 @@ let BaseImage: AbstractImageIOS = ({
     required: ariaRequired ?? props.accessibilityState?.required, // Win32
     selected: ariaSelected ?? props.accessibilityState?.selected,
   };
+
+  // In order for `aria-hidden` to work on iOS we must set `accessible` to false (`accessibilityElementsHidden` is not enough).
+  const accessible =
+    ariaHidden !== true && (props.alt !== undefined ? true : props.accessible);
   const accessibilityLabel = props['aria-label'] ?? props.accessibilityLabel;
 
   const actualRef = useWrapRefWithImageAttachedCallbacks(forwardedRef);
@@ -201,6 +206,20 @@ let BaseImage: AbstractImageIOS = ({
         // Win32]
 
         return (
+<<<<<<< Upstream
+          <ImageViewNativeComponent
+            accessibilityState={_accessibilityState}
+            {...restProps}
+            accessible={accessible}
+            accessibilityLabel={accessibilityLabel ?? props.alt}
+            ref={actualRef}
+            style={style}
+            resizeMode={resizeMode}
+            tintColor={tintColor}
+            source={sources}
+            internal_analyticTag={analyticTag}
+          />
+=======
           <ImageAnalyticsTagContext.Consumer>
             {analyticTag => {
               return (
@@ -219,6 +238,7 @@ let BaseImage: AbstractImageIOS = ({
               );
             }}
           </ImageAnalyticsTagContext.Consumer>
+>>>>>>> Override
         );
       }}
     </TextAncestor.Consumer>

@@ -12,8 +12,6 @@
 #include <string>
 #include <vector>
 
-#include <react/renderer/debug/DebugStringConvertible.h>
-
 namespace facebook::react {
 
 enum class AccessibilityTraits : uint32_t {
@@ -55,27 +53,6 @@ struct AccessibilityAction {
   std::optional<std::string> label{};
 };
 
-inline std::string toString(const AccessibilityAction& accessibilityAction) {
-  std::string result = accessibilityAction.name;
-  if (accessibilityAction.label.has_value()) {
-    result += ": '" + accessibilityAction.label.value() + "'";
-  }
-  return result;
-}
-
-inline std::string toString(
-    std::vector<AccessibilityAction> accessibilityActions) {
-  std::string result = "[";
-  for (size_t i = 0; i < accessibilityActions.size(); i++) {
-    result += toString(accessibilityActions[i]);
-    if (i < accessibilityActions.size() - 1) {
-      result += ", ";
-    }
-  }
-  result += "]";
-  return result;
-}
-
 inline static bool operator==(
     const AccessibilityAction& lhs,
     const AccessibilityAction& rhs) {
@@ -113,6 +90,8 @@ constexpr bool operator!=(
   return !(rhs == lhs);
 }
 
+<<<<<<< Upstream
+=======
 #if RN_DEBUG_STRING_CONVERTIBLE
 inline std::string toString(AccessibilityState::CheckedState state) {
   switch (state) {
@@ -145,6 +124,7 @@ inline std::string toString(const AccessibilityState& accessibilityState) {
 }
 #endif
 
+>>>>>>> Override
 struct AccessibilityLabelledBy {
   std::vector<std::string> value{};
 };
@@ -194,6 +174,9 @@ enum class AccessibilityLiveRegion : uint8_t {
   Assertive,
 };
 
+<<<<<<< Upstream
+enum class AccessibilityRole : uint8_t {
+=======
 inline std::string toString(
     const AccessibilityLiveRegion& accessibilityLiveRegion) {
   switch (accessibilityLiveRegion) {
@@ -216,6 +199,7 @@ inline std::string toString(
 }
 
 enum class AccessibilityRole {
+>>>>>>> Override
   None,
   Button,
   Dropdownlist,
@@ -258,7 +242,7 @@ enum class AccessibilityRole {
   Iconmenu,
 };
 
-enum class Role {
+enum class Role : uint8_t {
   Alert,
   Alertdialog,
   Application,

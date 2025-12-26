@@ -155,6 +155,9 @@ let BaseImage: AbstractImageIOS = ({
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-selected': ariaSelected,
+<<<<<<< Upstream
+    'aria-hidden': ariaHidden,
+=======
     'aria-readonly': ariaReadOnly, // Windows
     'aria-multiselectable': ariaMultiselectable, // Windows
     'aria-required': ariaRequired, // Windows,
@@ -162,6 +165,7 @@ let BaseImage: AbstractImageIOS = ({
     'aria-posinset': ariaPosinset, // Windows
     'aria-setsize': ariaSetsize, // Windows
     height,
+>>>>>>> Override
     src,
     ...restProps
   } = props;
@@ -177,6 +181,10 @@ let BaseImage: AbstractImageIOS = ({
       ariaMultiselectable ?? props.accessibilityState?.multiselectable, // Windows
     required: ariaRequired ?? props.accessibilityState?.required, // Windows
   };
+
+  // In order for `aria-hidden` to work on iOS we must set `accessible` to false (`accessibilityElementsHidden` is not enough).
+  const accessible =
+    ariaHidden !== true && (props.alt !== undefined ? true : props.accessible);
   const accessibilityLabel = props['aria-label'] ?? props.accessibilityLabel;
   const accessibilityLevel = ariaLevel ?? props.accessibilityLevel; // Windows
   const accessibilityPosInSet = ariaPosinset ?? props.accessibilityPosInSet; // Windows
@@ -191,7 +199,7 @@ let BaseImage: AbstractImageIOS = ({
           <ImageViewNativeComponent
             accessibilityState={_accessibilityState}
             {...restProps}
-            accessible={props.alt !== undefined ? true : props.accessible}
+            accessible={accessible}
             accessibilityLabel={accessibilityLabel ?? props.alt}
             accessibilityLevel={accessibilityLevel} // Windows
             accessibilityPosInSet={accessibilityPosInSet} // Windows
