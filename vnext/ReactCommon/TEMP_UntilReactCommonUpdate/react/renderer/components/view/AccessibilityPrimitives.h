@@ -90,41 +90,6 @@ constexpr bool operator!=(
   return !(rhs == lhs);
 }
 
-<<<<<<< Upstream
-=======
-#if RN_DEBUG_STRING_CONVERTIBLE
-inline std::string toString(AccessibilityState::CheckedState state) {
-  switch (state) {
-    case AccessibilityState::Unchecked:
-      return "Unchecked";
-    case AccessibilityState::Checked:
-      return "Checked";
-    case AccessibilityState::Mixed:
-      return "Mixed";
-    case AccessibilityState::None:
-      return "None";
-//#[Windows
-#if defined(_MSC_VER)
-    default:
-        __assume(0);
-#elif defined(__GNUC__) || defined(__clang__)
-    default:
-        __builtin_unreachable();
-#endif
-// 15379 #Windows]
-  }
-}
-
-inline std::string toString(const AccessibilityState& accessibilityState) {
-  return "{disabled:" + toString(accessibilityState.disabled) +
-      ",selected:" + toString(accessibilityState.selected) +
-      ",checked:" + toString(accessibilityState.checked) +
-      ",busy:" + toString(accessibilityState.busy) +
-      ",expanded:" + toString(accessibilityState.expanded) + "}";
-}
-#endif
-
->>>>>>> Override
 struct AccessibilityLabelledBy {
   std::vector<std::string> value{};
 };
@@ -174,32 +139,7 @@ enum class AccessibilityLiveRegion : uint8_t {
   Assertive,
 };
 
-<<<<<<< Upstream
 enum class AccessibilityRole : uint8_t {
-=======
-inline std::string toString(
-    const AccessibilityLiveRegion& accessibilityLiveRegion) {
-  switch (accessibilityLiveRegion) {
-    case AccessibilityLiveRegion::None:
-      return "none";
-    case AccessibilityLiveRegion::Polite:
-      return "polite";
-    case AccessibilityLiveRegion::Assertive:
-      return "assertive";
-//#[Windows
-#if defined(_MSC_VER)
-    default:
-        __assume(0);
-#elif defined(__GNUC__) || defined(__clang__)
-    default:
-        __builtin_unreachable();
-#endif
-// 15379 #Windows]
-  }
-}
-
-enum class AccessibilityRole {
->>>>>>> Override
   None,
   Button,
   Dropdownlist,

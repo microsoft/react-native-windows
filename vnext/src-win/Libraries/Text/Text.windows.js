@@ -543,16 +543,13 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
               accessibilityElementsHidden: _accessibilityElementsHidden,
               accessibilityLabel: _accessibilityLabel,
               accessibilityState: _accessibilityState,
-<<<<<<< Upstream
               importantForAccessibility: _importantForAccessibility,
-=======
               // #[Windows
               accessibilityLevel: _accessibilityLevel, // Windows
               accessibilityPosInSet: _accessibilityPosInSet, // Windows
               accessibilitySetSize: _accessibilitySetSize, // Windows
               ellipsizeMode: ellipsizeMode ?? 'tail', // Windows
               // #]Windows
->>>>>>> Override
               nativeID: _nativeID,
               numberOfLines: _numberOfLines,
               selectable: _selectable,

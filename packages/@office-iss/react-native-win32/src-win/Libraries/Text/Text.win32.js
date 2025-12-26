@@ -560,9 +560,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
               accessibilityElementsHidden: _accessibilityElementsHidden,
               accessibilityLabel: _accessibilityLabel,
               accessibilityState: _accessibilityState,
-<<<<<<< Upstream
               importantForAccessibility: _importantForAccessibility,
-=======
               // #[ Win32
               accessibilityControls: _accessibilityControls,
               accessibilityDescribedBy: _accessibilityDescribedBy,
@@ -571,7 +569,6 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
               accessibilityPositionInSet: _accessibilityPositionInSet,
               accessibilitySetSize: _accessibilitySetSize,
               // #] Win32
->>>>>>> Override
               nativeID: _nativeID,
               numberOfLines: _numberOfLines,
               selectable: _selectable,
@@ -604,9 +601,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           accessibilityElementsHidden={_accessibilityElementsHidden}
           accessibilityLabel={_accessibilityLabel}
           accessibilityState={_accessibilityState}
-<<<<<<< Upstream
           importantForAccessibility={_importantForAccessibility}
-=======
           // #[ Win32
           accessibilityControls={_accessibilityControls}
           accessibilityDescribedBy={_accessibilityDescribedBy}
@@ -615,7 +610,6 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           accessibilityPositionInSet={_accessibilityPositionInSet}
           accessibilitySetSize={_accessibilitySetSize}
           // #] Win32
->>>>>>> Override
           nativeID={_nativeID}
           numberOfLines={_numberOfLines}
           ref={forwardedRef}

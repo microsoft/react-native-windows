@@ -155,9 +155,7 @@ let BaseImage: AbstractImageIOS = ({
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-selected': ariaSelected,
-<<<<<<< Upstream
     'aria-hidden': ariaHidden,
-=======
     'aria-readonly': ariaReadOnly, // Windows
     'aria-multiselectable': ariaMultiselectable, // Windows
     'aria-required': ariaRequired, // Windows,
@@ -165,7 +163,6 @@ let BaseImage: AbstractImageIOS = ({
     'aria-posinset': ariaPosinset, // Windows
     'aria-setsize': ariaSetsize, // Windows
     height,
->>>>>>> Override
     src,
     ...restProps
   } = props;

@@ -206,27 +206,13 @@ let BaseImage: AbstractImageIOS = ({
         // Win32]
 
         return (
-<<<<<<< Upstream
-          <ImageViewNativeComponent
-            accessibilityState={_accessibilityState}
-            {...restProps}
-            accessible={accessible}
-            accessibilityLabel={accessibilityLabel ?? props.alt}
-            ref={actualRef}
-            style={style}
-            resizeMode={resizeMode}
-            tintColor={tintColor}
-            source={sources}
-            internal_analyticTag={analyticTag}
-          />
-=======
           <ImageAnalyticsTagContext.Consumer>
             {analyticTag => {
               return (
                 <ImageViewNativeComponent
                   accessibilityState={_accessibilityState}
                   {...restProps}
-                  accessible={props.alt !== undefined ? true : props.accessible}
+                  accessible={accessible}
                   accessibilityLabel={accessibilityLabel ?? props.alt}
                   ref={actualRef}
                   style={style}
@@ -238,7 +224,6 @@ let BaseImage: AbstractImageIOS = ({
               );
             }}
           </ImageAnalyticsTagContext.Consumer>
->>>>>>> Override
         );
       }}
     </TextAncestor.Consumer>
