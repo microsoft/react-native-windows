@@ -8,17 +8,17 @@
         "resolved": "1.83.0",
         "contentHash": "cy53VNMzysEMvhBixDe8ujPk67Fcj3v6FPHQnH91NYJNLHpc6jxa2xq9ruCaaJjE4M3YrGSHDi4uUSTGBWw6EQ=="
       },
-      "Microsoft.JavaScript.Hermes": {
+      "Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn": {
         "type": "Direct",
-        "requested": "[0.0.0-2512.22001-bc3d0ed7, )",
-        "resolved": "0.0.0-2512.22001-bc3d0ed7",
-        "contentHash": "aMuCKrIwkCAnT56+oKqmxgfIaAHlKRVt8IiG/jtMbG01QH1mLPwL7wP89jRMsYSJzikW96trqgpUllZZa3O+Qw=="
+        "requested": "[1.8.1.7, )",
+        "resolved": "1.8.1.7",
+        "contentHash": "FxNwT4YpsGdqforqFSTGc5f/e+qfRJ+1wf5G1w0nEEkT5pr5M95E5+fOuswpPUGXPZIXM+M7BSVGnCRcQZjomA=="
       },
       "Microsoft.VCRTForwarders.140": {
         "type": "Direct",
-        "requested": "[1.0.2-rc, )",
-        "resolved": "1.0.2-rc",
-        "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
+        "requested": "[1.0.6, )",
+        "resolved": "1.0.6",
+        "contentHash": "CRemcSRRhH5wtdovxqcz3AgjttqgEXJzJuXSCjNStxW/JSm54xM7kSkwVb3tYen/mGCnGv/+PHvpEaliMEUxYA=="
       },
       "Microsoft.Windows.CppWinRT": {
         "type": "Direct",
@@ -47,6 +47,11 @@
         "type": "Transitive",
         "resolved": "1.1.1",
         "contentHash": "AT3HlgTjsqHnWpBHSNeR0KxbLZD7bztlZVj7I8vgeYG9SYqbeFGh0TM/KVtC6fg53nrWHl3VfZFvb5BiQFcY6Q=="
+      },
+      "Microsoft.JavaScript.Hermes": {
+        "type": "Transitive",
+        "resolved": "0.0.0-2512.22001-bc3d0ed7",
+        "contentHash": "aMuCKrIwkCAnT56+oKqmxgfIaAHlKRVt8IiG/jtMbG01QH1mLPwL7wP89jRMsYSJzikW96trqgpUllZZa3O+Qw=="
       },
       "Microsoft.SourceLink.Common": {
         "type": "Transitive",
@@ -190,14 +195,93 @@
           "Folly": "[1.0.0, )",
           "boost": "[1.83.0, )"
         }
+      }
+    },
+    "native,Version=v0.0/win": {
+      "Microsoft.VCRTForwarders.140": {
+        "type": "Direct",
+        "requested": "[1.0.6, )",
+        "resolved": "1.0.6",
+        "contentHash": "CRemcSRRhH5wtdovxqcz3AgjttqgEXJzJuXSCjNStxW/JSm54xM7kSkwVb3tYen/mGCnGv/+PHvpEaliMEUxYA=="
       },
-      "samplecustomcomponent": {
-        "type": "Project",
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.3405.78",
+        "contentHash": "ceiIKuPHnzOf5CUv9nGpIBx0CWCCMWcBdv05QuonmUnpPtm6XDyAh6osgvin7MTpVD5O0+NbS5ts/WU9sgXgvA=="
+      },
+      "Microsoft.WindowsAppSDK.Foundation": {
+        "type": "Transitive",
+        "resolved": "2.0.8-experimental",
+        "contentHash": "8z2LKsnccAJ2RaXmLNZb7JLrSsX6Ud2nlL3Rz6YO4i1iFu9zYEuIdxz6cxsc/+ZSC8bGSQR8O/4k8NIY+qeXYA==",
         "dependencies": {
-          "Microsoft.ReactNative": "[1.0.0, )",
-          "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
-          "Microsoft.WindowsAppSDK": "[2.0.0-experimental3, )",
-          "boost": "[1.83.0, )"
+          "Microsoft.WindowsAppSDK.Base": "2.0.0-experimental",
+          "Microsoft.WindowsAppSDK.InteractiveExperiences": "2.0.3-experimental"
+        }
+      }
+    },
+    "native,Version=v0.0/win-arm64": {
+      "Microsoft.VCRTForwarders.140": {
+        "type": "Direct",
+        "requested": "[1.0.6, )",
+        "resolved": "1.0.6",
+        "contentHash": "CRemcSRRhH5wtdovxqcz3AgjttqgEXJzJuXSCjNStxW/JSm54xM7kSkwVb3tYen/mGCnGv/+PHvpEaliMEUxYA=="
+      },
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.3405.78",
+        "contentHash": "ceiIKuPHnzOf5CUv9nGpIBx0CWCCMWcBdv05QuonmUnpPtm6XDyAh6osgvin7MTpVD5O0+NbS5ts/WU9sgXgvA=="
+      },
+      "Microsoft.WindowsAppSDK.Foundation": {
+        "type": "Transitive",
+        "resolved": "2.0.8-experimental",
+        "contentHash": "8z2LKsnccAJ2RaXmLNZb7JLrSsX6Ud2nlL3Rz6YO4i1iFu9zYEuIdxz6cxsc/+ZSC8bGSQR8O/4k8NIY+qeXYA==",
+        "dependencies": {
+          "Microsoft.WindowsAppSDK.Base": "2.0.0-experimental",
+          "Microsoft.WindowsAppSDK.InteractiveExperiences": "2.0.3-experimental"
+        }
+      }
+    },
+    "native,Version=v0.0/win-x64": {
+      "Microsoft.VCRTForwarders.140": {
+        "type": "Direct",
+        "requested": "[1.0.6, )",
+        "resolved": "1.0.6",
+        "contentHash": "CRemcSRRhH5wtdovxqcz3AgjttqgEXJzJuXSCjNStxW/JSm54xM7kSkwVb3tYen/mGCnGv/+PHvpEaliMEUxYA=="
+      },
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.3405.78",
+        "contentHash": "ceiIKuPHnzOf5CUv9nGpIBx0CWCCMWcBdv05QuonmUnpPtm6XDyAh6osgvin7MTpVD5O0+NbS5ts/WU9sgXgvA=="
+      },
+      "Microsoft.WindowsAppSDK.Foundation": {
+        "type": "Transitive",
+        "resolved": "2.0.8-experimental",
+        "contentHash": "8z2LKsnccAJ2RaXmLNZb7JLrSsX6Ud2nlL3Rz6YO4i1iFu9zYEuIdxz6cxsc/+ZSC8bGSQR8O/4k8NIY+qeXYA==",
+        "dependencies": {
+          "Microsoft.WindowsAppSDK.Base": "2.0.0-experimental",
+          "Microsoft.WindowsAppSDK.InteractiveExperiences": "2.0.3-experimental"
+        }
+      }
+    },
+    "native,Version=v0.0/win-x86": {
+      "Microsoft.VCRTForwarders.140": {
+        "type": "Direct",
+        "requested": "[1.0.6, )",
+        "resolved": "1.0.6",
+        "contentHash": "CRemcSRRhH5wtdovxqcz3AgjttqgEXJzJuXSCjNStxW/JSm54xM7kSkwVb3tYen/mGCnGv/+PHvpEaliMEUxYA=="
+      },
+      "Microsoft.Web.WebView2": {
+        "type": "Transitive",
+        "resolved": "1.0.3405.78",
+        "contentHash": "ceiIKuPHnzOf5CUv9nGpIBx0CWCCMWcBdv05QuonmUnpPtm6XDyAh6osgvin7MTpVD5O0+NbS5ts/WU9sgXgvA=="
+      },
+      "Microsoft.WindowsAppSDK.Foundation": {
+        "type": "Transitive",
+        "resolved": "2.0.8-experimental",
+        "contentHash": "8z2LKsnccAJ2RaXmLNZb7JLrSsX6Ud2nlL3Rz6YO4i1iFu9zYEuIdxz6cxsc/+ZSC8bGSQR8O/4k8NIY+qeXYA==",
+        "dependencies": {
+          "Microsoft.WindowsAppSDK.Base": "2.0.0-experimental",
+          "Microsoft.WindowsAppSDK.InteractiveExperiences": "2.0.3-experimental"
         }
       }
     }
