@@ -7,7 +7,6 @@
 #include "ReactPackageProvider.g.cpp"
 #endif
 
-#include "CalendarView.h"
 #include "DrawingIsland.h"
 #include "MovingLight.h"
 
@@ -21,7 +20,6 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
 #ifdef RNW_NEW_ARCH
   RegisterDrawingIslandComponentView(packageBuilder);
   RegisterMovingLightNativeComponent(packageBuilder);
-  RegisterCalendarViewComponentView(packageBuilder);
 #endif // #ifdef RNW_NEW_ARCH
 }
 

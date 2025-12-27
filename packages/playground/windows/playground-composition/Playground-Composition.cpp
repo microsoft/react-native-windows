@@ -33,8 +33,6 @@ winrt::Microsoft::UI::Dispatching::DispatcherQueueController g_liftedDispatcherQ
 winrt::Microsoft::UI::Composition::Compositor g_liftedCompositor{nullptr};
 std::unordered_set<std::unique_ptr<WindowData>> g_windows{};
 
-void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept;
-
 /**
  * This ImageHandler will accept images with a uri using the ellipse protocol and render an ellipse image
  *
@@ -93,12 +91,12 @@ struct EllipseReactPackageProvider
   }
 };
 
-// Have to use TurboModules to override built in modules.. so the standard attributed package provider doesn't work.
+// A PackageProvider containing any turbo modules you define within this app project
 struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-    RegisterCustomComponent(packageBuilder);
+    AddAttributedModules(packageBuilder, true);
   }
 };
 
@@ -259,15 +257,74 @@ struct WindowData {
 
           host.InstanceSettings().BundleRootPath(
               std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
+          host.InstanceSettings().UseDeveloperSupport(true);
+
+          // Some of the images in RNTester require a user-agent header to properly fetch
+          winrt::Microsoft::ReactNative::HttpSettings::SetDefaultUserAgent(
+              host.InstanceSettings(), L"React Native Windows Playground");
 
           winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
-          // Nudge the ReactNativeHost to create the instance and wrapping context
-          host.ReloadInstance();
+          winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
+          viewOptions.ComponentName(m_appName);
 
-          for (auto &window : g_windows) {
-            window->UpdateViewOptions();
+          if (!m_compRootView) {
+            m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(g_liftedCompositor);
+
+            // By setting the compositor here we opt into using the new architecture.
+            winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
+                InstanceSettings(), g_liftedCompositor);
+
+            m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
+                g_liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
+
+            if (m_forceRTL) {
+              m_bridge.LayoutDirectionOverride(winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
+            }
+
+            auto appContent = m_compRootView.Island();
+
+            m_bridge.Connect(appContent);
+            m_bridge.Show();
+
+            m_compRootView.ScaleFactor(ScaleFactor(hwnd));
+            winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+            constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
+            constraints.MaximumSize =
+                constraints.MinimumSize = {m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
+
+            if (m_sizeToContent) {
+              ApplyConstraintsForContentSizedWindow(constraints);
+
+              // Disable user sizing of the hwnd
+              ::SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SIZEBOX);
+              m_compRootView.SizeChanged([hwnd, props = InstanceSettings().Properties()](
+                                             auto /*sender*/,
+                                             const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
+                auto compositor =
+                    winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(props);
+                auto async = compositor.RequestCommitAsync();
+                async.Completed([hwnd, size = args.Size()](
+                                    auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
+                  RECT rcClient, rcWindow;
+                  GetClientRect(hwnd, &rcClient);
+                  GetWindowRect(hwnd, &rcWindow);
+
+                  SetWindowPos(
+                      hwnd,
+                      nullptr,
+                      0,
+                      0,
+                      static_cast<int>(size.Width) + rcClient.left - rcClient.right + rcWindow.right - rcWindow.left,
+                      static_cast<int>(size.Height) + rcClient.top - rcClient.bottom + rcWindow.bottom - rcWindow.top,
+                      SWP_DEFERERASE | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+                });
+              });
+            }
+            m_compRootView.Arrange(constraints, {0, 0});
+
+            m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
           }
         }
 
