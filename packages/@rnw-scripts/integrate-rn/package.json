@@ -20,7 +20,7 @@
     "integrate-rn": "./bin.js"
   },
   "dependencies": {
-    "@react-native-community/template": "0.82.0-nightly-2025811-9d3d62a",
+    "@react-native-community/template": "0.82.0-nightly-2025819-246871d",
     "@react-native-windows/find-repo-root": "^0.0.0-canary.99",
     "@react-native-windows/fs": "^0.0.0-canary.70",
     "@react-native-windows/package-utils": "^0.0.0-canary.96",
@@ -29,7 +29,7 @@
     "async": "^3.2.3",
     "lodash": "^4.17.15",
     "ora": "^3.4.0",
-    "react-native-platform-override": "0.0.0-canary.1016",
+    "react-native-platform-override": "0.0.0-canary.1017",
     "semver": "^7.6.3",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"

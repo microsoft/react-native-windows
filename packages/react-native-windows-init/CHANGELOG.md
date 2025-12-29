@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Wed, 03 Dec 2025 06:40:45 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 25 Dec 2025 06:39:17 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1017
+
+Thu, 25 Dec 2025 06:39:17 GMT
+
+### Changes
+
+- Bump Jsi Version to 21 (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.0.0-canary.1016
 
