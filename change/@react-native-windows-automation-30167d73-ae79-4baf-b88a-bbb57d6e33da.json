@@ -1,0 +1,7 @@
+{
+  "comment": "adding reactnativeisland changes",
+  "type": "prerelease",
+  "packageName": "@react-native-windows/automation",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}

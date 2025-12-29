@@ -1,0 +1,7 @@
+{
+  "comment": "Fix react-native-platform-override version mismatch",
+  "type": "prerelease",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "protikbiswas100@microsoft.com",
+  "dependentChangeType": "patch"
+}
