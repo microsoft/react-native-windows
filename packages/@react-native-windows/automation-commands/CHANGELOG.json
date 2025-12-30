@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Tue, 30 Dec 2025 06:39:29 GMT",
+      "version": "0.0.0-canary.1025",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1025",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "c0b7f6f5a156b7a4406f96cd6db48589ff1c10d5",
+            "comment": "Use experimental WinAppSDK"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1025",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Dec 2025 06:39:17 GMT",
       "version": "0.0.0-canary.1024",
       "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1024",

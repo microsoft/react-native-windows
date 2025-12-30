@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Thu, 25 Dec 2025 06:39:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 30 Dec 2025 06:39:29 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.304
+
+Tue, 30 Dec 2025 06:39:29 GMT
+
+### Changes
+
+- Use experimental WinAppSDK (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1018
 
 ## 0.0.0-canary.303
 

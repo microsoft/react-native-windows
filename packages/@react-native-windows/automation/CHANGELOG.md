@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Thu, 25 Dec 2025 06:39:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 30 Dec 2025 06:39:29 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1025
+
+Tue, 30 Dec 2025 06:39:29 GMT
+
+### Changes
+
+- Use experimental WinAppSDK (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1025
 
 ## 0.0.0-canary.1024
 

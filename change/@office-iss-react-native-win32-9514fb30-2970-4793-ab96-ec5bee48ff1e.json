@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use experimental WinAppSDK",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "66076509+vineethkuttan@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
