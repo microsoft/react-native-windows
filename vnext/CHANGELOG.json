@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 03 Jan 2026 06:40:13 GMT",
+      "version": "0.0.0-canary.1025",
+      "tag": "react-native-windows_v0.0.0-canary.1025",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "6766ff1bf5560201e02d308d46598015d4d9aca9",
+            "comment": "Drop XamlApplication::EnsureCreated"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 30 Dec 2025 06:39:30 GMT",
       "version": "0.0.0-canary.1025",
       "tag": "react-native-windows_v0.0.0-canary.1025",
