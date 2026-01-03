@@ -10382,6 +10382,31 @@ react-is@^19.0.0, react-is@^19.1.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-19.2.1.tgz#712fa6ee30c8398dc34260017325dad92b9224c5"
   integrity sha512-L7BnWgRbMwzMAubQcS7sXdPdNLmKlucPlopgAzx7FtYbksWZgEWiuYM5x9T6UqS2Ne0rsgQTq5kY2SGqpzUkYA==
 
+react-native-platform-override@0.0.0-canary.1017:
+  version "0.0.0-canary.1017"
+  resolved "https://registry.yarnpkg.com/react-native-platform-override/-/react-native-platform-override-0.0.0-canary.1017.tgz#c94c9d8b2435a806a334a191ec6e571345fd0bb0"
+  integrity sha512-9fM3piBVzxa1xtsVwpXaODUNZmxMOVf6kjkygnoKhdRcYTXkRC34lmJWfq18BL25wJdx9ZEZp0dGGGDwD0ujFg==
+  dependencies:
+    "@react-native-windows/fs" "^0.0.0-canary.70"
+    "@react-native-windows/package-utils" "^0.0.0-canary.96"
+    "@typescript-eslint/eslint-plugin" "^7.1.1"
+    "@typescript-eslint/parser" "^7.1.1"
+    async "^3.2.3"
+    chalk "^4.1.0"
+    fp-ts "^2.5.0"
+    globby "^11.1.0"
+    inquirer "^7.1.0"
+    io-ts "^2.1.1"
+    isutf8 "^3.0.0"
+    lodash "^4.17.15"
+    node-fetch "^2.6.7"
+    ora "^3.4.0"
+    semver "^7.3.2"
+    simple-git "^3.3.0"
+    source-map-support "^0.5.19"
+    upath "^1.2.0"
+    yargs "^16.2.0"
+
 react-native@0.82.0-nightly-20250821-0ef21bf8a:
   version "0.82.0-nightly-20250821-0ef21bf8a"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.82.0-nightly-20250821-0ef21bf8a.tgz#6a3c4d980e5e7fec2f6a2535778dfd655e43bf66"
