@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "integrate 0.82.0-nightly-20250902-9731e8ebc",
+  "packageName": "react-native-platform-override",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
