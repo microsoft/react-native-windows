@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Tue, 30 Dec 2025 06:39:30 GMT",
+      "version": "0.0.0-canary.1018",
+      "tag": "react-native-platform-override_v0.0.0-canary.1018",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "c0b7f6f5a156b7a4406f96cd6db48589ff1c10d5",
+            "comment": "Use experimental WinAppSDK"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Dec 2025 06:39:17 GMT",
       "version": "0.0.0-canary.1017",
       "tag": "react-native-platform-override_v0.0.0-canary.1017",

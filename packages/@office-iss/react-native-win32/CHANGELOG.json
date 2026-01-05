@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 30 Dec 2025 06:39:29 GMT",
+      "version": "0.0.0-canary.304",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.304",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "c0b7f6f5a156b7a4406f96cd6db48589ff1c10d5",
+            "comment": "Use experimental WinAppSDK"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1018",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Dec 2025 06:39:16 GMT",
       "version": "0.0.0-canary.303",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.303",

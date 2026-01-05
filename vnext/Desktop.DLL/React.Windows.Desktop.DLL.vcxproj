@@ -110,6 +110,7 @@
         windowscodecs.lib;
         WindowsApp_downlevel.lib;
         dxguid.lib;
+        icu.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
       <AdditionalDependencies Condition="'$(Platform)' == 'ARM64EC'">

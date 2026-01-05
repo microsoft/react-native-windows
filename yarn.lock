@@ -10216,9 +10216,9 @@ qrcode@^1.5.0:
     yargs "^15.3.1"
 
 qs@~6.14.0:
-  version "6.14.0"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.14.0.tgz#c63fa40680d2c5c941412a0e899c89af60c0a930"
-  integrity sha512-YWWTjgABSKcvs/nWBi9PycY/JiPJqOD4JA6o9Sej2AtvSGarXxKC3OQSk4pAarbdQlKAh5D4FCQkJNkW+GAn3w==
+  version "6.14.1"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.14.1.tgz#a41d85b9d3902f31d27861790506294881871159"
+  integrity sha512-4EK3+xJl8Ts67nLYNwqw/dsFVnCf+qR7RgXSK9jEEm9unao3njwMDdmsdvoKBKHzxd7tCYz5e5M+SnMjdtXGQQ==
   dependencies:
     side-channel "^1.1.0"
 
@@ -10282,10 +10282,10 @@ react-is@^19.0.0, react-is@^19.1.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-19.2.1.tgz#712fa6ee30c8398dc34260017325dad92b9224c5"
   integrity sha512-L7BnWgRbMwzMAubQcS7sXdPdNLmKlucPlopgAzx7FtYbksWZgEWiuYM5x9T6UqS2Ne0rsgQTq5kY2SGqpzUkYA==
 
-react-native-platform-override@0.0.0-canary.1016:
-  version "0.0.0-canary.1016"
-  resolved "https://registry.yarnpkg.com/react-native-platform-override/-/react-native-platform-override-0.0.0-canary.1016.tgz#6b6e66a2fb8e9c3295a7daa11987cd73dec616b7"
-  integrity sha512-PZPVmP0isrxjhtMgfRYpkgrbPPd8FejOLIB9KqVknAfCQT+Lgwh5mtl2JZQbtxaoyAzXZj71g493PSRFbcM3vw==
+react-native-platform-override@0.0.0-canary.1017:
+  version "0.0.0-canary.1017"
+  resolved "https://registry.yarnpkg.com/react-native-platform-override/-/react-native-platform-override-0.0.0-canary.1017.tgz#c94c9d8b2435a806a334a191ec6e571345fd0bb0"
+  integrity sha512-9fM3piBVzxa1xtsVwpXaODUNZmxMOVf6kjkygnoKhdRcYTXkRC34lmJWfq18BL25wJdx9ZEZp0dGGGDwD0ujFg==
   dependencies:
     "@react-native-windows/fs" "^0.0.0-canary.70"
     "@react-native-windows/package-utils" "^0.0.0-canary.96"

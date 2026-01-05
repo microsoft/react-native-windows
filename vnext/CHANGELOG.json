@@ -2,6 +2,42 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 03 Jan 2026 06:40:13 GMT",
+      "version": "0.0.0-canary.1025",
+      "tag": "react-native-windows_v0.0.0-canary.1025",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "6766ff1bf5560201e02d308d46598015d4d9aca9",
+            "comment": "Drop XamlApplication::EnsureCreated"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 30 Dec 2025 06:39:30 GMT",
+      "version": "0.0.0-canary.1025",
+      "tag": "react-native-windows_v0.0.0-canary.1025",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c0b7f6f5a156b7a4406f96cd6db48589ff1c10d5",
+            "comment": "Use experimental WinAppSDK"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1018",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Dec 2025 06:39:17 GMT",
       "version": "0.0.0-canary.1024",
       "tag": "react-native-windows_v0.0.0-canary.1024",
