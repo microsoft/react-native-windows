@@ -8,9 +8,6 @@ namespace Microsoft.ReactNative.Xaml {
   DOC_STRING("Initializes a new XamlApplication instance for RNW-hosted WinUI/XAML.")
   XamlApplication();
 
-  DOC_STRING("Ensures the XamlApplication singleton exists.")
-  static void EnsureCreated();
-
   DOC_STRING("Gets the process-wide XamlApplication singleton.")
   static XamlApplication Current {
     get;

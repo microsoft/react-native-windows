@@ -66,12 +66,12 @@ const Platform: PlatformType = {
   },
   select: <T>(spec: PlatformSelectSpec<T>): T =>
     'win32' in spec
-      ? // $FlowFixMe[incompatible-return]
+      ? // $FlowFixMe[incompatible-type]
         spec.win32
       : 'native' in spec
-        ? // $FlowFixMe[incompatible-return]
+        ? // $FlowFixMe[incompatible-type]
           spec.native
-        : // $FlowFixMe[incompatible-return]
+        : // $FlowFixMe[incompatible-type]
           spec.default,
 };
 
