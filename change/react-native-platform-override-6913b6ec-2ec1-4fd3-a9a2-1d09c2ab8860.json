@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "bump node version to 20.19.4",
+  "packageName": "react-native-platform-override",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "none"
+}
