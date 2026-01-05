@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include <cxxreact/JSExecutor.h>
 #include "Utils.h"
+#include <string>
 
 namespace facebook {
 namespace react {

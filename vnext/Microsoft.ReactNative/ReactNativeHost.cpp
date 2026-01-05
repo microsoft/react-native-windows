@@ -82,8 +82,6 @@ ReactNativeHostProperty() noexcept {
 }
 
 IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
-  auto modulesProvider = std::make_shared<NativeModulesProvider>();
-
   auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
   auto uriImageManager =
@@ -95,7 +93,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
       ReactPropertyBag(m_instanceSettings.Properties()), componentregistry);
 
   m_packageBuilder =
-      make<ReactPackageBuilder>(modulesProvider, turboModulesProvider, componentregistry, uriImageManager);
+      make<ReactPackageBuilder>(turboModulesProvider, componentregistry, uriImageManager);
 
   winrt::Microsoft::ReactNative::Composition::implementation::RegisterWindowsModalHostNativeComponent(m_packageBuilder);
 
@@ -151,7 +149,6 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.SetEnableDefaultCrashHandler(m_instanceSettings.EnableDefaultCrashHandler());
   reactOptions.SetJsiEngine(static_cast<Mso::React::JSIEngine>(m_instanceSettings.JSIEngineOverride()));
 
-  reactOptions.ModuleProvider = modulesProvider;
   reactOptions.TurboModuleProvider = turboModulesProvider;
 
   reactOptions.UriImageManager = uriImageManager;

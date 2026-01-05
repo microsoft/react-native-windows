@@ -44,7 +44,6 @@
 #include "MoveOnCopy.h"
 #include "MsoUtils.h"
 #include "NativeModules.h"
-#include "NativeModulesProvider.h"
 #include "ReactCoreInjection.h"
 #include "ReactErrorProvider.h"
 #include "RedBox.h"
@@ -231,9 +230,8 @@ void ReactInstanceWin::InstanceCrashHandler(int fileDescriptor) noexcept {
 
 void ReactInstanceWin::LoadModules(
     const std::shared_ptr<facebook::react::DevSettings> &devSettings,
-    const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
     const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept {
-  auto registerTurboModule = [this, &nativeModulesProvider, &turboModulesProvider](
+  auto registerTurboModule = [this, &turboModulesProvider](
                                  const wchar_t *name, const ReactModuleProvider &provider) noexcept {
     turboModulesProvider->AddModuleProvider(name, provider, false);
   };
@@ -488,8 +486,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
             if (devSettings->useFastRefresh || devSettings->liveReloadCallback) {
               Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(*devSettings);
             }
-            // null moduleProvider since native modules are not supported in bridgeless
-            LoadModules(devSettings, nullptr, m_options.TurboModuleProvider);
+            LoadModules(devSettings, m_options.TurboModuleProvider);
 
             auto jsMessageThread = std::make_shared<facebook::react::MessageQueueThreadImpl>();
             m_jsMessageThread.Exchange(jsMessageThread);

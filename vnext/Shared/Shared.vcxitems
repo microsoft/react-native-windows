@@ -154,7 +154,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.cpp">
       <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JSExecutorFactorySettings.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)LayoutAnimation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.cpp" />
@@ -174,7 +173,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)tracing\tracing.cpp" />
@@ -270,7 +268,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactInstanceSettings.cpp">
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactInstanceSettings.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactCoreInjection.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactCoreInjection.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)">
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactCoreInjection.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactContext.cpp">
@@ -312,8 +310,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JSExecutorFactoryDelegate.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JSExecutorFactorySettings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobCollector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.h" />
@@ -340,7 +336,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTWebSocketResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)BatchingMessageQueueThread.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CreateModules.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CxxMessageQueue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DevServerHelper.h" />
@@ -355,14 +350,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Logging.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)NativeModuleProvider.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)OInstance.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Pch\pch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNode.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Tracing.h" />
@@ -381,17 +374,16 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\Timing.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\SampleTurboModule.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\SourceCode.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\NativeModulesProvider.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\CrashManager.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\CrashManager.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\JSCallInvokerScheduler.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\MsoReactContext.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\MsoReactContext.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\ReactErrorProvider.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\ReactInstanceWin.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\ReactInstanceWin.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\RedBox.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\RedBoxErrorFrameInfo.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\RedBoxErrorInfo.cpp" />
@@ -400,8 +392,6 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ImageUtils.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ThemeUtils.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\DevMenu.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Instance.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\ColorComponents.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Modern.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
@@ -486,7 +476,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\TextShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\RawTextShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphComponentDescriptor.cpp" DisableSpecificWarnings="5028;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\AccessibilityProps.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\AccessibilityProps.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\PointerEvent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\BaseTouch.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\TouchEventEmitter.cpp" />
@@ -497,13 +487,13 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\ValueFactoryEventPayload.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\DynamicPropsUtilities.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventBeat.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventDispatcher.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventDispatcher.cpp" DisableSpecificWarnings="4715;4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventEmitter.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\DynamicEventPayload.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventListener.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventTarget.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventQueue.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventQueueProcessor.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventQueueProcessor.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutableShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutConstraints.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutMetrics.cpp" />
@@ -547,12 +537,12 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\PointerEventsProcessor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\PointerHoverTracker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\consistency\LazyShadowTreeRevisionConsistencyManager.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManager.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManager.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManagerBinding.cpp" DisableSpecificWarnings="4389;4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\AppRegistryBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\runtime\BufferedRuntimeExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsitooling\react\runtime\JSRuntimeFactory.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\runtime\ReactInstance.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\runtime\ReactInstance.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\runtime\TimerManager.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryReporter.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceObserverRegistry.cpp" />
