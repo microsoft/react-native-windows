@@ -9,8 +9,8 @@
 
 #include <AutoDraw.h>
 #include <Fabric/ReactTaggedView.h>
-#include <Utils/ValueUtils.h>
 #include <Utils/IcuUtils.h>
+#include <Utils/ValueUtils.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/ParagraphState.h>
 #include <unicode.h>
