@@ -11,7 +11,6 @@ using folly::dynamic;
 
 namespace Microsoft::React::Modules {
 
-
 void SendEvent(
     msrn::ReactContext const &reactContext,
     std::wstring_view &&eventName,

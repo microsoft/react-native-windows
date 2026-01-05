@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "Utils.h"
 #include <string>
+#include "Utils.h"
 
 namespace facebook {
 namespace react {
