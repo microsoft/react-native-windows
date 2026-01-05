@@ -21,11 +21,13 @@ export default class Bootstrap extends React.Component {
           Click here : This is a text with a tooltip.
         </Text>
 
-        {/* Text Selection Test Section */}
         <View style={styles.selectionTestContainer}>
           <Text style={styles.sectionTitle}>Text Selection Test</Text>
           <Text selectable={true} style={styles.selectableText}>
             This text is SELECTABLE. Try clicking and dragging to select it.
+          </Text>
+          <Text selectable={true} style={styles.selectableText}>
+            Hello 世界世界 World - Double-click to test CJK word selection!
           </Text>
           <Text selectable={false} style={styles.nonSelectableText}>
             This text is NOT selectable (selectable=false).
