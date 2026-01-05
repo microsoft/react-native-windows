@@ -73,6 +73,7 @@ import typeof LogBox from './Libraries/LogBox/LogBox';
 import typeof Modal from './Libraries/Modal/Modal';
 // $FlowFixMe[invalid-exported-annotation]
 import typeof NativeDialogManagerAndroid from './Libraries/NativeModules/specs/NativeDialogManagerAndroid';
+import typeof * as NativeComponentRegistry from './Libraries/NativeComponent/NativeComponentRegistry';
 import typeof Networking from './Libraries/Network/RCTNetworking';
 import typeof * as Systrace from './Libraries/Performance/Systrace';
 import typeof PermissionsAndroid from './Libraries/PermissionsAndroid/PermissionsAndroid';
@@ -326,6 +327,9 @@ module.exports = {
   },
   get NativeAppEventEmitter(): RCTNativeAppEventEmitter {
     return require('./Libraries/EventEmitter/RCTNativeAppEventEmitter').default;
+  },
+  get NativeComponentRegistry(): NativeComponentRegistry {
+    return require('./Libraries/NativeComponent/NativeComponentRegistry');
   },
   get NativeDialogManagerAndroid(): NativeDialogManagerAndroid {
     return require('./Libraries/NativeModules/specs/NativeDialogManagerAndroid')

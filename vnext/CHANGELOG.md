@@ -1,8 +1,35 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 19 Dec 2025 06:34:05 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 30 Dec 2025 06:39:30 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1025
+
+Tue, 30 Dec 2025 06:39:30 GMT
+
+### Changes
+
+- Use experimental WinAppSDK (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1018
+
+## 0.0.0-canary.1024
+
+Thu, 25 Dec 2025 06:39:17 GMT
+
+### Changes
+
+- Integrate 0.82.0-nightly-20250821-0ef21bf8a (66076509+vineethkuttan@users.noreply.github.com)
+- Bump Jsi Version to 21 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1017
+
+## 0.0.0-canary.1023
+
+Wed, 24 Dec 2025 06:32:41 GMT
+
+### Changes
+
+- bump hermes to 0.0.0-2512.22001-bc3d0ed7 (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.0.0-canary.1022
 

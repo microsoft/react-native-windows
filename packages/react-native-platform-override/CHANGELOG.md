@@ -1,8 +1,24 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Wed, 03 Dec 2025 06:40:45 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 30 Dec 2025 06:39:30 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1018
+
+Tue, 30 Dec 2025 06:39:30 GMT
+
+### Changes
+
+- Use experimental WinAppSDK (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1017
+
+Thu, 25 Dec 2025 06:39:17 GMT
+
+### Changes
+
+- Bump Jsi Version to 21 (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.0.0-canary.1016
 
