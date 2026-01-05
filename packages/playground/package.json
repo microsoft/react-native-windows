@@ -37,6 +37,6 @@
     "sample-custom-component": "0.0.1"
   },
   "engines": {
-    "node": ">= 22"
+    "node": ">= 20.19.4"
   }
 }

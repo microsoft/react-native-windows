@@ -17,7 +17,7 @@
     "node-fetch": "^3.3.2"
   },
   "engines": {
-    "node": ">= 22"
+    "node": ">= 20.19.4"
   },
   "type": "module"
 }

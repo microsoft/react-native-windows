@@ -10,6 +10,6 @@
     "directory": "packages/@rnw-scripts/ts-config"
   },
   "engines": {
-    "node": ">= 22"
+    "node": ">= 20.19.4"
   }
 }
