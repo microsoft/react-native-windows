@@ -12,6 +12,7 @@
 #include <react/renderer/components/text/ParagraphProps.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
+#include <chrono>
 #include "CompositionHelpers.h"
 #include "CompositionViewComponentView.h"
 
@@ -48,6 +49,28 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   static facebook::react::SharedViewProps defaultProps() noexcept;
   const facebook::react::ParagraphProps &paragraphProps() const noexcept;
 
+  // Returns true when text is selectable
+  bool focusable() const noexcept override;
+
+  // Returns I-beam cursor for selectable text
+  std::pair<facebook::react::Cursor, HCURSOR> cursor() const noexcept override;
+
+  // Called when losing focus, when another text starts selection, or when clicking outside text bounds.
+  void ClearSelection() noexcept;
+
+  // Text selection pointer event handlers
+  void OnPointerPressed(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void OnPointerMoved(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void OnPointerReleased(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void OnPointerCaptureLost() noexcept override;
+  void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
+
+  // Keyboard event handler for copy
+  void OnKeyDown(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+
   ParagraphComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
@@ -56,7 +79,28 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
  private:
   void updateVisualBrush() noexcept;
   void DrawText() noexcept;
+  void DrawSelectionHighlight(
+      ID2D1RenderTarget &renderTarget,
+      float offsetX,
+      float offsetY,
+      float pointScaleFactor) noexcept;
   void updateTextAlignment(const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept;
+  bool IsTextSelectableAtPoint(facebook::react::Point pt) noexcept;
+  std::optional<int32_t> GetTextPositionAtPoint(facebook::react::Point pt) noexcept;
+  std::optional<int32_t> GetClampedTextPosition(facebook::react::Point pt) noexcept;
+  std::string GetSelectedText() const noexcept;
+
+  // Copies currently selected text to the system clipboard
+  void CopySelectionToClipboard() noexcept;
+
+  // Selects the word at the given character position
+  void SelectWordAtPosition(int32_t charPosition) noexcept;
+
+  // Shows a context menu with Copy/Select All options on right-click
+  void ShowContextMenu() noexcept;
+
+  // m_selectionStart <= m_selectionEnd
+  void SetSelection(int32_t start, int32_t end) noexcept;
 
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;
@@ -64,6 +108,14 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
 
   bool m_requireRedraw{true};
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface;
+
+  std::optional<int32_t> m_selectionStart;
+  std::optional<int32_t> m_selectionEnd;
+  bool m_isSelecting{false};
+
+  // Double-click detection
+  std::chrono::steady_clock::time_point m_lastClickTime{};
+  std::optional<int32_t> m_lastClickPosition;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

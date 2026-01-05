@@ -56,8 +56,9 @@ class WindowsTextLayoutManager : public TextLayoutManager {
       TextMeasurement::Attachments &attachments,
       float minimumFontScale) noexcept;
 
- private:
   static winrt::hstring GetTransformedText(const AttributedStringBox &attributedStringBox);
+
+ private:
   static void GetTextLayout(
       const AttributedStringBox &attributedStringBox,
       const ParagraphAttributes &paragraphAttributes,
