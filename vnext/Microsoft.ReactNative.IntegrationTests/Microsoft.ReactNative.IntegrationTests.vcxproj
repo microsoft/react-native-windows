@@ -82,7 +82,7 @@
       <PreprocessorDefinitions>
         _CONSOLE;MSO_MOTIFCPP;FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
-      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);$(ReactNativeWindowsDir)stubs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <!--
         /await  -
         /bigobj -
