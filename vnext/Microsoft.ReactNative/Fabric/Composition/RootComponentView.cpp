@@ -9,6 +9,7 @@
 #include <Fabric/FabricUIManagerModule.h>
 #include <winrt/Microsoft.UI.Input.h>
 #include "CompositionRootAutomationProvider.h"
+#include "ParagraphComponentView.h"
 #include "ReactNativeIsland.h"
 #include "Theme.h"
 
@@ -347,6 +348,20 @@ HWND RootComponentView::GetHwndForParenting() noexcept {
   }
 
   return base_type::GetHwndForParenting();
+}
+
+void RootComponentView::ClearCurrentTextSelection() noexcept {
+  if (auto view = m_viewWithTextSelection.view()) {
+    if (auto paragraphView = view.try_as<ParagraphComponentView>()) {
+      paragraphView->ClearSelection();
+    }
+  }
+  m_viewWithTextSelection =
+      ::Microsoft::ReactNative::ReactTaggedView{winrt::Microsoft::ReactNative::ComponentView{nullptr}};
+}
+
+void RootComponentView::SetViewWithTextSelection(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+  m_viewWithTextSelection = ::Microsoft::ReactNative::ReactTaggedView{view};
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
