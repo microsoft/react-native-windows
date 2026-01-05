@@ -2183,14 +2183,14 @@
     serve-static "^1.16.2"
     ws "^6.2.3"
 
-"@react-native/eslint-config@0.82.0-nightly-20250821-0ef21bf8a":
-  version "0.82.0-nightly-20250821-0ef21bf8a"
-  resolved "https://registry.yarnpkg.com/@react-native/eslint-config/-/eslint-config-0.82.0-nightly-20250821-0ef21bf8a.tgz#a8c87acf70e9bb54a45ddb3b751bb48a2496a8f2"
-  integrity sha512-uJCn1kD8dWPazEqutSdlmla2Or82Gz9MOlBQsdSlj8NC6Xuq3GS+ODgmRzZULiKGrEwQeRZlx2si3MXxM7c33g==
+"@react-native/eslint-config@0.82.0-nightly-20250902-9731e8ebc":
+  version "0.82.0-nightly-20250902-9731e8ebc"
+  resolved "https://registry.yarnpkg.com/@react-native/eslint-config/-/eslint-config-0.82.0-nightly-20250902-9731e8ebc.tgz#3fc55b38acbdf34476ad905333e9288a2f344e95"
+  integrity sha512-QqWr0dsHEN2MpZhJ2cLBE+aRRFbw1mwQMvDj9bhxnBTSk5iFwRT5/OnLChwBIRuqGwGdlydmKgsOzhIHaVRDOA==
   dependencies:
     "@babel/core" "^7.25.2"
     "@babel/eslint-parser" "^7.25.1"
-    "@react-native/eslint-plugin" "0.82.0-nightly-20250821-0ef21bf8a"
+    "@react-native/eslint-plugin" "0.82.0-nightly-20250902-9731e8ebc"
     "@typescript-eslint/eslint-plugin" "^8.36.0"
     "@typescript-eslint/parser" "^8.36.0"
     eslint-config-prettier "^8.5.0"
@@ -2201,10 +2201,10 @@
     eslint-plugin-react-hooks "^5.2.0"
     eslint-plugin-react-native "^4.0.0"
 
-"@react-native/eslint-plugin@0.82.0-nightly-20250821-0ef21bf8a":
-  version "0.82.0-nightly-20250821-0ef21bf8a"
-  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin/-/eslint-plugin-0.82.0-nightly-20250821-0ef21bf8a.tgz#c0803ac1560ce01c0138fb8b5cbedb9c91a7a816"
-  integrity sha512-XIiwVWJ/LHVHRoms7KKRiKbeQGMqKFrWTZX8IOlqgD6gSTjiUdlIqM7e2qh/K9xUbrj6SVb4cuy4e9GcZqvOug==
+"@react-native/eslint-plugin@0.82.0-nightly-20250902-9731e8ebc":
+  version "0.82.0-nightly-20250902-9731e8ebc"
+  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin/-/eslint-plugin-0.82.0-nightly-20250902-9731e8ebc.tgz#90bb4b23ffad05d9c16ab4440c65121667b9d370"
+  integrity sha512-yzE+AALmiSAL1xpUS+3ULi4H8SBvm/PkkBW99xvCS0lPlkm+0fl1TL50V6tEU6tMd/Pm8mOxVferi9WyiXIo5w==
 
 "@react-native/gradle-plugin@0.82.0-nightly-20250902-9731e8ebc":
   version "0.82.0-nightly-20250902-9731e8ebc"
@@ -2236,20 +2236,20 @@
     metro-config "^0.83.1"
     metro-runtime "^0.83.1"
 
-"@react-native/new-app-screen@0.82.0-nightly-20250821-0ef21bf8a":
-  version "0.82.0-nightly-20250821-0ef21bf8a"
-  resolved "https://registry.yarnpkg.com/@react-native/new-app-screen/-/new-app-screen-0.82.0-nightly-20250821-0ef21bf8a.tgz#f7b64f7bd93945bdea0d597d973b11d079bbceb9"
-  integrity sha512-IcNqFAgsUTEt/GxJDW7PaoOS2Sn3iTQijnPGCIBkmlo/PBlnOzOZOXT6nz58aVdWYbHVh9+WTuItv/dpeKgzMg==
+"@react-native/new-app-screen@0.82.0-nightly-20250902-9731e8ebc":
+  version "0.82.0-nightly-20250902-9731e8ebc"
+  resolved "https://registry.yarnpkg.com/@react-native/new-app-screen/-/new-app-screen-0.82.0-nightly-20250902-9731e8ebc.tgz#c726a7858e331d7c99e10d014351404605bf2bb2"
+  integrity sha512-mMURaNdPIzsfDD+x5olyIjAT5VbWR0aMPaXlieuSxk9bn6VIbnvYjZg1iAGg7wyyKqQvDKejqhLfejUpa4irfg==
 
 "@react-native/normalize-colors@0.82.0-nightly-20250902-9731e8ebc":
   version "0.82.0-nightly-20250902-9731e8ebc"
   resolved "https://registry.yarnpkg.com/@react-native/normalize-colors/-/normalize-colors-0.82.0-nightly-20250902-9731e8ebc.tgz#8e97a0b1111d2df29fa625303caf2be342309ab1"
   integrity sha512-jOBxfHsLoxfKv2KafbeJXMNqfppJOGXIQ1RyqMeqYEbLtr3IG43FI+eJNqjGUEEMineS+1bLZEW2Dj3pgqCACg==
 
-"@react-native/popup-menu-android@0.82.0-nightly-20250821-0ef21bf8a":
-  version "0.82.0-nightly-20250821-0ef21bf8a"
-  resolved "https://registry.yarnpkg.com/@react-native/popup-menu-android/-/popup-menu-android-0.82.0-nightly-20250821-0ef21bf8a.tgz#661faf5ac6dcb565166725f5690c992edbda0ead"
-  integrity sha512-IwER2Qt1UuOcMUlV1DpTSP9Sb6hCflkruepgZOhsoVGu0QIhQjPF07d/dHvh32P2xcuGDGl00HTazd7yGgIaAg==
+"@react-native/popup-menu-android@0.82.0-nightly-20250902-9731e8ebc":
+  version "0.82.0-nightly-20250902-9731e8ebc"
+  resolved "https://registry.yarnpkg.com/@react-native/popup-menu-android/-/popup-menu-android-0.82.0-nightly-20250902-9731e8ebc.tgz#6b07c3ac041df2102ee759c7d3cb545115b817c9"
+  integrity sha512-iVXonklFA+0FoU6MPap3ec/414JlgiNIi2F0000JSqU0pHXlfpCRNKLI+BWTz6shsgSFXyGjr/qx0cB9Lnc0wg==
   dependencies:
     nullthrows "^1.1.1"
 
