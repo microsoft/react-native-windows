@@ -59,7 +59,7 @@ function getBasePath(asset: PackagerAsset, local: boolean) {
     // If this asset was created with saveAssetPlugin, then we should shorten the path
     // This conditional allow compat of bundles which might have been created without the saveAssetPlugin
     // $FlowFixMe[prop-missing][sketchy-null-mixed]: __useShortPath not part of public type
-    if (asset.__useShortPath) {
+    if (asset.__useShortPath === true) {
       return ensureShortPath(safePath);
     }
     return safePath;
