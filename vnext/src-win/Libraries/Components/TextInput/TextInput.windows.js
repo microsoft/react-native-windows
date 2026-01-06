@@ -657,7 +657,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
   const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
   const _keyDown = (event: KeyEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
         if (
           event.nativeEvent.code === el.code &&
@@ -676,7 +676,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
   const _keyUp = (event: KeyEvent) => {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
         if (
           event.nativeEvent.code === el.code &&
@@ -695,7 +695,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
   const _keyDownCapture = (event: KeyEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
         if (
           event.nativeEvent.code === el.code &&
@@ -714,7 +714,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
   const _keyUpCapture = (event: KeyEvent) => {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
         if (
           event.nativeEvent.code === el.code &&
