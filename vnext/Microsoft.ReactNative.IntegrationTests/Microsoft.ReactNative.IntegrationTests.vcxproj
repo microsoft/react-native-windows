@@ -83,6 +83,8 @@
         _CONSOLE;MSO_MOTIFCPP;FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WarningLevel>Level4</WarningLevel>
       <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);$(ReactNativeWindowsDir)stubs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <!-- Disable C4244 for Folly F14Table.h: 'argument': conversion from 'uint64_t' to 'size_t' -->
+      <DisableSpecificWarnings>4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <!--
         /await  -
         /bigobj -
