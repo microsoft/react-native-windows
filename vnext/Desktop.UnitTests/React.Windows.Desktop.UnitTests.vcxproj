@@ -101,7 +101,7 @@
     <ClCompile Include="BaseFileReaderResourceUnitTest.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />
     <ClCompile Include="MemoryMappedBufferTests.cpp" />
-    <ClCompile Include="InstanceMocks.cpp" />
+    <ClCompile Include="InstanceMocks.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="OriginPolicyHttpFilterTest.cpp" />
     <ClCompile Include="RedirectHttpFilterUnitTest.cpp" />
     <ClCompile Include="ScriptStoreTests.cpp" />
