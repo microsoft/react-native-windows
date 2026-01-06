@@ -17,6 +17,7 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4127) // conditional expression is constant
+#pragma warning(disable : 4244) // 'argument': conversion from 'uint64_t' to 'size_t', possible loss of data
 #include <folly/container/detail/F14Table.h>
 #pragma warning(pop)
 
