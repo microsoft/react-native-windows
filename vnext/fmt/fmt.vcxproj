@@ -149,13 +149,5 @@
       Overwrite="true"
       Lines="$(CGManifestText)" />
   </Target>
-  <ItemGroup>
-    <TemporaryFmtPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFmtUpdate\**\*.*" />
-  </ItemGroup>
   <Target Name="Deploy" />
-  <!-- Allow temporary patches if needed, while we wait for PRs to land in fmt -->
-  <Target Name="ApplyFmtTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFmt">
-    <Message Importance="High" Text="Applying temporary patches to fmt." />
-    <Copy DestinationFiles="@(TemporaryFmtPatchFiles->'$(FmtDir)\include\fmt\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFmtPatchFiles)" />
-  </Target>
 </Project>
