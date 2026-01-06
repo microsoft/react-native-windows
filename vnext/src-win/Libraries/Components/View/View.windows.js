@@ -23,7 +23,8 @@ import type {KeyEvent} from '../../Types/CoreEventTypes';
 // $FlowFixMe[recursive-definition] - children typing
 const childrenWithImportantForAccessibility: (
   children: any, // $FlowFixMe[unclear-type]
-) => any = children => { // $FlowFixMe[unclear-type]
+) => any = children => {
+  // $FlowFixMe[unclear-type]
   if (children == null) {
     return children;
   }
