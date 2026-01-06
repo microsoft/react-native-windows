@@ -20,10 +20,10 @@ import type {KeyEvent} from '../../Types/CoreEventTypes';
 // Windows]
 
 // [Windows
-// $FlowFixMe[recursive-definition] - children typing
+// $FlowFixMe[recursive-definition][unclear-type] - children typing
 const childrenWithImportantForAccessibility: (
-  children: any, // $FlowFixMe[unclear-type]
-) => any = children => { // $FlowFixMe[unclear-type]
+  children: any,
+) => any = children => {
   if (children == null) {
     return children;
   }

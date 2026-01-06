@@ -2069,28 +2069,6 @@
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.4.tgz#7fb09506ee00a82989125cc03e8495204c8afc01"
   integrity sha512-Kf8h1AMnBo54b1fdiVylP2P/iFcZqzpMYcglC28EEFB1DEnOjsNr6Ucqc+3R9e91vHxEDnhZFbYDmAe79P2gjA==
 
-"@react-native-windows/automation-channel@0.0.0-canary.1024":
-  version "0.0.0-canary.1024"
-  resolved "https://registry.yarnpkg.com/@react-native-windows/automation-channel/-/automation-channel-0.0.0-canary.1024.tgz#6aaaa72354b591c54fc314743bcfad94d3a86fc1"
-  integrity sha512-ZUPhy1SChjBtBC4kfrDfkDdmm7QUWUTkSdlwLz3UXQW9ZtexxvL2JYB0kgvKxkwwbWUkppGfIh+eeMlZissAOg==
-  dependencies:
-    "@typescript-eslint/eslint-plugin" "^7.1.1"
-    "@typescript-eslint/parser" "^7.1.1"
-    jsonrpc-lite "^2.2.0"
-
-"@react-native-windows/automation@0.0.0-canary.1024":
-  version "0.0.0-canary.1024"
-  resolved "https://registry.yarnpkg.com/@react-native-windows/automation/-/automation-0.0.0-canary.1024.tgz#8d997a9801bcc295f4a9f3694a809d7a79937986"
-  integrity sha512-Q75ohedgnlEKNjRjr+2+leHZFI5zMWhwoe5gSAL05c2bcnJMb0ijqkWtiYb+RvQhktYYtMmCgrDlNfGRlmUhOQ==
-  dependencies:
-    "@react-native-windows/automation-channel" "0.0.0-canary.1024"
-    "@react-native-windows/fs" "^0.0.0-canary.70"
-    "@typescript-eslint/eslint-plugin" "^7.1.1"
-    "@typescript-eslint/parser" "^7.1.1"
-    chalk "^4.1.2"
-    readline-sync "1.4.10"
-    webdriverio "^6.9.0"
-
 "@react-native/assets-registry@0.82.0-nightly-20250902-9731e8ebc":
   version "0.82.0-nightly-20250902-9731e8ebc"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.82.0-nightly-20250902-9731e8ebc.tgz#d32973e28c8b43020e2d5bc08849dec1a1201943"
