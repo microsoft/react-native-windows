@@ -194,3 +194,5 @@ nul
 
 # midgard-yarn-strict
 .store*/*
+
+/npm-pkgs

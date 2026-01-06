@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Wed, 10 Dec 2025 18:44:30 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 20 Dec 2025 12:02:33 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0
+
+Sat, 20 Dec 2025 12:02:33 GMT
+
+### Patches
+
+- Promote 0.81 to latest (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.81.0
 
 ## 0.81.0-preview.3
 

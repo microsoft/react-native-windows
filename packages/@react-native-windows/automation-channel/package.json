@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation-channel",
-  "version": "0.81.0-preview.11",
+  "version": "0.81.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
     "prettier": "2.8.8",
     "react": "19.1.0",
     "react-native": "0.81.5",
-    "react-native-windows": "0.81.0-preview.11",
+    "react-native-windows": "0.81.0",
     "typescript": "5.0.4"
   },
   "files": [
@@ -42,11 +42,11 @@
     "!packages*.lock.json"
   ],
   "beachball": {
-    "defaultNpmTag": "preview",
+    "defaultNpmTag": "latest",
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch",
+      "prerelease",
       "premajor",
       "preminor",
       "prepatch"

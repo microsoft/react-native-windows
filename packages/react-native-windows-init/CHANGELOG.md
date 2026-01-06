@@ -1,8 +1,19 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Wed, 10 Dec 2025 18:44:29 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 20 Dec 2025 12:02:34 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.0
+
+Sat, 20 Dec 2025 12:02:34 GMT
+
+### Patches
+
+- Promote 0.81 to latest (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.81.0
+- Bump @react-native-windows/telemetry to v0.81.0
+- Bump @react-native-windows/cli to v0.81.0
 
 ## 0.81.0-preview.10
 
