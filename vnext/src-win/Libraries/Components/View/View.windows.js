@@ -22,9 +22,10 @@ import type {KeyEvent} from '../../Types/CoreEventTypes';
 // [Windows
 // $FlowFixMe[recursive-definition] - children typing
 const childrenWithImportantForAccessibility: (
-  children: any, // $FlowFixMe[unclear-type]
+  // $FlowFixMe[unclear-type] - children typing requires any
+  children: any,
+  // $FlowFixMe[unclear-type] - return type requires any
 ) => any = children => {
-  // $FlowFixMe[unclear-type]
   if (children == null) {
     return children;
   }
