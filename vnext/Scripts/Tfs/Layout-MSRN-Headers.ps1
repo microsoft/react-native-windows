@@ -99,6 +99,7 @@ New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\CallInvoker.h -Destination $MSRNCxxTargetRoot\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\SchedulerPriority.h -Destination $MSRNCxxTargetRoot\ReactCommon\
 New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\bridging -Force
+New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\timing -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Array.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\AString.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Base.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
