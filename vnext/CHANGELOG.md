@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 30 Dec 2025 06:39:30 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 06 Jan 2026 06:38:13 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1026
+
+Tue, 06 Jan 2026 06:38:13 GMT
+
+### Changes
+
+- Fix DPI scaling for debugging overlay highlights (74712637+iamAbhi-916@users.noreply.github.com)
+- Implements selectable for <Text> (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.0.0-canary.1025
 

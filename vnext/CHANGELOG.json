@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 06 Jan 2026 06:38:13 GMT",
+      "version": "0.0.0-canary.1026",
+      "tag": "react-native-windows_v0.0.0-canary.1026",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b331a6a60a875a1a36f8aa7fc1070449e964b197",
+            "comment": "Fix DPI scaling for debugging overlay highlights"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b3d4d01d6c67dd2657fced47bbe0c1bb27458b2b",
+            "comment": "Implements selectable for <Text>"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 03 Jan 2026 06:40:13 GMT",
       "version": "0.0.0-canary.1025",
       "tag": "react-native-windows_v0.0.0-canary.1025",
