@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix null pointer checks in CaseInsensitiveComparer operator",
+  "packageName": "react-native-windows-init",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

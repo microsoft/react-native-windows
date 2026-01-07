@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Validate arguements for OriginPolicyHttpFilter",
+  "packageName": "@react-native-windows/automation",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
