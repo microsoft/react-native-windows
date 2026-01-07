@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 07 Jan 2026 17:42:34 GMT",
+      "version": "0.81.1",
+      "tag": "react-native-windows_v0.81.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0ba33b823aa6ad4d00d47cdc583b07efcdf4379e",
+            "comment": "[NetUI] Reintroduce experimental yoga flag for use by NetUI"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "58d0858332f98821a7f434ba5f6e39ddbe81d0cc",
+            "comment": "Include missing bridging files in MS.RN.Cxx"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 20 Dec 2025 12:02:34 GMT",
       "version": "0.81.0",
       "tag": "react-native-windows_v0.81.0",

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[NetUI] Reintroduce experimental yoga flag for use by NetUI",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
