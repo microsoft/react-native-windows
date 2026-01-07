@@ -32,6 +32,7 @@
 #include "ReactNativeHost.h"
 #include "RootComponentView.h"
 #include "TextDrawing.h"
+#include "Theme.h"
 
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -281,6 +282,24 @@ void ReactNativeIsland::UpdateRootVisualSize() noexcept {
   UpdateDebuggerVisualSize();
 }
 
+void ReactNativeIsland::UpdateRootVisualBackground() noexcept {
+  if (m_rootVisual && m_theme) {
+    // Set a theme-aware background color on the root visual.
+    // This ensures that semi-transparent WinUI colors (like Button's ControlFillColorDefault)
+    // render correctly against the proper theme background, matching native WinUI app behavior.
+    // See Issue #15521: Button becomes invisible in dark mode.
+    auto themeImpl = winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(m_theme);
+    auto backgroundColor = themeImpl->PlatformColor("SolidBackgroundFillColorBase");
+    auto spriteVisual = m_rootVisual.as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>();
+    if (spriteVisual) {
+      auto compContext =
+          winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateContext(
+              m_compositor);
+      spriteVisual.Brush(compContext.CreateColorBrush(backgroundColor));
+    }
+  }
+}
+
 void ReactNativeIsland::UpdateLoadingVisualSize() noexcept {
   if (m_loadingVisual) {
     auto drawingSurface = CreateLoadingVisualBrush();
@@ -364,6 +383,9 @@ void ReactNativeIsland::Theme(const winrt::Microsoft::ReactNative::Composition::
           const winrt::Windows::Foundation::IInspectable & /*sender*/,
           const winrt::Windows::Foundation::IInspectable & /*args*/) {
         if (auto strongThis = wkThis.get()) {
+          // Update the root visual background when theme changes (light/dark mode switch)
+          strongThis->UpdateRootVisualBackground();
+
           if (auto rootView = strongThis->GetComponentView()) {
             Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
                 [](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
@@ -378,6 +400,9 @@ void ReactNativeIsland::Theme(const winrt::Microsoft::ReactNative::Composition::
           }
         }
       });
+
+  // Update the root visual background with the new theme
+  UpdateRootVisualBackground();
 
   if (auto rootView = GetComponentView()) {
     rootView->theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(value));
@@ -921,8 +946,9 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
           if (auto pThis = weakThis.get()) {
             if (auto rootView = pThis->GetComponentView()) {
               args.Result(
-                  rootView->NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
-                      winrt::Microsoft::ReactNative::FocusNavigationReason::First))
+                  rootView->NavigateFocus(
+                      winrt::Microsoft::ReactNative::FocusNavigationRequest(
+                          winrt::Microsoft::ReactNative::FocusNavigationReason::First))
                       ? winrt::Microsoft::UI::Input::FocusNavigationResult::Moved
                       : winrt::Microsoft::UI::Input::FocusNavigationResult::NotMoved);
             } else {
