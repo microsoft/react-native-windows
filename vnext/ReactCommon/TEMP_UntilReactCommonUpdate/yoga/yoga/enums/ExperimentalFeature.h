@@ -22,7 +22,7 @@ enum class ExperimentalFeature : uint8_t {
 
 template <>
 constexpr int32_t ordinalCount<ExperimentalFeature>() {
-  return 1;
+  return 2; // This should be +1 from core due to CallMeasureCallbackOnAllNodes
 }
 
 constexpr ExperimentalFeature scopedEnum(YGExperimentalFeature unscoped) {
