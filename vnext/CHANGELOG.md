@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 06 Jan 2026 06:38:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 07 Jan 2026 06:40:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1027
+
+Wed, 07 Jan 2026 06:40:55 GMT
+
+### Changes
+
+- Include missing bridging files in MS.RN.Cxx (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1026
 

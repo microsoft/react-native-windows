@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 07 Jan 2026 06:40:55 GMT",
+      "version": "0.0.0-canary.1027",
+      "tag": "react-native-windows_v0.0.0-canary.1027",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7cbfc2b7ef4e3218f1141aad98b684d414eea992",
+            "comment": "Include missing bridging files in MS.RN.Cxx"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 06 Jan 2026 06:38:13 GMT",
       "version": "0.0.0-canary.1026",
       "tag": "react-native-windows_v0.0.0-canary.1026",
