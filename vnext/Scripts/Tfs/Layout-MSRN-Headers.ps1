@@ -99,6 +99,7 @@ New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\CallInvoker.h -Destination $MSRNCxxTargetRoot\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\SchedulerPriority.h -Destination $MSRNCxxTargetRoot\ReactCommon\
 New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\bridging -Force
+New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\timing -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Array.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\AString.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Base.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
@@ -110,12 +111,14 @@ Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Convert.h -De
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Error.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\EventEmitter.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Function.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\HighResTimeStamp.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Number.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\LongLivedObject.cpp -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\LongLivedObject.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Object.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Promise.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Value.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\timing\primitives.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\timing\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp -Destination $MSRNCxxTargetRoot\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h -Destination $MSRNCxxTargetRoot\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp -Destination $MSRNCxxTargetRoot\ReactCommon\
