@@ -946,9 +946,8 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
           if (auto pThis = weakThis.get()) {
             if (auto rootView = pThis->GetComponentView()) {
               args.Result(
-                  rootView->NavigateFocus(
-                      winrt::Microsoft::ReactNative::FocusNavigationRequest(
-                          winrt::Microsoft::ReactNative::FocusNavigationReason::First))
+                  rootView->NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
+                      winrt::Microsoft::ReactNative::FocusNavigationReason::First))
                       ? winrt::Microsoft::UI::Input::FocusNavigationResult::Moved
                       : winrt::Microsoft::UI::Input::FocusNavigationResult::NotMoved);
             } else {
