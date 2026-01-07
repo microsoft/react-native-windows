@@ -31,7 +31,6 @@
 #include "IReactContext.h"
 #include "IReactDispatcher.h"
 #include "IReactNotificationService.h"
-#include "JSI/JSExecutorFactorySettings.h"
 #include "JsiApi.h"
 #include "Modules/DevSettingsModule.h"
 #include "Modules/ExceptionsManager.h"

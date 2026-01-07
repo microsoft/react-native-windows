@@ -19,7 +19,6 @@
 #include <Utils/LocalBundleReader.h>
 #endif
 
-#include <BatchingMessageQueueThread.h>
 #include <CppRuntimeOptions.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
