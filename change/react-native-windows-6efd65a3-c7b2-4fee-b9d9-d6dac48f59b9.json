@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix Button visibility in dark mode by adding theme-aware root background (#15521)",
+  "packageName": "react-native-windows",
+  "email": "nitchaudhary@microsoft.com",
+  "dependentChangeType": "patch"
+}
