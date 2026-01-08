@@ -16,6 +16,10 @@
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <tom.h>
 #include <unicode.h>
+#include <msctf.h>
+#include <inputscope.h>
+#include <Shlwapi.h>
+#include <TextServ.h>
 #include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.h>
@@ -27,6 +31,42 @@
 #include "guid/msoGuid.h"
 
 #include <unicode.h>
+#include <fstream>
+
+#pragma comment(lib, "Shlwapi.lib")
+
+// Simple file logger for debugging
+static void LogToFile(const std::string &message) {
+  std::ofstream logFile("D:\\keyboardtype_debug.log", std::ios::app);
+  if (logFile.is_open()) {
+    logFile << message << std::endl;
+    logFile.close();
+  }
+}
+
+// Dynamic loading of SetInputScopes from msctf.dll
+typedef HRESULT(WINAPI *PFN_SetInputScopes)(
+    HWND hwnd,
+    const InputScope *pInputScopes,
+    UINT cInputScopes,
+    PWSTR *ppszPhraseList,
+    UINT cPhrases,
+    PWSTR pszRegExp,
+    PWSTR pszSRGS);
+
+static PFN_SetInputScopes g_pfnSetInputScopes = nullptr;
+static bool g_bSetInputScopesInitialized = false;
+
+static PFN_SetInputScopes GetSetInputScopesProc() {
+  if (!g_bSetInputScopesInitialized) {
+    g_bSetInputScopesInitialized = true;
+    HMODULE hMsctf = LoadLibraryW(L"msctf.dll");
+    if (hMsctf) {
+      g_pfnSetInputScopes = (PFN_SetInputScopes)GetProcAddress(hMsctf, "SetInputScopes");
+    }
+  }
+  return g_pfnSetInputScopes;
+}
 
 // convert a BSTR to a std::string.
 std::string &BstrToStdString(const BSTR bstr, std::string &dst, int cp = CP_UTF8) {
@@ -1034,6 +1074,16 @@ void WindowsTextInputComponentView::onLostFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   m_hasFocus = false;
   Super::onLostFocus(args);
+  
+  // Reset InputScope on parent HWND when losing focus
+  HWND hwndParent = GetHwndForParenting();
+  if (hwndParent) {
+    if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
+      InputScope defaultScope = IS_DEFAULT;
+      pfnSetInputScopes(hwndParent, &defaultScope, 1, nullptr, 0, nullptr, nullptr);
+    }
+  }
+
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
@@ -1063,6 +1113,10 @@ void WindowsTextInputComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   m_hasFocus = true;
   Super::onGotFocus(args);
+  
+  // Set InputScope on parent HWND for touch keyboard layout
+  updateKeyboardType(m_keyboardType);
+
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
@@ -1200,6 +1254,17 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.selectionColor != newTextInputProps.selectionColor) {
     m_needsRedraw = true;
+  }
+
+  // Notify TSF when keyboardType changes so IME can update
+  if (oldTextInputProps.keyboardType != newTextInputProps.keyboardType ||
+      oldTextInputProps.secureTextEntry != newTextInputProps.secureTextEntry) {
+    // Force TSF to re-query ITfInputScope by simulating focus change
+    if (m_textServices && m_hasFocus) {
+      LRESULT lresult;
+      m_textServices->TxSendMessage(WM_KILLFOCUS, 0, 0, &lresult);
+      m_textServices->TxSendMessage(WM_SETFOCUS, 0, 0, &lresult);
+    }
   }
 
   UpdatePropertyBits();
@@ -1792,8 +1857,8 @@ WindowsTextInputComponentView::createVisual() noexcept {
   LRESULT res;
   winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_PLAINTEXT, 0, &res));
 
-  // Enable TSF support
-  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEDITSTYLE, SES_USECTF, SES_USECTF, nullptr));
+  // Enable TSF (Text Services Framework) for advanced input method support
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEDITSTYLE, SES_USECTF, SES_USECTF, &res));
 
   m_caretVisual = m_compContext.CreateCaretVisual();
   visual.InsertAt(m_caretVisual.InnerVisual(), 0);
@@ -1924,9 +1989,58 @@ void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Founda
 }
 
 void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboardType) noexcept {
-  // Store the keyboard type for future use
-  // Note: Fabric's windowless RichEdit doesn't have direct InputScope support like Paper's XAML controls.
-  // The keyboard type is stored but the actual keyboard behavior is handled by the system's IME.
   m_keyboardType = keyboardType;
+
+  // Get the parent/root HWND - this is the actual window that receives focus
+  HWND hwndParent = GetHwndForParenting();
+  
+  LogToFile("=== updateKeyboardType called ===");
+  LogToFile("  keyboardType: " + keyboardType);
+  LogToFile("  hwndParent: " + std::to_string(reinterpret_cast<uintptr_t>(hwndParent)));
+  
+  if (!hwndParent) {
+    LogToFile("  ERROR: hwndParent is NULL!");
+    return;
+  }
+
+  // Map keyboard type to InputScope
+  InputScope scope = IS_DEFAULT;
+  bool isSecureTextEntry = windowsTextInputProps().secureTextEntry;
+
+  static const std::unordered_map<std::string, InputScope> scopeMap = {
+      {"default", IS_DEFAULT},
+      {"numeric", IS_NUMBER},
+      {"number-pad", IS_DIGITS},
+      {"decimal-pad", IS_NUMBER},
+      {"email-address", IS_EMAIL_SMTPEMAILADDRESS},
+      {"phone-pad", IS_TELEPHONE_FULLTELEPHONENUMBER},
+      {"url", IS_URL},
+      {"web-search", IS_SEARCH}};
+
+  if (isSecureTextEntry) {
+    scope = (keyboardType == "numeric") ? IS_NUMBER : IS_PASSWORD;
+  } else {
+    auto it = scopeMap.find(keyboardType);
+    if (it != scopeMap.end()) {
+      scope = it->second;
+    }
+  }
+
+  LogToFile("  InputScope value: " + std::to_string(static_cast<int>(scope)));
+
+  // Use SetInputScopes API to set InputScope on the parent HWND
+  // This tells Windows Touch Keyboard which layout to show
+  if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
+    HRESULT hr = pfnSetInputScopes(hwndParent, &scope, 1, nullptr, 0, nullptr, nullptr);
+    LogToFile("  SetInputScopes HRESULT: 0x" + std::to_string(hr));
+    if (SUCCEEDED(hr)) {
+      LogToFile("  SUCCESS: InputScope set!");
+    } else {
+      LogToFile("  FAILED: SetInputScopes returned error");
+    }
+  } else {
+    LogToFile("  ERROR: SetInputScopes function not found in msctf.dll!");
+  }
+  LogToFile("=================================");
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
