@@ -5,7 +5,7 @@
  */
 
 import * as coreOneDS from '@microsoft/1ds-core-js';
-import { PostChannel, IChannelConfiguration } from '@microsoft/1ds-post-js';
+import {PostChannel, IChannelConfiguration} from '@microsoft/1ds-post-js';
 
 import * as basePropUtils from './utils/basePropUtils';
 import * as versionUtils from './utils/versionUtils';
@@ -100,7 +100,7 @@ export class Telemetry {
     | projectUtils.DependencyProjectInfo = undefined;
 
   // Store "Common Properties" in a single object. This will be logged in all telemetry events.
-  protected static commonProperties: { [key: string]: string } = {};
+  protected static commonProperties: {[key: string]: string} = {};
 
   protected static getDefaultSetupString(): string {
     // Enable overriding the default setup string via an environment variable
@@ -406,7 +406,7 @@ export class Telemetry {
   }
 
   private static trackCommandEvent(extraProps?: Record<string, any>) {
-    const telemetryItem: coreOneDS.ITelemetryItem = { name: CommandEventName };
+    const telemetryItem: coreOneDS.ITelemetryItem = {name: CommandEventName};
 
     // This is logged in Part C.
     const command = {
@@ -414,9 +414,9 @@ export class Telemetry {
       defaultOptions: Telemetry.commandInfo.startInfo?.defaultOptions,
       args: Telemetry.commandInfo.startInfo?.args,
       durationInSecs:
-        (Telemetry.commandInfo.endTime! - Telemetry.commandInfo.startTime!) / 1000,
-      resultCode:
-        Telemetry.commandInfo.endInfo?.resultCode ?? 'Unknown',
+        (Telemetry.commandInfo.endTime! - Telemetry.commandInfo.startTime!) /
+        1000,
+      resultCode: Telemetry.commandInfo.endInfo?.resultCode ?? 'Unknown',
     };
 
     telemetryItem.data = {
@@ -436,7 +436,7 @@ export class Telemetry {
       return;
     }
 
-    const telemetryItem: coreOneDS.ITelemetryItem = { name: CodedErrorEventName };
+    const telemetryItem: coreOneDS.ITelemetryItem = {name: CodedErrorEventName};
 
     // Save off CodedError info in Part C.
     const codedError =
