@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 08 Jan 2026 06:37:29 GMT",
+      "version": "0.0.0-canary.1027",
+      "tag": "react-native-windows_v0.0.0-canary.1027",
+      "comments": {
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5eb5ba9a707657c99a1576b68c20e77f7a65dd49",
+            "comment": "update fmt"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jan 2026 06:40:55 GMT",
       "version": "0.0.0-canary.1027",
       "tag": "react-native-windows_v0.0.0-canary.1027",
