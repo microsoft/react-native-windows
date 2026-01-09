@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "adding accessibility and UIA support for XAML fabric",
   "packageName": "react-native-windows",
   "email": "protikbiswas100@microsoft.com",

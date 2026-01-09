@@ -80,7 +80,7 @@ export default async function dumpVisualTree(
     removeGuidsFromImageSources?: boolean;
     additionalProperties?: string[];
   },
-): Promise<VisualTree> {
+): Promise<UIElement | VisualTree> {
   if (!automationClient) {
     throw new Error('RPC client is not enabled');
   }
@@ -94,9 +94,21 @@ export default async function dumpVisualTree(
     throw new Error(dumpResponse.message);
   }
 
-  const element: VisualTree = dumpResponse.result;
+  const element: UIElement | VisualTree = dumpResponse.result;
 
-  if (opts?.removeGuidsFromImageSources !== false) {
+  if ('XamlType' in element && opts?.pruneCollapsed !== false) {
+    pruneCollapsedElements(element);
+  }
+
+  if ('XamlType' in element && opts?.deterministicOnly !== false) {
+    removeNonDeterministicProps(element);
+  }
+
+  if ('XamlType' in element && opts?.removeDefaultProps !== false) {
+    removeDefaultProps(element);
+  }
+
+  if (!('XamlType' in element) && opts?.removeGuidsFromImageSources !== false) {
     removeGuidsFromImageSources(element);
   }
 
@@ -171,4 +183,51 @@ function removeGuidsFromImageSourcesHelper(node: ComponentNode) {
 
 function removeGuidsFromImageSources(visualTree: VisualTree) {
   removeGuidsFromImageSourcesHelper(visualTree['Component Tree']);
+}
+
+/**
+ * Removes trees of XAML that are not visible.
+ */
+function pruneCollapsedElements(element: UIElement) {
+  if (!element.children) {
+    return;
+  }
+
+  element.children = element.children.filter(
+    child => child.Visibility !== 'Collapsed',
+  );
+
+  element.children.forEach(pruneCollapsedElements);
+}
+
+/**
+ * Removes trees of properties that are not deterministic
+ */
+function removeNonDeterministicProps(element: UIElement) {
+  if (element.RenderSize) {
+    // RenderSize is subject to rounding, etc and should mostly be derived from
+    // other deterministic properties in the tree.
+    delete element.RenderSize;
+  }
+
+  if (element.children) {
+    element.children.forEach(removeNonDeterministicProps);
+  }
+}
+
+/**
+ * Removes noise from snapshot by removing properties with the default value
+ */
+function removeDefaultProps(element: UIElement) {
+  const defaultValues: [string, unknown][] = [['Tooltip', null]];
+
+  defaultValues.forEach(([propname, defaultValue]) => {
+    if (element[propname] === defaultValue) {
+      delete element[propname];
+    }
+  });
+
+  if (element.children) {
+    element.children.forEach(removeDefaultProps);
+  }
 }

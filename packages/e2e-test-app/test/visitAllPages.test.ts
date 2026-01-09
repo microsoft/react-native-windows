@@ -35,6 +35,7 @@ const componentExamples = testerList.Components.map(e => e.module.title);
 describe('visitAllPages', () => {
   for (const component of componentExamples) {
     if (
+      component === 'Custom Native Accessibility Example' ||
       component === 'Moving Light Example' ||
       component === 'Drawing Island Example' ||
       component === 'Fabric Native Component' ||

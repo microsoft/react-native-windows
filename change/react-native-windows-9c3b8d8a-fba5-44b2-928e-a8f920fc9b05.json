@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Add ability to customize native accessibility of custom native components",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",

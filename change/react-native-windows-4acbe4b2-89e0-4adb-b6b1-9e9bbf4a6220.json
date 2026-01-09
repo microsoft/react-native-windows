@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Defer UIA accessibility provider initialization until requested",
   "packageName": "react-native-windows",
   "email": "198982749+Copilot@users.noreply.github.com",
