@@ -513,27 +513,45 @@ ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept {
 }
 
 void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider) noexcept {
-  winrt::com_ptr<IRawElementProviderSimple> selectionContainer;
-  provider->get_SelectionContainer(selectionContainer.put());
-  if (!selectionContainer)
+  auto selectionContainerView = provider->GetSelectionContainer();
+  if (!selectionContainerView)
     return;
-  auto selectionContainerProvider = selectionContainer.as<CompositionDynamicAutomationProvider>();
+
+  auto selectionContainerCompView =
+      selectionContainerView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+  if (!selectionContainerCompView)
+    return;
+
+  selectionContainerCompView->EnsureUiaProvider();
+
+  if (!selectionContainerCompView->InnerAutomationProvider())
+    return;
+
   auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
   winrt::com_ptr<IRawElementProviderSimple> simpleProviderPtr;
   simpleProviderPtr.copy_from(simpleProvider);
-  selectionContainerProvider->AddToSelectionItems(simpleProviderPtr);
+  selectionContainerCompView->InnerAutomationProvider()->AddToSelectionItems(simpleProviderPtr);
 }
 
 void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept {
-  winrt::com_ptr<IRawElementProviderSimple> selectionContainer;
-  provider->get_SelectionContainer(selectionContainer.put());
-  if (!selectionContainer)
+  auto selectionContainerView = provider->GetSelectionContainer();
+  if (!selectionContainerView)
     return;
-  auto selectionContainerProvider = selectionContainer.as<CompositionDynamicAutomationProvider>();
+
+  auto selectionContainerCompView =
+      selectionContainerView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+  if (!selectionContainerCompView)
+    return;
+
+  selectionContainerCompView->EnsureUiaProvider();
+
+  if (!selectionContainerCompView->InnerAutomationProvider())
+    return;
+
   auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
   winrt::com_ptr<IRawElementProviderSimple> simpleProviderPtr;
   simpleProviderPtr.copy_from(simpleProvider);
-  selectionContainerProvider->RemoveFromSelectionItems(simpleProviderPtr);
+  selectionContainerCompView->InnerAutomationProvider()->RemoveFromSelectionItems(simpleProviderPtr);
 }
 
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept {

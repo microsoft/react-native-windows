@@ -111,12 +111,11 @@ void ContentIslandComponentView::ParentLayoutChanged() noexcept {
   });
 }
 
-winrt::IInspectable ContentIslandComponentView::EnsureUiaProvider() noexcept {
-  if (m_uiaProvider == nullptr) {
-    m_uiaProvider = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
-        *get_strong(), m_childSiteLink);
-  }
-  return m_uiaProvider;
+winrt::Windows::Foundation::IInspectable ContentIslandComponentView::CreateAutomationProvider() noexcept {
+  m_innerAutomationProvider =
+      winrt::make_self<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
+          *get_strong(), m_childSiteLink);
+  return *m_innerAutomationProvider;
 }
 
 bool ContentIslandComponentView::focusable() const noexcept {
@@ -283,6 +282,10 @@ void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
         args.AutomationProvider(nullptr);
         args.Handled(true);
       });
+
+  if (m_innerAutomationProvider) {
+    m_innerAutomationProvider->SetChildSiteLink(m_childSiteLink);
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

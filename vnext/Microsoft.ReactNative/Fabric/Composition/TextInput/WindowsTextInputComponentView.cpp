@@ -6,7 +6,6 @@
 #include "WindowsTextInputComponentView.h"
 
 #include <AutoDraw.h>
-#include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Fabric/platform/react/renderer/graphics/PlatformColorUtils.h>
 #include <Utils/ThemeUtils.h>

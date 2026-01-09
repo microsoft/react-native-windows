@@ -97,6 +97,7 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
 
   void AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
   void RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
+  winrt::Microsoft::ReactNative::ComponentView GetSelectionContainer() noexcept;
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
