@@ -245,7 +245,9 @@ struct WindowData {
         DialogBox(s_instance, MAKEINTRESOURCE(IDD_OPENJSBUNDLEBOX), hwnd, &Bundle);
 
         if (!m_bundleFile.empty()) {
-          m_appName = (m_bundleFile == LR"(Samples\rntester)") ? L"RNTesterApp" : L"Bootstrap";
+          PCWSTR appName = (m_bundleFile == LR"(Samples\rntester)") ? L"RNTesterApp" 
+                         : (m_bundleFile == LR"(Samples\KeyboardTypeTest)") ? L"KeyboardTypeTest"
+                         : L"Bootstrap";
 
           WCHAR appDirectory[MAX_PATH];
           GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
@@ -375,11 +377,12 @@ struct WindowData {
                                                         LR"(Samples\click)",        LR"(Samples\control)",
                                                         LR"(Samples\flexbox)",      LR"(Samples\focusTest)",
                                                         LR"(Samples\geosample)",    LR"(Samples\image)",
-                                                        LR"(Samples\index)",        LR"(Samples\nativeFabricComponent)",
-                                                        LR"(Samples\mouse)",        LR"(Samples\scrollViewSnapSample)",
-                                                        LR"(Samples\simple)",       LR"(Samples\text)",
-                                                        LR"(Samples\textinput)",    LR"(Samples\ticTacToe)",
-                                                        LR"(Samples\view)",         LR"(Samples\debugTest01)"};
+                                                        LR"(Samples\index)",        LR"(Samples\KeyboardTypeTest)",
+                                                        LR"(Samples\nativeFabricComponent)", LR"(Samples\mouse)",
+                                                        LR"(Samples\scrollViewSnapSample)", LR"(Samples\simple)",
+                                                        LR"(Samples\text)",         LR"(Samples\textinput)",
+                                                        LR"(Samples\ticTacToe)",    LR"(Samples\view)",
+                                                        LR"(Samples\debugTest01)"};
 
   static INT_PTR CALLBACK Bundle(HWND hwnd, UINT message, WPARAM wparam, LPARAM /*lparam*/) noexcept {
     switch (message) {
