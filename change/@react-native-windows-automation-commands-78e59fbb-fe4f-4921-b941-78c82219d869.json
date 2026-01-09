@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update to no longer include paper",
+  "packageName": "@react-native-windows/automation-commands",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
