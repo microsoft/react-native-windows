@@ -8,6 +8,9 @@
 #include <winrt/Windows.Data.Json.h>
 #include "winrt/AutomationChannel.h"
 
+// Includes from sample-custom-component
+#include <winrt/SampleCustomComponent.h>
+
 #include "AutolinkedNativeModules.g.h"
 
 #include "NativeModules.h"
@@ -75,6 +78,7 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   RegisterAutolinkedNativeModulePackages(host.PackageProviders());
 
   host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+  host.PackageProviders().Append(winrt::SampleCustomComponent::ReactPackageProvider());
 
 #if BUNDLE
   host.InstanceSettings().JavaScriptBundleFile(L"index.windows");

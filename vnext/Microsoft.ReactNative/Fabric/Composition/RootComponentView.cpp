@@ -8,7 +8,10 @@
 
 #include <Fabric/FabricUIManagerModule.h>
 #include <winrt/Microsoft.UI.Input.h>
+#include "CompositionDynamicAutomationProvider.h"
 #include "CompositionRootAutomationProvider.h"
+#include "ContentIslandComponentView.h"
+#include "ParagraphComponentView.h"
 #include "ReactNativeIsland.h"
 #include "Theme.h"
 
@@ -275,7 +278,7 @@ facebook::react::Point RootComponentView::getClientOffset() const noexcept {
   return {};
 }
 
-winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixels) noexcept {
+winrt::IUnknown RootComponentView::UiaProviderFromPoint(const POINT &ptPixels, const POINT &ptScreen) noexcept {
   facebook::react::Point ptDips{
       static_cast<facebook::react::Float>(ptPixels.x) / m_layoutMetrics.pointScaleFactor,
       static_cast<facebook::react::Float>(ptPixels.y) / m_layoutMetrics.pointScaleFactor};
@@ -295,7 +298,41 @@ winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixel
   if (view == nullptr)
     return nullptr;
 
-  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->EnsureUiaProvider();
+  auto uiaProvider =
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->EnsureUiaProvider();
+
+  if (auto contentIsland =
+          view.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ContentIslandComponentView>()) {
+    if (contentIsland->InnerAutomationProvider()) {
+      if (auto childProvider = contentIsland->InnerAutomationProvider()->TryGetChildSiteLinkAutomationProvider()) {
+        // ChildProvider is the the automation provider from the ChildSiteLink.  In the case of WinUI, this
+        // is a pointer to WinUI's internal CUIAHostWindow object.
+        // It seems odd, but even though this node doesn't behave as a fragment root in our case (the real fragment root
+        // is the RootComponentView's UIA provider), we still use its IRawElementProviderFragmentRoot -- just so
+        // we can do the ElementProviderFromPoint call.  (this was recommended by the team who did the initial
+        // architecture work).
+        if (auto fragmentRoot = childProvider.try_as<IRawElementProviderFragmentRoot>()) {
+          com_ptr<IRawElementProviderFragment> frag;
+          // WinUI then does its own hitTest inside the XAML tree.
+          fragmentRoot->ElementProviderFromPoint(
+              ptScreen
+                  .x, // Note since we're going through IRawElementProviderFragment the coordinates are in screen space.
+              ptScreen.y,
+              frag.put());
+          // We return the specific child provider(frag) when hosted XAML has an element
+          // under the cursor. This satisfies the UIA "element at point" contract and exposes
+          // the control’s patterns/properties. If the hosted tree finds nothing, we fall back
+          // to the RNW container’s provider (uiaProvider) to keep the island accessible.
+          // (A Microsoft_UI_Xaml!CUIAWrapper object)
+          if (frag) {
+            return frag.as<winrt::IUnknown>();
+          }
+        }
+      }
+    }
+  }
+
+  return uiaProvider;
 }
 
 float RootComponentView::FontSizeMultiplier() const noexcept {
@@ -347,6 +384,20 @@ HWND RootComponentView::GetHwndForParenting() noexcept {
   }
 
   return base_type::GetHwndForParenting();
+}
+
+void RootComponentView::ClearCurrentTextSelection() noexcept {
+  if (auto view = m_viewWithTextSelection.view()) {
+    if (auto paragraphView = view.try_as<ParagraphComponentView>()) {
+      paragraphView->ClearSelection();
+    }
+  }
+  m_viewWithTextSelection =
+      ::Microsoft::ReactNative::ReactTaggedView{winrt::Microsoft::ReactNative::ComponentView{nullptr}};
+}
+
+void RootComponentView::SetViewWithTextSelection(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+  m_viewWithTextSelection = ::Microsoft::ReactNative::ReactTaggedView{view};
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

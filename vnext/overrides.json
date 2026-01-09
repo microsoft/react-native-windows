@@ -384,6 +384,12 @@
       "file": "src-win/Libraries/Components/Popup/PopupNativeComponent.js"
     },
     {
+      "type": "derived",
+      "file": "src-win/Libraries/Components/Pressable/Pressable.d.ts",
+      "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.d.ts",
+      "baseHash": "d4dd8fc82436617bfeca9807be274aa5416d748c"
+    },
+    {
       "type": "patch",
       "file": "src-win/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.js",

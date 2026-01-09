@@ -219,7 +219,8 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
     auto local = rootView->ConvertScreenToLocal({static_cast<float>(x), static_cast<float>(y)});
     auto provider = rootView->UiaProviderFromPoint(
         {static_cast<LONG>(local.X * rootView->LayoutMetrics().PointScaleFactor),
-         static_cast<LONG>(local.Y * rootView->LayoutMetrics().PointScaleFactor)});
+         static_cast<LONG>(local.Y * rootView->LayoutMetrics().PointScaleFactor)},
+        {static_cast<LONG>(x), static_cast<LONG>(y)});
     auto spFragment = provider.try_as<IRawElementProviderFragment>();
     if (spFragment) {
       *pRetVal = spFragment.detach();

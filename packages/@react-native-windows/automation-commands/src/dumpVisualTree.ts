@@ -37,6 +37,7 @@ export type AutomationNode = {
   AutomationId?: string;
   ControlType?: number;
   LocalizedControlType?: string;
+  Name?: string;
   __Children?: [AutomationNode];
 };
 

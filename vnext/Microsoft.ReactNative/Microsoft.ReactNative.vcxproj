@@ -313,6 +313,7 @@
     <ClInclude Include="Utils\TransformableText.h" />
     <ClInclude Include="Utils\UwpPreparedScriptStore.h" />
     <ClInclude Include="Utils\UwpScriptStore.h" />
+    <ClInclude Include="Utils\IcuUtils.h" />
     <ClInclude Include="Utils\ValueUtils.h" />
     <ClInclude Include="Utils\XamlIslandUtils.h" />
     <ClInclude Include="Utils\XamlUtils.h" />

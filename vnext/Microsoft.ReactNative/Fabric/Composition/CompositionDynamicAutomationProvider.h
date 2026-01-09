@@ -97,6 +97,15 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
 
   void AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
   void RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
+  winrt::Microsoft::ReactNative::ComponentView GetSelectionContainer() noexcept;
+
+  void SetChildSiteLink(winrt::Microsoft::UI::Content::ChildSiteLink childSiteLink) {
+    m_childSiteLink = childSiteLink;
+  }
+
+  // If this object is for a ChildSiteLink, returns the ChildSiteLink's automation provider.
+  // This will be a provider object from the hosted framework (for example, WinUI).
+  winrt::IUnknown TryGetChildSiteLinkAutomationProvider();
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;

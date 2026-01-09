@@ -267,7 +267,7 @@ void TooltipTracker::ShowTooltip(const winrt::Microsoft::ReactNative::ComponentV
           static_cast<int>((tm.width + tooltipHorizontalPadding + tooltipHorizontalPadding) * scaleFactor);
       tooltipData->height = static_cast<int>((tm.height + tooltipTopPadding + tooltipBottomPadding) * scaleFactor);
 
-      POINT pt = {static_cast<LONG>(m_pos.X), static_cast<LONG>(m_pos.Y)};
+      POINT pt = {static_cast<LONG>(m_pos.X * scaleFactor), static_cast<LONG>(m_pos.Y * scaleFactor)};
       ClientToScreen(parentHwnd, &pt);
 
       RegisterTooltipWndClass();

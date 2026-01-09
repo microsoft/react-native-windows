@@ -8,6 +8,7 @@
 #include "DynamicReader.h"
 
 #include "ComponentView.g.cpp"
+#include "CreateAutomationPeerArgs.g.h"
 #include "LayoutMetricsChangedArgs.g.cpp"
 #include "MountChildComponentViewArgs.g.cpp"
 #include "UnmountChildComponentViewArgs.g.cpp"
@@ -641,7 +642,32 @@ facebook::react::Tag ComponentView::hitTest(
   return -1;
 }
 
+struct CreateAutomationPeerArgs
+    : public winrt::Microsoft::ReactNative::implementation::CreateAutomationPeerArgsT<CreateAutomationPeerArgs> {
+  CreateAutomationPeerArgs(winrt::Windows::Foundation::IInspectable defaultAutomationPeer)
+      : m_defaultAutomationPeer(defaultAutomationPeer) {}
+
+  winrt::Windows::Foundation::IInspectable DefaultAutomationPeer() const noexcept {
+    return m_defaultAutomationPeer;
+  }
+
+ private:
+  winrt::Windows::Foundation::IInspectable m_defaultAutomationPeer;
+};
+
 winrt::IInspectable ComponentView::EnsureUiaProvider() noexcept {
+  if (m_uiaProvider == nullptr) {
+    if (m_builder && m_builder->CreateAutomationPeerHandler()) {
+      m_uiaProvider = m_builder->CreateAutomationPeerHandler()(
+          *this, winrt::make<CreateAutomationPeerArgs>(CreateAutomationProvider()));
+    } else {
+      m_uiaProvider = CreateAutomationProvider();
+    }
+  }
+  return m_uiaProvider;
+}
+
+winrt::Windows::Foundation::IInspectable ComponentView::CreateAutomationProvider() noexcept {
   return nullptr;
 }
 

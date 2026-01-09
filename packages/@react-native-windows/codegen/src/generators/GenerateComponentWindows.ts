@@ -141,6 +141,12 @@ struct Base::_COMPONENT_NAME_:: {
                                         winrt::Microsoft::ReactNative::ComponentViewUpdateMask /*mask*/) noexcept {
   }
 
+  // CreateAutomationPeer will only be called if this method is overridden
+  virtual winrt::Windows::Foundation::IInspectable CreateAutomationPeer(const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
+                                        const winrt::Microsoft::ReactNative::CreateAutomationPeerArgs& /*args*/) noexcept {
+    return nullptr;
+  }
+
 ::_COMPONENT_VIEW_COMMAND_HANDLERS_::
 
   ::_COMPONENT_VIEW_COMMAND_HANDLER_::
@@ -221,6 +227,14 @@ void Register::_COMPONENT_NAME_::NativeComponent(
             return userData->UnmountChildComponentView(view, args);
           });
         }
+
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateAutomationPeer != &Base::_COMPONENT_NAME_::<TUserData>::CreateAutomationPeer) {
+            builder.SetCreateAutomationPeerHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                     const winrt::Microsoft::ReactNative::CreateAutomationPeerArgs& args) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            return userData->CreateAutomationPeer(view, args);
+          });
+        } 
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();

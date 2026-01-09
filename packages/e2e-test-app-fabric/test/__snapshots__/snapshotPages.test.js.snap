@@ -10923,6 +10923,39 @@ exports[`snapshotAllPages Crash 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Custom Native Accessibility Example 1`] = `
+<View
+  accessibilityLabel="example root"
+  accessible={true}
+  testID="custom-accessibility-root-1"
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
+    The below view should have custom accessibility
+  </Text>
+  <CustomAccessibility
+    accessibilityLabel="accessibility should not show this, as native overrides it"
+    accessible={true}
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 500,
+        "width": 500,
+      }
+    }
+    testID="custom-accessibility-1"
+  />
+</View>
+`;
+
 exports[`snapshotAllPages DevSettings 1`] = `
 <View
   accessibilityRole="button"

@@ -37,6 +37,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Include", "..\..\..\vnext\i
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutomationChannel", "..\..\..\node_modules\@react-native-windows\automation-channel\windows\AutomationChannel\AutomationChannel.vcxproj", "{C0A69310-6119-46DC-A6D6-0BAB7826DC92}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleCustomComponent", "..\..\sample-custom-component\windows\SampleCustomComponent\SampleCustomComponent.vcxproj", "{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\vnext\Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
@@ -168,6 +170,22 @@ Global
 		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|x86.Build.0 = Release|Win32
 		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|ARM64.ActiveCfg = Release|ARM64
 		{C0A69310-6119-46DC-A6D6-0BAB7826DC92}.Release|ARM64.Build.0 = Release|ARM64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|ARM64.Build.0 = Debug|ARM64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|x64.ActiveCfg = Debug|x64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|x64.Build.0 = Debug|x64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|x64.Deploy.0 = Debug|x64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|x86.ActiveCfg = Debug|Win32
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|x86.Build.0 = Debug|Win32
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|x86.Deploy.0 = Debug|Win32
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|ARM64.ActiveCfg = Release|ARM64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|ARM64.Build.0 = Release|ARM64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|x64.ActiveCfg = Release|x64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|x64.Build.0 = Release|x64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|x64.Deploy.0 = Release|x64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|x86.ActiveCfg = Release|Win32
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|x86.Build.0 = Release|Win32
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|x86.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

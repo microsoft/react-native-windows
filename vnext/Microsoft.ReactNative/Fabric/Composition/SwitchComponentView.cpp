@@ -7,7 +7,6 @@
 #include "SwitchComponentView.h"
 #include <AutoDraw.h>
 #include <Fabric/AbiViewProps.h>
-#include "CompositionDynamicAutomationProvider.h"
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
 

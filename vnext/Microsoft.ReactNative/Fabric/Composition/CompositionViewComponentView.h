@@ -19,8 +19,11 @@ namespace Microsoft::ReactNative {
 struct CompContext;
 } // namespace Microsoft::ReactNative
 
-namespace winrt::Microsoft::ReactNative::Composition::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
+class CompositionDynamicAutomationProvider;
+}
 
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct FocusPrimitive {
   std::shared_ptr<BorderPrimitive> m_focusInnerPrimitive;
   std::shared_ptr<BorderPrimitive> m_focusOuterPrimitive;
@@ -100,7 +103,9 @@ struct ComponentView : public ComponentViewT<
   comp::CompositionPropertySet EnsureCenterPointPropertySet() noexcept;
   void EnsureTransformMatrixFacade() noexcept;
 
-  winrt::IInspectable EnsureUiaProvider() noexcept override;
+  winrt::Windows::Foundation::IInspectable CreateAutomationProvider() noexcept override;
+  const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
+      &InnerAutomationProvider() const noexcept;
   std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
@@ -130,7 +135,9 @@ struct ComponentView : public ComponentViewT<
       facebook::react::Point &ptContent,
       facebook::react::Point &localPt) const noexcept;
 
-  winrt::IInspectable m_uiaProvider{nullptr};
+  // Most access should be through EnsureUIAProvider, instead of direct access to this.
+  winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
+      m_innerAutomationProvider;
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   comp::CompositionPropertySet m_centerPropSet{nullptr};
   facebook::react::SharedViewEventEmitter m_eventEmitter;
