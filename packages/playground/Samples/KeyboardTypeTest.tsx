@@ -55,7 +55,7 @@ class KeyboardTypeTest extends React.Component<
             style={styles.input}
             keyboardType="default"
             value={this.state.defaultValue}
-            onChangeText={(text) => this.setState({defaultValue: text})}
+            onChangeText={text => this.setState({defaultValue: text})}
             placeholder="default keyboard"
           />
         </View>
@@ -66,7 +66,7 @@ class KeyboardTypeTest extends React.Component<
             style={styles.input}
             keyboardType="numeric"
             value={this.state.numericValue}
-            onChangeText={(text) => this.setState({numericValue: text})}
+            onChangeText={text => this.setState({numericValue: text})}
             placeholder="numeric keyboard"
           />
         </View>
@@ -77,7 +77,7 @@ class KeyboardTypeTest extends React.Component<
             style={styles.input}
             keyboardType="number-pad"
             value={this.state.numberPadValue}
-            onChangeText={(text) => this.setState({numberPadValue: text})}
+            onChangeText={text => this.setState({numberPadValue: text})}
             placeholder="number-pad"
           />
         </View>
@@ -88,7 +88,7 @@ class KeyboardTypeTest extends React.Component<
             style={styles.input}
             keyboardType="decimal-pad"
             value={this.state.decimalPadValue}
-            onChangeText={(text) => this.setState({decimalPadValue: text})}
+            onChangeText={text => this.setState({decimalPadValue: text})}
             placeholder="decimal-pad"
           />
         </View>
@@ -99,7 +99,7 @@ class KeyboardTypeTest extends React.Component<
             style={styles.input}
             keyboardType="email-address"
             value={this.state.emailValue}
-            onChangeText={(text) => this.setState({emailValue: text})}
+            onChangeText={text => this.setState({emailValue: text})}
             placeholder="email-address"
           />
         </View>
@@ -110,7 +110,7 @@ class KeyboardTypeTest extends React.Component<
             style={styles.input}
             keyboardType="phone-pad"
             value={this.state.phonePadValue}
-            onChangeText={(text) => this.setState({phonePadValue: text})}
+            onChangeText={text => this.setState({phonePadValue: text})}
             placeholder="phone-pad"
           />
         </View>
@@ -121,7 +121,7 @@ class KeyboardTypeTest extends React.Component<
             style={styles.input}
             keyboardType="url"
             value={this.state.urlValue}
-            onChangeText={(text) => this.setState({urlValue: text})}
+            onChangeText={text => this.setState({urlValue: text})}
             placeholder="url"
           />
         </View>
@@ -132,7 +132,7 @@ class KeyboardTypeTest extends React.Component<
             style={styles.input}
             keyboardType="web-search"
             value={this.state.webSearchValue}
-            onChangeText={(text) => this.setState({webSearchValue: text})}
+            onChangeText={text => this.setState({webSearchValue: text})}
             placeholder="web-search"
           />
         </View>
@@ -144,7 +144,7 @@ class KeyboardTypeTest extends React.Component<
             keyboardType="numeric"
             secureTextEntry={true}
             value={this.state.secureNumericValue}
-            onChangeText={(text) => this.setState({secureNumericValue: text})}
+            onChangeText={text => this.setState({secureNumericValue: text})}
             placeholder="numeric password"
           />
         </View>
@@ -161,15 +161,13 @@ class KeyboardTypeTest extends React.Component<
             3. Tap/click each TextInput field to focus it{'\n'}
             4. Observe the touch keyboard layout changes{'\n'}
             {'\n'}
-            Expected keyboard layouts:{'\n'}
-            • default: Standard QWERTY{'\n'}
-            • numeric/number-pad: Number keys (IS_NUMBER/IS_DIGITS){'\n'}
-            • decimal-pad: Numbers with decimal point{'\n'}
-            • email-address: QWERTY with @ and .com keys{'\n'}
-            • phone-pad: Phone dial pad layout{'\n'}
-            • url: QWERTY with .com/.net buttons{'\n'}
-            • web-search: Search-optimized layout{'\n'}
-            • secure+numeric: PIN entry layout{'\n'}
+            Expected keyboard layouts:{'\n'}• default: Standard QWERTY{'\n'}•
+            numeric/number-pad: Number keys (IS_NUMBER/IS_DIGITS){'\n'}•
+            decimal-pad: Numbers with decimal point{'\n'}• email-address: QWERTY
+            with @ and .com keys{'\n'}• phone-pad: Phone dial pad layout{'\n'}•
+            url: QWERTY with .com/.net buttons{'\n'}• web-search:
+            Search-optimized layout{'\n'}• secure+numeric: PIN entry layout
+            {'\n'}
             {'\n'}
             Note: Physical keyboard allows all input (matches iOS/Android).
           </Text>
