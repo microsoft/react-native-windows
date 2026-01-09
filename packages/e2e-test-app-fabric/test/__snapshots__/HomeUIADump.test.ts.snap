@@ -6560,12 +6560,12 @@ exports[`Home UIA Tree Dump XAML 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "47, 24",
+        "Size": "47, 25",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "47, 24",
+            "Size": "47, 25",
             "Visual Type": "SpriteVisual",
           },
         ],
