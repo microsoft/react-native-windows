@@ -208,6 +208,7 @@ struct ComponentView
   virtual facebook::react::Tag
   hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents = false) const noexcept;
   virtual winrt::Windows::Foundation::IInspectable EnsureUiaProvider() noexcept;
+  virtual winrt::Windows::Foundation::IInspectable CreateAutomationProvider() noexcept;
   virtual std::optional<std::string> getAccessiblityValue() noexcept;
   virtual void setAcccessiblityValue(std::string &&value) noexcept;
   virtual bool getAcccessiblityIsReadOnly() noexcept;
@@ -265,6 +266,7 @@ struct ComponentView
   facebook::react::LayoutMetrics m_layoutMetrics;
   winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::ComponentView> m_children{
       winrt::single_threaded_vector<winrt::Microsoft::ReactNative::ComponentView>()};
+  winrt::IInspectable m_uiaProvider{nullptr};
 
   winrt::event<
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs>>

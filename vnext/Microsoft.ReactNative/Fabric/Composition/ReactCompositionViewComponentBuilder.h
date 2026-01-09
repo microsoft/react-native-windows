@@ -39,6 +39,7 @@ struct ReactCompositionViewComponentBuilder
   void SetUpdateEventEmitterHandler(UpdateEventEmitterDelegate impl) noexcept;
   void SetMountChildComponentViewHandler(MountChildComponentViewDelegate impl) noexcept;
   void SetUnmountChildComponentViewHandler(UnmountChildComponentViewDelegate impl) noexcept;
+  void SetCreateAutomationPeerHandler(CreateAutomationPeerDelegate impl) noexcept;
   bool XamlSupport() const noexcept;
   void XamlSupport(bool isRequired) noexcept;
 
@@ -79,6 +80,7 @@ struct ReactCompositionViewComponentBuilder
   const CreateVisualDelegate &CreateVisualHandler() const noexcept;
   const winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate &
   VisualToMountChildrenIntoHandler() const noexcept;
+  const CreateAutomationPeerDelegate &CreateAutomationPeerHandler() const noexcept;
 
  private:
   void InitializeComponentView(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept;
@@ -105,6 +107,7 @@ struct ReactCompositionViewComponentBuilder
   winrt::Microsoft::ReactNative::UpdateEventEmitterDelegate m_updateEventEmitterHandler;
   winrt::Microsoft::ReactNative::MountChildComponentViewDelegate m_mountChildComponentViewHandler;
   winrt::Microsoft::ReactNative::UnmountChildComponentViewDelegate m_unmountChildComponentViewHandler;
+  winrt::Microsoft::ReactNative::CreateAutomationPeerDelegate m_createAutomationPeerHandler;
 
   winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate m_createVisualHandler;
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate
