@@ -266,7 +266,7 @@ struct ComponentView
   facebook::react::LayoutMetrics m_layoutMetrics;
   winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::ComponentView> m_children{
       winrt::single_threaded_vector<winrt::Microsoft::ReactNative::ComponentView>()};
-  winrt::IInspectable m_uiaProvider{nullptr};
+  winrt::Windows::Foundation::IInspectable m_uiaProvider{nullptr};
 
   winrt::event<
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs>>

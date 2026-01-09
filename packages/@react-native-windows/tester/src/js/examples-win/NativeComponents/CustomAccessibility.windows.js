@@ -7,9 +7,9 @@ import RNTesterText from '../../components/RNTesterText';
 
 const CustomAccessibilityExample = () => {
   return (
-    <View>
+    <View testID="custom-accessibility-root-1">
       <RNTesterText>The below view should have custom accessibility</RNTesterText>
-      <CustomAccessibility style={{width: 500, height: 500, backgroundColor:'green'}} accessible accessibilityLabel='accessibility should not show this, as native overrides it'/>
+      <CustomAccessibility style={{width: 500, height: 500, backgroundColor:'green'}} accessible accessibilityLabel='accessibility should not show this, as native overrides it' testID="custom-accessibility-1"/>
     </View>
   );
 }
