@@ -43,6 +43,13 @@ namespace Microsoft::React::Networking {
 #pragma region CaseInsensitiveComparer
 
 bool OriginPolicyHttpFilter::CaseInsensitiveComparer::operator()(const wchar_t *a, const wchar_t *b) const {
+  if (a == b)
+    return false;
+  // Validate a, b before calling _wcsicmp
+  if (a == nullptr)
+    return false;
+  if (b == nullptr)
+    return true;
   return _wcsicmp(a, b) < 0;
 }
 
