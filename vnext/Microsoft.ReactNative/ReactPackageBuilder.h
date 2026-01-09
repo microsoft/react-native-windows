@@ -4,7 +4,6 @@
 
 #include <Fabric/Composition/UriImageManager.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
-#include "NativeModulesProvider.h"
 #include "TurboModulesProvider.h"
 #include "winrt/Microsoft.ReactNative.Composition.h"
 #include "winrt/Microsoft.ReactNative.h"
@@ -13,7 +12,6 @@ namespace winrt::Microsoft::ReactNative {
 
 struct ReactPackageBuilder : winrt::implements<ReactPackageBuilder, IReactPackageBuilder, IReactPackageBuilderFabric> {
   ReactPackageBuilder(
-      std::shared_ptr<NativeModulesProvider> const &modulesProvider,
       std::shared_ptr<TurboModulesProvider> const &turboModulesProvider,
       std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> const &componentRegistry,
       std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> const
@@ -28,7 +26,6 @@ struct ReactPackageBuilder : winrt::implements<ReactPackageBuilder, IReactPackag
   void AddUriImageProvider(const winrt::Microsoft::ReactNative::Composition::IUriImageProvider &provider) noexcept;
 
  private:
-  std::shared_ptr<NativeModulesProvider> m_modulesProvider;
   std::shared_ptr<TurboModulesProvider> m_turboModulesProvider;
   std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> m_componentRegistry;
   std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> m_uriImageManager;

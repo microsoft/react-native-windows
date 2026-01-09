@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include <cxxreact/CxxModule.h>
 #include <functional/functor.h>
 
 #include "codegen/NativeDevSettingsSpec.g.h"

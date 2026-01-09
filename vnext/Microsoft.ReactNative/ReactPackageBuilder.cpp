@@ -13,18 +13,19 @@ namespace winrt::Microsoft::ReactNative {
 //===========================================================================
 
 ReactPackageBuilder::ReactPackageBuilder(
-    std::shared_ptr<NativeModulesProvider> const &modulesProvider,
     std::shared_ptr<TurboModulesProvider> const &turboModulesProvider,
     std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> const &componentRegistry,
     std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> const
         &uriImageManager) noexcept
-    : m_modulesProvider{modulesProvider},
-      m_turboModulesProvider{turboModulesProvider},
+    : m_turboModulesProvider{turboModulesProvider},
       m_componentRegistry{componentRegistry},
       m_uriImageManager{uriImageManager} {}
 
 void ReactPackageBuilder::AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept {
-  m_modulesProvider->AddModuleProvider(moduleName, moduleProvider);
+  // AddModule previously registered CxxModule-based modules via NativeModulesProvider.
+  // Now it forwards to AddTurboModule for backward compatibility.
+  // Modules registered this way will work as TurboModules.
+  m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider, true);
 }
 
 void ReactPackageBuilder::AddTurboModule(

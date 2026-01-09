@@ -5,7 +5,6 @@
 
 #include "ReactNativeHost.g.h"
 
-#include "NativeModulesProvider.h"
 #include "ReactHost/React.h"
 #include "ReactInstanceSettings.h"
 #include "ReactPropertyBag.h"

@@ -12,7 +12,6 @@
 
 #include <unknwnbase.h>
 
-using namespace facebook::xplat;
 using namespace folly;
 namespace winrt {
 using namespace Windows::Foundation;

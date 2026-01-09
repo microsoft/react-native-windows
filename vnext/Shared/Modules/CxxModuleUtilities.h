@@ -6,9 +6,6 @@
 // Folly
 #include <folly/dynamic.h>
 
-// React Native
-#include <cxxreact/Instance.h>
-
 // React Native Windows
 #include <ReactContext.h>
 
@@ -17,11 +14,6 @@
 #include <string>
 
 namespace Microsoft::React::Modules {
-
-void SendEvent(
-    std::weak_ptr<facebook::react::Instance> weakReactInstance,
-    std::string &&eventName,
-    folly::dynamic &&args);
 
 void SendEvent(
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,

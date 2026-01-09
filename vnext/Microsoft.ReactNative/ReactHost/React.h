@@ -14,7 +14,6 @@
 #include "errorCode/errorCode.h"
 #include "future/future.h"
 
-#include <NativeModuleProvider.h>
 #include <TurboModulesProvider.h>
 
 #ifdef CORE_ABI
@@ -154,12 +153,6 @@ struct ReactDevOptions {
   std::string SourceBundleModuleName;
 };
 
-struct NativeModuleProvider2 {
-  virtual std::vector<facebook::react::NativeModuleDescription> GetModules(
-      Mso::CntPtr<IReactContext> const &reactContext,
-      std::shared_ptr<facebook::react::MessageQueueThread> const &defaultQueueThread) = 0;
-};
-
 //! A simple struct that describes the basic properties/needs of an SDX. Whenever a new SDX is
 //! getting hosted in React, properties here will be used to construct the SDX.
 struct ReactOptions {
@@ -167,7 +160,6 @@ struct ReactOptions {
 
   winrt::Microsoft::ReactNative::IReactNotificationService Notifications;
 
-  std::shared_ptr<NativeModuleProvider2> ModuleProvider;
   std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> TurboModuleProvider;
   std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> UriImageManager;
 

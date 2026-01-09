@@ -272,9 +272,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeModule.h">
       <Filter>cxxreact</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeModuleProvider.h">
-      <Filter>cxxreact</Filter>
-    </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.h">
       <Filter>cxxreact</Filter>
     </ClInclude>

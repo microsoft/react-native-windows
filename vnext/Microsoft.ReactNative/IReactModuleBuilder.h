@@ -2,7 +2,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ABICxxModule.h"
 #include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative {
@@ -18,21 +17,11 @@ struct ReactModuleBuilder : winrt::implements<ReactModuleBuilder, IReactModuleBu
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept;
   void AddEventEmitter(hstring const &name, EventEmitterInitializerDelegate const &emitter);
 
- public:
-  std::unique_ptr<facebook::xplat::module::CxxModule> MakeCxxModule(
-      std::string const &name,
-      IInspectable const &nativeModule) noexcept;
-
- private:
-  static MethodResultCallback MakeMethodResultCallback(
-      facebook::xplat::module::CxxModule::Callback &&callback) noexcept;
-
  private:
   IReactContext m_reactContext;
   std::vector<InitializerDelegate> m_initializers;
   std::vector<JsiInitializerDelegate> m_jsiinitializers;
   std::vector<ConstantProviderDelegate> m_constantProviders;
-  std::vector<facebook::xplat::module::CxxModule::Method> m_methods;
 };
 
 } // namespace winrt::Microsoft::ReactNative

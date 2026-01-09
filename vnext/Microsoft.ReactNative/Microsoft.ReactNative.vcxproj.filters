@@ -5,7 +5,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="XamlLoadState.cpp" />
     <ClCompile Include="XamlView.cpp" />
     <ClCompile Include="Pch\pch.cpp">
@@ -161,7 +160,6 @@
     <ClCompile Include="Utils\KeyboardUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="Base\CxxReactIncludes.h">
       <Filter>Base</Filter>
     </ClInclude>
@@ -171,7 +169,6 @@
     <ClInclude Include="HResult.h" />
     <ClInclude Include="IReactDispatcher.h" />
     <ClInclude Include="IReactNotificationService.h" />
-    <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="TurboModulesProvider.h" />
     <ClInclude Include="Pch\pch.h">
       <Filter>Pch</Filter>

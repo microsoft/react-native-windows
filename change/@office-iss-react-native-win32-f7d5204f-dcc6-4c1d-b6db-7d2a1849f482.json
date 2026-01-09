@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "integrate 0.82.0-nightly-20250902-9731e8ebc\u0002",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

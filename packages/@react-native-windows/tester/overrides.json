@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.82.0-nightly-20250821-0ef21bf8a",
+  "baseVersion": "0.82.0-nightly-20250902-9731e8ebc",
   "overrides": [
     {
       "type": "copy",
@@ -117,7 +117,7 @@
       "type": "patch",
       "file": "src/js/examples/Text/TextSharedExamples.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextSharedExamples.js",
-      "baseHash": "2f043ce1ae7f2f82c0a913247da51777dd53979b",
+      "baseHash": "da71056f942bf857b29702890d81f65cf49dc17e",
       "issue": 15125
     },
     {

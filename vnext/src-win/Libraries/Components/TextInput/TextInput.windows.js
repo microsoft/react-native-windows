@@ -657,7 +657,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
   const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
   const _keyDown = (event: KeyEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
         if (
           event.nativeEvent.code === el.code &&
@@ -676,7 +676,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
   const _keyUp = (event: KeyEvent) => {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
         if (
           event.nativeEvent.code === el.code &&
@@ -695,7 +695,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
   const _keyDownCapture = (event: KeyEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
         if (
           event.nativeEvent.code === el.code &&
@@ -714,7 +714,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
   const _keyUpCapture = (event: KeyEvent) => {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
         if (
           event.nativeEvent.code === el.code &&
@@ -801,6 +801,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
           flattenedStyle.paddingVertical == null &&
           flattenedStyle.paddingTop == null));
 
+    const _accessibilityElementsHidden =
+      props['aria-hidden'] ?? props.accessibilityElementsHidden;
+
     textInput = (
       <RCTTextInputView
         // Figure out imperative + forward refs.
@@ -810,6 +813,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         acceptDragAndDropTypes={props.experimental_acceptDragAndDropTypes}
         accessibilityLabel={_accessibilityLabel}
         accessibilityState={_accessibilityState}
+        accessibilityElementsHidden={_accessibilityElementsHidden}
         accessible={accessible}
         submitBehavior={submitBehavior}
         caretHidden={caretHidden}
@@ -838,6 +842,10 @@ function InternalTextInput(props: TextInputProps): React.Node {
     const autoCapitalize = props.autoCapitalize || 'sentences';
     const _accessibilityLabelledBy =
       props?.['aria-labelledby'] ?? props?.accessibilityLabelledBy;
+    const _importantForAccessibility =
+      props['aria-hidden'] === true
+        ? ('no-hide-descendants' as const)
+        : undefined;
     const placeholder = props.placeholder ?? '';
     let children = props.children;
     const childCount = React.Children.count(children);
@@ -883,6 +891,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         children={children}
         disableFullscreenUI={props.disableFullscreenUI}
         focusable={tabIndex !== undefined ? !tabIndex : focusable}
+        importantForAccessibility={_importantForAccessibility}
         mostRecentEventCount={mostRecentEventCount}
         nativeID={id ?? props.nativeID}
         numberOfLines={props.rows ?? props.numberOfLines}

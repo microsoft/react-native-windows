@@ -167,7 +167,6 @@
     <ClCompile Include="ABI\TestController.cpp">
       <DependentUpon>ABI\TestController.idl</DependentUpon>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />

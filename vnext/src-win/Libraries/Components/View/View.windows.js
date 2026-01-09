@@ -20,8 +20,12 @@ import type {KeyEvent} from '../../Types/CoreEventTypes';
 // Windows]
 
 // [Windows
-// $FlowFixMe - children typing
-const childrenWithImportantForAccessibility = children => {
+// $FlowFixMe[recursive-definition] - children typing
+const childrenWithImportantForAccessibility: (
+  // $FlowFixMe[unclear-type] - children typing requires any
+  children: any,
+  // $FlowFixMe[unclear-type] - return type requires any
+) => any = children => {
   if (children == null) {
     return children;
   }
@@ -187,7 +191,7 @@ component View(
     const keydownLocal = otherProps.onKeyDown;
     processedProps.onKeyDown = event => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
+        // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
           if (
             event.nativeEvent.code === el.code &&
@@ -209,7 +213,7 @@ component View(
     const keyupLocal = otherProps.onKeyUp;
     processedProps.onKeyUp = event => {
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyUpEvents was already checked to not be undefined
+        // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
           if (
             event.nativeEvent.code === el.code &&
@@ -231,7 +235,7 @@ component View(
     const keydownCaptureLocal = otherProps.onKeyDownCapture;
     processedProps.onKeyDownCapture = event => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
+        // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
           if (
             event.nativeEvent.code === el.code &&
@@ -253,7 +257,7 @@ component View(
     const keyupCaptureLocal = otherProps.onKeyUpCapture;
     processedProps.onKeyUpCapture = event => {
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyUpEvents was already checked to not be undefined
+        // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
           if (
             event.nativeEvent.code === el.code &&

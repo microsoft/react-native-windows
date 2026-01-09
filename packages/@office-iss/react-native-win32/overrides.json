@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.82.0-nightly-20250821-0ef21bf8a",
+  "baseVersion": "0.82.0-nightly-20250902-9731e8ebc",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "56b1b6a6ecee3c54f2c63eadd6bf5d67b11f5cd9"
+      "baseHash": "c8bd25d4aa75328a2484c5c7b0b768c188a50b52"
     },
     {
       "type": "derived",
@@ -114,13 +114,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "ed5d48ce62056182bf81dfa2d22d511d611d5201"
+      "baseHash": "547fa57cd844cece1f4401b93be75b2edd2a757f"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInputState.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "6ed06ca68066b0cdbaa28a2e5f1fe1b6d9d62f63"
+      "baseHash": "e310687c98b6de40bfe9d939639de566a91fca85"
     },
     {
       "type": "platform",
@@ -236,7 +236,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Image/Image.win32.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
-      "baseHash": "5d62f4a6c4edfe3007eb3b80704a1dfb68e5ff8a",
+      "baseHash": "be81d302b8f2d64ddf7a52bd30fbcb47d18741b5",
       "issue": 4320
     },
     {
@@ -425,7 +425,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "14367e55fca8889783f7dea94ec2c09205960c3c"
+      "baseHash": "59bf5757acc083a749a38173b3610529b27ef4fb"
     },
     {
       "type": "derived",
@@ -497,7 +497,7 @@
       "type": "patch",
       "file": "src-win/src/private/animated/NativeAnimatedHelper.win32.js",
       "baseFile": "packages/react-native/src/private/animated/NativeAnimatedHelper.js",
-      "baseHash": "c3fdc3d1e9879c6fe03a1a5caad7b02b386ddcde",
+      "baseHash": "14407780e54e66515159aed1a51cee154b1d5339",
       "issue": 11041
     },
     {

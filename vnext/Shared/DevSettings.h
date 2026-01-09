@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 #pragma once
-
-#include "JSI/JSExecutorFactoryDelegate.h"
 #include "Logging.h"
 
 #include <IRedBoxHandler.h>
@@ -28,7 +26,7 @@ class HostTarget;
 } // namespace jsinspector_modern
 
 enum class JSIEngineOverride : int32_t {
-  Default = 0, // No JSI, will use the legacy ExecutorFactory
+  Default = 3, // Now defaults to Hermes (New Architecture)
 
   Hermes = 3, // Use the JSIExecutorFactory with Hermes
   V8 = 4, // Use the JSIExecutorFactory with V8
@@ -74,9 +72,7 @@ struct DevSettings {
   /// reentrancy.
   std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> jsiRuntimeHolder;
 
-  /// A function that can be called with the current Instance to get
-  /// a JSExecutorFactory. This can be used to bypass the ABI JSI.
-  JSExecutorFactoryDelegate jsExecutorFactoryDelegate{nullptr};
+  // LEGACY REMOVED: jsExecutorFactoryDelegate - No longer needed with New Architecture
 
   // Until the ABI story is addressed we'll use this instead of the above for
   // the purposes of selecting a JSI Runtime to use.

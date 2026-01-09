@@ -24,16 +24,11 @@
 
 #if defined(MS_TARGET_APPLE) || (MS_TARGET_ANDROID)
 #undef _WIN32
-
-// Following headers are not present in Win nuget.
-#include <cxxreact/CxxNativeModule.h>
 #else
 // Following are Windows specific headers
 #include <InstanceManager.h>
 #endif
 
-#include <cxxreact/Instance.h>
-#include <cxxreact/JsArgumentHelpers.h>
 #include <folly/Json.h>
 
 #pragma pop_macro("_WIN32")
