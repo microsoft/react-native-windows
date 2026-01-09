@@ -8,6 +8,7 @@
 
 #include <Fabric/FabricUIManagerModule.h>
 #include <winrt/Microsoft.UI.Input.h>
+#include "CompositionDynamicAutomationProvider.h"
 #include "CompositionRootAutomationProvider.h"
 #include "ContentIslandComponentView.h"
 #include "ParagraphComponentView.h"
@@ -277,7 +278,7 @@ facebook::react::Point RootComponentView::getClientOffset() const noexcept {
   return {};
 }
 
-winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixels) noexcept {
+winrt::IUnknown RootComponentView::UiaProviderFromPoint(const POINT &ptPixels, const POINT &ptScreen) noexcept {
   facebook::react::Point ptDips{
       static_cast<facebook::react::Float>(ptPixels.x) / m_layoutMetrics.pointScaleFactor,
       static_cast<facebook::react::Float>(ptPixels.y) / m_layoutMetrics.pointScaleFactor};

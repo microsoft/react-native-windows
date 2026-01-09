@@ -149,6 +149,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetFocus(void) {
   return UiaSetFocusHelper(m_view);
 }
 
+winrt::IUnknown CompositionDynamicAutomationProvider::TryGetChildSiteLinkAutomationProvider() {
+  if (m_childSiteLink) {
+    return m_childSiteLink.AutomationProvider().as<winrt::IUnknown>();
+  }
+  return nullptr;
+}
+
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawElementProviderFragmentRoot **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
