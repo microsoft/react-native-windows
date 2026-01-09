@@ -5,36 +5,30 @@
 #include "codegen/react/components/SampleCustomComponent/CustomAccessibility.g.h"
 
 #ifdef RNW_NEW_ARCH
+#include <uiautomationclient.h>
+#include <uiautomationcore.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Windows.UI.h>
-#include <uiautomationcore.h>
-#include <uiautomationclient.h>
 
 namespace winrt::SampleCustomComponent {
 
+struct CustomAccessibilityAutomationPeer : public winrt::implements<
+                                               CustomAccessibilityAutomationPeer,
+                                               winrt::IInspectable,
+                                               IRawElementProviderFragment,
+                                               IRawElementProviderSimple> {
+  CustomAccessibilityAutomationPeer(const winrt::Microsoft::ReactNative::CreateAutomationPeerArgs &args)
+      : m_inner(args.DefaultAutomationPeer()) {}
 
-struct CustomAccessibilityAutomationPeer : public winrt::implements<CustomAccessibilityAutomationPeer,
-     winrt::IInspectable,
-     IRawElementProviderFragment,
-     IRawElementProviderSimple>
-{
-
-  CustomAccessibilityAutomationPeer(const winrt::Microsoft::ReactNative::CreateAutomationPeerArgs& args)
-    : m_inner(args.DefaultAutomationPeer())
-  {
-  }
-
-  virtual HRESULT __stdcall Navigate(NavigateDirection direction, IRawElementProviderFragment **pRetVal) override
-  {
+  virtual HRESULT __stdcall Navigate(NavigateDirection direction, IRawElementProviderFragment **pRetVal) override {
     winrt::com_ptr<IRawElementProviderFragment> innerAsREPF = m_inner.try_as<IRawElementProviderFragment>();
     if (!innerAsREPF)
       return E_FAIL;
     return innerAsREPF->Navigate(direction, pRetVal);
   }
 
-  virtual HRESULT __stdcall GetRuntimeId(SAFEARRAY **pRetVal) override
-  {
+  virtual HRESULT __stdcall GetRuntimeId(SAFEARRAY **pRetVal) override {
     winrt::com_ptr<IRawElementProviderFragment> innerAsREPF = m_inner.try_as<IRawElementProviderFragment>();
     if (!innerAsREPF)
       return E_FAIL;
@@ -105,15 +99,15 @@ struct CustomAccessibilityAutomationPeer : public winrt::implements<CustomAccess
     return innerAsREPS->get_HostRawElementProvider(pRetVal);
   }
 
-private:
+ private:
   winrt::Windows::Foundation::IInspectable m_inner;
 };
 
-struct CustomAccessibility : public winrt::implements<CustomAccessibility, winrt::IInspectable>, Codegen::BaseCustomAccessibility<CustomAccessibility> {
-
+struct CustomAccessibility : public winrt::implements<CustomAccessibility, winrt::IInspectable>,
+                             Codegen::BaseCustomAccessibility<CustomAccessibility> {
   virtual winrt::Windows::Foundation::IInspectable CreateAutomationPeer(
       const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
-      const winrt::Microsoft::ReactNative::CreateAutomationPeerArgs & args) noexcept override {
+      const winrt::Microsoft::ReactNative::CreateAutomationPeerArgs &args) noexcept override {
     return winrt::make<winrt::SampleCustomComponent::CustomAccessibilityAutomationPeer>(args);
   }
 };
