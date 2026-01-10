@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Sat, 10 Jan 2026 06:40:18 GMT",
+      "version": "0.0.0-canary.129",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.129",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "190a33d13984d6fb5b495c2a8d00acdbbf40fa9e",
+            "comment": "Add ability to customize native accessibility of custom native components"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Nov 2025 06:42:06 GMT",
       "version": "0.0.0-canary.128",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.128",
