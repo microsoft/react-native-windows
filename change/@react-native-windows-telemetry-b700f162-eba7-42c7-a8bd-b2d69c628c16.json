@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix(telemetry): prevent blank resultCode in command events",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "raykar.s2504@gmail.com",
+  "dependentChangeType": "patch"
+}
