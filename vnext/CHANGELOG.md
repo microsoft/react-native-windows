@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 07 Jan 2026 06:40:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 10 Jan 2026 06:40:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1028
+
+Sat, 10 Jan 2026 06:40:18 GMT
+
+### Changes
+
+- Add ability to customize native accessibility of custom native components (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.282
+- Bump @react-native-windows/codegen to v0.0.0-canary.129
 
 ## 0.0.0-canary.1027
 
