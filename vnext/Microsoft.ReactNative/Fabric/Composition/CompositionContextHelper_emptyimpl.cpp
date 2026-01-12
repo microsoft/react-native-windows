@@ -4,10 +4,8 @@
 #if __has_include("Composition.Experimental.SystemCompositionContextHelper.g.cpp")
 #include "Composition.Experimental.SystemCompositionContextHelper.g.cpp"
 #endif
-#ifdef USE_WINUI3
 #if __has_include("Composition.Experimental.MicrosoftCompositionContextHelper.g.cpp")
 #include "Composition.Experimental.MicrosoftCompositionContextHelper.g.cpp"
-#endif
 #endif
 
 namespace winrt::Microsoft::ReactNative::Composition::Experimental::implementation {
@@ -43,7 +41,6 @@ winrt::Windows::UI::Composition::ICompositionSurface SystemCompositionContextHel
   return nullptr;
 }
 
-#ifdef USE_WINUI3
 ICompositionContext MicrosoftCompositionContextHelper::CreateContext(
     winrt::Microsoft::UI::Composition::Compositor const &) noexcept {
   return nullptr;
@@ -74,6 +71,5 @@ winrt::Microsoft::UI::Composition::ICompositionSurface MicrosoftCompositionConte
     IDrawingSurfaceBrush) noexcept {
   return nullptr;
 }
-#endif
 
 } // namespace winrt::Microsoft::ReactNative::Composition::Experimental::implementation

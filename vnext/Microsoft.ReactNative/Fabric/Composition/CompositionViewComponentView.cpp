@@ -11,10 +11,8 @@
 #include <Fabric/AbiViewProps.h>
 #include <Fabric/Composition/ReactNativeIsland.h>
 #include <Fabric/FabricUIManagerModule.h>
-#include <UI.Xaml.Controls.h>
 #include <Utils/KeyboardUtils.h>
 #include <Utils/ValueUtils.h>
-#include <Views/FrameworkElementTransferProperties.h>
 #include <atlcomcli.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -527,10 +525,10 @@ facebook::react::RectangleEdges<bool> ComponentView::focusNudges() const noexcep
 
   Assert(m_componentHostingFocusVisual);
 
-  if (layoutMetrics.frame.origin.x < 0) {
+  if (layoutMetrics.frame.origin.x < m_componentHostingFocusVisual->m_layoutMetrics.frame.origin.x) {
     nudgeEdges.left = true;
   }
-  if (layoutMetrics.frame.origin.y < 0) {
+  if (layoutMetrics.frame.origin.y < m_componentHostingFocusVisual->m_layoutMetrics.frame.origin.y) {
     nudgeEdges.top = true;
   }
   if (layoutMetrics.frame.getMaxX() > m_componentHostingFocusVisual->m_layoutMetrics.frame.getMaxX()) {
@@ -801,8 +799,8 @@ void ComponentView::updateAccessibilityProps(
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_LiveSettingPropertyId,
-      oldViewProps.accessibilityLiveRegion,
-      newViewProps.accessibilityLiveRegion);
+      winrt::Microsoft::ReactNative::implementation::GetLiveSetting(oldViewProps.accessibilityLiveRegion),
+      winrt::Microsoft::ReactNative::implementation::GetLiveSetting(newViewProps.accessibilityLiveRegion));
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(), UIA_LevelPropertyId, oldViewProps.accessibilityLevel, newViewProps.accessibilityLevel);
@@ -857,14 +855,13 @@ void ComponentView::updateAccessibilityProps(
 
   if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
       ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {
-    auto compProvider =
-        EnsureUiaProvider()
-            .try_as<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>();
-    if (compProvider) {
+    EnsureUiaProvider();
+    if (m_innerAutomationProvider) {
       if ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value())) {
-        winrt::Microsoft::ReactNative::implementation::AddSelectionItemsToContainer(compProvider.get());
+        winrt::Microsoft::ReactNative::implementation::AddSelectionItemsToContainer(m_innerAutomationProvider.get());
       } else {
-        winrt::Microsoft::ReactNative::implementation::RemoveSelectionItemsFromContainer(compProvider.get());
+        winrt::Microsoft::ReactNative::implementation::RemoveSelectionItemsFromContainer(
+            m_innerAutomationProvider.get());
       }
     }
   }
@@ -1354,12 +1351,17 @@ std::string ViewComponentView::DefaultControlType() const noexcept {
   return "group";
 }
 
-winrt::IInspectable ComponentView::EnsureUiaProvider() noexcept {
-  if (m_uiaProvider == nullptr) {
-    m_uiaProvider =
-        winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(*get_strong());
-  }
-  return m_uiaProvider;
+winrt::Windows::Foundation::IInspectable ComponentView::CreateAutomationProvider() noexcept {
+  Assert(!m_innerAutomationProvider);
+  m_innerAutomationProvider =
+      winrt::make_self<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
+          *get_strong());
+  return *m_innerAutomationProvider;
+}
+
+const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
+    &ComponentView::InnerAutomationProvider() const noexcept {
+  return m_innerAutomationProvider;
 }
 
 bool IntersectRect(RECT *prcDst, const RECT &prcSrc1, const RECT &prcSrc2) {

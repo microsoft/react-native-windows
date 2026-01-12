@@ -17,13 +17,11 @@ using JSECreator =
 struct DevSettings;
 
 struct IDevSupportManager {
-  virtual JSECreator LoadJavaScriptInProxyMode(const DevSettings &settings, std::function<void()> &&errorCallback) = 0;
   virtual void StartPollingLiveReload(
       const std::string &sourceBundleHost,
       const uint16_t sourceBundlePort,
       std::function<void()> onChangeCallback) = 0;
   virtual void StopPollingLiveReload() = 0;
-  virtual void OpenDevTools(const std::string &bundleAppId) = 0;
 
   virtual void EnsureInspectorPackagerConnection(
       const std::string &packagerHost,

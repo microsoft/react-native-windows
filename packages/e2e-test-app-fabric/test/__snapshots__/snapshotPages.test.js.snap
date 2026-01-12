@@ -10923,6 +10923,39 @@ exports[`snapshotAllPages Crash 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Custom Native Accessibility Example 1`] = `
+<View
+  accessibilityLabel="example root"
+  accessible={true}
+  testID="custom-accessibility-root-1"
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
+    The below view should have custom accessibility
+  </Text>
+  <CustomAccessibility
+    accessibilityLabel="accessibility should not show this, as native overrides it"
+    accessible={true}
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 500,
+        "width": 500,
+      }
+    }
+    testID="custom-accessibility-1"
+  />
+</View>
+`;
+
 exports[`snapshotAllPages DevSettings 1`] = `
 <View
   accessibilityRole="button"
@@ -82084,6 +82117,57 @@ exports[`snapshotAllPages TextInput 41`] = `
 
 exports[`snapshotAllPages TextInput 42`] = `
 <View>
+  <Text>
+    accessibilityLabel prop
+  </Text>
+  <TextInput
+    accessibilityLabel="This is Accessibility Label"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <Text>
+    aria-label prop
+  </Text>
+  <TextInput
+    aria-label="This is Aria Label"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 43`] = `
+<View>
   <Text
     testID="textinput-state-display-in"
   >
@@ -82149,7 +82233,7 @@ exports[`snapshotAllPages TextInput 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 43`] = `
+exports[`snapshotAllPages TextInput 44`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -82285,7 +82369,7 @@ exports[`snapshotAllPages TextInput 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 44`] = `
+exports[`snapshotAllPages TextInput 45`] = `
 [
   <View
     focusable={true}
@@ -82351,7 +82435,7 @@ exports[`snapshotAllPages TextInput 44`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 45`] = `
+exports[`snapshotAllPages TextInput 46`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -82400,7 +82484,7 @@ exports[`snapshotAllPages TextInput 45`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 46`] = `
+exports[`snapshotAllPages TextInput 47`] = `
 <View>
   <Text>
     CaretHidden
@@ -82432,7 +82516,7 @@ exports[`snapshotAllPages TextInput 46`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 47`] = `
+exports[`snapshotAllPages TextInput 48`] = `
 <View>
   <Text>
     Cursorcolor
@@ -82464,7 +82548,7 @@ exports[`snapshotAllPages TextInput 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 48`] = `
+exports[`snapshotAllPages TextInput 49`] = `
 <View>
   <Text>
     Shadow
@@ -82502,7 +82586,7 @@ exports[`snapshotAllPages TextInput 48`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 49`] = `
+exports[`snapshotAllPages TextInput 50`] = `
 <View
   accessible={true}
   testID="textinput-set"
@@ -82585,7 +82669,7 @@ exports[`snapshotAllPages TextInput 49`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 50`] = `
+exports[`snapshotAllPages TextInput 51`] = `
 <View
   accessible={true}
   testID="textinput-searchbox"
@@ -90361,130 +90445,6 @@ exports[`snapshotAllPages WebSocket 1`] = `
     </View>
   </View>
 </RCTScrollView>
-`;
-
-exports[`snapshotAllPages XAML 1`] = `
-<View
-  testID="ReactNativeXAMLRoot"
->
-  <XamlControl
-    text="simple TextBox"
-    type="Windows.UI.Xaml.Controls.TextBox"
-  />
-  <XamlControl
-    fontStyle={2}
-    fontWeight={350}
-    foreground="red"
-    text="right aligned TextBlock"
-    textAlignment={2}
-    type="Windows.UI.Xaml.Controls.TextBlock"
-  />
-  <XamlControl
-    onTapped={[Function]}
-    testID="tappableTextBlock"
-    text="tapping on this TextBlock brings up the button's flyout menu"
-    type="Windows.UI.Xaml.Controls.TextBlock"
-  />
-  <XamlControl
-    background="green"
-    gridLayout={
-      {
-        "columns": [
-          200,
-          200,
-          200,
-        ],
-        "rows": [
-          40,
-          40,
-        ],
-      }
-    }
-    type="Windows.UI.Xaml.Controls.Grid"
-  >
-    <XamlControl
-      background="blue"
-      gridColumn={2}
-      gridRow={1}
-      type="Windows.UI.Xaml.Controls.Border"
-      xamlMargin={4}
-    >
-      <XamlControl
-        horizontalAlignment={1}
-        type="Windows.UI.Xaml.Controls.Button"
-      >
-        <XamlControl
-          orientation={1}
-          type="Windows.UI.Xaml.Controls.StackPanel"
-        >
-          <XamlControl
-            foreground="red"
-            symbol={57641}
-            type="Windows.UI.Xaml.Controls.SymbolIcon"
-          />
-          <XamlControl
-            foreground="white"
-            text="Button 1"
-            type="Windows.UI.Xaml.Controls.TextBlock"
-          />
-        </XamlControl>
-        <XamlControl
-          isOpen={false}
-          onClosed={[Function]}
-          priority={0}
-          testID="MenuFlyout"
-          type="Windows.UI.Xaml.Controls.MenuFlyout"
-        >
-          <XamlControl
-            text="menu option 1"
-            type="Windows.UI.Xaml.Controls.MenuFlyoutItem"
-          >
-            <XamlControl
-              symbol={57626}
-              type="Windows.UI.Xaml.Controls.SymbolIcon"
-            />
-          </XamlControl>
-          <XamlControl
-            onClick={[Function]}
-            testID="menuOption2"
-            text="menu option 2"
-            type="Windows.UI.Xaml.Controls.MenuFlyoutItem"
-          />
-        </XamlControl>
-      </XamlControl>
-    </XamlControl>
-  </XamlControl>
-  <XamlControl
-    data="M14,2H12V1H11V2H5V1H4V2H2V14H14ZM4,3V4H5V3h6V4h1V3h1V5H3V3Zm9,10H3V6H13ZM7,10V7H4v3ZM5,8H6V9H5Z"
-    fill="red"
-    height={16}
-    horizontalAlignment={1}
-    type="Windows.UI.Xaml.Shapes.Path"
-    verticalAlignment={1}
-    width={16}
-  />
-  <XamlControl
-    height={80}
-    source="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEzLjEyNSAwSDBWMTMuMTI1SDEzLjEyNVYwWiIgZmlsbD0iI0YyNTAyMiI+PC9wYXRoPjxwYXRoIGQ9Ik0yOCAwSDE0Ljg3NVYxMy4xMjVIMjhWMFoiIGZpbGw9IiM3RkJBMDAiPjwvcGF0aD48cGF0aCBkPSJNMTMuMTI1IDE0Ljg3NUgwVjI4SDEzLjEyNVYxNC44NzVaIiBmaWxsPSIjMDBBNEVGIj48L3BhdGg+PHBhdGggZD0iTTI4IDE0Ljg3NUgxNC44NzVWMjhIMjhWMTQuODc1WiIgZmlsbD0iI0ZGQjkwMCI+PC9wYXRoPjwvc3ZnPiA="
-    type="Windows.UI.Xaml.Controls.Image"
-    width={80}
-  />
-  <XamlControl
-    isActive={true}
-    type="Microsoft.UI.Xaml.Controls.ProgressRing"
-    width={40}
-  />
-  <XamlControl
-    horizontalAlignment={1}
-    isOpen={true}
-    message="here is the message"
-    onClosed={[Function]}
-    severity={1}
-    title="title"
-    type="Microsoft.UI.Xaml.Controls.InfoBar"
-    visibility={0}
-  />
-</View>
 `;
 
 exports[`snapshotAllPages XMLHttpRequest 1`] = `

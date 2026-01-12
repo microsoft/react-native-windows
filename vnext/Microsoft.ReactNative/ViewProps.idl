@@ -20,9 +20,7 @@ namespace Microsoft.ReactNative {
   [experimental]
   runtimeclass Color {
     Windows.UI.Color AsWindowsColor(Microsoft.ReactNative.Composition.Theme theme);
-#ifdef USE_WINUI3
     Microsoft.UI.Composition.CompositionBrush AsBrush(Microsoft.ReactNative.Composition.Theme theme);
-#endif
 
     Boolean Equals(Color color);
 

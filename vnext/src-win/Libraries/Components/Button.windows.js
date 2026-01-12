@@ -460,7 +460,7 @@ const Button: component(
         }}
         // $FlowFixMe[incompatible-exact]
         // $FlowFixMe[prop-missing]
-        // $FlowFixMe[incompatible-type-arg]
+        // $FlowFixMe[incompatible-type]
         ref={ref}>
         <View
           style={

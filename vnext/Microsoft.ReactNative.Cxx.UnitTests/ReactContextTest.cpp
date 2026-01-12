@@ -36,13 +36,6 @@ struct ReactContextStub : implements<ReactContextStub, IReactContext> {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
-  void DispatchEvent(
-      xaml::FrameworkElement const & /*view*/,
-      hstring const & /*eventName*/,
-      JSValueArgWriter const & /*eventDataArgWriter*/) noexcept {
-    VerifyElseCrashSz(false, "Not implemented");
-  }
-
   void CallJSFunction(
       hstring const &moduleName,
       hstring const &functionName,
@@ -80,10 +73,6 @@ struct ReactContextStub : implements<ReactContextStub, IReactContext> {
   }
 
   bool UseFastRefresh() noexcept {
-    VerifyElseCrashSz(false, "Not implemented");
-  }
-
-  bool UseWebDebugger() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
 

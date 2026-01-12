@@ -80,6 +80,10 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples-win/NativeComponents/MovingLight'),
   },
   {
+    key: 'Custom Native Accessibility',
+    module: require('../examples-win/NativeComponents/CustomAccessibility'),
+  },
+  {
     key: 'Native Component',
     module: require('../examples-win/NativeComponents/NativeComponent'),
   },
@@ -174,11 +178,6 @@ const Components: Array<RNTesterModuleInfo> = [
   //  category: 'UI',
   //  module: require('../examples/NewArchitecture/NewArchitectureExample'),
   //},
-  {
-    key: 'XAML',
-    category: 'UI',
-    module: require('../examples-win/XAML/XAMLExample'),
-  },
   {
     key: 'FabricXaml',
     category: 'UI',

@@ -30,12 +30,14 @@ const childrenWithImportantForAccessibility = children => {
       // $FlowFixMe[incompatible-use]
       if (child.props.children) {
         // $FlowFixMe[incompatible-call]
+        // $FlowFixMe[incompatible-type]
         return React.cloneElement(child, {
           accessible: false,
           children: childrenWithImportantForAccessibility(child.props.children),
         });
       } else {
         // $FlowFixMe[incompatible-call]
+        // $FlowFixMe[incompatible-type]
         return React.cloneElement(child, {accessible: false});
       }
     }
@@ -62,14 +64,6 @@ component View(
 ) {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const hasTextAncestor = use(TextAncestorContext);
-
-  // Windows - Paper doesn't support Views in Text
-  if (global.RN$Bridgeless !== true) {
-    invariant(
-      !hasTextAncestor,
-      'Nesting of <View> within <Text> is not currently supported.',
-    );
-  }
 
   let actualView;
   const {
@@ -140,15 +134,6 @@ component View(
   if (ariaSetsize !== undefined) {
     processedProps.accessibilitySetSize = ariaSetsize;
   }
-
-  // On paper we do some messy work to handle no-hide-descendants
-  if (global.RN$Bridgeless !== true) {
-    processedProps.children =
-      processedProps.importantForAccessibility === 'no-hide-descendants'
-        ? childrenWithImportantForAccessibility(otherProps.children)
-        : otherProps.children;
-  }
-  // Windows]
 
   if (id !== undefined) {
     processedProps.nativeID = id;

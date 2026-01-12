@@ -3,10 +3,8 @@
 #include <algorithm>
 #include "UiaHelpers.h"
 
-#ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
-#endif
 
 #include <Fabric/Composition/ReactNativeIsland.h>
 
@@ -59,7 +57,6 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetEmbeddedFragmentRoots(SA
 }
 
 HRESULT __stdcall CompositionRootAutomationProvider::SetFocus(void) {
-#ifdef USE_WINUI3
   if (m_island) {
     auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
 
@@ -69,7 +66,6 @@ HRESULT __stdcall CompositionRootAutomationProvider::SetFocus(void) {
       }
     }
   }
-#endif
 
   if (m_hwnd) {
     ::SetFocus(m_hwnd);
@@ -107,13 +103,11 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_HostRawElementProvider(
   if (pRetVal == nullptr)
     return E_POINTER;
 
-#ifdef USE_WINUI3
   if (m_island) {
     winrt::Windows::Foundation::IInspectable host = m_island.GetAutomationHostProvider();
     *pRetVal = host.as<IRawElementProviderSimple>().detach();
     return S_OK;
   }
-#endif
 
   // TODO: assumes windowed
   if (!IsWindow(m_hwnd)) {
@@ -130,7 +124,6 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_BoundingRectangle(UiaRe
   if (pRetVal == nullptr)
     return E_POINTER;
 
-#ifdef USE_WINUI3
   if (m_island) {
     auto cc = m_island.CoordinateConverter();
     auto origin = cc.ConvertLocalToScreen(winrt::Windows::Foundation::Point{0, 0});
@@ -143,7 +136,6 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_BoundingRectangle(UiaRe
 
     return S_OK;
   }
-#endif
 
   // TODO: Need host site offsets
   // Assume we're hosted in some other visual-based hosting site
@@ -219,7 +211,8 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
     auto local = rootView->ConvertScreenToLocal({static_cast<float>(x), static_cast<float>(y)});
     auto provider = rootView->UiaProviderFromPoint(
         {static_cast<LONG>(local.X * rootView->LayoutMetrics().PointScaleFactor),
-         static_cast<LONG>(local.Y * rootView->LayoutMetrics().PointScaleFactor)});
+         static_cast<LONG>(local.Y * rootView->LayoutMetrics().PointScaleFactor)},
+        {static_cast<LONG>(x), static_cast<LONG>(y)});
     auto spFragment = provider.try_as<IRawElementProviderFragment>();
     if (spFragment) {
       *pRetVal = spFragment.detach();
@@ -264,11 +257,9 @@ void CompositionRootAutomationProvider::SetHwnd(HWND hwnd) noexcept {
   m_hwnd = hwnd;
 }
 
-#ifdef USE_WINUI3
 void CompositionRootAutomationProvider::SetIsland(winrt::Microsoft::UI::Content::ContentIsland &island) noexcept {
   m_island = island;
 }
-#endif
 
 HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
     NavigateDirection direction,

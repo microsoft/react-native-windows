@@ -87,14 +87,6 @@ void ReactInstanceSettings::UseLiveReload(bool value) noexcept {
   Mso::React::ReactOptions::SetUseLiveReload(m_properties, value);
 }
 
-bool ReactInstanceSettings::UseWebDebugger() noexcept {
-  return Mso::React::ReactOptions::UseWebDebugger(m_properties);
-}
-
-void ReactInstanceSettings::UseWebDebugger(bool value) noexcept {
-  Mso::React::ReactOptions::SetUseWebDebugger(m_properties, value);
-}
-
 bool ReactInstanceSettings::UseDirectDebugger() noexcept {
   return Mso::React::ReactOptions::UseDirectDebugger(m_properties);
 }

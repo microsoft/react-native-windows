@@ -1,8 +1,217 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Thu, 30 Oct 2025 05:29:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 10 Jan 2026 06:40:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1028
+
+Sat, 10 Jan 2026 06:40:18 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1028
+
+## 0.0.0-canary.1027
+
+Wed, 07 Jan 2026 06:40:55 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1027
+
+## 0.0.0-canary.1026
+
+Tue, 06 Jan 2026 06:38:13 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1026
+
+## 0.0.0-canary.1025
+
+Tue, 30 Dec 2025 06:39:29 GMT
+
+### Changes
+
+- Use experimental WinAppSDK (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1025
+
+## 0.0.0-canary.1024
+
+Thu, 25 Dec 2025 06:39:17 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1024
+
+## 0.0.0-canary.1023
+
+Wed, 24 Dec 2025 06:32:41 GMT
+
+### Changes
+
+- bump hermes to 0.0.0-2512.22001-bc3d0ed7 (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1023
+
+## 0.0.0-canary.1022
+
+Fri, 19 Dec 2025 06:34:05 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1022
+
+## 0.0.0-canary.1021
+
+Wed, 17 Dec 2025 06:33:16 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1021
+
+## 0.0.0-canary.1020
+
+Sat, 13 Dec 2025 06:33:40 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1020
+
+## 0.0.0-canary.1019
+
+Sun, 07 Dec 2025 06:34:40 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1019
+
+## 0.0.0-canary.1018
+
+Sat, 06 Dec 2025 06:38:46 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1018
+
+## 0.0.0-canary.1017
+
+Fri, 05 Dec 2025 06:34:57 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1017
+
+## 0.0.0-canary.1016
+
+Wed, 03 Dec 2025 06:40:45 GMT
+
+### Changes
+
+- Use 0.0.0-canary.1015 version for public NPM packages (vmorozov@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1016
+
+## 0.3.437-0
+
+Tue, 02 Dec 2025 06:36:52 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.12.355-0
+
+## 0.3.436
+
+Mon, 01 Dec 2025 06:36:40 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.354
+
+## 0.3.435
+
+Thu, 27 Nov 2025 06:35:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.353
+
+## 0.3.434
+
+Wed, 26 Nov 2025 06:36:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.352
+
+## 0.3.433
+
+Fri, 21 Nov 2025 06:43:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.351
+
+## 0.3.432
+
+Thu, 20 Nov 2025 06:39:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.350
+
+## 0.3.431
+
+Wed, 19 Nov 2025 06:41:09 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.349
+
+## 0.3.430
+
+Tue, 18 Nov 2025 06:41:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.348
+
+## 0.3.429
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.347
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 0.3.428
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.346
+
+## 0.3.427
+
+Thu, 13 Nov 2025 14:35:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.345
+
+## 0.3.426
+
+Wed, 12 Nov 2025 21:00:47 GMT
+
+### Patches
+
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.12.344
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
 
 ## 0.3.425
 

@@ -15,6 +15,7 @@
 #include <winrt/Windows.UI.Input.h>
 #include "Composition.Input.h"
 #include "CompositionViewComponentView.h"
+#include "ParagraphComponentView.h"
 #include "ReactNativeIsland.h"
 #include "RootComponentView.h"
 
@@ -117,7 +118,6 @@ struct CompositionKeyboardSource
   CompositionEventHandler *m_outer{nullptr};
 };
 
-#ifdef USE_WINUI3
 struct CompositionInputKeyboardSource : winrt::implements<
                                             CompositionInputKeyboardSource,
                                             winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource> {
@@ -137,7 +137,6 @@ struct CompositionInputKeyboardSource : winrt::implements<
  private:
   winrt::Microsoft::UI::Input::InputKeyboardSource m_source{nullptr};
 };
-#endif
 
 CompositionEventHandler::CompositionEventHandler(
     const winrt::Microsoft::ReactNative::ReactContext &context,
@@ -145,7 +144,6 @@ CompositionEventHandler::CompositionEventHandler(
     : m_context(context), m_wkRootView(reactNativeIsland) {}
 
 void CompositionEventHandler::Initialize() noexcept {
-#ifdef USE_WINUI3
   if (auto island = m_wkRootView.get().Island()) {
     auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
 
@@ -323,11 +321,9 @@ void CompositionEventHandler::Initialize() noexcept {
           }
         });
   }
-#endif
 }
 
 CompositionEventHandler::~CompositionEventHandler() {
-#ifdef USE_WINUI3
   if (auto strongRootView = m_wkRootView.get()) {
     if (auto island = strongRootView.Island()) {
       auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
@@ -342,7 +338,6 @@ CompositionEventHandler::~CompositionEventHandler() {
       keyboardSource.CharacterReceived(m_characterReceivedToken);
     }
   }
-#endif
 
   if (m_hcursorOwned) {
     ::DestroyCursor(m_hcursor);
@@ -1101,6 +1096,13 @@ void CompositionEventHandler::onPointerExited(
 void CompositionEventHandler::onPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
+  namespace Composition = winrt::Microsoft::ReactNative::Composition;
+
+  // Clears any active text selection when left pointer is pressed
+  if (pointerPoint.Properties().PointerUpdateKind() != Composition::Input::PointerUpdateKind::RightButtonPressed) {
+    RootComponentView().ClearCurrentTextSelection();
+  }
+
   PointerId pointerId = pointerPoint.PointerId();
 
   auto staleTouch = std::find_if(m_activeTouches.begin(), m_activeTouches.end(), [pointerId](const auto &pair) {

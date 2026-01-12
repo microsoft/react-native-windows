@@ -16,8 +16,6 @@
   <PropertyGroup Label="ReactNativeWindowsProps">
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
     <RunAutolinkCheck>false</RunAutolinkCheck>
-    <!-- Ensure we have a valid packages.lock.json and not a packages.newarch.json. -->
-    <RnwNewArchOnly>true</RnwNewArchOnly>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.WindowsSdk.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -103,6 +101,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClInclude Include="CalendarView.h" />
+    <ClInclude Include="CustomAccessibility.h" />
     <ClInclude Include="DrawingIsland.h">
       <DependentUpon>DrawingIsland.idl</DependentUpon>
     </ClInclude>
@@ -115,6 +114,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CustomAccessibility.cpp" />
     <ClCompile Include="MovingLight.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

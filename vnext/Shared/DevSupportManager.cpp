@@ -8,7 +8,6 @@
 #include <Shared/DevServerHelper.h>
 #include <Shared/DevSettings.h>
 
-#include <Executors/WebSocketJSExecutor.h>
 #include "Inspector/ReactInspectorPackagerConnectionDelegate.h"
 #include "PackagerConnection.h"
 
@@ -116,38 +115,6 @@ void LaunchDevTools(const facebook::react::DevSettings &settings) {
 
   winrt::Windows::Web::Http::HttpRequestMessage request(winrt::Windows::Web::Http::HttpMethod::Get(), uri);
   httpClient.SendRequestAsync(request);
-}
-
-facebook::react::JSECreator DevSupportManager::LoadJavaScriptInProxyMode(
-    const facebook::react::DevSettings &settings,
-    std::function<void()> &&errorCallback) {
-  try {
-    LaunchDevTools(settings);
-    Microsoft::ReactNative::PackagerConnection::CreateOrReusePackagerConnection(settings);
-
-    return [this, settings, errorCallback](
-               std::shared_ptr<facebook::react::ExecutorDelegate> delegate,
-               std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) {
-      auto websocketJSE = std::make_unique<WebSocketJSExecutor>(delegate, jsQueue);
-      try {
-        websocketJSE
-            ->ConnectAsync(
-                facebook::react::DevServerHelper::get_WebsocketProxyUrl(
-                    settings.sourceBundleHost, settings.sourceBundlePort),
-                settings.errorCallback,
-                settings.waitingForDebuggerCallback,
-                settings.debuggerAttachCallback)
-            .get();
-      } catch (...) {
-        errorCallback();
-      }
-
-      return websocketJSE;
-    };
-  } catch (winrt::hresult_error const &e) {
-    errorCallback();
-    throw std::exception(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()).c_str());
-  }
 }
 
 DevSupportManager::~DevSupportManager() {
@@ -284,22 +251,6 @@ void DevSupportManager::StartPollingLiveReload(
 
 void DevSupportManager::StopPollingLiveReload() {
   m_cancellation_token = true;
-}
-
-// TODO: (vmoroz) Use or delete this function
-void DevSupportManager::OpenDevTools(const std::string &bundleAppId) {
-  winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
-  filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
-  winrt::Windows::Web::Http::HttpClient httpClient(filter);
-  // TODO: Use currently configured dev server host
-  winrt::Windows::Foundation::Uri uri(
-      Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_OpenDebuggerUrl(
-          std::string{DevServerHelper::DefaultPackagerHost},
-          DevServerHelper::DefaultPackagerPort,
-          GetDeviceId(GetPackageName(bundleAppId)))));
-
-  winrt::Windows::Web::Http::HttpRequestMessage request(winrt::Windows::Web::Http::HttpMethod::Post(), uri);
-  httpClient.SendRequestAsync(request);
 }
 
 void DevSupportManager::EnsureInspectorPackagerConnection(

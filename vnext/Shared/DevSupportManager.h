@@ -40,15 +40,11 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
   DevSupportManager() = default;
   ~DevSupportManager();
 
-  virtual facebook::react::JSECreator LoadJavaScriptInProxyMode(
-      const facebook::react::DevSettings &settings,
-      std::function<void()> &&errorCallback) override;
   virtual void StartPollingLiveReload(
       const std::string &sourceBundleHost,
       const uint16_t sourceBundlePort,
       std::function<void()> onChangeCallback) override;
   virtual void StopPollingLiveReload() override;
-  virtual void OpenDevTools(const std::string &bundleAppId) override;
 
   virtual void EnsureInspectorPackagerConnection(
       const std::string &packagerHost,

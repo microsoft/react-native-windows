@@ -83,12 +83,10 @@ namespace Microsoft.ReactNative
     DOC_STRING("Creates a new instance of @ReactNativeIsland. Can be implemented with a ReactViewHost or a ComponentView with reactContext")
     ReactNativeIsland();
 
-#ifdef USE_WINUI3
     ReactNativeIsland(Microsoft.UI.Composition.Compositor compositor);
 
     DOC_STRING("Used to create react portals, such as a native modal component.")
     static ReactNativeIsland CreatePortal(Microsoft.ReactNative.Composition.PortalComponentView portal);
-#endif
 
     DOC_STRING(
       "A ReactViewHost specifies the root UI component and initial properties to render in this RootView"
@@ -122,9 +120,7 @@ namespace Microsoft.ReactNative
     DOC_STRING("Initial props should be set on ReactViewHost. This is used to update props after the initial props are set")
     void SetProperties(JSValueArgWriter props);
 
-#ifdef USE_WINUI3
     Microsoft.UI.Content.ContentIsland Island { get; };
-#endif
 
     event Windows.Foundation.EventHandler<RootViewSizeChangedEventArgs> SizeChanged;
   }

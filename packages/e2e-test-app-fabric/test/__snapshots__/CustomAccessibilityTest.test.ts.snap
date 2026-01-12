@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Custom Accessibility Tests Verify custom native component has UIA label from native 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "custom-accessibility-root-1",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "Name": "example root",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "The below view should have custom accessibility",
+        "TextRangePattern.GetText": "The below view should have custom accessibility",
+      },
+      {
+        "AutomationId": "custom-accessibility-1",
+        "ControlType": 50026,
+        "LocalizedControlType": "group",
+        "Name": "accessiblity label from native",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "example root",
+      "TestId": "custom-accessibility-root-1",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "AccessibilityLabel": "accessibility should not show this, as native overrides it",
+          "TestId": "custom-accessibility-1",
+        },
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "custom-accessibility-root-1",
+    "Offset": "0, 0, 0",
+    "Size": "998, 519",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "998, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "998, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 19, 0",
+        "Size": "500, 500",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 128, 0, 255)",
+            },
+            "Comment": "custom-accessibility-1",
+            "Offset": "0, 0, 0",
+            "Size": "500, 500",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;

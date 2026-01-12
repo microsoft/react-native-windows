@@ -26,10 +26,8 @@
 #include <Windows.Foundation.h>
 #include <queue>
 
-#ifdef USE_FABRIC
 #include <Fabric/Composition/CompositionContextHelper.h>
 #include <Fabric/Composition/CompositionUIService.h>
-#endif
 
 namespace Microsoft::ReactNative {
 
@@ -41,7 +39,6 @@ const winrt::Microsoft::ReactNative::ReactContext &NativeAnimatedNodeManager::Re
 }
 
 comp::Compositor NativeAnimatedNodeManager::Compositor() const noexcept {
-#ifdef USE_FABRIC
   auto compositionContext =
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
           m_context.Properties().Handle());
@@ -49,14 +46,7 @@ comp::Compositor NativeAnimatedNodeManager::Compositor() const noexcept {
     return winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerCompositor(
         compositionContext);
   }
-#endif
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  // TODO: Islands - need to get the XamlView associated with this animation in order to
-  // use the compositor Microsoft::ReactNative::GetCompositor(xamlView)
-  return Microsoft::ReactNative::GetCompositor();
-#else
   return nullptr;
-#endif
 }
 
 void NativeAnimatedNodeManager::CreateAnimatedNode(
@@ -594,14 +584,18 @@ void NativeAnimatedNodeManager::RunUpdates(winrt::TimeSpan renderingTime) {
 }
 
 void NativeAnimatedNodeManager::EnsureRendering() {
+  /*
+  * Reenable to enable composition = false animations
   m_renderingRevoker =
       xaml::Media::CompositionTarget::Rendering(winrt::auto_revoke, {this, &NativeAnimatedNodeManager::OnRendering});
+      */
 }
 
 void NativeAnimatedNodeManager::OnRendering(winrt::IInspectable const &sender, winrt::IInspectable const &args) {
   // The `UpdateActiveAnimationIds` method only tracks animations where
   // composition is not used, so if only UI.Composition animations are active,
   // this rendering callback will not run.
+  /*
   UpdateActiveAnimationIds();
   if (m_activeAnimationIds.size() > 0 || m_updatedNodes.size() > 0) {
     if (const auto renderingArgs = args.try_as<xaml::Media::RenderingEventArgs>()) {
@@ -610,6 +604,7 @@ void NativeAnimatedNodeManager::OnRendering(winrt::IInspectable const &sender, w
   } else {
     m_renderingRevoker.revoke();
   }
+  */
 }
 
 void NativeAnimatedNodeManager::StopAnimationsForNode(int64_t tag) {

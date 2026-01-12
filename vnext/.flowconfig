@@ -64,7 +64,6 @@
 
 ; These files dont need to be checked and just increase the build time
 .*/node_modules/e2etest/.*
-.*/node_modules/sample-apps/.*
 .*/node_modules/playground/.*
 
 <PROJECT_ROOT>/packages/react-native/sdks/.*
@@ -150,7 +149,7 @@ module.system.haste.module_ref_prefix=m#
 
 react.runtime=automatic
 
-suppress_type=$FlowFixMe
+experimental.error_code_migration=new
 
 ban_spread_key_props=true
 sharedmemory.hash_table_pow=21
@@ -176,4 +175,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.278.0
+^0.279.0

@@ -6,7 +6,6 @@
 
 #include "ScrollViewComponentView.h"
 
-#include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 
 #pragma warning(push)
@@ -20,7 +19,6 @@
 #include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
 #include <unicode.h>
-#include "CompositionDynamicAutomationProvider.h"
 #include "JSValueReader.h"
 #include "RootComponentView.h"
 
@@ -813,6 +811,25 @@ void ScrollViewComponentView::updateProps(
       snapToOffsets.Append(static_cast<float>(offset));
     }
     m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView());
+  }
+
+  if (!oldProps || oldViewProps.pagingEnabled != newViewProps.pagingEnabled) {
+    m_scrollVisual.PagingEnabled(newViewProps.pagingEnabled);
+  }
+
+  if (!oldProps || oldViewProps.snapToInterval != newViewProps.snapToInterval) {
+    m_scrollVisual.SnapToInterval(static_cast<float>(newViewProps.snapToInterval));
+  }
+
+  if (!oldProps || oldViewProps.snapToAlignment != newViewProps.snapToAlignment) {
+    using SnapPointsAlignment = winrt::Microsoft::ReactNative::Composition::Experimental::SnapPointsAlignment;
+    SnapPointsAlignment alignment = SnapPointsAlignment::Near; // default is "start"
+    if (newViewProps.snapToAlignment == facebook::react::ScrollViewSnapToAlignment::Center) {
+      alignment = SnapPointsAlignment::Center;
+    } else if (newViewProps.snapToAlignment == facebook::react::ScrollViewSnapToAlignment::End) {
+      alignment = SnapPointsAlignment::Far;
+    }
+    m_scrollVisual.SnapToAlignment(alignment);
   }
 }
 

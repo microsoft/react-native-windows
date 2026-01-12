@@ -1,8 +1,53 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Tue, 21 Oct 2025 05:28:10 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 10 Jan 2026 06:40:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.282
+
+Sat, 10 Jan 2026 06:40:18 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.129
+
+## 0.0.0-canary.281
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.128
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @react-native-windows/package-utils to v0.0.0-canary.96
+- Bump @react-native-windows/telemetry to v0.0.0-canary.129
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 0.0.0-canary.280
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Changes
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.128
+
+## 0.0.0-canary.279
+
+Wed, 12 Nov 2025 21:00:41 GMT
+
+### Changes
+
+- Remove paper (30809111+acoates-ms@users.noreply.github.com)
+- Remove web debugging support (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.127
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @react-native-windows/package-utils to v0.0.0-canary.95
+- Bump @react-native-windows/telemetry to v0.0.0-canary.127
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
 
 ## 0.0.0-canary.278
 

@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include <react/renderer/debug/DebugStringConvertible.h>
+
 namespace facebook::react {
 
 enum class AccessibilityTraits : uint32_t {
@@ -91,10 +93,10 @@ struct AccessibilityState {
   std::optional<bool> selected{std::nullopt}; // [Windows] - Do not remove; required for Windows ISelectionItemProvider Implementation
   bool busy{false};
   std::optional<bool> expanded{std::nullopt};
+  enum CheckedState { Unchecked, Checked, Mixed, None } checked{None};
   std::optional<bool> readOnly{std::nullopt}; // [Windows] - Do not remove; required for Windows IRangeValueProvider and IValueProvider Implementation
   std::optional<bool> multiselectable{std::nullopt}; // [Windows] - Do not remove; required for Windows ISelectionProvider Implementation
   std::optional<bool> required{std::nullopt}; // [Windows] - Do not remove; required for Windows ISelectionProvider Implementation
-  enum { Unchecked, Checked, Mixed, None } checked{None};
 };
 
 constexpr bool operator==(
@@ -110,6 +112,38 @@ constexpr bool operator!=(
     const AccessibilityState& rhs) {
   return !(rhs == lhs);
 }
+
+#if RN_DEBUG_STRING_CONVERTIBLE
+inline std::string toString(AccessibilityState::CheckedState state) {
+  switch (state) {
+    case AccessibilityState::Unchecked:
+      return "Unchecked";
+    case AccessibilityState::Checked:
+      return "Checked";
+    case AccessibilityState::Mixed:
+      return "Mixed";
+    case AccessibilityState::None:
+      return "None";
+//#[Windows
+#if defined(_MSC_VER)
+    default:
+        __assume(0);
+#elif defined(__GNUC__) || defined(__clang__)
+    default:
+        __builtin_unreachable();
+#endif
+// 15379 #Windows]
+  }
+}
+
+inline std::string toString(const AccessibilityState& accessibilityState) {
+  return "{disabled:" + toString(accessibilityState.disabled) +
+      ",selected:" + toString(accessibilityState.selected) +
+      ",checked:" + toString(accessibilityState.checked) +
+      ",busy:" + toString(accessibilityState.busy) +
+      ",expanded:" + toString(accessibilityState.expanded) + "}";
+}
+#endif
 
 struct AccessibilityLabelledBy {
   std::vector<std::string> value{};
@@ -169,9 +203,16 @@ inline std::string toString(
       return "polite";
     case AccessibilityLiveRegion::Assertive:
       return "assertive";
+//#[Windows
+#if defined(_MSC_VER)
+    default:
+        __assume(0);
+#elif defined(__GNUC__) || defined(__clang__)
+    default:
+        __builtin_unreachable();
+#endif
+// 15379 #Windows]
   }
-  // [windows] Default return for unexpected enum values
-  return "none";
 }
 
 enum class AccessibilityRole {

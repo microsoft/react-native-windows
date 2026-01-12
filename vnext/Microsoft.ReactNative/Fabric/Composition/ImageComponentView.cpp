@@ -6,7 +6,6 @@
 
 #include "ImageComponentView.h"
 
-#include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 
 #include <IReactContext.h>
@@ -22,7 +21,6 @@
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
-#include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
 

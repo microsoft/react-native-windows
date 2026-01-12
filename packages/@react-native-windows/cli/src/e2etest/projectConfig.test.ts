@@ -15,7 +15,6 @@ import {
 import {AutoLinkWindows} from '../commands/autolinkWindows/autolinkWindows';
 import {
   ensureCppAppProject,
-  ensureCSharpAppProject,
   ensureWinUI3Project,
   ensureHermesProject,
   ensureExperimentalNuGetProject,
@@ -42,10 +41,6 @@ const projects: TargetProject[] = [
   // New C++ project based on the template
   project('SimpleCppApp', async (folder: string) => {
     await ensureCppAppProject(folder, 'SimpleCppApp');
-  }),
-  // New C# project based on the template
-  project('SimpleCSharpApp', async (folder: string) => {
-    await ensureCSharpAppProject(folder, 'SimpleCSharpApp');
   }),
   project('WithWinUI3', async (folder: string) => {
     await ensureWinUI3Project(folder);
@@ -125,7 +120,7 @@ test.skip('useWinUI3=true in react-native.config.js, UseWinUI3=false in Experime
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
 
   // Create project with UseWinUI3 == false in ExperimentalFeatures.props
-  await ensureCppAppProject(folder, 'WithWinUI3', false, false, false);
+  await ensureCppAppProject(folder, 'WithWinUI3', false, false);
 
   const rnc = require(path.join(folder, 'react-native.config.js'));
 
