@@ -5,7 +5,6 @@
 
 #include "Logging.h"
 
-// LEGACY REMOVED: ReactMarker.h - ReactMarker is no longer used in New Architecture
 #include <chrono>
 
 namespace facebook {

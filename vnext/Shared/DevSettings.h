@@ -72,8 +72,6 @@ struct DevSettings {
   /// reentrancy.
   std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> jsiRuntimeHolder;
 
-  // LEGACY REMOVED: jsExecutorFactoryDelegate - No longer needed with New Architecture
-
   // Until the ABI story is addressed we'll use this instead of the above for
   // the purposes of selecting a JSI Runtime to use.
   JSIEngineOverride jsiEngineOverride{JSIEngineOverride::Default};
