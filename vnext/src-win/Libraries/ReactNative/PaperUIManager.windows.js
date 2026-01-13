@@ -111,12 +111,12 @@ for (const propName of Object.getOwnPropertyNames(
  * and run Flow. */
 //const UIManagerJS = {
 //  ...NativeUIManager,
-// $FlowFixMe
+// $FlowFixMe[cannot-write]
 UIManagerJS.getConstants = getConstants;
 //  },
-// $FlowFixMe
+// $FlowFixMe[cannot-write]
 UIManagerJS.getViewManagerConfig = getViewManagerConfig;
-// $FlowFixMe
+// $FlowFixMe[cannot-write]
 UIManagerJS.hasViewManagerConfig = (viewManagerName: string) =>
   getViewManagerConfig(viewManagerName) != null;
 
@@ -130,7 +130,7 @@ UIManagerJS.hasViewManagerConfig = (viewManagerName: string) =>
 //            getViewManagerConfig is implemented on the JSI object, so we don't
 //            need to hook this unless we are running in webdebugger
 if (!global.nativeCallSyncHook)
-  // $FlowFixMe
+  // $FlowFixMe[prop-missing]
   NativeUIManager.getViewManagerConfig = UIManagerJS.getViewManagerConfig;
 
 function lazifyViewManagerConfig(viewName: string) {

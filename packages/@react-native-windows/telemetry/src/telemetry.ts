@@ -416,7 +416,7 @@ export class Telemetry {
       durationInSecs:
         (Telemetry.commandInfo.endTime! - Telemetry.commandInfo.startTime!) /
         1000,
-      resultCode: Telemetry.commandInfo.endInfo?.resultCode,
+      resultCode: Telemetry.commandInfo.endInfo?.resultCode ?? 'Unknown',
     };
 
     telemetryItem.data = {

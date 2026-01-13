@@ -43,7 +43,7 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
 
-  winrt::Windows::Foundation::IInspectable EnsureUiaProvider() noexcept override;
+  winrt::Windows::Foundation::IInspectable CreateAutomationProvider() noexcept override;
 
   void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
 
