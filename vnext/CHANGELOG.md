@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 10 Jan 2026 06:40:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 13 Jan 2026 06:39:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1029
+
+Tue, 13 Jan 2026 06:39:28 GMT
+
+### Changes
+
+- Validate arguements for OriginPolicyHttpFilter (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.0.0-canary.1028
 
