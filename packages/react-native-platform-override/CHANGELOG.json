@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Tue, 13 Jan 2026 13:00:14 GMT",
+      "version": "0.0.0-canary.1019",
+      "tag": "react-native-platform-override_v0.0.0-canary.1019",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "da1e74cb1c7d7d1749fd963398580069fa62344b",
+            "comment": "integrate 0.82.0-nightly-20250902-9731e8ebc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 30 Dec 2025 06:39:30 GMT",
       "version": "0.0.0-canary.1018",
       "tag": "react-native-platform-override_v0.0.0-canary.1018",

@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 13 Jan 2026 06:39:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 13 Jan 2026 13:00:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1030
+
+Tue, 13 Jan 2026 13:00:14 GMT
+
+### Changes
+
+- integrate 0.82.0-nightly-20250902-9731e8ebc (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.283
+- Bump react-native-platform-override to v0.0.0-canary.1019
 
 ## 0.0.0-canary.1029
 
