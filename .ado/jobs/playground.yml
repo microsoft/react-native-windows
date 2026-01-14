@@ -20,10 +20,6 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x86
             SolutionFile: Playground-Composition.sln
-          - Name: X64DebugComposition
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            SolutionFile: Playground-Composition.sln
           - Name: X64ReleaseComposition
             BuildConfiguration: Release
             BuildPlatform: x64

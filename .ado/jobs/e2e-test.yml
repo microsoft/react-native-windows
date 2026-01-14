@@ -16,6 +16,8 @@ parameters:
         Matrix:
           - Name: X64Hermes
             BuildPlatform: x64
+          - Name: X86Hermes
+            BuildPlatform: x86
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Hermes

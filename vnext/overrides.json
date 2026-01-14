@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.82.0-nightly-20250902-9731e8ebc",
+  "baseVersion": "0.82.0-rc.0",
   "overrides": [
     {
       "type": "derived",
@@ -177,19 +177,19 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
-      "baseHash": "ad6263ebaa34f1753daccc09d19bf2328cde48fa"
+      "baseHash": "ba36ba3603cf0325982afd08475c08d07cb9d231"
     },
     {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/accessibilityPropsConversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h",
-      "baseHash": "98a8417b1730c370d796caf93d2832f659d29ee2"
+      "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc"
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/conversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/conversions.h",
-      "baseHash": "8a845d31a2588668f47d61a3307bf045e2379e03",
+      "baseHash": "3487b9dcde51614425687a31b10923c67a2f1d52",
       "issue": 14698
     },
     {
@@ -223,7 +223,7 @@
       "type": "derived",
       "file": "src-win/index.windows.js.flow",
       "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "b3bfc5cc82b448bbfc5b87e0b6e2b4d11f3edde0"
+      "baseHash": "40517b790cce30b4f7fbb230efabccd98a917be8"
     },
     {
       "type": "platform",

@@ -24,6 +24,9 @@ parameters:
           - Name: X86Debug
             BuildConfiguration: Debug
             BuildPlatform: x86
+          - Name: X86Release
+            BuildConfiguration: Release
+            BuildPlatform: x86
           - Name: ARM64ECDebug
             BuildConfiguration: Debug
             BuildPlatform: ARM64EC

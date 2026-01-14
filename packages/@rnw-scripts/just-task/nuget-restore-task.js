@@ -113,7 +113,7 @@ function findVsDevCmd() {
   let installationRoot = '';
   try {
     installationRoot = execSync(
-      `${quote(vsWherePath)} -latest -products * -requires Microsoft.Component.MSBuild -property installationPath -format value`,
+      `${quote(vsWherePath)} -latest -prerelease -products * -requires Microsoft.Component.MSBuild -property installationPath -format value`,
       {encoding: 'utf8'},
     )
       .split(/\r?\n/)
