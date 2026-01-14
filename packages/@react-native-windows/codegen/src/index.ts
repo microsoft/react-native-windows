@@ -254,10 +254,10 @@ export function generate(
     rncodegenPath,
     'lib/generators/modules/GenerateModuleH',
   )).generate;
-  const generateJsiModuleCpp = require(path.resolve(
-    rncodegenPath,
-    'lib/generators/modules/GenerateModuleCpp',
-  )).generate;
+  // Use local fixed version instead of upstream to fix x86 union padding issue
+  // with MixedTypeAnnotation. See GenerateModuleCpp.js for details.
+  const generateJsiModuleCpp =
+    require('./generators/GenerateModuleCpp').generate;
   const generatorPropsH = require(path.resolve(
     rncodegenPath,
     'lib/generators/components/GeneratePropsH',
