@@ -1,6 +1,6 @@
 // @ts-check
 import path from 'path';
-import ensureShortPath from './Libraries/Image/assetPaths');
+import ensureShortPath from './Libraries/Image/assetPaths';
 
 /**
  * @typedef {import("metro").AssetData} AssetData;
