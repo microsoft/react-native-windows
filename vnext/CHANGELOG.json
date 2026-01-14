@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 14 Jan 2026 06:05:13 GMT",
+      "version": "0.81.2",
+      "tag": "react-native-windows_v0.81.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2589a216e30d0edb9b2be922ba8b5a3fb6ce2591",
+            "comment": "Align metro-runtime version with core"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jan 2026 17:42:34 GMT",
       "version": "0.81.1",
       "tag": "react-native-windows_v0.81.1",
