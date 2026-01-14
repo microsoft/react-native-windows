@@ -1,8 +1,19 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Tue, 13 Jan 2026 13:00:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 14 Jan 2026 13:07:17 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.1
+
+Wed, 14 Jan 2026 13:07:17 GMT
+
+### Changes
+
+- Promote 0.82 to preview (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.82.0-preview.1
+- Bump @react-native-windows/telemetry to v0.82.0-preview.1
+- Bump @react-native-windows/cli to v0.82.0-preview.1
 
 ## 0.0.0-canary.1020
 
