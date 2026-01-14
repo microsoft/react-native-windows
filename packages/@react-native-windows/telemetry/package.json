@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/telemetry",
-  "version": "0.0.0-canary.130",
+  "version": "0.82.0-preview.0",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "typings": "lib-commonjs/index.d.ts",
@@ -20,7 +20,7 @@
   "dependencies": {
     "@microsoft/1ds-core-js": "^4.3.0",
     "@microsoft/1ds-post-js": "^4.3.0",
-    "@react-native-windows/fs": "0.0.0-canary.70",
+    "@react-native-windows/fs": "0.82.0-preview.0",
     "@xmldom/xmldom": "^0.7.7",
     "ci-info": "^3.2.0",
     "envinfo": "^7.8.1",
@@ -52,7 +52,7 @@
     "lib-commonjs"
   ],
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
       "major",
       "minor",

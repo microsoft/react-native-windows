@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation",
-  "version": "0.0.0-canary.1030",
+  "version": "0.82.0-preview.0",
   "description": "UI Automation Suite for React Native Windows Applications",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -18,8 +18,8 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "0.0.0-canary.1030",
-    "@react-native-windows/fs": "^0.0.0-canary.70",
+    "@react-native-windows/automation-channel": "0.82.0-preview.0",
+    "@react-native-windows/fs": "0.82.0-preview.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "chalk": "^4.1.2",
@@ -49,7 +49,7 @@
     "README.md"
   ],
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
       "major",
       "minor",

@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/codegen",
-  "version": "0.0.0-canary.129",
+  "version": "0.82.0-preview.0",
   "description": "Generators for react-native-codegen targeting react-native-windows",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -22,7 +22,7 @@
     "react-native-windows-codegen": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.70",
+    "@react-native-windows/fs": "0.82.0-preview.0",
     "chalk": "^4.1.0",
     "globby": "^11.1.0",
     "minimatch": "^10.0.3",
@@ -58,7 +58,7 @@
     "src"
   ],
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
       "major",
       "minor",

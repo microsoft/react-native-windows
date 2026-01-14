@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/find-repo-root",
-  "version": "0.0.0-canary.99",
+  "version": "0.82.0-preview.0",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -16,7 +16,7 @@
     "directory": "packages/@react-native-windows/find-repo-root"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.70",
+    "@react-native-windows/fs": "0.82.0-preview.0",
     "find-up": "^4.1.0",
     "minimatch": "^10.0.3"
   },
@@ -33,7 +33,7 @@
     "typescript": "5.0.4"
   },
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
       "major",
       "minor",
