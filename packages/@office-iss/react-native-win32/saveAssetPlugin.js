@@ -1,6 +1,6 @@
 // @ts-check
-const path = require('path');
-const ensureShortPath = require('./Libraries/Image/assetPaths');
+import path from 'path';
+import ensureShortPath from './Libraries/Image/assetPaths');
 
 /**
  * @typedef {import("metro").AssetData} AssetData;
