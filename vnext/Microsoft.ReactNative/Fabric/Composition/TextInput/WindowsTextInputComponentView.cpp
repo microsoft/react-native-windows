@@ -31,18 +31,8 @@
 #include "guid/msoGuid.h"
 
 #include <unicode.h>
-#include <fstream>
 
 #pragma comment(lib, "Shlwapi.lib")
-
-// Simple file logger for debugging
-static void LogToFile(const std::string &message) {
-  std::ofstream logFile("D:\\keyboardtype_debug.log", std::ios::app);
-  if (logFile.is_open()) {
-    logFile << message << std::endl;
-    logFile.close();
-  }
-}
 
 // Dynamic loading of SetInputScopes from msctf.dll
 typedef HRESULT(WINAPI *PFN_SetInputScopes)(
@@ -1993,13 +1983,7 @@ void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboa
 
   // Get the parent/root HWND - this is the actual window that receives focus
   HWND hwndParent = GetHwndForParenting();
-  
-  LogToFile("=== updateKeyboardType called ===");
-  LogToFile("  keyboardType: " + keyboardType);
-  LogToFile("  hwndParent: " + std::to_string(reinterpret_cast<uintptr_t>(hwndParent)));
-  
   if (!hwndParent) {
-    LogToFile("  ERROR: hwndParent is NULL!");
     return;
   }
 
@@ -2026,21 +2010,10 @@ void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboa
     }
   }
 
-  LogToFile("  InputScope value: " + std::to_string(static_cast<int>(scope)));
-
   // Use SetInputScopes API to set InputScope on the parent HWND
   // This tells Windows Touch Keyboard which layout to show
   if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
-    HRESULT hr = pfnSetInputScopes(hwndParent, &scope, 1, nullptr, 0, nullptr, nullptr);
-    LogToFile("  SetInputScopes HRESULT: 0x" + std::to_string(hr));
-    if (SUCCEEDED(hr)) {
-      LogToFile("  SUCCESS: InputScope set!");
-    } else {
-      LogToFile("  FAILED: SetInputScopes returned error");
-    }
-  } else {
-    LogToFile("  ERROR: SetInputScopes function not found in msctf.dll!");
+    pfnSetInputScopes(hwndParent, &scope, 1, nullptr, 0, nullptr, nullptr);
   }
-  LogToFile("=================================");
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
