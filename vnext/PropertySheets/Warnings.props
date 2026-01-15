@@ -24,8 +24,7 @@
       4701;  <!-- potentially uninitialized local variable used -->
       4703;  <!-- potentially uninitialized local pointer variable used -->
       4789;  <!-- destination of memory copy too small -->
-      4995;  <!-- function marked as pragma deprecated -->
-      4996   <!-- deprecated function (including std::) -->
+      4995  <!-- function marked as pragma deprecated -->
     </SDLMandatoryWarnings>
 
     <!-- SDL RECOMMENDED WARNINGS (Strongly recommended to fix) -->

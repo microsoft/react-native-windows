@@ -2223,14 +2223,14 @@
     serve-static "^1.16.2"
     ws "^6.2.3"
 
-"@react-native/eslint-config@0.82.0-nightly-20250902-9731e8ebc":
-  version "0.82.0-nightly-20250902-9731e8ebc"
-  resolved "https://registry.yarnpkg.com/@react-native/eslint-config/-/eslint-config-0.82.0-nightly-20250902-9731e8ebc.tgz#3fc55b38acbdf34476ad905333e9288a2f344e95"
-  integrity sha512-QqWr0dsHEN2MpZhJ2cLBE+aRRFbw1mwQMvDj9bhxnBTSk5iFwRT5/OnLChwBIRuqGwGdlydmKgsOzhIHaVRDOA==
+"@react-native/eslint-config@0.82.0-rc.0":
+  version "0.82.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@react-native/eslint-config/-/eslint-config-0.82.0-rc.0.tgz#b34fa9abcfc7f6873f59f965e85de80cde05ae99"
+  integrity sha512-WN2grMkl+JaIfARp43vUzy/CZD/mfsAFIObIqcDAsdKF545/Hu7IjKGTMa/QaTYQIJ8rpgEV1thnk5F+98wDiw==
   dependencies:
     "@babel/core" "^7.25.2"
     "@babel/eslint-parser" "^7.25.1"
-    "@react-native/eslint-plugin" "0.82.0-nightly-20250902-9731e8ebc"
+    "@react-native/eslint-plugin" "0.82.0-rc.0"
     "@typescript-eslint/eslint-plugin" "^8.36.0"
     "@typescript-eslint/parser" "^8.36.0"
     eslint-config-prettier "^8.5.0"
@@ -2241,10 +2241,10 @@
     eslint-plugin-react-hooks "^5.2.0"
     eslint-plugin-react-native "^4.0.0"
 
-"@react-native/eslint-plugin@0.82.0-nightly-20250902-9731e8ebc":
-  version "0.82.0-nightly-20250902-9731e8ebc"
-  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin/-/eslint-plugin-0.82.0-nightly-20250902-9731e8ebc.tgz#90bb4b23ffad05d9c16ab4440c65121667b9d370"
-  integrity sha512-yzE+AALmiSAL1xpUS+3ULi4H8SBvm/PkkBW99xvCS0lPlkm+0fl1TL50V6tEU6tMd/Pm8mOxVferi9WyiXIo5w==
+"@react-native/eslint-plugin@0.82.0-rc.0":
+  version "0.82.0-rc.0"
+  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin/-/eslint-plugin-0.82.0-rc.0.tgz#ecca9e52de9df98c21a605795193d072db23b058"
+  integrity sha512-1kMkCVUiu0SLxcbZrPUbEjww0Vwfl//oeJpAyuUY0G4fc6uvUQGCiUZzjQCT/lz6xkgfEWjpRV9u4OKAIGXllQ==
 
 "@react-native/gradle-plugin@0.82.0-rc.0":
   version "0.82.0-rc.0"
@@ -2280,11 +2280,6 @@
   version "0.82.0-nightly-20250821-0ef21bf8a"
   resolved "https://registry.yarnpkg.com/@react-native/new-app-screen/-/new-app-screen-0.82.0-nightly-20250821-0ef21bf8a.tgz#f7b64f7bd93945bdea0d597d973b11d079bbceb9"
   integrity sha512-IcNqFAgsUTEt/GxJDW7PaoOS2Sn3iTQijnPGCIBkmlo/PBlnOzOZOXT6nz58aVdWYbHVh9+WTuItv/dpeKgzMg==
-
-"@react-native/new-app-screen@0.82.0-nightly-20250902-9731e8ebc":
-  version "0.82.0-nightly-20250902-9731e8ebc"
-  resolved "https://registry.yarnpkg.com/@react-native/new-app-screen/-/new-app-screen-0.82.0-nightly-20250902-9731e8ebc.tgz#c726a7858e331d7c99e10d014351404605bf2bb2"
-  integrity sha512-mMURaNdPIzsfDD+x5olyIjAT5VbWR0aMPaXlieuSxk9bn6VIbnvYjZg1iAGg7wyyKqQvDKejqhLfejUpa4irfg==
 
 "@react-native/new-app-screen@0.82.0-rc.0":
   version "0.82.0-rc.0"

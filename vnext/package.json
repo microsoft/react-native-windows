@@ -33,7 +33,7 @@
     "@react-native/community-cli-plugin": "0.82.0-rc.0",
     "@react-native/gradle-plugin": "0.82.0-rc.0",
     "@react-native/js-polyfills": "0.82.0-rc.0",
-    "@react-native/new-app-screen": "0.82.0-nightly-20250902-9731e8ebc",
+    "@react-native/new-app-screen": "0.82.0-rc.0",
     "@react-native/normalize-colors": "0.82.0-rc.0",
     "@react-native/virtualized-lists": "0.82.0-rc.0",
     "abort-controller": "^3.0.0",
