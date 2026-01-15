@@ -81,7 +81,7 @@ struct FieldInfo {
   FieldInfo(TValue TClass::*fieldPtr) noexcept
       : m_fieldReader{FieldReader<TClass, TValue>},
         m_fieldWriter{FieldWriter<TClass, TValue>},
-        m_fieldPtrStore{*reinterpret_cast<uintptr_t *>(&fieldPtr)} {
+        m_fieldPtrStore{StoreFieldPtr(fieldPtr)} {
     static_assert(sizeof(m_fieldPtrStore) >= sizeof(fieldPtr));
   }
 
@@ -94,6 +94,13 @@ struct FieldInfo {
   }
 
  private:
+  template <class TClass, class TValue>
+  static uintptr_t StoreFieldPtr(TValue TClass::*fieldPtr) noexcept {
+    uintptr_t result{};
+    std::memcpy(&result, &fieldPtr, sizeof(fieldPtr));
+    return result;
+  }
+
   FieldReaderType m_fieldReader;
   FieldWriterType m_fieldWriter;
   const uintptr_t m_fieldPtrStore;

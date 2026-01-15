@@ -34,6 +34,9 @@ struct WindowsComponentDescriptorRegistry {
 
   bool hasComponentProvider(const std::string &name) noexcept;
 
+  // Returns true if any component requested for XAML support.
+  bool isXamlSupportRequired() const noexcept;
+
  private:
   void add(const facebook::react::ComponentDescriptorProvider &provider) noexcept;
 

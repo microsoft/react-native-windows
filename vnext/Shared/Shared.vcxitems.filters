@@ -37,9 +37,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.cpp">
-      <Filter>Source Files\Threading</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.cpp">
       <Filter>Source Files\Threading</Filter>
     </ClCompile>
@@ -54,9 +51,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JSExecutorFactorySettings.cpp">
-      <Filter>Source Files\JSI</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp">
       <Filter>Source Files\Modules</Filter>
@@ -87,6 +81,7 @@
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ImageUtils.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\IcuUtils.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\Helpers.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\DevMenu.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\EventEmitters.cpp">
@@ -205,7 +200,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UiaHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UnimplementedNativeViewComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\NativeModulesProvider.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\CrashManager.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
@@ -296,6 +290,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\codegen\rnwcoreJSI-generated.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\TraceEventSerializer.cpp" />
+     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\HostTargetTraceRecording.cpp " />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\HostTargetTracing.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\TraceRecordingStateSerializer.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\PerfMonitorV2.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextProvider.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextRangeProvider.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionAnnotationProvider.cpp" />
@@ -470,9 +468,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)BatchingMessageQueueThread.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CreateModules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -509,9 +504,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)NativeModuleProvider.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)OInstance.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -539,9 +531,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\BatchingQueueThread.h">
-      <Filter>Header Files\Threading</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.h">
       <Filter>Header Files\Threading</Filter>
     </ClInclude>
@@ -555,12 +544,6 @@
       <Filter>Header Files\JSI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JSExecutorFactoryDelegate.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JSExecutorFactorySettings.h">
       <Filter>Header Files\JSI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h">

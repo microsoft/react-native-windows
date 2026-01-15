@@ -20,6 +20,23 @@ export default class Bootstrap extends React.Component {
           selectable={true}>
           Click here : This is a text with a tooltip.
         </Text>
+
+        <View style={styles.selectionTestContainer}>
+          <Text style={styles.sectionTitle}>Text Selection Test</Text>
+          <Text selectable={true} style={styles.selectableText}>
+            This text is SELECTABLE. Try clicking and dragging to select it.
+          </Text>
+          <Text selectable={true} style={styles.selectableText}>
+            Hello 世界世界 World - Double-click to test CJK word selection!
+          </Text>
+          <Text selectable={false} style={styles.nonSelectableText}>
+            This text is NOT selectable (selectable=false).
+          </Text>
+          <Text style={styles.defaultText}>
+            This text has no selectable prop (default behavior).
+          </Text>
+        </View>
+
         <View
           style={styles.container2}
           accessible={true}
@@ -63,6 +80,38 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
+  },
+  selectionTestContainer: {
+    backgroundColor: '#f0f0f0',
+    padding: 15,
+    marginVertical: 10,
+    borderRadius: 8,
+    width: 400,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333',
+  },
+  selectableText: {
+    fontSize: 16,
+    color: '#007ACC',
+    marginBottom: 8,
+    padding: 8,
+    backgroundColor: '#e8f4fc',
+  },
+  nonSelectableText: {
+    fontSize: 16,
+    color: '#666',
+    marginBottom: 8,
+    padding: 8,
+    backgroundColor: '#f5f5f5',
+  },
+  defaultText: {
+    fontSize: 16,
+    color: '#999',
+    padding: 8,
   },
 });
 

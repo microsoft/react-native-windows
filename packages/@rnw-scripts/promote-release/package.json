@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/promote-release",
   "version": "2.1.65",
+  "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "chalk": "^4.1.0",
+    "minimatch": "^10.0.3",
     "simple-git": "^3.3.0",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"

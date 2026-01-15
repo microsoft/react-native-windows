@@ -241,6 +241,9 @@ module.exports = {
   get NativeAppEventEmitter() {
     return require('./Libraries/EventEmitter/RCTNativeAppEventEmitter').default;
   },
+  get NativeComponentRegistry() {
+    return require('./Libraries/NativeComponent/NativeComponentRegistry');
+  },
   get NativeDialogManagerAndroid() {
     return require('./Libraries/NativeModules/specs/NativeDialogManagerAndroid')
       .default;
@@ -371,9 +374,6 @@ module.exports = {
   },
   get AppTheme() {
     return require('./Libraries/AppTheme/AppTheme').AppTheme;
-  },
-  get XamlHost() {
-    return require('./Libraries/Components/Xaml/XamlHost').default;
   },
 } as ReactNativePublicAPI;
 

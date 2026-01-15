@@ -2,6 +2,102 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 13 Jan 2026 13:00:14 GMT",
+      "version": "0.0.0-canary.1020",
+      "tag": "react-native-windows-init_v0.0.0-canary.1020",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.130",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.283",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 10 Jan 2026 06:40:18 GMT",
+      "version": "0.0.0-canary.1019",
+      "tag": "react-native-windows-init_v0.0.0-canary.1019",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.282",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 30 Dec 2025 06:39:30 GMT",
+      "version": "0.0.0-canary.1018",
+      "tag": "react-native-windows-init_v0.0.0-canary.1018",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows-init",
+            "commit": "c0b7f6f5a156b7a4406f96cd6db48589ff1c10d5",
+            "comment": "Use experimental WinAppSDK"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 25 Dec 2025 06:39:17 GMT",
+      "version": "0.0.0-canary.1017",
+      "tag": "react-native-windows-init_v0.0.0-canary.1017",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows-init",
+            "commit": "857247f5f8dd3bae2c02ad266dc4ff6f9d6f2579",
+            "comment": "Bump Jsi Version to 21"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 03 Dec 2025 06:40:45 GMT",
+      "version": "0.0.0-canary.1016",
+      "tag": "react-native-windows-init_v0.0.0-canary.1016",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "6099ed486aabbdc654176d4cab27708e24e8ab0c",
+            "comment": "Use 0.0.0-canary.1015 version for public NPM packages"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Dec 2025 06:36:52 GMT",
+      "version": "1.4.85",
+      "tag": "react-native-windows-init_v1.4.85",
+      "comments": {
+        "none": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "3123d2987b083e99fb7714bc3d871071c63c0ba9",
+            "comment": "Fix NPM dist tags and make some NPM private"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Nov 2025 06:42:06 GMT",
       "version": "1.4.85",
       "tag": "react-native-windows-init_v1.4.85",

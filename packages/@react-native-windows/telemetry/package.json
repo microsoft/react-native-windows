@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/telemetry",
-  "version": "0.0.0-canary.129",
+  "version": "0.0.0-canary.130",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "typings": "lib-commonjs/index.d.ts",

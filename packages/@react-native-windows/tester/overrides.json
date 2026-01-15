@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.82.0-nightly-20250806-5936f29d6",
+  "baseVersion": "0.82.0-nightly-20250902-9731e8ebc",
   "overrides": [
     {
       "type": "copy",
@@ -43,14 +43,14 @@
       "type": "patch",
       "file": "src/js/examples/FlatList/BaseFlatListExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/BaseFlatListExample.js",
-      "baseHash": "533b9b1c2889c22af9ba923e17a8951ffbbfe3d7",
+      "baseHash": "7a516e491b4cbe22678baf899dfe855567468a6f",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-basic.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-basic.js",
-      "baseHash": "c523e6ea68a0ec0e754f4bea57f598200112a3c1",
+      "baseHash": "41496b69da9128cd74a3efa43e41d08f967b37ed",
       "issue": 12869
     },
     {
@@ -104,7 +104,7 @@
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "004cbe16f75b572bd4f4d8f19eab81bc31f710e1",
+      "baseHash": "65b69f0b2d0906c91369d3e42ceea03a1d47b20c",
       "issue": 6240
     },
     {
@@ -117,14 +117,14 @@
       "type": "patch",
       "file": "src/js/examples/Text/TextSharedExamples.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextSharedExamples.js",
-      "baseHash": "2f043ce1ae7f2f82c0a913247da51777dd53979b",
+      "baseHash": "da71056f942bf857b29702890d81f65cf49dc17e",
       "issue": 15125
     },
     {
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "e2ec4b71e3cd614682d9be1551b3a2994ea51823",
+      "baseHash": "9aa7d0134a84831e699156845ec92d0a2fc8c108",
       "issue": 5688
     },
     {
@@ -137,7 +137,7 @@
       "type": "patch",
       "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "3e16d172b5b5cac74c4733662d83bc2b2107bc4f"
+      "baseHash": "6699f509cf17c113d98fd87bfab9127037d9ca08"
     },
     {
       "type": "patch",

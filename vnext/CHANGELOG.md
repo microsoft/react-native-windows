@@ -1,8 +1,154 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 27 Nov 2025 06:35:01 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 13 Jan 2026 13:00:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1030
+
+Tue, 13 Jan 2026 13:00:14 GMT
+
+### Changes
+
+- integrate 0.82.0-nightly-20250902-9731e8ebc (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.283
+- Bump react-native-platform-override to v0.0.0-canary.1019
+
+## 0.0.0-canary.1029
+
+Tue, 13 Jan 2026 06:39:28 GMT
+
+### Changes
+
+- Validate arguements for OriginPolicyHttpFilter (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1028
+
+Sat, 10 Jan 2026 06:40:18 GMT
+
+### Changes
+
+- Add ability to customize native accessibility of custom native components (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.282
+- Bump @react-native-windows/codegen to v0.0.0-canary.129
+
+## 0.0.0-canary.1027
+
+Wed, 07 Jan 2026 06:40:55 GMT
+
+### Changes
+
+- Include missing bridging files in MS.RN.Cxx (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1026
+
+Tue, 06 Jan 2026 06:38:13 GMT
+
+### Changes
+
+- Fix DPI scaling for debugging overlay highlights (74712637+iamAbhi-916@users.noreply.github.com)
+- Implements selectable for <Text> (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1025
+
+Tue, 30 Dec 2025 06:39:30 GMT
+
+### Changes
+
+- Use experimental WinAppSDK (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1018
+
+## 0.0.0-canary.1024
+
+Thu, 25 Dec 2025 06:39:17 GMT
+
+### Changes
+
+- Integrate 0.82.0-nightly-20250821-0ef21bf8a (66076509+vineethkuttan@users.noreply.github.com)
+- Bump Jsi Version to 21 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1017
+
+## 0.0.0-canary.1023
+
+Wed, 24 Dec 2025 06:32:41 GMT
+
+### Changes
+
+- bump hermes to 0.0.0-2512.22001-bc3d0ed7 (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1022
+
+Fri, 19 Dec 2025 06:34:05 GMT
+
+### Changes
+
+- adding accessibility and UIA support for XAML fabric (protikbiswas100@microsoft.com)
+
+## 0.0.0-canary.1021
+
+Wed, 17 Dec 2025 06:33:16 GMT
+
+### Changes
+
+- Defer UIA accessibility provider initialization until requested (198982749+Copilot@users.noreply.github.com)
+
+## 0.0.0-canary.1020
+
+Sat, 13 Dec 2025 06:33:40 GMT
+
+### Changes
+
+- [Fabric] Fix UIA_LiveSettingPropertyId to use VT_I4 datatype instead of VT_BSTR (ankudutt101@gmail.com)
+
+## 0.0.0-canary.1019
+
+Sun, 07 Dec 2025 06:34:40 GMT
+
+### Changes
+
+- Fix stackoverflow in StructInfo (vmorozov@microsoft.com)
+
+## 0.0.0-canary.1018
+
+Sat, 06 Dec 2025 06:38:46 GMT
+
+### Changes
+
+- solve modal foreground/background issue and only have a closebutton on title bar with no icon (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1017
+
+Fri, 05 Dec 2025 06:34:57 GMT
+
+### Changes
+
+- Fix crash when image loading fails due to network error (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1016
+
+Wed, 03 Dec 2025 06:40:45 GMT
+
+### Changes
+
+- Use 0.0.0-canary.1015 version for public NPM packages (vmorozov@microsoft.com)
+- Remove WerRegisterMemoryBlock which causes issues when kernel debugging (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1016
+
+## 0.0.0-canary.1015
+
+Tue, 02 Dec 2025 06:36:52 GMT
+
+### Changes
+
+- Adding override for conversions.h (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1014
+
+Mon, 01 Dec 2025 06:36:40 GMT
+
+### Changes
+
+- Bump fastfloat to 8.0.0 (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.0.0-canary.1013
 

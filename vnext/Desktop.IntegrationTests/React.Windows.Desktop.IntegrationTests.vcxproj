@@ -113,8 +113,8 @@
   <ItemGroup>
     <ClCompile Include="HttpOriginPolicyIntegrationTest.cpp" />
     <ClCompile Include="HttpResourceIntegrationTests.cpp" />
-    <ClCompile Include="Modules\TestDevSettingsModule.cpp" />
-    <ClCompile Include="Modules\TestImageLoaderModule.cpp" />
+    <ClCompile Include="Modules\TestDevSettingsModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
+    <ClCompile Include="Modules\TestImageLoaderModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="WebSocketIntegrationTest.cpp" />
     <ClCompile Include="WebSocketResourcePerformanceTests.cpp" />
   </ItemGroup>

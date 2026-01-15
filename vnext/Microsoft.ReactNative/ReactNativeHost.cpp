@@ -13,6 +13,9 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include "IReactContext.h"
 #include "ReactInstanceSettings.h"
+#ifdef RNW_XAML_ISLAND
+#include "XamlApplication.h"
+#endif // RNW_XAML_ISLAND
 
 #include <Fabric/Composition/Modal/WindowsModalHostViewComponentView.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
@@ -79,8 +82,6 @@ ReactNativeHostProperty() noexcept {
 }
 
 IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
-  auto modulesProvider = std::make_shared<NativeModulesProvider>();
-
   auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
   auto uriImageManager =
@@ -91,8 +92,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   ::Microsoft::ReactNative::WindowsComponentDescriptorRegistry::AddToProperties(
       ReactPropertyBag(m_instanceSettings.Properties()), componentregistry);
 
-  m_packageBuilder =
-      make<ReactPackageBuilder>(modulesProvider, turboModulesProvider, componentregistry, uriImageManager);
+  m_packageBuilder = make<ReactPackageBuilder>(turboModulesProvider, componentregistry, uriImageManager);
 
   winrt::Microsoft::ReactNative::Composition::implementation::RegisterWindowsModalHostNativeComponent(m_packageBuilder);
 
@@ -101,6 +101,12 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
       packageProvider.CreatePackage(m_packageBuilder);
     }
   }
+
+#ifdef RNW_XAML_ISLAND
+  if (componentregistry->isXamlSupportRequired()) {
+    winrt::Microsoft::ReactNative::Xaml::implementation::XamlApplication::EnsureCreated();
+  }
+#endif // RNW_XAML_ISLAND
 
   ReactPropertyBag(m_instanceSettings.Properties()).Set(ReactNativeHostProperty(), get_weak());
 
@@ -142,7 +148,6 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.SetEnableDefaultCrashHandler(m_instanceSettings.EnableDefaultCrashHandler());
   reactOptions.SetJsiEngine(static_cast<Mso::React::JSIEngine>(m_instanceSettings.JSIEngineOverride()));
 
-  reactOptions.ModuleProvider = modulesProvider;
   reactOptions.TurboModuleProvider = turboModulesProvider;
 
   reactOptions.UriImageManager = uriImageManager;

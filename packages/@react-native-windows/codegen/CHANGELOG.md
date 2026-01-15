@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 10 Jan 2026 06:40:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.129
+
+Sat, 10 Jan 2026 06:40:18 GMT
+
+### Changes
+
+- Add ability to customize native accessibility of custom native components (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.128
 

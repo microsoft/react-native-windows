@@ -77,7 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ControllableMessageQueueThread.cpp" />
-    <ClCompile Include="TestModule.cpp" />
+    <ClCompile Include="TestModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ControllableMessageQueueThread.h" />

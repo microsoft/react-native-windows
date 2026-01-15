@@ -124,6 +124,7 @@
         DISABLE_XAML_GENERATED_MAIN;
         REACTWINDOWS_BUILD;
         RN_PLATFORM=windows;
+        RNW_XAML_ISLAND;
         NOMINMAX;
         FOLLY_CFG_NO_COROUTINES;
         FOLLY_NO_CONFIG;
@@ -182,7 +183,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="Base\CxxReactIncludes.h" />
     <ClInclude Include="Base\FollyIncludes.h" />
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h" />
@@ -252,7 +252,6 @@
     <ClInclude Include="Modules\LogBoxModule.h" />
     <ClInclude Include="Modules\ReactRootViewTagGenerator.h" />
     <ClInclude Include="Modules\TimingModule.h" />
-    <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="ReactHost\IReactInstance.h" />
     <ClInclude Include="RedBoxErrorInfo.h" />
     <ClInclude Include="RedBoxErrorFrameInfo.h" />
@@ -307,6 +306,7 @@
     <ClInclude Include="Utils\TransformableText.h" />
     <ClInclude Include="Utils\UwpPreparedScriptStore.h" />
     <ClInclude Include="Utils\UwpScriptStore.h" />
+    <ClInclude Include="Utils\IcuUtils.h" />
     <ClInclude Include="Utils\ValueUtils.h" />
     <ClInclude Include="Utils\XamlIslandUtils.h" />
     <ClInclude Include="Utils\XamlUtils.h" />
@@ -331,7 +331,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="Modules\AccessibilityInfoModule.cpp" />
     <ClCompile Include="Modules\AlertModule.cpp" />
@@ -366,7 +365,7 @@
     <ClCompile Include="Modules\I18nManagerModule.cpp" />
     <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
-    <ClCompile Include="Modules\LogBoxModule.cpp" />
+    <ClCompile Include="Modules\LogBoxModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

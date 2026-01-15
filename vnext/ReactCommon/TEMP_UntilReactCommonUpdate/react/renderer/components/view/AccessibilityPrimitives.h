@@ -53,27 +53,6 @@ struct AccessibilityAction {
   std::optional<std::string> label{};
 };
 
-inline std::string toString(const AccessibilityAction& accessibilityAction) {
-  std::string result = accessibilityAction.name;
-  if (accessibilityAction.label.has_value()) {
-    result += ": '" + accessibilityAction.label.value() + "'";
-  }
-  return result;
-}
-
-inline std::string toString(
-    std::vector<AccessibilityAction> accessibilityActions) {
-  std::string result = "[";
-  for (size_t i = 0; i < accessibilityActions.size(); i++) {
-    result += toString(accessibilityActions[i]);
-    if (i < accessibilityActions.size() - 1) {
-      result += ", ";
-    }
-  }
-  result += "]";
-  return result;
-}
-
 inline static bool operator==(
     const AccessibilityAction& lhs,
     const AccessibilityAction& rhs) {
@@ -91,10 +70,10 @@ struct AccessibilityState {
   std::optional<bool> selected{std::nullopt}; // [Windows] - Do not remove; required for Windows ISelectionItemProvider Implementation
   bool busy{false};
   std::optional<bool> expanded{std::nullopt};
+  enum CheckedState { Unchecked, Checked, Mixed, None } checked{None};
   std::optional<bool> readOnly{std::nullopt}; // [Windows] - Do not remove; required for Windows IRangeValueProvider and IValueProvider Implementation
   std::optional<bool> multiselectable{std::nullopt}; // [Windows] - Do not remove; required for Windows ISelectionProvider Implementation
   std::optional<bool> required{std::nullopt}; // [Windows] - Do not remove; required for Windows ISelectionProvider Implementation
-  enum { Unchecked, Checked, Mixed, None } checked{None};
 };
 
 constexpr bool operator==(
@@ -160,21 +139,7 @@ enum class AccessibilityLiveRegion : uint8_t {
   Assertive,
 };
 
-inline std::string toString(
-    const AccessibilityLiveRegion& accessibilityLiveRegion) {
-  switch (accessibilityLiveRegion) {
-    case AccessibilityLiveRegion::None:
-      return "none";
-    case AccessibilityLiveRegion::Polite:
-      return "polite";
-    case AccessibilityLiveRegion::Assertive:
-      return "assertive";
-  }
-  // [windows] Default return for unexpected enum values
-  return "none";
-}
-
-enum class AccessibilityRole {
+enum class AccessibilityRole : uint8_t {
   None,
   Button,
   Dropdownlist,
@@ -217,7 +182,7 @@ enum class AccessibilityRole {
   Iconmenu,
 };
 
-enum class Role {
+enum class Role : uint8_t {
   Alert,
   Alertdialog,
   Application,

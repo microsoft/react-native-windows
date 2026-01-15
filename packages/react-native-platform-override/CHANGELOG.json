@@ -2,6 +2,81 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Tue, 13 Jan 2026 13:00:14 GMT",
+      "version": "0.0.0-canary.1019",
+      "tag": "react-native-platform-override_v0.0.0-canary.1019",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "da1e74cb1c7d7d1749fd963398580069fa62344b",
+            "comment": "integrate 0.82.0-nightly-20250902-9731e8ebc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 30 Dec 2025 06:39:30 GMT",
+      "version": "0.0.0-canary.1018",
+      "tag": "react-native-platform-override_v0.0.0-canary.1018",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "c0b7f6f5a156b7a4406f96cd6db48589ff1c10d5",
+            "comment": "Use experimental WinAppSDK"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 25 Dec 2025 06:39:17 GMT",
+      "version": "0.0.0-canary.1017",
+      "tag": "react-native-platform-override_v0.0.0-canary.1017",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "857247f5f8dd3bae2c02ad266dc4ff6f9d6f2579",
+            "comment": "Bump Jsi Version to 21"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 03 Dec 2025 06:40:45 GMT",
+      "version": "0.0.0-canary.1016",
+      "tag": "react-native-platform-override_v0.0.0-canary.1016",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "6099ed486aabbdc654176d4cab27708e24e8ab0c",
+            "comment": "Use 0.0.0-canary.1015 version for public NPM packages"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Dec 2025 06:36:52 GMT",
+      "version": "1.9.61",
+      "tag": "react-native-platform-override_v1.9.61",
+      "comments": {
+        "none": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "3123d2987b083e99fb7714bc3d871071c63c0ba9",
+            "comment": "Fix NPM dist tags and make some NPM private"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Nov 2025 06:42:06 GMT",
       "version": "1.9.61",
       "tag": "react-native-platform-override_v1.9.61",

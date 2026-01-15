@@ -30,7 +30,6 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4068 4251 4101 4804 4309)
-#include <cxxreact/JSExecutor.h>
 #include <cxxreact/MessageQueueThread.h>
 #pragma warning(pop)
 
