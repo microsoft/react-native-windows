@@ -100,8 +100,9 @@ function serializeArg(moduleName, arg, index, resolveAlias, enumMap) {
 
     // param: T
     //return `count <= ${index} ? throw jsi::JSError(rt, "Expected argument in position ${index} to be passed") : ${expression}`;
-    //return `if(count <= ${index}) throw jsi::JSError(rt, "Expected argument in position ${index} to be passed"); else  ${expression};`;
-    return `(count > 0 || (throw jsi::JSError(rt, "Expected argument in position ${index} to be passed"), false), ${expression})`;
+    //Windows #15545
+    return `(count > ${index} || (throw jsi::JSError(rt, "Expected argument in position ${index} to be passed"), false), ${expression})`;
+    //Windows
   }
   switch (realTypeAnnotation.type) {
     case 'ReservedTypeAnnotation':

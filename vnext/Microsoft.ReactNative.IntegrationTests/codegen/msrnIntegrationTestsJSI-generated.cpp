@@ -20,7 +20,7 @@ static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_logActio
   static_cast<NativeMySimpleTurboModuleCxxCxxSpecJSI *>(&turboModule)->logAction(
     rt,
     (count > 0 || (throw jsi::JSError(rt, "Expected argument in position 0 to be passed"), false), args[0].asString(rt)),
-    (count > 0 || (throw jsi::JSError(rt, "Expected argument in position 1 to be passed"), false), jsi::Value(rt, args[1]))
+    (count > 1 || (throw jsi::JSError(rt, "Expected argument in position 1 to be passed"), false), jsi::Value(rt, args[1]))
   );
   return jsi::Value::undefined();
 }
@@ -64,8 +64,8 @@ static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_getValue
   return static_cast<NativeMySimpleTurboModuleCxxCxxSpecJSI *>(&turboModule)->getValue(
     rt,
     (count > 0 || (throw jsi::JSError(rt, "Expected argument in position 0 to be passed"), false), args[0].asNumber()),
-    (count > 0 || (throw jsi::JSError(rt, "Expected argument in position 1 to be passed"), false), args[1].asString(rt)),
-    (count > 0 || (throw jsi::JSError(rt, "Expected argument in position 2 to be passed"), false), args[2].asObject(rt))
+    (count > 1 || (throw jsi::JSError(rt, "Expected argument in position 1 to be passed"), false), args[1].asString(rt)),
+    (count > 2 || (throw jsi::JSError(rt, "Expected argument in position 2 to be passed"), false), args[2].asObject(rt))
   );
 }
 static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_getValueWithCallback(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
