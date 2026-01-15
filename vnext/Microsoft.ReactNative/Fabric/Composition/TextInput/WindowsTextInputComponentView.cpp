@@ -47,6 +47,28 @@ typedef HRESULT(WINAPI *PFN_SetInputScopes)(
 static PFN_SetInputScopes g_pfnSetInputScopes = nullptr;
 static bool g_bSetInputScopesInitialized = false;
 
+// Debug logging to file in current working directory
+static void LogToFile(const char* message) {
+  wchar_t exePath[MAX_PATH];
+  GetModuleFileNameW(NULL, exePath, MAX_PATH);
+  std::wstring logPath(exePath);
+  size_t lastSlash = logPath.find_last_of(L"\\/");
+  if (lastSlash != std::wstring::npos) {
+    logPath = logPath.substr(0, lastSlash + 1);
+  }
+  logPath += L"keyboard_debug.log";
+  
+  FILE* f = nullptr;
+  _wfopen_s(&f, logPath.c_str(), L"a");
+  if (f) {
+    SYSTEMTIME st;
+    GetLocalTime(&st);
+    fprintf(f, "[%02d:%02d:%02d.%03d] %s\n", st.wHour, st.wMinute, st.wSecond, st.wMilliseconds, message);
+    fflush(f);
+    fclose(f);
+  }
+}
+
 static PFN_SetInputScopes GetSetInputScopesProc() {
   if (!g_bSetInputScopesInitialized) {
     g_bSetInputScopesInitialized = true;
@@ -753,7 +775,8 @@ void WindowsTextInputComponentView::OnPointerPressed(
     pressInArgs.pagePoint = {position.X, position.Y};
     pressInArgs.offsetPoint = {offsetX, offsetY}; //{LocationX,LocationY}
     pressInArgs.timestamp = static_cast<double>(pp.Timestamp()) / 1000.0;
-    pressInArgs.identifier = pp.PointerId();
+    // Normalize pointer ID to 0-20 range to avoid React touch system performance warning
+    pressInArgs.identifier = pp.PointerId() % 21;
 
     emitter->onPressIn(pressInArgs);
   }
@@ -818,7 +841,8 @@ void WindowsTextInputComponentView::OnPointerReleased(
     pressOutArgs.pagePoint = {position.X, position.Y};
     pressOutArgs.offsetPoint = {offsetX, offsetY}; //{LocationX,LocationY}
     pressOutArgs.timestamp = static_cast<double>(pp.Timestamp()) / 1000.0;
-    pressOutArgs.identifier = pp.PointerId();
+    // Normalize pointer ID to 0-20 range to avoid React touch system performance warning
+    pressOutArgs.identifier = pp.PointerId() % 21;
 
     emitter->onPressOut(pressOutArgs);
   }
@@ -1103,6 +1127,10 @@ void WindowsTextInputComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   m_hasFocus = true;
   Super::onGotFocus(args);
+  
+  char logBuf[256];
+  sprintf_s(logBuf, "onGotFocus called, m_keyboardType='%s'", m_keyboardType.c_str());
+  LogToFile(logBuf);
   
   // Set InputScope on parent HWND for touch keyboard layout
   updateKeyboardType(m_keyboardType);
@@ -1981,11 +2009,19 @@ void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Founda
 void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboardType) noexcept {
   m_keyboardType = keyboardType;
 
+  char logBuf[512];
+  sprintf_s(logBuf, "updateKeyboardType called with: '%s'", keyboardType.c_str());
+  LogToFile(logBuf);
+
   // Get the parent/root HWND - this is the actual window that receives focus
   HWND hwndParent = GetHwndForParenting();
   if (!hwndParent) {
+    LogToFile("ERROR: GetHwndForParenting returned NULL");
     return;
   }
+  
+  sprintf_s(logBuf, "Got parent HWND: 0x%p", hwndParent);
+  LogToFile(logBuf);
 
   // Map keyboard type to InputScope
   InputScope scope = IS_DEFAULT;
@@ -2010,10 +2046,17 @@ void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboa
     }
   }
 
+  sprintf_s(logBuf, "Mapped to InputScope: %d (secureTextEntry=%d)", (int)scope, isSecureTextEntry ? 1 : 0);
+  LogToFile(logBuf);
+
   // Use SetInputScopes API to set InputScope on the parent HWND
   // This tells Windows Touch Keyboard which layout to show
   if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
-    pfnSetInputScopes(hwndParent, &scope, 1, nullptr, 0, nullptr, nullptr);
+    HRESULT hr = pfnSetInputScopes(hwndParent, &scope, 1, nullptr, 0, nullptr, nullptr);
+    sprintf_s(logBuf, "SetInputScopes returned HRESULT: 0x%08lX", hr);
+    LogToFile(logBuf);
+  } else {
+    LogToFile("ERROR: GetSetInputScopesProc returned NULL - msctf.dll not loaded");
   }
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
