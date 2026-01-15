@@ -1,8 +1,88 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 17 Dec 2025 06:33:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 13 Jan 2026 13:00:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1030
+
+Tue, 13 Jan 2026 13:00:14 GMT
+
+### Changes
+
+- integrate 0.82.0-nightly-20250902-9731e8ebc (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.283
+- Bump react-native-platform-override to v0.0.0-canary.1019
+
+## 0.0.0-canary.1029
+
+Tue, 13 Jan 2026 06:39:28 GMT
+
+### Changes
+
+- Validate arguements for OriginPolicyHttpFilter (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1028
+
+Sat, 10 Jan 2026 06:40:18 GMT
+
+### Changes
+
+- Add ability to customize native accessibility of custom native components (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.282
+- Bump @react-native-windows/codegen to v0.0.0-canary.129
+
+## 0.0.0-canary.1027
+
+Wed, 07 Jan 2026 06:40:55 GMT
+
+### Changes
+
+- Include missing bridging files in MS.RN.Cxx (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1026
+
+Tue, 06 Jan 2026 06:38:13 GMT
+
+### Changes
+
+- Fix DPI scaling for debugging overlay highlights (74712637+iamAbhi-916@users.noreply.github.com)
+- Implements selectable for <Text> (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1025
+
+Tue, 30 Dec 2025 06:39:30 GMT
+
+### Changes
+
+- Use experimental WinAppSDK (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1018
+
+## 0.0.0-canary.1024
+
+Thu, 25 Dec 2025 06:39:17 GMT
+
+### Changes
+
+- Integrate 0.82.0-nightly-20250821-0ef21bf8a (66076509+vineethkuttan@users.noreply.github.com)
+- Bump Jsi Version to 21 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1017
+
+## 0.0.0-canary.1023
+
+Wed, 24 Dec 2025 06:32:41 GMT
+
+### Changes
+
+- bump hermes to 0.0.0-2512.22001-bc3d0ed7 (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1022
+
+Fri, 19 Dec 2025 06:34:05 GMT
+
+### Changes
+
+- adding accessibility and UIA support for XAML fabric (protikbiswas100@microsoft.com)
 
 ## 0.0.0-canary.1021
 

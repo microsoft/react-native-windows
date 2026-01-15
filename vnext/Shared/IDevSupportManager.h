@@ -3,16 +3,12 @@
 
 #pragma once
 
-#include <cxxreact/JSExecutor.h>
 #include <functional>
 #include <memory>
 #include <string>
 
 namespace facebook {
 namespace react {
-
-using JSECreator =
-    std::function<std::unique_ptr<JSExecutor>(std::shared_ptr<ExecutorDelegate>, std::shared_ptr<MessageQueueThread>)>;
 
 struct DevSettings;
 

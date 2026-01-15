@@ -322,7 +322,7 @@ const TouchableWithoutFeedback: React.AbstractComponent<
     }
   }
 
-  // $FlowFixMe[incompatible-call]
+  // $FlowFixMe[incompatible-type]
   return cloneElement(element, {...elementProps, ref}, ...children);
 });
 

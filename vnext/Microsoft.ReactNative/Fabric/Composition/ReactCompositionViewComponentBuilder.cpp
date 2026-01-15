@@ -227,6 +227,14 @@ void ReactCompositionViewComponentBuilder::SetUnmountChildComponentViewHandler(
   m_unmountChildComponentViewHandler = impl;
 }
 
+void ReactCompositionViewComponentBuilder::SetCreateAutomationPeerHandler(CreateAutomationPeerDelegate impl) noexcept {
+  m_createAutomationPeerHandler = impl;
+}
+
+const CreateAutomationPeerDelegate &ReactCompositionViewComponentBuilder::CreateAutomationPeerHandler() const noexcept {
+  return m_createAutomationPeerHandler;
+}
+
 bool ReactCompositionViewComponentBuilder::XamlSupport() const noexcept {
   return m_xamlSupport;
 }

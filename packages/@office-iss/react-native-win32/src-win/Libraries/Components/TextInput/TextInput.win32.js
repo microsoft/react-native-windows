@@ -508,7 +508,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     [mostRecentEventCount, viewCommands],
   );
 
-  // $FlowExpectedError[incompatible-call]
+  // $FlowExpectedError[incompatible-type]
   const ref = useMergeRefs<HostInstance>(setLocalRef, props.forwardedRef);
 
   const _onChange = (event: TextInputChangeEvent) => {
@@ -721,6 +721,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
     props.onKeyUpCapture && props.onKeyUpCapture(event);
   };
 
+  const _accessibilityLabel =
+    props?.['aria-label'] ?? props?.accessibilityLabel;
+
   let _accessibilityState;
   if (
     accessibilityState != null ||
@@ -752,7 +755,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     if (typeof flattenedStyle?.fontWeight === 'number') {
       overrides = overrides || ({}: {...TextStyleInternal});
       overrides.fontWeight =
-        // $FlowFixMe[incompatible-cast]
+        // $FlowFixMe[incompatible-type]
         (flattenedStyle.fontWeight.toString(): TextStyleInternal['fontWeight']);
     }
 
@@ -782,6 +785,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
           flattenedStyle.paddingVertical == null &&
           flattenedStyle.paddingTop == null));
 
+    const _accessibilityElementsHidden =
+      props['aria-hidden'] ?? props.accessibilityElementsHidden;
+
     textInput = (
       <RCTTextInputView
         // Figure out imperative + forward refs.
@@ -789,8 +795,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
         {...otherProps}
         {...eventHandlers}
         acceptDragAndDropTypes={props.experimental_acceptDragAndDropTypes}
-        accessibilityErrorMessage={accessibilityErrorMessage}
+        accessibilityLabel={_accessibilityLabel}
         accessibilityState={_accessibilityState}
+        accessibilityElementsHidden={_accessibilityElementsHidden}
         accessible={accessible}
         submitBehavior={submitBehavior}
         caretHidden={caretHidden}
@@ -819,6 +826,10 @@ function InternalTextInput(props: TextInputProps): React.Node {
     const autoCapitalize = props.autoCapitalize || 'sentences';
     const _accessibilityLabelledBy =
       props?.['aria-labelledby'] ?? props?.accessibilityLabelledBy;
+    const _importantForAccessibility =
+      props['aria-hidden'] === true
+        ? ('no-hide-descendants' as const)
+        : undefined;
     const placeholder = props.placeholder ?? '';
     let children = props.children;
     const childCount = React.Children.count(children);
@@ -853,9 +864,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
         {...otherProps}
         {...colorProps}
         {...eventHandlers}
-        accessibilityErrorMessage={accessibilityErrorMessage}
-        accessibilityState={_accessibilityState}
+        accessibilityLabel={_accessibilityLabel}
         accessibilityLabelledBy={_accessibilityLabelledBy}
+        accessibilityState={_accessibilityState}
         accessible={accessible}
         acceptDragAndDropTypes={props.experimental_acceptDragAndDropTypes}
         autoCapitalize={autoCapitalize}
@@ -864,6 +875,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         children={children}
         disableFullscreenUI={props.disableFullscreenUI}
         focusable={tabIndex !== undefined ? !tabIndex : focusable}
+        importantForAccessibility={_importantForAccessibility}
         mostRecentEventCount={mostRecentEventCount}
         nativeID={id ?? props.nativeID}
         numberOfLines={props.rows ?? props.numberOfLines}
@@ -873,7 +885,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         /* $FlowFixMe[prop-missing] the types for AndroidTextInput don't match
          * up exactly with the props for TextInput. This will need to get fixed
          */
-        /* $FlowFixMe[incompatible-type-arg] the types for AndroidTextInput
+        /* $FlowFixMe[incompatible-type] the types for AndroidTextInput
          * don't match up exactly with the props for TextInput. This will need
          * to get fixed */
         onScroll={_onScroll}

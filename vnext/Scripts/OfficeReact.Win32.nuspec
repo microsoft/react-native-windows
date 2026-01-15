@@ -54,12 +54,10 @@
     <file src="$nugetroot$\inc\Shared\LayoutAnimation.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Logging.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\MemoryMappedBuffer.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\NativeModuleProvider.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Networking\IWebSocketResource.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Networking\OriginPolicy.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\RuntimeOptions.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Tracing.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\JSI\JSExecutorFactoryDelegate.h" target="inc\JSI"/>
 
     <!-- Test DLL -->
     <file src="$nugetroot$\inc\Test\WebSocketServer.h" target="inc\Test" />

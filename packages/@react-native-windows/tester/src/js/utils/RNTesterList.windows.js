@@ -80,6 +80,10 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples-win/NativeComponents/MovingLight'),
   },
   {
+    key: 'Custom Native Accessibility',
+    module: require('../examples-win/NativeComponents/CustomAccessibility'),
+  },
+  {
     key: 'Native Component',
     module: require('../examples-win/NativeComponents/NativeComponent'),
   },

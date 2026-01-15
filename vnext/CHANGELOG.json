@@ -2,6 +2,219 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 13 Jan 2026 13:00:14 GMT",
+      "version": "0.0.0-canary.1030",
+      "tag": "react-native-windows_v0.0.0-canary.1030",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "da1e74cb1c7d7d1749fd963398580069fa62344b",
+            "comment": "integrate 0.82.0-nightly-20250902-9731e8ebc"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.283",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1019",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 13 Jan 2026 06:39:28 GMT",
+      "version": "0.0.0-canary.1029",
+      "tag": "react-native-windows_v0.0.0-canary.1029",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b374980e3e49639c03a25594b91a551a74e012fa",
+            "comment": "Validate arguements for OriginPolicyHttpFilter"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 10 Jan 2026 06:40:18 GMT",
+      "version": "0.0.0-canary.1028",
+      "tag": "react-native-windows_v0.0.0-canary.1028",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "190a33d13984d6fb5b495c2a8d00acdbbf40fa9e",
+            "comment": "Add ability to customize native accessibility of custom native components"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.282",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.129",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Jan 2026 06:37:29 GMT",
+      "version": "0.0.0-canary.1027",
+      "tag": "react-native-windows_v0.0.0-canary.1027",
+      "comments": {
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5eb5ba9a707657c99a1576b68c20e77f7a65dd49",
+            "comment": "update fmt"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 07 Jan 2026 06:40:55 GMT",
+      "version": "0.0.0-canary.1027",
+      "tag": "react-native-windows_v0.0.0-canary.1027",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7cbfc2b7ef4e3218f1141aad98b684d414eea992",
+            "comment": "Include missing bridging files in MS.RN.Cxx"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Jan 2026 06:38:13 GMT",
+      "version": "0.0.0-canary.1026",
+      "tag": "react-native-windows_v0.0.0-canary.1026",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b331a6a60a875a1a36f8aa7fc1070449e964b197",
+            "comment": "Fix DPI scaling for debugging overlay highlights"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b3d4d01d6c67dd2657fced47bbe0c1bb27458b2b",
+            "comment": "Implements selectable for <Text>"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 03 Jan 2026 06:40:13 GMT",
+      "version": "0.0.0-canary.1025",
+      "tag": "react-native-windows_v0.0.0-canary.1025",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "6766ff1bf5560201e02d308d46598015d4d9aca9",
+            "comment": "Drop XamlApplication::EnsureCreated"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 30 Dec 2025 06:39:30 GMT",
+      "version": "0.0.0-canary.1025",
+      "tag": "react-native-windows_v0.0.0-canary.1025",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c0b7f6f5a156b7a4406f96cd6db48589ff1c10d5",
+            "comment": "Use experimental WinAppSDK"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1018",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 25 Dec 2025 06:39:17 GMT",
+      "version": "0.0.0-canary.1024",
+      "tag": "react-native-windows_v0.0.0-canary.1024",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5ef7484667043c898e77f7ab4fdda8d42d833ce5",
+            "comment": "Integrate 0.82.0-nightly-20250821-0ef21bf8a"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "857247f5f8dd3bae2c02ad266dc4ff6f9d6f2579",
+            "comment": "Bump Jsi Version to 21"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1017",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Dec 2025 06:32:41 GMT",
+      "version": "0.0.0-canary.1023",
+      "tag": "react-native-windows_v0.0.0-canary.1023",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "dde33281bfb5e85b6573a368a024cc9bfdf63f33",
+            "comment": "bump hermes to 0.0.0-2512.22001-bc3d0ed7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 19 Dec 2025 06:34:05 GMT",
+      "version": "0.0.0-canary.1022",
+      "tag": "react-native-windows_v0.0.0-canary.1022",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "protikbiswas100@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "387c058034948cd0613428c1fcf56440f97c257b",
+            "comment": "adding accessibility and UIA support for XAML fabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Dec 2025 06:33:16 GMT",
       "version": "0.0.0-canary.1021",
       "tag": "react-native-windows_v0.0.0-canary.1021",

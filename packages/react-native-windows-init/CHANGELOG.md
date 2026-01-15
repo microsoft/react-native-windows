@@ -1,8 +1,41 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Wed, 03 Dec 2025 06:40:45 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 13 Jan 2026 13:00:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1020
+
+Tue, 13 Jan 2026 13:00:14 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.130
+- Bump @react-native-windows/cli to v0.0.0-canary.283
+
+## 0.0.0-canary.1019
+
+Sat, 10 Jan 2026 06:40:18 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.282
+
+## 0.0.0-canary.1018
+
+Tue, 30 Dec 2025 06:39:30 GMT
+
+### Changes
+
+- Use experimental WinAppSDK (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1017
+
+Thu, 25 Dec 2025 06:39:17 GMT
+
+### Changes
+
+- Bump Jsi Version to 21 (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.0.0-canary.1016
 

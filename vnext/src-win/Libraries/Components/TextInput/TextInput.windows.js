@@ -428,6 +428,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
       selection,
       text,
       // $FlowFixMe[incompatible-call]
+      // $FlowFixMe[incompatible-type]
       viewCommands,
     });
 
@@ -517,7 +518,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     [mostRecentEventCount, viewCommands],
   );
 
-  // $FlowExpectedError[incompatible-call]
+  // $FlowExpectedError[incompatible-type]
   const ref = useMergeRefs<HostInstance>(setLocalRef, props.forwardedRef);
 
   const _onChange = (event: TextInputChangeEvent) => {
@@ -656,7 +657,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
   const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
   const _keyDown = (event: KeyEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
         if (
           event.nativeEvent.code === el.code &&
@@ -675,7 +676,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
   const _keyUp = (event: KeyEvent) => {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
         if (
           event.nativeEvent.code === el.code &&
@@ -694,7 +695,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
   const _keyDownCapture = (event: KeyEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
         if (
           event.nativeEvent.code === el.code &&
@@ -713,7 +714,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
   const _keyUpCapture = (event: KeyEvent) => {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
+      // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
         if (
           event.nativeEvent.code === el.code &&
@@ -733,6 +734,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
   const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Windows
   const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet; // Windows
   const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Windows
+
+  const _accessibilityLabel =
+    props?.['aria-label'] ?? props?.accessibilityLabel;
 
   let _accessibilityState;
   if (
@@ -767,7 +771,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     if (typeof flattenedStyle?.fontWeight === 'number') {
       overrides = overrides || ({}: {...TextStyleInternal});
       overrides.fontWeight =
-        // $FlowFixMe[incompatible-cast]
+        // $FlowFixMe[incompatible-type]
         (flattenedStyle.fontWeight.toString(): TextStyleInternal['fontWeight']);
     }
 
@@ -797,6 +801,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
           flattenedStyle.paddingVertical == null &&
           flattenedStyle.paddingTop == null));
 
+    const _accessibilityElementsHidden =
+      props['aria-hidden'] ?? props.accessibilityElementsHidden;
+
     textInput = (
       <RCTTextInputView
         // Figure out imperative + forward refs.
@@ -804,8 +811,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
         {...otherProps}
         {...eventHandlers}
         acceptDragAndDropTypes={props.experimental_acceptDragAndDropTypes}
-        accessibilityErrorMessage={accessibilityErrorMessage}
+        accessibilityLabel={_accessibilityLabel}
         accessibilityState={_accessibilityState}
+        accessibilityElementsHidden={_accessibilityElementsHidden}
         accessible={accessible}
         submitBehavior={submitBehavior}
         caretHidden={caretHidden}
@@ -834,6 +842,10 @@ function InternalTextInput(props: TextInputProps): React.Node {
     const autoCapitalize = props.autoCapitalize || 'sentences';
     const _accessibilityLabelledBy =
       props?.['aria-labelledby'] ?? props?.accessibilityLabelledBy;
+    const _importantForAccessibility =
+      props['aria-hidden'] === true
+        ? ('no-hide-descendants' as const)
+        : undefined;
     const placeholder = props.placeholder ?? '';
     let children = props.children;
     const childCount = React.Children.count(children);
@@ -868,9 +880,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
         {...otherProps}
         {...colorProps}
         {...eventHandlers}
-        accessibilityErrorMessage={accessibilityErrorMessage}
-        accessibilityState={_accessibilityState}
+        accessibilityLabel={_accessibilityLabel}
         accessibilityLabelledBy={_accessibilityLabelledBy}
+        accessibilityState={_accessibilityState}
         accessible={accessible}
         acceptDragAndDropTypes={props.experimental_acceptDragAndDropTypes}
         autoCapitalize={autoCapitalize}
@@ -879,6 +891,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         children={children}
         disableFullscreenUI={props.disableFullscreenUI}
         focusable={tabIndex !== undefined ? !tabIndex : focusable}
+        importantForAccessibility={_importantForAccessibility}
         mostRecentEventCount={mostRecentEventCount}
         nativeID={id ?? props.nativeID}
         numberOfLines={props.rows ?? props.numberOfLines}
@@ -888,7 +901,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         /* $FlowFixMe[prop-missing] the types for AndroidTextInput don't match
          * up exactly with the props for TextInput. This will need to get fixed
          */
-        /* $FlowFixMe[incompatible-type-arg] the types for AndroidTextInput
+        /* $FlowFixMe[incompatible-type] the types for AndroidTextInput
          * don't match up exactly with the props for TextInput. This will need
          * to get fixed */
         onScroll={_onScroll}
@@ -933,6 +946,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
          * up exactly with the props for TextInput. This will need to get fixed
          */
         /* $FlowFixMe[incompatible-type-arg] the types for WindowsTextInput
+         * don't match up exactly with the props for TextInput. This will need
+         * to get fixed */
+        /* $FlowFixMe[incompatible-type] the types for WindowsTextInput
          * don't match up exactly with the props for TextInput. This will need
          * to get fixed */
         onScroll={_onScroll}

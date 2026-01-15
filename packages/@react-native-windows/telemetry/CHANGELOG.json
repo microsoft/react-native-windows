@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 13 Jan 2026 13:00:13 GMT",
+      "version": "0.0.0-canary.130",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.130",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "raykar.s2504@gmail.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "b0aba40127cac9ca90a95448522d2b4f757173e8",
+            "comment": "fix(telemetry): prevent blank resultCode in command events"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Nov 2025 06:42:06 GMT",
       "version": "0.0.0-canary.129",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.129",

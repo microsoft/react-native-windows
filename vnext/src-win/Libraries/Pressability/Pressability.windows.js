@@ -603,9 +603,9 @@ export default class Pressability {
           this._isKeyDown
         ) {
           const {onPressOut, onPress} = this._config;
-          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
+          // $FlowFixMe[incompatible-type]: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPressOut && onPressOut(event);
-          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
+          // $FlowFixMe[incompatible-type]: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPress && onPress(event);
         }
         // Native windows app clears the key pressed state when another key press interrupts the current
@@ -624,7 +624,7 @@ export default class Pressability {
         ) {
           const {onPressIn} = this._config;
           this._isKeyDown = true;
-          // $FlowFixMe: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
+          // $FlowFixMe[incompatible-type]: PressEvents don't mesh with keyboarding APIs. Keep legacy behavior of passing KeyEvents instead
           onPressIn && onPressIn(event);
         }
       },
@@ -789,7 +789,7 @@ export default class Pressability {
   }
 
   // [Windows]
-  // $FlowFixMe - button typing
+  // $FlowFixMe[missing-local-annot] - button typing
   _isDefaultPressButton(button): boolean {
     return !button; // Treat 0 or undefined as default press
   }
