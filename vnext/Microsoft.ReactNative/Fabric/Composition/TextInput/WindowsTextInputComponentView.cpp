@@ -1196,6 +1196,17 @@ void WindowsTextInputComponentView::onGotFocus(
   
   // Set InputScope on parent HWND for touch keyboard layout
   updateKeyboardType(m_keyboardType);
+  
+  // Try to set InputScope via ITfInputScope on the TSF focus
+  // Query our text host for ITfInputScope to ensure it's properly exposed
+  if (m_textHost) {
+    winrt::com_ptr<ITfInputScope> inputScopePtr;
+    if (SUCCEEDED(m_textHost->QueryInterface(IID_ITfInputScope, inputScopePtr.put_void()))) {
+      LogToFile("ITfInputScope successfully queried from m_textHost");
+    } else {
+      LogToFile("Failed to query ITfInputScope from m_textHost");
+    }
+  }
 
   if (m_textServices) {
     LRESULT lresult;
