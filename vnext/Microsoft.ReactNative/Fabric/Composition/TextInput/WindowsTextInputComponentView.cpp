@@ -145,19 +145,23 @@ void WindowsTextInputComponentView::EnsureProxyEditControl(HWND parentHwnd) {
     return; // Already created
   }
   
-  // Create a small EDIT control positioned off-screen
+  // Create an EDIT control - position at 0,0 initially, we'll move it when focused
+  // WS_VISIBLE is needed for TSF to properly integrate
   s_proxyEditHwnd = CreateWindowExW(
-      0,
+      WS_EX_TRANSPARENT | WS_EX_LAYERED, // Transparent and layered for invisibility
       L"EDIT",
       L"",
-      WS_CHILD | ES_AUTOHSCROLL, // Child window, not visible initially
-      -100, -100, 10, 10, // Off-screen position
+      WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL,
+      0, 0, 1, 1, // Small but not off-screen
       parentHwnd,
       nullptr,
       GetModuleHandle(nullptr),
       nullptr);
   
   if (s_proxyEditHwnd) {
+    // Make it fully transparent
+    SetLayeredWindowAttributes(s_proxyEditHwnd, 0, 0, LWA_ALPHA);
+    
     // Subclass the EDIT control to forward input to our RichEdit
     s_originalProxyEditWndProc = (WNDPROC)SetWindowLongPtrW(
         s_proxyEditHwnd, GWLP_WNDPROC, (LONG_PTR)ProxyEditWndProc);
@@ -1277,10 +1281,26 @@ void WindowsTextInputComponentView::onGotFocus(
         LogToFile(logBuf);
       }
       
-      // Make the proxy EDIT visible and give it Windows focus
-      ShowWindow(s_proxyEditHwnd, SW_SHOW);
+      // Position the proxy EDIT at our location (even though it's transparent)
+      auto screenPos = LocalToScreen({0, 0});
+      SetWindowPos(s_proxyEditHwnd, HWND_TOP, 
+          (int)screenPos.X, (int)screenPos.Y,
+          (int)m_layoutMetrics.frame.size.width, (int)m_layoutMetrics.frame.size.height,
+          SWP_NOACTIVATE);
+      
+      // Give it Windows focus
       SetFocus(s_proxyEditHwnd);
       LogToFile("Set focus to proxy EDIT control");
+      
+      // Check TSF state after setting focus
+      winrt::com_ptr<ITfThreadMgr> threadMgr2;
+      if (SUCCEEDED(CoCreateInstance(CLSID_TF_ThreadMgr, nullptr, CLSCTX_INPROC_SERVER, 
+          IID_ITfThreadMgr, threadMgr2.put_void())) && threadMgr2) {
+        winrt::com_ptr<ITfDocumentMgr> docMgr2;
+        HRESULT hr2 = threadMgr2->GetFocus(docMgr2.put());
+        sprintf_s(logBuf, "After SetFocus: GetFocus returned 0x%08lX (docMgr=%p)", hr2, docMgr2.get());
+        LogToFile(logBuf);
+      }
     }
   }
   
