@@ -121,7 +121,6 @@ struct WindowsTextInputComponentView
   void updateSpellCheck(bool value) noexcept;
   void ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept;
   void updateKeyboardType(const std::string &keyboardType) noexcept;
-  InputScope GetCurrentInputScope() const noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};

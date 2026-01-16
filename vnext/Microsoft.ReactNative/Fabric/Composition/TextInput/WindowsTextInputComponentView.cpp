@@ -47,28 +47,6 @@ typedef HRESULT(WINAPI *PFN_SetInputScopes)(
 static PFN_SetInputScopes g_pfnSetInputScopes = nullptr;
 static bool g_bSetInputScopesInitialized = false;
 
-// Debug logging to file in current working directory
-static void LogToFile(const char* message) {
-  wchar_t exePath[MAX_PATH];
-  GetModuleFileNameW(NULL, exePath, MAX_PATH);
-  std::wstring logPath(exePath);
-  size_t lastSlash = logPath.find_last_of(L"\\/");
-  if (lastSlash != std::wstring::npos) {
-    logPath = logPath.substr(0, lastSlash + 1);
-  }
-  logPath += L"keyboard_debug.log";
-  
-  FILE* f = nullptr;
-  _wfopen_s(&f, logPath.c_str(), L"a");
-  if (f) {
-    SYSTEMTIME st;
-    GetLocalTime(&st);
-    fprintf(f, "[%02d:%02d:%02d.%03d] %s\n", st.wHour, st.wMinute, st.wSecond, st.wMilliseconds, message);
-    fflush(f);
-    fclose(f);
-  }
-}
-
 static PFN_SetInputScopes GetSetInputScopesProc() {
   if (!g_bSetInputScopesInitialized) {
     g_bSetInputScopesInitialized = true;
@@ -165,12 +143,6 @@ void WindowsTextInputComponentView::EnsureProxyEditControl(HWND parentHwnd) {
     // Subclass the EDIT control to forward input to our RichEdit
     s_originalProxyEditWndProc = (WNDPROC)SetWindowLongPtrW(
         s_proxyEditHwnd, GWLP_WNDPROC, (LONG_PTR)ProxyEditWndProc);
-    
-    LogToFile("Created proxy EDIT control for InputScope support");
-  } else {
-    char buf[128];
-    sprintf_s(buf, "Failed to create proxy EDIT control, error: %lu", GetLastError());
-    LogToFile(buf);
   }
 }
 
@@ -216,70 +188,8 @@ HRESULT HrEnsureRichEd20Loaded() noexcept {
   return NOERROR;
 }
 
-// ITfInputScope GUID - needed for manual QueryInterface
-// {FDE1EAEE-6924-4CDF-91E7-DA38CFF5559D}
-static const GUID IID_ITfInputScope = 
-    {0xfde1eaee, 0x6924, 0x4cdf, {0x91, 0xe7, 0xda, 0x38, 0xcf, 0xf5, 0x55, 0x9d}};
-
-struct CompTextHost : public winrt::implements<CompTextHost, ITextHost, ITfInputScope> {
+struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   CompTextHost(WindowsTextInputComponentView *outer) : m_outer(outer) {}
-
-  // ITfInputScope implementation
-  HRESULT STDMETHODCALLTYPE GetInputScopes(InputScope **pprgInputScopes, UINT *pcCount) override {
-    if (!pprgInputScopes || !pcCount) {
-      return E_INVALIDARG;
-    }
-    
-    // Allocate array for single scope
-    InputScope *scopes = (InputScope *)CoTaskMemAlloc(sizeof(InputScope));
-    if (!scopes) {
-      return E_OUTOFMEMORY;
-    }
-    
-    // Get the current input scope from the outer component
-    scopes[0] = m_outer->GetCurrentInputScope();
-    *pprgInputScopes = scopes;
-    *pcCount = 1;
-    
-    char logBuf[256];
-    sprintf_s(logBuf, "ITfInputScope::GetInputScopes called, returning scope=%d", (int)scopes[0]);
-    LogToFile(logBuf);
-    
-    return S_OK;
-  }
-  
-  HRESULT STDMETHODCALLTYPE GetPhrase(BSTR **ppbstrPhrases, UINT *pcCount) override {
-    if (!ppbstrPhrases || !pcCount) {
-      return E_INVALIDARG;
-    }
-    *ppbstrPhrases = nullptr;
-    *pcCount = 0;
-    return S_OK;
-  }
-  
-  HRESULT STDMETHODCALLTYPE GetRegularExpression(BSTR *pbstrRegExp) override {
-    if (!pbstrRegExp) {
-      return E_INVALIDARG;
-    }
-    *pbstrRegExp = nullptr;
-    return S_OK;
-  }
-  
-  HRESULT STDMETHODCALLTYPE GetSRGS(BSTR *pbstrSRGS) override {
-    if (!pbstrSRGS) {
-      return E_INVALIDARG;
-    }
-    *pbstrSRGS = nullptr;
-    return S_OK;
-  }
-  
-  HRESULT STDMETHODCALLTYPE GetXML(BSTR *pbstrXML) override {
-    if (!pbstrXML) {
-      return E_INVALIDARG;
-    }
-    *pbstrXML = nullptr;
-    return S_OK;
-  }
 
   //@cmember Get the DC for the host
   HDC TxGetDC() override {
@@ -1258,10 +1168,6 @@ void WindowsTextInputComponentView::onGotFocus(
   m_hasFocus = true;
   Super::onGotFocus(args);
   
-  char logBuf[256];
-  sprintf_s(logBuf, "onGotFocus called, m_keyboardType='%s'", m_keyboardType.c_str());
-  LogToFile(logBuf);
-  
   // Set InputScope on parent HWND for touch keyboard layout
   updateKeyboardType(m_keyboardType);
   
@@ -1276,9 +1182,7 @@ void WindowsTextInputComponentView::onGotFocus(
       
       // Set InputScope on the proxy EDIT control
       if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
-        HRESULT hr = pfnSetInputScopes(s_proxyEditHwnd, &m_currentInputScope, 1, nullptr, 0, nullptr, nullptr);
-        sprintf_s(logBuf, "SetInputScopes on proxy EDIT returned: 0x%08lX", hr);
-        LogToFile(logBuf);
+        pfnSetInputScopes(s_proxyEditHwnd, &m_currentInputScope, 1, nullptr, 0, nullptr, nullptr);
       }
       
       // Position the proxy EDIT at our location (even though it's transparent)
@@ -1288,30 +1192,8 @@ void WindowsTextInputComponentView::onGotFocus(
           (int)m_layoutMetrics.frame.size.width, (int)m_layoutMetrics.frame.size.height,
           SWP_NOACTIVATE);
       
-      // Give it Windows focus
+      // Give it Windows focus so Touch Keyboard sees correct InputScope
       SetFocus(s_proxyEditHwnd);
-      LogToFile("Set focus to proxy EDIT control");
-      
-      // Check TSF state after setting focus
-      winrt::com_ptr<ITfThreadMgr> threadMgr2;
-      if (SUCCEEDED(CoCreateInstance(CLSID_TF_ThreadMgr, nullptr, CLSCTX_INPROC_SERVER, 
-          IID_ITfThreadMgr, threadMgr2.put_void())) && threadMgr2) {
-        winrt::com_ptr<ITfDocumentMgr> docMgr2;
-        HRESULT hr2 = threadMgr2->GetFocus(docMgr2.put());
-        sprintf_s(logBuf, "After SetFocus: GetFocus returned 0x%08lX (docMgr=%p)", hr2, docMgr2.get());
-        LogToFile(logBuf);
-      }
-    }
-  }
-  
-  // Try to set InputScope via ITfInputScope on the TSF focus
-  // Query our text host for ITfInputScope to ensure it's properly exposed
-  if (m_textHost) {
-    winrt::com_ptr<ITfInputScope> inputScopePtr;
-    if (SUCCEEDED(m_textHost->QueryInterface(IID_ITfInputScope, inputScopePtr.put_void()))) {
-      LogToFile("ITfInputScope successfully queried from m_textHost");
-    } else {
-      LogToFile("Failed to query ITfInputScope from m_textHost");
     }
   }
 
@@ -2189,19 +2071,11 @@ void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Founda
 void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboardType) noexcept {
   m_keyboardType = keyboardType;
 
-  char logBuf[512];
-  sprintf_s(logBuf, "updateKeyboardType called with: '%s'", keyboardType.c_str());
-  LogToFile(logBuf);
-
-  // Get the parent/root HWND - this is the actual window that receives focus
+  // Get the parent/root HWND
   HWND hwndParent = GetHwndForParenting();
   if (!hwndParent) {
-    LogToFile("ERROR: GetHwndForParenting returned NULL");
     return;
   }
-  
-  sprintf_s(logBuf, "Got parent HWND: 0x%p", hwndParent);
-  LogToFile(logBuf);
 
   // Map keyboard type to InputScope
   InputScope scope = IS_DEFAULT;
@@ -2226,67 +2100,13 @@ void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboa
     }
   }
 
-  // Store the current scope for ITfInputScope queries
+  // Store the current scope for proxy EDIT control
   m_currentInputScope = scope;
 
-  sprintf_s(logBuf, "Mapped to InputScope: %d (secureTextEntry=%d)", (int)scope, isSecureTextEntry ? 1 : 0);
-  LogToFile(logBuf);
-
   // Use SetInputScopes API to set InputScope on the parent HWND
-  // This tells Windows Touch Keyboard which layout to show
   if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
-    HRESULT hr = pfnSetInputScopes(hwndParent, &scope, 1, nullptr, 0, nullptr, nullptr);
-    sprintf_s(logBuf, "SetInputScopes returned HRESULT: 0x%08lX", hr);
-    LogToFile(logBuf);
-  } else {
-    LogToFile("ERROR: GetSetInputScopesProc returned NULL - msctf.dll not loaded");
-  }
-  
-  // Try to get the TSF thread manager and query for the current document
-  // This helps us understand if TSF is active and what context is focused
-  winrt::com_ptr<ITfThreadMgr> threadMgr;
-  HRESULT hr = CoCreateInstance(
-      CLSID_TF_ThreadMgr,
-      nullptr,
-      CLSCTX_INPROC_SERVER,
-      IID_ITfThreadMgr,
-      threadMgr.put_void());
-  
-  if (SUCCEEDED(hr) && threadMgr) {
-    LogToFile("Successfully created ITfThreadMgr");
-    
-    // Get the document manager that has focus
-    winrt::com_ptr<ITfDocumentMgr> docMgr;
-    hr = threadMgr->GetFocus(docMgr.put());
-    if (SUCCEEDED(hr) && docMgr) {
-      LogToFile("Got focused ITfDocumentMgr");
-      
-      // Get the top context
-      winrt::com_ptr<ITfContext> context;
-      hr = docMgr->GetTop(context.put());
-      if (SUCCEEDED(hr) && context) {
-        LogToFile("Got top ITfContext - TSF is fully active");
-        
-        // Try to query for ITfInputScope from the context
-        winrt::com_ptr<ITfInputScope> inputScopeFromContext;
-        hr = context->QueryInterface(IID_ITfInputScope, inputScopeFromContext.put_void());
-        sprintf_s(logBuf, "QueryInterface ITfInputScope from context: 0x%08lX", hr);
-        LogToFile(logBuf);
-      } else {
-        sprintf_s(logBuf, "GetTop returned: 0x%08lX (context=%p)", hr, context.get());
-        LogToFile(logBuf);
-      }
-    } else {
-      sprintf_s(logBuf, "GetFocus returned: 0x%08lX (docMgr=%p)", hr, docMgr.get());
-      LogToFile(logBuf);
-    }
-  } else {
-    sprintf_s(logBuf, "CoCreateInstance ITfThreadMgr failed: 0x%08lX", hr);
-    LogToFile(logBuf);
+    pfnSetInputScopes(hwndParent, &scope, 1, nullptr, 0, nullptr, nullptr);
   }
 }
 
-InputScope WindowsTextInputComponentView::GetCurrentInputScope() const noexcept {
-  return m_currentInputScope;
-}
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
