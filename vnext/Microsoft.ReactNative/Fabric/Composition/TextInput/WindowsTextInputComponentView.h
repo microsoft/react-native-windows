@@ -153,6 +153,13 @@ struct WindowsTextInputComponentView
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
   std::string m_keyboardType{};
   InputScope m_currentInputScope{IS_DEFAULT};
+  
+  // Hidden proxy EDIT control for InputScope/Touch Keyboard support
+  static HWND s_proxyEditHwnd;
+  static WNDPROC s_originalProxyEditWndProc;
+  static WindowsTextInputComponentView* s_currentFocusedTextInput;
+  static void EnsureProxyEditControl(HWND parentHwnd);
+  static LRESULT CALLBACK ProxyEditWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

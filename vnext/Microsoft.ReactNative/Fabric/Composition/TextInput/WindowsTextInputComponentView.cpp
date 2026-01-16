@@ -114,6 +114,62 @@ MSO_CLASS_GUID(ITextServices2, "8D33F741-CF58-11CE-A89D-00AA006CADC5") // IID_IT
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
+// Static members for proxy EDIT control
+HWND WindowsTextInputComponentView::s_proxyEditHwnd = nullptr;
+WNDPROC WindowsTextInputComponentView::s_originalProxyEditWndProc = nullptr;
+WindowsTextInputComponentView* WindowsTextInputComponentView::s_currentFocusedTextInput = nullptr;
+
+// Proxy EDIT control window procedure - forwards input to the active TextInput
+LRESULT CALLBACK WindowsTextInputComponentView::ProxyEditWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+  // Forward character and key messages to the actual TextInput's RichEdit
+  if (s_currentFocusedTextInput && s_currentFocusedTextInput->m_textServices) {
+    if (msg == WM_CHAR || msg == WM_KEYDOWN || msg == WM_KEYUP || 
+        msg == WM_IME_CHAR || msg == WM_IME_COMPOSITION || msg == WM_IME_STARTCOMPOSITION ||
+        msg == WM_IME_ENDCOMPOSITION) {
+      LRESULT result;
+      s_currentFocusedTextInput->m_textServices->TxSendMessage(msg, wParam, lParam, &result);
+      if (msg == WM_CHAR || msg == WM_IME_CHAR) {
+        s_currentFocusedTextInput->OnTextUpdated();
+      }
+      return result;
+    }
+  }
+  
+  // For other messages, call the original window procedure
+  return CallWindowProcW(s_originalProxyEditWndProc, hwnd, msg, wParam, lParam);
+}
+
+// Create a hidden EDIT control for InputScope support
+void WindowsTextInputComponentView::EnsureProxyEditControl(HWND parentHwnd) {
+  if (s_proxyEditHwnd) {
+    return; // Already created
+  }
+  
+  // Create a small EDIT control positioned off-screen
+  s_proxyEditHwnd = CreateWindowExW(
+      0,
+      L"EDIT",
+      L"",
+      WS_CHILD | ES_AUTOHSCROLL, // Child window, not visible initially
+      -100, -100, 10, 10, // Off-screen position
+      parentHwnd,
+      nullptr,
+      GetModuleHandle(nullptr),
+      nullptr);
+  
+  if (s_proxyEditHwnd) {
+    // Subclass the EDIT control to forward input to our RichEdit
+    s_originalProxyEditWndProc = (WNDPROC)SetWindowLongPtrW(
+        s_proxyEditHwnd, GWLP_WNDPROC, (LONG_PTR)ProxyEditWndProc);
+    
+    LogToFile("Created proxy EDIT control for InputScope support");
+  } else {
+    char buf[128];
+    sprintf_s(buf, "Failed to create proxy EDIT control, error: %lu", GetLastError());
+    LogToFile(buf);
+  }
+}
+
 // RichEdit doesn't handle us calling Draw during the middle of a TxTranslateMessage call.
 WindowsTextInputComponentView::DrawBlock::DrawBlock(WindowsTextInputComponentView &view) : m_view(view) {
   m_view.m_cDrawBlock++;
@@ -1159,6 +1215,14 @@ void WindowsTextInputComponentView::onLostFocus(
       pfnSetInputScopes(hwndParent, &defaultScope, 1, nullptr, 0, nullptr, nullptr);
     }
   }
+  
+  // Clear proxy EDIT control focus
+  if (s_currentFocusedTextInput == this) {
+    s_currentFocusedTextInput = nullptr;
+    if (s_proxyEditHwnd) {
+      ShowWindow(s_proxyEditHwnd, SW_HIDE);
+    }
+  }
 
   if (m_textServices) {
     LRESULT lresult;
@@ -1196,6 +1260,29 @@ void WindowsTextInputComponentView::onGotFocus(
   
   // Set InputScope on parent HWND for touch keyboard layout
   updateKeyboardType(m_keyboardType);
+  
+  // Use proxy EDIT control for Touch Keyboard InputScope support
+  HWND hwndParent = GetHwndForParenting();
+  if (hwndParent) {
+    EnsureProxyEditControl(hwndParent);
+    
+    if (s_proxyEditHwnd) {
+      // Set this as the current focused TextInput
+      s_currentFocusedTextInput = this;
+      
+      // Set InputScope on the proxy EDIT control
+      if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
+        HRESULT hr = pfnSetInputScopes(s_proxyEditHwnd, &m_currentInputScope, 1, nullptr, 0, nullptr, nullptr);
+        sprintf_s(logBuf, "SetInputScopes on proxy EDIT returned: 0x%08lX", hr);
+        LogToFile(logBuf);
+      }
+      
+      // Make the proxy EDIT visible and give it Windows focus
+      ShowWindow(s_proxyEditHwnd, SW_SHOW);
+      SetFocus(s_proxyEditHwnd);
+      LogToFile("Set focus to proxy EDIT control");
+    }
+  }
   
   // Try to set InputScope via ITfInputScope on the TSF focus
   // Query our text host for ITfInputScope to ensure it's properly exposed
