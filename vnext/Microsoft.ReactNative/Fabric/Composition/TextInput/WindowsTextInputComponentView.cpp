@@ -1,25 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#pragma once
-
 #include "WindowsTextInputComponentView.h"
 
 #include <AutoDraw.h>
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Fabric/platform/react/renderer/graphics/PlatformColorUtils.h>
+#include <Shlwapi.h>
+#include <TextServ.h>
 #include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
+#include <inputscope.h>
+#include <msctf.h>
 #include <react/renderer/components/textinput/TextInputState.h>
 #include <react/renderer/graphics/HostPlatformColor.h>
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <tom.h>
 #include <unicode.h>
-#include <msctf.h>
-#include <inputscope.h>
-#include <Shlwapi.h>
-#include <TextServ.h>
 #include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.h>
@@ -29,8 +27,6 @@
 #include "JSValueReader.h"
 #include "WindowsTextInputShadowNode.h"
 #include "guid/msoGuid.h"
-
-#include <unicode.h>
 
 #pragma comment(lib, "Shlwapi.lib")
 
@@ -95,15 +91,14 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 // Static members for proxy EDIT control
 HWND WindowsTextInputComponentView::s_proxyEditHwnd = nullptr;
 WNDPROC WindowsTextInputComponentView::s_originalProxyEditWndProc = nullptr;
-WindowsTextInputComponentView* WindowsTextInputComponentView::s_currentFocusedTextInput = nullptr;
+WindowsTextInputComponentView *WindowsTextInputComponentView::s_currentFocusedTextInput = nullptr;
 
 // Proxy EDIT control window procedure - forwards input to the active TextInput
 LRESULT CALLBACK WindowsTextInputComponentView::ProxyEditWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
   // Forward character and key messages to the actual TextInput's RichEdit
   if (s_currentFocusedTextInput && s_currentFocusedTextInput->m_textServices) {
-    if (msg == WM_CHAR || msg == WM_KEYDOWN || msg == WM_KEYUP || 
-        msg == WM_IME_CHAR || msg == WM_IME_COMPOSITION || msg == WM_IME_STARTCOMPOSITION ||
-        msg == WM_IME_ENDCOMPOSITION) {
+    if (msg == WM_CHAR || msg == WM_KEYDOWN || msg == WM_KEYUP || msg == WM_IME_CHAR || msg == WM_IME_COMPOSITION ||
+        msg == WM_IME_STARTCOMPOSITION || msg == WM_IME_ENDCOMPOSITION) {
       LRESULT result;
       s_currentFocusedTextInput->m_textServices->TxSendMessage(msg, wParam, lParam, &result);
       if (msg == WM_CHAR || msg == WM_IME_CHAR) {
@@ -112,7 +107,7 @@ LRESULT CALLBACK WindowsTextInputComponentView::ProxyEditWndProc(HWND hwnd, UINT
       return result;
     }
   }
-  
+
   // For other messages, call the original window procedure
   return CallWindowProcW(s_originalProxyEditWndProc, hwnd, msg, wParam, lParam);
 }
@@ -122,7 +117,7 @@ void WindowsTextInputComponentView::EnsureProxyEditControl(HWND parentHwnd) {
   if (s_proxyEditHwnd) {
     return; // Already created
   }
-  
+
   // Create an EDIT control - position at 0,0 initially, we'll move it when focused
   // WS_VISIBLE is needed for TSF to properly integrate
   s_proxyEditHwnd = CreateWindowExW(
@@ -130,19 +125,21 @@ void WindowsTextInputComponentView::EnsureProxyEditControl(HWND parentHwnd) {
       L"EDIT",
       L"",
       WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL,
-      0, 0, 1, 1, // Small but not off-screen
+      0,
+      0,
+      1,
+      1, // Small but not off-screen
       parentHwnd,
       nullptr,
       GetModuleHandle(nullptr),
       nullptr);
-  
+
   if (s_proxyEditHwnd) {
     // Make it fully transparent
     SetLayeredWindowAttributes(s_proxyEditHwnd, 0, 0, LWA_ALPHA);
-    
+
     // Subclass the EDIT control to forward input to our RichEdit
-    s_originalProxyEditWndProc = (WNDPROC)SetWindowLongPtrW(
-        s_proxyEditHwnd, GWLP_WNDPROC, (LONG_PTR)ProxyEditWndProc);
+    s_originalProxyEditWndProc = (WNDPROC)SetWindowLongPtrW(s_proxyEditHwnd, GWLP_WNDPROC, (LONG_PTR)ProxyEditWndProc);
   }
 }
 
@@ -1120,7 +1117,7 @@ void WindowsTextInputComponentView::onLostFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   m_hasFocus = false;
   Super::onLostFocus(args);
-  
+
   // Reset InputScope on parent HWND when losing focus
   HWND hwndParent = GetHwndForParenting();
   if (hwndParent) {
@@ -1129,7 +1126,7 @@ void WindowsTextInputComponentView::onLostFocus(
       pfnSetInputScopes(hwndParent, &defaultScope, 1, nullptr, 0, nullptr, nullptr);
     }
   }
-  
+
   // Clear proxy EDIT control focus
   if (s_currentFocusedTextInput == this) {
     s_currentFocusedTextInput = nullptr;
@@ -1167,31 +1164,35 @@ void WindowsTextInputComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   m_hasFocus = true;
   Super::onGotFocus(args);
-  
+
   // Set InputScope on parent HWND for touch keyboard layout
   updateKeyboardType(m_keyboardType);
-  
+
   // Use proxy EDIT control for Touch Keyboard InputScope support
   HWND hwndParent = GetHwndForParenting();
   if (hwndParent) {
     EnsureProxyEditControl(hwndParent);
-    
+
     if (s_proxyEditHwnd) {
       // Set this as the current focused TextInput
       s_currentFocusedTextInput = this;
-      
+
       // Set InputScope on the proxy EDIT control
       if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
         pfnSetInputScopes(s_proxyEditHwnd, &m_currentInputScope, 1, nullptr, 0, nullptr, nullptr);
       }
-      
+
       // Position the proxy EDIT at our location (even though it's transparent)
       auto screenPos = LocalToScreen({0, 0});
-      SetWindowPos(s_proxyEditHwnd, HWND_TOP, 
-          (int)screenPos.X, (int)screenPos.Y,
-          (int)m_layoutMetrics.frame.size.width, (int)m_layoutMetrics.frame.size.height,
+      SetWindowPos(
+          s_proxyEditHwnd,
+          HWND_TOP,
+          (int)screenPos.X,
+          (int)screenPos.Y,
+          (int)m_layoutMetrics.frame.size.width,
+          (int)m_layoutMetrics.frame.size.height,
           SWP_NOACTIVATE);
-      
+
       // Give it Windows focus so Touch Keyboard sees correct InputScope
       SetFocus(s_proxyEditHwnd);
     }

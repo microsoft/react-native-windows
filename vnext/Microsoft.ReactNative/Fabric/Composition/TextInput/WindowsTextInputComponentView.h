@@ -7,9 +7,9 @@
 #include "Composition.WindowsTextInputComponentView.g.h"
 #include <ReactContext.h>
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
+#include <inputscope.h>
 #include <richedit.h>
 #include <textserv.h>
-#include <inputscope.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "../ComponentView.h"
@@ -152,11 +152,11 @@ struct WindowsTextInputComponentView
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
   std::string m_keyboardType{};
   InputScope m_currentInputScope{IS_DEFAULT};
-  
+
   // Hidden proxy EDIT control for InputScope/Touch Keyboard support
   static HWND s_proxyEditHwnd;
   static WNDPROC s_originalProxyEditWndProc;
-  static WindowsTextInputComponentView* s_currentFocusedTextInput;
+  static WindowsTextInputComponentView *s_currentFocusedTextInput;
   static void EnsureProxyEditControl(HWND parentHwnd);
   static LRESULT CALLBACK ProxyEditWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 };
