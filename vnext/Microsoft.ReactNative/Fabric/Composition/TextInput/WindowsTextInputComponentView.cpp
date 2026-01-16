@@ -156,8 +156,70 @@ HRESULT HrEnsureRichEd20Loaded() noexcept {
   return NOERROR;
 }
 
-struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
+// ITfInputScope GUID - needed for manual QueryInterface
+// {FDE1EAEE-6924-4CDF-91E7-DA38CFF5559D}
+static const GUID IID_ITfInputScope = 
+    {0xfde1eaee, 0x6924, 0x4cdf, {0x91, 0xe7, 0xda, 0x38, 0xcf, 0xf5, 0x55, 0x9d}};
+
+struct CompTextHost : public winrt::implements<CompTextHost, ITextHost, ITfInputScope> {
   CompTextHost(WindowsTextInputComponentView *outer) : m_outer(outer) {}
+
+  // ITfInputScope implementation
+  HRESULT STDMETHODCALLTYPE GetInputScopes(InputScope **pprgInputScopes, UINT *pcCount) override {
+    if (!pprgInputScopes || !pcCount) {
+      return E_INVALIDARG;
+    }
+    
+    // Allocate array for single scope
+    InputScope *scopes = (InputScope *)CoTaskMemAlloc(sizeof(InputScope));
+    if (!scopes) {
+      return E_OUTOFMEMORY;
+    }
+    
+    // Get the current input scope from the outer component
+    scopes[0] = m_outer->GetCurrentInputScope();
+    *pprgInputScopes = scopes;
+    *pcCount = 1;
+    
+    char logBuf[256];
+    sprintf_s(logBuf, "ITfInputScope::GetInputScopes called, returning scope=%d", (int)scopes[0]);
+    LogToFile(logBuf);
+    
+    return S_OK;
+  }
+  
+  HRESULT STDMETHODCALLTYPE GetPhrase(BSTR **ppbstrPhrases, UINT *pcCount) override {
+    if (!ppbstrPhrases || !pcCount) {
+      return E_INVALIDARG;
+    }
+    *ppbstrPhrases = nullptr;
+    *pcCount = 0;
+    return S_OK;
+  }
+  
+  HRESULT STDMETHODCALLTYPE GetRegularExpression(BSTR *pbstrRegExp) override {
+    if (!pbstrRegExp) {
+      return E_INVALIDARG;
+    }
+    *pbstrRegExp = nullptr;
+    return S_OK;
+  }
+  
+  HRESULT STDMETHODCALLTYPE GetSRGS(BSTR *pbstrSRGS) override {
+    if (!pbstrSRGS) {
+      return E_INVALIDARG;
+    }
+    *pbstrSRGS = nullptr;
+    return S_OK;
+  }
+  
+  HRESULT STDMETHODCALLTYPE GetXML(BSTR *pbstrXML) override {
+    if (!pbstrXML) {
+      return E_INVALIDARG;
+    }
+    *pbstrXML = nullptr;
+    return S_OK;
+  }
 
   //@cmember Get the DC for the host
   HDC TxGetDC() override {
@@ -2046,6 +2108,9 @@ void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboa
     }
   }
 
+  // Store the current scope for ITfInputScope queries
+  m_currentInputScope = scope;
+
   sprintf_s(logBuf, "Mapped to InputScope: %d (secureTextEntry=%d)", (int)scope, isSecureTextEntry ? 1 : 0);
   LogToFile(logBuf);
 
@@ -2058,5 +2123,9 @@ void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboa
   } else {
     LogToFile("ERROR: GetSetInputScopesProc returned NULL - msctf.dll not loaded");
   }
+}
+
+InputScope WindowsTextInputComponentView::GetCurrentInputScope() const noexcept {
+  return m_currentInputScope;
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

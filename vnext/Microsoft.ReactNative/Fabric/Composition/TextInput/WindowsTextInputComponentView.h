@@ -9,6 +9,7 @@
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
 #include <richedit.h>
 #include <textserv.h>
+#include <inputscope.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "../ComponentView.h"
@@ -120,6 +121,7 @@ struct WindowsTextInputComponentView
   void updateSpellCheck(bool value) noexcept;
   void ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept;
   void updateKeyboardType(const std::string &keyboardType) noexcept;
+  InputScope GetCurrentInputScope() const noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
@@ -150,6 +152,7 @@ struct WindowsTextInputComponentView
   std::chrono::steady_clock::time_point m_lastClickTime{};
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
   std::string m_keyboardType{};
+  InputScope m_currentInputScope{IS_DEFAULT};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
