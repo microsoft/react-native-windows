@@ -2134,6 +2134,49 @@ void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboa
   } else {
     LogToFile("ERROR: GetSetInputScopesProc returned NULL - msctf.dll not loaded");
   }
+  
+  // Try to get the TSF thread manager and query for the current document
+  // This helps us understand if TSF is active and what context is focused
+  winrt::com_ptr<ITfThreadMgr> threadMgr;
+  HRESULT hr = CoCreateInstance(
+      CLSID_TF_ThreadMgr,
+      nullptr,
+      CLSCTX_INPROC_SERVER,
+      IID_ITfThreadMgr,
+      threadMgr.put_void());
+  
+  if (SUCCEEDED(hr) && threadMgr) {
+    LogToFile("Successfully created ITfThreadMgr");
+    
+    // Get the document manager that has focus
+    winrt::com_ptr<ITfDocumentMgr> docMgr;
+    hr = threadMgr->GetFocus(docMgr.put());
+    if (SUCCEEDED(hr) && docMgr) {
+      LogToFile("Got focused ITfDocumentMgr");
+      
+      // Get the top context
+      winrt::com_ptr<ITfContext> context;
+      hr = docMgr->GetTop(context.put());
+      if (SUCCEEDED(hr) && context) {
+        LogToFile("Got top ITfContext - TSF is fully active");
+        
+        // Try to query for ITfInputScope from the context
+        winrt::com_ptr<ITfInputScope> inputScopeFromContext;
+        hr = context->QueryInterface(IID_ITfInputScope, inputScopeFromContext.put_void());
+        sprintf_s(logBuf, "QueryInterface ITfInputScope from context: 0x%08lX", hr);
+        LogToFile(logBuf);
+      } else {
+        sprintf_s(logBuf, "GetTop returned: 0x%08lX (context=%p)", hr, context.get());
+        LogToFile(logBuf);
+      }
+    } else {
+      sprintf_s(logBuf, "GetFocus returned: 0x%08lX (docMgr=%p)", hr, docMgr.get());
+      LogToFile(logBuf);
+    }
+  } else {
+    sprintf_s(logBuf, "CoCreateInstance ITfThreadMgr failed: 0x%08lX", hr);
+    LogToFile(logBuf);
+  }
 }
 
 InputScope WindowsTextInputComponentView::GetCurrentInputScope() const noexcept {
