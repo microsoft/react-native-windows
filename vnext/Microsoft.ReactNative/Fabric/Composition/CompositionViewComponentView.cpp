@@ -729,8 +729,9 @@ void ComponentView::updateTransformProps(
         static_cast<facebook::react::BackfaceVisibility>(
             winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility::Hidden) ==
         facebook::react::BackfaceVisibility::Hidden);
-    visual.BackfaceVisibility(static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
-        newViewProps.backfaceVisibility));
+    visual.BackfaceVisibility(
+        static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
+            newViewProps.backfaceVisibility));
   }
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
@@ -1341,14 +1342,14 @@ void ViewComponentView::updateLayoutMetrics(
 
   // Size and offset m_contentVisual to match the content area, excluding borders
   if (m_contentVisual && m_props) {
-    auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, *m_props);
-    float borderLeft = borderMetrics.borderWidths.left;
-    float borderTop = borderMetrics.borderWidths.top;
-    float borderRight = borderMetrics.borderWidths.right;
-    float borderBottom = borderMetrics.borderWidths.bottom;
-    float scale = layoutMetrics.pointScaleFactor;
-    float contentWidth = layoutMetrics.frame.size.width * scale - borderLeft - borderRight;
-    float contentHeight = layoutMetrics.frame.size.height * scale - borderTop - borderBottom;
+    const auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, *m_props);
+    const float borderLeft = borderMetrics.borderWidths.left;
+    const float borderTop = borderMetrics.borderWidths.top;
+    const float borderRight = borderMetrics.borderWidths.right;
+    const float borderBottom = borderMetrics.borderWidths.bottom;
+    const float scale = layoutMetrics.pointScaleFactor;
+    const float contentWidth = layoutMetrics.frame.size.width * scale - borderLeft - borderRight;
+    const float contentHeight = layoutMetrics.frame.size.height * scale - borderTop - borderBottom;
     m_contentVisual.Offset({borderLeft, borderTop, 0});
     m_contentVisual.Size({std::max(0.f, contentWidth), std::max(0.f, contentHeight)});
 
@@ -1423,8 +1424,8 @@ winrt::Windows::Foundation::IInspectable ComponentView::CreateAutomationProvider
   return *m_innerAutomationProvider;
 }
 
-const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
-    &ComponentView::InnerAutomationProvider() const noexcept {
+const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider> &
+ComponentView::InnerAutomationProvider() const noexcept {
   return m_innerAutomationProvider;
 }
 
