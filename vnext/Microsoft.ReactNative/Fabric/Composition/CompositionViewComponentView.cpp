@@ -1090,7 +1090,8 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 ViewComponentView::VisualToMountChildrenInto() noexcept {
   if (m_builder && m_builder->VisualToMountChildrenIntoHandler())
     return m_builder->VisualToMountChildrenIntoHandler()(*this);
-  // Mount children into m_contentVisual
+  // Mount children into m_contentVisual (ensureVisual should have been called before this)
+  ensureVisual();
   return m_contentVisual ? m_contentVisual : Visual();
 }
 
