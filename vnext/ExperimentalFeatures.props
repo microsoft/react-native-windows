@@ -1,5 +1,4 @@
 <Project>
-  <!-- Declare the unconditional group last so it does not supersede solution-specific assignments -->
   <PropertyGroup>
     <RnwNewArch Condition="'$(RnwNewArch)' == ''">true</RnwNewArch>
     <UseFabric Condition="'$(UseFabric)' == ''">true</UseFabric>
