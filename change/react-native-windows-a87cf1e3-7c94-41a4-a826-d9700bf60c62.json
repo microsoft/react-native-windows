@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove redundant experimental feature declaration",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
