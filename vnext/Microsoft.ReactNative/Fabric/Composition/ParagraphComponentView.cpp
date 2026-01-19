@@ -107,6 +107,10 @@ void ParagraphComponentView::updateProps(
     m_requireRedraw = true;
   }
 
+  if (oldViewProps.selectionColor != newViewProps.selectionColor) {
+    m_requireRedraw = true;
+  }
+
   Super::updateProps(props, oldProps);
 }
 
@@ -454,9 +458,14 @@ void ParagraphComponentView::DrawSelectionHighlight(
     return;
   }
 
-  // TODO: use prop selectionColor if provided
   winrt::com_ptr<ID2D1SolidColorBrush> selectionBrush;
-  const D2D1_COLOR_F selectionColor = theme()->D2DPlatformColor("Highlight@40");
+  D2D1_COLOR_F selectionColor;
+  const auto &props = paragraphProps();
+  if (props.selectionColor) {
+    selectionColor = theme()->D2DColor(**props.selectionColor);
+  } else {
+    selectionColor = theme()->D2DPlatformColor("Highlight@40");
+  }
   hr = renderTarget.CreateSolidColorBrush(selectionColor, selectionBrush.put());
 
   if (FAILED(hr)) {
