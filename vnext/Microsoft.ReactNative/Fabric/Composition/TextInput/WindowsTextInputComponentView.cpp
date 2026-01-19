@@ -1165,7 +1165,7 @@ void WindowsTextInputComponentView::onGotFocus(
   Super::onGotFocus(args);
 
   // Set InputScope on parent HWND for touch keyboard layout
-  updateKeyboardType(m_keyboardType);
+  updateKeyboardType(windowsTextInputProps().keyboardType);
 
   // Use proxy EDIT control for Touch Keyboard InputScope support
   HWND hwndParent = GetHwndForParenting();
@@ -2069,8 +2069,6 @@ void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Founda
 }
 
 void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboardType) noexcept {
-  m_keyboardType = keyboardType;
-
   // Get the parent/root HWND
   HWND hwndParent = GetHwndForParenting();
   if (!hwndParent) {

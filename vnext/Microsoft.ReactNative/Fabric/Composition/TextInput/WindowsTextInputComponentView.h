@@ -150,7 +150,6 @@ struct WindowsTextInputComponentView
   HCURSOR m_hcursor{nullptr};
   std::chrono::steady_clock::time_point m_lastClickTime{};
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
-  std::string m_keyboardType{};
   InputScope m_currentInputScope{IS_DEFAULT};
 
   // Hidden proxy EDIT control for InputScope/Touch Keyboard support
