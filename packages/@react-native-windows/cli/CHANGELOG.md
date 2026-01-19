@@ -1,8 +1,24 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 13 Jan 2026 13:00:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.283
+
+Tue, 13 Jan 2026 13:00:14 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.130
+
+## 0.0.0-canary.282
+
+Sat, 10 Jan 2026 06:40:18 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.129
 
 ## 0.0.0-canary.281
 

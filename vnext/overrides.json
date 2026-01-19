@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.82.0-nightly-20250821-0ef21bf8a",
+  "baseVersion": "0.82.0-nightly-20250902-9731e8ebc",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "56b1b6a6ecee3c54f2c63eadd6bf5d67b11f5cd9"
+      "baseHash": "c8bd25d4aa75328a2484c5c7b0b768c188a50b52"
     },
     {
       "type": "derived",
@@ -65,7 +65,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/NativeToJsBridge.cpp",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/NativeToJsBridge.cpp",
-      "baseHash": "1e4d9b9053dd74a3bea6719c98d8511de0ff8f73",
+      "baseHash": "fc88341abd157a9a36561be8b6d297bcc8125c6f",
       "issue": 13172
     },
     {
@@ -79,7 +79,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
-      "baseHash": "80c95f0c0635f68a77e8a61380484389d771bf9e",
+      "baseHash": "fb38db987176918ac2158c74ed5473018d4acab5",
       "issue": 12210
     },
     {
@@ -160,6 +160,20 @@
       "issue": 15379
     },
     {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/BaseParagraphProps.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/BaseParagraphProps.cpp",
+      "baseHash": "1aaf0a003c83195882c512a664409e429de4f892",
+      "issue": 15552
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/BaseParagraphProps.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/BaseParagraphProps.h",
+      "baseHash": "7661ba5c8392034cbda48f5d4b721a1ff30fe68d",
+      "issue": 15552
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/ParagraphShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/ParagraphShadowNode.cpp",
@@ -177,19 +191,19 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
-      "baseHash": "ba36ba3603cf0325982afd08475c08d07cb9d231"
+      "baseHash": "ad6263ebaa34f1753daccc09d19bf2328cde48fa"
     },
     {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/accessibilityPropsConversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h",
-      "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc"
+      "baseHash": "98a8417b1730c370d796caf93d2832f659d29ee2"
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/conversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/conversions.h",
-      "baseHash": "3487b9dcde51614425687a31b10923c67a2f1d52",
+      "baseHash": "8a845d31a2588668f47d61a3307bf045e2379e03",
       "issue": 14698
     },
     {
@@ -203,7 +217,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/primitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/primitives.h",
-      "baseHash": "74cee7804fa62964c9ecc3fafd475d09b0ed6375",
+      "baseHash": "660ea2d03bb421337ecbcde0971607a64922bf27",
       "issue": 15263
     },
     {
@@ -223,7 +237,7 @@
       "type": "derived",
       "file": "src-win/index.windows.js.flow",
       "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "40517b790cce30b4f7fbb230efabccd98a917be8"
+      "baseHash": "b3bfc5cc82b448bbfc5b87e0b6e2b4d11f3edde0"
     },
     {
       "type": "platform",
@@ -387,7 +401,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollView.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "34777aa89308a95d5d04bea192451451b3786e4e"
+      "baseHash": "297988d11942a8a287f0578363c50ce129fe7605"
     },
     {
       "type": "derived",
@@ -411,13 +425,13 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "ed5d48ce62056182bf81dfa2d22d511d611d5201"
+      "baseHash": "547fa57cd844cece1f4401b93be75b2edd2a757f"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInputState.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "6ed06ca68066b0cdbaa28a2e5f1fe1b6d9d62f63"
+      "baseHash": "e310687c98b6de40bfe9d939639de566a91fca85"
     },
     {
       "type": "derived",
@@ -519,7 +533,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Image/Image.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
-      "baseHash": "5d62f4a6c4edfe3007eb3b80704a1dfb68e5ff8a",
+      "baseHash": "be81d302b8f2d64ddf7a52bd30fbcb47d18741b5",
       "issue": 4590
     },
     {
@@ -628,7 +642,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "14367e55fca8889783f7dea94ec2c09205960c3c"
+      "baseHash": "59bf5757acc083a749a38173b3610529b27ef4fb"
     },
     {
       "type": "derived",
@@ -678,7 +692,7 @@
       "type": "patch",
       "file": "src-win/src/private/featureflags/ReactNativeFeatureFlagsBase.js",
       "baseFile": "packages/react-native/src/private/featureflags/ReactNativeFeatureFlagsBase.js",
-      "baseHash": "b3f30f3392ed9acd6918007eba024968f372eb95"
+      "baseHash": "7f9ec3ffc3b96bb213039323d5f35d623cde89d7"
     },
     {
       "type": "patch",

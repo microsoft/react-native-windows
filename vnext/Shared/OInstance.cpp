@@ -2,32 +2,23 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-
-#include <cxxreact/CxxModule.h>
-#include <cxxreact/CxxNativeModule.h>
-#include <cxxreact/Instance.h>
+#include "OInstance.h"
 #include <cxxreact/JSBigString.h>
-#include <cxxreact/JSExecutor.h>
 #include <cxxreact/JsBundleType.h>
-#include <cxxreact/ReactMarker.h>
 #include <folly/Bits.h>
 #include <folly/json.h>
 #include <jsi/jsi.h>
-#include <jsireact/JSIExecutor.h>
 #include <filesystem>
-#include "OInstance.h"
 #include "Unicode.h"
 
 #include "JSI/RuntimeHolder.h"
 
 #include <cxxreact/MessageQueueThread.h>
-#include <cxxreact/ModuleRegistry.h>
 
 #if (defined(_MSC_VER) && (defined(WINRT)))
 #include <Utils/LocalBundleReader.h>
 #endif
 
-#include <BatchingMessageQueueThread.h>
 #include <CppRuntimeOptions.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
@@ -356,6 +347,6 @@ std::unique_ptr<const facebook::react::JSBigString> JsBigStringFromPath(
 
 namespace facebook::react {
 
-void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const char * /*tag*/) {}
+void logMarker(int /*id*/, const char * /*tag*/) {}
 
 } // namespace facebook::react

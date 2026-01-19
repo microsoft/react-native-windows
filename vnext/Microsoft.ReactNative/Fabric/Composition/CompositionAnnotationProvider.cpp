@@ -8,11 +8,8 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionAnnotationProvider::CompositionAnnotationProvider(
-    const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
-    CompositionDynamicAutomationProvider *parentProvider) noexcept
-    : m_view{componentView} {
-  m_parentProvider.copy_from(parentProvider);
-}
+    const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept
+    : m_view{componentView} {}
 HRESULT __stdcall CompositionAnnotationProvider::get_AnnotationTypeId(int *retVal) {
   if (retVal == nullptr)
     return E_POINTER;

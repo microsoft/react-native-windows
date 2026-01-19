@@ -68,7 +68,6 @@
     <ClCompile Include="WebSocketResourceFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

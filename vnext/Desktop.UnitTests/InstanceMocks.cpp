@@ -1,7 +1,5 @@
 #include "InstanceMocks.h"
 
-#include <cxxreact/ModuleRegistry.h>
-
 using namespace facebook::react;
 
 using folly::dynamic;
