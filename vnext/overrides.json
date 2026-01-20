@@ -160,6 +160,20 @@
       "issue": 15379
     },
     {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/BaseParagraphProps.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/BaseParagraphProps.cpp",
+      "baseHash": "1aaf0a003c83195882c512a664409e429de4f892",
+      "issue": 15552
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/BaseParagraphProps.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/BaseParagraphProps.h",
+      "baseHash": "7661ba5c8392034cbda48f5d4b721a1ff30fe68d",
+      "issue": 15552
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/ParagraphShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/ParagraphShadowNode.cpp",
