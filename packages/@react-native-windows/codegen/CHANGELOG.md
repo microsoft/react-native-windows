@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Wed, 14 Jan 2026 13:07:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 20 Jan 2026 18:42:50 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.2
+
+Tue, 20 Jan 2026 18:42:50 GMT
+
+### Changes
+
+- forking GenerateModuleCpp (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.82.0-preview.1
 
