@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "update package.json to RN 0.82.0-rc-0 and removed SDL check for 4996 deprecation warning",
+  "packageName": "react-native-windows",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

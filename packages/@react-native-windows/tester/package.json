@@ -24,7 +24,7 @@
     "react-native-xaml": "^0.0.80"
   },
   "devDependencies": {
-    "@react-native/new-app-screen": "0.82.0-nightly-20250902-9731e8ebc",
+    "@react-native/new-app-screen": "0.82.0-rc.0",
     "@react-native/tester": "0.82.0-main",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",

@@ -13,7 +13,7 @@
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
     "@microsoft/eslint-plugin-sdl": "^0.2.0",
-    "@react-native/eslint-config": "0.82.0-nightly-20250902-9731e8ebc",
+    "@react-native/eslint-config": "0.82.0-rc.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-ft-flow": "^2.0.1",
     "hermes-eslint": "0.23.1"
