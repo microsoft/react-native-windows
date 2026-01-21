@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 17 Jan 2026 06:40:58 GMT",
+      "version": "0.0.0-canary.1031",
+      "tag": "react-native-windows_v0.0.0-canary.1031",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "39e354db3eda47b0d92c5ae836a6be2059e99dd8",
+            "comment": "Add multipart/form-data test endpoint"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3f3df4df73a81e061b4e4cb4b62037f853e81973",
+            "comment": "Remove redundant experimental feature declaration"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jan 2026 13:00:14 GMT",
       "version": "0.0.0-canary.1030",
       "tag": "react-native-windows_v0.0.0-canary.1030",

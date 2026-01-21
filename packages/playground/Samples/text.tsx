@@ -37,10 +37,42 @@ export default class Bootstrap extends React.Component {
           </Text>
         </View>
 
+        <View style={styles.selectionColorTestContainer}>
+          <Text style={styles.sectionTitle}>Selection Color Test</Text>
+          <Text
+            selectable={true}
+            selectionColor="red"
+            style={styles.selectableText}>
+            Red selection color - Select this text to see red highlight!
+          </Text>
+          <Text
+            selectable={true}
+            selectionColor="#00FF00"
+            style={styles.selectableText}>
+            Green selection color (#00FF00) - Select this text!
+          </Text>
+          <Text
+            selectable={true}
+            selectionColor="rgba(255, 165, 0, 0.5)"
+            style={styles.selectableText}>
+            Orange with 50% opacity - Select this text!
+          </Text>
+          <Text
+            selectable={true}
+            selectionColor="blue"
+            style={styles.selectableText}>
+            Blue selection color - Select this text!
+          </Text>
+          <Text selectable={true} style={styles.selectableText}>
+            Default selection color (no selectionColor prop) - Uses theme
+            default.
+          </Text>
+        </View>
+
         <View
           style={styles.container2}
           accessible={true}
-          accessibilityLabel="Annotation Checkc"
+          accessibilityLabel="Annotation Check"
           accessibilityAnnotation={{
             typeID: 'Comment',
             typeName: 'Check Comment',
@@ -83,6 +115,13 @@ const styles = StyleSheet.create({
   },
   selectionTestContainer: {
     backgroundColor: '#f0f0f0',
+    padding: 15,
+    marginVertical: 10,
+    borderRadius: 8,
+    width: 400,
+  },
+  selectionColorTestContainer: {
+    backgroundColor: '#fff0f5',
     padding: 15,
     marginVertical: 10,
     borderRadius: 8,
