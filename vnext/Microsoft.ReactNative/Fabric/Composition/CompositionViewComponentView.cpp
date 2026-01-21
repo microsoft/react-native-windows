@@ -1354,31 +1354,32 @@ void ViewComponentView::updateLayoutMetrics(
     m_contentVisual.Size({std::max(0.f, contentWidth), std::max(0.f, contentHeight)});
 
     // Apply clipping to m_contentVisual for overflow: hidden
-    if (m_props->getClipsContentToBounds()) {
-      // Calculate inner border radii for clipping (0 for rectangular clip)
-      facebook::react::RectangleCorners<facebook::react::CornerRadii> innerRadii;
-      innerRadii.topLeft = {
-          std::max(0.f, borderMetrics.borderRadii.topLeft.horizontal - borderLeft),
-          std::max(0.f, borderMetrics.borderRadii.topLeft.vertical - borderTop)};
-      innerRadii.topRight = {
-          std::max(0.f, borderMetrics.borderRadii.topRight.horizontal - borderRight),
-          std::max(0.f, borderMetrics.borderRadii.topRight.vertical - borderTop)};
-      innerRadii.bottomLeft = {
-          std::max(0.f, borderMetrics.borderRadii.bottomLeft.horizontal - borderLeft),
-          std::max(0.f, borderMetrics.borderRadii.bottomLeft.vertical - borderBottom)};
-      innerRadii.bottomRight = {
-          std::max(0.f, borderMetrics.borderRadii.bottomRight.horizontal - borderRight),
-          std::max(0.f, borderMetrics.borderRadii.bottomRight.vertical - borderBottom)};
+    if (auto visualInterop =
+            m_contentVisual.try_as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()) {
+      if (m_props->getClipsContentToBounds()) {
+        // Calculate inner border radii for clipping (0 for rectangular clip)
+        facebook::react::RectangleCorners<facebook::react::CornerRadii> innerRadii;
+        innerRadii.topLeft = {
+            std::max(0.f, borderMetrics.borderRadii.topLeft.horizontal - borderLeft),
+            std::max(0.f, borderMetrics.borderRadii.topLeft.vertical - borderTop)};
+        innerRadii.topRight = {
+            std::max(0.f, borderMetrics.borderRadii.topRight.horizontal - borderRight),
+            std::max(0.f, borderMetrics.borderRadii.topRight.vertical - borderTop)};
+        innerRadii.bottomLeft = {
+            std::max(0.f, borderMetrics.borderRadii.bottomLeft.horizontal - borderLeft),
+            std::max(0.f, borderMetrics.borderRadii.bottomLeft.vertical - borderBottom)};
+        innerRadii.bottomRight = {
+            std::max(0.f, borderMetrics.borderRadii.bottomRight.horizontal - borderRight),
+            std::max(0.f, borderMetrics.borderRadii.bottomRight.vertical - borderBottom)};
 
-      winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
-          m_compContext, innerRadii, {0, 0, 0, 0}, {0, 0, std::max(0.f, contentWidth), std::max(0.f, contentHeight)});
+        winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
+            m_compContext, innerRadii, {0, 0, 0, 0}, {0, 0, std::max(0.f, contentWidth), std::max(0.f, contentHeight)});
 
-      m_contentVisual.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
-          pathGeometry.get());
-    } else {
-      // Clear any existing clip
-      m_contentVisual.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
-          nullptr);
+        visualInterop->SetClippingPath(pathGeometry.get());
+      } else {
+        // Clear any existing clip
+        visualInterop->SetClippingPath(nullptr);
+      }
     }
   }
 }
