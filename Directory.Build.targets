@@ -105,6 +105,8 @@
         BaseOutDir;
         ReactNativeDir;
         ReactNativeWindowsDir;
+        RnwNewArch;
+        UseFabric;
         FollyDir;
         YogaDir;
         WinVer;
@@ -120,7 +122,6 @@
         HermesVersion;
         HermesPackage;
         HermesArch;
-        UseFabric;
         UseV8;
         V8Package;
         V8Version;
