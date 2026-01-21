@@ -142,7 +142,7 @@ extends:
             displayName: Fix missing npm config
 
           - pwsh: |
-              npx beachball check --verbose 2>&1 | Tee-Object -Variable beachballOutput
+              npx --yes beachball check --verbose 2>&1 | Tee-Object -Variable beachballOutput
               $beachballErrors = $beachballOutput | Where-Object { $_ -match "ERROR: *"}
               $beachballErrors | ForEach { Write-Host "##vso[task.logissue type=error]$_" }
               if ( $beachballErrors.Count -gt 0)  { throw "Beachball check found $($beachballErrors.Count) errors." }
@@ -175,7 +175,7 @@ extends:
           - script: |
               if exist "$(Pipeline.Workspace)\published-packages" rd /s /q "$(Pipeline.Workspace)\published-packages"
               mkdir "$(Pipeline.Workspace)\published-packages"
-              npx beachball publish --no-publish $(SkipGitPushPublishArgs) --pack-to-path "$(Pipeline.Workspace)\published-packages" --branch origin/$(SourceBranchWithFolders) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
+              npx --yes beachball publish --no-publish $(SkipGitPushPublishArgs) --pack-to-path "$(Pipeline.Workspace)\published-packages" --branch origin/$(SourceBranchWithFolders) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
             displayName: Beachball Publish
 
           - script: dir /s "$(Pipeline.Workspace)\published-packages"
