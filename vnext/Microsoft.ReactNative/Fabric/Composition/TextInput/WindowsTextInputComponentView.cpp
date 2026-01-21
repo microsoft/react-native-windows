@@ -1508,18 +1508,12 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   cfNew.wWeight =
       props.textAttributes.fontWeight ? static_cast<WORD>(*props.textAttributes.fontWeight) : DWRITE_FONT_WEIGHT_NORMAL;
 
-  // set font style
-  // cfNew.dwMask |= (CFM_ITALIC | CFM_STRIKEOUT | CFM_UNDERLINE);
-  // int dFontStyle = fontDetails.FontStyle;
-  // if (dFontStyle & FS_Italic) {
-  //    cfNew.dwEffects |= CFE_ITALIC;
-  //  }
-  //  if (dFontStyle & FS_StrikeOut) {
-  // cfNew.dwEffects |= CFE_STRIKEOUT;
-  //}
-  // if (dFontStyle & FS_Underline) {
-  //    cfNew.dwEffects |= CFE_UNDERLINE;
-  //  }
+  // set font style (italic)
+  cfNew.dwMask |= CFM_ITALIC;
+  if (props.textAttributes.fontStyle == facebook::react::FontStyle::Italic ||
+      props.textAttributes.fontStyle == facebook::react::FontStyle::Oblique) {
+    cfNew.dwEffects |= CFE_ITALIC;
+  }
 
   // set font family
   if (!props.textAttributes.fontFamily.empty()) {
