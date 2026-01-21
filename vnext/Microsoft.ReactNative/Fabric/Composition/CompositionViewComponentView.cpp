@@ -890,13 +890,18 @@ void ComponentView::Toggle() noexcept {
 void ComponentView::updateClippingPath(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
+  auto visualInterop = Visual().try_as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>();
+  if (!visualInterop) {
+    return;
+  }
+
   auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
 
   if (borderMetrics.borderRadii.topLeft.horizontal == 0 && borderMetrics.borderRadii.topRight.horizontal == 0 &&
       borderMetrics.borderRadii.bottomLeft.horizontal == 0 && borderMetrics.borderRadii.bottomRight.horizontal == 0 &&
       borderMetrics.borderRadii.topLeft.vertical == 0 && borderMetrics.borderRadii.topRight.vertical == 0 &&
       borderMetrics.borderRadii.bottomLeft.vertical == 0 && borderMetrics.borderRadii.bottomRight.vertical == 0) {
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
+    visualInterop->SetClippingPath(nullptr);
   } else {
     winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
         m_compContext,
@@ -907,8 +912,7 @@ void ComponentView::updateClippingPath(
          layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
          layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
-        pathGeometry.get());
+    visualInterop->SetClippingPath(pathGeometry.get());
   }
 }
 
@@ -1069,12 +1073,6 @@ void ViewComponentView::ensureVisual() noexcept {
     }
     OuterVisual().InsertAt(m_visual, 0);
   }
-
-  // Create m_contentVisual as a child of m_visual if not already created
-  if (!m_contentVisual) {
-    m_contentVisual = m_compContext.CreateSpriteVisual();
-    m_visual.InsertAt(m_contentVisual, 0); // Insert at index 0 so it's below border visuals
-  }
 }
 
 winrt::Microsoft::ReactNative::ComponentView ViewComponentView::Create(
@@ -1089,8 +1087,7 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 ViewComponentView::VisualToMountChildrenInto() noexcept {
   if (m_builder && m_builder->VisualToMountChildrenIntoHandler())
     return m_builder->VisualToMountChildrenIntoHandler()(*this);
-  // Mount children into m_contentVisual (ensureVisual should have been called before this)
-  ensureVisual();
+  // Mount children into m_contentVisual if it exists (for overflow: hidden), otherwise into Visual()
   return m_contentVisual ? m_contentVisual : Visual();
 }
 
@@ -1148,16 +1145,36 @@ void ViewComponentView::updateProps(
   updateAccessibilityProps(oldViewProps, newViewProps);
   updateTransformProps(oldViewProps, newViewProps, Visual());
 
-  // Handle overflow property changes
+  // Handle overflow property changes - lazily create m_contentVisual only when needed
   if (oldViewProps.yogaStyle.overflow() != newViewProps.yogaStyle.overflow()) {
-    auto compVisual =
-        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
-            Visual());
-    if (compVisual) {
-      if (newViewProps.yogaStyle.overflow() == facebook::yoga::Overflow::Hidden) {
-        compVisual.Clip(Compositor().CreateInsetClip(0.0f, 0.0f, 0.0f, 0.0f));
-      } else {
-        compVisual.Clip(nullptr);
+    bool needsClipping = newViewProps.yogaStyle.overflow() != facebook::yoga::Overflow::Visible;
+    if (needsClipping) {
+      // Create m_contentVisual if not already created
+      if (!m_contentVisual) {
+        m_contentVisual = m_compContext.CreateSpriteVisual();
+        // Reparent existing child visuals from Visual() to m_contentVisual
+        for (uint32_t i = 0; i < m_children.Size(); i++) {
+          if (auto compositionChild = m_children.GetAt(i).try_as<ComponentView>()) {
+            Visual().Remove(compositionChild->OuterVisual());
+            m_contentVisual.InsertAt(compositionChild->OuterVisual(), i);
+          }
+        }
+        // Insert m_contentVisual at index 0 (below border visuals)
+        Visual().InsertAt(m_contentVisual, 0);
+      }
+    } else {
+      // Remove m_contentVisual if it exists - reparent children back to Visual()
+      if (m_contentVisual) {
+        // Move children from m_contentVisual back to Visual()
+        for (uint32_t i = 0; i < m_children.Size(); i++) {
+          if (auto compositionChild = m_children.GetAt(i).try_as<ComponentView>()) {
+            m_contentVisual.Remove(compositionChild->OuterVisual());
+            Visual().InsertAt(compositionChild->OuterVisual(), i);
+          }
+        }
+        // Remove m_contentVisual from visual
+        Visual().Remove(m_contentVisual);
+        m_contentVisual = nullptr;
       }
     }
   }
