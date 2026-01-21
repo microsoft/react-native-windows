@@ -2,6 +2,78 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 20 Jan 2026 18:42:50 GMT",
+      "version": "0.82.0-preview.2",
+      "tag": "react-native-windows_v0.82.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4bb47d05de41311659d451b79f33e9a596230dcb",
+            "comment": "implements selectionColor"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8b6a19d8917b49a69a6747f4ec7f08fa7043e714",
+            "comment": "forking GenerateModuleCpp"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8fc409bf4676d66df4b4d76f5705b6a0b4f5bab0",
+            "comment": "update package.json to RN 0.82.0-rc-0 and removed SDL check for 4996 deprecation warning"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.82.0-preview.2",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.82.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Jan 2026 13:07:17 GMT",
+      "version": "0.82.0-preview.1",
+      "tag": "react-native-windows_v0.82.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4ade8ccd99bb577a15a1ce46e1fdc7dd43d66dd5",
+            "comment": "Promote 0.82 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.82.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.82.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.82.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jan 2026 13:00:14 GMT",
       "version": "0.0.0-canary.1030",
       "tag": "react-native-windows_v0.0.0-canary.1030",

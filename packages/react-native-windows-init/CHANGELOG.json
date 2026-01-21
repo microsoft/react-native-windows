@@ -2,6 +2,54 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 20 Jan 2026 18:42:50 GMT",
+      "version": "0.82.0-preview.2",
+      "tag": "react-native-windows-init_v0.82.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.82.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Jan 2026 13:07:17 GMT",
+      "version": "0.82.0-preview.1",
+      "tag": "react-native-windows-init_v0.82.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows-init",
+            "commit": "4ade8ccd99bb577a15a1ce46e1fdc7dd43d66dd5",
+            "comment": "Promote 0.82 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/fs to v0.82.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.82.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.82.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jan 2026 13:00:14 GMT",
       "version": "0.0.0-canary.1020",
       "tag": "react-native-windows-init_v0.0.0-canary.1020",

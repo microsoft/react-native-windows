@@ -1,8 +1,25 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Sat, 10 Jan 2026 06:40:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 20 Jan 2026 18:42:50 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.2
+
+Tue, 20 Jan 2026 18:42:50 GMT
+
+### Changes
+
+- forking GenerateModuleCpp (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.82.0-preview.1
+
+Wed, 14 Jan 2026 13:07:18 GMT
+
+### Changes
+
+- Promote 0.82 to preview (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.82.0-preview.1
 
 ## 0.0.0-canary.129
 

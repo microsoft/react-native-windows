@@ -2,6 +2,42 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Tue, 20 Jan 2026 18:42:50 GMT",
+      "version": "0.82.0-preview.2",
+      "tag": "@react-native-windows/codegen_v0.82.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "8b6a19d8917b49a69a6747f4ec7f08fa7043e714",
+            "comment": "forking GenerateModuleCpp"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Jan 2026 13:07:18 GMT",
+      "version": "0.82.0-preview.1",
+      "tag": "@react-native-windows/codegen_v0.82.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "4ade8ccd99bb577a15a1ce46e1fdc7dd43d66dd5",
+            "comment": "Promote 0.82 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.82.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 10 Jan 2026 06:40:18 GMT",
       "version": "0.0.0-canary.129",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.129",
