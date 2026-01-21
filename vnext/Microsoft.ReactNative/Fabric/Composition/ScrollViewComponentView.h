@@ -129,6 +129,10 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool scrollRight(float delta, bool animate) noexcept;
   void updateBackgroundColor(const facebook::react::SharedColor &color) noexcept;
   void updateStateWithContentOffset() noexcept;
+  // Issue #15557: Notify ContentIslandComponentView instances that scroll position has changed
+  void FireLayoutMetricsChangedForScrollPositionChange() noexcept;
+  // Issue #15557: Dismiss XAML popups in child ContentIslandComponentView instances when scroll begins
+  void DismissChildContentIslandPopups() noexcept;
   facebook::react::ScrollViewEventEmitter::Metrics getScrollMetrics(
       facebook::react::SharedViewEventEmitter const &eventEmitter,
       winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) noexcept;

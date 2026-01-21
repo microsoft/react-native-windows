@@ -6,6 +6,7 @@
 
 #include "ScrollViewComponentView.h"
 
+#include <Fabric/ComponentView.h>
 #include <Utils/ValueUtils.h>
 
 #pragma warning(push)
@@ -19,6 +20,8 @@
 #include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
 #include <unicode.h>
+#include <functional>
+#include "ContentIslandComponentView.h"
 #include "JSValueReader.h"
 #include "RootComponentView.h"
 
@@ -1325,6 +1328,11 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
             m_allowNextScrollNoMatterWhat = false;
           }
         }
+
+        // Issue #15557: Fire LayoutMetricsChanged to notify ContentIslandComponentView instances
+        // that scroll position has changed, so they can update their LocalToParentTransformMatrix
+        // for correct XAML popup positioning
+        FireLayoutMetricsChangedForScrollPositionChange();
       });
 
   m_scrollBeginDragRevoker = m_scrollVisual.ScrollBeginDrag(
@@ -1332,6 +1340,9 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        // Issue #15557: Dismiss any open XAML popups when scroll begins (light dismiss behavior)
+        DismissChildContentIslandPopups();
+
         m_allowNextScrollNoMatterWhat = true; // Ensure next scroll event is recorded, regardless of throttle
         updateStateWithContentOffset();
         auto eventEmitter = GetEventEmitter();
@@ -1477,5 +1488,47 @@ void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noe
 
 void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
+}
+
+// Issue #15557: Fire LayoutMetricsChanged to notify ContentIslandComponentView instances
+// that scroll position has changed, so they can update their LocalToParentTransformMatrix
+// for correct XAML popup positioning.
+void ScrollViewComponentView::FireLayoutMetricsChangedForScrollPositionChange() noexcept {
+  // Create LayoutMetricsChangedArgs with same old/new metrics
+  // The actual scroll offset is handled in getClientOffset() which ContentIslandComponentView
+  // uses when calculating the transform matrix via getClientRect()
+  winrt::Microsoft::ReactNative::LayoutMetrics metrics{
+      {m_layoutMetrics.frame.origin.x,
+       m_layoutMetrics.frame.origin.y,
+       m_layoutMetrics.frame.size.width,
+       m_layoutMetrics.frame.size.height},
+      m_layoutMetrics.pointScaleFactor};
+
+  m_layoutMetricsChangedEvent(
+      *this, winrt::make<winrt::Microsoft::ReactNative::implementation::LayoutMetricsChangedArgs>(metrics, metrics));
+}
+
+// Issue #15557: Dismiss XAML popups in child ContentIslandComponentView instances when scroll begins.
+// This implements light dismiss behavior for controls like ComboBox dropdown.
+void ScrollViewComponentView::DismissChildContentIslandPopups() noexcept {
+  // Helper lambda to recursively find and dismiss popups in all ContentIslandComponentView children
+  std::function<void(const winrt::Microsoft::ReactNative::ComponentView &)> dismissPopupsRecursively =
+      [&dismissPopupsRecursively](const winrt::Microsoft::ReactNative::ComponentView &view) {
+        // Check if this view is a ContentIslandComponentView
+        if (auto contentIsland =
+                view.try_as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>()) {
+          winrt::get_self<ContentIslandComponentView>(contentIsland)->DismissPopups();
+        }
+
+        // Recursively check children
+        for (auto child : view.Children()) {
+          dismissPopupsRecursively(child);
+        }
+      };
+
+  // Start recursive search from this ScrollView's children
+  for (auto child : Children()) {
+    dismissPopupsRecursively(child);
+  }
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
