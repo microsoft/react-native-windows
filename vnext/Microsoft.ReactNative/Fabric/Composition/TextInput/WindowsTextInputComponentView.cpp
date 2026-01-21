@@ -1515,6 +1515,20 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
     cfNew.dwEffects |= CFE_ITALIC;
   }
 
+  // set text decoration (underline and strikethrough)
+  cfNew.dwMask |= (CFM_UNDERLINE | CFM_STRIKEOUT);
+  if (props.textAttributes.textDecorationLineType.has_value()) {
+    auto decorationType = *props.textAttributes.textDecorationLineType;
+    if (decorationType == facebook::react::TextDecorationLineType::Underline ||
+        decorationType == facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+      cfNew.dwEffects |= CFE_UNDERLINE;
+    }
+    if (decorationType == facebook::react::TextDecorationLineType::Strikethrough ||
+        decorationType == facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+      cfNew.dwEffects |= CFE_STRIKEOUT;
+    }
+  }
+
   // set font family
   if (!props.textAttributes.fontFamily.empty()) {
     cfNew.dwMask |= CFM_FACE;
