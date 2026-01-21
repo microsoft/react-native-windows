@@ -1508,18 +1508,26 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   cfNew.wWeight =
       props.textAttributes.fontWeight ? static_cast<WORD>(*props.textAttributes.fontWeight) : DWRITE_FONT_WEIGHT_NORMAL;
 
-  // set font style
-  // cfNew.dwMask |= (CFM_ITALIC | CFM_STRIKEOUT | CFM_UNDERLINE);
-  // int dFontStyle = fontDetails.FontStyle;
-  // if (dFontStyle & FS_Italic) {
-  //    cfNew.dwEffects |= CFE_ITALIC;
-  //  }
-  //  if (dFontStyle & FS_StrikeOut) {
-  // cfNew.dwEffects |= CFE_STRIKEOUT;
-  //}
-  // if (dFontStyle & FS_Underline) {
-  //    cfNew.dwEffects |= CFE_UNDERLINE;
-  //  }
+  // set font style (italic)
+  cfNew.dwMask |= CFM_ITALIC;
+  if (props.textAttributes.fontStyle == facebook::react::FontStyle::Italic ||
+      props.textAttributes.fontStyle == facebook::react::FontStyle::Oblique) {
+    cfNew.dwEffects |= CFE_ITALIC;
+  }
+
+  // set text decoration (underline and strikethrough)
+  cfNew.dwMask |= (CFM_UNDERLINE | CFM_STRIKEOUT);
+  if (props.textAttributes.textDecorationLineType.has_value()) {
+    auto decorationType = *props.textAttributes.textDecorationLineType;
+    if (decorationType == facebook::react::TextDecorationLineType::Underline ||
+        decorationType == facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+      cfNew.dwEffects |= CFE_UNDERLINE;
+    }
+    if (decorationType == facebook::react::TextDecorationLineType::Strikethrough ||
+        decorationType == facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+      cfNew.dwEffects |= CFE_STRIKEOUT;
+    }
+  }
 
   // set font family
   if (!props.textAttributes.fontFamily.empty()) {
