@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Jan 2026 14:42:27 GMT",
+      "version": "0.82.0-preview.3",
+      "tag": "react-native-windows_v0.82.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7d9a26d50288e3829966de2eeaf36cd6bc83f462",
+            "comment": "fix: Apply fontStyle italic to TextInput component"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Jan 2026 18:42:50 GMT",
       "version": "0.82.0-preview.2",
       "tag": "react-native-windows_v0.82.0-preview.2",

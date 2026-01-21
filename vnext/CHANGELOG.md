@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 20 Jan 2026 18:42:50 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 21 Jan 2026 14:42:27 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.3
+
+Wed, 21 Jan 2026 14:42:27 GMT
+
+### Changes
+
+- fix: Apply fontStyle italic to TextInput component (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.82.0-preview.2
 
