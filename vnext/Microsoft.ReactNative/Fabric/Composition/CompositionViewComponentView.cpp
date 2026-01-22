@@ -890,13 +890,18 @@ void ComponentView::Toggle() noexcept {
 void ComponentView::updateClippingPath(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
+  auto visualInterop = Visual().try_as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>();
+  if (!visualInterop) {
+    return;
+  }
+
   auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
 
   if (borderMetrics.borderRadii.topLeft.horizontal == 0 && borderMetrics.borderRadii.topRight.horizontal == 0 &&
       borderMetrics.borderRadii.bottomLeft.horizontal == 0 && borderMetrics.borderRadii.bottomRight.horizontal == 0 &&
       borderMetrics.borderRadii.topLeft.vertical == 0 && borderMetrics.borderRadii.topRight.vertical == 0 &&
       borderMetrics.borderRadii.bottomLeft.vertical == 0 && borderMetrics.borderRadii.bottomRight.vertical == 0) {
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
+    visualInterop->SetClippingPath(nullptr);
   } else {
     winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
         m_compContext,
@@ -907,8 +912,7 @@ void ComponentView::updateClippingPath(
          layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
          layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
-        pathGeometry.get());
+    visualInterop->SetClippingPath(pathGeometry.get());
   }
 }
 
