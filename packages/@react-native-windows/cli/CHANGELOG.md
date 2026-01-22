@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Tue, 20 Jan 2026 18:42:50 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 22 Jan 2026 10:16:24 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.3
+
+Thu, 22 Jan 2026 10:16:24 GMT
+
+### Changes
+
+- Fixed template info not detecting mixed architecture projects (4123478+tido64@users.noreply.github.com)
 
 ## 0.82.0-preview.2
 

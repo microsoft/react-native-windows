@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 22 Jan 2026 10:16:24 GMT",
+      "version": "0.82.0-preview.3",
+      "tag": "@react-native-windows/cli_v0.82.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "d0841de690130ed16982e9ba6a944a73e67f85d6",
+            "comment": "Fixed template info not detecting mixed architecture projects"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Jan 2026 18:42:50 GMT",
       "version": "0.82.0-preview.2",
       "tag": "@react-native-windows/cli_v0.82.0-preview.2",

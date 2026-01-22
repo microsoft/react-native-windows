@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Thu, 22 Jan 2026 10:16:24 GMT",
+      "version": "0.82.0-preview.3",
+      "tag": "react-native-windows-init_v0.82.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.82.0-preview.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Jan 2026 18:42:50 GMT",
       "version": "0.82.0-preview.2",
       "tag": "react-native-windows-init_v0.82.0-preview.2",

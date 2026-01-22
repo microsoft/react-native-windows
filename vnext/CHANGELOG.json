@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 22 Jan 2026 10:16:24 GMT",
+      "version": "0.82.0-preview.4",
+      "tag": "react-native-windows_v0.82.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.82.0-preview.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Jan 2026 14:42:27 GMT",
       "version": "0.82.0-preview.3",
       "tag": "react-native-windows_v0.82.0-preview.3",
