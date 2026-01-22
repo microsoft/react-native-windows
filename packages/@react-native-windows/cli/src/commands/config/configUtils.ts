@@ -143,22 +143,6 @@ export function getRawTemplateInfo(filePath: string): RawTemplateInfo {
     if (
       importProjectExists(
         projectContents,
-        'Microsoft.ReactNative.Uwp.CppApp.targets',
-      )
-    ) {
-      result.projectType = 'app';
-      result.projectArch = 'old';
-    } else if (
-      importProjectExists(
-        projectContents,
-        'Microsoft.ReactNative.Uwp.CppLib.targets',
-      )
-    ) {
-      result.projectType = 'lib';
-      result.projectArch = 'old';
-    } else if (
-      importProjectExists(
-        projectContents,
         'Microsoft.ReactNative.Composition.CppApp.targets',
       )
     ) {
@@ -180,6 +164,22 @@ export function getRawTemplateInfo(filePath: string): RawTemplateInfo {
     ) {
       result.projectType = 'lib';
       result.projectArch = 'mixed';
+    } else if (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Uwp.CppApp.targets',
+      )
+    ) {
+      result.projectType = 'app';
+      result.projectArch = 'old';
+    } else if (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Uwp.CppLib.targets',
+      )
+    ) {
+      result.projectType = 'lib';
+      result.projectArch = 'old';
     }
   }
 
