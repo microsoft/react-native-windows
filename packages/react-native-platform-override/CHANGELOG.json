@@ -2,6 +2,33 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 14 Jan 2026 13:07:17 GMT",
+      "version": "0.82.0-preview.1",
+      "tag": "react-native-platform-override_v0.82.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "4ade8ccd99bb577a15a1ce46e1fdc7dd43d66dd5",
+            "comment": "Promote 0.82 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/fs to v0.82.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/package-utils to v0.82.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jan 2026 13:00:14 GMT",
       "version": "0.0.0-canary.1019",
       "tag": "react-native-platform-override_v0.0.0-canary.1019",

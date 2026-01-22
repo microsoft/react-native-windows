@@ -2,6 +2,57 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Wed, 21 Jan 2026 14:42:27 GMT",
+      "version": "0.82.0-preview.3",
+      "tag": "@react-native-windows/automation-commands_v0.82.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.82.0-preview.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 20 Jan 2026 18:42:50 GMT",
+      "version": "0.82.0-preview.2",
+      "tag": "@react-native-windows/automation-commands_v0.82.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.82.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Jan 2026 13:07:18 GMT",
+      "version": "0.82.0-preview.1",
+      "tag": "@react-native-windows/automation-commands_v0.82.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "4ade8ccd99bb577a15a1ce46e1fdc7dd43d66dd5",
+            "comment": "Promote 0.82 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.82.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jan 2026 13:00:14 GMT",
       "version": "0.0.0-canary.1030",
       "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1030",

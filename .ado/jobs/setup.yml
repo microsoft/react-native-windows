@@ -36,16 +36,16 @@ jobs:
         displayName: Build @rnw-scripts/beachball-config
       
       - pwsh: |
-          npx beachball check --branch origin/$(BeachBallBranchName) --verbose 2>&1 | Tee-Object -Variable beachballOutput
+          npx --yes beachball check --branch origin/$(BeachBallBranchName) --verbose 2>&1 | Tee-Object -Variable beachballOutput
           $beachballErrors = $beachballOutput | Where-Object { $_ -match "ERROR: *"}
           $beachballErrors | ForEach { Write-Host "##vso[task.logissue type=warning]POSSIBLE $_" }
         displayName: Warn for possible invalid change files
 
       - ${{ if endsWith(parameters.buildEnvironment, 'PullRequest') }}:
-        - script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "##vso[task.logissue type=error]Run \"yarn change\" from root of repo to generate a change file."
+        - script: npx --yes beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "##vso[task.logissue type=error]Run \"yarn change\" from root of repo to generate a change file."
           displayName: Check for change files
 
-      - script: npx beachball bump --branch origin/$(BeachBallBranchName) --yes --verbose
+      - script: npx --yes beachball bump --branch origin/$(BeachBallBranchName) --yes --verbose
         displayName: beachball bump
 
       - template: ../templates/set-version-vars.yml

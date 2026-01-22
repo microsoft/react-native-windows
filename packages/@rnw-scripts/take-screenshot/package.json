@@ -19,7 +19,7 @@
     "take-screenshot": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "0.82.0-preview.0",
+    "@react-native-windows/fs": "0.82.0-preview.1",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "minimatch": "^10.0.3",

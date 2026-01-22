@@ -1,8 +1,33 @@
 # Change Log - @react-native-windows/automation-commands
 
-<!-- This log was last generated on Tue, 13 Jan 2026 13:00:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 21 Jan 2026 14:42:27 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.3
+
+Wed, 21 Jan 2026 14:42:27 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.82.0-preview.3
+
+## 0.82.0-preview.2
+
+Tue, 20 Jan 2026 18:42:50 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.82.0-preview.2
+
+## 0.82.0-preview.1
+
+Wed, 14 Jan 2026 13:07:18 GMT
+
+### Changes
+
+- Promote 0.82 to preview (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.82.0-preview.1
 
 ## 0.0.0-canary.1030
 
