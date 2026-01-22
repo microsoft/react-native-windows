@@ -890,18 +890,13 @@ void ComponentView::Toggle() noexcept {
 void ComponentView::updateClippingPath(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
-  auto visualInterop = Visual().try_as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>();
-  if (!visualInterop) {
-    return;
-  }
-
   auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
 
   if (borderMetrics.borderRadii.topLeft.horizontal == 0 && borderMetrics.borderRadii.topRight.horizontal == 0 &&
       borderMetrics.borderRadii.bottomLeft.horizontal == 0 && borderMetrics.borderRadii.bottomRight.horizontal == 0 &&
       borderMetrics.borderRadii.topLeft.vertical == 0 && borderMetrics.borderRadii.topRight.vertical == 0 &&
       borderMetrics.borderRadii.bottomLeft.vertical == 0 && borderMetrics.borderRadii.bottomRight.vertical == 0) {
-    visualInterop->SetClippingPath(nullptr);
+    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
   } else {
     winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
         m_compContext,
@@ -912,7 +907,8 @@ void ComponentView::updateClippingPath(
          layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
          layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 
-    visualInterop->SetClippingPath(pathGeometry.get());
+    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
+        pathGeometry.get());
   }
 }
 
@@ -1073,6 +1069,12 @@ void ViewComponentView::ensureVisual() noexcept {
     }
     OuterVisual().InsertAt(m_visual, 0);
   }
+
+  // Create m_contentVisual as a child of m_visual if not already created
+  if (!m_contentVisual) {
+    m_contentVisual = m_compContext.CreateSpriteVisual();
+    m_visual.InsertAt(m_contentVisual, 0); // Insert at index 0 so it's below border visuals
+  }
 }
 
 winrt::Microsoft::ReactNative::ComponentView ViewComponentView::Create(
@@ -1087,7 +1089,9 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 ViewComponentView::VisualToMountChildrenInto() noexcept {
   if (m_builder && m_builder->VisualToMountChildrenIntoHandler())
     return m_builder->VisualToMountChildrenIntoHandler()(*this);
-  return Visual();
+  // Mount children into m_contentVisual (ensureVisual should have been called before this)
+  ensureVisual();
+  return m_contentVisual ? m_contentVisual : Visual();
 }
 
 void ViewComponentView::MountChildComponentView(
@@ -1143,6 +1147,21 @@ void ViewComponentView::updateProps(
   // update BaseComponentView props
   updateAccessibilityProps(oldViewProps, newViewProps);
   updateTransformProps(oldViewProps, newViewProps, Visual());
+
+  // Handle overflow property changes
+  if (oldViewProps.yogaStyle.overflow() != newViewProps.yogaStyle.overflow()) {
+    auto compVisual =
+        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
+            Visual());
+    if (compVisual) {
+      if (newViewProps.yogaStyle.overflow() == facebook::yoga::Overflow::Hidden) {
+        compVisual.Clip(Compositor().CreateInsetClip(0.0f, 0.0f, 0.0f, 0.0f));
+      } else {
+        compVisual.Clip(nullptr);
+      }
+    }
+  }
+
   base_type::updateProps(props, oldProps);
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
@@ -1320,6 +1339,52 @@ void ViewComponentView::updateLayoutMetrics(
   Visual().Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+
+  // Size and offset m_contentVisual to match the content area, excluding borders
+  if (m_contentVisual && m_props) {
+    const auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, *m_props);
+    const float borderLeft = borderMetrics.borderWidths.left;
+    const float borderTop = borderMetrics.borderWidths.top;
+    const float borderRight = borderMetrics.borderWidths.right;
+    const float borderBottom = borderMetrics.borderWidths.bottom;
+    const float scale = layoutMetrics.pointScaleFactor;
+    const float contentWidth = layoutMetrics.frame.size.width * scale - borderLeft - borderRight;
+    const float contentHeight = layoutMetrics.frame.size.height * scale - borderTop - borderBottom;
+    m_contentVisual.Offset({borderLeft, borderTop, 0});
+    m_contentVisual.Size({std::max(0.f, contentWidth), std::max(0.f, contentHeight)});
+
+    // Apply clipping to m_contentVisual for overflow: hidden
+    if (m_props->getClipsContentToBounds()) {
+      // Calculate inner border radii for clipping (0 for rectangular clip)
+      facebook::react::RectangleCorners<facebook::react::CornerRadii> innerRadii;
+      innerRadii.topLeft = {
+          std::max(0.f, borderMetrics.borderRadii.topLeft.horizontal - borderLeft),
+          std::max(0.f, borderMetrics.borderRadii.topLeft.vertical - borderTop)};
+      innerRadii.topRight = {
+          std::max(0.f, borderMetrics.borderRadii.topRight.horizontal - borderRight),
+          std::max(0.f, borderMetrics.borderRadii.topRight.vertical - borderTop)};
+      innerRadii.bottomLeft = {
+          std::max(0.f, borderMetrics.borderRadii.bottomLeft.horizontal - borderLeft),
+          std::max(0.f, borderMetrics.borderRadii.bottomLeft.vertical - borderBottom)};
+      innerRadii.bottomRight = {
+          std::max(0.f, borderMetrics.borderRadii.bottomRight.horizontal - borderRight),
+          std::max(0.f, borderMetrics.borderRadii.bottomRight.vertical - borderBottom)};
+
+      winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
+          m_compContext, innerRadii, {0, 0, 0, 0}, {0, 0, std::max(0.f, contentWidth), std::max(0.f, contentHeight)});
+
+      if (auto visualInterop =
+              m_contentVisual.try_as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()) {
+        visualInterop->SetClippingPath(pathGeometry.get());
+      }
+    } else {
+      // Clear any existing clip
+      if (auto visualInterop =
+              m_contentVisual.try_as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()) {
+        visualInterop->SetClippingPath(nullptr);
+      }
+    }
+  }
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}
