@@ -72,6 +72,8 @@ export function enumerateVsInstalls(opts: {
   if (opts.minVersion) {
     // VS 2019 ex: minVersion == 16.7 => [16.7,17.0)
     // VS 2022 ex: minVersion == 17.0 => [17.0,18.0)
+    // VS 2026 ex: minVersion == 18.0 => [18.0,19.0)
+    // To support both VS2022 and VS2026 with minVersion == 17.11.0 => [17.11.0,19.0)
 
     // Try to parse minVersion as both a Number and SemVer
     const minVersionNum = Number(opts.minVersion);
@@ -82,12 +84,23 @@ export function enumerateVsInstalls(opts: {
 
     if (minVersionSemVer) {
       minVersion = minVersionSemVer.toString();
-      maxVersion = `${minVersionSemVer.major + 1}.0`;
+      // Support VS2022 (17.x) and VS2026 (18.x) by extending max version range
+      // If minVersion is 17.x, allow up to 19.0 to include both VS2022 and VS2026
+      if (minVersionSemVer.major === 17) {
+        maxVersion = '19.0';
+      } else {
+        maxVersion = `${minVersionSemVer.major + 1}.0`;
+      }
     } else if (!Number.isNaN(minVersionNum)) {
       minVersion = Number.isInteger(minVersionNum)
         ? `${minVersionNum}.0`
         : minVersionNum.toString();
-      maxVersion = `${Math.floor(minVersionNum) + 1}.0`;
+      // Support VS2022 (17.x) and VS2026 (18.x) by extending max version range
+      if (Math.floor(minVersionNum) === 17) {
+        maxVersion = '19.0';
+      } else {
+        maxVersion = `${Math.floor(minVersionNum) + 1}.0`;
+      }
     } else {
       // Unable to parse minVersion and determine maxVersion,
       // caller will throw error that version couldn't be found.
