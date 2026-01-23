@@ -100,6 +100,7 @@ struct WindowsTextInputComponentView
   void UpdateParaFormat() noexcept;
   void UpdateText(const std::string &str) noexcept;
   void OnTextUpdated() noexcept;
+  void EmitOnKeyPress(wchar_t keyChar) noexcept;
   void EmitOnScrollEvent() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
   std::pair<float, float> GetContentSize() const noexcept;

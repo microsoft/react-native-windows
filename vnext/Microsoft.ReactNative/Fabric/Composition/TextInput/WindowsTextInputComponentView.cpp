@@ -101,6 +101,8 @@ LRESULT CALLBACK WindowsTextInputComponentView::ProxyEditWndProc(HWND hwnd, UINT
       LRESULT result;
       s_currentFocusedTextInput->m_textServices->TxSendMessage(msg, wParam, lParam, &result);
       if (msg == WM_CHAR || msg == WM_IME_CHAR) {
+        // Emit onKeyPress event (this is what OnCharacterReceived normally does)
+        s_currentFocusedTextInput->EmitOnKeyPress(static_cast<wchar_t>(wParam));
         s_currentFocusedTextInput->OnTextUpdated();
       }
       return result;
@@ -1030,6 +1032,28 @@ bool WindowsTextInputComponentView::ShouldSubmit(
   return shouldSubmit;
 }
 
+// Helper method to emit onKeyPress event - used by both OnCharacterReceived and ProxyEditWndProc
+void WindowsTextInputComponentView::EmitOnKeyPress(wchar_t keyChar) noexcept {
+  if (!m_eventEmitter) {
+    return;
+  }
+
+  // Convert wchar_t to std::string
+  wchar_t key[2] = {keyChar, L'\0'};
+  std::string keyString = ::Microsoft::Common::Unicode::Utf16ToUtf8(key, 1);
+
+  auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+  facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
+  if (keyString.compare("\r") == 0) {
+    onKeyPressArgs.key = "Enter";
+  } else if (keyString.compare("\b") == 0) {
+    onKeyPressArgs.key = "Backspace";
+  } else {
+    onKeyPressArgs.key = keyString;
+  }
+  emitter->onKeyPress(onKeyPressArgs);
+}
+
 void WindowsTextInputComponentView::OnCharacterReceived(
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with
@@ -1058,21 +1082,8 @@ void WindowsTextInputComponentView::OnCharacterReceived(
     return;
   }
 
-  // convert keyCode to std::string
-  wchar_t key[2] = L" ";
-  key[0] = static_cast<wchar_t>(args.KeyCode());
-  std::string keyString = ::Microsoft::Common::Unicode::Utf16ToUtf8(key, 1);
-  // Call onKeyPress event
-  auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-  facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
-  if (keyString.compare("\r") == 0) {
-    onKeyPressArgs.key = "Enter";
-  } else if (keyString.compare("\b") == 0) {
-    onKeyPressArgs.key = "Backspace";
-  } else {
-    onKeyPressArgs.key = keyString;
-  }
-  emitter->onKeyPress(onKeyPressArgs);
+  // Call onKeyPress event using the helper method
+  EmitOnKeyPress(static_cast<wchar_t>(args.KeyCode()));
 
   WPARAM wParam = static_cast<WPARAM>(args.KeyCode());
 
