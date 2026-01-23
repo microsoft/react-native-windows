@@ -1,0 +1,11 @@
+steps:
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: 'Office-React-Native-Windows-Bot'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+          # Note that the resource is specified to limit the token to Azure DevOps
+          aadToken=$(az account get-access-token --query accessToken --resource 499b84ac-1321-427f-aa17-267ca6975798 -o tsv)
+          echo "##vso[task.setvariable variable=oficeReactnativeWindowsBotAadAuthToken;issecret=true]$aadToken"
+    displayName: 'Generate oficeReactnativeWindowsBotAadAuthToken AAD token using Azure CLI'
