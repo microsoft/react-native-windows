@@ -17,7 +17,7 @@ steps:
   - template: compute-beachball-branch-name.yml
 
   - ${{ if eq(parameters.beachballPublish, true) }}:
-    - script: npx beachball bump --branch origin/$(BeachBallBranchName) --no-push --yes --verbose --changehint "Run `yarn change` from root of repo to generate a change file."
+    - script: npx --yes beachball bump --branch origin/$(BeachBallBranchName) --no-push --yes --verbose --changehint "Run `yarn change` from root of repo to generate a change file."
       displayName: Beachball bump versions
 
     - script: node .ado/scripts/npmPack.js --clean --no-color

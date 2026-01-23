@@ -1,8 +1,47 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 13 Jan 2026 13:00:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 22 Jan 2026 10:16:24 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.4
+
+Thu, 22 Jan 2026 10:16:24 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.82.0-preview.3
+
+## 0.82.0-preview.3
+
+Wed, 21 Jan 2026 14:42:27 GMT
+
+### Changes
+
+- fix: Apply fontStyle italic to TextInput component (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.82.0-preview.2
+
+Tue, 20 Jan 2026 18:42:50 GMT
+
+### Changes
+
+- implements selectionColor (74712637+iamAbhi-916@users.noreply.github.com)
+- forking GenerateModuleCpp (66076509+vineethkuttan@users.noreply.github.com)
+- update package.json to RN 0.82.0-rc-0 and removed SDL check for 4996 deprecation warning (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.82.0-preview.2
+- Bump @react-native-windows/codegen to v0.82.0-preview.2
+
+## 0.82.0-preview.1
+
+Wed, 14 Jan 2026 13:07:17 GMT
+
+### Changes
+
+- Promote 0.82 to preview (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.82.0-preview.1
+- Bump @react-native-windows/codegen to v0.82.0-preview.1
+- Bump react-native-platform-override to v0.82.0-preview.1
 
 ## 0.0.0-canary.1030
 

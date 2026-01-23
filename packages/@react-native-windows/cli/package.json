@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.82.0-preview.0",
+  "version": "0.82.0-preview.3",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,10 +17,10 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/codegen": "0.82.0-preview.0",
-    "@react-native-windows/fs": "0.82.0-preview.0",
-    "@react-native-windows/package-utils": "0.82.0-preview.0",
-    "@react-native-windows/telemetry": "0.82.0-preview.0",
+    "@react-native-windows/codegen": "0.82.0-preview.2",
+    "@react-native-windows/fs": "0.82.0-preview.1",
+    "@react-native-windows/package-utils": "0.82.0-preview.1",
+    "@react-native-windows/telemetry": "0.82.0-preview.1",
     "@xmldom/xmldom": "^0.7.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
