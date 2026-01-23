@@ -19,7 +19,7 @@
   "peerDependencies": {
     "@office-iss/react-native-win32": "0.82.0-preview.1",
     "react": "19.1.1",
-    "react-native": "0.82.0-rc.0"
+    "react-native": "^0.82.0"
   },
   "devDependencies": {
     "@office-iss/react-native-win32": "0.82.0-preview.1",
@@ -30,7 +30,7 @@
     "@types/node": "^22.14.0",
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
-    "react-native": "0.82.0-rc.0",
+    "react-native": "0.82.1",
     "react-native-platform-override": "0.82.0-preview.1",
     "typescript": "5.0.4"
   },
