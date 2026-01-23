@@ -30,7 +30,7 @@ extends:
       displayName: Publish artifacts
       jobs:
       - job: PushPrivateAdo
-        displayName: ADO - react-native
+        displayName: ADO - nuget - react-native
         timeoutInMinutes: 0
         templateContext:
           inputs:
@@ -42,18 +42,15 @@ extends:
         - checkout: none
         - task: NuGetToolInstaller@1
           displayName: 'Use NuGet '
-        - task: NuGetAuthenticate@1
-          displayName: NuGet Authenticate
-          inputs:
-            nuGetServiceConnections: ms/react-native ADO Feed
+        - template: .ado/templates/authenticate-office-react-native-windows-bot.yml@self
         - task: CmdLine@2
           displayName: NuGet push (react-native)
           inputs:
-            script: nuget.exe push *.nupkg -ApiKey AzureArtifacts -Source https://pkgs.dev.azure.com/ms/_packaging/react-native/nuget/v3/index.json -NonInteractive -Verbosity Detailed -SkipDuplicate -NoSymbols
+            script: nuget.exe push *.nupkg -ApiKey $(oficeReactnativeWindowsBotAadAuthToken) -Source https://pkgs.dev.azure.com/ms/_packaging/react-native/nuget/v3/index.json -NonInteractive -Verbosity Detailed -SkipDuplicate -NoSymbols
             workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
 
       - job: PushPublicAdo
-        displayName: ADO - react-native-public
+        displayName: ADO - nuget - react-native-public
         timeoutInMinutes: 0
         templateContext:
           inputs:
@@ -65,14 +62,11 @@ extends:
         - checkout: none
         - task: NuGetToolInstaller@1
           displayName: 'Use NuGet '
-        - task: NuGetAuthenticate@1
-          displayName: NuGet Authenticate
-          inputs:
-            nuGetServiceConnections: ms/react-native-public ADO Feed
+        - template: .ado/templates/authenticate-office-react-native-windows-bot.yml@self
         - task: CmdLine@2
           displayName: NuGet push (react-native-public)
           inputs:
-            script: nuget.exe push *.nupkg -ApiKey AzureArtifacts -Source https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json -NonInteractive -Verbosity Detailed -SkipDuplicate -NoSymbols
+            script: nuget.exe push *.nupkg -ApiKey $(oficeReactnativeWindowsBotAadAuthToken) -Source https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json -NonInteractive -Verbosity Detailed -SkipDuplicate -NoSymbols
             workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
 
       - job: PushNuGetOrg
