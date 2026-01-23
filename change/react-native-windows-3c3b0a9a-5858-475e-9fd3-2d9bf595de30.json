@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "integrate 0.82.1",
+  "packageName": "react-native-windows",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
