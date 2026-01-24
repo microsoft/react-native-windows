@@ -118,12 +118,12 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "916, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "916, 19",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -134,12 +134,12 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
       },
       {
         "Offset": "0, 19, 0",
-        "Size": "916, 18",
+        "Size": "916, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 18",
+            "Size": "916, 19",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -160,22 +160,22 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
       },
       {
         "Offset": "0, 37, 0",
-        "Size": "916, 19",
+        "Size": "916, 18",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "916, 18",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 19",
+                "Size": "916, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 19",
+                    "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -1537,12 +1537,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 19",
+                "Size": "916, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 19",
+                    "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -1563,12 +1563,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 19",
+                "Size": "916, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 19",
+                    "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -1589,12 +1589,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 19",
+                "Size": "916, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 19",
+                    "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -1615,12 +1615,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 19",
+                "Size": "916, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 19",
+                    "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -1671,12 +1671,12 @@ exports[`Pressable Tests Pressables can have tooltips 1`] = `
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 19",
+        "Size": "916, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1833,12 +1833,12 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 30",
+        "Size": "916, 29",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 30",
+            "Size": "916, 29",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1859,12 +1859,12 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
             "__Children": [
               {
                 "Offset": "83, 90, 0",
-                "Size": "34, 19",
+                "Size": "34, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "34, 19",
+                    "Size": "34, 20",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -1889,12 +1889,12 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
             "__Children": [
               {
                 "Offset": "8, 90, 0",
-                "Size": "184, 19",
+                "Size": "184, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "184, 19",
+                    "Size": "184, 20",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -1931,12 +1931,12 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
             "__Children": [
               {
                 "Offset": "6, 90, 0",
-                "Size": "188, 20",
+                "Size": "188, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "188, 20",
+                    "Size": "188, 19",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
@@ -1961,12 +1961,12 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
             "__Children": [
               {
                 "Offset": "85, 90, 0",
-                "Size": "30, 20",
+                "Size": "30, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "30, 20",
+                    "Size": "30, 19",
                     "Visual Type": "SpriteVisual",
                   },
                 ],
