@@ -101,7 +101,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
   "Visual Tree": {
     "Comment": "flatlist-basic",
     "Offset": "0, 0, 0",
-    "Size": "998, 422",
+    "Size": "998, 447",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -110,7 +110,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 422",
+        "Size": "998, 447",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -119,12 +119,12 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 422",
+            "Size": "998, 447",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "998, 422",
+                "Size": "998, 447",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
@@ -133,7 +133,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
                       "Color": "rgba(255, 255, 255, 255)",
                     },
                     "Offset": "0, 0, 0",
-                    "Size": "998, 422",
+                    "Size": "998, 447",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -418,7 +418,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 416",
+            "Size": "12, 441",
             "Visual Type": "Visual",
           },
           {
@@ -435,7 +435,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 390",
+            "Size": "6, 415",
             "Visual Type": "Visual",
           },
         ],

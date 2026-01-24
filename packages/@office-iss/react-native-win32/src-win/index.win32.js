@@ -310,7 +310,7 @@ module.exports = {
   /**
    * @deprecated
    */
-  get InteractionManager() {
+  get InteractionManager(): InteractionManager {
     warnOnce(
       'interaction-manager-deprecated',
       'InteractionManager has been deprecated and will be removed in a ' +
