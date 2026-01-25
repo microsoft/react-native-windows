@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 25 Jan 2026 13:58:35 GMT",
+      "version": "0.82.0-preview.7",
+      "tag": "react-native-windows_v0.82.0-preview.7",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f2e1f06e74a3ae1719f62f057eb02eaa588d4b97",
+            "comment": "cleanup legacy filters"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 25 Jan 2026 08:57:18 GMT",
       "version": "0.82.0-preview.6",
       "tag": "react-native-windows_v0.82.0-preview.6",

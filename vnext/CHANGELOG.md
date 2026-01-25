@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sun, 25 Jan 2026 08:57:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 25 Jan 2026 13:58:35 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.7
+
+Sun, 25 Jan 2026 13:58:35 GMT
+
+### Changes
+
+- cleanup legacy filters (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.82.0-preview.6
 
