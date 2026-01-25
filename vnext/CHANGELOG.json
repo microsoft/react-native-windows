@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 24 Jan 2026 16:43:28 GMT",
+      "version": "0.82.0-preview.5",
+      "tag": "react-native-windows_v0.82.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cff8b32ff255fde207fc11cffba107aec8195c63",
+            "comment": "Fix selectable text not working inside ScrollView"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9486be369921a08663e2b5227dda13cbc7ad5388",
+            "comment": "integrate 0.82.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jan 2026 10:16:24 GMT",
       "version": "0.82.0-preview.4",
       "tag": "react-native-windows_v0.82.0-preview.4",

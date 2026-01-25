@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.82.0-rc.0",
+  "baseVersion": "0.82.1",
   "overrides": [
     {
       "type": "copy",
@@ -278,7 +278,7 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseHash": "408ae7ff893047dc3a187b878fd8ac9c61883547"
+      "baseHash": "e03913cdeff804265a1c4dc8b5e4b002ba7ef00f"
     },
     {
       "type": "copy",
@@ -584,14 +584,14 @@
       "type": "copy",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "8cd219abae140e98f9578432954fc9ef62421308",
+      "baseHash": "aeb0275507e7c508cdf7c2ceec49f9e95ef4e1ec",
       "issue": 13228
     },
     {
       "type": "copy",
       "file": "js/utils/RNTesterList.ios.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
-      "baseHash": "6872f4b3f0d2495a64c33fdd4328272d547f9108",
+      "baseHash": "a93dea4da7d61b0ad13e1d90f9a0b34dbac57994",
       "issue": 13228
     },
     {
@@ -661,7 +661,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "776489e1b9443d58745341463dd92ed9e1fd2253",
+      "baseHash": "682ccb9907f2aee503b92998a72aa696e51845e0",
       "issue": 13228
     },
     {
