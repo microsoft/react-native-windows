@@ -80,17 +80,13 @@ CreateInternalVisualDelegate(Microsoft.ReactNative.ComponentView view);
   };
 };
 
-// Delegate for popup dismissal callback (Issue #15557)
-// 3rd party XAML components can register this callback to receive dismiss notifications
 [experimental][webhosthidden] runtimeclass ContentIslandComponentView : ViewComponentView {
   void Connect(Microsoft.UI.Content.ContentIsland contentIsland);
 
-  // Issue #15557: Register the XamlRoot for this ContentIsland to enable popup dismissal.
-  // When a parent ScrollView starts scrolling, DismissPopups() will be called which uses
-  // VisualTreeHelper.GetOpenPopupsForXamlRoot() to find and close all open XAML popups.
-  // 3rd party XAML components (ComboBox, DatePicker, etc.) should call this after creating
-  // their XamlIsland: islandView.SetXamlRoot(m_xamlIsland.Content().XamlRoot());
-  void SetXamlRoot(Microsoft.UI.Xaml.XamlRoot xamlRoot);
+  // Issue #15557: Event fired when a parent ScrollView starts scrolling.
+  // 3rd party XAML components should subscribe to this event to dismiss any open popups.
+  // Example: comboBox dropdown, DatePicker calendar, Flyouts, etc.
+  event Windows.Foundation.EventHandler<IInspectable> DismissPopupsRequest;
 };
 
 [experimental][webhosthidden][default_interface] runtimeclass SwitchComponentView : ViewComponentView{};

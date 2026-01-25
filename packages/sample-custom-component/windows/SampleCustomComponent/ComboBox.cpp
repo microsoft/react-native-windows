@@ -11,13 +11,14 @@
 
 #include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <winrt/Microsoft.UI.Xaml.Media.h>
 
 namespace winrt::SampleCustomComponent {
 
 // ComboBox component to test popup positioning issue #15557
 // When inside a ScrollView, the dropdown popup should appear at the correct position
 // Bug 1: After scrolling, the popup appears at the wrong offset (FIXED via LayoutMetricsChanged)
-// Bug 2: When popup is open and user scrolls, popup should dismiss (FIXED via SetXamlRoot + VisualTreeHelper)
+// Bug 2: When popup is open and user scrolls, popup should dismiss (FIXED via DismissPopupsRequest event)
 
 struct ComboBoxComponentView : public winrt::implements<ComboBoxComponentView, winrt::IInspectable>,
                                Codegen::BaseComboBox<ComboBoxComponentView> {
@@ -41,19 +42,15 @@ struct ComboBoxComponentView : public winrt::implements<ComboBoxComponentView, w
     m_xamlIsland.Content(m_comboBox);
     islandView.Connect(m_xamlIsland.ContentIsland());
 
-    // Issue #15557 Bug 2 Fix: Register XamlRoot to enable popup dismissal when scroll begins.
-    // This is the GENERIC pattern that ANY 3rd party XAML component should use:
-    // 1. Create your XamlIsland and set its Content
-    // 2. Call SetXamlRoot() with the content's XamlRoot
-    // When the parent ScrollView starts scrolling, ContentIslandComponentView will use
-    // VisualTreeHelper.GetOpenPopupsForXamlRoot() to find and close ALL open popups.
+    // Issue #15557 Bug 2 Fix: Subscribe to DismissPopupsRequest event to close popups when scroll begins.
+    // This is the pattern that ANY 3rd party XAML component should use:
+    // 1. Subscribe to the DismissPopupsRequest event
+    // 2. When the event fires, use VisualTreeHelper to find and close your open popups
     // This works for ComboBox, DatePicker, TimePicker, Flyouts, etc. - any XAML popup!
-    m_comboBox.Loaded([islandView, this](auto const &, auto const &) {
-      // XamlRoot is available after the element is loaded
-      if (auto xamlRoot = m_comboBox.XamlRoot()) {
-        islandView.SetXamlRoot(xamlRoot);
-      }
-    });
+    m_dismissPopupsRequestToken = islandView.DismissPopupsRequest(
+        [this](winrt::Windows::Foundation::IInspectable const &, winrt::Windows::Foundation::IInspectable const &) {
+          DismissPopups();
+        });
 
     m_selectionChangedToken =
         m_comboBox.SelectionChanged([this](
@@ -73,10 +70,23 @@ struct ComboBoxComponentView : public winrt::implements<ComboBoxComponentView, w
         });
   }
 
+  // Dismiss any open popups for this component's XamlRoot
+  void DismissPopups() noexcept {
+    if (auto xamlRoot = m_comboBox.XamlRoot()) {
+      auto openPopups = winrt::Microsoft::UI::Xaml::Media::VisualTreeHelper::GetOpenPopupsForXamlRoot(xamlRoot);
+      for (const auto &popup : openPopups) {
+        if (popup.IsOpen()) {
+          popup.IsOpen(false);
+        }
+      }
+    }
+  }
+
  private:
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
   winrt::Microsoft::UI::Xaml::Controls::ComboBox m_comboBox{nullptr};
   winrt::event_token m_selectionChangedToken{};
+  winrt::event_token m_dismissPopupsRequestToken{};
 };
 
 } // namespace winrt::SampleCustomComponent

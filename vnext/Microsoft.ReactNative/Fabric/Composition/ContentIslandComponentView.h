@@ -9,7 +9,6 @@
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
-#include <winrt/Microsoft.UI.Xaml.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionHelpers.h"
 #include "CompositionViewComponentView.h"
@@ -48,11 +47,13 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
 
   void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
 
-  // Issue #15557: Register the XamlRoot for this ContentIsland to enable popup dismissal
-  void SetXamlRoot(winrt::Microsoft::UI::Xaml::XamlRoot const &xamlRoot) noexcept;
+  // Issue #15557: Fire event to notify 3P component to dismiss popups when scroll begins
+  void FireDismissPopupsRequest() noexcept;
 
-  // Issue #15557: Called by ScrollViewComponentView when scroll begins to dismiss popups
-  void DismissPopups() noexcept;
+  // Issue #15557: Event accessors for DismissPopupsRequest
+  winrt::event_token DismissPopupsRequest(
+      winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept;
+  void DismissPopupsRequest(winrt::event_token const &token) noexcept;
 
   ContentIslandComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
@@ -82,8 +83,9 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   winrt::event_token m_nextSiblingAutomationProviderRequestedToken{};
   winrt::event_token m_previousSiblingAutomationProviderRequestedToken{};
 
-  // Issue #15557: XamlRoot registered by 3rd party XAML components to enable popup dismissal
-  winrt::Microsoft::UI::Xaml::XamlRoot m_xamlRoot{nullptr};
+  // Issue #15557: Event for notifying 3P components to dismiss popups when scroll begins
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable>>
+      m_dismissPopupsRequestEvent;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

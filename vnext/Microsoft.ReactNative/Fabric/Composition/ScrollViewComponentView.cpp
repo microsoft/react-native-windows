@@ -1508,27 +1508,27 @@ void ScrollViewComponentView::FireLayoutMetricsChangedForScrollPositionChange() 
       *this, winrt::make<winrt::Microsoft::ReactNative::implementation::LayoutMetricsChangedArgs>(metrics, metrics));
 }
 
-// Issue #15557: Dismiss XAML popups in child ContentIslandComponentView instances when scroll begins.
-// This implements light dismiss behavior for controls like ComboBox dropdown.
+// Issue #15557: Fire DismissPopupsRequest event on child ContentIslandComponentView instances when scroll begins.
+// This notifies 3P components to dismiss their own popups - implementing light dismiss behavior.
 void ScrollViewComponentView::DismissChildContentIslandPopups() noexcept {
-  // Helper lambda to recursively find and dismiss popups in all ContentIslandComponentView children
-  std::function<void(const winrt::Microsoft::ReactNative::ComponentView &)> dismissPopupsRecursively =
-      [&dismissPopupsRecursively](const winrt::Microsoft::ReactNative::ComponentView &view) {
+  // Helper lambda to recursively find ContentIslandComponentView children and fire the event
+  std::function<void(const winrt::Microsoft::ReactNative::ComponentView &)> fireEventRecursively =
+      [&fireEventRecursively](const winrt::Microsoft::ReactNative::ComponentView &view) {
         // Check if this view is a ContentIslandComponentView
         if (auto contentIsland =
                 view.try_as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>()) {
-          winrt::get_self<ContentIslandComponentView>(contentIsland)->DismissPopups();
+          winrt::get_self<ContentIslandComponentView>(contentIsland)->FireDismissPopupsRequest();
         }
 
         // Recursively check children
         for (auto child : view.Children()) {
-          dismissPopupsRecursively(child);
+          fireEventRecursively(child);
         }
       };
 
   // Start recursive search from this ScrollView's children
   for (auto child : Children()) {
-    dismissPopupsRecursively(child);
+    fireEventRecursively(child);
   }
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

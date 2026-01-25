@@ -131,7 +131,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   void updateStateWithContentOffset() noexcept;
   // Issue #15557: Notify ContentIslandComponentView instances that scroll position has changed
   void FireLayoutMetricsChangedForScrollPositionChange() noexcept;
-  // Issue #15557: Dismiss XAML popups in child ContentIslandComponentView instances when scroll begins
+  // Issue #15557: Fire DismissPopupsRequest event on child ContentIslandComponentView instances when scroll begins
   void DismissChildContentIslandPopups() noexcept;
   facebook::react::ScrollViewEventEmitter::Metrics getScrollMetrics(
       facebook::react::SharedViewEventEmitter const &eventEmitter,

@@ -11,8 +11,6 @@
 #include <Utils/ValueUtils.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
-#include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>
-#include <winrt/Microsoft.UI.Xaml.Media.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionContextHelper.h"
 #include "RootComponentView.h"
@@ -50,6 +48,12 @@ void ContentIslandComponentView::OnMounted() noexcept {
       winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
           .as<winrt::Microsoft::UI::Composition::ContainerVisual>());
   m_childSiteLink.ActualSize({m_layoutMetrics.frame.size.width, m_layoutMetrics.frame.size.height});
+
+  // Issue #15557: Set initial LocalToParentTransformMatrix synchronously before Connect.
+  // This fixes popup position being wrong even without scrolling.
+  auto clientRect = getClientRect();
+  m_childSiteLink.LocalToParentTransformMatrix(winrt::Windows::Foundation::Numerics::make_float4x4_translation(
+      static_cast<float>(clientRect.left), static_cast<float>(clientRect.top), 0.0f));
 
   m_navigationHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteLink(m_childSiteLink);
 
@@ -168,28 +172,20 @@ void ContentIslandComponentView::onGotFocus(
   m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(navigationReason));
 }
 
-// Issue #15557: Allow 3rd party XAML components to register their XamlRoot for popup dismissal.
-// This enables the generic tree-walking approach to close all open popups when scroll begins.
-void ContentIslandComponentView::SetXamlRoot(winrt::Microsoft::UI::Xaml::XamlRoot const &xamlRoot) noexcept {
-  m_xamlRoot = xamlRoot;
+// Issue #15557: Fire event to notify 3P component to dismiss popups when scroll begins.
+// The 3P component is responsible for closing its own popups.
+void ContentIslandComponentView::FireDismissPopupsRequest() noexcept {
+  m_dismissPopupsRequestEvent(*this, nullptr);
 }
 
-// Issue #15557: Dismiss any open XAML popups when scroll begins.
-// This uses VisualTreeHelper.GetOpenPopupsForXamlRoot() to find all open popups
-// and closes them - implementing light dismiss behavior for ANY XAML control.
-// This is the generic approach that works for all 3rd party XAML components.
-void ContentIslandComponentView::DismissPopups() noexcept {
-  if (m_xamlRoot) {
-    // Get all open popups for this XamlRoot using VisualTreeHelper
-    auto openPopups = winrt::Microsoft::UI::Xaml::Media::VisualTreeHelper::GetOpenPopupsForXamlRoot(m_xamlRoot);
+// Issue #15557: Event accessors for DismissPopupsRequest
+winrt::event_token ContentIslandComponentView::DismissPopupsRequest(
+    winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept {
+  return m_dismissPopupsRequestEvent.add(handler);
+}
 
-    // Close each open popup
-    for (const auto &popup : openPopups) {
-      if (popup.IsOpen()) {
-        popup.IsOpen(false);
-      }
-    }
-  }
+void ContentIslandComponentView::DismissPopupsRequest(winrt::event_token const &token) noexcept {
+  m_dismissPopupsRequestEvent.remove(token);
 }
 
 ContentIslandComponentView::~ContentIslandComponentView() noexcept {
