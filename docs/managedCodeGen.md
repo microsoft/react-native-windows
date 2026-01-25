@@ -36,3 +36,15 @@ The hookups in MSBuild do not use the latest BeforeTargets/AfterTargets feature 
 ## Future improvements
  * Add support for `Task<T>` async methods. [#5143](https://github.com/microsoft/react-native-windows/issues/5143)
  * Ship it as a NuGet package [#4546](https://github.com/microsoft/react-native-windows/issues/4546)
+
+---
+
+## Note on Fabric Native Components (JavaScript)
+
+This document describes code generation for **managed (C#) modules and ViewManagers**.
+
+When using **Fabric Native Components implemented in JavaScript** on Windows,
+developers must additionally run the Windows-specific code generation step:
+
+```bash
+npx react-native codegen-windows
