@@ -51,9 +51,12 @@ void ContentIslandComponentView::OnMounted() noexcept {
 
   // Issue #15557: Set initial LocalToParentTransformMatrix synchronously before Connect.
   // This fixes popup position being wrong even without scrolling.
+  // Note: getClientRect() returns physical pixels, but LocalToParentTransformMatrix expects DIPs.
   auto clientRect = getClientRect();
-  m_childSiteLink.LocalToParentTransformMatrix(winrt::Windows::Foundation::Numerics::make_float4x4_translation(
-      static_cast<float>(clientRect.left), static_cast<float>(clientRect.top), 0.0f));
+  float scaleFactor = m_layoutMetrics.pointScaleFactor;
+  m_childSiteLink.LocalToParentTransformMatrix(
+      winrt::Windows::Foundation::Numerics::make_float4x4_translation(
+          static_cast<float>(clientRect.left) / scaleFactor, static_cast<float>(clientRect.top) / scaleFactor, 0.0f));
 
   m_navigationHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteLink(m_childSiteLink);
 
@@ -99,21 +102,21 @@ void ContentIslandComponentView::OnUnmounted() noexcept {
 }
 
 void ContentIslandComponentView::ParentLayoutChanged() noexcept {
-  if (m_layoutChangePosted)
-    return;
+  // Issue #15557: Update transform synchronously to ensure correct popup position
+  // when user clicks. Async updates via UIDispatcher().Post() were causing the
+  // popup to open with stale transform values.
+  //
+  // Note: getClientRect() returns values in physical pixels (scaled by pointScaleFactor),
+  // but LocalToParentTransformMatrix expects logical pixels (DIPs). We need to divide
+  // by the scale factor to convert.
+  auto clientRect = getClientRect();
+  float scaleFactor = m_layoutMetrics.pointScaleFactor;
 
-  m_layoutChangePosted = true;
-  ReactContext().UIDispatcher().Post([wkThis = get_weak()]() {
-    if (auto strongThis = wkThis.get()) {
-      auto clientRect = strongThis->getClientRect();
+  float x = static_cast<float>(clientRect.left) / scaleFactor;
+  float y = static_cast<float>(clientRect.top) / scaleFactor;
 
-      strongThis->m_childSiteLink.LocalToParentTransformMatrix(
-          winrt::Windows::Foundation::Numerics::make_float4x4_translation(
-              static_cast<float>(clientRect.left), static_cast<float>(clientRect.top), 0.0f));
-
-      strongThis->m_layoutChangePosted = false;
-    }
-  });
+  m_childSiteLink.LocalToParentTransformMatrix(
+      winrt::Windows::Foundation::Numerics::make_float4x4_translation(x, y, 0.0f));
 }
 
 winrt::Windows::Foundation::IInspectable ContentIslandComponentView::CreateAutomationProvider() noexcept {
