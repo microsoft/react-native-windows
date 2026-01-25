@@ -26,12 +26,11 @@ extends:
     customBuildTags:
     - ES365AIMigrationTooling-Release
     stages:
-    - stage: PushToPrivateAdoStage
-      displayName: ADO - react-native
+    - stage: Release
+      displayName: Publish artifacts
       jobs:
-      - job: PushPackages
-        displayName: Push packages
-        condition: succeeded()
+      - job: PushPrivateAdo
+        displayName: ADO - react-native
         timeoutInMinutes: 0
         templateContext:
           inputs:
@@ -49,12 +48,9 @@ extends:
           inputs:
             script: nuget.exe push *.nupkg -ApiKey $(oficeReactnativeWindowsBotAadAuthToken) -Source https://pkgs.dev.azure.com/ms/_packaging/react-native/nuget/v3/index.json -NonInteractive -Verbosity Detailed -SkipDuplicate -NoSymbols
             workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
-    - stage: PushToPublicAdoStage
-      displayName: ADO - react-native-public
-      jobs:
-      - job: PushPackages
-        displayName: Push packages
-        condition: succeeded()
+
+      - job: PushPublicAdo
+        displayName: ADO - react-native-public
         timeoutInMinutes: 0
         templateContext:
           inputs:
@@ -72,13 +68,11 @@ extends:
           inputs:
             script: nuget.exe push *.nupkg -ApiKey $(oficeReactnativeWindowsBotAadAuthToken) -Source https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json -NonInteractive -Verbosity Detailed -SkipDuplicate -NoSymbols
             workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
-    - stage: PushToNuGetStage
-      displayName: nuget.org - Push nuget packages
-      variables:
-      - group: RNW Secrets
-      jobs:
-      - job: PushPackages
-        displayName: Push packages
+
+      - job: PushNuGetOrg
+        displayName: nuget.org - Push nuget packages
+        variables:
+        - group: RNW Secrets
         timeoutInMinutes: 0
         templateContext:
           inputs:
