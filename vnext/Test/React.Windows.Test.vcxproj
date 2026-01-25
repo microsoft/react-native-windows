@@ -78,6 +78,7 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\HybridCRT.props" />
   <ItemGroup>
     <ClInclude Include="HttpServer.h" />
     <ClInclude Include="WebSocketServer.h" />
