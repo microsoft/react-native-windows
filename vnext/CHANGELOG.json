@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 25 Jan 2026 08:57:18 GMT",
+      "version": "0.82.0-preview.6",
+      "tag": "react-native-windows_v0.82.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "af291af749b98ce700854a3b88f44a4910582ea3",
+            "comment": "Add multipart/form-data test endpoint"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jan 2026 16:43:28 GMT",
       "version": "0.82.0-preview.5",
       "tag": "react-native-windows_v0.82.0-preview.5",

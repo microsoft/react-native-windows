@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 24 Jan 2026 16:43:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 25 Jan 2026 08:57:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.6
+
+Sun, 25 Jan 2026 08:57:18 GMT
+
+### Changes
+
+- Add multipart/form-data test endpoint (julio.rocha@microsoft.com)
 
 ## 0.82.0-preview.5
 
