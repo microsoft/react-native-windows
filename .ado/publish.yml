@@ -349,6 +349,7 @@ extends:
               inputs:
                 SearchPattern: vnext/target/**/*.pdb
                 SymbolServerType: TeamServices
+                UseAad: true
 
             templateContext:
               sdl:
@@ -445,6 +446,7 @@ extends:
               SymbolsArtifactName: 'ReactNativeWindows-Symbols'
               DetailedLog: true
               TreatNotIndexedAsWarning: false
+              UseAad: true
 
           templateContext:
             sdl:
