@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "make comments less verbose in ParagrapghComponentview for selectable",
-  "packageName": "react-native-windows",
-  "email": "74712637+iamAbhi-916@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

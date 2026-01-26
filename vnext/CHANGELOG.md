@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sun, 25 Jan 2026 13:58:35 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 26 Jan 2026 05:38:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.8
+
+Mon, 26 Jan 2026 05:38:32 GMT
+
+### Changes
+
+- make comments less verbose in ParagrapghComponentview for selectable (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.82.0-preview.7
 

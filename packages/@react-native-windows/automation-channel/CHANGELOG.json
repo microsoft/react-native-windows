@@ -2,6 +2,21 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Mon, 26 Jan 2026 05:38:32 GMT",
+      "version": "0.82.0-preview.8",
+      "tag": "@react-native-windows/automation-channel_v0.82.0-preview.8",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.82.0-preview.8",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 25 Jan 2026 13:58:35 GMT",
       "version": "0.82.0-preview.7",
       "tag": "@react-native-windows/automation-channel_v0.82.0-preview.7",
