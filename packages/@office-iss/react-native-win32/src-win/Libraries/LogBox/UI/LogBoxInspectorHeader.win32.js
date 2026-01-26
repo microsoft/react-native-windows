@@ -61,7 +61,6 @@ export default function LogBoxInspectorHeader(props: Props): React.Node {
           id="logbox_header_button_prev"
           disabled={props.total <= 1}
           level={props.level}
-          image={new String('←')}
           onPress={() => props.onSelectIndex(prevIndex)}
         />
         <View style={styles.title}>
@@ -73,7 +72,6 @@ export default function LogBoxInspectorHeader(props: Props): React.Node {
           id="logbox_header_button_next"
           disabled={props.total <= 1}
           level={props.level}
-          image={new String('→')}
           onPress={() => props.onSelectIndex(nextIndex)}
         />
       </View>
