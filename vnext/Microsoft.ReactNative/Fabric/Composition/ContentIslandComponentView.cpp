@@ -54,9 +54,8 @@ void ContentIslandComponentView::OnMounted() noexcept {
   // Note: getClientRect() returns physical pixels, but LocalToParentTransformMatrix expects DIPs.
   auto clientRect = getClientRect();
   float scaleFactor = m_layoutMetrics.pointScaleFactor;
-  m_childSiteLink.LocalToParentTransformMatrix(
-      winrt::Windows::Foundation::Numerics::make_float4x4_translation(
-          static_cast<float>(clientRect.left) / scaleFactor, static_cast<float>(clientRect.top) / scaleFactor, 0.0f));
+  m_childSiteLink.LocalToParentTransformMatrix(winrt::Windows::Foundation::Numerics::make_float4x4_translation(
+      static_cast<float>(clientRect.left) / scaleFactor, static_cast<float>(clientRect.top) / scaleFactor, 0.0f));
 
   m_navigationHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteLink(m_childSiteLink);
 

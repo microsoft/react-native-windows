@@ -468,30 +468,28 @@ struct ScrollBarComponent {
       }
 
       winrt::com_ptr<IDWriteTextFormat> spTextFormat;
-      winrt::check_hresult(
-          ::Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
-              L"Segoe Fluent Icons",
-              nullptr, // Font collection (nullptr sets it to use the system font collection).
-              DWRITE_FONT_WEIGHT_REGULAR,
-              DWRITE_FONT_STYLE_NORMAL,
-              DWRITE_FONT_STRETCH_NORMAL,
-              8, //  Xaml resource: ScrollBarButtonArrowIconFontSize
-              L"",
-              spTextFormat.put()));
+      winrt::check_hresult(::Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
+          L"Segoe Fluent Icons",
+          nullptr, // Font collection (nullptr sets it to use the system font collection).
+          DWRITE_FONT_WEIGHT_REGULAR,
+          DWRITE_FONT_STYLE_NORMAL,
+          DWRITE_FONT_STRETCH_NORMAL,
+          8, //  Xaml resource: ScrollBarButtonArrowIconFontSize
+          L"",
+          spTextFormat.put()));
 
       winrt::check_hresult(spTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER));
 
       winrt::com_ptr<IDWriteTextLayout> spTextLayout;
-      winrt::check_hresult(
-          ::Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
-              m_vertical ? ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDDB" : L"\uEDDC")
-                         : ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDD9" : L"\uEDDA"),
-              1, // The length of the string.
-              spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
-              (m_arrowSize / m_scaleFactor), // The width of the layout box.
-              (m_arrowSize / m_scaleFactor), // The height of the layout box.
-              spTextLayout.put() // The IDWriteTextLayout interface pointer.
-              ));
+      winrt::check_hresult(::Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
+          m_vertical ? ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDDB" : L"\uEDDC")
+                     : ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDD9" : L"\uEDDA"),
+          1, // The length of the string.
+          spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
+          (m_arrowSize / m_scaleFactor), // The width of the layout box.
+          (m_arrowSize / m_scaleFactor), // The height of the layout box.
+          spTextLayout.put() // The IDWriteTextLayout interface pointer.
+          ));
 
       POINT offset;
       {
