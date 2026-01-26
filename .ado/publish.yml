@@ -80,6 +80,10 @@ variables:
     value: false
   - name: EnableCodesign
     value: false
+  - name: ArtifactServices.Symbol.AccountName
+    value: microsoft
+  - name: ArtifactServices.Symbol.PAT
+    value: $(pat-symbols-publish-microsoft)
   - name: SourceBranchWithFolders
     value: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
 
@@ -342,8 +346,6 @@ extends:
             # Make symbols available through http://symweb.
             - task: PublishSymbols@2
               displayName: Publish symbols
-              env:
-                ARTIFACTSERVICES_SYMBOL_ACCOUNTNAME: microsoft
               inputs:
                 SearchPattern: vnext/target/**/*.pdb
                 SymbolServerType: TeamServices
@@ -435,8 +437,6 @@ extends:
           - task: PublishSymbols@2
             displayName: 'Publish Symbols to Microsoft Symbol Server'
             condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
-            env:
-              ARTIFACTSERVICES_SYMBOL_ACCOUNTNAME: microsoft
             inputs:
               SymbolsFolder: '$(System.DefaultWorkingDirectory)\NugetRoot'
               SearchPattern: '**/*.pdb'
