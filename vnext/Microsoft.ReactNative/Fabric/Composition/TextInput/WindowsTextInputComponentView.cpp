@@ -1178,33 +1178,45 @@ void WindowsTextInputComponentView::onGotFocus(
   // Set InputScope on parent HWND for touch keyboard layout
   updateKeyboardType(windowsTextInputProps().keyboardType);
 
-  // Use proxy EDIT control for Touch Keyboard InputScope support
-  HWND hwndParent = GetHwndForParenting();
-  if (hwndParent) {
-    EnsureProxyEditControl(hwndParent);
+  // Only use proxy EDIT control for non-default keyboard types
+  // This is needed for Touch Keyboard to show specialized layouts (numeric, phone, email, etc.)
+  // For "default" keyboard type, we don't need the proxy and it would interfere with normal input
+  const auto &keyboardType = windowsTextInputProps().keyboardType;
+  bool needsProxyEdit = !keyboardType.empty() && keyboardType != "default";
 
-    if (s_proxyEditHwnd) {
-      // Set this as the current focused TextInput
-      s_currentFocusedTextInput = this;
+  if (needsProxyEdit) {
+    HWND hwndParent = GetHwndForParenting();
+    if (hwndParent) {
+      EnsureProxyEditControl(hwndParent);
 
-      // Set InputScope on the proxy EDIT control
-      if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
-        pfnSetInputScopes(s_proxyEditHwnd, &m_currentInputScope, 1, nullptr, 0, nullptr, nullptr);
+      if (s_proxyEditHwnd) {
+        // Set this as the current focused TextInput
+        s_currentFocusedTextInput = this;
+
+        // Set InputScope on the proxy EDIT control
+        if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
+          pfnSetInputScopes(s_proxyEditHwnd, &m_currentInputScope, 1, nullptr, 0, nullptr, nullptr);
+        }
+
+        // Position the proxy EDIT at our location (even though it's transparent)
+        auto screenPos = LocalToScreen({0, 0});
+        SetWindowPos(
+            s_proxyEditHwnd,
+            HWND_TOP,
+            (int)screenPos.X,
+            (int)screenPos.Y,
+            (int)m_layoutMetrics.frame.size.width,
+            (int)m_layoutMetrics.frame.size.height,
+            SWP_NOACTIVATE);
+
+        // Give it Windows focus so Touch Keyboard sees correct InputScope
+        SetFocus(s_proxyEditHwnd);
       }
-
-      // Position the proxy EDIT at our location (even though it's transparent)
-      auto screenPos = LocalToScreen({0, 0});
-      SetWindowPos(
-          s_proxyEditHwnd,
-          HWND_TOP,
-          (int)screenPos.X,
-          (int)screenPos.Y,
-          (int)m_layoutMetrics.frame.size.width,
-          (int)m_layoutMetrics.frame.size.height,
-          SWP_NOACTIVATE);
-
-      // Give it Windows focus so Touch Keyboard sees correct InputScope
-      SetFocus(s_proxyEditHwnd);
+    }
+  } else {
+    // Clear proxy focus if we were previously using it
+    if (s_currentFocusedTextInput == this) {
+      s_currentFocusedTextInput = nullptr;
     }
   }
 
