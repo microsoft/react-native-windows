@@ -469,7 +469,7 @@ $requirements = @(
         Name = 'Node.js (LTS, >= 22.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
-        Install = { WinGetInstall OpenJS.NodeJS.LTS  "22.22.0"};
+        Install = { WinGetInstall OpenJS.NodeJS.22  "22.22.0"};
         HasVerboseOutput = $true;
     },
     @{
