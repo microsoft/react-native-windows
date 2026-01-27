@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Sat, 20 Dec 2025 12:02:33 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 27 Jan 2026 19:33:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.1
+
+Tue, 27 Jan 2026 19:33:59 GMT
+
+### Patches
+
+- Add ability to customize native accessibility of custom native components (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.0
 
