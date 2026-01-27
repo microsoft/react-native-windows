@@ -126,6 +126,12 @@ struct BasePullToRefreshView {
                                         winrt::Microsoft::ReactNative::ComponentViewUpdateMask /*mask*/) noexcept {
   }
 
+  // CreateAutomationPeer will only be called if this method is overridden
+  virtual winrt::Windows::Foundation::IInspectable CreateAutomationPeer(const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
+                                        const winrt::Microsoft::ReactNative::CreateAutomationPeerArgs& /*args*/) noexcept {
+    return nullptr;
+  }
+
   // You must provide an implementation of this method to handle the "setNativeRefreshing" command
   virtual void HandleSetNativeRefreshingCommand(bool refreshing) noexcept = 0;
 
@@ -218,6 +224,14 @@ void RegisterPullToRefreshViewNativeComponent(
             return userData->UnmountChildComponentView(view, args);
           });
         }
+
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateAutomationPeer != &BasePullToRefreshView<TUserData>::CreateAutomationPeer) {
+            builder.SetCreateAutomationPeerHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                     const winrt::Microsoft::ReactNative::CreateAutomationPeerArgs& args) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            return userData->CreateAutomationPeer(view, args);
+          });
+        } 
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();

@@ -2,6 +2,7 @@
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionAnnotationProvider.h>
+#include <Fabric/Composition/CompositionTextProvider.h>
 #include <Fabric/Composition/CompositionTextRangeProvider.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
@@ -44,19 +45,6 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
 
   if (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value()) {
     AddSelectionItemsToContainer(this);
-  }
-
-  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
-      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>()) {
-    m_textProvider = winrt::make<CompositionTextProvider>(
-                         strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
-                         .try_as<ITextProvider2>();
-  }
-
-  if (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()) {
-    m_annotationProvider = winrt::make<CompositionAnnotationProvider>(
-                               strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), this)
-                               .try_as<IAnnotationProvider>();
   }
 }
 
@@ -159,6 +147,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetEmbeddedFragmentRoots
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::SetFocus(void) {
   return UiaSetFocusHelper(m_view);
+}
+
+winrt::IUnknown CompositionDynamicAutomationProvider::TryGetChildSiteLinkAutomationProvider() {
+  if (m_childSiteLink) {
+    return m_childSiteLink.AutomationProvider().as<winrt::IUnknown>();
+  }
+  return nullptr;
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawElementProviderFragmentRoot **pRetVal) {
@@ -297,16 +292,31 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (patternId == UIA_TextPatternId &&
       (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
        strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>())) {
+    if (!m_textProvider) {
+      m_textProvider = winrt::make<CompositionTextProvider>(
+                           strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>())
+                           .as<ITextProvider2>();
+    }
     m_textProvider.as<IUnknown>().copy_to(pRetVal);
   }
 
   if (patternId == UIA_TextPattern2Id &&
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>()) {
+    if (!m_textProvider) {
+      m_textProvider = winrt::make<CompositionTextProvider>(
+                           strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>())
+                           .as<ITextProvider2>();
+    }
     m_textProvider.as<IUnknown>().copy_to(pRetVal);
   }
   if (patternId == UIA_AnnotationPatternId &&
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>() &&
       accessibilityAnnotationHasValue(props->accessibilityAnnotation)) {
+    if (!m_annotationProvider) {
+      m_annotationProvider = winrt::make<CompositionAnnotationProvider>(
+                                 strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>())
+                                 .as<IAnnotationProvider>();
+    }
     m_annotationProvider.as<IUnknown>().copy_to(pRetVal);
   }
 
@@ -949,9 +959,18 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY *
   std::vector<int> selectedItems;
   for (size_t i = 0; i < m_selectionItems.size(); i++) {
     auto selectionItem = m_selectionItems.at(i);
-    auto provider = selectionItem.as<CompositionDynamicAutomationProvider>();
+
+    winrt::com_ptr<IUnknown> unkSelectionItemProvider;
+    auto hr = selectionItem->GetPatternProvider(UIA_SelectionItemPatternId, unkSelectionItemProvider.put());
+    if (FAILED(hr))
+      return hr;
+
+    auto selectionItemProvider = unkSelectionItemProvider.try_as<ISelectionItemProvider>();
+    if (!selectionItemProvider)
+      return E_FAIL;
+
     BOOL selected;
-    auto hr = provider->get_IsSelected(&selected);
+    hr = selectionItemProvider->get_IsSelected(&selected);
     if (hr == S_OK && selected) {
       selectedItems.push_back(int(i));
     }
@@ -1010,27 +1029,28 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsSelected(BOOL *pRe
   return S_OK;
 }
 
-IRawElementProviderSimple *findSelectionContainer(winrt::Microsoft::ReactNative::ComponentView current) {
+winrt::Microsoft::ReactNative::ComponentView findSelectionContainer(
+    winrt::Microsoft::ReactNative::ComponentView current) noexcept {
   if (!current)
     return nullptr;
 
-  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(current)->props());
-  if (props->accessibilityState.has_value() && props->accessibilityState->multiselectable.has_value() &&
-      props->accessibilityState->required.has_value()) {
-    auto uiaProvider =
-        current.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()->EnsureUiaProvider();
-    if (uiaProvider != nullptr) {
-      auto spProviderSimple = uiaProvider.try_as<IRawElementProviderSimple>();
-      if (spProviderSimple != nullptr) {
-        spProviderSimple->AddRef();
-        return spProviderSimple.get();
-      }
+  if (auto viewbase = current.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()) {
+    auto props = viewbase->viewProps();
+    if (props->accessibilityState.has_value() && props->accessibilityState->multiselectable.has_value() &&
+        props->accessibilityState->required.has_value()) {
+      return current;
     }
-  } else {
-    return findSelectionContainer(current.Parent());
   }
-  return nullptr;
+  return findSelectionContainer(current.Parent());
+}
+
+winrt::Microsoft::ReactNative::ComponentView CompositionDynamicAutomationProvider::GetSelectionContainer() noexcept {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return nullptr;
+
+  return findSelectionContainer(strongView.Parent());
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::get_SelectionContainer(IRawElementProviderSimple **pRetVal) {
@@ -1041,7 +1061,20 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_SelectionContainer(I
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  *pRetVal = findSelectionContainer(strongView.Parent());
+  *pRetVal = nullptr;
+
+  auto selectionContainerView = GetSelectionContainer();
+  auto uiaProvider =
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(selectionContainerView)
+          ->EnsureUiaProvider();
+  if (uiaProvider != nullptr) {
+    auto spProviderSimple = uiaProvider.try_as<IRawElementProviderSimple>();
+    if (spProviderSimple != nullptr) {
+      spProviderSimple->AddRef();
+      *pRetVal = spProviderSimple.get();
+    }
+  }
+
   return S_OK;
 }
 

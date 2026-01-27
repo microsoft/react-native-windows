@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/ReactTaggedView.h>
 #include <UIAutomation.h>
@@ -12,8 +11,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 class CompositionAnnotationProvider : public winrt::implements<CompositionAnnotationProvider, IAnnotationProvider> {
  public:
   CompositionAnnotationProvider(
-      const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
-      CompositionDynamicAutomationProvider *parentProvider) noexcept;
+      const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;
 
   // inherited via IAnnotationProvider
   virtual HRESULT __stdcall get_AnnotationTypeId(int *retVal) override;
@@ -25,7 +23,6 @@ class CompositionAnnotationProvider : public winrt::implements<CompositionAnnota
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
   winrt::com_ptr<IAnnotationProvider> m_annotationProvider;
-  winrt::com_ptr<CompositionDynamicAutomationProvider> m_parentProvider;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

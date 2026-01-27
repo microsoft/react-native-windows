@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/CompositionTextProvider.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/ReactTaggedView.h>
@@ -12,9 +11,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 class CompositionTextRangeProvider : public winrt::implements<CompositionTextRangeProvider, ITextRangeProvider> {
  public:
-  CompositionTextRangeProvider(
-      const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
-      CompositionDynamicAutomationProvider *parentProvider) noexcept;
+  CompositionTextRangeProvider(const winrt::Microsoft::ReactNative::ComponentView &componentView) noexcept;
 
   // inherited via ITextRangeProvider
   virtual HRESULT __stdcall Clone(ITextRangeProvider **pRetVal) override;
@@ -53,7 +50,6 @@ class CompositionTextRangeProvider : public winrt::implements<CompositionTextRan
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
-  winrt::com_ptr<CompositionDynamicAutomationProvider> m_parentProvider;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

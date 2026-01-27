@@ -54,6 +54,10 @@ namespace Microsoft.ReactNative
     Boolean Handled;
   };
 
+  runtimeclass CreateAutomationPeerArgs {
+    Object DefaultAutomationPeer { get; };
+  };
+
   [experimental]
   DOC_STRING("A delegate that creates a @IComponentProps object for an instance of @ViewProps. See @IReactViewComponentBuilder.SetCreateProps")
   delegate IComponentProps ViewPropsFactory(ViewProps props, IComponentProps cloneFrom);
@@ -96,6 +100,9 @@ namespace Microsoft.ReactNative
   delegate void UnmountChildComponentViewDelegate(ComponentView source, UnmountChildComponentViewArgs args);
 
   [experimental]
+  delegate Object CreateAutomationPeerDelegate(ComponentView source, CreateAutomationPeerArgs args);
+
+  [experimental]
   runtimeclass EventEmitter {
     void DispatchEvent(String eventName, JSValueArgWriter args);
   };
@@ -124,6 +131,7 @@ namespace Microsoft.ReactNative
     void SetUpdateEventEmitterHandler(UpdateEventEmitterDelegate impl);
     void SetMountChildComponentViewHandler(MountChildComponentViewDelegate impl);
     void SetUnmountChildComponentViewHandler(UnmountChildComponentViewDelegate impl);
+    void SetCreateAutomationPeerHandler(CreateAutomationPeerDelegate impl);
   };
 
   // [exclusiveto(ShadowNode)]

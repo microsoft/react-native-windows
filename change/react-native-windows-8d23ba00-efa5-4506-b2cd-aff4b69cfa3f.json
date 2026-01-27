@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix stackoverflow in StructInfo",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
