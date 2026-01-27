@@ -196,7 +196,8 @@ dotnet --version
 
 - [Microsoft Attack Surface Analyzer GitHub](https://github.com/microsoft/AttackSurfaceAnalyzer)
 - [ASA Documentation](https://github.com/microsoft/AttackSurfaceAnalyzer/wiki)
-- [SDL Requirements](https://liquid.microsoft.com/Web/Object/Read/MS.Security/Requirements/Microsoft.Security.AccessControl.10011)
+- [This requirement is part of Microsoft's Secure Development Lifecycle (SDL).
+See:] (https://learn.microsoft.com/en-us/windows/security/)
 - [ASA CLI Usage](https://github.com/microsoft/AttackSurfaceAnalyzer/wiki/Command-Line-Usage)
 
 ## Support

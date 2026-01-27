@@ -27,7 +27,7 @@ When building the apps that are checked in to our repo for testing, we have to r
 
 ## Turning on/off
 Currently the feature is behind an MSBuild property `$(ReactNativeCodeGenEnabled)`.
-The default at the moment is false, it is only turned  on for a single project for now which is the [SampleLibraryCS.csproj](https://github.com/microsoft/react-native-windows/blob/main/packages/sample-apps/windows/SampleLibraryCS/SampleLibraryCS.csproj) project, to prove it is stable. We will slowly enable it for all projects in the repo and then make it the default.
+The default at the moment is false, it is only turned  on for a single project for now which is the [SampleAppFabric](https://github.com/microsoft/react-native-windows/tree/main/packages/sample-app-fabric/windows/SampleAppFabric) project, to prove it is stable. We will slowly enable it for all projects in the repo and then make it the default.
 
 ## MSBuild/NuGet Complications
 MSBuild and NuGet spent a long time fighting me in mixing a NetCoreApp3.1 executable and WinRT apps in the same solution and the same build. ProjectReferences cannot be used so I had to use the `<MSBuild>` task directly in the targets and it was tricky making it build from both the customer apps as well as our main build solution and unittest (Microsoft.ReactNative.sln). In the end there are a few hacks in place to make this work.
