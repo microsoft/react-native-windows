@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 27 Jan 2026 18:10:35 GMT",
+      "version": "0.82.0-preview.8",
+      "tag": "react-native-windows_v0.82.0-preview.8",
+      "comments": {
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1255965fd40f751ba652cfea2e7df5dda1d47a32",
+            "comment": "Fix rnw-dependencies.ps1 Node.js installation failures"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Jan 2026 05:38:32 GMT",
       "version": "0.82.0-preview.8",
       "tag": "react-native-windows_v0.82.0-preview.8",
