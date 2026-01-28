@@ -203,8 +203,10 @@ extends:
           - script: dir /s "$(Pipeline.Workspace)\published-packages"
             displayName: Show npm packages before ESRP release
 
+          # TODO: Re-enable after fixing publishing issues
           - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
             displayName: 'ESRP Release to npmjs.com'
+            enabled: false
             condition: and(succeeded(), ne(variables['NpmDistTag'], ''))
             inputs:
               connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
