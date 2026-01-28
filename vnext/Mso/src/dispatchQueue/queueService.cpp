@@ -205,8 +205,10 @@ void QueueService::InvokeTask(
   DispatchTask taskToInvoke{std::move(task)};
   taskToInvoke.Get()->Invoke(); // Call Get()->Invoke instead of operator() to flatten call stack
 
-  while (taskToInvoke = context.TakeNextDeferredTask()) {
+  taskToInvoke = context.TakeNextDeferredTask();
+  while (taskToInvoke) {
     taskToInvoke.Get()->Invoke();
+    taskToInvoke = context.TakeNextDeferredTask();
   }
 }
 
