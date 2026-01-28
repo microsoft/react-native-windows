@@ -9,7 +9,7 @@
     <ProjectName>Playground-composition</ProjectName>
     <Keyword>Win32Proj</Keyword>
     <DefaultLanguage>en-US</DefaultLanguage>
-    <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>18.0</MinimumVisualStudioVersion>
     <AppxPackage>false</AppxPackage>
   </PropertyGroup>
   <!-- This isn't necessary in the current cpp-app template, but looks like maybe it's needed for XAML hosting support to work properly. -->
@@ -54,7 +54,7 @@
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
