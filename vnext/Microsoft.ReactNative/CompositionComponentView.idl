@@ -11,165 +11,127 @@ import "ReactNativeIsland.idl";
 
 #include "DocString.h"
 
-namespace Microsoft.ReactNative.Composition
-{
+namespace Microsoft.ReactNative.Composition {
 
-  [flags]
-  [webhosthidden]
-  [experimental]
-  enum ComponentViewFeatures
-  {
-    None          = 0x00000000,
-    NativeBorder  = 0x00000001,
-    ShadowProps   = 0x00000002,
-    Background    = 0x00000004,
-    FocusVisual   = 0x00000008,
+[flags][webhosthidden][experimental] enum ComponentViewFeatures {
+  None = 0x00000000,
+  NativeBorder = 0x00000001,
+  ShadowProps = 0x00000002,
+  Background = 0x00000004,
+  FocusVisual = 0x00000008,
 
-    Default       = 0x0000000F, // ShadowProps | NativeBorder | Background | FocusVisual
+  Default = 0x0000000F, // ShadowProps | NativeBorder | Background | FocusVisual
+};
+
+namespace Experimental {
+[webhosthidden][experimental] interface IInternalComponentView {
+  ICompositionContext CompositionContext {
+    get;
   };
+}
+} // namespace Experimental
 
-  namespace Experimental {
-    [webhosthidden]
-    [experimental]
-    interface IInternalComponentView
-    {
-      ICompositionContext CompositionContext { get; };
-    }
-  }
+// [exclusiveto(ComponentView)]
+// [uuid(ABFAC092-E527-47DC-9CF9-7A4003B0AFB0)]
+// interface IComponentViewFactory
+// {
+// }
 
-  // [exclusiveto(ComponentView)]
-  // [uuid(ABFAC092-E527-47DC-9CF9-7A4003B0AFB0)]
-  // interface IComponentViewFactory
-  // {
-  // }
-
-  // [composable(IComponentViewFactory, protected)]
-  [experimental]
-  [webhosthidden]
-  unsealed runtimeclass ComponentView : Microsoft.ReactNative.ComponentView {
-    Microsoft.UI.Composition.Compositor Compositor { get; };
-    RootComponentView Root { get; };
-    Theme Theme;
-
-    event Windows.Foundation.EventHandler<IInspectable> ThemeChanged;
-    Boolean CapturePointer(Microsoft.ReactNative.Composition.Input.Pointer pointer);
-    void ReleasePointerCapture(Microsoft.ReactNative.Composition.Input.Pointer pointer);
+// [composable(IComponentViewFactory, protected)]
+[experimental][webhosthidden] unsealed runtimeclass ComponentView : Microsoft.ReactNative.ComponentView {
+  Microsoft.UI.Composition.Compositor Compositor {
+    get;
   };
+  RootComponentView Root {
+    get;
+  };
+  Theme Theme;
 
-  namespace Experimental {
+  event Windows.Foundation.EventHandler<IInspectable> ThemeChanged;
+  Boolean CapturePointer(Microsoft.ReactNative.Composition.Input.Pointer pointer);
+  void ReleasePointerCapture(Microsoft.ReactNative.Composition.Input.Pointer pointer);
+};
 
-    [webhosthidden]
-    [experimental]
-    delegate Microsoft.ReactNative.Composition.Experimental.IVisual CreateInternalVisualDelegate(Microsoft.ReactNative.ComponentView view);
+namespace Experimental {
 
-    [webhosthidden]
-    [experimental]
-    DOC_STRING("Custom ViewComponents need to implement this interface to be able to provide a custom"
+[webhosthidden][experimental] delegate Microsoft.ReactNative.Composition.Experimental.IVisual
+CreateInternalVisualDelegate(Microsoft.ReactNative.ComponentView view);
+
+[webhosthidden][experimental] DOC_STRING(
+    "Custom ViewComponents need to implement this interface to be able to provide a custom"
     " visual using the composition context that allows custom compositors. This is only required for"
     " custom components that need to support running in RNW instances with custom compositors. Most"
-  " custom components can just set CreateVisualHandler on ViewComponentView."
-    " This will be removed in a future version")
-    interface IInternalCreateVisual
-    {
-      CreateInternalVisualDelegate CreateInternalVisualHandler;
-    }
-  }
+    " custom components can just set CreateVisualHandler on ViewComponentView."
+    " This will be removed in a future version") interface IInternalCreateVisual {
+  CreateInternalVisualDelegate CreateInternalVisualHandler;
+}
+} // namespace Experimental
 
-  // [exclusiveto(ViewComponentView)]
-  // [uuid(756AA1DF-ED74-467E-9BAA-3797B39B1875)]
-  // interface IViewComponentViewFactory
-  // {
-  // }
+// [exclusiveto(ViewComponentView)]
+// [uuid(756AA1DF-ED74-467E-9BAA-3797B39B1875)]
+// interface IViewComponentViewFactory
+// {
+// }
 
-  // [composable(IViewComponentViewFactory, protected)]
-  [experimental]
-  [webhosthidden]
-  unsealed runtimeclass ViewComponentView : ComponentView {
-
-    Microsoft.ReactNative.ViewProps ViewProps { get; };
+// [composable(IViewComponentViewFactory, protected)]
+[experimental][webhosthidden] unsealed runtimeclass ViewComponentView : ComponentView {
+  Microsoft.ReactNative.ViewProps ViewProps {
+    get;
   };
+};
 
-  [experimental]
-  [webhosthidden]
-  runtimeclass ContentIslandComponentView : ViewComponentView { 
-    void Connect(Microsoft.UI.Content.ContentIsland contentIsland);
+[experimental][webhosthidden] runtimeclass ContentIslandComponentView : ViewComponentView {
+  void Connect(Microsoft.UI.Content.ContentIsland contentIsland);
 
-    // Issue #15557: Event fired when a parent ScrollView starts scrolling.
-    // 3rd party XAML components should subscribe to this event to dismiss any open popups.
-    event Windows.Foundation.EventHandler<IInspectable> DismissPopupsRequest;
+  // Issue #15557: Event fired when a parent ScrollView starts scrolling.
+  // 3rd party XAML components should subscribe to this event to dismiss any open popups.
+  event Windows.Foundation.EventHandler<IInspectable> DismissPopupsRequest;
+};
+
+[experimental][webhosthidden][default_interface] runtimeclass SwitchComponentView : ViewComponentView{};
+
+[experimental][webhosthidden][default_interface] runtimeclass RootComponentView : ViewComponentView {
+  Microsoft.ReactNative.ComponentView GetFocusedComponent();
+  Microsoft.ReactNative.ReactNativeIsland ReactNativeIsland {
+    get;
   };
-
-  [experimental]
-  [webhosthidden]
-  [default_interface]
-  runtimeclass SwitchComponentView : ViewComponentView {
+  DOC_STRING("Is non-null if this RootComponentView is the content of a portal")
+  PortalComponentView Portal {
+    get;
   };
+};
 
-  [experimental]
-  [webhosthidden]
-  [default_interface]
-  runtimeclass RootComponentView : ViewComponentView {
-    Microsoft.ReactNative.ComponentView GetFocusedComponent();
-    Microsoft.ReactNative.ReactNativeIsland ReactNativeIsland { get; };
-    DOC_STRING("Is non-null if this RootComponentView is the content of a portal")
-    PortalComponentView Portal { get; };
+[experimental][webhosthidden][default_interface] DOC_STRING(
+    "Used to implement UI that is hosted outside the main UI tree, such as modal.") runtimeclass PortalComponentView
+    : Microsoft.ReactNative.ComponentView {
+  RootComponentView ContentRoot {
+    get;
   };
+};
 
-  [experimental]
-  [webhosthidden]
-  [default_interface]
-  DOC_STRING("Used to implement UI that is hosted outside the main UI tree, such as modal.")
-  runtimeclass PortalComponentView : Microsoft.ReactNative.ComponentView {
-    RootComponentView ContentRoot { get; };
-  };
+[experimental][webhosthidden][default_interface] runtimeclass DebuggingOverlayComponentView : ViewComponentView{};
 
-  [experimental]
-  [webhosthidden]
-  [default_interface]
-  runtimeclass DebuggingOverlayComponentView : ViewComponentView {
-  };
+[experimental][webhosthidden][default_interface] runtimeclass ActivityIndicatorComponentView : ViewComponentView{};
 
-  [experimental]
-  [webhosthidden]
-  [default_interface]
-  runtimeclass ActivityIndicatorComponentView : ViewComponentView {
-  };
+[experimental][webhosthidden][default_interface] runtimeclass WindowsModalHostComponentView : ViewComponentView{};
 
-  [experimental]
-  [webhosthidden]
-  [default_interface]
-  runtimeclass WindowsModalHostComponentView : ViewComponentView {
+[experimental][webhosthidden][default_interface] runtimeclass ImageComponentView : ViewComponentView {
+  Microsoft.ReactNative.ImageProps ViewProps {
+    get;
   };
+};
 
-  [experimental]
-  [webhosthidden]
-  [default_interface]
-  runtimeclass ImageComponentView : ViewComponentView {
-    Microsoft.ReactNative.ImageProps ViewProps { get; };
-  };
+[experimental][webhosthidden][default_interface] runtimeclass ParagraphComponentView : ViewComponentView{};
 
-  [experimental]
-  [webhosthidden]
-  [default_interface]
-  runtimeclass ParagraphComponentView : ViewComponentView {
-  };
+[experimental][webhosthidden][default_interface] runtimeclass ScrollViewComponentView : ViewComponentView {
+  // Issue #15557: Event fired when scroll drag begins.
+  // ContentIslandComponentView uses this to know when to dismiss popups (light dismiss).
+  event Windows.Foundation.EventHandler<IInspectable> ScrollBeginDrag;
+};
 
-  [experimental]
-  [webhosthidden]
-  [default_interface]
-  runtimeclass ScrollViewComponentView : ViewComponentView {
-  };
+[experimental][webhosthidden][default_interface] runtimeclass UnimplementedNativeViewComponentView
+    : ViewComponentView{};
 
-  [experimental]
-  [webhosthidden]
-  [default_interface]
-  runtimeclass UnimplementedNativeViewComponentView : ViewComponentView {
-  };
+[experimental][webhosthidden][default_interface] runtimeclass WindowsTextInputComponentView : ViewComponentView{};
 
-  [experimental]
-  [webhosthidden]
-  [default_interface]
-  runtimeclass WindowsTextInputComponentView : ViewComponentView {
-  };
-  
-} // namespace Microsoft.ReactNative
+} // namespace Microsoft.ReactNative. Composition

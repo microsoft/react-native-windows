@@ -118,6 +118,11 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   double getVerticalSize() noexcept;
   double getHorizontalSize() noexcept;
 
+  // Issue #15557: Event accessors for ScrollBeginDrag (used by ContentIslandComponentView for light dismiss)
+  winrt::event_token ScrollBeginDrag(
+      winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept;
+  void ScrollBeginDrag(winrt::event_token const &token) noexcept;
+
  private:
   void updateDecelerationRate(float value) noexcept;
   void updateContentVisualSize() noexcept;
@@ -164,6 +169,10 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool m_allowNextScrollNoMatterWhat{false};
   std::chrono::steady_clock::time_point m_lastScrollEventTime{};
   std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
+
+  // Issue #15557: Event for notifying ContentIslandComponentView instances when scroll begins
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable>>
+      m_scrollBeginDragEvent;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

@@ -14,6 +14,7 @@
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionContextHelper.h"
 #include "RootComponentView.h"
+#include "ScrollViewComponentView.h"
 
 #include "Composition.ContentIslandComponentView.g.cpp"
 
@@ -88,12 +89,34 @@ void ContentIslandComponentView::OnMounted() noexcept {
             strongThis->ParentLayoutChanged();
           }
         }));
+
+    // Issue #15557: Register for ScrollBeginDrag on parent ScrollViews for light dismiss.
+    // This is more efficient than walking the tree on every scroll begin.
+    if (auto scrollView = view.try_as<winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView>()) {
+      auto token =
+          scrollView.ScrollBeginDrag([wkThis = get_weak()](const winrt::IInspectable &, const winrt::IInspectable &) {
+            if (auto strongThis = wkThis.get()) {
+              strongThis->FireDismissPopupsRequest();
+            }
+          });
+      m_scrollBeginDragSubscriptions.push_back({scrollView, token});
+    }
+
     view = view.Parent();
   }
 }
 
 void ContentIslandComponentView::OnUnmounted() noexcept {
   m_layoutMetricChangedRevokers.clear();
+
+  // Issue #15557: Unsubscribe from parent ScrollView events
+  for (auto &subscription : m_scrollBeginDragSubscriptions) {
+    if (auto scrollView = subscription.scrollView.get()) {
+      scrollView.ScrollBeginDrag(subscription.token);
+    }
+  }
+  m_scrollBeginDragSubscriptions.clear();
+
   if (m_navigationHostDepartFocusRequestedToken && m_navigationHost) {
     m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
     m_navigationHostDepartFocusRequestedToken = {};
@@ -105,7 +128,11 @@ void ContentIslandComponentView::ParentLayoutChanged() noexcept {
   // when user clicks. Async updates via UIDispatcher().Post() were causing the
   // popup to open with stale transform values.
   //
-  // Note: getClientRect() returns values in physical pixels (scaled by pointScaleFactor),
+  // Note: The original async approach was for batching notifications during layout passes.
+  // However, LocalToParentTransformMatrix is a cheap call (just sets a matrix), and
+  // synchronous updates are required to ensure correct popup position when clicked.
+  //
+  // getClientRect() returns values in physical pixels (scaled by pointScaleFactor),
   // but LocalToParentTransformMatrix expects logical pixels (DIPs). We need to divide
   // by the scale factor to convert.
   auto clientRect = getClientRect();

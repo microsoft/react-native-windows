@@ -76,6 +76,13 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   winrt::Microsoft::UI::Input::InputFocusNavigationHost m_navigationHost{nullptr};
   winrt::event_token m_navigationHostDepartFocusRequestedToken{};
 
+  // Issue #15557: Store scroll begin drag subscriptions to parent ScrollViews for light dismiss
+  struct ScrollBeginDragSubscription {
+    winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView> scrollView;
+    winrt::event_token token;
+  };
+  std::vector<ScrollBeginDragSubscription> m_scrollBeginDragSubscriptions;
+
   // Automation
   void ConfigureChildSiteLinkAutomation() noexcept;
   winrt::event_token m_fragmentRootAutomationProviderRequestedToken{};

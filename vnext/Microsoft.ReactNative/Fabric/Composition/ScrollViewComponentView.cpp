@@ -1508,27 +1508,22 @@ void ScrollViewComponentView::FireLayoutMetricsChangedForScrollPositionChange() 
       *this, winrt::make<winrt::Microsoft::ReactNative::implementation::LayoutMetricsChangedArgs>(metrics, metrics));
 }
 
-// Issue #15557: Fire DismissPopupsRequest event on child ContentIslandComponentView instances when scroll begins.
-// This notifies 3P components to dismiss their own popups - implementing light dismiss behavior.
+// Issue #15557: Event accessors for ScrollBeginDrag
+winrt::event_token ScrollViewComponentView::ScrollBeginDrag(
+    winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept {
+  return m_scrollBeginDragEvent.add(handler);
+}
+
+void ScrollViewComponentView::ScrollBeginDrag(winrt::event_token const &token) noexcept {
+  m_scrollBeginDragEvent.remove(token);
+}
+
+// Issue #15557: Fire ScrollBeginDrag event to notify registered ContentIslandComponentView instances.
+// ContentIslandComponentViews register during their OnMounted by walking up the tree and subscribing
+// to this event on any parent ScrollViewComponentViews. This is more efficient than walking the tree
+// on every scroll begin.
 void ScrollViewComponentView::DismissChildContentIslandPopups() noexcept {
-  // Helper lambda to recursively find ContentIslandComponentView children and fire the event
-  std::function<void(const winrt::Microsoft::ReactNative::ComponentView &)> fireEventRecursively =
-      [&fireEventRecursively](const winrt::Microsoft::ReactNative::ComponentView &view) {
-        // Check if this view is a ContentIslandComponentView
-        if (auto contentIsland =
-                view.try_as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>()) {
-          winrt::get_self<ContentIslandComponentView>(contentIsland)->FireDismissPopupsRequest();
-        }
-
-        // Recursively check children
-        for (auto child : view.Children()) {
-          fireEventRecursively(child);
-        }
-      };
-
-  // Start recursive search from this ScrollView's children
-  for (auto child : Children()) {
-    fireEventRecursively(child);
-  }
+  // Fire the event to all registered listeners (ContentIslandComponentViews that are descendants of this ScrollView)
+  m_scrollBeginDragEvent(*this, nullptr);
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
