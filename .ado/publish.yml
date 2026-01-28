@@ -105,6 +105,8 @@ extends:
     sdl:
       credscan:
           suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
+      binskim:
+          break: false  # BA2007 is suppressed via .gdn/.gdnsuppress - don't fail build
       spotBugs:
           enabled: false # We don't have any java, but random packages in node_modules do
     stages:
