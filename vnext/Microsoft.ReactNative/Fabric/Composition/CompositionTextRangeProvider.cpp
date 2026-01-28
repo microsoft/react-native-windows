@@ -11,18 +11,14 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionTextRangeProvider::CompositionTextRangeProvider(
-    const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
-    CompositionDynamicAutomationProvider *parentProvider) noexcept
-    : m_view{componentView} {
-  m_parentProvider.copy_from(parentProvider);
-}
+    const winrt::Microsoft::ReactNative::ComponentView &componentView) noexcept
+    : m_view{componentView} {}
 
 HRESULT __stdcall CompositionTextRangeProvider::Clone(ITextRangeProvider **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
 
-  auto clone = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionTextRangeProvider>(
-      m_view.view().as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), m_parentProvider.get());
+  auto clone = winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionTextRangeProvider>(m_view.view());
   *pRetVal = clone.detach();
   return S_OK;
 }
@@ -91,13 +87,13 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto props = std::static_pointer_cast<const facebook::react::ParagraphProps>(
+  auto props = std::static_pointer_cast<const facebook::react::BaseViewProps>(
       winrt::get_self<ComponentView>(strongView)->props());
 
-  auto textinputProps = std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(
-      winrt::get_self<ComponentView>(strongView)->props());
+  auto asParagraph =
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView>();
 
-  auto isTextInput =
+  auto asTextInput =
       strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>();
 
   if (props == nullptr)
@@ -106,15 +102,16 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
   if (attributeId == UIA_BackgroundColorAttributeId) {
     pRetVal->vt = VT_I4;
     pRetVal->lVal = (*props->backgroundColor).AsColorRefWithAlpha();
-  } else if (attributeId == UIA_CapStyleAttributeId) {
+  } else if (attributeId == UIA_CapStyleAttributeId && asParagraph) {
     pRetVal->vt = VT_I4;
     auto fontVariant = facebook::react::FontVariant::Default;
     auto textTransform = facebook::react::TextTransform::None;
-    if (props->textAttributes.fontVariant.has_value()) {
-      fontVariant = props->textAttributes.fontVariant.value();
+
+    if (asParagraph->paragraphProps().textAttributes.fontVariant.has_value()) {
+      fontVariant = asParagraph->paragraphProps().textAttributes.fontVariant.value();
     }
-    if (props->textAttributes.textTransform.has_value()) {
-      textTransform = props->textAttributes.textTransform.value();
+    if (asParagraph->paragraphProps().textAttributes.textTransform.has_value()) {
+      textTransform = asParagraph->paragraphProps().textAttributes.textTransform.value();
     }
     if (fontVariant == facebook::react::FontVariant::SmallCaps) {
       pRetVal->lVal = CapStyle_SmallCap;
@@ -125,39 +122,44 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
     } else if (textTransform == facebook::react::TextTransform::Uppercase) {
       pRetVal->lVal = CapStyle_AllCap;
     }
-  } else if (attributeId == UIA_FontNameAttributeId) {
+  } else if (attributeId == UIA_FontNameAttributeId && asParagraph) {
     pRetVal->vt = VT_BSTR;
-    auto fontName = props->textAttributes.fontFamily;
+    auto fontName = asParagraph->paragraphProps().textAttributes.fontFamily;
     if (fontName.empty()) {
       fontName = "Segoe UI";
     }
     std::wstring wfontName(fontName.begin(), fontName.end());
     pRetVal->bstrVal = SysAllocString(wfontName.c_str());
-  } else if (attributeId == UIA_FontSizeAttributeId) {
+  } else if (attributeId == UIA_FontSizeAttributeId && asParagraph) {
     pRetVal->vt = VT_R8;
-    pRetVal->dblVal = props->textAttributes.fontSize;
-  } else if (attributeId == UIA_FontWeightAttributeId) {
-    if (props->textAttributes.fontWeight.has_value()) {
+    pRetVal->dblVal = asParagraph->paragraphProps().textAttributes.fontSize;
+  } else if (attributeId == UIA_FontWeightAttributeId && asParagraph) {
+    if (asParagraph->paragraphProps().textAttributes.fontWeight.has_value()) {
       pRetVal->vt = VT_I4;
-      pRetVal->lVal = static_cast<long>(props->textAttributes.fontWeight.value());
+      pRetVal->lVal = static_cast<long>(asParagraph->paragraphProps().textAttributes.fontWeight.value());
     }
-  } else if (attributeId == UIA_ForegroundColorAttributeId) {
+  } else if (attributeId == UIA_ForegroundColorAttributeId && asParagraph) {
     pRetVal->vt = VT_I4;
-    pRetVal->lVal = (*props->textAttributes.foregroundColor).AsColorRefWithAlpha();
-  } else if (attributeId == UIA_IsItalicAttributeId) {
+    pRetVal->lVal = (*asParagraph->paragraphProps().textAttributes.foregroundColor).AsColorRefWithAlpha();
+  } else if (attributeId == UIA_IsItalicAttributeId && asParagraph) {
     pRetVal->vt = VT_BOOL;
-    pRetVal->boolVal = (props->textAttributes.fontStyle.has_value() &&
-                        props->textAttributes.fontStyle.value() == facebook::react::FontStyle::Italic)
+    pRetVal->boolVal =
+        (asParagraph->paragraphProps().textAttributes.fontStyle.has_value() &&
+         asParagraph->paragraphProps().textAttributes.fontStyle.value() == facebook::react::FontStyle::Italic)
         ? VARIANT_TRUE
         : VARIANT_FALSE;
   } else if (attributeId == UIA_IsReadOnlyAttributeId) {
     pRetVal->vt = VT_BOOL;
-    pRetVal->boolVal = isTextInput ? textinputProps->editable ? VARIANT_FALSE : VARIANT_TRUE : VARIANT_TRUE;
-  } else if (attributeId == UIA_HorizontalTextAlignmentAttributeId) {
+    if (asTextInput) {
+      pRetVal->boolVal = asTextInput->windowsTextInputProps().editable ? VARIANT_FALSE : VARIANT_TRUE;
+    } else {
+      pRetVal->boolVal = VARIANT_TRUE;
+    }
+  } else if (attributeId == UIA_HorizontalTextAlignmentAttributeId && asParagraph) {
     pRetVal->vt = VT_I4;
     auto textAlign = facebook::react::TextAlignment::Center;
-    if (props->textAttributes.alignment.has_value()) {
-      textAlign = props->textAttributes.alignment.value();
+    if (asParagraph->paragraphProps().textAttributes.alignment.has_value()) {
+      textAlign = asParagraph->paragraphProps().textAttributes.alignment.value();
     }
     if (textAlign == facebook::react::TextAlignment::Left) {
       pRetVal->lVal = HorizontalTextAlignment_Left;
@@ -170,40 +172,42 @@ HRESULT __stdcall CompositionTextRangeProvider::GetAttributeValue(TEXTATTRIBUTEI
     } else if (textAlign == facebook::react::TextAlignment::Natural) {
       pRetVal->lVal = HorizontalTextAlignment_Left;
     }
-  } else if (attributeId == UIA_StrikethroughColorAttributeId) {
-    if (props->textAttributes.textDecorationLineType.has_value() &&
-        (props->textAttributes.textDecorationLineType.value() ==
+  } else if (attributeId == UIA_StrikethroughColorAttributeId && asParagraph) {
+    if (asParagraph->paragraphProps().textAttributes.textDecorationLineType.has_value() &&
+        (asParagraph->paragraphProps().textAttributes.textDecorationLineType.value() ==
              facebook::react::TextDecorationLineType::Strikethrough ||
-         props->textAttributes.textDecorationLineType.value() ==
+         asParagraph->paragraphProps().textAttributes.textDecorationLineType.value() ==
              facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
       pRetVal->vt = VT_I4;
-      pRetVal->lVal = (*props->textAttributes.textDecorationColor).AsColorRefWithAlpha();
+      pRetVal->lVal = (*asParagraph->paragraphProps().textAttributes.textDecorationColor).AsColorRefWithAlpha();
     }
-  } else if (attributeId == UIA_StrikethroughStyleAttributeId) {
-    if (props->textAttributes.textDecorationLineType.has_value() &&
-        (props->textAttributes.textDecorationLineType.value() ==
+  } else if (attributeId == UIA_StrikethroughStyleAttributeId && asParagraph) {
+    if (asParagraph->paragraphProps().textAttributes.textDecorationLineType.has_value() &&
+        (asParagraph->paragraphProps().textAttributes.textDecorationLineType.value() ==
              facebook::react::TextDecorationLineType::Strikethrough ||
-         props->textAttributes.textDecorationLineType.value() ==
+         asParagraph->paragraphProps().textAttributes.textDecorationLineType.value() ==
              facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
       pRetVal->vt = VT_I4;
-      auto style = props->textAttributes.textDecorationStyle.value();
+      auto style = asParagraph->paragraphProps().textAttributes.textDecorationStyle.value();
       pRetVal->lVal = GetTextDecorationLineStyle(style);
     }
-  } else if (attributeId == UIA_UnderlineColorAttributeId) {
-    if (props->textAttributes.textDecorationLineType.has_value() &&
-        (props->textAttributes.textDecorationLineType.value() == facebook::react::TextDecorationLineType::Underline ||
-         props->textAttributes.textDecorationLineType.value() ==
+  } else if (attributeId == UIA_UnderlineColorAttributeId && asParagraph) {
+    if (asParagraph->paragraphProps().textAttributes.textDecorationLineType.has_value() &&
+        (asParagraph->paragraphProps().textAttributes.textDecorationLineType.value() ==
+             facebook::react::TextDecorationLineType::Underline ||
+         asParagraph->paragraphProps().textAttributes.textDecorationLineType.value() ==
              facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
       pRetVal->vt = VT_I4;
-      pRetVal->lVal = (*props->textAttributes.textDecorationColor).AsColorRefWithAlpha();
+      pRetVal->lVal = (*asParagraph->paragraphProps().textAttributes.textDecorationColor).AsColorRefWithAlpha();
     }
-  } else if (attributeId == UIA_UnderlineStyleAttributeId) {
-    if (props->textAttributes.textDecorationLineType.has_value() &&
-        (props->textAttributes.textDecorationLineType.value() == facebook::react::TextDecorationLineType::Underline ||
-         props->textAttributes.textDecorationLineType.value() ==
+  } else if (attributeId == UIA_UnderlineStyleAttributeId && asParagraph) {
+    if (asParagraph->paragraphProps().textAttributes.textDecorationLineType.has_value() &&
+        (asParagraph->paragraphProps().textAttributes.textDecorationLineType.value() ==
+             facebook::react::TextDecorationLineType::Underline ||
+         asParagraph->paragraphProps().textAttributes.textDecorationLineType.value() ==
              facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
       pRetVal->vt = VT_I4;
-      auto style = props->textAttributes.textDecorationStyle.value();
+      auto style = asParagraph->paragraphProps().textAttributes.textDecorationStyle.value();
       pRetVal->lVal = GetTextDecorationLineStyle(style);
     }
   }
@@ -214,7 +218,18 @@ HRESULT __stdcall CompositionTextRangeProvider::GetBoundingRectangles(SAFEARRAY 
   if (pRetVal == nullptr)
     return E_POINTER;
   UiaRect rect;
-  auto hr = m_parentProvider->get_BoundingRectangle(&rect);
+
+  auto strongView = m_view.view();
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto componentView = strongView.as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
+  auto provider = componentView->EnsureUiaProvider();
+  auto repf = provider.try_as<IRawElementProviderFragment>();
+  if (!repf)
+    return E_FAIL;
+
+  auto hr = repf->get_BoundingRectangle(&rect);
   if (FAILED(hr))
     return hr;
   *pRetVal = SafeArrayCreateVector(VT_R8, 0, 4);

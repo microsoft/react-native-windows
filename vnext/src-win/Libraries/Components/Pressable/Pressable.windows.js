@@ -71,6 +71,14 @@ type PressableBaseProps = $ReadOnly<{
    */
   disabled?: ?boolean,
 
+  // [Windows
+  /**
+   * When the pressable is pressed it will take focus
+   * Default value: true
+   */
+  focusOnPress?: ?boolean,
+  // Windows]
+
   /**
    * Additional distance outside of this view in which a press is detected.
    */
@@ -238,6 +246,7 @@ function Pressable({
     delayLongPress,
     disabled,
     focusable,
+    focusOnPress, // Windows
     hitSlop,
     onBlur,
     onFocus,
@@ -309,6 +318,16 @@ function Pressable({
     hitSlop,
   };
 
+  const onPressWithFocus = React.useCallback(
+    (args: GestureResponderEvent) => {
+      if (focusable !== false && focusOnPress !== false) {
+        viewRef?.current?.focus();
+      }
+      onPress?.(args);
+    },
+    [focusOnPress, onPress, focusable],
+  );
+
   const config = useMemo(
     () => ({
       cancelable,
@@ -325,7 +344,7 @@ function Pressable({
       onHoverIn,
       onHoverOut,
       onLongPress,
-      onPress,
+      onPress: onPressWithFocus,
       onPressIn(event: GestureResponderEvent): void {
         if (android_rippleConfig != null) {
           android_rippleConfig.onPressIn(event);
@@ -369,7 +388,7 @@ function Pressable({
       onHoverIn,
       onHoverOut,
       onLongPress,
-      onPress,
+      onPressWithFocus,
       onPressIn,
       onPressMove,
       onPressOut,

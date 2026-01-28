@@ -174,6 +174,12 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
     return true;
   }
 
+  if (platformColor == "Highlight@40" && TryGetPlatformColor("Highlight", color)) {
+    color.A = static_cast<uint8_t>(static_cast<float>(color.A) * 0.4f);
+    m_colorCache[platformColor] = std::make_pair(true, color);
+    return true;
+  }
+
   auto uiColor = s_uiColorTypes.find(platformColor);
   if (uiColor != s_uiColorTypes.end()) {
     auto uiSettings{winrt::Windows::UI::ViewManagement::UISettings()};
