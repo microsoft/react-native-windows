@@ -49,6 +49,11 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   static facebook::react::SharedViewProps defaultProps() noexcept;
   const facebook::react::ParagraphProps &paragraphProps() const noexcept;
 
+  facebook::react::Tag hitTest(
+      facebook::react::Point pt,
+      facebook::react::Point &localPt,
+      bool ignorePointerEvents = false) const noexcept override;
+
   // Returns true when text is selectable
   bool focusable() const noexcept override;
 

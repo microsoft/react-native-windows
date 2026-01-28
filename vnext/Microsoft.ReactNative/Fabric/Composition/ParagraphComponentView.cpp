@@ -167,6 +167,26 @@ void ParagraphComponentView::updateTextAlignment(
   m_textLayout = nullptr;
 }
 
+facebook::react::Tag ParagraphComponentView::hitTest(
+    facebook::react::Point pt,
+    facebook::react::Point &localPt,
+    bool ignorePointerEvents) const noexcept {
+  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
+  const auto &props = paragraphProps();
+  const auto &vProps = *viewProps();
+
+  if (props.isSelectable && ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+      ptLocal.y <= m_layoutMetrics.frame.size.height) {
+    // claims if pointer events are enabled for this component
+    if (ignorePointerEvents || vProps.pointerEvents == facebook::react::PointerEventsMode::Auto ||
+        vProps.pointerEvents == facebook::react::PointerEventsMode::BoxOnly) {
+      localPt = ptLocal;
+      return Tag();
+    }
+  }
+  return Super::hitTest(pt, localPt, ignorePointerEvents);
+}
+
 bool ParagraphComponentView::IsTextSelectableAtPoint(facebook::react::Point pt) noexcept {
   // paragraph-level selectable prop is enabled
   const auto &props = paragraphProps();
@@ -534,7 +554,8 @@ void ParagraphComponentView::OnPointerPressed(
     return;
   }
 
-  auto pp = args.GetCurrentPoint(-1);
+  // Use Tag() to get coordinates in component's local space
+  auto pp = args.GetCurrentPoint(static_cast<int32_t>(Tag()));
 
   // Ignores right-click
   if (pp.Properties().PointerUpdateKind() ==
@@ -545,8 +566,8 @@ void ParagraphComponentView::OnPointerPressed(
 
   auto position = pp.Position();
 
-  facebook::react::Point localPt{
-      position.X - m_layoutMetrics.frame.origin.x, position.Y - m_layoutMetrics.frame.origin.y};
+  // GetCurrentPoint(Tag()) returns position relative to component origin
+  facebook::react::Point localPt{position.X, position.Y};
 
   std::optional<int32_t> charPosition = GetTextPositionAtPoint(localPt);
 
@@ -620,7 +641,7 @@ void ParagraphComponentView::OnPointerMoved(
 void ParagraphComponentView::OnPointerReleased(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   // Check for right-click to show context menu
-  auto pp = args.GetCurrentPoint(-1);
+  auto pp = args.GetCurrentPoint(static_cast<int32_t>(Tag()));
   if (pp.Properties().PointerUpdateKind() ==
       winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::RightButtonReleased) {
     const auto &props = paragraphProps();
