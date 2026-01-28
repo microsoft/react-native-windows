@@ -47,6 +47,14 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
 
   void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
 
+  // Issue #15557: Fire event to notify 3P component to dismiss popups when scroll begins
+  void FireDismissPopupsRequest() noexcept;
+
+  // Issue #15557: Event accessors for DismissPopupsRequest
+  winrt::event_token DismissPopupsRequest(
+      winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept;
+  void DismissPopupsRequest(winrt::event_token const &token) noexcept;
+
   ContentIslandComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
@@ -68,12 +76,23 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   winrt::Microsoft::UI::Input::InputFocusNavigationHost m_navigationHost{nullptr};
   winrt::event_token m_navigationHostDepartFocusRequestedToken{};
 
+  // Issue #15557: Store scroll begin drag subscriptions to parent ScrollViews for light dismiss
+  struct ScrollBeginDragSubscription {
+    winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView> scrollView;
+    winrt::event_token token;
+  };
+  std::vector<ScrollBeginDragSubscription> m_scrollBeginDragSubscriptions;
+
   // Automation
   void ConfigureChildSiteLinkAutomation() noexcept;
   winrt::event_token m_fragmentRootAutomationProviderRequestedToken{};
   winrt::event_token m_parentAutomationProviderRequestedToken{};
   winrt::event_token m_nextSiblingAutomationProviderRequestedToken{};
   winrt::event_token m_previousSiblingAutomationProviderRequestedToken{};
+
+  // Issue #15557: Event for notifying 3P components to dismiss popups when scroll begins
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable>>
+      m_dismissPopupsRequestEvent;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
