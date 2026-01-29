@@ -77,16 +77,18 @@ winrt::fire_and_forget GetImageSizeAsync(
       }
 #ifdef USE_FABRIC
     } else {
-      auto result = wicBitmapSourceFromStream(memoryStream);
-      if (!std::get<std::shared_ptr<facebook::react::ImageErrorInfo>>(result)) {
-        auto imagingFactory = std::get<winrt::com_ptr<IWICImagingFactory>>(result);
-        auto wicBmpSource = std::get<winrt::com_ptr<IWICBitmapSource>>(result);
-        UINT width, height;
-        if (SUCCEEDED(wicBmpSource->GetSize(&width, &height))) {
-          successCallback(width, height);
-          succeeded = true;
+      if (memoryStream) {  // Added nullcheck to prevent app from crashing if value is uninitialized
+        auto result = wicBitmapSourceFromStream(memoryStream);
+        if (!std::get<std::shared_ptr<facebook::react::ImageErrorInfo>>(result)) {
+          auto imagingFactory = std::get<winrt::com_ptr<IWICImagingFactory>>(result);
+          auto wicBmpSource = std::get<winrt::com_ptr<IWICBitmapSource>>(result);
+          UINT width, height;
+          if (SUCCEEDED(wicBmpSource->GetSize(&width, &height))) {
+            successCallback(width, height);
+            succeeded = true;
+          }
         }
-      }
+      }  
     }
 #endif // USE_FABRIC
   } catch (winrt::hresult_error const &) {
