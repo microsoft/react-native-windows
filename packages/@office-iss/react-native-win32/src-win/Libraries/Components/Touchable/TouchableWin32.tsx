@@ -30,7 +30,7 @@ import { IKeyboardEvent } from '../View/ViewPropTypes';
 const BoundingDimensions = require('./BoundingDimensions');
 const Position = require('./Position');
 
-const {findNodeHandle} = require('../../Renderer/shims/ReactNative');
+const {findNodeHandle} = require('../../ReactNative/RendererProxy');
 
 /**
  * Extracts a single touch, generally this is the active touch or touch that
