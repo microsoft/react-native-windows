@@ -8,16 +8,9 @@
         "resolved": "1.83.0",
         "contentHash": "cy53VNMzysEMvhBixDe8ujPk67Fcj3v6FPHQnH91NYJNLHpc6jxa2xq9ruCaaJjE4M3YrGSHDi4uUSTGBWw6EQ=="
       },
-      "ReactWindows.OpenSSL.StdCall.Static": {
-        "type": "Direct",
-        "requested": "[1.0.2-p.5, )",
-        "resolved": "1.0.2-p.5",
-        "contentHash": "1tAtFgtbVpI/JgRIxy9j30R/W6B1zi9dYt0o5QwAk5V3X2mo9xrrHcbXlbczKQIftYoNHe0Mfq9ExIu9A1Cs0g=="
-      },
       "react.windows.test": {
         "type": "Project",
         "dependencies": {
-          "ReactWindows.OpenSSL.StdCall.Static": "[1.0.2-p.5, )",
           "boost": "[1.83.0, )"
         }
       }
