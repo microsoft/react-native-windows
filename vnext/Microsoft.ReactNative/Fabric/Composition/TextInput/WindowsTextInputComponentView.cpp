@@ -1,15 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#pragma once
-
 #include "WindowsTextInputComponentView.h"
 
 #include <AutoDraw.h>
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Fabric/platform/react/renderer/graphics/PlatformColorUtils.h>
+#include <Shlwapi.h>
+#include <TextServ.h>
 #include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
+#include <inputscope.h>
+#include <msctf.h>
 #include <react/renderer/components/textinput/TextInputState.h>
 #include <react/renderer/graphics/HostPlatformColor.h>
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
@@ -25,7 +27,31 @@
 #include "WindowsTextInputShadowNode.h"
 #include "guid/msoGuid.h"
 
-#include <unicode.h>
+#pragma comment(lib, "Shlwapi.lib")
+
+// Dynamic loading of SetInputScopes from msctf.dll
+typedef HRESULT(WINAPI *PFN_SetInputScopes)(
+    HWND hwnd,
+    const InputScope *pInputScopes,
+    UINT cInputScopes,
+    PWSTR *ppszPhraseList,
+    UINT cPhrases,
+    PWSTR pszRegExp,
+    PWSTR pszSRGS);
+
+static PFN_SetInputScopes g_pfnSetInputScopes = nullptr;
+static bool g_bSetInputScopesInitialized = false;
+
+static PFN_SetInputScopes GetSetInputScopesProc() {
+  if (!g_bSetInputScopesInitialized) {
+    g_bSetInputScopesInitialized = true;
+    HMODULE hMsctf = LoadLibraryW(L"msctf.dll");
+    if (hMsctf) {
+      g_pfnSetInputScopes = (PFN_SetInputScopes)GetProcAddress(hMsctf, "SetInputScopes");
+    }
+  }
+  return g_pfnSetInputScopes;
+}
 
 // convert a BSTR to a std::string.
 std::string &BstrToStdString(const BSTR bstr, std::string &dst, int cp = CP_UTF8) {
@@ -60,6 +86,63 @@ MSO_CLASS_GUID(ITextServices, "8D33F740-CF58-11CE-A89D-00AA006CADC5") // IID_ITe
 MSO_CLASS_GUID(ITextServices2, "8D33F741-CF58-11CE-A89D-00AA006CADC5") // IID_ITextServices2
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
+
+// Static members for proxy EDIT control
+HWND WindowsTextInputComponentView::s_proxyEditHwnd = nullptr;
+WNDPROC WindowsTextInputComponentView::s_originalProxyEditWndProc = nullptr;
+WindowsTextInputComponentView *WindowsTextInputComponentView::s_currentFocusedTextInput = nullptr;
+
+// Proxy EDIT control window procedure - forwards input to the active TextInput
+LRESULT CALLBACK WindowsTextInputComponentView::ProxyEditWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+  // Forward character and key messages to the actual TextInput's RichEdit
+  if (s_currentFocusedTextInput && s_currentFocusedTextInput->m_textServices) {
+    if (msg == WM_CHAR || msg == WM_KEYDOWN || msg == WM_KEYUP || msg == WM_IME_CHAR || msg == WM_IME_COMPOSITION ||
+        msg == WM_IME_STARTCOMPOSITION || msg == WM_IME_ENDCOMPOSITION) {
+      LRESULT result;
+      s_currentFocusedTextInput->m_textServices->TxSendMessage(msg, wParam, lParam, &result);
+      if (msg == WM_CHAR || msg == WM_IME_CHAR) {
+        // Emit onKeyPress event (this is what OnCharacterReceived normally does)
+        s_currentFocusedTextInput->EmitOnKeyPress(static_cast<wchar_t>(wParam));
+        s_currentFocusedTextInput->OnTextUpdated();
+      }
+      return result;
+    }
+  }
+
+  // For other messages, call the original window procedure
+  return CallWindowProcW(s_originalProxyEditWndProc, hwnd, msg, wParam, lParam);
+}
+
+// Create a hidden EDIT control for InputScope support
+void WindowsTextInputComponentView::EnsureProxyEditControl(HWND parentHwnd) {
+  if (s_proxyEditHwnd) {
+    return; // Already created
+  }
+
+  // Create an EDIT control - position at 0,0 initially, we'll move it when focused
+  // WS_VISIBLE is needed for TSF to properly integrate
+  s_proxyEditHwnd = CreateWindowExW(
+      WS_EX_TRANSPARENT | WS_EX_LAYERED, // Transparent and layered for invisibility
+      L"EDIT",
+      L"",
+      WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL,
+      0,
+      0,
+      1,
+      1, // Small but not off-screen
+      parentHwnd,
+      nullptr,
+      GetModuleHandle(nullptr),
+      nullptr);
+
+  if (s_proxyEditHwnd) {
+    // Make it fully transparent
+    SetLayeredWindowAttributes(s_proxyEditHwnd, 0, 0, LWA_ALPHA);
+
+    // Subclass the EDIT control to forward input to our RichEdit
+    s_originalProxyEditWndProc = (WNDPROC)SetWindowLongPtrW(s_proxyEditHwnd, GWLP_WNDPROC, (LONG_PTR)ProxyEditWndProc);
+  }
+}
 
 // RichEdit doesn't handle us calling Draw during the middle of a TxTranslateMessage call.
 WindowsTextInputComponentView::DrawBlock::DrawBlock(WindowsTextInputComponentView &view) : m_view(view) {
@@ -722,7 +805,8 @@ void WindowsTextInputComponentView::OnPointerPressed(
     pressInArgs.pagePoint = {position.X, position.Y};
     pressInArgs.offsetPoint = {offsetX, offsetY}; //{LocationX,LocationY}
     pressInArgs.timestamp = static_cast<double>(pp.Timestamp()) / 1000.0;
-    pressInArgs.identifier = pp.PointerId();
+    // Normalize pointer ID to 0-20 range to avoid React touch system performance warning
+    pressInArgs.identifier = pp.PointerId() % 21;
 
     emitter->onPressIn(pressInArgs);
   }
@@ -787,7 +871,8 @@ void WindowsTextInputComponentView::OnPointerReleased(
     pressOutArgs.pagePoint = {position.X, position.Y};
     pressOutArgs.offsetPoint = {offsetX, offsetY}; //{LocationX,LocationY}
     pressOutArgs.timestamp = static_cast<double>(pp.Timestamp()) / 1000.0;
-    pressOutArgs.identifier = pp.PointerId();
+    // Normalize pointer ID to 0-20 range to avoid React touch system performance warning
+    pressOutArgs.identifier = pp.PointerId() % 21;
 
     emitter->onPressOut(pressOutArgs);
   }
@@ -947,6 +1032,28 @@ bool WindowsTextInputComponentView::ShouldSubmit(
   return shouldSubmit;
 }
 
+// Helper method to emit onKeyPress event - used by both OnCharacterReceived and ProxyEditWndProc
+void WindowsTextInputComponentView::EmitOnKeyPress(wchar_t keyChar) noexcept {
+  if (!m_eventEmitter) {
+    return;
+  }
+
+  // Convert wchar_t to std::string
+  wchar_t key[2] = {keyChar, L'\0'};
+  std::string keyString = ::Microsoft::Common::Unicode::Utf16ToUtf8(key, 1);
+
+  auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+  facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
+  if (keyString.compare("\r") == 0) {
+    onKeyPressArgs.key = "Enter";
+  } else if (keyString.compare("\b") == 0) {
+    onKeyPressArgs.key = "Backspace";
+  } else {
+    onKeyPressArgs.key = keyString;
+  }
+  emitter->onKeyPress(onKeyPressArgs);
+}
+
 void WindowsTextInputComponentView::OnCharacterReceived(
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with
@@ -975,21 +1082,8 @@ void WindowsTextInputComponentView::OnCharacterReceived(
     return;
   }
 
-  // convert keyCode to std::string
-  wchar_t key[2] = L" ";
-  key[0] = static_cast<wchar_t>(args.KeyCode());
-  std::string keyString = ::Microsoft::Common::Unicode::Utf16ToUtf8(key, 1);
-  // Call onKeyPress event
-  auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-  facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
-  if (keyString.compare("\r") == 0) {
-    onKeyPressArgs.key = "Enter";
-  } else if (keyString.compare("\b") == 0) {
-    onKeyPressArgs.key = "Backspace";
-  } else {
-    onKeyPressArgs.key = keyString;
-  }
-  emitter->onKeyPress(onKeyPressArgs);
+  // Call onKeyPress event using the helper method
+  EmitOnKeyPress(static_cast<wchar_t>(args.KeyCode()));
 
   WPARAM wParam = static_cast<WPARAM>(args.KeyCode());
 
@@ -1033,6 +1127,24 @@ void WindowsTextInputComponentView::onLostFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   m_hasFocus = false;
   Super::onLostFocus(args);
+
+  // Reset InputScope on parent HWND when losing focus
+  HWND hwndParent = GetHwndForParenting();
+  if (hwndParent) {
+    if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
+      InputScope defaultScope = IS_DEFAULT;
+      pfnSetInputScopes(hwndParent, &defaultScope, 1, nullptr, 0, nullptr, nullptr);
+    }
+  }
+
+  // Clear proxy EDIT control focus
+  if (s_currentFocusedTextInput == this) {
+    s_currentFocusedTextInput = nullptr;
+    if (s_proxyEditHwnd) {
+      ShowWindow(s_proxyEditHwnd, SW_HIDE);
+    }
+  }
+
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
@@ -1062,6 +1174,52 @@ void WindowsTextInputComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   m_hasFocus = true;
   Super::onGotFocus(args);
+
+  // Set InputScope on parent HWND for touch keyboard layout
+  updateKeyboardType(windowsTextInputProps().keyboardType);
+
+  // Only use proxy EDIT control for non-default keyboard types
+  // This is needed for Touch Keyboard to show specialized layouts (numeric, phone, email, etc.)
+  // For "default" keyboard type, we don't need the proxy and it would interfere with normal input
+  const auto &keyboardType = windowsTextInputProps().keyboardType;
+  bool needsProxyEdit = !keyboardType.empty() && keyboardType != "default";
+
+  if (needsProxyEdit) {
+    HWND hwndParent = GetHwndForParenting();
+    if (hwndParent) {
+      EnsureProxyEditControl(hwndParent);
+
+      if (s_proxyEditHwnd) {
+        // Set this as the current focused TextInput
+        s_currentFocusedTextInput = this;
+
+        // Set InputScope on the proxy EDIT control
+        if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
+          pfnSetInputScopes(s_proxyEditHwnd, &m_currentInputScope, 1, nullptr, 0, nullptr, nullptr);
+        }
+
+        // Position the proxy EDIT at our location (even though it's transparent)
+        auto screenPos = LocalToScreen({0, 0});
+        SetWindowPos(
+            s_proxyEditHwnd,
+            HWND_TOP,
+            (int)screenPos.X,
+            (int)screenPos.Y,
+            (int)m_layoutMetrics.frame.size.width,
+            (int)m_layoutMetrics.frame.size.height,
+            SWP_NOACTIVATE);
+
+        // Give it Windows focus so Touch Keyboard sees correct InputScope
+        SetFocus(s_proxyEditHwnd);
+      }
+    }
+  } else {
+    // Clear proxy focus if we were previously using it
+    if (s_currentFocusedTextInput == this) {
+      s_currentFocusedTextInput = nullptr;
+    }
+  }
+
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
@@ -1192,8 +1350,24 @@ void WindowsTextInputComponentView::updateProps(
     updateAutoCorrect(newTextInputProps.autoCorrect);
   }
 
+  if (oldTextInputProps.keyboardType != newTextInputProps.keyboardType ||
+      oldTextInputProps.secureTextEntry != newTextInputProps.secureTextEntry) {
+    updateKeyboardType(newTextInputProps.keyboardType);
+  }
+
   if (oldTextInputProps.selectionColor != newTextInputProps.selectionColor) {
     m_needsRedraw = true;
+  }
+
+  // Notify TSF when keyboardType changes so IME can update
+  if (oldTextInputProps.keyboardType != newTextInputProps.keyboardType ||
+      oldTextInputProps.secureTextEntry != newTextInputProps.secureTextEntry) {
+    // Force TSF to re-query ITfInputScope by simulating focus change
+    if (m_textServices && m_hasFocus) {
+      LRESULT lresult;
+      m_textServices->TxSendMessage(WM_KILLFOCUS, 0, 0, &lresult);
+      m_textServices->TxSendMessage(WM_SETFOCUS, 0, 0, &lresult);
+    }
   }
 
   UpdatePropertyBits();
@@ -1438,6 +1612,10 @@ void WindowsTextInputComponentView::onMounted() noexcept {
     m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
     m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
+
+  // Initialize keyboardType
+  updateKeyboardType(windowsTextInputProps().keyboardType);
+
   InternalFinalize();
 
   // Handle autoFocus property - focus the component when mounted if autoFocus is true
@@ -1790,8 +1968,8 @@ WindowsTextInputComponentView::createVisual() noexcept {
   LRESULT res;
   winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_PLAINTEXT, 0, &res));
 
-  // Enable TSF support
-  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEDITSTYLE, SES_USECTF, SES_USECTF, nullptr));
+  // Enable TSF (Text Services Framework) for advanced input method support
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEDITSTYLE, SES_USECTF, SES_USECTF, &res));
 
   m_caretVisual = m_compContext.CreateCaretVisual();
   visual.InsertAt(m_caretVisual.InnerVisual(), 0);
@@ -1919,6 +2097,45 @@ void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Founda
   }
 
   DestroyMenu(menu);
+}
+
+void WindowsTextInputComponentView::updateKeyboardType(const std::string &keyboardType) noexcept {
+  // Get the parent/root HWND
+  HWND hwndParent = GetHwndForParenting();
+  if (!hwndParent) {
+    return;
+  }
+
+  // Map keyboard type to InputScope
+  InputScope scope = IS_DEFAULT;
+  bool isSecureTextEntry = windowsTextInputProps().secureTextEntry;
+
+  static const std::unordered_map<std::string, InputScope> scopeMap = {
+      {"default", IS_DEFAULT},
+      {"numeric", IS_NUMBER},
+      {"number-pad", IS_DIGITS},
+      {"decimal-pad", IS_NUMBER},
+      {"email-address", IS_EMAIL_SMTPEMAILADDRESS},
+      {"phone-pad", IS_TELEPHONE_FULLTELEPHONENUMBER},
+      {"url", IS_URL},
+      {"web-search", IS_SEARCH}};
+
+  if (isSecureTextEntry) {
+    scope = (keyboardType == "numeric") ? IS_NUMBER : IS_PASSWORD;
+  } else {
+    auto it = scopeMap.find(keyboardType);
+    if (it != scopeMap.end()) {
+      scope = it->second;
+    }
+  }
+
+  // Store the current scope for proxy EDIT control
+  m_currentInputScope = scope;
+
+  // Use SetInputScopes API to set InputScope on the parent HWND
+  if (auto pfnSetInputScopes = GetSetInputScopesProc()) {
+    pfnSetInputScopes(hwndParent, &scope, 1, nullptr, 0, nullptr, nullptr);
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

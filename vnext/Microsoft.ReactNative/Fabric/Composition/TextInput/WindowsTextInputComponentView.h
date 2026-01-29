@@ -7,6 +7,7 @@
 #include "Composition.WindowsTextInputComponentView.g.h"
 #include <ReactContext.h>
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
+#include <inputscope.h>
 #include <richedit.h>
 #include <textserv.h>
 #include <windows.ui.composition.interop.h>
@@ -99,6 +100,7 @@ struct WindowsTextInputComponentView
   void UpdateParaFormat() noexcept;
   void UpdateText(const std::string &str) noexcept;
   void OnTextUpdated() noexcept;
+  void EmitOnKeyPress(wchar_t keyChar) noexcept;
   void EmitOnScrollEvent() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
   std::pair<float, float> GetContentSize() const noexcept;
@@ -119,6 +121,7 @@ struct WindowsTextInputComponentView
   void updateAutoCorrect(bool value) noexcept;
   void updateSpellCheck(bool value) noexcept;
   void ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept;
+  void updateKeyboardType(const std::string &keyboardType) noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
@@ -148,6 +151,14 @@ struct WindowsTextInputComponentView
   HCURSOR m_hcursor{nullptr};
   std::chrono::steady_clock::time_point m_lastClickTime{};
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
+  InputScope m_currentInputScope{IS_DEFAULT};
+
+  // Hidden proxy EDIT control for InputScope/Touch Keyboard support
+  static HWND s_proxyEditHwnd;
+  static WNDPROC s_originalProxyEditWndProc;
+  static WindowsTextInputComponentView *s_currentFocusedTextInput;
+  static void EnsureProxyEditControl(HWND parentHwnd);
+  static LRESULT CALLBACK ProxyEditWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

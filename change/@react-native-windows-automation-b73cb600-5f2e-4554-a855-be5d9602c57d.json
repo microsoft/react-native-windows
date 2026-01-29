@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix broken web links in markdown documentation files",
+  "packageName": "@react-native-windows/automation",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
