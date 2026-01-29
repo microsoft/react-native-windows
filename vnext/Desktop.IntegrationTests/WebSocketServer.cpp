@@ -1,4 +1,8 @@
 // clang-format off
+
+// C4996: 'gethostbyaddr': Use getnameinfo() or GetNameInfoW() instead
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
 #include "WebSocketServer.h"
 
 #include <boost/asio/bind_executor.hpp>

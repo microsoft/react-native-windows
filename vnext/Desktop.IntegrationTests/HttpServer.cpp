@@ -1,4 +1,8 @@
 // clang-format off
+
+// C4996: 'gethostbyaddr': Use getnameinfo() or GetNameInfoW() instead
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
 #include "HttpServer.h"
 
 #include <boost/beast/core/multi_buffer.hpp>
