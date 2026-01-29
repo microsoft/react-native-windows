@@ -54,6 +54,7 @@ struct CompositionTypeTraits<WindowsTypeTag> {
   using CompositionStretch = winrt::Windows::UI::Composition::CompositionStretch;
   using CompositionStrokeCap = winrt::Windows::UI::Composition::CompositionStrokeCap;
   using CompositionSurfaceBrush = winrt::Windows::UI::Composition::CompositionSurfaceBrush;
+  using CompositionDropShadowSourcePolicy = winrt::Windows::UI::Composition::CompositionDropShadowSourcePolicy;
   using Compositor = winrt::Windows::UI::Composition::Compositor;
   using ContainerVisual = winrt::Windows::UI::Composition::ContainerVisual;
   using CubicBezierEasingFunction = winrt::Windows::UI::Composition::CubicBezierEasingFunction;
@@ -127,6 +128,7 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
   using CompositionStretch = winrt::Microsoft::UI::Composition::CompositionStretch;
   using CompositionStrokeCap = winrt::Microsoft::UI::Composition::CompositionStrokeCap;
   using CompositionSurfaceBrush = winrt::Microsoft::UI::Composition::CompositionSurfaceBrush;
+  using CompositionDropShadowSourcePolicy = winrt::Microsoft::UI::Composition::CompositionDropShadowSourcePolicy;
   using Compositor = winrt::Microsoft::UI::Composition::Compositor;
   using ContainerVisual = winrt::Microsoft::UI::Composition::ContainerVisual;
   using CubicBezierEasingFunction = winrt::Microsoft::UI::Composition::CubicBezierEasingFunction;
@@ -222,6 +224,19 @@ struct CompDropShadow : public winrt::implements<
 
   void Color(winrt::Windows::UI::Color color) noexcept {
     m_shadow.Color(color);
+  }
+
+  void Mask(winrt::Microsoft::ReactNative::Composition::Experimental::IBrush const &mask) noexcept {
+    if (mask) {
+      m_shadow.Mask(mask.as<typename TTypeRedirects::IInnerCompositionBrush>()->InnerBrush());
+    } else {
+      m_shadow.Mask(nullptr);
+    }
+  }
+
+  void SourcePolicy(
+      winrt::Microsoft::ReactNative::Composition::Experimental::CompositionDropShadowSourcePolicy policy) noexcept {
+    m_shadow.SourcePolicy(static_cast<typename TTypeRedirects::CompositionDropShadowSourcePolicy>(policy));
   }
 
  private:
@@ -698,7 +713,7 @@ struct CompScrollerVisual : winrt::implements<
                                 IVisualInterop> {
   struct ScrollInteractionTrackerOwner
       : public winrt::implements<ScrollInteractionTrackerOwner, typename TTypeRedirects::IInteractionTrackerOwner> {
-    ScrollInteractionTrackerOwner(CompScrollerVisual *outer) : m_outer(outer){};
+    ScrollInteractionTrackerOwner(CompScrollerVisual *outer) : m_outer(outer) {};
 
     void CustomAnimationStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
@@ -1100,8 +1115,9 @@ struct CompScrollerVisual : winrt::implements<
     auto positionAnimation = compositor.CreateVector3KeyFrameAnimation();
 
     positionAnimation.InsertKeyFrame(1.0f, {x, y, 0.0f});
-    positionAnimation.Duration(std::chrono::milliseconds(
-        std::clamp(distance * s_offsetsChangeMsPerUnit, s_offsetsChangeMinMs, s_offsetsChangeMaxMs)));
+    positionAnimation.Duration(
+        std::chrono::milliseconds(
+            std::clamp(distance * s_offsetsChangeMsPerUnit, s_offsetsChangeMinMs, s_offsetsChangeMaxMs)));
 
     return positionAnimation;
   }

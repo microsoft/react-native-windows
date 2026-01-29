@@ -710,7 +710,86 @@ void ComponentView::applyShadowProps(const facebook::react::ViewProps &viewProps
       shadow.Color(theme()->Color(*viewProps.shadowColor));
   }
 
-  Visual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(shadow);
+  // Check if any border radius is set
+  auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(m_layoutMetrics, viewProps);
+  bool hasBorderRadius = borderMetrics.borderRadii.topLeft.horizontal != 0 ||
+      borderMetrics.borderRadii.topRight.horizontal != 0 || borderMetrics.borderRadii.bottomLeft.horizontal != 0 ||
+      borderMetrics.borderRadii.bottomRight.horizontal != 0 || borderMetrics.borderRadii.topLeft.vertical != 0 ||
+      borderMetrics.borderRadii.topRight.vertical != 0 || borderMetrics.borderRadii.bottomLeft.vertical != 0 ||
+      borderMetrics.borderRadii.bottomRight.vertical != 0;
+
+  if (hasBorderRadius) {
+    // When borderRadius is set, we need to create a shadow mask that follows the rounded rectangle shape.
+    // Use CompositionVisualSurface to capture the clipped visual's appearance as the shadow mask.
+    bool maskSet = false;
+
+    // Try Microsoft (WinUI3) Composition first
+    auto msCompositor =
+        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
+            m_compContext);
+    if (msCompositor) {
+      auto innerVisual =
+          winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
+              Visual());
+      if (innerVisual) {
+        // Create a VisualSurface that captures the visual (with its clip applied)
+        auto visualSurface = msCompositor.CreateVisualSurface();
+        visualSurface.SourceVisual(innerVisual);
+        visualSurface.SourceSize(
+            {m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
+             m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor});
+
+        // Create a brush from the visual surface to use as shadow mask
+        auto maskBrush = msCompositor.CreateSurfaceBrush(visualSurface);
+        maskBrush.Stretch(winrt::Microsoft::UI::Composition::CompositionStretch::Fill);
+
+        // Get the inner shadow and set the mask
+        auto innerShadow = winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::
+            InnerDropShadow(shadow);
+        if (innerShadow) {
+          innerShadow.Mask(maskBrush);
+          maskSet = true;
+        }
+      }
+    }
+
+    // Fallback to System (Windows.UI) Composition if Microsoft Composition is not available
+    if (!maskSet) {
+      auto sysCompositor =
+          winrt::Microsoft::ReactNative::Composition::Experimental::SystemCompositionContextHelper::InnerCompositor(
+              m_compContext);
+      if (sysCompositor) {
+        auto innerVisual =
+            winrt::Microsoft::ReactNative::Composition::Experimental::SystemCompositionContextHelper::InnerVisual(
+                Visual());
+        if (innerVisual) {
+          auto visualSurface = sysCompositor.CreateVisualSurface();
+          visualSurface.SourceVisual(innerVisual);
+          visualSurface.SourceSize(
+              {m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
+               m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor});
+
+          auto maskBrush = sysCompositor.CreateSurfaceBrush(visualSurface);
+          maskBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::Fill);
+
+          auto innerShadow =
+              winrt::Microsoft::ReactNative::Composition::Experimental::SystemCompositionContextHelper::InnerDropShadow(
+                  shadow);
+          if (innerShadow) {
+            innerShadow.Mask(maskBrush);
+          }
+        }
+      }
+    }
+
+    // Apply shadow to OuterVisual (which is not clipped) so the shadow can extend beyond the clip
+    OuterVisual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(shadow);
+    Visual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(nullptr);
+  } else {
+    // No border radius - apply shadow directly to Visual (original behavior)
+    Visual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(shadow);
+    OuterVisual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(nullptr);
+  }
 }
 
 void ComponentView::updateTransformProps(
@@ -731,8 +810,9 @@ void ComponentView::updateTransformProps(
         static_cast<facebook::react::BackfaceVisibility>(
             winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility::Hidden) ==
         facebook::react::BackfaceVisibility::Hidden);
-    visual.BackfaceVisibility(static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
-        newViewProps.backfaceVisibility));
+    visual.BackfaceVisibility(
+        static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
+            newViewProps.backfaceVisibility));
   }
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
@@ -1361,8 +1441,8 @@ winrt::Windows::Foundation::IInspectable ComponentView::CreateAutomationProvider
   return *m_innerAutomationProvider;
 }
 
-const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
-    &ComponentView::InnerAutomationProvider() const noexcept {
+const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider> &
+ComponentView::InnerAutomationProvider() const noexcept {
   return m_innerAutomationProvider;
 }
 
