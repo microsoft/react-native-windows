@@ -125,9 +125,6 @@
     <ProjectReference Include="..\IntegrationTests\React.Windows.IntegrationTests.vcxproj">
       <Project>{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Test\React.Windows.Test.vcxproj">
-      <Project>{cd0415c6-d908-4212-9481-49be41f58d27}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <!--
