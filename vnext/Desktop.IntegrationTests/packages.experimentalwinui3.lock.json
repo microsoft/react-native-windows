@@ -208,12 +208,6 @@
           "boost": "[1.83.0, )"
         }
       },
-      "react.windows.test": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "[1.83.0, )"
-        }
-      },
       "reactcommon": {
         "type": "Project",
         "dependencies": {
