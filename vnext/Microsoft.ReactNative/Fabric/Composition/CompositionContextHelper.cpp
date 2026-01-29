@@ -713,7 +713,7 @@ struct CompScrollerVisual : winrt::implements<
                                 IVisualInterop> {
   struct ScrollInteractionTrackerOwner
       : public winrt::implements<ScrollInteractionTrackerOwner, typename TTypeRedirects::IInteractionTrackerOwner> {
-    ScrollInteractionTrackerOwner(CompScrollerVisual *outer) : m_outer(outer) {};
+    ScrollInteractionTrackerOwner(CompScrollerVisual *outer) : m_outer(outer){};
 
     void CustomAnimationStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
@@ -1115,9 +1115,8 @@ struct CompScrollerVisual : winrt::implements<
     auto positionAnimation = compositor.CreateVector3KeyFrameAnimation();
 
     positionAnimation.InsertKeyFrame(1.0f, {x, y, 0.0f});
-    positionAnimation.Duration(
-        std::chrono::milliseconds(
-            std::clamp(distance * s_offsetsChangeMsPerUnit, s_offsetsChangeMinMs, s_offsetsChangeMaxMs)));
+    positionAnimation.Duration(std::chrono::milliseconds(
+        std::clamp(distance * s_offsetsChangeMsPerUnit, s_offsetsChangeMinMs, s_offsetsChangeMaxMs)));
 
     return positionAnimation;
   }
