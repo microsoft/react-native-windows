@@ -161,6 +161,15 @@ export class InitWindows {
 
     spinner.info(`Using template '${this.options.template}'...`);
     if (!this.templates.has(this.options.template.replace(/[\\]/g, '/'))) {
+      // Check if user is trying to use an old architecture template
+      const isOldArchTemplate = this.options.template.startsWith('old');
+      if (isOldArchTemplate) {
+        showOldArchitectureWarning();
+        throw new CodedError(
+          'InvalidTemplateName',
+          `The template '${this.options.template}' is no longer available. Please use 'cpp-app' template instead.`,
+        );
+      }
       throw new CodedError(
         'InvalidTemplateName',
         `Unable to find template '${this.options.template}'.`,
