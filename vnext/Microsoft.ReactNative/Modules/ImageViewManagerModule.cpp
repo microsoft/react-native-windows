@@ -56,9 +56,10 @@ winrt::fire_and_forget GetImageSizeAsync(
     winrt::hstring scheme{uri.SchemeName()};
     bool needsDownload = (scheme == L"http") || (scheme == L"https");
     bool inlineData = scheme == L"data";
+    bool isLocalFile = (scheme == L"file") || (scheme == L"ms-appx") || (scheme == L"ms-appdata");
 
     winrt::IRandomAccessStream memoryStream;
-    if (needsDownload) {
+    if (needsDownload || isLocalFile) {
       memoryStream = co_await GetImageStreamAsync(properties, source);
     } else if (inlineData) {
       memoryStream = co_await GetImageInlineDataAsync(source);
