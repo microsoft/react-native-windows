@@ -85,10 +85,6 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
 
   // Automation
   void ConfigureChildSiteLinkAutomation() noexcept;
-  winrt::event_token m_fragmentRootAutomationProviderRequestedToken{};
-  winrt::event_token m_parentAutomationProviderRequestedToken{};
-  winrt::event_token m_nextSiblingAutomationProviderRequestedToken{};
-  winrt::event_token m_previousSiblingAutomationProviderRequestedToken{};
 
   // Issue #15557: Event for notifying 3P components to dismiss popups when scroll begins
   winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable>>
