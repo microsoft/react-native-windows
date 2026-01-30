@@ -171,24 +171,6 @@ ContentIslandComponentView::~ContentIslandComponentView() noexcept {
     m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
     m_navigationHostDepartFocusRequestedToken = {};
   }
-  if (m_childSiteLink) {
-    if (m_fragmentRootAutomationProviderRequestedToken) {
-      m_childSiteLink.FragmentRootAutomationProviderRequested(m_fragmentRootAutomationProviderRequestedToken);
-      m_fragmentRootAutomationProviderRequestedToken = {};
-    }
-    if (m_parentAutomationProviderRequestedToken) {
-      m_childSiteLink.ParentAutomationProviderRequested(m_parentAutomationProviderRequestedToken);
-      m_parentAutomationProviderRequestedToken = {};
-    }
-    if (m_nextSiblingAutomationProviderRequestedToken) {
-      m_childSiteLink.NextSiblingAutomationProviderRequested(m_nextSiblingAutomationProviderRequestedToken);
-      m_nextSiblingAutomationProviderRequestedToken = {};
-    }
-    if (m_previousSiblingAutomationProviderRequestedToken) {
-      m_childSiteLink.PreviousSiblingAutomationProviderRequested(m_previousSiblingAutomationProviderRequestedToken);
-      m_previousSiblingAutomationProviderRequestedToken = {};
-    }
-  }
   if (m_islandToConnect) {
     m_islandToConnect.Close();
   }
