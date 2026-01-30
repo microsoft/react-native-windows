@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fix rnw-dependencies.ps1 Node.js installation failures",
+  "packageName": "react-native-windows",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "none"
+}
