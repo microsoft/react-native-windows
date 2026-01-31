@@ -364,7 +364,7 @@ void HttpServer::Start()
   Accept();
 
   m_ioThreads.reserve(m_ioThreadCount);
-  for (int i = 0; i < m_ioThreadCount; i++)
+  for (size_t i = 0; i < m_ioThreadCount; i++)
   {
     m_ioThreads.emplace_back([self = shared_from_this()]()
     {
