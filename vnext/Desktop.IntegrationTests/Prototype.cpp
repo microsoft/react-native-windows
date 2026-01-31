@@ -3,8 +3,8 @@
 #include <CppUnitTest.h>
 
 #include <Microsoft.ReactNative/ReactHost/React.h>
-
 #include <Microsoft.ReactNative/IReactDispatcher.h>
+#include <winrt/Microsoft.UI.Dispatching.h>
 
 #include <future>
 
@@ -47,12 +47,100 @@ msrn::ReactPropertyId<winrt::hstring> PlatformNameOverrideProperty() noexcept {
   return prop;
 }
 
+struct TestReactNativeHostHolder {
+  struct Options {
+    bool LoadInstance = true;
+  };
+
+  TestReactNativeHostHolder(
+      std::wstring_view jsBundle,
+      Mso::Functor<void(winrt::Microsoft::ReactNative::ReactNativeHost const &)> &&hostInitializer,
+      Options &&options = {}) noexcept;
+  ~TestReactNativeHostHolder() noexcept;
+
+  winrt::Microsoft::ReactNative::ReactNativeHost const &Host() const noexcept;
+
+ private:
+  winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
+  winrt::Microsoft::UI::Dispatching::DispatcherQueueController m_queueController{nullptr};
+};
+
+#pragma region TRNHH impl
+
+TestReactNativeHostHolder::TestReactNativeHostHolder(
+    std::wstring_view jsBundle,
+    Mso::Functor<void(winrt::Microsoft::ReactNative::ReactNativeHost const &)> &&hostInitializer,
+    Options &&options) noexcept {
+  m_host = winrt::Microsoft::ReactNative::ReactNativeHost{};
+  m_queueController = winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnDedicatedThread();
+  m_queueController.DispatcherQueue().TryEnqueue([this,
+                                                  jsBundle = std::wstring{jsBundle},
+                                                  hostInitializer = std::move(hostInitializer),
+                                                  options = std::move(options)]() noexcept {
+    //// bundle is assumed to be co-located with the test binary
+    //wchar_t testBinaryPath[MAX_PATH];
+    //TestCheck(GetModuleFileNameW(NULL, testBinaryPath, MAX_PATH) < MAX_PATH);
+    //testBinaryPath[std::wstring_view{testBinaryPath}.rfind(L"\\")] = 0;
+
+    //m_host.InstanceSettings().BundleRootPath(testBinaryPath);
+    //m_host.InstanceSettings().JavaScriptBundleFile(jsBundle);
+    //m_host.InstanceSettings().UseDeveloperSupport(false);
+    //m_host.InstanceSettings().UseFastRefresh(false);
+    //m_host.InstanceSettings().UseLiveReload(false);
+    //m_host.InstanceSettings().EnableDeveloperMenu(false);
+    //m_host.PackageProviders().Append(winrt::make<TestReactPackageProvider>());
+
+    auto settings = m_host.InstanceSettings();
+    settings.Properties().Set(PlatformNameOverrideProperty().Handle(), winrt::box_value(L"windows"));
+    settings.UseFastRefresh(true);
+    settings.JavaScriptBundleFile(L"IntegrationTests/IntegrationTestsApp");
+
+    // To properly enable fabric you need to set a compositor.
+    // Since the UTs are ui-less we can force fabric by setting a CompositionContext with a null compositor
+    //winrt::Microsoft::ReactNative::ReactPropertyBag(m_host.InstanceSettings().Properties())
+    //winrt::Microsoft::ReactNative::ReactPropertyBag(settings.Properties())
+    //    .Set(
+    //        winrt::Microsoft::ReactNative::ReactPropertyId<
+    //            winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext>{
+    //            L"ReactNative.Composition", L"CompositionContext"},
+    //        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateContext(
+    //            nullptr));
+
+    hostInitializer(m_host);
+
+    if (options.LoadInstance) {
+      m_host.LoadInstance();
+    }
+  });
+}
+
+TestReactNativeHostHolder::~TestReactNativeHostHolder() noexcept {
+  m_host.UnloadInstance().get();
+  m_queueController.ShutdownQueueAsync().get();
+}
+
+winrt::Microsoft::ReactNative::ReactNativeHost const &TestReactNativeHostHolder::Host() const noexcept {
+  return m_host;
+}
+
+#pragma endregion TRNHH impl
+
 TEST_CLASS (Prototype) {
 
   TEST_CLASS_INITIALIZE(Initialize)
   {
-    winrt::uninit_apartment();
-    winrt::init_apartment(winrt::apartment_type::multi_threaded);
+    //winrt::uninit_apartment();
+    //winrt::init_apartment(winrt::apartment_type::multi_threaded);
+  }
+
+  TEST_METHOD(Proto2)
+  {
+    //auto holder = TestReactNativeHostHolder(L"TurboModuleTests", [](msrn::ReactNativeHost const &host) noexcept {});
+
+    auto controller = winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnDedicatedThread();
+
+
+    Assert::IsTrue(true);
   }
 
   TEST_METHOD(Proto1)
