@@ -211,6 +211,7 @@ struct ViewComponentView : public ViewComponentViewT<
       facebook::react::Props::Shared const &props) noexcept override;
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept override;
   void ensureVisual() noexcept;
+  void ensureContentVisual() noexcept;
 
   static facebook::react::SharedViewProps defaultProps() noexcept;
 

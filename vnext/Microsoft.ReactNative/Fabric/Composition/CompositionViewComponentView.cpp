@@ -1074,6 +1074,14 @@ void ViewComponentView::ensureVisual() noexcept {
     OuterVisual().InsertAt(m_visual, 0);
   }
 
+  // NOTE: m_contentVisual is now created lazily in ensureContentVisual()
+  // It will only be created when:
+  // 1. Children need to be mounted (VisualToMountChildrenInto is called)
+  // 2. overflow:hidden is set and clipping needs to be applied
+}
+
+void ViewComponentView::ensureContentVisual() noexcept {
+  ensureVisual();
   // Create m_contentVisual as a child of m_visual if not already created
   if (!m_contentVisual) {
     m_contentVisual = m_compContext.CreateSpriteVisual();
@@ -1093,8 +1101,8 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 ViewComponentView::VisualToMountChildrenInto() noexcept {
   if (m_builder && m_builder->VisualToMountChildrenIntoHandler())
     return m_builder->VisualToMountChildrenIntoHandler()(*this);
-  // Mount children into m_contentVisual (ensureVisual should have been called before this)
-  ensureVisual();
+  // Mount children into m_contentVisual - create it lazily when children are mounted
+  ensureContentVisual();
   return m_contentVisual ? m_contentVisual : Visual();
 }
 
@@ -1104,7 +1112,7 @@ void ViewComponentView::MountChildComponentView(
   base_type::MountChildComponentView(childComponentView, index);
 
   indexOffsetForBorder(index);
-  ensureVisual();
+  ensureContentVisual(); // Create m_contentVisual lazily when mounting children
 
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
     auto visualIndex = index;
@@ -1343,6 +1351,11 @@ void ViewComponentView::updateLayoutMetrics(
   Visual().Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+
+  // For overflow:hidden, we need m_contentVisual for clipping - create it lazily
+  if (m_props && m_props->getClipsContentToBounds() && !m_contentVisual) {
+    ensureContentVisual();
+  }
 
   // Size and offset m_contentVisual to match the content area, excluding borders
   if (m_contentVisual && m_props) {
