@@ -30,20 +30,33 @@ using namespace xaml::Media::Imaging;
 
 namespace Microsoft::ReactNative {
 
+static const char *ERROR_INVALID_URI = "E_INVALID_URI";
+static const char *ERROR_GET_SIZE_FAILURE = "E_GET_SIZE_FAILURE";
+
 winrt::fire_and_forget GetImageSizeAsync(
     const winrt::Microsoft::ReactNative::IReactPropertyBag &properties,
     std::string uriString,
     winrt::Microsoft::ReactNative::JSValue &&headers,
     Mso::Functor<void(int32_t width, int32_t height)> successCallback,
-    Mso::Functor<void()> errorCallback
+    Mso::Functor<void(const char *errorCode, std::string errorMessage)> errorCallback
 #ifdef USE_FABRIC
     ,
     bool useFabric
 #endif // USE_FABRIC
 ) {
   bool succeeded{false};
+  const char *errorCode = ERROR_GET_SIZE_FAILURE;
+  std::string errorMessage;
 
   try {
+    // Validate URI is not empty
+    if (uriString.empty()) {
+      errorCode = ERROR_INVALID_URI;
+      errorMessage = "Cannot get the size of an image for an empty URI";
+      errorCallback(errorCode, errorMessage);
+      co_return;
+    }
+
     ReactImageSource source;
     source.uri = uriString;
     if (!headers.IsNull()) {
@@ -92,11 +105,17 @@ winrt::fire_and_forget GetImageSizeAsync(
       }
     }
 #endif // USE_FABRIC
-  } catch (winrt::hresult_error const &) {
+  } catch (winrt::hresult_error const &e) {
+    errorMessage = "Failed to get image size: " +
+                   Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring(e.message())) + " for URI: " + uriString;
   }
 
-  if (!succeeded)
-    errorCallback();
+  if (!succeeded) {
+    if (errorMessage.empty()) {
+      errorMessage = "Failed to get image size for URI: " + uriString;
+    }
+    errorCallback(errorCode, errorMessage);
+  }
 
   co_return;
 }
@@ -115,7 +134,15 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
             [result](double width, double height) noexcept {
               result.Resolve(std::vector<double>{width, height});
             },
-            [result]() noexcept { result.Reject("Failed"); }
+            [context, result](const char *errorCode, std::string errorMessage) noexcept {
+              // Log to Metro console so developers see the actual error
+              context.CallJSFunction(
+                  L"RCTLog",
+                  L"logToConsole",
+                  L"error",
+                  Microsoft::Common::Unicode::Utf8ToUtf16("[" + std::string(errorCode) + "] " + errorMessage));
+              result.Reject(React::ReactError{errorCode, errorMessage});
+            }
 #ifdef USE_FABRIC
             ,
             IsFabricEnabled(context.Properties().Handle())
@@ -140,7 +167,15 @@ void ImageLoader::getSizeWithHeaders(
         [result](double width, double height) noexcept {
           result.Resolve(Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType{width, height});
         },
-        [result]() noexcept { result.Reject("Failed"); }
+        [context, result](const char *errorCode, std::string errorMessage) noexcept {
+          // Log to Metro console so developers see the actual error
+          context.CallJSFunction(
+              L"RCTLog",
+              L"logToConsole",
+              L"error",
+              Microsoft::Common::Unicode::Utf8ToUtf16("[" + std::string(errorCode) + "] " + errorMessage));
+          result.Reject(React::ReactError{errorCode, errorMessage});
+        }
 #ifdef USE_FABRIC
         ,
         IsFabricEnabled(context.Properties().Handle())
