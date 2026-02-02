@@ -346,6 +346,7 @@ extends:
             # Make symbols available through http://symweb.
             - task: PublishSymbols@2
               displayName: Publish symbols
+              enabled: true
               inputs:
                 SearchPattern: vnext/target/**/*.pdb
                 SymbolServerType: TeamServices
@@ -435,6 +436,7 @@ extends:
           # Symbol Publishing for Work Item 59264834 - MSRC Compliance
           - task: PublishSymbols@2
             displayName: 'Publish Symbols to Microsoft Symbol Server'
+            enabled: true
             condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
             inputs:
               SymbolsFolder: '$(System.DefaultWorkingDirectory)\NugetRoot'
