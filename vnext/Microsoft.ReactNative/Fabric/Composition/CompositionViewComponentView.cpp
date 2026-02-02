@@ -729,8 +729,9 @@ void ComponentView::updateTransformProps(
         static_cast<facebook::react::BackfaceVisibility>(
             winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility::Hidden) ==
         facebook::react::BackfaceVisibility::Hidden);
-    visual.BackfaceVisibility(static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
-        newViewProps.backfaceVisibility));
+    visual.BackfaceVisibility(
+        static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
+            newViewProps.backfaceVisibility));
   }
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
@@ -1083,7 +1084,8 @@ void ViewComponentView::ensureVisual() noexcept {
 void ViewComponentView::ensureContentVisual() noexcept {
   ensureVisual();
   // Create m_contentVisual as a child of m_visual if not already created
-  if (!m_contentVisual) {
+  // Only create it if we have a standard visual (not a custom builder visual)
+  if (!m_contentVisual && !m_builder) {
     m_contentVisual = m_compContext.CreateSpriteVisual();
     m_visual.InsertAt(m_contentVisual, 0); // Insert at index 0 so it's below border visuals
   }
@@ -1445,8 +1447,8 @@ winrt::Windows::Foundation::IInspectable ComponentView::CreateAutomationProvider
   return *m_innerAutomationProvider;
 }
 
-const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
-    &ComponentView::InnerAutomationProvider() const noexcept {
+const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider> &
+ComponentView::InnerAutomationProvider() const noexcept {
   return m_innerAutomationProvider;
 }
 
