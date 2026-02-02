@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.82.0-rc.0",
+  "baseVersion": "0.82.1",
   "overrides": [
     {
       "type": "derived",
@@ -231,7 +231,7 @@
       "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "88aa62f2d86a810631bcbc871f45c28c53fceec7"
+      "baseHash": "85e7ef1b905f25616471b5e1c61a191fe5879176"
     },
     {
       "type": "derived",
@@ -413,7 +413,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Switch/Switch.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Switch/Switch.js",
-      "baseHash": "c470803da7ac52c64c0a4745a4b41f1af0949a30"
+      "baseHash": "132a05e2a7c63a4fe99973501013afe4b2794390"
     },
     {
       "type": "derived",
@@ -699,6 +699,13 @@
       "file": "src-win/src/private/specs_DEPRECATED/components/RCTModalHostViewNativeComponent.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/components/RCTModalHostViewNativeComponent.js",
       "baseHash": "6de61fb2342d9cdfad73a28c8d9cf39d2097a34b"
+    },
+    {
+      "type": "patch",
+      "file": "src-win/src/private/specs_DEPRECATED/components/SwitchNativeComponent.js",
+      "baseFile": "packages/react-native/src/private/specs_DEPRECATED/components/SwitchNativeComponent.js",
+      "baseHash": "ef274b26bb96c786b0137ca34561d4c53ab37faa",
+      "issue": 15582
     },
     {
       "type": "platform",

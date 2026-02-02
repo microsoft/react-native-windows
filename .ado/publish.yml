@@ -105,6 +105,8 @@ extends:
     sdl:
       credscan:
           suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
+      binskim:
+          break: false  # BA2007 is suppressed via .gdn/.gdnsuppress - don't fail build
       spotBugs:
           enabled: false # We don't have any java, but random packages in node_modules do
     stages:
@@ -203,8 +205,10 @@ extends:
           - script: dir /s "$(Pipeline.Workspace)\published-packages"
             displayName: Show npm packages before ESRP release
 
+          # TODO: Re-enable after fixing publishing issues
           - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
             displayName: 'ESRP Release to npmjs.com'
+            enabled: false
             condition: and(succeeded(), ne(variables['NpmDistTag'], ''))
             inputs:
               connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
@@ -344,8 +348,10 @@ extends:
             - template: .ado/templates/component-governance.yml@self
 
             # Make symbols available through http://symweb.
+            # TODO: Re-enable after fixing symbol publishing authentication for 0.82 release
             - task: PublishSymbols@2
               displayName: Publish symbols
+              enabled: false
               inputs:
                 SearchPattern: vnext/target/**/*.pdb
                 SymbolServerType: TeamServices
@@ -434,8 +440,10 @@ extends:
                   configuration: Debug
 
           # Symbol Publishing for Work Item 59264834 - MSRC Compliance
+          # TODO: Re-enable after fixing symbol publishing authentication
           - task: PublishSymbols@2
             displayName: 'Publish Symbols to Microsoft Symbol Server'
+            enabled: false
             condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
             inputs:
               SymbolsFolder: '$(System.DefaultWorkingDirectory)\NugetRoot'

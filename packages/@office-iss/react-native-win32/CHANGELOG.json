@@ -2,6 +2,36 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 27 Jan 2026 19:51:45 GMT",
+      "version": "0.82.0-preview.3",
+      "tag": "@office-iss/react-native-win32_v0.82.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "457a9edc7fc189514b7ac1129911b3deceb0fce8",
+            "comment": "Fix TouchableWin32 and LogBox"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 24 Jan 2026 16:43:28 GMT",
+      "version": "0.82.0-preview.2",
+      "tag": "@office-iss/react-native-win32_v0.82.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "9486be369921a08663e2b5227dda13cbc7ad5388",
+            "comment": "integrate 0.82.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Jan 2026 13:07:17 GMT",
       "version": "0.82.0-preview.1",
       "tag": "@office-iss/react-native-win32_v0.82.0-preview.1",

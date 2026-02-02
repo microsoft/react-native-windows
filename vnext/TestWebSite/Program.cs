@@ -85,6 +85,10 @@ app.MapGet(
    Microsoft.Office.Test.OfficeJsTests.Issue4144)
   .RequireCors(originPolicyName);
 
+app.MapPost(
+  "/officedev/office-js/issues/5869",
+   Microsoft.Office.Test.OfficeJsTests.Issue5869);
+
 #endregion Request Mappings
 
 await app.RunAsync();

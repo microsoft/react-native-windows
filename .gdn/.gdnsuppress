@@ -1,11 +1,12 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "suppressions": [
     {
       "tool": "binskim",
       "ruleId": "BA2007",
       "justification": "Warning 4996 (deprecated APIs) is disabled for React Native upstream code that uses deprecated functions. This is a known technical debt item tracked by the team.",
-      "expirationDate": "2027-01-22"
+      "expirationDate": "2027-01-22",
+      "matchKind": "Full"
     }
   ]
 }

@@ -1,8 +1,41 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 22 Jan 2026 10:16:24 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 26 Jan 2026 05:38:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.8
+
+Mon, 26 Jan 2026 05:38:32 GMT
+
+### Changes
+
+- make comments less verbose in ParagrapghComponentview for selectable (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.82.0-preview.7
+
+Sun, 25 Jan 2026 13:58:35 GMT
+
+### Changes
+
+- cleanup legacy filters (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.82.0-preview.6
+
+Sun, 25 Jan 2026 08:57:18 GMT
+
+### Changes
+
+- Add multipart/form-data test endpoint (julio.rocha@microsoft.com)
+
+## 0.82.0-preview.5
+
+Sat, 24 Jan 2026 16:43:28 GMT
+
+### Changes
+
+- Fix selectable text not working inside ScrollView (74712637+iamAbhi-916@users.noreply.github.com)
+- integrate 0.82.1 (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.82.0-preview.4
 

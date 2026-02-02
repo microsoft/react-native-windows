@@ -49,6 +49,11 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   static facebook::react::SharedViewProps defaultProps() noexcept;
   const facebook::react::ParagraphProps &paragraphProps() const noexcept;
 
+  facebook::react::Tag hitTest(
+      facebook::react::Point pt,
+      facebook::react::Point &localPt,
+      bool ignorePointerEvents = false) const noexcept override;
+
   // Returns true when text is selectable
   bool focusable() const noexcept override;
 
@@ -90,16 +95,12 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   std::optional<int32_t> GetClampedTextPosition(facebook::react::Point pt) noexcept;
   std::string GetSelectedText() const noexcept;
 
-  // Copies currently selected text to the system clipboard
   void CopySelectionToClipboard() noexcept;
 
-  // Selects the word at the given character position
   void SelectWordAtPosition(int32_t charPosition) noexcept;
 
-  // Shows a context menu with Copy/Select All options on right-click
   void ShowContextMenu() noexcept;
 
-  // m_selectionStart <= m_selectionEnd
   void SetSelection(int32_t start, int32_t end) noexcept;
 
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
