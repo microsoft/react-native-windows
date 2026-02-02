@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 02 Feb 2026 11:34:36 GMT",
+      "version": "0.82.0-preview.9",
+      "tag": "react-native-windows_v0.82.0-preview.9",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d33fd3a3891e5f03e884dc47c80f92bedb4e086f",
+            "comment": "Use automationoption as frameworkbased for childsite"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Jan 2026 18:10:35 GMT",
       "version": "0.82.0-preview.8",
       "tag": "react-native-windows_v0.82.0-preview.8",

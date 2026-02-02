@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update warning deprecating paper",
-  "packageName": "@react-native-windows/cli",
-  "email": "hmalothu@microsoft.com",
-  "dependentChangeType": "none"
-}
