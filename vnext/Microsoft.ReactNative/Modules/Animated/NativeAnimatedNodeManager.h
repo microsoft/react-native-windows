@@ -7,6 +7,7 @@
 #include <IReactInstance.h>
 #include "AnimatedNode.h"
 #include "AnimationDriver.h"
+#include "ColorAnimatedNode.h"
 #include "EventAnimationDriver.h"
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
@@ -95,6 +96,7 @@ class NativeAnimatedNodeManager {
   StyleAnimatedNode *GetStyleAnimatedNode(int64_t tag);
   TransformAnimatedNode *GetTransformAnimatedNode(int64_t tag);
   TrackingAnimatedNode *GetTrackingAnimatedNode(int64_t tag);
+  ColorAnimatedNode *GetColorAnimatedNode(int64_t tag);
 
   void RemoveActiveAnimation(int64_t tag);
   void RemoveStoppedAnimation(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager);
@@ -119,6 +121,7 @@ class NativeAnimatedNodeManager {
   std::unordered_map<int64_t, std::unique_ptr<StyleAnimatedNode>> m_styleNodes{};
   std::unordered_map<int64_t, std::unique_ptr<TransformAnimatedNode>> m_transformNodes{};
   std::unordered_map<int64_t, std::unique_ptr<TrackingAnimatedNode>> m_trackingNodes{};
+  std::unordered_map<int64_t, std::unique_ptr<ColorAnimatedNode>> m_colorNodes{};
   std::unordered_map<std::tuple<int64_t, std::string>, std::vector<std::unique_ptr<EventAnimationDriver>>>
       m_eventDrivers{};
   std::unordered_map<int64_t, std::shared_ptr<AnimationDriver>> m_activeAnimations{};

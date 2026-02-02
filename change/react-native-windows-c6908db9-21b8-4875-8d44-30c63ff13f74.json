@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds color animated nodes to tick-driven animations",
+  "packageName": "react-native-windows",
+  "email": "ericroz@meta.com",
+  "dependentChangeType": "patch"
+}
