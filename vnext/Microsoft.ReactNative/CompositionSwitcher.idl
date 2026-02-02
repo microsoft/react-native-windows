@@ -45,9 +45,16 @@ enum SnapPointsAlignment {
   void Opacity(Single value);
   void BlurRadius(Single value);
   void Color(Windows.UI.Color value);
+  void Mask(IBrush mask);
+  void SourcePolicy(CompositionDropShadowSourcePolicy policy);
 }
 
-    [webhosthidden][experimental] interface IVisual {
+    [webhosthidden][experimental] enum CompositionDropShadowSourcePolicy {
+      Default = 0,
+      InheritedOnly = 1
+    };
+
+[webhosthidden][experimental] interface IVisual {
   void InsertAt(IVisual visual, Int32 index);
   void Remove(IVisual visual);
   IVisual GetAt(UInt32 index);
@@ -72,14 +79,14 @@ enum SnapPointsAlignment {
   void AnimationClass(AnimationClass value);
 }
 
-[webhosthidden][experimental] interface ISpriteVisual
+    [webhosthidden][experimental] interface ISpriteVisual
   requires IVisual
 {
   void Brush(IBrush brush);
   void Shadow(IDropShadow shadow);
 }
 
-    [webhosthidden][experimental] interface IRoundedRectangleVisual
+[webhosthidden][experimental] interface IRoundedRectangleVisual
   requires IVisual
 {
   void Brush(IBrush brush);
@@ -88,13 +95,13 @@ enum SnapPointsAlignment {
   void StrokeThickness(Single value);
 }
 
-[webhosthidden][experimental] interface IScrollPositionChangedArgs {
+    [webhosthidden][experimental] interface IScrollPositionChangedArgs {
   Windows.Foundation.Numerics.Vector2 Position {
     get;
   };
 }
 
-    [webhosthidden][experimental] interface IScrollVisual
+[webhosthidden][experimental] interface IScrollVisual
   requires IVisual
 {
   void Brush(IBrush brush);
@@ -122,7 +129,7 @@ enum SnapPointsAlignment {
   void SnapToAlignment(SnapPointsAlignment alignment);
 }
 
-[webhosthidden][experimental] interface IActivityVisual
+    [webhosthidden][experimental] interface IActivityVisual
   requires IVisual
 {
   void Size(Single value);
@@ -131,7 +138,7 @@ enum SnapPointsAlignment {
   void StopAnimation();
 }
 
-    [webhosthidden][experimental] interface ICaretVisual {
+[webhosthidden][experimental] interface ICaretVisual {
   IVisual InnerVisual {
     get;
   };
@@ -144,7 +151,7 @@ enum SnapPointsAlignment {
   void Brush(IBrush brush);
 }
 
-[webhosthidden][experimental] interface IFocusVisual {
+    [webhosthidden][experimental] interface IFocusVisual {
   IVisual InnerVisual {
     get;
   };
@@ -158,7 +165,7 @@ enum SnapPointsAlignment {
   };
 }
 
-    [webhosthidden][experimental] interface ICompositionContext {
+[webhosthidden][experimental] interface ICompositionContext {
   ISpriteVisual CreateSpriteVisual();
   IScrollVisual CreateScrollerVisual();
   IRoundedRectangleVisual CreateRoundedRectangleVisual();
