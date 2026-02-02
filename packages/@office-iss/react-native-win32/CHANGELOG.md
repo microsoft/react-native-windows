@@ -1,8 +1,24 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Wed, 14 Jan 2026 13:07:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 27 Jan 2026 19:51:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.3
+
+Tue, 27 Jan 2026 19:51:45 GMT
+
+### Changes
+
+- Fix TouchableWin32 and LogBox (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.82.0-preview.2
+
+Sat, 24 Jan 2026 16:43:28 GMT
+
+### Changes
+
+- integrate 0.82.1 (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.82.0-preview.1
 

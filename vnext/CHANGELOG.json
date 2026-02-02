@@ -2,6 +2,102 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 02 Feb 2026 11:34:36 GMT",
+      "version": "0.82.0-preview.9",
+      "tag": "react-native-windows_v0.82.0-preview.9",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d33fd3a3891e5f03e884dc47c80f92bedb4e086f",
+            "comment": "Use automationoption as frameworkbased for childsite"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 27 Jan 2026 18:10:35 GMT",
+      "version": "0.82.0-preview.8",
+      "tag": "react-native-windows_v0.82.0-preview.8",
+      "comments": {
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1255965fd40f751ba652cfea2e7df5dda1d47a32",
+            "comment": "Fix rnw-dependencies.ps1 Node.js installation failures"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 26 Jan 2026 05:38:32 GMT",
+      "version": "0.82.0-preview.8",
+      "tag": "react-native-windows_v0.82.0-preview.8",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0b0dae325f9d903a2303df7268888403c3d21ad5",
+            "comment": "make comments less verbose in ParagrapghComponentview for selectable"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 25 Jan 2026 13:58:35 GMT",
+      "version": "0.82.0-preview.7",
+      "tag": "react-native-windows_v0.82.0-preview.7",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f2e1f06e74a3ae1719f62f057eb02eaa588d4b97",
+            "comment": "cleanup legacy filters"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 25 Jan 2026 08:57:18 GMT",
+      "version": "0.82.0-preview.6",
+      "tag": "react-native-windows_v0.82.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "af291af749b98ce700854a3b88f44a4910582ea3",
+            "comment": "Add multipart/form-data test endpoint"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 24 Jan 2026 16:43:28 GMT",
+      "version": "0.82.0-preview.5",
+      "tag": "react-native-windows_v0.82.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cff8b32ff255fde207fc11cffba107aec8195c63",
+            "comment": "Fix selectable text not working inside ScrollView"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9486be369921a08663e2b5227dda13cbc7ad5388",
+            "comment": "integrate 0.82.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jan 2026 10:16:24 GMT",
       "version": "0.82.0-preview.4",
       "tag": "react-native-windows_v0.82.0-preview.4",

@@ -105,6 +105,8 @@ extends:
     sdl:
       credscan:
           suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
+      binskim:
+          break: false  # BA2007 is suppressed via .gdn/.gdnsuppress - don't fail build
       spotBugs:
           enabled: false # We don't have any java, but random packages in node_modules do
     stages:
@@ -203,8 +205,10 @@ extends:
           - script: dir /s "$(Pipeline.Workspace)\published-packages"
             displayName: Show npm packages before ESRP release
 
+          # TODO: Re-enable after fixing publishing issues
           - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
             displayName: 'ESRP Release to npmjs.com'
+            enabled: false
             condition: and(succeeded(), ne(variables['NpmDistTag'], ''))
             inputs:
               connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
@@ -350,6 +354,7 @@ extends:
               inputs:
                 SearchPattern: vnext/target/**/*.pdb
                 SymbolServerType: TeamServices
+                Pat: $(System.AccessToken)
 
             templateContext:
               sdl:
@@ -447,6 +452,7 @@ extends:
               SymbolsArtifactName: 'ReactNativeWindows-Symbols'
               DetailedLog: true
               TreatNotIndexedAsWarning: false
+              Pat: $(System.AccessToken)
 
           templateContext:
             sdl:

@@ -2256,8 +2256,7 @@ exports[`snapshotAllPages Animated 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           }
         }
         testID="toggle-use-native-driver"
@@ -3295,8 +3294,7 @@ exports[`snapshotAllPages Animated 2`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           }
         }
         testID="toggle-use-native-driver"
@@ -3494,8 +3492,7 @@ exports[`snapshotAllPages Animated 3`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           }
         }
         testID="toggle-use-native-driver"
@@ -3635,8 +3632,7 @@ exports[`snapshotAllPages Animated 4`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           }
         }
         testID="toggle-use-native-driver"
@@ -4990,8 +4986,7 @@ exports[`snapshotAllPages Animated 5`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           }
         }
         testID="toggle-use-native-driver"
@@ -6087,8 +6082,7 @@ exports[`snapshotAllPages Animated 7`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           }
         }
         testID="toggle-use-native-driver"
@@ -6224,8 +6218,7 @@ exports[`snapshotAllPages Animated 8`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           }
         }
         testID="toggle-use-native-driver"
@@ -6566,8 +6559,7 @@ exports[`snapshotAllPages Animated 9`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           }
         }
         testID="toggle-use-native-driver"
@@ -6707,8 +6699,7 @@ exports[`snapshotAllPages Animated 10`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           }
         }
         testID="toggle-use-native-driver"
@@ -7602,8 +7593,7 @@ exports[`snapshotAllPages Animated 14`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       testID="toggle-use-native-driver"
@@ -11754,8 +11744,7 @@ exports[`snapshotAllPages Display:none Style 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   {
-                    "height": 31,
-                    "width": 51,
+                    "alignSelf": "flex-start",
                   }
                 }
                 testID="toggle-display:none"
@@ -28812,8 +28801,7 @@ exports[`snapshotAllPages LegacyControlStyleTest 1`] = `
       style={
         [
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           },
           {
             "backgroundColor": "rgba(225,225,225,0.2)",
@@ -30818,8 +30806,7 @@ exports[`snapshotAllPages Modal 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={false}
@@ -30861,8 +30848,7 @@ exports[`snapshotAllPages Modal 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={false}
@@ -30904,8 +30890,7 @@ exports[`snapshotAllPages Modal 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={false}
@@ -30947,8 +30932,7 @@ exports[`snapshotAllPages Modal 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={false}
@@ -31349,8 +31333,7 @@ exports[`snapshotAllPages Modal 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           }
         }
         value={false}
@@ -34152,8 +34135,7 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={false}
@@ -34189,8 +34171,7 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={false}
@@ -34245,6 +34226,480 @@ exports[`snapshotAllPages PanResponder Sample 1`] = `
       ]
     }
   />
+</View>
+`;
+
+exports[`snapshotAllPages Performance API Examples 1`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Click to update memory info
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      jsHeapSizeLimit: undefined bytes
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      totalJSHeapSize: undefined bytes
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      usedJSHeapSize: undefined bytes
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance API Examples 2`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Click to update React startup timing
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      startTime: undefined ms
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      initializeRuntimeStart: undefined ms
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      executeJavaScriptBundleEntryPointStart: undefined ms
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      endTime: undefined ms
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance API Examples 3`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Click to log some marks and measures
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View />
+</View>
+`;
+
+exports[`snapshotAllPages Performance API Examples 4`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Click to force a slow event (clicked 0 times)
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View />
 </View>
 `;
 
@@ -38861,8 +39316,7 @@ exports[`snapshotAllPages Pressable 15`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={false}
@@ -40366,8 +40820,7 @@ exports[`snapshotAllPages RTLExample 1`] = `
         style={
           [
             {
-              "height": 31,
-              "width": 51,
+              "alignSelf": "flex-start",
             },
             {
               "position": "absolute",
@@ -66901,8 +67354,7 @@ exports[`snapshotAllPages Switch 1`] = `
       onTintColor="yellow"
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       testID="on-off-initial-off"
@@ -66942,8 +67394,7 @@ exports[`snapshotAllPages Switch 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       testID="on-off-initial-on"
@@ -66988,8 +67439,7 @@ exports[`snapshotAllPages Switch 2`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       testID="disabled-initial-off"
@@ -67029,8 +67479,7 @@ exports[`snapshotAllPages Switch 2`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       testID="disabled-initial-on"
@@ -67073,8 +67522,7 @@ exports[`snapshotAllPages Switch 3`] = `
       style={
         [
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           },
           {
             "marginBottom": 10,
@@ -67094,8 +67542,7 @@ exports[`snapshotAllPages Switch 3`] = `
       style={
         [
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           },
           {
             "marginBottom": 10,
@@ -67130,8 +67577,7 @@ exports[`snapshotAllPages Switch 3`] = `
       style={
         [
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           },
           {
             "marginBottom": 10,
@@ -67151,8 +67597,7 @@ exports[`snapshotAllPages Switch 3`] = `
       style={
         [
           {
-            "height": 31,
-            "width": 51,
+            "alignSelf": "flex-start",
           },
           {
             "marginBottom": 10,
@@ -67189,8 +67634,7 @@ exports[`snapshotAllPages Switch 4`] = `
   onStartShouldSetResponder={[Function]}
   style={
     {
-      "height": 31,
-      "width": 51,
+      "alignSelf": "flex-start",
     }
   }
   testID="controlled-switch"
@@ -67211,8 +67655,7 @@ exports[`snapshotAllPages Switch 5`] = `
     style={
       [
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         },
         {
           "marginBottom": 10,
@@ -67234,8 +67677,7 @@ exports[`snapshotAllPages Switch 5`] = `
     onTintColor="#00ff00"
     style={
       {
-        "height": 31,
-        "width": 51,
+        "alignSelf": "flex-start",
       }
     }
     testID="initial-true-switch"
@@ -67257,8 +67699,7 @@ exports[`snapshotAllPages Switch 6`] = `
     onStartShouldSetResponder={[Function]}
     style={
       {
-        "height": 31,
-        "width": 51,
+        "alignSelf": "flex-start",
       }
     }
     value={false}
@@ -67278,8 +67719,7 @@ exports[`snapshotAllPages Switch 7`] = `
     style={
       [
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         },
         {
           "backgroundColor": "blue",
@@ -67321,8 +67761,7 @@ exports[`snapshotAllPages Switch 8`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={true}
@@ -67341,8 +67780,7 @@ exports[`snapshotAllPages Switch 8`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={true}
@@ -67372,8 +67810,7 @@ exports[`snapshotAllPages Switch 8`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={false}
@@ -67392,8 +67829,7 @@ exports[`snapshotAllPages Switch 8`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={true}
@@ -79719,8 +80155,7 @@ exports[`snapshotAllPages TextInput 21`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={true}
@@ -79746,8 +80181,7 @@ exports[`snapshotAllPages TextInput 21`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={true}
@@ -81576,8 +82010,7 @@ exports[`snapshotAllPages TextInput 37`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={true}
@@ -81594,8 +82027,7 @@ exports[`snapshotAllPages TextInput 37`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={true}
@@ -82449,8 +82881,7 @@ exports[`snapshotAllPages TextInput 46`] = `
     onStartShouldSetResponder={[Function]}
     style={
       {
-        "height": 31,
-        "width": 51,
+        "alignSelf": "flex-start",
       }
     }
     value={true}
@@ -90480,8 +90911,7 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={false}
@@ -90518,8 +90948,7 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={true}
@@ -90556,8 +90985,7 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={false}
@@ -90594,8 +91022,7 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "height": 31,
-          "width": 51,
+          "alignSelf": "flex-start",
         }
       }
       value={false}
