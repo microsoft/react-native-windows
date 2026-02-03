@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable Fragment‑Based Automation for ChildSite Without XAML Islands",
+  "packageName": "react-native-windows",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
