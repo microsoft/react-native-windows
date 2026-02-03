@@ -47,6 +47,7 @@ describe('visitAllPages', () => {
     if (
       component === 'Flyout' ||
       component === 'XAML' ||
+      component === 'Xaml WinUI3 (Experimental, for Fabric)' ||
       component === 'SwipeableCard'
     ) {
       console.log('Skipping: ' + component);
