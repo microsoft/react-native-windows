@@ -438,7 +438,7 @@ module.exports = {
   },
   get TextWin32(): any {
     // Legacy export
-    return require('./Libraries/Text/Text');
+    return require('./Libraries/Text/Text').default;
   },
   get ButtonWin32(): any {
     return require('./Libraries/Components/Button/ButtonWin32').ButtonWin32;
