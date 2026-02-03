@@ -171,24 +171,6 @@ ContentIslandComponentView::~ContentIslandComponentView() noexcept {
     m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
     m_navigationHostDepartFocusRequestedToken = {};
   }
-  if (m_childSiteLink) {
-    if (m_fragmentRootAutomationProviderRequestedToken) {
-      m_childSiteLink.FragmentRootAutomationProviderRequested(m_fragmentRootAutomationProviderRequestedToken);
-      m_fragmentRootAutomationProviderRequestedToken = {};
-    }
-    if (m_parentAutomationProviderRequestedToken) {
-      m_childSiteLink.ParentAutomationProviderRequested(m_parentAutomationProviderRequestedToken);
-      m_parentAutomationProviderRequestedToken = {};
-    }
-    if (m_nextSiblingAutomationProviderRequestedToken) {
-      m_childSiteLink.NextSiblingAutomationProviderRequested(m_nextSiblingAutomationProviderRequestedToken);
-      m_nextSiblingAutomationProviderRequestedToken = {};
-    }
-    if (m_previousSiblingAutomationProviderRequestedToken) {
-      m_childSiteLink.PreviousSiblingAutomationProviderRequested(m_previousSiblingAutomationProviderRequestedToken);
-      m_previousSiblingAutomationProviderRequestedToken = {};
-    }
-  }
   if (m_islandToConnect) {
     m_islandToConnect.Close();
   }
@@ -230,56 +212,13 @@ void ContentIslandComponentView::prepareForRecycle() noexcept {
 }
 
 void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
-  // This automation mode must be set before connecting the child ContentIsland.
-  // It puts the child content into a mode where it won't own its own framework root.  Instead, the child island's
-  // automation peers will use the same framework root as the automation peer of this ContentIslandComponentView.
-  m_childSiteLink.AutomationOption(winrt::Microsoft::UI::Content::ContentAutomationOptions::FragmentBased);
+  // Use FrameworkBased to let the XamlIsland manage its own framework-level accessibility tree
+  // and raise focus events naturally. This tells the system that the child island has its own
+  // framework (WinUI/XAML) that manages automation.
+  m_childSiteLink.AutomationOption(winrt::Microsoft::UI::Content::ContentAutomationOptions::FrameworkBased);
 
-  // These events are raised in response to the child ContentIsland asking for providers.
-  // For example, the ContentIsland.FragmentRootAutomationProvider property will return
-  // the provider we provide here in FragmentRootAutomationProviderRequested.
-
-  // We capture "this" as a raw pointer because ContentIslandComponentView doesn't currently support weak ptrs.
-  // It's safe because we disconnect these events in the destructor.
-
-  m_fragmentRootAutomationProviderRequestedToken = m_childSiteLink.FragmentRootAutomationProviderRequested(
-      [this](
-          const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-          const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-        // The child island's fragment tree doesn't have its own fragment root.
-        // Here's how we can provide the correct fragment root to the child's UIA logic.
-        winrt::com_ptr<IRawElementProviderFragmentRoot> fragmentRoot{nullptr};
-        auto uiaProvider = this->EnsureUiaProvider();
-        uiaProvider.as<IRawElementProviderFragment>()->get_FragmentRoot(fragmentRoot.put());
-        args.AutomationProvider(fragmentRoot.as<IInspectable>());
-        args.Handled(true);
-      });
-
-  m_parentAutomationProviderRequestedToken = m_childSiteLink.ParentAutomationProviderRequested(
-      [this](
-          const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-          const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-        auto uiaProvider = this->EnsureUiaProvider();
-        args.AutomationProvider(uiaProvider);
-        args.Handled(true);
-      });
-
-  m_nextSiblingAutomationProviderRequestedToken = m_childSiteLink.NextSiblingAutomationProviderRequested(
-      [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-         const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-        // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
-        args.AutomationProvider(nullptr);
-        args.Handled(true);
-      });
-
-  m_previousSiblingAutomationProviderRequestedToken = m_childSiteLink.PreviousSiblingAutomationProviderRequested(
-      [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-         const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-        // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
-        args.AutomationProvider(nullptr);
-        args.Handled(true);
-      });
-
+  // When using FrameworkBased mode, we don't register automation callbacks - let the XamlIsland handle its own UIA
+  // tree.
   if (m_innerAutomationProvider) {
     m_innerAutomationProvider->SetChildSiteLink(m_childSiteLink);
   }

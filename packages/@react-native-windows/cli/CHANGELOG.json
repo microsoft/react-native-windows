@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 02 Feb 2026 11:34:36 GMT",
+      "version": "0.82.0-preview.3",
+      "tag": "@react-native-windows/cli_v0.82.0-preview.3",
+      "comments": {
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "bbd2c207c87146675a8d2b3bb91825a65ae1ddeb",
+            "comment": "Update warning deprecating paper"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Jan 2026 10:16:24 GMT",
       "version": "0.82.0-preview.3",
       "tag": "@react-native-windows/cli_v0.82.0-preview.3",
