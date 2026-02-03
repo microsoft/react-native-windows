@@ -347,6 +347,8 @@ extends:
 
             - template: .ado/templates/component-governance.yml@self
 
+            - template: .ado/templates/authenticate-office-react-native-windows-bot.yml@self
+
             # Make symbols available through http://symweb.
             - task: PublishSymbols@2
               displayName: Publish symbols
@@ -354,7 +356,7 @@ extends:
               inputs:
                 SearchPattern: vnext/target/**/*.pdb
                 SymbolServerType: TeamServices
-                Pat: $(System.AccessToken)
+                Pat: $(oficeReactnativeWindowsBotAadAuthToken)
 
             templateContext:
               sdl:
@@ -438,6 +440,8 @@ extends:
                 - platform: ARM64EC
                   configuration: Debug
 
+          - template: .ado/templates/authenticate-office-react-native-windows-bot.yml@self
+
           # Symbol Publishing for Work Item 59264834 - MSRC Compliance
           - task: PublishSymbols@2
             displayName: 'Publish Symbols to Microsoft Symbol Server'
@@ -452,7 +456,7 @@ extends:
               SymbolsArtifactName: 'ReactNativeWindows-Symbols'
               DetailedLog: true
               TreatNotIndexedAsWarning: false
-              Pat: $(System.AccessToken)
+              Pat: $(oficeReactnativeWindowsBotAadAuthToken)
 
           templateContext:
             sdl:

@@ -2,7 +2,7 @@ steps:
   - task: AzureCLI@2
     inputs:
       azureSubscription: 'Office-React-Native-Windows-Bot'
-      scriptType: 'bash'
+      scriptType: 'batch'
       scriptLocation: 'inlineScript'
       inlineScript: |
           # Note that the resource is specified to limit the token to Azure DevOps
