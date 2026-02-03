@@ -106,8 +106,8 @@ winrt::fire_and_forget GetImageSizeAsync(
     }
 #endif // USE_FABRIC
   } catch (winrt::hresult_error const &e) {
-    errorMessage = "Failed to get image size: " +
-                   Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring(e.message())) + " for URI: " + uriString;
+    errorMessage = "Failed to get image size: " + Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring(e.message())) +
+        " for URI: " + uriString;
   }
 
   if (!succeeded) {
