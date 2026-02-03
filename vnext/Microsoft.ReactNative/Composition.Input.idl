@@ -34,6 +34,17 @@ namespace Microsoft.ReactNative.Composition.Input
     KeyboardSource KeyboardSource { get; };
   };
 
+  DOC_STRING("Event arguments for context menu events (SHIFT+F10, Context Menu key, or right-click)")
+  interface ContextMenuRoutedEventArgs requires RoutedEventArgs
+  {
+    DOC_STRING("Gets or sets whether the event was handled. Set to true to prevent default behavior.")
+    Boolean Handled { get; set; };
+    DOC_STRING("Gets the position where the context menu was requested, in local coordinates.")
+    Windows.Foundation.Point Position { get; };
+    DOC_STRING("Gets whether the context menu was triggered by keyboard (SHIFT+F10 or Context Menu key) rather than pointer.")
+    Boolean IsKeyboardTriggered { get; };
+  };
+
   interface IPointerPointTransform
   {
     IPointerPointTransform Inverse { get; };

@@ -696,17 +696,10 @@ void WindowsTextInputComponentView::OnPointerPressed(
   }
 
   if (m_textServices && msg) {
-    if (msg == WM_RBUTTONUP && !windowsTextInputProps().contextMenuHidden) {
-      ShowContextMenu(position);
-      args.Handled(true);
-    } else if (msg == WM_RBUTTONUP && windowsTextInputProps().contextMenuHidden) {
-      args.Handled(true);
-    } else {
-      LRESULT lresult;
-      DrawBlock db(*this);
-      auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
-      args.Handled(hr != S_FALSE);
-    }
+    LRESULT lresult;
+    DrawBlock db(*this);
+    auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
+    args.Handled(hr != S_FALSE);
   }
 
   // Emits the OnPressIn event
@@ -768,10 +761,19 @@ void WindowsTextInputComponentView::OnPointerReleased(
   }
 
   if (m_textServices && msg) {
-    LRESULT lresult;
-    DrawBlock db(*this);
-    auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
-    args.Handled(hr != S_FALSE);
+    // Show context menu on right button release (standard Windows behavior)
+    if (msg == WM_RBUTTONUP && !windowsTextInputProps().contextMenuHidden) {
+      ShowContextMenu(position);
+      args.Handled(true);
+    } else if (msg == WM_RBUTTONUP && windowsTextInputProps().contextMenuHidden) {
+      // Context menu is hidden, just mark as handled
+      args.Handled(true);
+    } else {
+      LRESULT lresult;
+      DrawBlock db(*this);
+      auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
+      args.Handled(hr != S_FALSE);
+    }
   }
 
   // Emits the OnPressOut event
@@ -1877,6 +1879,15 @@ void WindowsTextInputComponentView::updateSpellCheck(bool enable) noexcept {
   LRESULT lresult;
   winrt::check_hresult(
       m_textServices->TxSendMessage(EM_SETLANGOPTIONS, IMF_SPELLCHECKING, enable ? newLangOptions : 0, &lresult));
+}
+
+void WindowsTextInputComponentView::OnContextMenu(
+    const winrt::Microsoft::ReactNative::Composition::Input::ContextMenuRoutedEventArgs &args) noexcept {
+  // Handle context menu event (generated for SHIFT+F10, Context Menu key, or right-click)
+  if (!windowsTextInputProps().contextMenuHidden) {
+    ShowContextMenu(args.Position());
+    args.Handled(true);
+  }
 }
 
 void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept {
