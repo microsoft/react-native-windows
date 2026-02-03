@@ -694,8 +694,8 @@ void ComponentView::updateShadowProps(
 }
 
 void ComponentView::applyShadowProps(const facebook::react::ViewProps &viewProps) noexcept {
-  // Early return if m_visual is not initialized yet
-  if (!m_visual) {
+  // Early return if Visual is not initialized yet
+  if (!Visual()) {
     return;
   }
 
