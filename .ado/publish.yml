@@ -348,10 +348,9 @@ extends:
             - template: .ado/templates/component-governance.yml@self
 
             # Make symbols available through http://symweb.
-            # TODO: Re-enable after fixing symbol publishing authentication for 0.82 release
             - task: PublishSymbols@2
               displayName: Publish symbols
-              enabled: false
+              enabled: true
               inputs:
                 SearchPattern: vnext/target/**/*.pdb
                 SymbolServerType: TeamServices
@@ -440,10 +439,9 @@ extends:
                   configuration: Debug
 
           # Symbol Publishing for Work Item 59264834 - MSRC Compliance
-          # TODO: Re-enable after fixing symbol publishing authentication
           - task: PublishSymbols@2
             displayName: 'Publish Symbols to Microsoft Symbol Server'
-            enabled: false
+            enabled: true
             condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
             inputs:
               SymbolsFolder: '$(System.DefaultWorkingDirectory)\NugetRoot'
