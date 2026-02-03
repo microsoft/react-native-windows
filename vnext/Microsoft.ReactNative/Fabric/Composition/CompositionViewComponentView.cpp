@@ -694,6 +694,11 @@ void ComponentView::updateShadowProps(
 }
 
 void ComponentView::applyShadowProps(const facebook::react::ViewProps &viewProps) noexcept {
+  // Early return if m_visual is not initialized yet
+  if (!m_visual) {
+    return;
+  }
+
   auto shadow = m_compContext.CreateDropShadow();
   if (!viewProps.boxShadow.empty()) {
     shadow.Offset({viewProps.boxShadow[0].offsetX, viewProps.boxShadow[0].offsetY, 0});
@@ -808,9 +813,8 @@ void ComponentView::updateTransformProps(
         static_cast<facebook::react::BackfaceVisibility>(
             winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility::Hidden) ==
         facebook::react::BackfaceVisibility::Hidden);
-    visual.BackfaceVisibility(
-        static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
-            newViewProps.backfaceVisibility));
+    visual.BackfaceVisibility(static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
+        newViewProps.backfaceVisibility));
   }
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
@@ -1526,8 +1530,8 @@ winrt::Windows::Foundation::IInspectable ComponentView::CreateAutomationProvider
   return *m_innerAutomationProvider;
 }
 
-const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider> &
-ComponentView::InnerAutomationProvider() const noexcept {
+const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
+    &ComponentView::InnerAutomationProvider() const noexcept {
   return m_innerAutomationProvider;
 }
 
