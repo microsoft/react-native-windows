@@ -67,6 +67,8 @@ struct WindowsTextInputComponentView
   void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void OnCharacterReceived(const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs
                                &args) noexcept override;
+  void OnContextMenuKey(
+      const winrt::Microsoft::ReactNative::Composition::Input::ContextMenuKeyEventArgs &args) noexcept override;
   void onMounted() noexcept override;
 
   std::optional<std::string> getAccessiblityValue() noexcept override;
@@ -146,6 +148,7 @@ struct WindowsTextInputComponentView
   DWORD m_propBitsMask{0};
   DWORD m_propBits{0};
   HCURSOR m_hcursor{nullptr};
+  POINT m_caretPosition{0, 0};
   std::chrono::steady_clock::time_point m_lastClickTime{};
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
 };
