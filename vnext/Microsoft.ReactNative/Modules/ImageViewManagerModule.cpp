@@ -134,13 +134,7 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
             [result](double width, double height) noexcept {
               result.Resolve(std::vector<double>{width, height});
             },
-            [context, result](const char *errorCode, std::string errorMessage) noexcept {
-              // Log to Metro console so developers see the actual error
-              context.CallJSFunction(
-                  L"RCTLog",
-                  L"logToConsole",
-                  L"error",
-                  Microsoft::Common::Unicode::Utf8ToUtf16("[" + std::string(errorCode) + "] " + errorMessage));
+            [result](const char *errorCode, std::string errorMessage) noexcept {
               result.Reject(React::ReactError{errorCode, errorMessage});
             }
 #ifdef USE_FABRIC
@@ -167,13 +161,7 @@ void ImageLoader::getSizeWithHeaders(
         [result](double width, double height) noexcept {
           result.Resolve(Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType{width, height});
         },
-        [context, result](const char *errorCode, std::string errorMessage) noexcept {
-          // Log to Metro console so developers see the actual error
-          context.CallJSFunction(
-              L"RCTLog",
-              L"logToConsole",
-              L"error",
-              Microsoft::Common::Unicode::Utf8ToUtf16("[" + std::string(errorCode) + "] " + errorMessage));
+        [result](const char *errorCode, std::string errorMessage) noexcept {
           result.Reject(React::ReactError{errorCode, errorMessage});
         }
 #ifdef USE_FABRIC
