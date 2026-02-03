@@ -70,6 +70,10 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
 
   // Automation
   void ConfigureChildSiteLinkAutomation() noexcept;
+  winrt::event_token m_fragmentRootAutomationProviderRequestedToken{};
+  winrt::event_token m_parentAutomationProviderRequestedToken{};
+  winrt::event_token m_nextSiblingAutomationProviderRequestedToken{};
+  winrt::event_token m_previousSiblingAutomationProviderRequestedToken{};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
