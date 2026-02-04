@@ -8,10 +8,10 @@
 
 #include "codegen/react/components/SampleCustomComponent/PickerXaml.g.h"
 
-#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
-#include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>
+#include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.h>
 #include <limits>
 
@@ -23,37 +23,27 @@ struct PickerXamlStateData : winrt::implements<PickerXamlStateData, winrt::IInsp
   winrt::Windows::Foundation::Size desiredSize;
 };
 
-struct PickerXamlComponentView
-    : winrt::implements<PickerXamlComponentView, winrt::IInspectable>,
-      Codegen::BasePickerXaml<PickerXamlComponentView> {
-
+struct PickerXamlComponentView : winrt::implements<PickerXamlComponentView, winrt::IInspectable>,
+                                 Codegen::BasePickerXaml<PickerXamlComponentView> {
   void InitializeContentIsland(
-      const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView& islandView) {
+      const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) {
     // Create ComboBox for picker functionality
     m_comboBox = winrt::Microsoft::UI::Xaml::Controls::ComboBox();
-    m_comboBox.HorizontalAlignment(
-      winrt::Microsoft::UI::Xaml::HorizontalAlignment::Stretch);
-    
+    m_comboBox.HorizontalAlignment(winrt::Microsoft::UI::Xaml::HorizontalAlignment::Stretch);
+
     // For editable ComboBox, trigger selection change always (not just on commit)
-    m_comboBox.SelectionChangedTrigger(
-      winrt::Microsoft::UI::Xaml::Controls::ComboBoxSelectionChangedTrigger::Always);
+    m_comboBox.SelectionChangedTrigger(winrt::Microsoft::UI::Xaml::Controls::ComboBoxSelectionChangedTrigger::Always);
 
     // Listen for size changes on the comboBox
-    m_comboBox.SizeChanged([this](auto const& /*sender*/, auto const& /*args*/) {
-      RefreshSize();
-    });
+    m_comboBox.SizeChanged([this](auto const & /*sender*/, auto const & /*args*/) { RefreshSize(); });
 
     // Listen for selection changes
     m_selectionChangedRevoker = m_comboBox.SelectionChanged(
-        winrt::auto_revoke, [this](const auto& /*sender*/, const auto& /*args*/) {
-          EmitPickerSelectEvent();
-        });
+        winrt::auto_revoke, [this](const auto & /*sender*/, const auto & /*args*/) { EmitPickerSelectEvent(); });
 
     // Listen for text submitted (when user presses Enter in editable mode)
     m_textSubmittedRevoker = m_comboBox.TextSubmitted(
-        winrt::auto_revoke, [this](const auto& /*sender*/, const auto& /*args*/) {
-          EmitPickerSelectEvent();
-        });
+        winrt::auto_revoke, [this](const auto & /*sender*/, const auto & /*args*/) { EmitPickerSelectEvent(); });
 
     m_island = winrt::Microsoft::UI::Xaml::XamlIsland{};
     m_island.Content(m_comboBox);
@@ -62,9 +52,9 @@ struct PickerXamlComponentView
   }
 
   void UpdateProps(
-      const winrt::Microsoft::ReactNative::ComponentView& view,
-      const winrt::com_ptr<Codegen::PickerXamlProps>& newProps,
-      const winrt::com_ptr<Codegen::PickerXamlProps>& oldProps) noexcept override {
+      const winrt::Microsoft::ReactNative::ComponentView &view,
+      const winrt::com_ptr<Codegen::PickerXamlProps> &newProps,
+      const winrt::com_ptr<Codegen::PickerXamlProps> &oldProps) noexcept override {
     BasePickerXaml::UpdateProps(view, newProps, oldProps);
 
     // Suspend event handlers during programmatic updates to avoid triggering
@@ -76,7 +66,7 @@ struct PickerXamlComponentView
         m_comboBox.Items().Clear();
         m_items.clear();
 
-        for (const auto& item : newProps->items) {
+        for (const auto &item : newProps->items) {
           // Store item data
           m_items.push_back(item);
 
@@ -88,7 +78,8 @@ struct PickerXamlComponentView
       }
 
       // Always update selected index on first render or when changed
-      if (!oldProps || oldProps->selectedIndex != newProps->selectedIndex || m_comboBox.SelectedIndex() != newProps->selectedIndex) {
+      if (!oldProps || oldProps->selectedIndex != newProps->selectedIndex ||
+          m_comboBox.SelectedIndex() != newProps->selectedIndex) {
         const int32_t selectedIndex = newProps->selectedIndex;
         if (selectedIndex >= 0 && selectedIndex < static_cast<int32_t>(m_comboBox.Items().Size())) {
           m_comboBox.SelectedIndex(selectedIndex);
@@ -102,17 +93,15 @@ struct PickerXamlComponentView
   }
 
   void UpdateState(
-      const winrt::Microsoft::ReactNative::ComponentView& /*view*/,
-      const winrt::Microsoft::ReactNative::IComponentState& newState) noexcept override {
+      const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
+      const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept override {
     m_state = newState;
   }
 
  private:
   void RefreshSize() {
     m_comboBox.Measure(winrt::Windows::Foundation::Size{
-        std::numeric_limits<float>::infinity(),
-        std::numeric_limits<float>::infinity()
-      });
+        std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity()});
 
     const auto desiredSize = m_comboBox.DesiredSize();
 
@@ -156,28 +145,23 @@ struct PickerXamlComponentView
 
   // RAII helper to temporarily suspend event handlers during programmatic updates.
   // This avoids triggering change events when we're setting values from props.
-  template<typename TAction>
+  template <typename TAction>
   void WithEventsSuspended(TAction action) {
     m_selectionChangedRevoker.revoke();
     m_textSubmittedRevoker.revoke();
-    
+
     action();
-    
+
     m_selectionChangedRevoker = m_comboBox.SelectionChanged(
-        winrt::auto_revoke, [this](const auto& /*sender*/, const auto& /*args*/) {
-          EmitPickerSelectEvent();
-        });
+        winrt::auto_revoke, [this](const auto & /*sender*/, const auto & /*args*/) { EmitPickerSelectEvent(); });
     m_textSubmittedRevoker = m_comboBox.TextSubmitted(
-        winrt::auto_revoke, [this](const auto& /*sender*/, const auto& /*args*/) {
-          EmitPickerSelectEvent();
-        });
+        winrt::auto_revoke, [this](const auto & /*sender*/, const auto & /*args*/) { EmitPickerSelectEvent(); });
   }
 };
 
 } // namespace winrt::SampleCustomComponent
 
-void RegisterPickerXamlComponentView(
-    winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
+void RegisterPickerXamlComponentView(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
   winrt::SampleCustomComponent::Codegen::RegisterPickerXamlNativeComponent<
       winrt::SampleCustomComponent::PickerXamlComponentView>(
       packageBuilder,
@@ -192,7 +176,7 @@ void RegisterPickerXamlComponentView(
             });
         // Set up initial state with zero size
         builder.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().SetInitialStateDataFactory(
-            [](const winrt::Microsoft::ReactNative::IComponentProps& /*props*/) noexcept {
+            [](const winrt::Microsoft::ReactNative::IComponentProps & /*props*/) noexcept {
               return winrt::make<winrt::SampleCustomComponent::PickerXamlStateData>(
                   winrt::Windows::Foundation::Size{0, 0});
             });
@@ -218,10 +202,8 @@ void RegisterPickerXamlComponentView(
         builder.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>().SetUpdateStateHandler(
             [](const winrt::Microsoft::ReactNative::ComponentView &view,
                const winrt::Microsoft::ReactNative::IComponentState &newState) {
-              const auto islandView =
-                  view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>();
-              const auto userData =
-                  islandView.UserData().as<winrt::SampleCustomComponent::PickerXamlComponentView>();
+              const auto islandView = view.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>();
+              const auto userData = islandView.UserData().as<winrt::SampleCustomComponent::PickerXamlComponentView>();
               userData->UpdateState(view, newState);
             });
       });

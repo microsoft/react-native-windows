@@ -230,62 +230,16 @@ void ContentIslandComponentView::prepareForRecycle() noexcept {
 }
 
 void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
-  // Use FrameworkBased to let the XamlIsland manage its own framework-level accessibility tree
-  // and raise focus events naturally. This tells the system that the child island has its own
-  // framework (WinUI/XAML) that manages automation.
-  if (m_builder && m_builder->XamlSupport()) {
-    m_childSiteLink.AutomationOption(winrt::Microsoft::UI::Content::ContentAutomationOptions::FrameworkBased);
-  } else {
-    // This automation mode must be set before connecting the child ContentIsland.
-    // It puts the child content into a mode where it won't own its own framework root.  Instead, the child island's
-    // automation peers will use the same framework root as the automation peer of this ContentIslandComponentView.
-    m_childSiteLink.AutomationOption(winrt::Microsoft::UI::Content::ContentAutomationOptions::FragmentBased);
-
-    // These events are raised in response to the child ContentIsland asking for providers.
-    // For example, the ContentIsland.FragmentRootAutomationProvider property will return
-    // the provider we provide here in FragmentRootAutomationProviderRequested.
-
-    // We capture "this" as a raw pointer because ContentIslandComponentView doesn't currently support weak ptrs.
-    // It's safe because we disconnect these events in the destructor.
-
-    m_fragmentRootAutomationProviderRequestedToken = m_childSiteLink.FragmentRootAutomationProviderRequested(
-        [this](
-            const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-            const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-          // The child island's fragment tree doesn't have its own fragment root.
-          // Here's how we can provide the correct fragment root to the child's UIA logic.
-          winrt::com_ptr<IRawElementProviderFragmentRoot> fragmentRoot{nullptr};
-          auto uiaProvider = this->EnsureUiaProvider();
-          uiaProvider.as<IRawElementProviderFragment>()->get_FragmentRoot(fragmentRoot.put());
-          args.AutomationProvider(fragmentRoot.as<IInspectable>());
-          args.Handled(true);
-        });
-
-    m_parentAutomationProviderRequestedToken = m_childSiteLink.ParentAutomationProviderRequested(
-        [this](
-            const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-            const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-          auto uiaProvider = this->EnsureUiaProvider();
-          args.AutomationProvider(uiaProvider);
-          args.Handled(true);
-        });
-
-    m_nextSiblingAutomationProviderRequestedToken = m_childSiteLink.NextSiblingAutomationProviderRequested(
-        [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-           const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-          // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
-          args.AutomationProvider(nullptr);
-          args.Handled(true);
-        });
-
-    m_previousSiblingAutomationProviderRequestedToken = m_childSiteLink.PreviousSiblingAutomationProviderRequested(
-        [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-           const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-          // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
-          args.AutomationProvider(nullptr);
-          args.Handled(true);
-        });
+  // Determine the automation option to use:
+  // 1. If explicitly set via builder, use that
+  // 2. Otherwise, default to FrameworkBased
+  winrt::Microsoft::UI::Content::ContentAutomationOptions automationOption =
+      winrt::Microsoft::UI::Content::ContentAutomationOptions::FrameworkBased;
+  if (m_builder && m_builder->ContentIslandChildSiteAutomationOption().has_value()) {
+    automationOption = m_builder->ContentIslandChildSiteAutomationOption().value();
   }
+
+  m_childSiteLink.AutomationOption(automationOption);
 
   if (m_innerAutomationProvider) {
     m_innerAutomationProvider->SetChildSiteLink(m_childSiteLink);
