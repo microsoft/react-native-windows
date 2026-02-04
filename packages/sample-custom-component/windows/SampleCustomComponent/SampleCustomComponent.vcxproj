@@ -102,7 +102,6 @@
   <ItemGroup>
     <ClInclude Include="CalendarView.h" />
     <ClInclude Include="CustomAccessibility.h" />
-    <ClInclude Include="PickerXaml.h" />
     <ClInclude Include="DrawingIsland.h">
       <DependentUpon>DrawingIsland.idl</DependentUpon>
     </ClInclude>
@@ -116,7 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CustomAccessibility.cpp" />
-    <ClCompile Include="PickerXaml.cpp" />
     <ClCompile Include="MovingLight.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

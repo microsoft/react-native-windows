@@ -7,13 +7,10 @@ import CalendarView from './FabricXamlCalendarViewNativeComponent'
 
 import CustomAccessibility from './CustomAccessibilityNativeComponent';
 
-import PickerXaml from './PickerXamlNativeComponent';
-
 export {
     CustomAccessibility,
     DrawingIsland,
     MovingLight,
     MovingLightHandle,
     CalendarView,
-    PickerXaml
 };
