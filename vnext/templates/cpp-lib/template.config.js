@@ -125,8 +125,8 @@ async function getFileMappings(config = {}, options = {}) {
 
     currentUser,
     devMode,
-    useNuGets: !devMode,// default is to use published NuGets except in devMode, change to true here if you want to test devMode and nugets simultaneously
-    addReactNativePublicAdoFeed: true || isCanary,// Temporary true for all new projects until code-signing is restored, see issue #14030
+    useNuGets: !devMode, // default is to use published NuGets except in devMode, change to true here if you want to test devMode and nugets simultaneously
+    addReactNativePublicAdoFeed: true || isCanary, // Temporary true for all new projects until code-signing is restored, see issue #14030
 
     cppNugetPackages: [],
   };
@@ -141,7 +141,7 @@ async function getFileMappings(config = {}, options = {}) {
       to: file.to.replace(/MyLib/g, projectName),
       replacements,
     };
-    
+
     // Don't copy example files if there is no example in the destination
     if (!exExists && fileMapping.to.startsWith('example')) {
       continue;
