@@ -1510,7 +1510,6 @@ winrt::Microsoft::ReactNative::ViewProps ViewComponentView::ViewPropsInner() noe
 }
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ViewComponentView::Visual() const noexcept {
-  assert(m_visual);
   return m_visual;
 }
 
