@@ -77,10 +77,13 @@ facebook::react::Props::Shared ComponentView::props() noexcept {
 
 void ComponentView::onThemeChanged() noexcept {
   if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
-    if (viewProps()->backgroundColor) {
-      Visual().as<Experimental::ISpriteVisual>().Brush(theme()->Brush(*viewProps()->backgroundColor));
-    } else {
-      Visual().as<Experimental::ISpriteVisual>().Brush(nullptr);
+    // Only update background if Visual is initialized
+    if (auto visual = Visual()) {
+      if (viewProps()->backgroundColor) {
+        visual.as<Experimental::ISpriteVisual>().Brush(theme()->Brush(*viewProps()->backgroundColor));
+      } else {
+        visual.as<Experimental::ISpriteVisual>().Brush(nullptr);
+      }
     }
   }
 
@@ -813,8 +816,9 @@ void ComponentView::updateTransformProps(
         static_cast<facebook::react::BackfaceVisibility>(
             winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility::Hidden) ==
         facebook::react::BackfaceVisibility::Hidden);
-    visual.BackfaceVisibility(static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
-        newViewProps.backfaceVisibility));
+    visual.BackfaceVisibility(
+        static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
+            newViewProps.backfaceVisibility));
   }
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
@@ -1186,8 +1190,8 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 ViewComponentView::VisualToMountChildrenInto() noexcept {
   if (m_builder && m_builder->VisualToMountChildrenIntoHandler())
     return m_builder->VisualToMountChildrenIntoHandler()(*this);
-  // Mount children into m_contentVisual - create it lazily when children are mounted
-  ensureContentVisual();
+  // Mount children into m_contentVisual only if it exists (created for overflow:hidden)
+  // Otherwise mount directly into Visual() like the original behavior
   return m_contentVisual ? m_contentVisual : Visual();
 }
 
@@ -1197,7 +1201,7 @@ void ViewComponentView::MountChildComponentView(
   base_type::MountChildComponentView(childComponentView, index);
 
   indexOffsetForBorder(index);
-  ensureContentVisual(); // Create m_contentVisual lazily when mounting children
+  ensureVisual(); // Restore original behavior - only create m_visual, not m_contentVisual
 
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
     auto visualIndex = index;
@@ -1529,8 +1533,8 @@ winrt::Windows::Foundation::IInspectable ComponentView::CreateAutomationProvider
   return *m_innerAutomationProvider;
 }
 
-const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
-    &ComponentView::InnerAutomationProvider() const noexcept {
+const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider> &
+ComponentView::InnerAutomationProvider() const noexcept {
   return m_innerAutomationProvider;
 }
 
