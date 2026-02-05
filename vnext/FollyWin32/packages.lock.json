@@ -8,11 +8,15 @@
         "resolved": "1.84.0",
         "contentHash": "4el2YP3cNJDVFPdzOso+LxGvdWP2rHxML4siq8VdonNypW2m4q503tHfCj6vK0L1UfxioE2hpFGb4ITEua73tg=="
       },
-      "ReactWindows.OpenSSL.StdCall.Static": {
-        "type": "Direct",
-        "requested": "[1.0.2-p.5, )",
-        "resolved": "1.0.2-p.5",
-        "contentHash": "1tAtFgtbVpI/JgRIxy9j30R/W6B1zi9dYt0o5QwAk5V3X2mo9xrrHcbXlbczKQIftYoNHe0Mfq9ExIu9A1Cs0g=="
+      "fmt": {
+        "type": "Project"
+      },
+      "folly": {
+        "type": "Project",
+        "dependencies": {
+          "boost": "[1.83.0, )",
+          "fmt": "[1.0.0, )"
+        }
       }
     },
     "native,Version=v0.0/win": {},

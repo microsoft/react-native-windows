@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove dependency ReactWindows.OpenSSL.StdCall.Static",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
