@@ -20,12 +20,6 @@
         "resolved": "0.71.8",
         "contentHash": "ksHjshj05AMAQ/v7Wet5Dwcwn9Up2BTOIrTv1yEW7+D23FQX0yILW5Zw0bmlWtV8MEtdY611z+06U3Xvu2ygSA=="
       },
-      "ReactWindows.OpenSSL.StdCall.Static": {
-        "type": "Direct",
-        "requested": "[1.0.2-p.5, )",
-        "resolved": "1.0.2-p.5",
-        "contentHash": "1tAtFgtbVpI/JgRIxy9j30R/W6B1zi9dYt0o5QwAk5V3X2mo9xrrHcbXlbczKQIftYoNHe0Mfq9ExIu9A1Cs0g=="
-      },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
         "resolved": "1.1.1",
@@ -211,13 +205,6 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "boost": "[1.83.0, )"
-        }
-      },
-      "react.windows.test": {
-        "type": "Project",
-        "dependencies": {
-          "ReactWindows.OpenSSL.StdCall.Static": "[1.0.2-p.5, )",
           "boost": "[1.83.0, )"
         }
       },

@@ -4,12 +4,17 @@
 // cspell:disable
 
 // clang-format off
+
+// C4996: 'gethostbyaddr': Use getnameinfo() or GetNameInfoW() instead
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
 #include <CppUnitTest.h>
 #include <Networking/IWebSocketResource.h>
-#include <Test/WebSocketServer.h>
 
 // Standard Library
 #include <future>
+
+#include "WebSocketServer.h"
 
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
