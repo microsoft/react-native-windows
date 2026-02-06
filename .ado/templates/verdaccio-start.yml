@@ -23,6 +23,9 @@ steps:
     - script: node .ado/scripts/npmPack.js --clean
       displayName: Pack all workspace packages
 
+    - script: node .ado/scripts/npmPack.js --no-pack --check-npm --no-color
+      displayName: Remove already published packages
+
     - script: |
         for %%f in (npm-pkgs\*.tgz) do (
           echo Publishing %%f to verdaccio...
