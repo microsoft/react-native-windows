@@ -211,6 +211,7 @@ struct ViewComponentView : public ViewComponentViewT<
       facebook::react::Props::Shared const &props) noexcept override;
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept override;
   void ensureVisual() noexcept;
+  void ensureContentVisual() noexcept;
 
   static facebook::react::SharedViewProps defaultProps() noexcept;
 
@@ -238,6 +239,7 @@ struct ViewComponentView : public ViewComponentViewT<
   bool m_hasNonVisualChildren{false};
   facebook::react::SharedViewProps m_props;
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_contentVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::CreateInternalVisualDelegate m_createInternalVisualHandler{
       nullptr};
 };

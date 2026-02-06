@@ -77,10 +77,13 @@ facebook::react::Props::Shared ComponentView::props() noexcept {
 
 void ComponentView::onThemeChanged() noexcept {
   if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
-    if (viewProps()->backgroundColor) {
-      Visual().as<Experimental::ISpriteVisual>().Brush(theme()->Brush(*viewProps()->backgroundColor));
-    } else {
-      Visual().as<Experimental::ISpriteVisual>().Brush(nullptr);
+    // Only update background if Visual is initialized
+    if (auto visual = Visual()) {
+      if (viewProps()->backgroundColor) {
+        visual.as<Experimental::ISpriteVisual>().Brush(theme()->Brush(*viewProps()->backgroundColor));
+      } else {
+        visual.as<Experimental::ISpriteVisual>().Brush(nullptr);
+      }
     }
   }
 
@@ -694,6 +697,11 @@ void ComponentView::updateShadowProps(
 }
 
 void ComponentView::applyShadowProps(const facebook::react::ViewProps &viewProps) noexcept {
+  // Early return if Visual is not initialized yet
+  if (!Visual()) {
+    return;
+  }
+
   auto shadow = m_compContext.CreateDropShadow();
   if (!viewProps.boxShadow.empty()) {
     shadow.Offset({viewProps.boxShadow[0].offsetX, viewProps.boxShadow[0].offsetY, 0});
@@ -808,8 +816,9 @@ void ComponentView::updateTransformProps(
         static_cast<facebook::react::BackfaceVisibility>(
             winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility::Hidden) ==
         facebook::react::BackfaceVisibility::Hidden);
-    visual.BackfaceVisibility(static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
-        newViewProps.backfaceVisibility));
+    visual.BackfaceVisibility(
+        static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
+            newViewProps.backfaceVisibility));
   }
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
@@ -969,13 +978,18 @@ void ComponentView::Toggle() noexcept {
 void ComponentView::updateClippingPath(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
+  auto visualInterop = Visual().try_as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>();
+  if (!visualInterop) {
+    return;
+  }
+
   auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
 
   if (borderMetrics.borderRadii.topLeft.horizontal == 0 && borderMetrics.borderRadii.topRight.horizontal == 0 &&
       borderMetrics.borderRadii.bottomLeft.horizontal == 0 && borderMetrics.borderRadii.bottomRight.horizontal == 0 &&
       borderMetrics.borderRadii.topLeft.vertical == 0 && borderMetrics.borderRadii.topRight.vertical == 0 &&
       borderMetrics.borderRadii.bottomLeft.vertical == 0 && borderMetrics.borderRadii.bottomRight.vertical == 0) {
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
+    visualInterop->SetClippingPath(nullptr);
   } else {
     winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
         m_compContext,
@@ -986,8 +1000,7 @@ void ComponentView::updateClippingPath(
          layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
          layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
-        pathGeometry.get());
+    visualInterop->SetClippingPath(pathGeometry.get());
   }
 }
 
@@ -1148,6 +1161,21 @@ void ViewComponentView::ensureVisual() noexcept {
     }
     OuterVisual().InsertAt(m_visual, 0);
   }
+
+  // NOTE: m_contentVisual is now created lazily in ensureContentVisual()
+  // It will only be created when:
+  // 1. Children need to be mounted (VisualToMountChildrenInto is called)
+  // 2. overflow:hidden is set and clipping needs to be applied
+}
+
+void ViewComponentView::ensureContentVisual() noexcept {
+  ensureVisual();
+  // Create m_contentVisual as a child of m_visual if not already created
+  // Only create it if we have a standard visual (not a custom builder visual)
+  if (!m_contentVisual && !m_builder) {
+    m_contentVisual = m_compContext.CreateSpriteVisual();
+    m_visual.InsertAt(m_contentVisual, 0); // Insert at index 0 so it's below border visuals
+  }
 }
 
 winrt::Microsoft::ReactNative::ComponentView ViewComponentView::Create(
@@ -1162,7 +1190,9 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 ViewComponentView::VisualToMountChildrenInto() noexcept {
   if (m_builder && m_builder->VisualToMountChildrenIntoHandler())
     return m_builder->VisualToMountChildrenIntoHandler()(*this);
-  return Visual();
+  // Mount children into m_contentVisual only if it exists (created for overflow:hidden)
+  // Otherwise mount directly into Visual() like the original behavior
+  return m_contentVisual ? m_contentVisual : Visual();
 }
 
 void ViewComponentView::MountChildComponentView(
@@ -1171,7 +1201,7 @@ void ViewComponentView::MountChildComponentView(
   base_type::MountChildComponentView(childComponentView, index);
 
   indexOffsetForBorder(index);
-  ensureVisual();
+  ensureVisual(); // Restore original behavior - only create m_visual, not m_contentVisual
 
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
     auto visualIndex = index;
@@ -1218,6 +1248,21 @@ void ViewComponentView::updateProps(
   // update BaseComponentView props
   updateAccessibilityProps(oldViewProps, newViewProps);
   updateTransformProps(oldViewProps, newViewProps, Visual());
+
+  // Handle overflow property changes
+  if (oldViewProps.yogaStyle.overflow() != newViewProps.yogaStyle.overflow()) {
+    auto compVisual =
+        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
+            Visual());
+    if (compVisual) {
+      if (newViewProps.yogaStyle.overflow() == facebook::yoga::Overflow::Hidden) {
+        compVisual.Clip(Compositor().CreateInsetClip(0.0f, 0.0f, 0.0f, 0.0f));
+      } else {
+        compVisual.Clip(nullptr);
+      }
+    }
+  }
+
   base_type::updateProps(props, oldProps);
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
@@ -1395,6 +1440,57 @@ void ViewComponentView::updateLayoutMetrics(
   Visual().Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+
+  // For overflow:hidden, we need m_contentVisual for clipping - create it lazily
+  if (m_props && m_props->getClipsContentToBounds() && !m_contentVisual) {
+    ensureContentVisual();
+  }
+
+  // Size and offset m_contentVisual to match the content area, excluding borders
+  if (m_contentVisual && m_props) {
+    const auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, *m_props);
+    const float borderLeft = borderMetrics.borderWidths.left;
+    const float borderTop = borderMetrics.borderWidths.top;
+    const float borderRight = borderMetrics.borderWidths.right;
+    const float borderBottom = borderMetrics.borderWidths.bottom;
+    const float scale = layoutMetrics.pointScaleFactor;
+    const float contentWidth = layoutMetrics.frame.size.width * scale - borderLeft - borderRight;
+    const float contentHeight = layoutMetrics.frame.size.height * scale - borderTop - borderBottom;
+    m_contentVisual.Offset({borderLeft, borderTop, 0});
+    m_contentVisual.Size({std::max(0.f, contentWidth), std::max(0.f, contentHeight)});
+
+    // Apply clipping to m_contentVisual for overflow: hidden
+    if (m_props->getClipsContentToBounds()) {
+      // Calculate inner border radii for clipping (0 for rectangular clip)
+      facebook::react::RectangleCorners<facebook::react::CornerRadii> innerRadii;
+      innerRadii.topLeft = {
+          std::max(0.f, borderMetrics.borderRadii.topLeft.horizontal - borderLeft),
+          std::max(0.f, borderMetrics.borderRadii.topLeft.vertical - borderTop)};
+      innerRadii.topRight = {
+          std::max(0.f, borderMetrics.borderRadii.topRight.horizontal - borderRight),
+          std::max(0.f, borderMetrics.borderRadii.topRight.vertical - borderTop)};
+      innerRadii.bottomLeft = {
+          std::max(0.f, borderMetrics.borderRadii.bottomLeft.horizontal - borderLeft),
+          std::max(0.f, borderMetrics.borderRadii.bottomLeft.vertical - borderBottom)};
+      innerRadii.bottomRight = {
+          std::max(0.f, borderMetrics.borderRadii.bottomRight.horizontal - borderRight),
+          std::max(0.f, borderMetrics.borderRadii.bottomRight.vertical - borderBottom)};
+
+      winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
+          m_compContext, innerRadii, {0, 0, 0, 0}, {0, 0, std::max(0.f, contentWidth), std::max(0.f, contentHeight)});
+
+      if (auto visualInterop =
+              m_contentVisual.try_as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()) {
+        visualInterop->SetClippingPath(pathGeometry.get());
+      }
+    } else {
+      // Clear any existing clip
+      if (auto visualInterop =
+              m_contentVisual.try_as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()) {
+        visualInterop->SetClippingPath(nullptr);
+      }
+    }
+  }
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}
@@ -1418,7 +1514,6 @@ winrt::Microsoft::ReactNative::ViewProps ViewComponentView::ViewPropsInner() noe
 }
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ViewComponentView::Visual() const noexcept {
-  assert(m_visual);
   return m_visual;
 }
 
@@ -1438,8 +1533,8 @@ winrt::Windows::Foundation::IInspectable ComponentView::CreateAutomationProvider
   return *m_innerAutomationProvider;
 }
 
-const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
-    &ComponentView::InnerAutomationProvider() const noexcept {
+const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider> &
+ComponentView::InnerAutomationProvider() const noexcept {
   return m_innerAutomationProvider;
 }
 
