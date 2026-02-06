@@ -6,6 +6,13 @@
 #include <Microsoft.ReactNative/IReactDispatcher.h>
 #include <winrt/Microsoft.UI.Dispatching.h>
 
+
+#include <windows.h>
+#include <MddBootstrap.h>
+#include <WindowsAppSDK-VersionInfo.h>
+#include <winrt/base.h>
+
+
 #include <future>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -129,8 +136,30 @@ TEST_CLASS (Prototype) {
 
   TEST_CLASS_INITIALIZE(Initialize)
   {
-    //winrt::uninit_apartment();
-    //winrt::init_apartment(winrt::apartment_type::multi_threaded);
+    // See
+    // https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/win32/mddbootstrap/nf-mddbootstrap-mddbootstrapinitialize2
+    winrt::uninit_apartment();
+    winrt::init_apartment(winrt::apartment_type::multi_threaded);
+
+
+    // 2) Bootstrap the Windows App SDK.
+    // Use the version constants from WindowsAppSDK-VersionInfo.h
+    const UINT32 majorMinor = Microsoft::WindowsAppSDK::Release::MajorMinor;
+    PCWSTR versionTag = WINDOWSAPPSDK_RELEASE_CHANNEL_W; // e.g. LTS, Stable, etc.
+    PCWSTR minVersion = WINDOWSAPPSDK_RELEASE_VERSION_TAG_W; // e.g. "1.5.240829000"
+
+    // If you’re on an older SDK that doesn’t have Initialize2, call MddBootstrapInitialize instead.
+    // The OnNoMatch_ShowUI option is helpful while developing so you’re prompted to install runtime if missing.
+    //MddBootstrapInitialize2(Microsoft::WindowsAppSDK::Release::MajorMinor, versionTag, minVersion, MddBootstrapInitializeOptions_OnNoMatch_ShowUI);
+    //MddBootstrapInitialize2(
+    //    Microsoft::WindowsAppSDK::Release::MajorMinor,
+    //    versionTag,
+    //    WINDOWSAPPSDK_RUNTIME_VERSION_UINT64);
+  }
+
+  TEST_CLASS_CLEANUP(Cleanup)
+  {
+    MddBootstrapShutdown();
   }
 
   TEST_METHOD(Proto2)
