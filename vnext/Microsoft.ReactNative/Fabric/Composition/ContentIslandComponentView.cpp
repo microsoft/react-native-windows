@@ -212,13 +212,17 @@ void ContentIslandComponentView::prepareForRecycle() noexcept {
 }
 
 void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
-  // Use FrameworkBased to let the XamlIsland manage its own framework-level accessibility tree
-  // and raise focus events naturally. This tells the system that the child island has its own
-  // framework (WinUI/XAML) that manages automation.
-  m_childSiteLink.AutomationOption(winrt::Microsoft::UI::Content::ContentAutomationOptions::FrameworkBased);
+  // Determine the automation option to use:
+  // 1. If explicitly set via builder, use that
+  // 2. Otherwise, default to FrameworkBased
+  winrt::Microsoft::UI::Content::ContentAutomationOptions automationOption =
+      winrt::Microsoft::UI::Content::ContentAutomationOptions::FrameworkBased;
+  if (m_builder && m_builder->ContentIslandChildSiteAutomationOption().has_value()) {
+    automationOption = m_builder->ContentIslandChildSiteAutomationOption().value();
+  }
 
-  // When using FrameworkBased mode, we don't register automation callbacks - let the XamlIsland handle its own UIA
-  // tree.
+  m_childSiteLink.AutomationOption(automationOption);
+
   if (m_innerAutomationProvider) {
     m_innerAutomationProvider->SetChildSiteLink(m_childSiteLink);
   }
