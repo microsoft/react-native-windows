@@ -30,20 +30,33 @@ using namespace xaml::Media::Imaging;
 
 namespace Microsoft::ReactNative {
 
+static const char *ERROR_INVALID_URI = "E_INVALID_URI";
+static const char *ERROR_GET_SIZE_FAILURE = "E_GET_SIZE_FAILURE";
+
 winrt::fire_and_forget GetImageSizeAsync(
     const winrt::Microsoft::ReactNative::IReactPropertyBag &properties,
     std::string uriString,
     winrt::Microsoft::ReactNative::JSValue &&headers,
     Mso::Functor<void(int32_t width, int32_t height)> successCallback,
-    Mso::Functor<void()> errorCallback
+    Mso::Functor<void(const char *errorCode, std::string errorMessage)> errorCallback
 #ifdef USE_FABRIC
     ,
     bool useFabric
 #endif // USE_FABRIC
 ) {
   bool succeeded{false};
+  const char *errorCode = ERROR_GET_SIZE_FAILURE;
+  std::string errorMessage;
 
   try {
+    // Validate URI is not empty
+    if (uriString.empty()) {
+      errorCode = ERROR_INVALID_URI;
+      errorMessage = "Cannot get the size of an image for an empty URI";
+      errorCallback(errorCode, errorMessage);
+      co_return;
+    }
+
     ReactImageSource source;
     source.uri = uriString;
     if (!headers.IsNull()) {
@@ -56,9 +69,10 @@ winrt::fire_and_forget GetImageSizeAsync(
     winrt::hstring scheme{uri.SchemeName()};
     bool needsDownload = (scheme == L"http") || (scheme == L"https");
     bool inlineData = scheme == L"data";
+    bool isLocalFile = (scheme == L"file") || (scheme == L"ms-appx") || (scheme == L"ms-appdata");
 
     winrt::IRandomAccessStream memoryStream;
-    if (needsDownload) {
+    if (needsDownload || isLocalFile) {
       memoryStream = co_await GetImageStreamAsync(properties, source);
     } else if (inlineData) {
       memoryStream = co_await GetImageInlineDataAsync(source);
@@ -77,23 +91,31 @@ winrt::fire_and_forget GetImageSizeAsync(
       }
 #ifdef USE_FABRIC
     } else {
-      auto result = wicBitmapSourceFromStream(memoryStream);
-      if (!std::get<std::shared_ptr<facebook::react::ImageErrorInfo>>(result)) {
-        auto imagingFactory = std::get<winrt::com_ptr<IWICImagingFactory>>(result);
-        auto wicBmpSource = std::get<winrt::com_ptr<IWICBitmapSource>>(result);
-        UINT width, height;
-        if (SUCCEEDED(wicBmpSource->GetSize(&width, &height))) {
-          successCallback(width, height);
-          succeeded = true;
+      if (memoryStream) { // Added nullcheck to prevent app from crashing if value is uninitialized
+        auto result = wicBitmapSourceFromStream(memoryStream);
+        if (!std::get<std::shared_ptr<facebook::react::ImageErrorInfo>>(result)) {
+          auto imagingFactory = std::get<winrt::com_ptr<IWICImagingFactory>>(result);
+          auto wicBmpSource = std::get<winrt::com_ptr<IWICBitmapSource>>(result);
+          UINT width, height;
+          if (SUCCEEDED(wicBmpSource->GetSize(&width, &height))) {
+            successCallback(width, height);
+            succeeded = true;
+          }
         }
       }
     }
 #endif // USE_FABRIC
-  } catch (winrt::hresult_error const &) {
+  } catch (winrt::hresult_error const &e) {
+    errorMessage = "Failed to get image size: " + Microsoft::Common::Unicode::Utf16ToUtf8(std::wstring(e.message())) +
+        " for URI: " + uriString;
   }
 
-  if (!succeeded)
-    errorCallback();
+  if (!succeeded) {
+    if (errorMessage.empty()) {
+      errorMessage = "Failed to get image size for URI: " + uriString;
+    }
+    errorCallback(errorCode, errorMessage);
+  }
 
   co_return;
 }
@@ -112,7 +134,9 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
             [result](double width, double height) noexcept {
               result.Resolve(std::vector<double>{width, height});
             },
-            [result]() noexcept { result.Reject("Failed"); }
+            [result](const char *errorCode, std::string errorMessage) noexcept {
+              result.Reject(React::ReactError{errorCode, errorMessage});
+            }
 #ifdef USE_FABRIC
             ,
             IsFabricEnabled(context.Properties().Handle())
@@ -137,7 +161,9 @@ void ImageLoader::getSizeWithHeaders(
         [result](double width, double height) noexcept {
           result.Resolve(Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType{width, height});
         },
-        [result]() noexcept { result.Reject("Failed"); }
+        [result](const char *errorCode, std::string errorMessage) noexcept {
+          result.Reject(React::ReactError{errorCode, errorMessage});
+        }
 #ifdef USE_FABRIC
         ,
         IsFabricEnabled(context.Properties().Handle())

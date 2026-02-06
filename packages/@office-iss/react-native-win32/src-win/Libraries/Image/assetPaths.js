@@ -33,4 +33,4 @@ function ensureShortPath(str) {
   return assetsPrefix + hash.toString();
 }
 
-module.exports = ensureShortPath;
+export default ensureShortPath;

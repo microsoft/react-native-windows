@@ -20,7 +20,6 @@
 #include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
 #include <unicode.h>
-#include "CompositionDynamicAutomationProvider.h"
 #include "JSValueReader.h"
 #include "RootComponentView.h"
 

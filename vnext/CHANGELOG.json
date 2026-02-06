@@ -2,6 +2,123 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 27 Jan 2026 19:33:59 GMT",
+      "version": "0.81.3",
+      "tag": "react-native-windows_v0.81.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "24f8960205c6f12387c8777208a70ec080bda8f1",
+            "comment": "Add TSF support to TextInput"
+          },
+          {
+            "author": "protikbiswas100@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "24f8960205c6f12387c8777208a70ec080bda8f1",
+            "comment": "adding accessibility and UIA support for XAML fabric"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "24f8960205c6f12387c8777208a70ec080bda8f1",
+            "comment": "Fix DPI scaling for debugging overlay highlights"
+          },
+          {
+            "author": "198982749+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "24f8960205c6f12387c8777208a70ec080bda8f1",
+            "comment": "Defer UIA accessibility provider initialization until requested"
+          },
+          {
+            "author": "ankudutt101@gmail.com",
+            "package": "react-native-windows",
+            "commit": "24f8960205c6f12387c8777208a70ec080bda8f1",
+            "comment": "[Fabric] Fix UIA_LiveSettingPropertyId to use VT_I4 datatype instead of VT_BSTR"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "24f8960205c6f12387c8777208a70ec080bda8f1",
+            "comment": "Fix stackoverflow in StructInfo"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "24f8960205c6f12387c8777208a70ec080bda8f1",
+            "comment": "Add ability to customize native accessibility of custom native components"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "24f8960205c6f12387c8777208a70ec080bda8f1",
+            "comment": "Tooltip positioned incorrectly on non 100% scale factor"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "24f8960205c6f12387c8777208a70ec080bda8f1",
+            "comment": "Pressables should take focus on press"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "24f8960205c6f12387c8777208a70ec080bda8f1",
+            "comment": "Implements selectable for <Text>"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.81.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.81.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Jan 2026 06:05:13 GMT",
+      "version": "0.81.2",
+      "tag": "react-native-windows_v0.81.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2589a216e30d0edb9b2be922ba8b5a3fb6ce2591",
+            "comment": "Align metro-runtime version with core"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 07 Jan 2026 17:42:34 GMT",
+      "version": "0.81.1",
+      "tag": "react-native-windows_v0.81.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0ba33b823aa6ad4d00d47cdc583b07efcdf4379e",
+            "comment": "[NetUI] Reintroduce experimental yoga flag for use by NetUI"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "58d0858332f98821a7f434ba5f6e39ddbe81d0cc",
+            "comment": "Include missing bridging files in MS.RN.Cxx"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 20 Dec 2025 12:02:34 GMT",
       "version": "0.81.0",
       "tag": "react-native-windows_v0.81.0",

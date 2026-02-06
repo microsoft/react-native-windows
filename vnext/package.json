@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.81.0",
+  "version": "0.81.3",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "@react-native-community/cli": "17.0.0",
     "@react-native-community/cli-platform-android": "17.0.0",
     "@react-native-community/cli-platform-ios": "17.0.0",
-    "@react-native-windows/cli": "0.81.0",
+    "@react-native-windows/cli": "0.81.1",
     "@react-native/assets": "1.0.0",
     "@react-native/assets-registry": "0.81.5",
     "@react-native/codegen": "0.81.5",
@@ -50,7 +50,7 @@
     "invariant": "^2.2.4",
     "jest-environment-node": "^29.7.0",
     "memoize-one": "^5.0.0",
-    "metro-runtime": "^0.82.2",
+    "metro-runtime": "^0.83.1",
     "metro-source-map": "^0.82.2",
     "mkdirp": "^0.5.1",
     "nullthrows": "^1.1.1",
@@ -68,7 +68,7 @@
     "yargs": "^17.6.2"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.81.0",
+    "@react-native-windows/codegen": "0.81.1",
     "@react-native/metro-config": "0.81.5",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.37",

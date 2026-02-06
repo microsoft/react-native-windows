@@ -8,9 +8,9 @@
 
 'use strict';
 
-const resolveAssetSource = require('./resolveAssetSource.js'); // Get base impl
-const Platform = require('../Utilities/Platform').default;
-const ensureShortPath = require('./assetPaths.js');
+import resolveAssetSource from './resolveAssetSource.js'; // Get base impl
+import Platform from '../Utilities/Platform';
+import ensureShortPath from './assetPaths';
 
 type IPackagerAsset = {
   __packager_asset: boolean,
@@ -123,9 +123,10 @@ class AssetResolverLateScaleResolution {
 
 // We should leave the resource scale out of the URI, and do that lookup on the native side.
 // That way we can handle dynamic dpi changes and multimon scenarios better
-resolveAssetSource.setCustomSourceTransformer(resolver => {
+function setCustomSourceTransformer(resolver) {
   const lsrResolver = new AssetResolverLateScaleResolution(resolver);
   return lsrResolver.defaultAsset();
-});
+}
 
-module.exports = resolveAssetSource;
+resolveAssetSource.setCustomSourceTransformer = setCustomSourceTransformer;
+export default resolveAssetSource;

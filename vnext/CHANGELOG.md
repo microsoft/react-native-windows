@@ -1,8 +1,44 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 20 Dec 2025 12:02:34 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 27 Jan 2026 19:33:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.3
+
+Tue, 27 Jan 2026 19:33:59 GMT
+
+### Patches
+
+- Add TSF support to TextInput (30809111+acoates-ms@users.noreply.github.com)
+- adding accessibility and UIA support for XAML fabric (protikbiswas100@microsoft.com)
+- Fix DPI scaling for debugging overlay highlights (74712637+iamAbhi-916@users.noreply.github.com)
+- Defer UIA accessibility provider initialization until requested (198982749+Copilot@users.noreply.github.com)
+- [Fabric] Fix UIA_LiveSettingPropertyId to use VT_I4 datatype instead of VT_BSTR (ankudutt101@gmail.com)
+- Fix stackoverflow in StructInfo (vmorozov@microsoft.com)
+- Add ability to customize native accessibility of custom native components (30809111+acoates-ms@users.noreply.github.com)
+- Tooltip positioned incorrectly on non 100% scale factor (30809111+acoates-ms@users.noreply.github.com)
+- Pressables should take focus on press (30809111+acoates-ms@users.noreply.github.com)
+- Implements selectable for <Text> (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.81.1
+- Bump @react-native-windows/codegen to v0.81.1
+
+## 0.81.2
+
+Wed, 14 Jan 2026 06:05:13 GMT
+
+### Patches
+
+- Align metro-runtime version with core (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.81.1
+
+Wed, 07 Jan 2026 17:42:34 GMT
+
+### Patches
+
+- [NetUI] Reintroduce experimental yoga flag for use by NetUI (30809111+acoates-ms@users.noreply.github.com)
+- Include missing bridging files in MS.RN.Cxx (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.0
 
