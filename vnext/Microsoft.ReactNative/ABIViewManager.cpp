@@ -191,7 +191,11 @@ void ABIViewManager::AddView(const xaml::DependencyObject &parent, const xaml::D
 
 void ABIViewManager::RemoveAllChildren(const xaml::DependencyObject &parent) {
   if (m_viewManagerWithChildren) {
-    m_viewManagerWithChildren.RemoveAllChildren(parent.as<xaml::FrameworkElement>());
+    try {
+      m_viewManagerWithChildren.RemoveAllChildren(parent.as<xaml::FrameworkElement>());
+    } catch (...) {
+      // External view manager may fail during shutdown if view is already disposed
+    }
   } else {
     Super::RemoveAllChildren(parent);
   }
