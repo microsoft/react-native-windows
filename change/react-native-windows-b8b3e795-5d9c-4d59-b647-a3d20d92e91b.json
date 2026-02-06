@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fix crash in ABIViewManager::RemoveAllChildren during shutdown",
+  "packageName": "react-native-windows",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "none"
+}
