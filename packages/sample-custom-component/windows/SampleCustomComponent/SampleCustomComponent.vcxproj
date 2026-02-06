@@ -101,6 +101,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClInclude Include="CalendarView.h" />
+    <ClInclude Include="ComboBox.h" />
     <ClInclude Include="CustomAccessibility.h" />
     <ClInclude Include="DrawingIsland.h">
       <DependentUpon>DrawingIsland.idl</DependentUpon>
@@ -126,6 +127,7 @@
       <DependentUpon>ReactPackageProvider.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="CalendarView.cpp" />
+    <ClCompile Include="ComboBox.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>

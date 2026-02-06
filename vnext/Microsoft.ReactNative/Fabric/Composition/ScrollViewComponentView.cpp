@@ -6,6 +6,7 @@
 
 #include "ScrollViewComponentView.h"
 
+#include <Fabric/ComponentView.h>
 #include <Utils/ValueUtils.h>
 
 #pragma warning(push)
@@ -19,6 +20,8 @@
 #include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
 #include <unicode.h>
+#include <functional>
+#include "ContentIslandComponentView.h"
 #include "JSValueReader.h"
 #include "RootComponentView.h"
 
@@ -1325,6 +1328,11 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
             m_allowNextScrollNoMatterWhat = false;
           }
         }
+
+        // Issue #15557: Fire LayoutMetricsChanged to notify ContentIslandComponentView instances
+        // that scroll position has changed, so they can update their LocalToParentTransformMatrix
+        // for correct XAML popup positioning
+        FireLayoutMetricsChangedForScrollPositionChange();
       });
 
   m_scrollBeginDragRevoker = m_scrollVisual.ScrollBeginDrag(
@@ -1332,6 +1340,9 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        // Issue #15557: Dismiss any open XAML popups when scroll begins (light dismiss behavior)
+        DismissChildContentIslandPopups();
+
         m_allowNextScrollNoMatterWhat = true; // Ensure next scroll event is recorded, regardless of throttle
         updateStateWithContentOffset();
         auto eventEmitter = GetEventEmitter();
@@ -1477,5 +1488,42 @@ void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noe
 
 void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
+}
+
+// Issue #15557: Fire LayoutMetricsChanged to notify ContentIslandComponentView instances
+// that scroll position has changed, so they can update their LocalToParentTransformMatrix
+// for correct XAML popup positioning.
+void ScrollViewComponentView::FireLayoutMetricsChangedForScrollPositionChange() noexcept {
+  // Create LayoutMetricsChangedArgs with same old/new metrics
+  // The actual scroll offset is handled in getClientOffset() which ContentIslandComponentView
+  // uses when calculating the transform matrix via getClientRect()
+  winrt::Microsoft::ReactNative::LayoutMetrics metrics{
+      {m_layoutMetrics.frame.origin.x,
+       m_layoutMetrics.frame.origin.y,
+       m_layoutMetrics.frame.size.width,
+       m_layoutMetrics.frame.size.height},
+      m_layoutMetrics.pointScaleFactor};
+
+  m_layoutMetricsChangedEvent(
+      *this, winrt::make<winrt::Microsoft::ReactNative::implementation::LayoutMetricsChangedArgs>(metrics, metrics));
+}
+
+// Issue #15557: Event accessors for ScrollBeginDrag
+winrt::event_token ScrollViewComponentView::ScrollBeginDrag(
+    winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept {
+  return m_scrollBeginDragEvent.add(handler);
+}
+
+void ScrollViewComponentView::ScrollBeginDrag(winrt::event_token const &token) noexcept {
+  m_scrollBeginDragEvent.remove(token);
+}
+
+// Issue #15557: Fire ScrollBeginDrag event to notify registered ContentIslandComponentView instances.
+// ContentIslandComponentViews register during their OnMounted by walking up the tree and subscribing
+// to this event on any parent ScrollViewComponentViews. This is more efficient than walking the tree
+// on every scroll begin.
+void ScrollViewComponentView::DismissChildContentIslandPopups() noexcept {
+  // Fire the event to all registered listeners (ContentIslandComponentViews that are descendants of this ScrollView)
+  m_scrollBeginDragEvent(*this, nullptr);
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
