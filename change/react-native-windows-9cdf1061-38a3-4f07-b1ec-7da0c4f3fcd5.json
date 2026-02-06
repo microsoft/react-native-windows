@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fix watson bug",
+  "packageName": "react-native-windows",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "none"
+}
