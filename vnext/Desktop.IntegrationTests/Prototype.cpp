@@ -142,19 +142,19 @@ TEST_CLASS (Prototype) {
     winrt::init_apartment(winrt::apartment_type::multi_threaded);
 
 
-    // 2) Bootstrap the Windows App SDK.
     // Use the version constants from WindowsAppSDK-VersionInfo.h
-    const UINT32 majorMinor = Microsoft::WindowsAppSDK::Release::MajorMinor;
-    PCWSTR versionTag = WINDOWSAPPSDK_RELEASE_CHANNEL_W; // e.g. LTS, Stable, etc.
-    PCWSTR minVersion = WINDOWSAPPSDK_RELEASE_VERSION_TAG_W; // e.g. "1.5.240829000"
+    //const UINT32 majorMinor = WINDOWSAPPSDK_RELEASE_MAJORMINOR;
+    //PCWSTR versionTag = WINDOWSAPPSDK_RELEASE_CHANNEL_W; // e.g. LTS, Stable, etc.
+    //PCWSTR minVersion = WINDOWSAPPSDK_RELEASE_VERSION_TAG_W; // e.g. "1.5.240829000"
 
-    // If you’re on an older SDK that doesn’t have Initialize2, call MddBootstrapInitialize instead.
-    // The OnNoMatch_ShowUI option is helpful while developing so you’re prompted to install runtime if missing.
-    //MddBootstrapInitialize2(Microsoft::WindowsAppSDK::Release::MajorMinor, versionTag, minVersion, MddBootstrapInitializeOptions_OnNoMatch_ShowUI);
-    //MddBootstrapInitialize2(
-    //    Microsoft::WindowsAppSDK::Release::MajorMinor,
-    //    versionTag,
-    //    WINDOWSAPPSDK_RUNTIME_VERSION_UINT64);
+    if (FAILED(MddBootstrapInitialize2(
+        Microsoft::WindowsAppSDK::Release::MajorMinor,
+        Microsoft::WindowsAppSDK::Release::VersionTag,
+        { Microsoft::WindowsAppSDK::Runtime::Version::UInt64 },
+            MddBootstrapInitializeOptions::MddBootstrapInitializeOptions_None)))
+    {
+      throw std::exception("Could not initialize Windows App runtime");
+    }
   }
 
   TEST_CLASS_CLEANUP(Cleanup)
@@ -164,10 +164,7 @@ TEST_CLASS (Prototype) {
 
   TEST_METHOD(Proto2)
   {
-    //auto holder = TestReactNativeHostHolder(L"TurboModuleTests", [](msrn::ReactNativeHost const &host) noexcept {});
-
-    auto controller = winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnDedicatedThread();
-
+    auto holder = TestReactNativeHostHolder(L"TurboModuleTests", [](msrn::ReactNativeHost const &host) noexcept {});
 
     Assert::IsTrue(true);
   }
