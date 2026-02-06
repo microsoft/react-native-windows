@@ -2842,9 +2842,9 @@
   integrity sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw==
 
 "@types/node@^22.0.0", "@types/node@^22.14.0":
-  version "22.19.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.19.8.tgz#b0c7812df8a98a001570950f4275f0c10fcad101"
-  integrity sha512-ebO/Yl+EAvVe8DnMfi+iaAyIqYdK0q/q0y0rw82INWEKJOBe6b/P3YWE8NW7oOlF/nXFNrHwhARrN/hdgDkraA==
+  version "22.19.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.19.9.tgz#2f7c7b09fe8441c4520e9a791ab615a313917111"
+  integrity sha512-PD03/U8g1F9T9MI+1OBisaIARhSzeidsUjQaf51fOxrfjeiKN9bLVO06lHuHYjxdnqLWJijJHfqXPSJri2EM2A==
   dependencies:
     undici-types "~6.21.0"
 
