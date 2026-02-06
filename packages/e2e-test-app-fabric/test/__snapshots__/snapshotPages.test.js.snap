@@ -2256,7 +2256,8 @@ exports[`snapshotAllPages Animated 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           }
         }
         testID="toggle-use-native-driver"
@@ -3294,7 +3295,8 @@ exports[`snapshotAllPages Animated 2`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           }
         }
         testID="toggle-use-native-driver"
@@ -3492,7 +3494,8 @@ exports[`snapshotAllPages Animated 3`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           }
         }
         testID="toggle-use-native-driver"
@@ -3632,7 +3635,8 @@ exports[`snapshotAllPages Animated 4`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           }
         }
         testID="toggle-use-native-driver"
@@ -4986,7 +4990,8 @@ exports[`snapshotAllPages Animated 5`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           }
         }
         testID="toggle-use-native-driver"
@@ -6082,7 +6087,8 @@ exports[`snapshotAllPages Animated 7`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           }
         }
         testID="toggle-use-native-driver"
@@ -6218,7 +6224,8 @@ exports[`snapshotAllPages Animated 8`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           }
         }
         testID="toggle-use-native-driver"
@@ -6559,7 +6566,8 @@ exports[`snapshotAllPages Animated 9`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           }
         }
         testID="toggle-use-native-driver"
@@ -6699,7 +6707,8 @@ exports[`snapshotAllPages Animated 10`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           }
         }
         testID="toggle-use-native-driver"
@@ -7593,7 +7602,8 @@ exports[`snapshotAllPages Animated 14`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       testID="toggle-use-native-driver"
@@ -11744,7 +11754,8 @@ exports[`snapshotAllPages Display:none Style 1`] = `
                 onStartShouldSetResponder={[Function]}
                 style={
                   {
-                    "alignSelf": "flex-start",
+                    "height": 31,
+                    "width": 51,
                   }
                 }
                 testID="toggle-display:none"
@@ -28801,7 +28812,8 @@ exports[`snapshotAllPages LegacyControlStyleTest 1`] = `
       style={
         [
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           },
           {
             "backgroundColor": "rgba(225,225,225,0.2)",
@@ -30806,7 +30818,8 @@ exports[`snapshotAllPages Modal 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={false}
@@ -30848,7 +30861,8 @@ exports[`snapshotAllPages Modal 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={false}
@@ -30890,7 +30904,8 @@ exports[`snapshotAllPages Modal 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={false}
@@ -30932,7 +30947,8 @@ exports[`snapshotAllPages Modal 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={false}
@@ -31333,7 +31349,8 @@ exports[`snapshotAllPages Modal 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           }
         }
         value={false}
@@ -34135,7 +34152,8 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={false}
@@ -34171,7 +34189,8 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={false}
@@ -39316,7 +39335,8 @@ exports[`snapshotAllPages Pressable 15`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={false}
@@ -40820,7 +40840,8 @@ exports[`snapshotAllPages RTLExample 1`] = `
         style={
           [
             {
-              "alignSelf": "flex-start",
+              "height": 31,
+              "width": 51,
             },
             {
               "position": "absolute",
@@ -67354,7 +67375,8 @@ exports[`snapshotAllPages Switch 1`] = `
       onTintColor="yellow"
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       testID="on-off-initial-off"
@@ -67394,7 +67416,8 @@ exports[`snapshotAllPages Switch 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       testID="on-off-initial-on"
@@ -67439,7 +67462,8 @@ exports[`snapshotAllPages Switch 2`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       testID="disabled-initial-off"
@@ -67479,7 +67503,8 @@ exports[`snapshotAllPages Switch 2`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       testID="disabled-initial-on"
@@ -67522,7 +67547,8 @@ exports[`snapshotAllPages Switch 3`] = `
       style={
         [
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           },
           {
             "marginBottom": 10,
@@ -67542,7 +67568,8 @@ exports[`snapshotAllPages Switch 3`] = `
       style={
         [
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           },
           {
             "marginBottom": 10,
@@ -67577,7 +67604,8 @@ exports[`snapshotAllPages Switch 3`] = `
       style={
         [
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           },
           {
             "marginBottom": 10,
@@ -67597,7 +67625,8 @@ exports[`snapshotAllPages Switch 3`] = `
       style={
         [
           {
-            "alignSelf": "flex-start",
+            "height": 31,
+            "width": 51,
           },
           {
             "marginBottom": 10,
@@ -67634,7 +67663,8 @@ exports[`snapshotAllPages Switch 4`] = `
   onStartShouldSetResponder={[Function]}
   style={
     {
-      "alignSelf": "flex-start",
+      "height": 31,
+      "width": 51,
     }
   }
   testID="controlled-switch"
@@ -67655,7 +67685,8 @@ exports[`snapshotAllPages Switch 5`] = `
     style={
       [
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         },
         {
           "marginBottom": 10,
@@ -67677,7 +67708,8 @@ exports[`snapshotAllPages Switch 5`] = `
     onTintColor="#00ff00"
     style={
       {
-        "alignSelf": "flex-start",
+        "height": 31,
+        "width": 51,
       }
     }
     testID="initial-true-switch"
@@ -67699,7 +67731,8 @@ exports[`snapshotAllPages Switch 6`] = `
     onStartShouldSetResponder={[Function]}
     style={
       {
-        "alignSelf": "flex-start",
+        "height": 31,
+        "width": 51,
       }
     }
     value={false}
@@ -67719,7 +67752,8 @@ exports[`snapshotAllPages Switch 7`] = `
     style={
       [
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         },
         {
           "backgroundColor": "blue",
@@ -67761,7 +67795,8 @@ exports[`snapshotAllPages Switch 8`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={true}
@@ -67780,7 +67815,8 @@ exports[`snapshotAllPages Switch 8`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={true}
@@ -67810,7 +67846,8 @@ exports[`snapshotAllPages Switch 8`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={false}
@@ -67829,7 +67866,8 @@ exports[`snapshotAllPages Switch 8`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={true}
@@ -80155,7 +80193,8 @@ exports[`snapshotAllPages TextInput 21`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={true}
@@ -80181,7 +80220,8 @@ exports[`snapshotAllPages TextInput 21`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={true}
@@ -82010,7 +82050,8 @@ exports[`snapshotAllPages TextInput 37`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={true}
@@ -82027,7 +82068,8 @@ exports[`snapshotAllPages TextInput 37`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={true}
@@ -82881,7 +82923,8 @@ exports[`snapshotAllPages TextInput 46`] = `
     onStartShouldSetResponder={[Function]}
     style={
       {
-        "alignSelf": "flex-start",
+        "height": 31,
+        "width": 51,
       }
     }
     value={true}
@@ -90911,7 +90954,8 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={false}
@@ -90948,7 +90992,8 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={true}
@@ -90985,7 +91030,8 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={false}
@@ -91022,7 +91068,8 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         {
-          "alignSelf": "flex-start",
+          "height": 31,
+          "width": 51,
         }
       }
       value={false}
