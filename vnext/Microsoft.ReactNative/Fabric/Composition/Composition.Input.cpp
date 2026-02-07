@@ -136,6 +136,28 @@ winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource CharacterRecei
   return m_source;
 }
 
+ContextMenuRoutedEventArgs::ContextMenuRoutedEventArgs(
+    facebook::react::Tag tag,
+    winrt::Windows::Foundation::Point position,
+    bool isKeyboardTriggered)
+    : m_tag(tag), m_position(position), m_isKeyboardTriggered(isKeyboardTriggered) {}
+
+int32_t ContextMenuRoutedEventArgs::OriginalSource() noexcept {
+  return m_tag;
+}
+bool ContextMenuRoutedEventArgs::Handled() noexcept {
+  return m_handled;
+}
+void ContextMenuRoutedEventArgs::Handled(bool value) noexcept {
+  m_handled = value;
+}
+winrt::Windows::Foundation::Point ContextMenuRoutedEventArgs::Position() noexcept {
+  return m_position;
+}
+bool ContextMenuRoutedEventArgs::IsKeyboardTriggered() noexcept {
+  return m_isKeyboardTriggered;
+}
+
 Pointer::Pointer(winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType type, uint32_t id)
     : m_type(type), m_id(id) {}
 

@@ -78,6 +78,28 @@ struct CharacterReceivedRoutedEventArgs
   const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource m_source;
 };
 
+struct ContextMenuRoutedEventArgs : winrt::implements<
+                                        ContextMenuRoutedEventArgs,
+                                        winrt::Microsoft::ReactNative::Composition::Input::ContextMenuRoutedEventArgs,
+                                        winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> {
+  ContextMenuRoutedEventArgs(
+      facebook::react::Tag tag,
+      winrt::Windows::Foundation::Point position,
+      bool isKeyboardTriggered);
+
+  int32_t OriginalSource() noexcept;
+  bool Handled() noexcept;
+  void Handled(bool value) noexcept;
+  winrt::Windows::Foundation::Point Position() noexcept;
+  bool IsKeyboardTriggered() noexcept;
+
+ private:
+  facebook::react::Tag m_tag{-1};
+  bool m_handled{false};
+  winrt::Windows::Foundation::Point m_position;
+  bool m_isKeyboardTriggered{false};
+};
+
 struct Pointer : PointerT<Pointer> {
   Pointer(winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType type, uint32_t id);
 

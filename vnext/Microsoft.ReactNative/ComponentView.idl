@@ -106,6 +106,8 @@ namespace Microsoft.ReactNative
     DOC_STRING("Used to handle key up events when this component is focused, or if a child component did not handle the key up")
     event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.KeyRoutedEventArgs> KeyUp;
     event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.CharacterReceivedRoutedEventArgs> CharacterReceived;
+    DOC_STRING("Used to handle context menu events (SHIFT+F10, Context Menu key, or right-click) when this component is focused")
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.ContextMenuRoutedEventArgs> ContextMenu;
     event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs> PointerPressed;
     event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs> PointerReleased;
     event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs> PointerMoved;

@@ -67,6 +67,8 @@ struct WindowsTextInputComponentView
   void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void OnCharacterReceived(const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs
                                &args) noexcept override;
+  void OnContextMenu(
+      const winrt::Microsoft::ReactNative::Composition::Input::ContextMenuRoutedEventArgs &args) noexcept override;
   void onMounted() noexcept override;
 
   std::optional<std::string> getAccessiblityValue() noexcept override;

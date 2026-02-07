@@ -469,6 +469,16 @@ void ComponentView::CharacterReceived(winrt::event_token const &token) noexcept 
   m_characterReceivedEvent.remove(token);
 }
 
+winrt::event_token ComponentView::ContextMenu(
+    winrt::Windows::Foundation::EventHandler<
+        winrt::Microsoft::ReactNative::Composition::Input::ContextMenuRoutedEventArgs> const &handler) noexcept {
+  return m_contextMenuEvent.add(handler);
+}
+
+void ComponentView::ContextMenu(winrt::event_token const &token) noexcept {
+  m_contextMenuEvent.remove(token);
+}
+
 winrt::event_token ComponentView::PointerPressed(
     winrt::Windows::Foundation::EventHandler<
         winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs> const &handler) noexcept {
@@ -606,6 +616,14 @@ void ComponentView::OnCharacterReceived(
   m_characterReceivedEvent(*this, args);
   if (m_parent && !args.Handled()) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->OnCharacterReceived(args);
+  }
+}
+
+void ComponentView::OnContextMenu(
+    const winrt::Microsoft::ReactNative::Composition::Input::ContextMenuRoutedEventArgs &args) noexcept {
+  m_contextMenuEvent(*this, args);
+  if (m_parent && !args.Handled()) {
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->OnContextMenu(args);
   }
 }
 
