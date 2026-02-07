@@ -222,6 +222,7 @@ extends:
               BuildDropPath: $(System.DefaultWorkingDirectory)
 
           templateContext:
+            type: releaseJob
             outputs:
               - output: pipelineArtifact
                 displayName: 'Publish npm pack artifacts'
@@ -447,6 +448,7 @@ extends:
               TreatNotIndexedAsWarning: false
 
           templateContext:
+            type: releaseJob
             sdl:
               binskim:
                 analyzeTargetGlob: '$(System.DefaultWorkingDirectory)\NugetRoot\**\Microsoft.ReactNative\Microsoft.ReactNative.dll;$(System.DefaultWorkingDirectory)\NugetRoot\**\React.Windows.Desktop.DLL\react-native-win32.dll'
