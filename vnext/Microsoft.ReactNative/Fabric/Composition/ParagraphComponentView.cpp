@@ -539,6 +539,7 @@ void ParagraphComponentView::ClearSelection() noexcept {
   m_selectionStart = std::nullopt;
   m_selectionEnd = std::nullopt;
   m_isSelecting = false;
+  m_isWordSelecting = false;
   if (hadSelection) {
     // Clears selection highlight
     DrawText();
@@ -589,7 +590,13 @@ void ParagraphComponentView::OnPointerPressed(
 
     if (isDoubleClick) {
       SelectWordAtPosition(*charPosition);
-      m_isSelecting = false;
+      if (m_selectionStart && m_selectionEnd) {
+        m_isWordSelecting = true;
+        m_wordAnchorStart = *m_selectionStart;
+        m_wordAnchorEnd = *m_selectionEnd;
+        m_isSelecting = true;
+        CapturePointer(args.Pointer());
+      }
     } else {
       // Single-click: start drag selection
       m_selectionStart = charPosition;
@@ -631,10 +638,28 @@ void ParagraphComponentView::OnPointerMoved(
   facebook::react::Point localPt{position.X, position.Y};
   std::optional<int32_t> charPosition = GetClampedTextPosition(localPt);
 
-  if (charPosition && charPosition != m_selectionEnd) {
-    m_selectionEnd = charPosition;
-    DrawText();
-    args.Handled(true);
+  if (charPosition) {
+    if (m_isWordSelecting) {
+      // Extend selection by whole words
+      auto [wordStart, wordEnd] = GetWordBoundariesAtPosition(*charPosition);
+
+      if (*charPosition < m_wordAnchorStart) {
+        m_selectionStart = wordStart;
+        m_selectionEnd = m_wordAnchorEnd;
+      } else if (*charPosition >= m_wordAnchorEnd) {
+        m_selectionStart = m_wordAnchorStart;
+        m_selectionEnd = wordEnd;
+      } else {
+        m_selectionStart = m_wordAnchorStart;
+        m_selectionEnd = m_wordAnchorEnd;
+      }
+      DrawText();
+      args.Handled(true);
+    } else if (charPosition != m_selectionEnd) {
+      m_selectionEnd = charPosition;
+      DrawText();
+      args.Handled(true);
+    }
   }
 }
 
@@ -658,6 +683,7 @@ void ParagraphComponentView::OnPointerReleased(
   }
 
   m_isSelecting = false;
+  m_isWordSelecting = false;
 
   ReleasePointerCapture(args.Pointer());
 
@@ -682,6 +708,7 @@ void ParagraphComponentView::OnPointerCaptureLost() noexcept {
   // Pointer capture was lost stop any active selection drag
   if (m_isSelecting) {
     m_isSelecting = false;
+    m_isWordSelecting = false;
 
     if (!m_selectionStart || !m_selectionEnd || *m_selectionStart == *m_selectionEnd) {
       m_selectionStart = std::nullopt;
@@ -732,12 +759,17 @@ void ParagraphComponentView::CopySelectionToClipboard() noexcept {
   winrt::Windows::ApplicationModel::DataTransfer::Clipboard::SetContent(dataPackage);
 }
 
-void ParagraphComponentView::SelectWordAtPosition(int32_t charPosition) noexcept {
+std::pair<int32_t, int32_t> ParagraphComponentView::GetWordBoundariesAtPosition(int32_t charPosition) noexcept {
   const std::wstring utf16Text{facebook::react::WindowsTextLayoutManager::GetTransformedText(m_attributedStringBox)};
   const int32_t textLength = static_cast<int32_t>(utf16Text.length());
 
-  if (utf16Text.empty() || charPosition < 0 || charPosition >= textLength) {
-    return;
+  if (utf16Text.empty() || charPosition < 0) {
+    return {0, 0};
+  }
+
+  charPosition = std::min(charPosition, textLength - 1);
+  if (charPosition < 0) {
+    return {0, 0};
   }
 
   int32_t wordStart = charPosition;
@@ -769,6 +801,12 @@ void ParagraphComponentView::SelectWordAtPosition(int32_t charPosition) noexcept
       wordEnd = ::Microsoft::ReactNative::IcuUtils::MoveToNextCodePoint(utf16Text.c_str(), textLength, wordEnd);
     }
   }
+
+  return {wordStart, wordEnd};
+}
+
+void ParagraphComponentView::SelectWordAtPosition(int32_t charPosition) noexcept {
+  auto [wordStart, wordEnd] = GetWordBoundariesAtPosition(charPosition);
 
   if (wordEnd > wordStart) {
     SetSelection(wordStart, wordEnd);
