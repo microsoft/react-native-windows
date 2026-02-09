@@ -161,6 +161,39 @@ void RegisterTooltipWndClass() noexcept {
   registered = true;
 }
 
+// Clamp tooltip position so it stays within the nearest monitor's work area.
+// Flips the tooltip below the cursor if it would go above the work area.
+void ClampTooltipToMonitor(POINT cursorScreenPt, int tooltipWidth, int tooltipHeight, float scaleFactor, int &x, int &y) noexcept {
+  HMONITOR hMonitor = MonitorFromPoint(cursorScreenPt, MONITOR_DEFAULTTONEAREST);
+  if (!hMonitor)
+    return;
+
+  MONITORINFO mi = {};
+  mi.cbSize = sizeof(mi);
+  if (!GetMonitorInfo(hMonitor, &mi))
+    return;
+
+  const RECT &workArea = mi.rcWork;
+
+  // Clamp horizontally
+  if (x + tooltipWidth > workArea.right) {
+    x = workArea.right - tooltipWidth;
+  }
+  if (x < workArea.left) {
+    x = workArea.left;
+  }
+
+  // If tooltip goes above the work area, flip it below the cursor
+  if (y < workArea.top) {
+    y = static_cast<int>(cursorScreenPt.y + (toolTipPlacementMargin * scaleFactor));
+  }
+
+  // If tooltip goes below the work area (after flip), clamp to bottom
+  if (y + tooltipHeight > workArea.bottom) {
+    y = workArea.bottom - tooltipHeight;
+  }
+}
+
 TooltipTracker::TooltipTracker(
     const winrt::Microsoft::ReactNative::ComponentView &view,
     const winrt::Microsoft::ReactNative::ReactPropertyBag &properties,
@@ -227,6 +260,11 @@ void TooltipTracker::OnPointerExited(
   DestroyTooltip();
 }
 
+void TooltipTracker::DismissActiveTooltip() noexcept {
+  DestroyTimer();
+  DestroyTooltip();
+}
+
 void TooltipTracker::OnUnmounted(
     const winrt::Windows::Foundation::IInspectable &,
     const winrt::Microsoft::ReactNative::ComponentView &) noexcept {
@@ -267,8 +305,15 @@ void TooltipTracker::ShowTooltip(const winrt::Microsoft::ReactNative::ComponentV
           static_cast<int>((tm.width + tooltipHorizontalPadding + tooltipHorizontalPadding) * scaleFactor);
       tooltipData->height = static_cast<int>((tm.height + tooltipTopPadding + tooltipBottomPadding) * scaleFactor);
 
-      POINT pt = {static_cast<LONG>(m_pos.X * scaleFactor), static_cast<LONG>(m_pos.Y * scaleFactor)};
-      ClientToScreen(parentHwnd, &pt);
+      // Convert island-local DIP coordinates to screen pixel coordinates.
+      // Use LocalToScreen which properly handles both ContentIsland and HWND hosting.
+      auto screenPt = selfView->LocalToScreen({m_pos.X, m_pos.Y});
+      POINT pt = {static_cast<LONG>(screenPt.X), static_cast<LONG>(screenPt.Y)};
+
+      // Calculate initial desired tooltip position and clamp to monitor work area
+      int tooltipX = pt.x - tooltipData->width / 2;
+      int tooltipY = static_cast<int>(pt.y - tooltipData->height - (toolTipPlacementMargin * scaleFactor));
+      ClampTooltipToMonitor(pt, tooltipData->width, tooltipData->height, scaleFactor, tooltipX, tooltipY);
 
       RegisterTooltipWndClass();
       HINSTANCE hInstance = GetModuleHandle(NULL);
@@ -276,8 +321,8 @@ void TooltipTracker::ShowTooltip(const winrt::Microsoft::ReactNative::ComponentV
           c_tooltipWindowClassName,
           L"Tooltip",
           WS_POPUP,
-          pt.x - tooltipData->width / 2,
-          static_cast<int>(pt.y - tooltipData->height - (toolTipPlacementMargin * scaleFactor)),
+          tooltipX,
+          tooltipY,
           tooltipData->width,
           tooltipData->height,
           parentHwnd,
@@ -323,6 +368,12 @@ void TooltipService::StopTracking(const winrt::Microsoft::ReactNative::Component
       it = m_trackers.erase(it);
     else
       ++it;
+  }
+}
+
+void TooltipService::DismissAllTooltips() noexcept {
+  for (auto &tracker : m_trackers) {
+    tracker->DismissActiveTooltip();
   }
 }
 
