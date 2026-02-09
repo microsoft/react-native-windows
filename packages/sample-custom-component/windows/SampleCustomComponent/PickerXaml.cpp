@@ -35,15 +35,28 @@ struct PickerXamlComponentView : winrt::implements<PickerXamlComponentView, winr
     m_comboBox.SelectionChangedTrigger(winrt::Microsoft::UI::Xaml::Controls::ComboBoxSelectionChangedTrigger::Always);
 
     // Listen for size changes on the comboBox
-    m_comboBox.SizeChanged([this](auto const & /*sender*/, auto const & /*args*/) { RefreshSize(); });
+    auto weakThis = winrt::get_weak(*this);
+    m_comboBox.SizeChanged([weakThis](auto const & /*sender*/, auto const & /*args*/) {
+      if (auto strongThis = weakThis.get()) {
+        strongThis->RefreshSize();
+      }
+    });
 
     // Listen for selection changes
-    m_selectionChangedRevoker = m_comboBox.SelectionChanged(
-        winrt::auto_revoke, [this](const auto & /*sender*/, const auto & /*args*/) { EmitPickerSelectEvent(); });
+    m_selectionChangedRevoker =
+        m_comboBox.SelectionChanged(winrt::auto_revoke, [weakThis](const auto & /*sender*/, const auto & /*args*/) {
+          if (auto strongThis = weakThis.get()) {
+            strongThis->EmitPickerSelectEvent();
+          }
+        });
 
     // Listen for text submitted (when user presses Enter in editable mode)
-    m_textSubmittedRevoker = m_comboBox.TextSubmitted(
-        winrt::auto_revoke, [this](const auto & /*sender*/, const auto & /*args*/) { EmitPickerSelectEvent(); });
+    m_textSubmittedRevoker =
+        m_comboBox.TextSubmitted(winrt::auto_revoke, [weakThis](const auto & /*sender*/, const auto & /*args*/) {
+          if (auto strongThis = weakThis.get()) {
+            strongThis->EmitPickerSelectEvent();
+          }
+        });
 
     m_island = winrt::Microsoft::UI::Xaml::XamlIsland{};
     m_island.Content(m_comboBox);
@@ -152,10 +165,19 @@ struct PickerXamlComponentView : winrt::implements<PickerXamlComponentView, winr
 
     action();
 
-    m_selectionChangedRevoker = m_comboBox.SelectionChanged(
-        winrt::auto_revoke, [this](const auto & /*sender*/, const auto & /*args*/) { EmitPickerSelectEvent(); });
-    m_textSubmittedRevoker = m_comboBox.TextSubmitted(
-        winrt::auto_revoke, [this](const auto & /*sender*/, const auto & /*args*/) { EmitPickerSelectEvent(); });
+    auto weakThis = winrt::get_weak(*this);
+    m_selectionChangedRevoker =
+        m_comboBox.SelectionChanged(winrt::auto_revoke, [weakThis](const auto & /*sender*/, const auto & /*args*/) {
+          if (auto strongThis = weakThis.get()) {
+            strongThis->EmitPickerSelectEvent();
+          }
+        });
+    m_textSubmittedRevoker =
+        m_comboBox.TextSubmitted(winrt::auto_revoke, [weakThis](const auto & /*sender*/, const auto & /*args*/) {
+          if (auto strongThis = weakThis.get()) {
+            strongThis->EmitPickerSelectEvent();
+          }
+        });
   }
 };
 
