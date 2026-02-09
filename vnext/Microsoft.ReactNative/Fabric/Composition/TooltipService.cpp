@@ -163,7 +163,13 @@ void RegisterTooltipWndClass() noexcept {
 
 // Clamp tooltip position so it stays within the nearest monitor's work area.
 // Flips the tooltip below the cursor if it would go above the work area.
-void ClampTooltipToMonitor(POINT cursorScreenPt, int tooltipWidth, int tooltipHeight, float scaleFactor, int &x, int &y) noexcept {
+void ClampTooltipToMonitor(
+    POINT cursorScreenPt,
+    int tooltipWidth,
+    int tooltipHeight,
+    float scaleFactor,
+    int &x,
+    int &y) noexcept {
   HMONITOR hMonitor = MonitorFromPoint(cursorScreenPt, MONITOR_DEFAULTTONEAREST);
   if (!hMonitor)
     return;
