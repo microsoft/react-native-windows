@@ -651,7 +651,7 @@ void ParagraphComponentView::OnPointerMoved(
     if (m_isWordSelecting) {
       // Extend selection by whole words
       auto [wordStart, wordEnd] = GetWordBoundariesAtPosition(*charPosition);
-      
+
       if (*charPosition < m_wordAnchorStart) {
         m_selectionStart = wordStart;
         m_selectionEnd = m_wordAnchorEnd;
