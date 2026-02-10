@@ -26,8 +26,8 @@ export interface MovingLightProps extends ViewProps {
   // Events
   onSomething?: DirectEventHandler<SomethingEvent>,
   onTestObjectEvent?: DirectEventHandler<{ target: Int32; testObject: UnsafeMixed }>;
-  onEventWithInlineTypes: DirectEventHandler<{ target: Int32; contentInset: { top: Double; bottom: Double; left: Double; right: Double }; contentOffset: { x: Double; y: Double }; contentSize: { width: Double; height: Double }; layoutMeasurement: { width: Double; height: Double }; velocity: { x: Double; y: Double }; isUserTriggered: boolean }>;
-  onEventWithMultipleAliasTypes: DirectEventHandler<{ target: Int32; contentInset: { top: Double; bottom: Double; left: Double; right: Double }; contentOffset: { x: Double; y: Double }; contentSize: { width: Double; height: Double }; layoutMeasurement: { width: Double; height: Double }; velocity: { x: Double; y: Double }; isUserTriggered: boolean }>;
+  onEventWithInlineTypes?: DirectEventHandler<{ target: Int32; contentInset: { top: Double; bottom: Double; left: Double; right: Double }; contentOffset: { x: Double; y: Double }; contentSize: { width: Double; height: Double }; layoutMeasurement: { width: Double; height: Double }; velocity: { x: Double; y: Double }; isUserTriggered: boolean }>;
+  onEventWithMultipleAliasTypes?: DirectEventHandler<{ target: Int32; contentInset: { top: Double; bottom: Double; left: Double; right: Double }; contentOffset: { x: Double; y: Double }; contentSize: { width: Double; height: Double }; layoutMeasurement: { width: Double; height: Double }; velocity: { x: Double; y: Double }; isUserTriggered: boolean }>;
 }
 
 
