@@ -78,6 +78,7 @@ void ContentIslandComponentView::ConnectInternal() noexcept {
     m_childSiteLink.Connect(m_islandToConnect);
     m_islandToConnect = nullptr;
   }
+  UnregisterForRootIslandEvents();
 
   ParentLayoutChanged();
   auto view = Parent();
@@ -111,6 +112,14 @@ void ContentIslandComponentView::RegisterForRootIslandEvents() noexcept {
   }
 }
 
+void ContentIslandComponentView::UnregisterForRootIslandEvents() noexcept {
+  if (m_islandStateChangedToken) {
+    m_parentContentIsland.StateChanged(m_islandStateChangedToken);
+    m_islandStateChangedToken = {};
+    m_parentContentIsland = nullptr;
+  }
+}
+
 void ContentIslandComponentView::OnMounted() noexcept {
   RegisterForRootIslandEvents();
 }
@@ -121,11 +130,7 @@ void ContentIslandComponentView::OnUnmounted() noexcept {
     m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
     m_navigationHostDepartFocusRequestedToken = {};
   }
-  if (m_islandStateChangedToken) {
-    m_parentContentIsland.StateChanged(m_islandStateChangedToken);
-    m_islandStateChangedToken = {};
-    m_parentContentIsland = nullptr;
-  }
+  UnregisterForRootIslandEvents();
 }
 
 void ContentIslandComponentView::ParentLayoutChanged() noexcept {

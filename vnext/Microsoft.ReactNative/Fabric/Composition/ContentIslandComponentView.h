@@ -60,6 +60,7 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   void ParentLayoutChanged() noexcept;
   void ConnectInternal() noexcept;
   void RegisterForRootIslandEvents() noexcept;
+  void UnregisterForRootIslandEvents() noexcept;
   winrt::Microsoft::UI::Content::ContentIsland ParentContentIsland() noexcept;
 
   bool m_layoutChangePosted{false};
