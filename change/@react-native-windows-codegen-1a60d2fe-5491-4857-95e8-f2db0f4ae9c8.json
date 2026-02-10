@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Fix issues with more complex props and event types",
   "packageName": "@react-native-windows/codegen",
   "email": "30809111+acoates-ms@users.noreply.github.com",
