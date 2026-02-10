@@ -346,8 +346,7 @@ export function createComponentGenerator({
           .map(prop => {
             if (prop.typeAnnotation.type === 'MixedTypeAnnotation')
               return `       ${prop.name} = cloneFromProps->${prop.name}.Copy();`;
-            else
-              return `       ${prop.name} = cloneFromProps->${prop.name};`;
+            else return `       ${prop.name} = cloneFromProps->${prop.name};`;
           })
           .join('\n');
 
@@ -416,33 +415,31 @@ export function createComponentGenerator({
               );
           })
           .join('\n\n');
-          
+
         const eventObjectUsings = eventObjectAliases.jobs
           .map(eventObjectTypeName => {
-            return `  using ${eventObjectTypeName.replace(
-              'on',
-              'On',
-            )} = ${getAliasCppName(eventObjectTypeName)/*.replace('_on', '_On')*/};`;
+            return `  using ${eventObjectTypeName.replace('on', 'On')} = ${
+              getAliasCppName(eventObjectTypeName) /*.replace('_on', '_On')*/
+            };`;
           })
           .join('\n');
 
         // Collect all the alias types for the event objects so that we can generate the unnamed types within objects
-        eventObjectAliases.jobs
-          .forEach(eventObjectTypeName => {
-            const eventObjectType =
-              eventObjectAliases.types[eventObjectTypeName]!;
-            eventObjectType.properties
-              .forEach(property => {
-                translateComponentEventType(
-                  property.typeAnnotation,
-                  eventObjectAliases,
-                  eventObjectTypeName,
-                  cppCodegenOptions,
-                );
-              });
-            });
+        eventObjectAliases.jobs.forEach(eventObjectTypeName => {
+          const eventObjectType =
+            eventObjectAliases.types[eventObjectTypeName]!;
+          eventObjectType.properties.forEach(property => {
+            translateComponentEventType(
+              property.typeAnnotation,
+              eventObjectAliases,
+              eventObjectTypeName,
+              cppCodegenOptions,
+            );
+          });
+        });
 
-        const eventObjects = eventObjectAliases.jobs.reverse()
+        const eventObjects = eventObjectAliases.jobs
+          .reverse()
           .map(eventObjectTypeName => {
             const eventObjectType =
               eventObjectAliases.types[eventObjectTypeName]!;
@@ -465,7 +462,7 @@ export function createComponentGenerator({
             return eventsObjectTemplate
               .replace(
                 /::_OBJECT_NAME_::/g,
-                getAliasCppName(eventObjectTypeName)/*.replace('_on', '_On')*/,
+                getAliasCppName(eventObjectTypeName) /*.replace('_on', '_On')*/,
               )
               .replace(/::_OBJECT_FIELDS_::/g, eventObjectFields);
           })

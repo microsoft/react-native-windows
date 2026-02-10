@@ -8,22 +8,22 @@
 import path from 'path';
 import fs from '@react-native-windows/fs';
 import globby from 'globby';
-import type { CppStringTypes } from './generators/GenerateNM2';
-import { createNM2Generator } from './generators/GenerateNM2';
-import { createComponentGenerator } from './generators/GenerateComponentWindows';
+import type {CppStringTypes} from './generators/GenerateNM2';
+import {createNM2Generator} from './generators/GenerateNM2';
+import {createComponentGenerator} from './generators/GenerateComponentWindows';
 import {
   generateTypeScript,
   setOptionalTurboModule,
 } from './generators/GenerateTypeScript';
-import type { SchemaType } from '@react-native/codegen/lib/CodegenSchema';
-import type { Parser } from '@react-native/codegen/lib/parsers/parser';
+import type {SchemaType} from '@react-native/codegen/lib/CodegenSchema';
+import type {Parser} from '@react-native/codegen/lib/parsers/parser';
 
-export type { CppStringTypes } from './generators/GenerateNM2';
+export type {CppStringTypes} from './generators/GenerateNM2';
 
 // Load @react-native/codegen from react-native
 const rnPath = path.dirname(require.resolve('react-native/package.json'));
 const rncodegenPath = path.dirname(
-  require.resolve('@react-native/codegen/package.json', { paths: [rnPath] }),
+  require.resolve('@react-native/codegen/package.json', {paths: [rnPath]}),
 );
 
 function getParser(isTypeScript: boolean): Parser {
@@ -88,7 +88,7 @@ function checkFilesForChanges(
   outputDir = path.resolve(outputDir);
   const globbyDir = outputDir.replace(/\\/g, '/');
   const allExistingFiles = globby
-    .sync([`${globbyDir}/**`, `${globbyDir}/**/.*`], { absolute: true })
+    .sync([`${globbyDir}/**`, `${globbyDir}/**/.*`], {absolute: true})
     .map(_ => path.normalize(_));
   const allGeneratedFiles = [...map.keys()].map(_ => path.normalize(_)).sort();
 
@@ -128,7 +128,7 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
   // This ensures that we delete any generated files from modules that have been deleted
   const allExistingFiles = globby.sync(
     [`${globbyDir}/**`, `${globbyDir}/**/.*`],
-    { absolute: true },
+    {absolute: true},
   );
 
   const allGeneratedFiles = [...map.keys()].map(_ => path.normalize(_)).sort();
@@ -141,7 +141,7 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
 
   for (const [fileName, contents] of map) {
     try {
-      fs.mkdirSync(path.dirname(fileName), { recursive: true });
+      fs.mkdirSync(path.dirname(fileName), {recursive: true});
 
       if (fs.existsSync(fileName)) {
         const currentContents = fs.readFileSync(fileName, 'utf8');
@@ -202,11 +202,11 @@ export function combineSchemas(files: string[]): SchemaType {
           contents.includes('extends TurboModule'))
       ) {
         const schema = parseFile(filename);
-        merged.modules = { ...merged.modules, ...schema.modules };
+        merged.modules = {...merged.modules, ...schema.modules};
       }
       return merged;
     },
-    { modules: {} },
+    {modules: {}},
   );
 }
 
@@ -226,7 +226,7 @@ export function generate(
     moduleSpecName,
     schema,
   }: Options,
-  {/*generators,*/ test }: Config,
+  {/*generators,*/ test}: Config,
 ): boolean {
   schemaValidator.validate(schema);
 
@@ -410,6 +410,6 @@ export function runCodeGen(options: CodeGenOptions): boolean {
       moduleSpecName,
       schema,
     },
-    { generators: [], test: options.test },
+    {generators: [], test: options.test},
   );
 }
