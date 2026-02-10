@@ -58,9 +58,15 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   void OnMounted() noexcept;
   void OnUnmounted() noexcept;
   void ParentLayoutChanged() noexcept;
+  void ConnectInternal() noexcept;
+  void RegisterForRootIslandEvents() noexcept;
+  winrt::Microsoft::UI::Content::ContentIsland ParentContentIsland() noexcept;
 
   bool m_layoutChangePosted{false};
+  winrt::Microsoft::UI::Content::ContentIsland m_parentContentIsland{nullptr};
   winrt::Microsoft::UI::Content::ContentIsland m_islandToConnect{nullptr};
+  winrt::event_token m_islandStateChangedToken;
+
   winrt::event_token m_mountedToken;
   winrt::event_token m_unmountedToken;
   std::vector<winrt::Microsoft::ReactNative::ComponentView::LayoutMetricsChanged_revoker> m_layoutMetricChangedRevokers;
