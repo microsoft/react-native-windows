@@ -19,6 +19,7 @@
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
+    "minimatch": "^10.0.3",
     "jsonrpc-lite": "^2.2.0"
   },
   "devDependencies": {
