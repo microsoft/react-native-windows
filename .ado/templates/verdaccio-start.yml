@@ -20,7 +20,7 @@ steps:
     - script: npx beachball bump --branch origin/$(BeachBallBranchName) --no-push --yes --verbose --changehint "Run `yarn change` from root of repo to generate a change file."
       displayName: Beachball bump versions
 
-    - script: node .ado/scripts/npmPack.js --clean
+    - script: node .ado/scripts/npmPack.js --clean --no-color
       displayName: Pack all workspace packages
 
     - script: node .ado/scripts/npmPack.js --no-pack --check-npm --no-color
