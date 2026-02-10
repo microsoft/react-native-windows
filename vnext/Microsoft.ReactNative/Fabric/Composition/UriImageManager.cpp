@@ -104,6 +104,11 @@ struct SvgDataImageHandler
             ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingBrush, 1.0, &pt);
             auto renderTarget = autoDraw.GetRenderTarget();
 
+            // Defensive check: ensure device context is valid before D2D operations
+            if (!renderTarget) {
+              return nullptr;
+            }
+
             winrt::com_ptr<ID2D1DeviceContext5> deviceContext5;
             winrt::check_hresult(renderTarget->QueryInterface(IID_ID2D1DeviceContext5, deviceContext5.put_void()));
 

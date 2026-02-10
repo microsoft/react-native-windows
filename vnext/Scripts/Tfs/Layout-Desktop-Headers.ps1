@@ -5,7 +5,7 @@ param(
 	[string] $SourceRoot = ($PSScriptRoot | Split-Path | Split-Path | Split-Path),
 	[string] $TargetRoot = "$SourceRoot\vnext\target",
 	[System.IO.DirectoryInfo] $ReactWindowsRoot = "$SourceRoot\vnext",
-	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\node_modules\react-native",	
+	[System.IO.DirectoryInfo] $ReactNativeRoot = "$SourceRoot\node_modules\react-native",
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
 
@@ -108,20 +108,6 @@ Get-ChildItem -Path $ReactWindowsRoot\Desktop -Name -Recurse -Include '*.h','*.h
 Get-ChildItem -Path $ReactWindowsRoot\Desktop.DLL -Recurse -Include '*.def' | ForEach-Object { Copy-Item `
 	-Path        $_ `
 	-Destination (New-Item -ItemType Directory $TargetRoot\inc\ -Force) `
-	-Force
-}
-
-# React.Windows.Test headers
-Get-ChildItem -Path $ReactWindowsRoot\Test -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
-	-Path        $ReactWindowsRoot\Test\$_ `
-	-Destination (New-Item -ItemType Directory $TargetRoot\inc\Test\$(Split-Path $_) -Force) `
-	-Force
-}
-
-# React.Windows.Test DLL DEF files
-Get-ChildItem -Path $ReactWindowsRoot\Desktop.Test.DLL -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
-	-Path        $ReactWindowsRoot\Desktop.Test.DLL\$_ `
-	-Destination (New-Item -ItemType Directory $TargetRoot\inc\$(Split-Path $_) -Force) `
 	-Force
 }
 

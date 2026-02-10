@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fix getSize",
+  "packageName": "react-native-windows",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "none"
+}
