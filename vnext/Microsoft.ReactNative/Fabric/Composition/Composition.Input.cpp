@@ -140,6 +140,18 @@ winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource CharacterRecei
   return m_source;
 }
 
+ContextMenuKeyEventArgs::ContextMenuKeyEventArgs(facebook::react::Tag tag) : m_tag(tag) {}
+
+int32_t ContextMenuKeyEventArgs::OriginalSource() noexcept {
+  return m_tag;
+}
+bool ContextMenuKeyEventArgs::Handled() noexcept {
+  return m_handled;
+}
+void ContextMenuKeyEventArgs::Handled(bool value) noexcept {
+  m_handled = value;
+}
+
 Pointer::Pointer(winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType type, uint32_t id)
     : m_type(type), m_id(id) {}
 

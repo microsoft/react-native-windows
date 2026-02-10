@@ -186,6 +186,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
     auto pt = m_outer->getClientOffset();
     m_outer->m_caretVisual.Position({x - pt.x, y - pt.y});
+    m_outer->m_caretPosition = {x, y};
     return true;
   }
 
@@ -696,17 +697,10 @@ void WindowsTextInputComponentView::OnPointerPressed(
   }
 
   if (m_textServices && msg) {
-    if (msg == WM_RBUTTONUP && !windowsTextInputProps().contextMenuHidden) {
-      ShowContextMenu(position);
-      args.Handled(true);
-    } else if (msg == WM_RBUTTONUP && windowsTextInputProps().contextMenuHidden) {
-      args.Handled(true);
-    } else {
-      LRESULT lresult;
-      DrawBlock db(*this);
-      auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
-      args.Handled(hr != S_FALSE);
-    }
+    LRESULT lresult;
+    DrawBlock db(*this);
+    auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
+    args.Handled(hr != S_FALSE);
   }
 
   // Emits the OnPressIn event
@@ -768,10 +762,18 @@ void WindowsTextInputComponentView::OnPointerReleased(
   }
 
   if (m_textServices && msg) {
-    LRESULT lresult;
-    DrawBlock db(*this);
-    auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
-    args.Handled(hr != S_FALSE);
+    // Show context menu on right button release (standard Windows behavior)
+    if (msg == WM_RBUTTONUP && !windowsTextInputProps().contextMenuHidden) {
+      ShowContextMenu(LocalToScreen(position));
+      args.Handled(true);
+    } else if (msg == WM_RBUTTONUP) {
+      // Context menu is hidden - don't mark as handled, let app add custom behavior
+    } else {
+      LRESULT lresult;
+      DrawBlock db(*this);
+      auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
+      args.Handled(hr != S_FALSE);
+    }
   }
 
   // Emits the OnPressOut event
@@ -1870,6 +1872,21 @@ void WindowsTextInputComponentView::updateSpellCheck(bool enable) noexcept {
       m_textServices->TxSendMessage(EM_SETLANGOPTIONS, IMF_SPELLCHECKING, enable ? newLangOptions : 0, &lresult));
 }
 
+void WindowsTextInputComponentView::OnContextMenuKey(
+    const winrt::Microsoft::ReactNative::Composition::Input::ContextMenuKeyEventArgs &args) noexcept {
+  // Handle context menu key event (SHIFT+F10 or Context Menu key)
+  if (!windowsTextInputProps().contextMenuHidden) {
+    // m_caretPosition is stored from TxSetCaretPos in RichEdit client rect space (physical pixels).
+    // LocalToScreen expects logical (DIP) coordinates, so divide by pointScaleFactor.
+    auto screenPt = LocalToScreen(winrt::Windows::Foundation::Point{
+        static_cast<float>(m_caretPosition.x) / m_layoutMetrics.pointScaleFactor,
+        static_cast<float>(m_caretPosition.y) / m_layoutMetrics.pointScaleFactor});
+    ShowContextMenu(screenPt);
+    args.Handled(true);
+  }
+  // If contextMenuHidden, don't mark as handled - let app handle it
+}
+
 void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept {
   HMENU menu = CreatePopupMenu();
   if (!menu)
@@ -1889,13 +1906,16 @@ void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Founda
   AppendMenuW(menu, MF_STRING | (canPaste ? 0 : MF_GRAYED), 3, L"Paste");
   AppendMenuW(menu, MF_STRING | (!isEmpty && !isReadOnly ? 0 : MF_GRAYED), 4, L"Select All");
 
-  POINT cursorPos;
-  GetCursorPos(&cursorPos);
-
   HWND hwnd = GetActiveWindow();
 
   int cmd = TrackPopupMenu(
-      menu, TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD | TPM_NONOTIFY, cursorPos.x, cursorPos.y, 0, hwnd, NULL);
+      menu,
+      TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD | TPM_NONOTIFY,
+      static_cast<int>(position.X),
+      static_cast<int>(position.Y),
+      0,
+      hwnd,
+      NULL);
 
   if (cmd == 1) { // Cut
     m_textServices->TxSendMessage(WM_CUT, 0, 0, &res);
