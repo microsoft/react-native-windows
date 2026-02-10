@@ -154,7 +154,17 @@ module.exports = {
   get Modal(): Modal {
     return require('./Libraries/Modal/Modal').default;
   },
+<<<<<<< Upstream
+  get unstable_NativeText() {
+    return require('./Libraries/Text/TextNativeComponent').NativeText;
+  },
+  get unstable_NativeView() {
+    return require('./Libraries/Components/View/ViewNativeComponent').default;
+  },
+  get Pressable() {
+=======
   get Pressable(): Pressable {
+>>>>>>> Override
     return require('./Libraries/Components/Pressable/Pressable').default;
   },
   // $FlowFixMe[value-as-type]
