@@ -70,7 +70,7 @@ struct ::_OBJECT_NAME_:: {
 `;
 
 const eventEmitterMethodTemplate = `  void ::_EVENT_NAME_::(::_EVENT_OBJECT_TYPE_:: &value) const {
-    m_eventEmitter.DispatchEvent(L"::_EVENT_NAME_NO_ON_::", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"::_EVENT_NAME_NO_ON_::", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }`;
@@ -344,7 +344,9 @@ export function createComponentGenerator({
 
         const propInitializers = componentShape.props
           .map(prop => {
-            return `       ${prop.name} = cloneFromProps->${prop.name};`;
+            if (prop.typeAnnotation.type === 'MixedTypeAnnotation')
+              return `       ${prop.name} = cloneFromProps->${prop.name}.Copy();`;
+            else return `       ${prop.name} = cloneFromProps->${prop.name};`;
           })
           .join('\n');
 
@@ -414,7 +416,30 @@ export function createComponentGenerator({
           })
           .join('\n\n');
 
+        const eventObjectUsings = eventObjectAliases.jobs
+          .map(eventObjectTypeName => {
+            return `  using ${eventObjectTypeName.replace('on', 'On')} = ${
+              getAliasCppName(eventObjectTypeName) /*.replace('_on', '_On')*/
+            };`;
+          })
+          .join('\n');
+
+        // Collect all the alias types for the event objects so that we can generate the unnamed types within objects
+        eventObjectAliases.jobs.forEach(eventObjectTypeName => {
+          const eventObjectType =
+            eventObjectAliases.types[eventObjectTypeName]!;
+          eventObjectType.properties.forEach(property => {
+            translateComponentEventType(
+              property.typeAnnotation,
+              eventObjectAliases,
+              eventObjectTypeName,
+              cppCodegenOptions,
+            );
+          });
+        });
+
         const eventObjects = eventObjectAliases.jobs
+          .reverse()
           .map(eventObjectTypeName => {
             const eventObjectType =
               eventObjectAliases.types[eventObjectTypeName]!;
@@ -437,18 +462,9 @@ export function createComponentGenerator({
             return eventsObjectTemplate
               .replace(
                 /::_OBJECT_NAME_::/g,
-                `${componentName}_${eventObjectTypeName.replace('on', 'On')}`,
+                getAliasCppName(eventObjectTypeName) /*.replace('_on', '_On')*/,
               )
               .replace(/::_OBJECT_FIELDS_::/g, eventObjectFields);
-          })
-          .join('\n');
-
-        const eventObjectUsings = eventObjectAliases.jobs
-          .map(eventObjectTypeName => {
-            return `  using ${eventObjectTypeName.replace(
-              'on',
-              'On',
-            )} = ${componentName}_${eventObjectTypeName.replace('on', 'On')};`;
           })
           .join('\n');
 
