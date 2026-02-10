@@ -28,7 +28,7 @@ struct CalendarViewComponentView : public winrt::implements<CalendarViewComponen
 
     m_calendarView.SelectedDatesChanged([this](auto &&, auto &&) {
       if (auto emitter = EventEmitter()) {
-        Codegen::CalendarView_OnSelectedDatesChanged args;
+        Codegen::CalendarViewEventEmitter::OnSelectedDatesChanged args;
         auto selectedDates = m_calendarView.SelectedDates();
         if (selectedDates.Size() == 0) {
           args.startDate = "(none)";
