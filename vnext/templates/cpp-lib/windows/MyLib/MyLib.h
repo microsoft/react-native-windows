@@ -3,20 +3,14 @@
 #include "pch.h"
 #include "resource.h"
 
-#if __has_include("codegen/Native{{ pascalName }}DataTypes.g.h")
-  #include "codegen/Native{{ pascalName }}DataTypes.g.h"
+#if __has_include("codegen/Native{{ codegenName }}DataTypes.g.h")
+  #include "codegen/Native{{ codegenName }}DataTypes.g.h"
 #endif
+
 // Note: The following lines use Mustache template syntax which will be processed during
-// project generation to produce standard C++ code. If existing codegen spec files are found,
-// use the actual filename; otherwise use conditional includes.
-{{#hasExistingSpecFiles}}
-#include "codegen/{{ firstSpecFile }}"
-{{/hasExistingSpecFiles}}
-{{^hasExistingSpecFiles}}
-#if __has_include("codegen/Native{{ pascalName }}Spec.g.h")
-  #include "codegen/Native{{ pascalName }}Spec.g.h"
-#endif
-{{/hasExistingSpecFiles}}
+// project generation to produce standard C++ code. The spec filename is derived from
+// `codegenConfig.name` in the user library's package.json, which is the single source of truth.
+#include "codegen/Native{{ codegenName }}Spec.g.h"
 
 #include "NativeModules.h"
 
@@ -29,15 +23,8 @@ REACT_MODULE({{ pascalName }})
 struct {{ pascalName }}
 {
   // Note: Mustache template syntax below will be processed during project generation
-  // to produce standard C++ code based on detected codegen files.
-{{#hasExistingSpecFiles}}
-  using ModuleSpec = {{ namespaceCpp }}Codegen::{{ firstSpecName }};
-{{/hasExistingSpecFiles}}
-{{^hasExistingSpecFiles}}
-#if __has_include("codegen/Native{{ pascalName }}Spec.g.h")
-  using ModuleSpec = {{ namespaceCpp }}Codegen::{{ pascalName }}Spec;
-#endif
-{{/hasExistingSpecFiles}}
+  // to produce standard C++ code based on the codegenConfig.name value.
+  using ModuleSpec = {{ namespaceCpp }}Codegen::{{ codegenName }}Spec;
 
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;
