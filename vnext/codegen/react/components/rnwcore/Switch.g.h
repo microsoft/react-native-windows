@@ -67,8 +67,8 @@ struct SwitchProps : winrt::implements<SwitchProps, winrt::Microsoft::ReactNativ
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(Switch_OnChange)
-struct Switch_OnChange {
+REACT_STRUCT(SwitchSpec_onChange)
+struct SwitchSpec_onChange {
   REACT_FIELD(value)
   bool value{};
 
@@ -80,10 +80,10 @@ struct SwitchEventEmitter {
   SwitchEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnChange = Switch_OnChange;
+  using OnChange = SwitchSpec_onChange;
 
   void onChange(OnChange &value) const {
-    m_eventEmitter.DispatchEvent(L"change", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"change", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
