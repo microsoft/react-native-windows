@@ -34,6 +34,13 @@ namespace Microsoft.ReactNative.Composition.Input
     KeyboardSource KeyboardSource { get; };
   };
 
+  DOC_STRING("Event arguments for context menu key events (SHIFT+F10 or Context Menu key)")
+  interface ContextMenuKeyEventArgs requires RoutedEventArgs
+  {
+    DOC_STRING("Gets or sets whether the event was handled. Set to true to prevent default behavior.")
+    Boolean Handled { get; set; };
+  };
+
   interface IPointerPointTransform
   {
     IPointerPointTransform Inverse { get; };
