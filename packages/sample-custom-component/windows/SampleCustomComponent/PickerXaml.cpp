@@ -35,7 +35,7 @@ struct PickerXamlComponentView : winrt::implements<PickerXamlComponentView, winr
     m_comboBox.SelectionChangedTrigger(winrt::Microsoft::UI::Xaml::Controls::ComboBoxSelectionChangedTrigger::Always);
 
     // Listen for size changes on the comboBox
-    auto weakThis = winrt::get_weak(*this);
+    auto weakThis = get_weak();
     m_comboBox.SizeChanged([weakThis](auto const & /*sender*/, auto const & /*args*/) {
       if (auto strongThis = weakThis.get()) {
         strongThis->RefreshSize();
@@ -165,7 +165,7 @@ struct PickerXamlComponentView : winrt::implements<PickerXamlComponentView, winr
 
     action();
 
-    auto weakThis = winrt::get_weak(*this);
+    auto weakThis = get_weak();
     m_selectionChangedRevoker =
         m_comboBox.SelectionChanged(winrt::auto_revoke, [weakThis](const auto & /*sender*/, const auto & /*args*/) {
           if (auto strongThis = weakThis.get()) {
