@@ -156,10 +156,10 @@ module.exports = {
   get Modal(): Modal {
     return require('./Libraries/Modal/Modal').default;
   },
-  get unstable_NativeText() : unstable_NativeText {
+  get unstable_NativeText(): unstable_NativeText {
     return require('./Libraries/Text/TextNativeComponent').NativeText;
   },
-  get unstable_NativeView() : unstable_NativeView{
+  get unstable_NativeView(): unstable_NativeView {
     return require('./Libraries/Components/View/ViewNativeComponent').default;
   },
   get Pressable(): Pressable {
