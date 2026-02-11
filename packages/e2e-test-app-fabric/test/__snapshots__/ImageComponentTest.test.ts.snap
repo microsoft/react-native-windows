@@ -12,8 +12,9 @@ exports[`Image Tests A network Image example 1`] = `
     "_Props": {
       "Sources": [
         {
-          "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1",
+          "Size": "6000, 5340",
+          "Type": "Local",
+          "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/very-large-image.png",
         },
       ],
       "TestId": "image-network",
@@ -22,7 +23,7 @@ exports[`Image Tests A network Image example 1`] = `
   "Visual Tree": {
     "Comment": "image-network",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -200,53 +201,53 @@ exports[`Image Tests An Image can a border radius 1`] = `
   "Visual Tree": {
     "Comment": "image-border-radius",
     "Offset": "0, 0, 0",
-    "Size": "873, 324",
+    "Size": "916, 144",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "6, 6, 0",
-        "Size": "96, 96",
+        "Offset": "4, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "114, 6, 0",
-        "Size": "95.999985, 96",
+        "Offset": "76, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "95.999985, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "222, 6, 0",
-        "Size": "96, 96",
+        "Offset": "148, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "330, 6, 0",
-        "Size": "96, 96",
+        "Offset": "220, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -255,7 +256,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Color": "rgba(0, 128, 0, 255)",
                 },
                 "Offset": "0, 0, 0",
-                "Size": "21, 21",
+                "Size": "14, 14",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -263,8 +264,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "21, 0, 0",
-                "Size": "69, 6",
+                "Offset": "14, 0, 0",
+                "Size": "46, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -272,8 +273,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "-6, 0, 0",
-                "Size": "6, 6",
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -281,8 +282,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "-6, 6, 0",
-                "Size": "6, 54",
+                "Offset": "-4, 4, 0",
+                "Size": "4, 36",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -290,8 +291,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "-36, -36, 0",
-                "Size": "36, 36",
+                "Offset": "-24, -24, 0",
+                "Size": "24, 24",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -299,8 +300,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "6, -6, 0",
-                "Size": "54, 6",
+                "Offset": "4, -4, 0",
+                "Size": "36, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -308,8 +309,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "0, -6, 0",
-                "Size": "6, 6",
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -317,8 +318,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "0, 21, 0",
-                "Size": "6, 69",
+                "Offset": "0, 14, 0",
+                "Size": "4, 46",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -326,13 +327,13 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "438, 6, 0",
-        "Size": "135, 96",
+        "Offset": "292, 4, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -341,7 +342,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Color": "rgba(255, 0, 0, 255)",
                 },
                 "Offset": "0, 0, 0",
-                "Size": "21, 21",
+                "Size": "14, 14",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -349,8 +350,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "21, 0, 0",
-                "Size": "78, 6",
+                "Offset": "14, 0, 0",
+                "Size": "52, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -358,8 +359,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "-36, 0, 0",
-                "Size": "36, 36",
+                "Offset": "-24, 0, 0",
+                "Size": "24, 24",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -367,8 +368,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "-6, 36, 0",
-                "Size": "6, 9",
+                "Offset": "-4, 24, 0",
+                "Size": "4, 6",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -376,8 +377,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "-51, -51, 0",
-                "Size": "51, 51",
+                "Offset": "-34, -34, 0",
+                "Size": "34, 34",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -385,8 +386,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "66, -6, 0",
-                "Size": "18, 6",
+                "Offset": "44, -4, 0",
+                "Size": "12, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -394,8 +395,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "0, -66, 0",
-                "Size": "66, 66",
+                "Offset": "0, -44, 0",
+                "Size": "44, 44",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -403,8 +404,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "0, 21, 0",
-                "Size": "6, 9",
+                "Offset": "0, 14, 0",
+                "Size": "4, 6",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -412,13 +413,13 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "585, 6, 0",
-        "Size": "134.99995, 96",
+        "Offset": "390, 4, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "134.99995, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -427,7 +428,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Color": "rgba(255, 0, 0, 255)",
                 },
                 "Offset": "0, 0, 0",
-                "Size": "21, 21",
+                "Size": "14, 14",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -435,8 +436,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "21, 0, 0",
-                "Size": "77.999954, 6",
+                "Offset": "14, 0, 0",
+                "Size": "52, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -444,8 +445,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "-36, 0, 0",
-                "Size": "36, 36",
+                "Offset": "-24, 0, 0",
+                "Size": "24, 24",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -453,8 +454,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "-6, 36, 0",
-                "Size": "6, 9",
+                "Offset": "-4, 24, 0",
+                "Size": "4, 6",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -462,8 +463,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "-51, -51, 0",
-                "Size": "51, 51",
+                "Offset": "-34, -34, 0",
+                "Size": "34, 34",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -471,8 +472,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "66, -6, 0",
-                "Size": "17.999954, 6",
+                "Offset": "44, -4, 0",
+                "Size": "12, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -480,8 +481,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "0, -66, 0",
-                "Size": "66, 66",
+                "Offset": "0, -44, 0",
+                "Size": "44, 44",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -489,8 +490,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "0, 21, 0",
-                "Size": "6, 9",
+                "Offset": "0, 14, 0",
+                "Size": "4, 6",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -498,13 +499,13 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "732, 6, 0",
-        "Size": "135, 96",
+        "Offset": "488, 4, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -513,7 +514,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Color": "rgba(255, 0, 0, 255)",
                 },
                 "Offset": "0, 0, 0",
-                "Size": "21, 21",
+                "Size": "14, 14",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -521,8 +522,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "21, 0, 0",
-                "Size": "78, 6",
+                "Offset": "14, 0, 0",
+                "Size": "52, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -530,8 +531,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "-36, 0, 0",
-                "Size": "36, 36",
+                "Offset": "-24, 0, 0",
+                "Size": "24, 24",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -539,8 +540,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "-6, 36, 0",
-                "Size": "6, 9",
+                "Offset": "-4, 24, 0",
+                "Size": "4, 6",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -548,8 +549,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "-51, -51, 0",
-                "Size": "51, 51",
+                "Offset": "-34, -34, 0",
+                "Size": "34, 34",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -557,8 +558,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "66, -6, 0",
-                "Size": "18, 6",
+                "Offset": "44, -4, 0",
+                "Size": "12, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -566,8 +567,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "0, -66, 0",
-                "Size": "66, 66",
+                "Offset": "0, -44, 0",
+                "Size": "44, 44",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -575,8 +576,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(255, 0, 0, 255)",
                 },
-                "Offset": "0, 21, 0",
-                "Size": "6, 9",
+                "Offset": "0, 14, 0",
+                "Size": "4, 6",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -584,13 +585,13 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "6, 114, 0",
-        "Size": "135, 96",
+        "Offset": "586, 4, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -599,7 +600,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Color": "rgba(0, 0, 255, 255)",
                 },
                 "Offset": "0, 0, 0",
-                "Size": "6, 6",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -607,8 +608,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "6, 0, 0",
-                "Size": "123, 6",
+                "Offset": "4, 0, 0",
+                "Size": "82, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -616,8 +617,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "-6, 0, 0",
-                "Size": "6, 6",
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -625,8 +626,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "-6, 6, 0",
-                "Size": "6, 39",
+                "Offset": "-4, 4, 0",
+                "Size": "4, 26",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -634,8 +635,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "-51, -51, 0",
-                "Size": "51, 51",
+                "Offset": "-34, -34, 0",
+                "Size": "34, 34",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -643,8 +644,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "6, -6, 0",
-                "Size": "78, 6",
+                "Offset": "4, -4, 0",
+                "Size": "52, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -652,8 +653,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "0, -6, 0",
-                "Size": "6, 6",
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -661,8 +662,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "0, 6, 0",
-                "Size": "6, 84",
+                "Offset": "0, 4, 0",
+                "Size": "4, 56",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -670,13 +671,13 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "153, 114, 0",
-        "Size": "135, 96",
+        "Offset": "684, 4, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -685,7 +686,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Color": "rgba(0, 0, 255, 255)",
                 },
                 "Offset": "0, 0, 0",
-                "Size": "6, 6",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -693,8 +694,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "6, 0, 0",
-                "Size": "123, 6",
+                "Offset": "4, 0, 0",
+                "Size": "82, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -702,8 +703,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "-6, 0, 0",
-                "Size": "6, 6",
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -711,8 +712,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "-6, 6, 0",
-                "Size": "6, 84",
+                "Offset": "-4, 4, 0",
+                "Size": "4, 56",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -720,8 +721,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "-6, -6, 0",
-                "Size": "6, 6",
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -729,8 +730,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "51, -6, 0",
-                "Size": "78, 6",
+                "Offset": "34, -4, 0",
+                "Size": "52, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -738,8 +739,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "0, -51, 0",
-                "Size": "51, 51",
+                "Offset": "0, -34, 0",
+                "Size": "34, 34",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -747,8 +748,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "0, 6, 0",
-                "Size": "6, 39",
+                "Offset": "0, 4, 0",
+                "Size": "4, 26",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -756,53 +757,53 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "300, 114, 0",
-        "Size": "135.00003, 96",
+        "Offset": "782, 4, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135.00003, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "6, 6",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, 0, 0",
-                "Size": "-12, 6",
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 0, 0",
-                "Size": "6, 6",
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 6, 0",
-                "Size": "6, -18",
+                "Offset": "-4, 4, 0",
+                "Size": "4, -12",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, -12, 0",
-                "Size": "6, 12",
+                "Offset": "-4, -8, 0",
+                "Size": "4, 8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, -12, 0",
-                "Size": "-12, 12",
+                "Offset": "4, -8, 0",
+                "Size": "-8, 8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, -12, 0",
-                "Size": "6, 12",
+                "Offset": "0, -8, 0",
+                "Size": "4, 8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, 6, 0",
-                "Size": "6, -18",
+                "Offset": "0, 4, 0",
+                "Size": "4, -12",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -810,53 +811,53 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "447, 114, 0",
-        "Size": "135, 96",
+        "Offset": "4, 76, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "12, 6",
+                "Size": "8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "12, 0, 0",
-                "Size": "-18, 6",
+                "Offset": "8, 0, 0",
+                "Size": "-12, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 0, 0",
-                "Size": "6, 6",
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 6, 0",
-                "Size": "6, -12",
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, -6, 0",
-                "Size": "6, 6",
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "12, -6, 0",
-                "Size": "-18, 6",
+                "Offset": "8, -4, 0",
+                "Size": "-12, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, -6, 0",
-                "Size": "12, 6",
+                "Offset": "0, -4, 0",
+                "Size": "8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, 6, 0",
-                "Size": "12, -12",
+                "Offset": "0, 4, 0",
+                "Size": "8, -8",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -864,99 +865,13 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "594, 114, 0",
-        "Size": "134.99995, 96",
+        "Offset": "102, 76, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "134.99995, 96",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "0, 0, 0",
-                "Size": "6, 6",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "6, 0, 0",
-                "Size": "77.999954, 6",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "-51, 0, 0",
-                "Size": "51, 51",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "-6, 51, 0",
-                "Size": "6, 39",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "-6, -6, 0",
-                "Size": "6, 6",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "6, -6, 0",
-                "Size": "122.999954, 6",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "0, -6, 0",
-                "Size": "6, 6",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 255, 255)",
-                },
-                "Offset": "0, 6, 0",
-                "Size": "6, 84",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "6, 222, 0",
-        "Size": "135, 96",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -965,7 +880,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Color": "rgba(0, 0, 255, 255)",
                 },
                 "Offset": "0, 0, 0",
-                "Size": "51, 51",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -973,8 +888,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "51, 0, 0",
-                "Size": "78, 6",
+                "Offset": "4, 0, 0",
+                "Size": "52, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -982,8 +897,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "-6, 0, 0",
-                "Size": "6, 6",
+                "Offset": "-34, 0, 0",
+                "Size": "34, 34",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -991,8 +906,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "-6, 6, 0",
-                "Size": "6, 84",
+                "Offset": "-4, 34, 0",
+                "Size": "4, 26",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -1000,8 +915,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "-6, -6, 0",
-                "Size": "6, 6",
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -1009,8 +924,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "6, -6, 0",
-                "Size": "123, 6",
+                "Offset": "4, -4, 0",
+                "Size": "82, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -1018,8 +933,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "0, -6, 0",
-                "Size": "6, 6",
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -1027,8 +942,8 @@ exports[`Image Tests An Image can a border radius 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 0, 255, 255)",
                 },
-                "Offset": "0, 51, 0",
-                "Size": "6, 39",
+                "Offset": "0, 4, 0",
+                "Size": "4, 56",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -1036,53 +951,139 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "153, 222, 0",
-        "Size": "135, 96",
+        "Offset": "200, 76, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 96",
+            "Size": "90, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "34, 34",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "34, 0, 0",
+                "Size": "52, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, 4, 0",
+                "Size": "4, 56",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "4, -4, 0",
+                "Size": "82, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 34, 0",
+                "Size": "4, 26",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "298, 76, 0",
+        "Size": "90, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "6, 12",
+                "Size": "4, 8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, 0, 0",
-                "Size": "-12, 12",
+                "Offset": "4, 0, 0",
+                "Size": "-8, 8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 0, 0",
-                "Size": "6, 12",
+                "Offset": "-4, 0, 0",
+                "Size": "4, 8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 12, 0",
-                "Size": "6, -18",
+                "Offset": "-4, 8, 0",
+                "Size": "4, -12",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, -6, 0",
-                "Size": "6, 6",
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, -6, 0",
-                "Size": "-12, 6",
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, -6, 0",
-                "Size": "6, 6",
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, 12, 0",
-                "Size": "6, -18",
+                "Offset": "0, 8, 0",
+                "Size": "4, -12",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -1116,7 +1117,7 @@ exports[`Image Tests An Image can be added to the accessibility tree 1`] = `
   "Visual Tree": {
     "Comment": "image-accessible",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1164,29 +1165,29 @@ exports[`Image Tests An Image can be nested inside of a component 1`] = `
   "Visual Tree": {
     "Comment": "image-nested",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "96, 96",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "18, 30, 0",
-        "Size": "77.99999, 28.999878",
+        "Offset": "12, 20, 0",
+        "Size": "52, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "77.99999, 28.999878",
+            "Size": "52, 19",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1218,7 +1219,7 @@ exports[`Image Tests An Image can be rendered at a different size 1`] = `
   "Visual Tree": {
     "Comment": "image-size",
     "Offset": "0, 0, 0",
-    "Size": "90.00001, 90",
+    "Size": "60, 60",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1246,47 +1247,47 @@ exports[`Image Tests An Image can borders 1`] = `
   "Visual Tree": {
     "Comment": "image-border",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "8, 8",
+        "Size": "5, 5",
         "Visual Type": "SpriteVisual",
       },
       {
-        "Offset": "8, 0, 0",
-        "Size": "-16, 8",
+        "Offset": "5, 0, 0",
+        "Size": "-10, 5",
         "Visual Type": "SpriteVisual",
       },
       {
-        "Offset": "-8, 0, 0",
-        "Size": "8, 8",
+        "Offset": "-5, 0, 0",
+        "Size": "5, 5",
         "Visual Type": "SpriteVisual",
       },
       {
-        "Offset": "-8, 8, 0",
-        "Size": "8, -16",
+        "Offset": "-5, 5, 0",
+        "Size": "5, -10",
         "Visual Type": "SpriteVisual",
       },
       {
-        "Offset": "-8, -8, 0",
-        "Size": "8, 8",
+        "Offset": "-5, -5, 0",
+        "Size": "5, 5",
         "Visual Type": "SpriteVisual",
       },
       {
-        "Offset": "8, -8, 0",
-        "Size": "-16, 8",
+        "Offset": "5, -5, 0",
+        "Size": "-10, 5",
         "Visual Type": "SpriteVisual",
       },
       {
-        "Offset": "0, -8, 0",
-        "Size": "8, 8",
+        "Offset": "0, -5, 0",
+        "Size": "5, 5",
         "Visual Type": "SpriteVisual",
       },
       {
-        "Offset": "0, 8, 0",
-        "Size": "8, -16",
+        "Offset": "0, 5, 0",
+        "Size": "5, -10",
         "Visual Type": "SpriteVisual",
       },
     ],
@@ -1356,53 +1357,53 @@ exports[`Image Tests An Image can have a background color 1`] = `
   "Visual Tree": {
     "Comment": "background-color-example",
     "Offset": "0, 0, 0",
-    "Size": "873, 108",
+    "Size": "916, 72",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "6, 6, 0",
-        "Size": "96, 96",
+        "Offset": "4, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "114, 6, 0",
-        "Size": "95.999985, 96",
+        "Offset": "76, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "95.999985, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "222, 6, 0",
-        "Size": "96, 96",
+        "Offset": "148, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "330, 6, 0",
-        "Size": "96, 96",
+        "Offset": "220, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1411,7 +1412,7 @@ exports[`Image Tests An Image can have a background color 1`] = `
                   "Color": "rgba(0, 128, 0, 255)",
                 },
                 "Offset": "0, 0, 0",
-                "Size": "42, 42",
+                "Size": "28, 28",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -1419,8 +1420,8 @@ exports[`Image Tests An Image can have a background color 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "42, 0, 0",
-                "Size": "12, 5",
+                "Offset": "28, 0, 0",
+                "Size": "8, 3",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -1428,8 +1429,8 @@ exports[`Image Tests An Image can have a background color 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "-42, 0, 0",
-                "Size": "42, 42",
+                "Offset": "-28, 0, 0",
+                "Size": "28, 28",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -1437,8 +1438,8 @@ exports[`Image Tests An Image can have a background color 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "-5, 42, 0",
-                "Size": "5, 12",
+                "Offset": "-3, 28, 0",
+                "Size": "3, 8",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -1446,8 +1447,8 @@ exports[`Image Tests An Image can have a background color 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "-42, -42, 0",
-                "Size": "42, 42",
+                "Offset": "-28, -28, 0",
+                "Size": "28, 28",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -1455,8 +1456,8 @@ exports[`Image Tests An Image can have a background color 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "42, -5, 0",
-                "Size": "12, 5",
+                "Offset": "28, -3, 0",
+                "Size": "8, 3",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -1464,8 +1465,8 @@ exports[`Image Tests An Image can have a background color 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "0, -42, 0",
-                "Size": "42, 42",
+                "Offset": "0, -28, 0",
+                "Size": "28, 28",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -1473,8 +1474,8 @@ exports[`Image Tests An Image can have a background color 1`] = `
                   "Brush Type": "ColorBrush",
                   "Color": "rgba(0, 128, 0, 255)",
                 },
-                "Offset": "0, 42, 0",
-                "Size": "5, 12",
+                "Offset": "0, 28, 0",
+                "Size": "3, 8",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -1510,7 +1511,7 @@ exports[`Image Tests An Image can have a can have alt text 1`] = `
   "Visual Tree": {
     "Comment": "image-alt",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1600,77 +1601,77 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
   "Visual Tree": {
     "Comment": "image-blur-radius",
     "Offset": "0, 0, 0",
-    "Size": "873, 108",
+    "Size": "916, 72",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "6, 6, 0",
-        "Size": "96, 96",
+        "Offset": "4, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "114, 6, 0",
-        "Size": "95.999985, 96",
+        "Offset": "76, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "95.999985, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "222, 6, 0",
-        "Size": "96, 96",
+        "Offset": "148, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "330, 6, 0",
-        "Size": "96, 96",
+        "Offset": "220, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "438, 6, 0",
-        "Size": "96, 96",
+        "Offset": "292, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "546, 6, 0",
-        "Size": "96, 96",
+        "Offset": "364, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1702,7 +1703,7 @@ exports[`Image Tests An Image can have a loading indicator visual 1`] = `
   "Visual Tree": {
     "Comment": "image-loading-indicator",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -1752,7 +1753,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1765,7 +1766,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1778,7 +1779,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1791,63 +1792,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1864,7 +1809,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1877,7 +1822,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1890,7 +1835,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1903,7 +1848,63 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1961,233 +1962,233 @@ exports[`Image Tests An Image can have a tint color 1`] = `
   "Visual Tree": {
     "Comment": "image-tint-color",
     "Offset": "0, 0, 0",
-    "Size": "873, 348.99976",
+    "Size": "916, 233",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "6, 6, 0",
-        "Size": "22.000002, 22.999878",
+        "Offset": "4, 4, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22.000002, 22.999878",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "41, 6, 0",
-        "Size": "23.000004, 22.999878",
+        "Offset": "27, 4, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "23.000004, 22.999878",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "75, 6, 0",
-        "Size": "21.999996, 22.999878",
+        "Offset": "50, 4, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "21.999996, 22.999878",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "110, 6, 0",
-        "Size": "22.999992, 22.999878",
+        "Offset": "73, 4, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22.999992, 22.999878",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "0, 43, 0",
-        "Size": "873, 29.000244",
+        "Offset": "0, 29, 0",
+        "Size": "916, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "873, 29.000244",
+            "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "6, 86, 0",
-        "Size": "22.000002, 21.999756",
+        "Offset": "4, 58, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22.000002, 21.999756",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "41, 86, 0",
-        "Size": "23.000004, 21.999756",
+        "Offset": "27, 58, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "23.000004, 21.999756",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "75, 86, 0",
-        "Size": "21.999996, 21.999756",
+        "Offset": "50, 58, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "21.999996, 21.999756",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "110, 86, 0",
-        "Size": "22.999992, 21.999756",
+        "Offset": "73, 58, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22.999992, 21.999756",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "0, 123, 0",
-        "Size": "873, 28.000122",
+        "Offset": "0, 82, 0",
+        "Size": "916, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "873, 28.000122",
+            "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "6, 167, 0",
-        "Size": "22.000002, 22.000122",
+        "Offset": "4, 111, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22.000002, 22.000122",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "41, 167, 0",
-        "Size": "23.000004, 22.000122",
+        "Offset": "27, 111, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "23.000004, 22.000122",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "75, 167, 0",
-        "Size": "21.999996, 22.000122",
+        "Offset": "50, 111, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "21.999996, 22.000122",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "110, 167, 0",
-        "Size": "22.999992, 22.000122",
+        "Offset": "73, 111, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22.999992, 22.000122",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "0, 204, 0",
-        "Size": "873, 28.999878",
+        "Offset": "0, 136, 0",
+        "Size": "916, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "873, 28.999878",
+            "Size": "916, 19",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "6, 247, 0",
-        "Size": "96, 96",
+        "Offset": "4, 165, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "114, 247, 0",
-        "Size": "95.999985, 96",
+        "Offset": "76, 165, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "95.999985, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "222, 247, 0",
-        "Size": "96, 96",
+        "Offset": "148, 165, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "330, 247, 0",
-        "Size": "96, 96",
+        "Offset": "220, 165, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2221,7 +2222,7 @@ exports[`Image Tests An Image can have an accessibilityLabel 1`] = `
   "Visual Tree": {
     "Comment": "image-accessibilitylabel",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2343,57 +2344,57 @@ exports[`Image Tests An Image can have border colors 1`] = `
   "Visual Tree": {
     "Comment": "image-border-colors",
     "Offset": "0, 0, 0",
-    "Size": "873, 216",
+    "Size": "916, 72",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "6, 6, 0",
-        "Size": "135, 96",
+        "Offset": "4, 4, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "6, 6",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, 0, 0",
-                "Size": "-12, 6",
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 0, 0",
-                "Size": "6, 6",
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 6, 0",
-                "Size": "6, -12",
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, -6, 0",
-                "Size": "6, 6",
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, -6, 0",
-                "Size": "-12, 6",
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, -6, 0",
-                "Size": "6, 6",
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, 6, 0",
-                "Size": "6, -12",
+                "Offset": "0, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -2401,53 +2402,53 @@ exports[`Image Tests An Image can have border colors 1`] = `
         ],
       },
       {
-        "Offset": "153, 6, 0",
-        "Size": "135, 96",
+        "Offset": "102, 4, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "6, 6",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, 0, 0",
-                "Size": "-12, 6",
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 0, 0",
-                "Size": "6, 6",
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 6, 0",
-                "Size": "6, -12",
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, -6, 0",
-                "Size": "6, 6",
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, -6, 0",
-                "Size": "-12, 6",
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, -6, 0",
-                "Size": "6, 6",
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, 6, 0",
-                "Size": "6, -12",
+                "Offset": "0, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -2455,53 +2456,53 @@ exports[`Image Tests An Image can have border colors 1`] = `
         ],
       },
       {
-        "Offset": "300, 6, 0",
-        "Size": "135.00003, 96",
+        "Offset": "200, 4, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135.00003, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "6, 6",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, 0, 0",
-                "Size": "-12, 6",
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 0, 0",
-                "Size": "6, 6",
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 6, 0",
-                "Size": "6, -12",
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, -6, 0",
-                "Size": "6, 6",
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, -6, 0",
-                "Size": "-12, 6",
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, -6, 0",
-                "Size": "6, 6",
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, 6, 0",
-                "Size": "6, -12",
+                "Offset": "0, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -2509,53 +2510,53 @@ exports[`Image Tests An Image can have border colors 1`] = `
         ],
       },
       {
-        "Offset": "447, 6, 0",
-        "Size": "135, 96",
+        "Offset": "298, 4, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "6, 6",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, 0, 0",
-                "Size": "-12, 6",
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 0, 0",
-                "Size": "6, 6",
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 6, 0",
-                "Size": "6, -12",
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, -6, 0",
-                "Size": "6, 6",
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, -6, 0",
-                "Size": "-12, 6",
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, -6, 0",
-                "Size": "6, 6",
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, 6, 0",
-                "Size": "6, -12",
+                "Offset": "0, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -2563,53 +2564,53 @@ exports[`Image Tests An Image can have border colors 1`] = `
         ],
       },
       {
-        "Offset": "594, 6, 0",
-        "Size": "134.99995, 96",
+        "Offset": "396, 4, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "134.99995, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "6, 6",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, 0, 0",
-                "Size": "-12, 6",
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 0, 0",
-                "Size": "6, 6",
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 6, 0",
-                "Size": "6, -12",
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, -6, 0",
-                "Size": "6, 6",
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, -6, 0",
-                "Size": "-12, 6",
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, -6, 0",
-                "Size": "6, 6",
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, 6, 0",
-                "Size": "6, -12",
+                "Offset": "0, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -2617,53 +2618,53 @@ exports[`Image Tests An Image can have border colors 1`] = `
         ],
       },
       {
-        "Offset": "6, 114, 0",
-        "Size": "135, 96",
+        "Offset": "494, 4, 0",
+        "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 96",
+            "Size": "90, 64",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "6, 6",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, 0, 0",
-                "Size": "-12, 6",
+                "Offset": "4, 0, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 0, 0",
-                "Size": "6, 6",
+                "Offset": "-4, 0, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, 6, 0",
-                "Size": "6, -12",
+                "Offset": "-4, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "-6, -6, 0",
-                "Size": "6, 6",
+                "Offset": "-4, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "6, -6, 0",
-                "Size": "-12, 6",
+                "Offset": "4, -4, 0",
+                "Size": "-8, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, -6, 0",
-                "Size": "6, 6",
+                "Offset": "0, -4, 0",
+                "Size": "4, 4",
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "0, 6, 0",
-                "Size": "6, -12",
+                "Offset": "0, 4, 0",
+                "Size": "4, -8",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -2764,82 +2765,82 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
   "Visual Tree": {
     "Comment": "image-opacity",
     "Offset": "0, 0, 0",
-    "Size": "873, 108",
+    "Size": "916, 72",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "6, 6, 0",
-        "Size": "96, 96",
+        "Offset": "4, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "114, 6, 0",
-        "Size": "95.999985, 96",
+        "Offset": "76, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Opacity": 0.800000011920929,
-            "Size": "95.999985, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "222, 6, 0",
-        "Size": "96, 96",
+        "Offset": "148, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Opacity": 0.6000000238418579,
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "330, 6, 0",
-        "Size": "96, 96",
+        "Offset": "220, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Opacity": 0.4000000059604645,
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "438, 6, 0",
-        "Size": "96, 96",
+        "Offset": "292, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Opacity": 0.20000000298023224,
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "546, 6, 0",
-        "Size": "96, 96",
+        "Offset": "364, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Opacity": 0,
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2877,7 +2878,7 @@ exports[`Image Tests An Image can have multiple sources 1`] = `
   "Visual Tree": {
     "Comment": "image-multiple-sources",
     "Offset": "0, 0, 0",
-    "Size": "45.000008, 45",
+    "Size": "30, 30",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2913,7 +2914,7 @@ exports[`Image Tests An Image can have multiple sources through the srcSet prop 
   "Visual Tree": {
     "Comment": "image-srcset",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2952,7 +2953,7 @@ exports[`Image Tests An Image can have onLayout behavior 1`] = `
   "Visual Tree": {
     "Comment": "image-onlayout",
     "Offset": "0, 0, 0",
-    "Size": "45.000008, 45",
+    "Size": "30, 30",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2979,7 +2980,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2992,7 +2993,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_selected@2x.png?platform=windows&hash=4b7088ca5499061913e736668940c5bf",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_selected@2x.png",
             },
           ],
         },
@@ -3005,7 +3006,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_comment_normal@2x.png?platform=windows&hash=a271ab3a3933f61465b85e76ed8e4852",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_comment_normal@2x.png",
             },
           ],
         },
@@ -3018,7 +3019,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_comment_highlighted@2x.png?platform=windows&hash=99e642a0f019ca4695e8d172530b3c58",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_comment_highlighted@2x.png",
             },
           ],
         },
@@ -3028,53 +3029,53 @@ exports[`Image Tests An Image can load a static image 1`] = `
   "Visual Tree": {
     "Comment": "image-static",
     "Offset": "0, 0, 0",
-    "Size": "873, 34.99997",
+    "Size": "916, 23",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "6, 6, 0",
-        "Size": "22.000002, 22.99997",
+        "Offset": "4, 4, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22.000002, 22.99997",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "41, 6, 0",
-        "Size": "23.000004, 22.99997",
+        "Offset": "27, 4, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "23.000004, 22.99997",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "75, 6, 0",
-        "Size": "21.999996, 22.99997",
+        "Offset": "50, 4, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "21.999996, 22.99997",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "110, 6, 0",
-        "Size": "22.999992, 22.99997",
+        "Offset": "73, 4, 0",
+        "Size": "15, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22.999992, 22.99997",
+            "Size": "15, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3106,7 +3107,7 @@ exports[`Image Tests An Image can load an image through its source prop 1`] = `
   "Visual Tree": {
     "Comment": "image-plain-source",
     "Offset": "0, 0, 0",
-    "Size": "96, 95.99998",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -3134,7 +3135,7 @@ exports[`Image Tests An Image can load an image through its src prop 1`] = `
   "Visual Tree": {
     "Comment": "image-plain-src",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -3162,7 +3163,7 @@ exports[`Image Tests An Image component can have a network callback 1`] = `
   "Visual Tree": {
     "Comment": "image-network-callback",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -3190,7 +3191,7 @@ exports[`Image Tests An Image component can render a blob image 1`] = `
   "Visual Tree": {
     "Comment": "image-blob",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -3436,95 +3437,29 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
   "Visual Tree": {
     "Comment": "image-object-fit",
     "Offset": "0, 0, 0",
-    "Size": "873, 699.00037",
+    "Size": "916, 465",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "135, 23.000244",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 23.000244",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "0, 26, 0",
-        "Size": "135, 90",
+        "Offset": "0, 18, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 90",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, 0, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, -1, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "150, 0, 0",
-        "Size": "135, 23.000244",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 23.000244",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "150, 26, 0",
-        "Size": "135, 90",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 90",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3572,25 +3507,25 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         ],
       },
       {
-        "Offset": "0, 116, 0",
-        "Size": "135, 22.999878",
+        "Offset": "100, 0, 0",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 22.999878",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "0, 142, 0",
-        "Size": "135, 89.99963",
+        "Offset": "100, 18, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 89.99963",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3638,25 +3573,157 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         ],
       },
       {
-        "Offset": "150, 116, 0",
-        "Size": "135, 22.999878",
+        "Offset": "0, 78, 0",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 22.999878",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "150, 142, 0",
-        "Size": "135, 89.99963",
+        "Offset": "0, 96, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 89.99963",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "100, 78, 0",
+        "Size": "90, 15",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 15",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "100, 96, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 155, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 173, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3705,90 +3772,24 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "0, 233, 0",
-        "Size": "135, 23.000244",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 23.000244",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "0, 259, 0",
-        "Size": "135, 90",
+        "Offset": "0, 251, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 90",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, 0, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, -1, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 349, 0",
-        "Size": "135, 23.000244",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 23.000244",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "0, 375, 0",
-        "Size": "135, 90",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 90",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3836,91 +3837,25 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         ],
       },
       {
-        "Offset": "150, 349, 0",
-        "Size": "135, 23.000244",
+        "Offset": "100, 233, 0",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 23.000244",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "150, 375, 0",
-        "Size": "135, 90",
+        "Offset": "100, 251, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 90",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, 0, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, -1, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 465, 0",
-        "Size": "135, 21.999756",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 21.999756",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "0, 491, 0",
-        "Size": "135, 90",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 90",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3968,25 +3903,25 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         ],
       },
       {
-        "Offset": "150, 465, 0",
-        "Size": "135, 21.999756",
+        "Offset": "0, 311, 0",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 21.999756",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "150, 491, 0",
-        "Size": "135, 90",
+        "Offset": "0, 329, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 90",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -4034,25 +3969,91 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         ],
       },
       {
-        "Offset": "0, 582, 0",
-        "Size": "135, 22.999512",
+        "Offset": "100, 311, 0",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 22.999512",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "0, 608, 0",
-        "Size": "135, 90",
+        "Offset": "100, 329, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 90",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 388, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 406, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -4126,7 +4127,7 @@ exports[`Image Tests An Image supports abortPrefetch and resolveAssetSource 1`] 
   "Visual Tree": {
     "Comment": "image-asset-source",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -4156,7 +4157,7 @@ exports[`Image Tests An Image supports accessibility actions 1`] = `
   "Visual Tree": {
     "Comment": "image-accessibility-actions",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -4188,7 +4189,7 @@ exports[`Image Tests An Image supports accessibility properties 1`] = `
   "Visual Tree": {
     "Comment": "image-accessibility-properties",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -4217,7 +4218,7 @@ exports[`Image Tests An Image supports interaction properties 1`] = `
   "Visual Tree": {
     "Comment": "image-interaction-properties",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -4245,7 +4246,7 @@ exports[`Image Tests An Image supports style properties 1`] = `
   "Visual Tree": {
     "Comment": "image-style-properties",
     "Offset": "0, 0, 0",
-    "Size": "96, 96",
+    "Size": "64, 64",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -4309,29 +4310,29 @@ exports[`Image Tests Images can be defined as a set using accessibilityPosInSet 
   "Visual Tree": {
     "Comment": "image-set",
     "Offset": "0, 0, 0",
-    "Size": "873, 216",
+    "Size": "916, 144",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "6, 6, 0",
-        "Size": "96, 96",
+        "Offset": "4, 4, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "6, 114, 0",
-        "Size": "96, 96",
+        "Offset": "4, 76, 0",
+        "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "96, 96",
+            "Size": "64, 64",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4625,95 +4626,29 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
   "Visual Tree": {
     "Comment": "image-resize-mode",
     "Offset": "0, 0, 0",
-    "Size": "873, 697.9995",
+    "Size": "916, 466",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "135, 23.000244",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 23.000244",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "0, 26, 0",
-        "Size": "135, 90",
+        "Offset": "0, 18, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 90",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, 0, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, -1, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "150, 0, 0",
-        "Size": "135, 23.000244",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 23.000244",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "150, 26, 0",
-        "Size": "135, 90",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 90",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -4761,91 +4696,25 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         ],
       },
       {
-        "Offset": "0, 116, 0",
-        "Size": "135, 23.000244",
+        "Offset": "100, 0, 0",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 23.000244",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "0, 142, 0",
-        "Size": "135, 90",
+        "Offset": "100, 18, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 90",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, 0, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, -1, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "150, 116, 0",
-        "Size": "135, 23.000244",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 23.000244",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "150, 142, 0",
-        "Size": "135, 90",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 90",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -4893,25 +4762,223 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         ],
       },
       {
-        "Offset": "300, 116, 0",
-        "Size": "134.99997, 23.000244",
+        "Offset": "0, 78, 0",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "134.99997, 23.000244",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "300, 142, 0",
-        "Size": "135.00003, 90",
+        "Offset": "0, 96, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135.00003, 90",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "100, 78, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "100, 96, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "200, 78, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "200, 96, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 155, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 173, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -4960,90 +5027,24 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "0, 233, 0",
-        "Size": "135, 23.000244",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 23.000244",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "0, 259, 0",
-        "Size": "135, 90",
+        "Offset": "0, 251, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 90",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, 0, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, -1, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 349, 0",
-        "Size": "135, 23.000244",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 23.000244",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "0, 375, 0",
-        "Size": "135, 90",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 90",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -5091,91 +5092,25 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         ],
       },
       {
-        "Offset": "150, 349, 0",
-        "Size": "135, 23.000244",
+        "Offset": "100, 233, 0",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 23.000244",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "150, 375, 0",
-        "Size": "135, 90",
+        "Offset": "100, 251, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 90",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, 0, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, -1, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 465, 0",
-        "Size": "135, 22.999512",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 22.999512",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "0, 491, 0",
-        "Size": "135, 90",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135, 90",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -5223,91 +5158,25 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         ],
       },
       {
-        "Offset": "150, 465, 0",
-        "Size": "135, 22.999512",
+        "Offset": "0, 311, 0",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 22.999512",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "150, 491, 0",
-        "Size": "135, 90",
+        "Offset": "0, 329, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 90",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, 0, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, -1, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "300, 465, 0",
-        "Size": "134.99997, 22.999512",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "134.99997, 22.999512",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "300, 491, 0",
-        "Size": "135.00003, 90",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "135.00003, 90",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -5355,25 +5224,157 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         ],
       },
       {
-        "Offset": "0, 582, 0",
-        "Size": "135, 21.999756",
+        "Offset": "100, 311, 0",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 21.999756",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "0, 608, 0",
-        "Size": "135, 90",
+        "Offset": "100, 329, 0",
+        "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 90",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "200, 311, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "200, 329, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 388, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 406, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {

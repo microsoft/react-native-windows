@@ -36,17 +36,17 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to bottom butto
     },
     "Comment": "scroll_to_bottom_button",
     "Offset": "0, 0, 0",
-    "Size": "858, 43.00003",
+    "Size": "906, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "353, 7, 0",
-        "Size": "151.99997, 29.000015",
+        "Offset": "402, 5, 0",
+        "Size": "102, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "151.99997, 29.000015",
+            "Size": "102, 19",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -92,17 +92,17 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to end button 1
     },
     "Comment": "scroll_to_end_button",
     "Offset": "0, 0, 0",
-    "Size": "858, 43.00003",
+    "Size": "906, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "370, 7, 0",
-        "Size": "118.00003, 28.99997",
+        "Offset": "414, 5, 0",
+        "Size": "78, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "118.00003, 28.99997",
+            "Size": "78, 19",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -148,17 +148,17 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to start button
     },
     "Comment": "scroll_to_start_button",
     "Offset": "0, 0, 0",
-    "Size": "858, 42.99994",
+    "Size": "906, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "367, 7, 0",
-        "Size": "124.00003, 29.000061",
+        "Offset": "412, 5, 0",
+        "Size": "82, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "124.00003, 29.000061",
+            "Size": "82, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -204,17 +204,17 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to top button 1
     },
     "Comment": "scroll_to_top_button",
     "Offset": "0, 0, 0",
-    "Size": "858, 42.999985",
+    "Size": "906, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "372, 7, 0",
-        "Size": "114, 29.000015",
+        "Offset": "415, 5, 0",
+        "Size": "76, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "114, 29.000015",
+            "Size": "76, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -431,7 +431,7 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
   "Visual Tree": {
     "Comment": "scroll_horizontal",
     "Offset": "0, 0, 0",
-    "Size": "873, 159",
+    "Size": "916, 106",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -440,7 +440,7 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
           "Color": "rgba(238, 238, 238, 255)",
         },
         "Offset": "0, 0, 0",
-        "Size": "873, 159",
+        "Size": "916, 106",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -449,22 +449,22 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "1908, 159",
+            "Size": "1272, 106",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "1908, 159",
+                "Size": "1272, 106",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "1908, 159",
+                    "Size": "1272, 106",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
-                        "Offset": "8, 8, 0",
-                        "Size": "144, 144",
+                        "Offset": "5, 5, 0",
+                        "Size": "96, 96",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
@@ -473,54 +473,26 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                               "Color": "rgba(204, 204, 204, 255)",
                             },
                             "Offset": "0, 0, 0",
-                            "Size": "144, 144",
+                            "Size": "96, 96",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "15, 15, 0",
-                        "Size": "129, 29.000061",
+                        "Offset": "10, 10, 0",
+                        "Size": "86, 20",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
                             "Offset": "0, 0, 0",
-                            "Size": "129, 29.000061",
+                            "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "167, 8, 0",
-                        "Size": "144, 144",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(204, 204, 204, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "144, 144",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "174, 15, 0",
-                        "Size": "129, 29.000061",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "129, 29.000061",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "326, 8, 0",
-                        "Size": "144, 144",
+                        "Offset": "111, 5, 0",
+                        "Size": "96, 96",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
@@ -529,54 +501,26 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                               "Color": "rgba(204, 204, 204, 255)",
                             },
                             "Offset": "0, 0, 0",
-                            "Size": "144, 144",
+                            "Size": "96, 96",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "333, 15, 0",
-                        "Size": "129, 29.000061",
+                        "Offset": "116, 10, 0",
+                        "Size": "86, 20",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
                             "Offset": "0, 0, 0",
-                            "Size": "129, 29.000061",
+                            "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "485, 8, 0",
-                        "Size": "144, 144",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(204, 204, 204, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "144, 144",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "492, 15, 0",
-                        "Size": "129, 29.000061",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "129, 29.000061",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "644, 8, 0",
-                        "Size": "144, 144",
+                        "Offset": "217, 5, 0",
+                        "Size": "96, 96",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
@@ -585,54 +529,26 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                               "Color": "rgba(204, 204, 204, 255)",
                             },
                             "Offset": "0, 0, 0",
-                            "Size": "144, 144",
+                            "Size": "96, 96",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "651, 15, 0",
-                        "Size": "129.00005, 29.000061",
+                        "Offset": "222, 10, 0",
+                        "Size": "86, 20",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
                             "Offset": "0, 0, 0",
-                            "Size": "129.00005, 29.000061",
+                            "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "803, 8, 0",
-                        "Size": "144, 144",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(204, 204, 204, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "144, 144",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "810, 15, 0",
-                        "Size": "129, 29.000061",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "129, 29.000061",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "962, 8, 0",
-                        "Size": "144, 144",
+                        "Offset": "323, 5, 0",
+                        "Size": "96, 96",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
@@ -641,54 +557,26 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                               "Color": "rgba(204, 204, 204, 255)",
                             },
                             "Offset": "0, 0, 0",
-                            "Size": "144, 144",
+                            "Size": "96, 96",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "969, 15, 0",
-                        "Size": "129, 29.000061",
+                        "Offset": "328, 10, 0",
+                        "Size": "86, 20",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
                             "Offset": "0, 0, 0",
-                            "Size": "129, 29.000061",
+                            "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "1121, 8, 0",
-                        "Size": "144, 144",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(204, 204, 204, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "144, 144",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "1128, 15, 0",
-                        "Size": "129, 29.000061",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "129, 29.000061",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "1280, 8, 0",
-                        "Size": "144, 144",
+                        "Offset": "429, 5, 0",
+                        "Size": "96, 96",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
@@ -697,54 +585,26 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                               "Color": "rgba(204, 204, 204, 255)",
                             },
                             "Offset": "0, 0, 0",
-                            "Size": "144, 144",
+                            "Size": "96, 96",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "1287, 15, 0",
-                        "Size": "129, 29.000061",
+                        "Offset": "434, 10, 0",
+                        "Size": "86, 20",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
                             "Offset": "0, 0, 0",
-                            "Size": "129, 29.000061",
+                            "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "1439, 8, 0",
-                        "Size": "144, 144",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(204, 204, 204, 255)",
-                            },
-                            "Offset": "0, 0, 0",
-                            "Size": "144, 144",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "1446, 15, 0",
-                        "Size": "128.99991, 29.000061",
-                        "Visual Type": "SpriteVisual",
-                        "__Children": [
-                          {
-                            "Offset": "0, 0, 0",
-                            "Size": "128.99991, 29.000061",
-                            "Visual Type": "SpriteVisual",
-                          },
-                        ],
-                      },
-                      {
-                        "Offset": "1598, 8, 0",
-                        "Size": "144, 144",
+                        "Offset": "535, 5, 0",
+                        "Size": "96, 96",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
@@ -753,26 +613,26 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                               "Color": "rgba(204, 204, 204, 255)",
                             },
                             "Offset": "0, 0, 0",
-                            "Size": "144, 144",
+                            "Size": "96, 96",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "1605, 15, 0",
-                        "Size": "129, 29.000061",
+                        "Offset": "540, 10, 0",
+                        "Size": "86, 20",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
                             "Offset": "0, 0, 0",
-                            "Size": "129, 29.000061",
+                            "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "1757, 8, 0",
-                        "Size": "144, 144",
+                        "Offset": "641, 5, 0",
+                        "Size": "96, 96",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
@@ -781,19 +641,159 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                               "Color": "rgba(204, 204, 204, 255)",
                             },
                             "Offset": "0, 0, 0",
-                            "Size": "144, 144",
+                            "Size": "96, 96",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
                       },
                       {
-                        "Offset": "1764, 15, 0",
-                        "Size": "129, 29.000061",
+                        "Offset": "646, 10, 0",
+                        "Size": "86, 20",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
                             "Offset": "0, 0, 0",
-                            "Size": "129, 29.000061",
+                            "Size": "86, 20",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "747, 5, 0",
+                        "Size": "96, 96",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(204, 204, 204, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "96, 96",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "752, 10, 0",
+                        "Size": "86, 20",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "86, 20",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "853, 5, 0",
+                        "Size": "96, 96",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(204, 204, 204, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "96, 96",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "858, 10, 0",
+                        "Size": "86, 20",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "86, 20",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "959, 5, 0",
+                        "Size": "96, 96",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(204, 204, 204, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "96, 96",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "964, 10, 0",
+                        "Size": "86, 20",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "86, 20",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "1065, 5, 0",
+                        "Size": "96, 96",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(204, 204, 204, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "96, 96",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "1070, 10, 0",
+                        "Size": "86, 20",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "86, 20",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "1171, 5, 0",
+                        "Size": "96, 96",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(204, 204, 204, 255)",
+                            },
+                            "Offset": "0, 0, 0",
+                            "Size": "96, 96",
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                      },
+                      {
+                        "Offset": "1176, 10, 0",
+                        "Size": "86, 20",
+                        "Visual Type": "SpriteVisual",
+                        "__Children": [
+                          {
+                            "Offset": "0, 0, 0",
+                            "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
                           },
                         ],
@@ -807,61 +807,61 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
         ],
       },
       {
-        "Offset": "-19.5, 0, 0",
-        "Size": "18, 0",
+        "Offset": "-13, 0, 0",
+        "Size": "12, 0",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Offset": "-18, 4.5, 0",
+            "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "18, 150",
+            "Size": "12, 100",
             "Visual Type": "Visual",
           },
           {
-            "Offset": "0, 6, 0",
+            "Offset": "0, 4, 0",
             "Opacity": 0,
-            "Size": "18, 18",
+            "Size": "12, 12",
             "Visual Type": "SpriteVisual",
           },
           {
-            "Offset": "0, -24, 0",
+            "Offset": "0, -16, 0",
             "Opacity": 0,
-            "Size": "18, 18",
+            "Size": "12, 12",
             "Visual Type": "SpriteVisual",
           },
           {
-            "Offset": "-7.5, 24, 0",
-            "Size": "9, 111",
+            "Offset": "-5, 16, 0",
+            "Size": "6, 74",
             "Visual Type": "Visual",
           },
         ],
       },
       {
-        "Offset": "0, -19.5, 0",
-        "Size": "0, 18",
+        "Offset": "0, -13, 0",
+        "Size": "0, 12",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Offset": "4.5, -18, 0",
+            "Offset": "3, -12, 0",
             "Opacity": 0,
-            "Size": "864, 18",
+            "Size": "910, 12",
             "Visual Type": "Visual",
           },
           {
-            "Offset": "6, 0, 0",
+            "Offset": "4, 0, 0",
             "Opacity": 0,
-            "Size": "18, 18",
+            "Size": "12, 12",
             "Visual Type": "SpriteVisual",
           },
           {
-            "Offset": "-24, 0, 0",
+            "Offset": "-16, 0, 0",
             "Opacity": 0,
-            "Size": "18, 18",
+            "Size": "12, 12",
             "Visual Type": "SpriteVisual",
           },
           {
-            "Offset": "24, -7.5, 0",
-            "Size": "377, 9",
+            "Offset": "16, -5, 0",
+            "Size": "637, 6",
             "Visual Type": "Visual",
           },
         ],
@@ -907,17 +907,17 @@ exports[`ScrollView Tests ScrollViews has flash scroll indicators 1`] = `
     },
     "Comment": "flash_scroll_indicators_button",
     "Offset": "0, 0, 0",
-    "Size": "858, 42.99994",
+    "Size": "906, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "330, 7, 0",
-        "Size": "198, 29.000061",
+        "Offset": "387, 5, 0",
+        "Size": "132, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "198, 29.000061",
+            "Size": "132, 20",
             "Visual Type": "SpriteVisual",
           },
         ],

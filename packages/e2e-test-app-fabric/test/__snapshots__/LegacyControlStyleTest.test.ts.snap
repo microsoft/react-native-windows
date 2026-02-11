@@ -12,7 +12,7 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
   "Visual Tree": {
     "Comment": "control-style-switch-view",
     "Offset": "0, 0, 0",
-    "Size": "996, 270",
+    "Size": "998, 180",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -30,7 +30,7 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
   "Visual Tree": {
     "Comment": "control-style-switch-view",
     "Offset": "0, 0, 0",
-    "Size": "996, 270",
+    "Size": "998, 180",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -48,7 +48,7 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
   "Visual Tree": {
     "Comment": "control-style-switch-view",
     "Offset": "0, 0, 0",
-    "Size": "996, 270",
+    "Size": "998, 180",
     "Visual Type": "SpriteVisual",
   },
 }
