@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.82.0-nightly-20250902-9731e8ebc",
+  "baseVersion": "0.83.0-nightly-20250917-18cb4edfa",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "c8bd25d4aa75328a2484c5c7b0b768c188a50b52"
+      "baseHash": "8a6739338afdae4cbcfad614e33e66ae2948f497"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "88aa62f2d86a810631bcbc871f45c28c53fceec7"
+      "baseHash": "02a8ea6efd164de036681159f18135cc3393cb21"
     },
     {
       "type": "platform",
@@ -394,7 +394,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Renderer/shims/ReactNativeTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Renderer/shims/ReactNativeTypes.js",
-      "baseHash": "9e91759d01c9a6d459c5781b357533f4ac8727a7",
+      "baseHash": "333afc05f5a42a5321196f5f7a14d14c8fd5dd0f",
       "issue": 0
     },
     {
@@ -431,7 +431,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextNativeComponent.js",
-      "baseHash": "259a625b5f7cf3a70ecd4af6388d82d47f446e50",
+      "baseHash": "56a99244e10bd1833a3d048f2476c4500f59202d",
       "issue": 7074
     },
     {
