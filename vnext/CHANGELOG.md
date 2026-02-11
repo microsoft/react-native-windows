@@ -1,8 +1,25 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 27 Jan 2026 19:33:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 11 Feb 2026 16:10:54 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.4
+
+Wed, 11 Feb 2026 16:10:54 GMT
+
+### Patches
+
+- Fix selectable text not working inside ScrollView (74712637+iamAbhi-916@users.noreply.github.com)
+- Fix memoryStram getting unitialized (hmalothu@microsoft.com)
+- enables word-extension during drag after a double-click selection (74712637+iamAbhi-916@users.noreply.github.com)
+- update codegen'd files (30809111+acoates-ms@users.noreply.github.com)
+- adding fix for shadow in rounded box (protikbiswas@microsoft.com)
+- Fix issue when creating a ContentIslandComponentView when the root ReactNativeIsland is not connected (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash in ABIViewManager::RemoveAllChildren during shutdown (hmalothu@microsoft.com)
+- visual studio 2026 strict check fix (hmalothu@microsoft.com)
+- Bump @react-native-windows/cli to v0.81.2
+- Bump @react-native-windows/codegen to v0.81.2
 
 ## 0.81.3
 

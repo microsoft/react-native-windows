@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 11 Feb 2026 16:10:54 GMT",
+      "version": "0.81.3",
+      "tag": "@office-iss/react-native-win32_v0.81.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "abadef8978d29431c24dd81d4fadd688550ae5c0",
+            "comment": "Fix TextWin32 export"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Jan 2026 19:33:59 GMT",
       "version": "0.81.2",
       "tag": "@office-iss/react-native-win32_v0.81.2",
