@@ -709,7 +709,9 @@ void ComponentView::applyShadowProps(const facebook::react::ViewProps &viewProps
       shadow.Color(theme()->Color(*viewProps.shadowColor));
   }
 
-  Visual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(shadow);
+  // Apply shadow to OuterVisual (not Visual) because Visual may have a rounded-corner clip
+  // from updateClippingPath, which would clip the shadow. OuterVisual is not clipped.
+  OuterVisual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(shadow);
 }
 
 void ComponentView::updateTransformProps(
@@ -730,8 +732,9 @@ void ComponentView::updateTransformProps(
         static_cast<facebook::react::BackfaceVisibility>(
             winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility::Hidden) ==
         facebook::react::BackfaceVisibility::Hidden);
-    visual.BackfaceVisibility(static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
-        newViewProps.backfaceVisibility));
+    visual.BackfaceVisibility(
+        static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
+            newViewProps.backfaceVisibility));
   }
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
@@ -1364,9 +1367,10 @@ void ViewComponentView::updateChildrenClippingPath(
 
       // Insert m_childrenContainer after border visuals in m_visual
       Visual().InsertAt(m_childrenContainer, borderCount);
-    }
 
-    m_childrenContainer.Size({viewWidth, viewHeight});
+      // Use relative sizing so container automatically tracks parent's size
+      m_childrenContainer.RelativeSizeWithOffset({0, 0}, {1, 1});
+    }
 
     // Clip children to view bounds using outer border radii (matches iOS default behavior)
     auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
@@ -1377,7 +1381,6 @@ void ViewComponentView::updateChildrenClippingPath(
         pathGeometry.get());
   } else if (m_childrenContainer) {
     // overflow changed from hidden to visible. Keep container, just remove clip.
-    m_childrenContainer.Size({viewWidth, viewHeight});
     m_childrenContainer.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
         nullptr);
   }
@@ -1424,8 +1427,8 @@ winrt::Windows::Foundation::IInspectable ComponentView::CreateAutomationProvider
   return *m_innerAutomationProvider;
 }
 
-const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
-    &ComponentView::InnerAutomationProvider() const noexcept {
+const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider> &
+ComponentView::InnerAutomationProvider() const noexcept {
   return m_innerAutomationProvider;
 }
 
