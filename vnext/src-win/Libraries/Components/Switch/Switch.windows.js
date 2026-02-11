@@ -272,7 +272,7 @@ const Switch: component(
       disabled,
       onTintColor: trackColorForTrue,
       style: StyleSheet.compose(
-        {alignSelf: 'flex-start' as const},
+        {height: 31, width: 51}, // #windows
         StyleSheet.compose(
           style,
           ios_backgroundColor == null

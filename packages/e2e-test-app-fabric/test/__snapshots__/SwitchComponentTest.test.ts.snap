@@ -17,11 +17,11 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
   "Visual Tree": {
     "Comment": "event-switch-bottom",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
@@ -55,11 +55,11 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
   "Visual Tree": {
     "Comment": "event-switch-regression-top",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
@@ -92,11 +92,11 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
   "Visual Tree": {
     "Comment": "event-switch-top",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
@@ -130,11 +130,11 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
   "Visual Tree": {
     "Comment": "event-switch-regression-bottom",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
@@ -167,11 +167,11 @@ exports[`SwitchTests Controlled switch 1`] = `
   "Visual Tree": {
     "Comment": "controlled-switch",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
@@ -204,11 +204,11 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
   "Visual Tree": {
     "Comment": "initial-false-switch",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
@@ -242,11 +242,11 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
   "Visual Tree": {
     "Comment": "initial-true-switch",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
@@ -279,11 +279,11 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
   "Visual Tree": {
     "Comment": "disabled-initial-off",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
@@ -316,11 +316,11 @@ exports[`SwitchTests Switches can be disabled, initial false 2`] = `
   "Visual Tree": {
     "Comment": "disabled-initial-off",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
@@ -354,11 +354,11 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
   "Visual Tree": {
     "Comment": "disabled-initial-on",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
@@ -391,11 +391,11 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
   "Visual Tree": {
     "Comment": "on-off-initial-off",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
@@ -418,6 +418,7 @@ exports[`SwitchTests Switches can be set to true/false, initial false 2`] = `
     "ControlType": 50000,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
+    "TogglePattern.ToggleState": "On",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.SwitchComponentView",
@@ -428,17 +429,17 @@ exports[`SwitchTests Switches can be set to true/false, initial false 2`] = `
   "Visual Tree": {
     "Comment": "on-off-initial-off",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "4, 4, 0",
-            "Size": "12, 12",
+            "Offset": "22, 3, 0",
+            "Size": "14, 14",
             "Visual Type": "Visual",
           },
         ],
@@ -466,11 +467,11 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
   "Visual Tree": {
     "Comment": "on-off-initial-on",
     "Offset": "0, 0, 0",
-    "Size": "0, 0",
+    "Size": "51, 31",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "-20, -10, 0",
+        "Offset": "5.5, 5.5, 0",
         "Size": "40, 20",
         "Visual Type": "Visual",
         "__Children": [
@@ -575,21 +576,21 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
   "Visual Tree": {
     "Comment": "accessibility-switch",
     "Offset": "0, 0, 0",
-    "Size": "916, 20",
+    "Size": "916, 82",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "0, 0",
+        "Size": "51, 31",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "0, 0",
+            "Size": "51, 31",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
-                "Offset": "-20, -10, 0",
+                "Offset": "5.5, 5.5, 0",
                 "Size": "40, 20",
                 "Visual Type": "Visual",
                 "__Children": [
@@ -605,17 +606,17 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         ],
       },
       {
-        "Offset": "916, 0, 0",
-        "Size": "0, 0",
+        "Offset": "865, 0, 0",
+        "Size": "51, 31",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "0, 0",
+            "Size": "51, 31",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
-                "Offset": "-20, -10, 0",
+                "Offset": "5.5, 5.5, 0",
                 "Size": "40, 20",
                 "Visual Type": "Visual",
                 "__Children": [
@@ -631,17 +632,17 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         ],
       },
       {
-        "Offset": "0, 10, 0",
-        "Size": "0, 0",
+        "Offset": "0, 41, 0",
+        "Size": "51, 31",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "0, 0",
+            "Size": "51, 31",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
-                "Offset": "-20, -10, 0",
+                "Offset": "5.5, 5.5, 0",
                 "Size": "40, 20",
                 "Visual Type": "Visual",
                 "__Children": [
@@ -657,17 +658,17 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         ],
       },
       {
-        "Offset": "916, 10, 0",
-        "Size": "0, 0",
+        "Offset": "865, 41, 0",
+        "Size": "51, 31",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "0, 0",
+            "Size": "51, 31",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
-                "Offset": "-20, -10, 0",
+                "Offset": "5.5, 5.5, 0",
                 "Size": "40, 20",
                 "Visual Type": "Visual",
                 "__Children": [
