@@ -6,9 +6,7 @@
 // Boost Framework
 #include <boost/beast/core/multi_buffer.hpp>
 #include <boost/beast/core/tcp_stream.hpp>
-#include <boost/beast/ssl/ssl_stream.hpp>
 #include <boost/beast/websocket.hpp>
-#include <boost/beast/websocket/ssl.hpp>
 
 // Standard Library
 #include <thread>
@@ -77,27 +75,6 @@ class WebSocketSession :
  public:
   WebSocketSession(boost::asio::ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks);
   ~WebSocketSession();
-};
-
-class SecureWebSocketSession :
-  public std::enable_shared_from_this<SecureWebSocketSession>,
-  public BaseWebSocketSession<boost::beast::ssl_stream<boost::beast::tcp_stream>>
-{
-  boost::asio::ssl::context m_context;
-
-  std::shared_ptr<BaseWebSocketSession<boost::beast::ssl_stream<boost::beast::tcp_stream>>> SharedFromThis() override;
-
- public:
-  SecureWebSocketSession(boost::asio::ip::tcp::socket socket, WebSocketServiceCallbacks& callbacks);
-  ~SecureWebSocketSession();
-
-  void OnSslHandshake(boost::system::error_code ec);
-
-#pragma region IWebSocketSession
-
-  void Start() override;
-
-#pragma endregion IWebSocketSession
 };
 
 class WebSocketServer : public std::enable_shared_from_this<WebSocketServer>
