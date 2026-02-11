@@ -380,6 +380,7 @@ extends:
             # Make symbols available through http://symweb.
             - task: PublishSymbols@2
               displayName: Publish symbols
+              enabled: false
               env:
                 ARTIFACTSERVICES_SYMBOL_ACCOUNTNAME: microsoft
               inputs:
@@ -480,6 +481,7 @@ extends:
           # Symbol Publishing for Work Item 59264834 - MSRC Compliance
           - task: PublishSymbols@2
             displayName: 'Publish Symbols to Microsoft Symbol Server'
+            enabled: false
             condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
             env:
               ARTIFACTSERVICES_SYMBOL_ACCOUNTNAME: microsoft
