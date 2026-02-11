@@ -52,8 +52,8 @@ struct PickerXamlProps : winrt::implements<PickerXamlProps, winrt::Microsoft::Re
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(PickerXaml_OnPickerSelect)
-struct PickerXaml_OnPickerSelect {
+REACT_STRUCT(PickerXamlSpec_onPickerSelect)
+struct PickerXamlSpec_onPickerSelect {
   REACT_FIELD(value)
   std::string value;
 
@@ -68,10 +68,10 @@ struct PickerXamlEventEmitter {
   PickerXamlEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnPickerSelect = PickerXaml_OnPickerSelect;
+  using OnPickerSelect = PickerXamlSpec_onPickerSelect;
 
   void onPickerSelect(OnPickerSelect &value) const {
-    m_eventEmitter.DispatchEvent(L"pickerSelect", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"pickerSelect", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

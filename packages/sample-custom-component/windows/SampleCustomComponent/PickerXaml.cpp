@@ -132,7 +132,7 @@ struct PickerXamlComponentView : winrt::implements<PickerXamlComponentView, winr
     if (auto eventEmitter = this->EventEmitter()) {
       const int32_t selectedIndex = m_comboBox.SelectedIndex();
 
-      Codegen::PickerXaml_OnPickerSelect eventArgs;
+      Codegen::PickerXamlSpec_onPickerSelect eventArgs;
       eventArgs.itemIndex = selectedIndex;
 
       // Get the selected item value and text if available
