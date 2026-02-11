@@ -5,6 +5,7 @@
 #include <Fabric/AbiComponentDescriptor.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProvider.h>
 #include <react/renderer/core/ReactPrimitives.h>
+#include <optional>
 #include "winrt/Microsoft.ReactNative.Composition.Experimental.h"
 #include "winrt/Microsoft.ReactNative.Composition.h"
 #include "winrt/Microsoft.ReactNative.h"
@@ -46,6 +47,8 @@ struct ReactCompositionViewComponentBuilder
  public: // Composition::IReactCompositionViewComponentBuilder
   void SetViewComponentViewInitializer(const ViewComponentViewInitializer &initializer) noexcept;
   void SetContentIslandComponentViewInitializer(const ComponentIslandComponentViewInitializer &initializer) noexcept;
+  void SetContentIslandChildSiteAutomationOption(
+      winrt::Microsoft::UI::Content::ContentAutomationOptions automationOption) noexcept;
   void SetPortalComponentViewInitializer(const PortalComponentViewInitializer &initializer) noexcept;
   void SetCreateVisualHandler(CreateVisualDelegate impl) noexcept;
   void SetViewFeatures(ComponentViewFeatures viewFeatures) noexcept;
@@ -81,6 +84,8 @@ struct ReactCompositionViewComponentBuilder
   const winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate &
   VisualToMountChildrenIntoHandler() const noexcept;
   const CreateAutomationPeerDelegate &CreateAutomationPeerHandler() const noexcept;
+  std::optional<winrt::Microsoft::UI::Content::ContentAutomationOptions> ContentIslandChildSiteAutomationOption()
+      const noexcept;
 
  private:
   void InitializeComponentView(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept;
@@ -114,6 +119,7 @@ struct ReactCompositionViewComponentBuilder
       m_visualToMountChildrenIntoHandler;
   UpdateLayoutMetricsDelegate m_updateLayoutMetricsHandler;
   bool m_xamlSupport{false};
+  std::optional<winrt::Microsoft::UI::Content::ContentAutomationOptions> m_contentIslandChildSiteAutomationOption;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition
