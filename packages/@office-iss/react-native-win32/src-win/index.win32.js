@@ -71,7 +71,7 @@ import typeof VirtualizedList from './Libraries/Lists/VirtualizedList';
 import typeof VirtualizedSectionList from './Libraries/Lists/VirtualizedSectionList';
 import typeof LogBox from './Libraries/LogBox/LogBox';
 import typeof Modal from './Libraries/Modal/Modal';
-import typeof unstable_NativeText from './Libraries/Text/TextNativeComponent';
+import typeof {NativeText as unstable_NativeText} from './Libraries/Text/TextNativeComponent';
 import typeof unstable_NativeView from './Libraries/Components/View/ViewNativeComponent';
 // $FlowFixMe[invalid-exported-annotation]
 import typeof NativeDialogManagerAndroid from './Libraries/NativeModules/specs/NativeDialogManagerAndroid';
