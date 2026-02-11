@@ -17,17 +17,17 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
   "Visual Tree": {
     "Comment": "event-switch-bottom",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "76.00001, 46.999992",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.000004, 8.499996, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "4, 4, 0",
-            "Size": "12, 12",
+            "Offset": "6, 6, 0",
+            "Size": "18, 18",
             "Visual Type": "Visual",
           },
         ],
@@ -55,17 +55,17 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
   "Visual Tree": {
     "Comment": "event-switch-regression-top",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "77.000015, 45.999985",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.500008, 7.9999924, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "24, 4, 0",
-            "Size": "12, 12",
+            "Offset": "36, 6, 0",
+            "Size": "18, 18",
             "Visual Type": "Visual",
           },
         ],
@@ -92,17 +92,17 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
   "Visual Tree": {
     "Comment": "event-switch-top",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "76.00001, 45.999985",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.000004, 7.9999924, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "4, 4, 0",
-            "Size": "12, 12",
+            "Offset": "6, 6, 0",
+            "Size": "18, 18",
             "Visual Type": "Visual",
           },
         ],
@@ -130,17 +130,17 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
   "Visual Tree": {
     "Comment": "event-switch-regression-bottom",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "77.000015, 46.999992",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.500008, 8.499996, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "24, 4, 0",
-            "Size": "12, 12",
+            "Offset": "36, 6, 0",
+            "Size": "18, 18",
             "Visual Type": "Visual",
           },
         ],
@@ -167,17 +167,17 @@ exports[`SwitchTests Controlled switch 1`] = `
   "Visual Tree": {
     "Comment": "controlled-switch",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "76, 45.999985",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.000001, 7.9999924, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "4, 4, 0",
-            "Size": "12, 12",
+            "Offset": "6, 6, 0",
+            "Size": "18, 18",
             "Visual Type": "Visual",
           },
         ],
@@ -204,17 +204,17 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
   "Visual Tree": {
     "Comment": "initial-false-switch",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "76, 45.999985",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.000001, 7.9999924, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "4, 4, 0",
-            "Size": "12, 12",
+            "Offset": "6, 6, 0",
+            "Size": "18, 18",
             "Visual Type": "Visual",
           },
         ],
@@ -242,17 +242,17 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
   "Visual Tree": {
     "Comment": "initial-true-switch",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "76, 46.999992",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.000001, 8.499996, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "24, 4, 0",
-            "Size": "12, 12",
+            "Offset": "36, 6, 0",
+            "Size": "18, 18",
             "Visual Type": "Visual",
           },
         ],
@@ -279,17 +279,17 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
   "Visual Tree": {
     "Comment": "disabled-initial-off",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "76, 45.999985",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.000001, 7.9999924, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "4, 4, 0",
-            "Size": "12, 12",
+            "Offset": "6, 6, 0",
+            "Size": "18, 18",
             "Visual Type": "Visual",
           },
         ],
@@ -316,17 +316,17 @@ exports[`SwitchTests Switches can be disabled, initial false 2`] = `
   "Visual Tree": {
     "Comment": "disabled-initial-off",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "76, 45.999985",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.000001, 7.9999924, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "4, 4, 0",
-            "Size": "12, 12",
+            "Offset": "6, 6, 0",
+            "Size": "18, 18",
             "Visual Type": "Visual",
           },
         ],
@@ -354,17 +354,17 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
   "Visual Tree": {
     "Comment": "disabled-initial-on",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "76, 46.999992",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.000001, 8.499996, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "24, 4, 0",
-            "Size": "12, 12",
+            "Offset": "36, 6, 0",
+            "Size": "18, 18",
             "Visual Type": "Visual",
           },
         ],
@@ -391,17 +391,17 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
   "Visual Tree": {
     "Comment": "on-off-initial-off",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "76, 45.999985",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.000001, 7.9999924, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "4, 4, 0",
-            "Size": "12, 12",
+            "Offset": "6, 6, 0",
+            "Size": "18, 18",
             "Visual Type": "Visual",
           },
         ],
@@ -429,17 +429,17 @@ exports[`SwitchTests Switches can be set to true/false, initial false 2`] = `
   "Visual Tree": {
     "Comment": "on-off-initial-off",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "76, 45.999985",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.000001, 7.9999924, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "22, 3, 0",
-            "Size": "14, 14",
+            "Offset": "33, 4.5, 0",
+            "Size": "21, 21",
             "Visual Type": "Visual",
           },
         ],
@@ -467,17 +467,17 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
   "Visual Tree": {
     "Comment": "on-off-initial-on",
     "Offset": "0, 0, 0",
-    "Size": "51, 31",
+    "Size": "76, 46.999992",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "5.5, 5.5, 0",
-        "Size": "40, 20",
+        "Offset": "8.000001, 8.499996, 0",
+        "Size": "60, 30",
         "Visual Type": "Visual",
         "__Children": [
           {
-            "Offset": "24, 4, 0",
-            "Size": "12, 12",
+            "Offset": "36, 6, 0",
+            "Size": "18, 18",
             "Visual Type": "Visual",
           },
         ],
@@ -576,27 +576,27 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
   "Visual Tree": {
     "Comment": "accessibility-switch",
     "Offset": "0, 0, 0",
-    "Size": "916, 82",
+    "Size": "873, 122.99998",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "51, 31",
+        "Size": "76, 45.999985",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "51, 31",
+            "Size": "76, 45.999985",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
-                "Offset": "5.5, 5.5, 0",
-                "Size": "40, 20",
+                "Offset": "8.000001, 7.9999924, 0",
+                "Size": "60, 30",
                 "Visual Type": "Visual",
                 "__Children": [
                   {
-                    "Offset": "24, 4, 0",
-                    "Size": "12, 12",
+                    "Offset": "36, 6, 0",
+                    "Size": "18, 18",
                     "Visual Type": "Visual",
                   },
                 ],
@@ -606,23 +606,23 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         ],
       },
       {
-        "Offset": "865, 0, 0",
-        "Size": "51, 31",
+        "Offset": "797, 0, 0",
+        "Size": "76.99997, 45.999985",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "51, 31",
+            "Size": "76.99997, 45.999985",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
-                "Offset": "5.5, 5.5, 0",
-                "Size": "40, 20",
+                "Offset": "8.499985, 7.9999924, 0",
+                "Size": "60, 30",
                 "Visual Type": "Visual",
                 "__Children": [
                   {
-                    "Offset": "24, 4, 0",
-                    "Size": "12, 12",
+                    "Offset": "36, 6, 0",
+                    "Size": "18, 18",
                     "Visual Type": "Visual",
                   },
                 ],
@@ -632,23 +632,23 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         ],
       },
       {
-        "Offset": "0, 41, 0",
-        "Size": "51, 31",
+        "Offset": "0, 62, 0",
+        "Size": "76, 46.999992",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "51, 31",
+            "Size": "76, 46.999992",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
-                "Offset": "5.5, 5.5, 0",
-                "Size": "40, 20",
+                "Offset": "8.000001, 8.499996, 0",
+                "Size": "60, 30",
                 "Visual Type": "Visual",
                 "__Children": [
                   {
-                    "Offset": "4, 4, 0",
-                    "Size": "12, 12",
+                    "Offset": "6, 6, 0",
+                    "Size": "18, 18",
                     "Visual Type": "Visual",
                   },
                 ],
@@ -658,23 +658,23 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         ],
       },
       {
-        "Offset": "865, 41, 0",
-        "Size": "51, 31",
+        "Offset": "797, 62, 0",
+        "Size": "76.99997, 46.999992",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "51, 31",
+            "Size": "76.99997, 46.999992",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
-                "Offset": "5.5, 5.5, 0",
-                "Size": "40, 20",
+                "Offset": "8.499985, 8.499996, 0",
+                "Size": "60, 30",
                 "Visual Type": "Visual",
                 "__Children": [
                   {
-                    "Offset": "24, 4, 0",
-                    "Size": "12, 12",
+                    "Offset": "36, 6, 0",
+                    "Size": "18, 18",
                     "Visual Type": "Visual",
                   },
                 ],

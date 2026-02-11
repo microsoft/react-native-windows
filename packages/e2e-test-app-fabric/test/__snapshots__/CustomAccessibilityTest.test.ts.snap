@@ -46,24 +46,24 @@ exports[`Custom Accessibility Tests Verify custom native component has UIA label
   "Visual Tree": {
     "Comment": "custom-accessibility-root-1",
     "Offset": "0, 0, 0",
-    "Size": "998, 519",
+    "Size": "996, 778",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "998, 19",
+        "Size": "996, 27.999996",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "998, 19",
+            "Size": "996, 27.999996",
             "Visual Type": "SpriteVisual",
           },
         ],
       },
       {
-        "Offset": "0, 19, 0",
-        "Size": "500, 500",
+        "Offset": "0, 28, 0",
+        "Size": "750, 750.00006",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -73,7 +73,7 @@ exports[`Custom Accessibility Tests Verify custom native component has UIA label
             },
             "Comment": "custom-accessibility-1",
             "Offset": "0, 0, 0",
-            "Size": "500, 500",
+            "Size": "750, 750.00006",
             "Visual Type": "SpriteVisual",
           },
         ],

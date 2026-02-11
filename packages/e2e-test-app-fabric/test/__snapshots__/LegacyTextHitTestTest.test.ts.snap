@@ -18,7 +18,7 @@ exports[`LegacyTextHitTestTest BidirectionalTextPressable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -42,7 +42,7 @@ exports[`LegacyTextHitTestTest BidirectionalTextPressableEdgeCaseNotPressable 1`
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -66,7 +66,7 @@ exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsEdgeCasePressable 1`
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -90,7 +90,7 @@ exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsPressable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -114,7 +114,7 @@ exports[`LegacyTextHitTestTest InsertedVirtualTextPressable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -138,7 +138,7 @@ exports[`LegacyTextHitTestTest LTRTextInRTLFlowPressable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -162,7 +162,7 @@ exports[`LegacyTextHitTestTest MultilineRTLTextEdgeCaseNotPressable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -186,7 +186,7 @@ exports[`LegacyTextHitTestTest MultilineRTLTextPressable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -210,7 +210,7 @@ exports[`LegacyTextHitTestTest MultilineTextPressable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -234,7 +234,7 @@ exports[`LegacyTextHitTestTest RTLTextInRTLFlowPressable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -258,7 +258,7 @@ exports[`LegacyTextHitTestTest RTLTextPressable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -282,7 +282,7 @@ exports[`LegacyTextHitTestTest TextPressableWithVirtualText 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -306,7 +306,7 @@ exports[`LegacyTextHitTestTest ToggleVirtualTextPressable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -330,7 +330,7 @@ exports[`LegacyTextHitTestTest VirtualTextPressable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -354,7 +354,7 @@ exports[`LegacyTextHitTestTest WrappedLTRInRTLFlowEdgeCaseNotPressable 1`] = `
   "Visual Tree": {
     "Comment": "pressed-state",
     "Offset": "0, 0, 0",
-    "Size": "103, 19",
+    "Size": "154, 27.999996",
     "Visual Type": "SpriteVisual",
   },
 }
