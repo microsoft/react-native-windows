@@ -1,7 +1,7 @@
 {
-  "type": "none",
+  "type": "patch",
   "comment": "visual studio 2026 strict check fix",
   "packageName": "react-native-windows",
   "email": "hmalothu@microsoft.com",
-  "dependentChangeType": "none"
+  "dependentChangeType": "patch"
 }
