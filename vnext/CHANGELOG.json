@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Feb 2026 09:48:46 GMT",
+      "version": "0.82.0-preview.10",
+      "tag": "react-native-windows_v0.82.0-preview.10",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1d7bc892b419b8f082743a4f98259a7b1e97ca77",
+            "comment": "enables word-extension during drag after a double-click selection"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2592b3f97d36cee312ea99e0041003320665424f",
+            "comment": "Fix switch Component's layout change"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "84017aa1d6b66d73c43ab35eeefb36a60bab3055",
+            "comment": "Fix SHIFT+F10 keyboard shortcut for context menu in TextInput"
+          }
+        ],
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3ce2c3c166823addc49bb02f2545d66881538ef2",
+            "comment": "Add getSize Api"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 02 Feb 2026 11:34:36 GMT",
       "version": "0.82.0-preview.9",
       "tag": "react-native-windows_v0.82.0-preview.9",
