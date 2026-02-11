@@ -1,7 +1,7 @@
 {
-  "type": "none",
+  "type": "patch",
   "comment": "Fix memoryStram getting unitialized",
   "packageName": "react-native-windows",
   "email": "hmalothu@microsoft.com",
-  "dependentChangeType": "none"
+  "dependentChangeType": "patch"
 }
