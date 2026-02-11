@@ -43,9 +43,19 @@ ContentIslandComponentView::ContentIslandComponentView(
       });
 }
 
-void ContentIslandComponentView::OnMounted() noexcept {
+winrt::Microsoft::UI::Content::ContentIsland ContentIslandComponentView::ParentContentIsland() noexcept {
+  auto root = rootComponentView();
+  if (!root)
+    return nullptr;
+  return root->parentContentIsland();
+}
+
+void ContentIslandComponentView::ConnectInternal() noexcept {
+  if (!m_islandToConnect)
+    return;
+
   m_childSiteLink = winrt::Microsoft::UI::Content::ChildSiteLink::Create(
-      rootComponentView()->parentContentIsland(),
+      m_parentContentIsland,
       winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
           .as<winrt::Microsoft::UI::Composition::ContainerVisual>());
   m_childSiteLink.ActualSize({m_layoutMetrics.frame.size.width, m_layoutMetrics.frame.size.height});
@@ -69,6 +79,7 @@ void ContentIslandComponentView::OnMounted() noexcept {
     m_childSiteLink.Connect(m_islandToConnect);
     m_islandToConnect = nullptr;
   }
+  UnregisterForRootIslandEvents();
 
   ParentLayoutChanged();
   auto view = Parent();
@@ -85,12 +96,42 @@ void ContentIslandComponentView::OnMounted() noexcept {
   }
 }
 
+void ContentIslandComponentView::RegisterForRootIslandEvents() noexcept {
+  m_parentContentIsland = ParentContentIsland();
+
+  if (m_parentContentIsland.IsConnected()) {
+    ConnectInternal();
+  } else {
+    m_islandStateChangedToken = m_parentContentIsland.StateChanged(
+        [wkThis = get_weak()](
+            const winrt::Microsoft::UI::Content::ContentIsland & /*island*/,
+            const winrt::Microsoft::UI::Content::ContentIslandStateChangedEventArgs & /*args*/) {
+          if (auto strongThis = wkThis.get()) {
+            strongThis->ConnectInternal();
+          }
+        });
+  }
+}
+
+void ContentIslandComponentView::UnregisterForRootIslandEvents() noexcept {
+  if (m_islandStateChangedToken) {
+    m_parentContentIsland.StateChanged(m_islandStateChangedToken);
+    m_islandStateChangedToken = {};
+    m_parentContentIsland = nullptr;
+  }
+}
+
+void ContentIslandComponentView::OnMounted() noexcept {
+  RegisterForRootIslandEvents();
+}
+
 void ContentIslandComponentView::OnUnmounted() noexcept {
   m_layoutMetricChangedRevokers.clear();
   if (m_navigationHostDepartFocusRequestedToken && m_navigationHost) {
     m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
     m_navigationHostDepartFocusRequestedToken = {};
   }
+  UnregisterForRootIslandEvents();
 }
 
 void ContentIslandComponentView::ParentLayoutChanged() noexcept {
