@@ -43,8 +43,38 @@ struct VirtualViewProps : winrt::implements<VirtualViewProps, winrt::Microsoft::
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(VirtualView_OnModeChange)
-struct VirtualView_OnModeChange {
+REACT_STRUCT(VirtualViewSpec_onModeChange3)
+struct VirtualViewSpec_onModeChange3 {
+  REACT_FIELD(x)
+  double x{};
+
+  REACT_FIELD(y)
+  double y{};
+
+  REACT_FIELD(width)
+  double width{};
+
+  REACT_FIELD(height)
+  double height{};
+};
+
+REACT_STRUCT(VirtualViewSpec_onModeChange2)
+struct VirtualViewSpec_onModeChange2 {
+  REACT_FIELD(x)
+  double x{};
+
+  REACT_FIELD(y)
+  double y{};
+
+  REACT_FIELD(width)
+  double width{};
+
+  REACT_FIELD(height)
+  double height{};
+};
+
+REACT_STRUCT(VirtualViewSpec_onModeChange)
+struct VirtualViewSpec_onModeChange {
   REACT_FIELD(mode)
   int32_t mode{};
 
@@ -59,12 +89,10 @@ struct VirtualViewEventEmitter {
   VirtualViewEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnModeChange = VirtualView_OnModeChange;
-  using OnModeChange2 = VirtualView_OnModeChange2;
-  using OnModeChange3 = VirtualView_OnModeChange3;
+  using OnModeChange = VirtualViewSpec_onModeChange;
 
   void onModeChange(OnModeChange &value) const {
-    m_eventEmitter.DispatchEvent(L"modeChange", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"modeChange", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

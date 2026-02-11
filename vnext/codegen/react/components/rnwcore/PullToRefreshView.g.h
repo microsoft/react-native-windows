@@ -55,18 +55,18 @@ struct PullToRefreshViewProps : winrt::implements<PullToRefreshViewProps, winrt:
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(PullToRefreshView_OnRefresh)
-struct PullToRefreshView_OnRefresh {
+REACT_STRUCT(PullToRefreshViewSpec_onRefresh)
+struct PullToRefreshViewSpec_onRefresh {
 };
 
 struct PullToRefreshViewEventEmitter {
   PullToRefreshViewEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnRefresh = PullToRefreshView_OnRefresh;
+  using OnRefresh = PullToRefreshViewSpec_onRefresh;
 
   void onRefresh(OnRefresh &value) const {
-    m_eventEmitter.DispatchEvent(L"refresh", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"refresh", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

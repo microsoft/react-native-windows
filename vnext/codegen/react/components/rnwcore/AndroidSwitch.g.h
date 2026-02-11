@@ -71,8 +71,8 @@ struct AndroidSwitchProps : winrt::implements<AndroidSwitchProps, winrt::Microso
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(AndroidSwitch_OnChange)
-struct AndroidSwitch_OnChange {
+REACT_STRUCT(AndroidSwitchSpec_onChange)
+struct AndroidSwitchSpec_onChange {
   REACT_FIELD(value)
   bool value{};
 
@@ -84,10 +84,10 @@ struct AndroidSwitchEventEmitter {
   AndroidSwitchEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnChange = AndroidSwitch_OnChange;
+  using OnChange = AndroidSwitchSpec_onChange;
 
   void onChange(OnChange &value) const {
-    m_eventEmitter.DispatchEvent(L"change", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"change", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
