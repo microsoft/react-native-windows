@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix issue when creating a ContentIslandComponentView when the root ReactNativeIsland is not connected",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
