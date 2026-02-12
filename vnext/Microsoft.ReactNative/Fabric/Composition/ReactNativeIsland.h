@@ -203,6 +203,7 @@ struct ReactNativeIsland
   void ShowDebuggerUI(std::string message, const std::function<void()> &onResume) noexcept;
   void HideDebuggerUI() noexcept;
   void UpdateRootVisualSize() noexcept;
+  void UpdateRootVisualBackground() noexcept;
   void UpdateLoadingVisualSize() noexcept;
   void UpdateDebuggerVisualSize() noexcept;
   Composition::Experimental::IDrawingSurfaceBrush CreateLoadingVisualBrush() noexcept;
