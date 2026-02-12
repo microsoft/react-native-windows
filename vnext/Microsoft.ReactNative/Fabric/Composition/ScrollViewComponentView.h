@@ -169,8 +169,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
 
   // Issue #15557: Event for notifying listeners when scroll position changes
-  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable>>
-      m_viewChangedEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable>> m_viewChangedEvent;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
