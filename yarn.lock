@@ -3161,9 +3161,9 @@
   integrity sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw==
 
 "@types/node@^22.0.0", "@types/node@^22.14.0":
-  version "22.19.10"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.19.10.tgz#a802d3cc6bdc190ec2b0cbf6958bf127c0ec2926"
-  integrity sha512-tF5VOugLS/EuDlTBijk0MqABfP8UxgYazTLo3uIn3b4yJgg26QRbVYJYsDtHrjdDUIRfP70+VfhTTc+CE1yskw==
+  version "22.19.11"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.19.11.tgz#7e1feaad24e4e36c52fa5558d5864bb4b272603e"
+  integrity sha512-BH7YwL6rA93ReqeQS1c4bsPpcfOmJasG+Fkr6Y59q83f9M1WcBRHR2vM+P9eOisYRcN3ujQoiZY8uk5W+1WL8w==
   dependencies:
     undici-types "~6.21.0"
 
@@ -8631,9 +8631,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 lage@^2.7.1:
-  version "2.14.17"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.14.17.tgz#0022919de8225010cb1f501ce72f1071c4550ab9"
-  integrity sha512-siTPYicgpWB5n7bLbV08mJL073qTyXHUCgrjBkU3KeMk+V45o77819L2D/6i1AcTGlCm4hS7ZCq1QUPQti0A4A==
+  version "2.14.18"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.14.18.tgz#11138dc6b564142655502fd0f8f6efcaff756d69"
+  integrity sha512-pVW45DnILDaLxr8KiuSK5yQnWTQSmk0MlBgRlvixrk11EwptGEJNXrBfpWFjEJ2WkBUp/6ifdoWLro81GHFi0w==
   dependencies:
     glob-hasher "^1.4.2"
   optionalDependencies:
