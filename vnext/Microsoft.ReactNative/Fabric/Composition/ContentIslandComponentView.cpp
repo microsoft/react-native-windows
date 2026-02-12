@@ -93,41 +93,11 @@ void ContentIslandComponentView::ConnectInternal() noexcept {
         }));
     view = view.Parent();
   }
-
-  if (m_pendingFocus) {
-    m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(*m_pendingFocus));
-    m_pendingFocus = std::nullopt;
-  }
-}
-
-void ContentIslandComponentView::ConnectIfParentIsConnectedElsePost() noexcept {
-  if (!isMounted())
-    return;
-
-  m_parentContentIsland = ParentContentIsland();
-
-  if (m_parentContentIsland.IsConnected()) {
-    ConnectInternal();
-  } else {
-    if (!m_postedConnectTask) {
-      m_postedConnectTask = true;
-      // Ideally we'd use m_parentContentIsland.Connected event, but that doesn't exist yet.
-      // So we use the dispatcher to post a task and we'll poll for IsConnected
-      winrt::Microsoft::UI::Dispatching::DispatcherQueue dispatcherQueue = m_parentContentIsland.DispatcherQueue();
-
-      bool result = dispatcherQueue.TryEnqueue(
-          winrt::Microsoft::UI::Dispatching::DispatcherQueuePriority::Normal, [wkThis = get_weak()] {
-            if (auto strongThis = wkThis.get()) {
-              strongThis->m_postedConnectTask = false;
-              strongThis->ConnectIfParentIsConnectedElsePost();
-            }
-          });
-    }
-  }
 }
 
 void ContentIslandComponentView::OnMounted() noexcept {
-  ConnectIfParentIsConnectedElsePost();
+  m_parentContentIsland = ParentContentIsland();
+  ConnectInternal();
 }
 
 void ContentIslandComponentView::OnUnmounted() noexcept {
@@ -210,21 +180,7 @@ void ContentIslandComponentView::onGotFocus(
   auto gotFocusEventArgs = args.as<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>();
   const auto navigationReason = GetFocusNavigationReason(gotFocusEventArgs->Direction());
 
-  // If we have not connected the island yet, we save the focus navigation reason
-  // and will focus the island once the island is connected.
-  if (!m_navigationHost) {
-    m_pendingFocus = navigationReason;
-    return;
-  }
-
   m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(navigationReason));
-}
-
-void ContentIslandComponentView::onLostFocus(
-    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
-  if (m_pendingFocus) {
-    m_pendingFocus = std::nullopt;
-  }
 }
 
 ContentIslandComponentView::~ContentIslandComponentView() noexcept {
@@ -283,6 +239,9 @@ void ContentIslandComponentView::Connect(const winrt::Microsoft::UI::Content::Co
     m_childSiteLink.Connect(contentIsland);
   } else {
     m_islandToConnect = contentIsland;
+    if (isMounted()) {
+      ConnectInternal();
+    }
   }
 }
 

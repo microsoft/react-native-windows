@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Defer focus if attempt to move focus to a ContentIsland that is not yet connected",
+  "comment": "Fix issue when creating a ContentIslandComponentView when the root ReactNativeIsland is not connected",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

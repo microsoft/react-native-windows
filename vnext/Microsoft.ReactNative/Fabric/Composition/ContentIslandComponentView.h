@@ -46,7 +46,6 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   winrt::Windows::Foundation::IInspectable CreateAutomationProvider() noexcept override;
 
   void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
-  void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
 
   ContentIslandComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
@@ -60,7 +59,6 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   void OnUnmounted() noexcept;
   void ParentLayoutChanged() noexcept;
   void ConnectInternal() noexcept;
-  void ConnectIfParentIsConnectedElsePost() noexcept;
   winrt::Microsoft::UI::Content::ContentIsland ParentContentIsland() noexcept;
 
   bool m_layoutChangePosted{false};
