@@ -116,7 +116,7 @@ void ContentIslandComponentView::ParentLayoutChanged() noexcept {
   ReactContext().UIDispatcher().Post([wkThis = get_weak()]() {
     if (auto strongThis = wkThis.get()) {
       auto clientRect = strongThis->getClientRect();
-|
+
       strongThis->m_childSiteLink.LocalToParentTransformMatrix(
           winrt::Windows::Foundation::Numerics::make_float4x4_translation(
               static_cast<float>(clientRect.left), static_cast<float>(clientRect.top), 0.0f));
