@@ -67,6 +67,7 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
   winrt::Microsoft::UI::Input::InputFocusNavigationHost m_navigationHost{nullptr};
   winrt::event_token m_navigationHostDepartFocusRequestedToken{};
+  std::optional<winrt::Microsoft::UI::Input::FocusNavigationReason::Restore> m_pendingFocus;
 
   // Automation
   void ConfigureChildSiteLinkAutomation() noexcept;

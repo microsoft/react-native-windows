@@ -83,6 +83,11 @@ void ContentIslandComponentView::OnMounted() noexcept {
         }));
     view = view.Parent();
   }
+
+  if (m_pendingFocus) {
+    m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(*m_pendingFocus));
+    m_pendingFocus = std::nullopt;
+  }
 }
 
 void ContentIslandComponentView::OnUnmounted() noexcept {
@@ -164,7 +169,21 @@ void ContentIslandComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   auto gotFocusEventArgs = args.as<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>();
   const auto navigationReason = GetFocusNavigationReason(gotFocusEventArgs->Direction());
+
+  // If we have not connected the island yet, we save the focus navigation reason
+  // and will focus the island once the island is connected.
+  if (!m_navigationHost) {
+    m_pendingFocus = navigationReason;
+    return;
+  }
+
   m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(navigationReason));
+}
+
+void ContentIslandComponentView::onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
+  if (m_pendingFocus) {
+    m_pendingFocus = std::nullopt;
+  }
 }
 
 ContentIslandComponentView::~ContentIslandComponentView() noexcept {
