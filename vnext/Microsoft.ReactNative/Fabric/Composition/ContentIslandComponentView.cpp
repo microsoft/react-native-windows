@@ -220,7 +220,8 @@ void ContentIslandComponentView::onGotFocus(
   m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(navigationReason));
 }
 
-void ContentIslandComponentView::onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
+void ContentIslandComponentView::onLostFocus(
+    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   if (m_pendingFocus) {
     m_pendingFocus = std::nullopt;
   }
