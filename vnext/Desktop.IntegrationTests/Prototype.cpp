@@ -66,10 +66,13 @@ struct TestReactNativeHostHolder {
   ~TestReactNativeHostHolder() noexcept;
 
   winrt::Microsoft::ReactNative::ReactNativeHost const &Host() const noexcept;
+  void WaitForInstanceCreated();
 
  private:
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::UI::Dispatching::DispatcherQueueController m_queueController{nullptr};
+  winrt::handle m_instanceCreatedEvent{CreateEvent(nullptr, TRUE, FALSE, nullptr)};
+  msrn::IReactDispatcher m_uiDispatcher{nullptr};
 };
 
 #pragma region TRNHH impl
@@ -79,6 +82,15 @@ TestReactNativeHostHolder::TestReactNativeHostHolder(
     Mso::Functor<void(winrt::Microsoft::ReactNative::ReactNativeHost const &)> &&hostInitializer,
     Options &&options) noexcept {
   m_host = winrt::Microsoft::ReactNative::ReactNativeHost{};
+
+  // Create UI dispatcher for headless tests (required by Desktop DLL)
+  m_uiDispatcher = winrt::make<TestUIDispatcher>(Mso::DispatchQueue::MakeSerialQueue());
+
+  // Subscribe to InstanceCreated event BEFORE launching async work
+  m_host.InstanceSettings().InstanceCreated([this](auto&&, auto&&) {
+    SetEvent(m_instanceCreatedEvent.get());
+  });
+
   m_queueController = winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnDedicatedThread();
   m_queueController.DispatcherQueue().TryEnqueue([this,
                                                   jsBundle = std::wstring{jsBundle},
@@ -98,6 +110,7 @@ TestReactNativeHostHolder::TestReactNativeHostHolder(
     //m_host.PackageProviders().Append(winrt::make<TestReactPackageProvider>());
 
     auto settings = m_host.InstanceSettings();
+    settings.Properties().Set(msrn::ReactDispatcherHelper::UIDispatcherProperty(), m_uiDispatcher);
     settings.Properties().Set(PlatformNameOverrideProperty().Handle(), winrt::box_value(L"windows"));
     settings.UseFastRefresh(true);
     settings.JavaScriptBundleFile(L"IntegrationTests/IntegrationTestsApp");
@@ -128,6 +141,10 @@ TestReactNativeHostHolder::~TestReactNativeHostHolder() noexcept {
 
 winrt::Microsoft::ReactNative::ReactNativeHost const &TestReactNativeHostHolder::Host() const noexcept {
   return m_host;
+}
+
+void TestReactNativeHostHolder::WaitForInstanceCreated() {
+  WaitForSingleObject(m_instanceCreatedEvent.get(), INFINITE);
 }
 
 #pragma endregion TRNHH impl
@@ -165,6 +182,9 @@ TEST_CLASS (Prototype) {
   TEST_METHOD(Proto2)
   {
     auto holder = TestReactNativeHostHolder(L"TurboModuleTests", [](msrn::ReactNativeHost const &host) noexcept {});
+
+    // Wait for React Native instance to be fully initialized
+    holder.WaitForInstanceCreated();
 
     Assert::IsTrue(true);
   }
