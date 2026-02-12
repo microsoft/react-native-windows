@@ -118,6 +118,13 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   double getVerticalSize() noexcept;
   double getHorizontalSize() noexcept;
 
+ protected:
+  // ScrollView mounts children into m_scrollVisual (not Visual()), and scroll visuals
+  // inherently clip their content, so we skip the children container clipping logic.
+  void updateChildrenClippingPath(
+      facebook::react::LayoutMetrics const &layoutMetrics,
+      const facebook::react::ViewProps &viewProps) noexcept override;
+
  private:
   void updateDecelerationRate(float value) noexcept;
   void updateContentVisualSize() noexcept;

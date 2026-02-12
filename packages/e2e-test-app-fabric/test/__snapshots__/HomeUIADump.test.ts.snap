@@ -76,6 +76,13 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
                     "Offset": "0, 0, 0",
                     "Size": "30, 20",
                     "Visual Type": "SpriteVisual",
+                    "__Children": [
+                      {
+                        "Offset": "0, 0, 0",
+                        "Size": "0, 0",
+                        "Visual Type": "SpriteVisual",
+                      },
+                    ],
                   },
                 ],
               },
@@ -1107,6 +1114,13 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                     "Offset": "0, 0, 0",
                     "Size": "20, 20",
                     "Visual Type": "SpriteVisual",
+                    "__Children": [
+                      {
+                        "Offset": "0, 0, 0",
+                        "Size": "0, 0",
+                        "Visual Type": "SpriteVisual",
+                      },
+                    ],
                   },
                 ],
               },
