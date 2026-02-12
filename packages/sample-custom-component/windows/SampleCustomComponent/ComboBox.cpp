@@ -61,7 +61,7 @@ struct ComboBoxComponentView : public winrt::implements<ComboBoxComponentView, w
                                         winrt::Windows::Foundation::IInspectable const &,
                                         winrt::Microsoft::UI::Xaml::Controls::SelectionChangedEventArgs const &) {
           if (auto emitter = EventEmitter()) {
-            Codegen::ComboBox_OnSelectionChanged args;
+            Codegen::ComboBoxEventEmitter::OnSelectionChanged args;
             args.selectedIndex = m_comboBox.SelectedIndex();
             if (m_comboBox.SelectedItem()) {
               auto selectedText = winrt::unbox_value<winrt::hstring>(m_comboBox.SelectedItem());
