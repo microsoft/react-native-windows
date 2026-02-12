@@ -46,6 +46,7 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   winrt::Windows::Foundation::IInspectable CreateAutomationProvider() noexcept override;
 
   void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
+  void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept override;
 
   ContentIslandComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
@@ -73,7 +74,7 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
   winrt::Microsoft::UI::Input::InputFocusNavigationHost m_navigationHost{nullptr};
   winrt::event_token m_navigationHostDepartFocusRequestedToken{};
-  std::optional<winrt::Microsoft::UI::Input::FocusNavigationReason::Restore> m_pendingFocus;
+  std::optional<winrt::Microsoft::UI::Input::FocusNavigationReason> m_pendingFocus;
 
   // Automation
   void ConfigureChildSiteLinkAutomation() noexcept;
