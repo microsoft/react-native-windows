@@ -76,7 +76,6 @@ void ContentIslandComponentView::ConnectInternal() noexcept {
   ConfigureChildSiteLinkAutomation();
 
   if (m_islandToConnect) {
-
     Assert(m_childSiteLink.SiteView().IsConnected());
     Assert(!m_islandToConnect.IsConnected());
 
@@ -84,9 +83,9 @@ void ContentIslandComponentView::ConnectInternal() noexcept {
     m_islandToConnect = nullptr;
   }
 
-  if (m_pendingNavigateFocus)
-  {
-    m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(*m_pendingNavigateFocus));
+  if (m_pendingNavigateFocus) {
+    m_navigationHost.NavigateFocus(
+        winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(*m_pendingNavigateFocus));
     m_pendingNavigateFocus.reset();
   }
 
