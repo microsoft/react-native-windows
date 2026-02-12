@@ -116,6 +116,7 @@ void ContentIslandComponentView::ParentLayoutChanged() noexcept {
   ReactContext().UIDispatcher().Post([wkThis = get_weak()]() {
     if (auto strongThis = wkThis.get()) {
       auto clientRect = strongThis->getClientRect();
+|
       strongThis->m_childSiteLink.LocalToParentTransformMatrix(
           winrt::Windows::Foundation::Numerics::make_float4x4_translation(
               static_cast<float>(clientRect.left), static_cast<float>(clientRect.top), 0.0f));
@@ -178,7 +179,6 @@ void ContentIslandComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   auto gotFocusEventArgs = args.as<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>();
   const auto navigationReason = GetFocusNavigationReason(gotFocusEventArgs->Direction());
-
   m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(navigationReason));
 }
 
