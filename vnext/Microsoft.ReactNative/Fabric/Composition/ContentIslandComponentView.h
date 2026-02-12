@@ -64,7 +64,6 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   bool m_layoutChangePosted{false};
   winrt::Microsoft::UI::Content::ContentIsland m_parentContentIsland{nullptr};
   winrt::Microsoft::UI::Content::ContentIsland m_islandToConnect{nullptr};
-  bool m_postedConnectTask{false};
 
   winrt::event_token m_mountedToken;
   winrt::event_token m_unmountedToken;
