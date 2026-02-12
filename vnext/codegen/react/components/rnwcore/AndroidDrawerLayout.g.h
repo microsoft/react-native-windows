@@ -59,55 +59,55 @@ struct AndroidDrawerLayoutProps : winrt::implements<AndroidDrawerLayoutProps, wi
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(AndroidDrawerLayout_OnDrawerSlide)
-struct AndroidDrawerLayout_OnDrawerSlide {
-  REACT_FIELD(offset)
-  float offset{};
+REACT_STRUCT(AndroidDrawerLayoutSpec_onDrawerClose)
+struct AndroidDrawerLayoutSpec_onDrawerClose {
 };
 
-REACT_STRUCT(AndroidDrawerLayout_OnDrawerStateChanged)
-struct AndroidDrawerLayout_OnDrawerStateChanged {
+REACT_STRUCT(AndroidDrawerLayoutSpec_onDrawerOpen)
+struct AndroidDrawerLayoutSpec_onDrawerOpen {
+};
+
+REACT_STRUCT(AndroidDrawerLayoutSpec_onDrawerStateChanged)
+struct AndroidDrawerLayoutSpec_onDrawerStateChanged {
   REACT_FIELD(drawerState)
   int32_t drawerState{};
 };
 
-REACT_STRUCT(AndroidDrawerLayout_OnDrawerOpen)
-struct AndroidDrawerLayout_OnDrawerOpen {
-};
-
-REACT_STRUCT(AndroidDrawerLayout_OnDrawerClose)
-struct AndroidDrawerLayout_OnDrawerClose {
+REACT_STRUCT(AndroidDrawerLayoutSpec_onDrawerSlide)
+struct AndroidDrawerLayoutSpec_onDrawerSlide {
+  REACT_FIELD(offset)
+  float offset{};
 };
 
 struct AndroidDrawerLayoutEventEmitter {
   AndroidDrawerLayoutEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnDrawerSlide = AndroidDrawerLayout_OnDrawerSlide;
-  using OnDrawerStateChanged = AndroidDrawerLayout_OnDrawerStateChanged;
-  using OnDrawerOpen = AndroidDrawerLayout_OnDrawerOpen;
-  using OnDrawerClose = AndroidDrawerLayout_OnDrawerClose;
+  using OnDrawerSlide = AndroidDrawerLayoutSpec_onDrawerSlide;
+  using OnDrawerStateChanged = AndroidDrawerLayoutSpec_onDrawerStateChanged;
+  using OnDrawerOpen = AndroidDrawerLayoutSpec_onDrawerOpen;
+  using OnDrawerClose = AndroidDrawerLayoutSpec_onDrawerClose;
 
   void onDrawerSlide(OnDrawerSlide &value) const {
-    m_eventEmitter.DispatchEvent(L"drawerSlide", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"drawerSlide", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
 
   void onDrawerStateChanged(OnDrawerStateChanged &value) const {
-    m_eventEmitter.DispatchEvent(L"drawerStateChanged", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"drawerStateChanged", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
 
   void onDrawerOpen(OnDrawerOpen &value) const {
-    m_eventEmitter.DispatchEvent(L"drawerOpen", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"drawerOpen", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
 
   void onDrawerClose(OnDrawerClose &value) const {
-    m_eventEmitter.DispatchEvent(L"drawerClose", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"drawerClose", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

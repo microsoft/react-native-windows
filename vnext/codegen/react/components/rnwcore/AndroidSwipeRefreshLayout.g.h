@@ -59,18 +59,18 @@ struct AndroidSwipeRefreshLayoutProps : winrt::implements<AndroidSwipeRefreshLay
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(AndroidSwipeRefreshLayout_OnRefresh)
-struct AndroidSwipeRefreshLayout_OnRefresh {
+REACT_STRUCT(AndroidSwipeRefreshLayoutSpec_onRefresh)
+struct AndroidSwipeRefreshLayoutSpec_onRefresh {
 };
 
 struct AndroidSwipeRefreshLayoutEventEmitter {
   AndroidSwipeRefreshLayoutEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnRefresh = AndroidSwipeRefreshLayout_OnRefresh;
+  using OnRefresh = AndroidSwipeRefreshLayoutSpec_onRefresh;
 
   void onRefresh(OnRefresh &value) const {
-    m_eventEmitter.DispatchEvent(L"refresh", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"refresh", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

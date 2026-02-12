@@ -36,6 +36,7 @@ struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::
        auto cloneFromProps = cloneFrom.as<MovingLightProps>();
        size = cloneFromProps->size;
        color = cloneFromProps->color;
+       testMixed = cloneFromProps->testMixed.Copy();
        eventParam = cloneFromProps->eventParam;
        objectProp = cloneFromProps->objectProp;  
      }
@@ -51,6 +52,9 @@ struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::
   REACT_FIELD(color)
   winrt::Microsoft::ReactNative::Color color{nullptr};
 
+  REACT_FIELD(testMixed)
+  winrt::Microsoft::ReactNative::JSValue testMixed{nullptr};
+
   REACT_FIELD(eventParam)
   std::optional<std::string> eventParam;
 
@@ -60,8 +64,167 @@ struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(MovingLight_OnSomething)
-struct MovingLight_OnSomething {
+REACT_STRUCT(MovingLightSpec_onEventWithMultipleAliasTypes6)
+struct MovingLightSpec_onEventWithMultipleAliasTypes6 {
+  REACT_FIELD(x)
+  double x{};
+
+  REACT_FIELD(y)
+  double y{};
+};
+
+REACT_STRUCT(MovingLightSpec_onEventWithMultipleAliasTypes5)
+struct MovingLightSpec_onEventWithMultipleAliasTypes5 {
+  REACT_FIELD(width)
+  double width{};
+
+  REACT_FIELD(height)
+  double height{};
+};
+
+REACT_STRUCT(MovingLightSpec_onEventWithMultipleAliasTypes4)
+struct MovingLightSpec_onEventWithMultipleAliasTypes4 {
+  REACT_FIELD(width)
+  double width{};
+
+  REACT_FIELD(height)
+  double height{};
+};
+
+REACT_STRUCT(MovingLightSpec_onEventWithMultipleAliasTypes3)
+struct MovingLightSpec_onEventWithMultipleAliasTypes3 {
+  REACT_FIELD(x)
+  double x{};
+
+  REACT_FIELD(y)
+  double y{};
+};
+
+REACT_STRUCT(MovingLightSpec_onEventWithMultipleAliasTypes2)
+struct MovingLightSpec_onEventWithMultipleAliasTypes2 {
+  REACT_FIELD(top)
+  double top{};
+
+  REACT_FIELD(bottom)
+  double bottom{};
+
+  REACT_FIELD(left)
+  double left{};
+
+  REACT_FIELD(right)
+  double right{};
+};
+
+REACT_STRUCT(MovingLightSpec_onEventWithInlineTypes6)
+struct MovingLightSpec_onEventWithInlineTypes6 {
+  REACT_FIELD(x)
+  double x{};
+
+  REACT_FIELD(y)
+  double y{};
+};
+
+REACT_STRUCT(MovingLightSpec_onEventWithInlineTypes5)
+struct MovingLightSpec_onEventWithInlineTypes5 {
+  REACT_FIELD(width)
+  double width{};
+
+  REACT_FIELD(height)
+  double height{};
+};
+
+REACT_STRUCT(MovingLightSpec_onEventWithInlineTypes4)
+struct MovingLightSpec_onEventWithInlineTypes4 {
+  REACT_FIELD(width)
+  double width{};
+
+  REACT_FIELD(height)
+  double height{};
+};
+
+REACT_STRUCT(MovingLightSpec_onEventWithInlineTypes3)
+struct MovingLightSpec_onEventWithInlineTypes3 {
+  REACT_FIELD(x)
+  double x{};
+
+  REACT_FIELD(y)
+  double y{};
+};
+
+REACT_STRUCT(MovingLightSpec_onEventWithInlineTypes2)
+struct MovingLightSpec_onEventWithInlineTypes2 {
+  REACT_FIELD(top)
+  double top{};
+
+  REACT_FIELD(bottom)
+  double bottom{};
+
+  REACT_FIELD(left)
+  double left{};
+
+  REACT_FIELD(right)
+  double right{};
+};
+
+REACT_STRUCT(MovingLightSpec_onEventWithMultipleAliasTypes)
+struct MovingLightSpec_onEventWithMultipleAliasTypes {
+  REACT_FIELD(target)
+  int32_t target{};
+
+  REACT_FIELD(contentInset)
+  MovingLightSpec_onEventWithMultipleAliasTypes2 contentInset;
+
+  REACT_FIELD(contentOffset)
+  MovingLightSpec_onEventWithMultipleAliasTypes3 contentOffset;
+
+  REACT_FIELD(contentSize)
+  MovingLightSpec_onEventWithMultipleAliasTypes4 contentSize;
+
+  REACT_FIELD(layoutMeasurement)
+  MovingLightSpec_onEventWithMultipleAliasTypes5 layoutMeasurement;
+
+  REACT_FIELD(velocity)
+  MovingLightSpec_onEventWithMultipleAliasTypes6 velocity;
+
+  REACT_FIELD(isUserTriggered)
+  bool isUserTriggered{};
+};
+
+REACT_STRUCT(MovingLightSpec_onEventWithInlineTypes)
+struct MovingLightSpec_onEventWithInlineTypes {
+  REACT_FIELD(target)
+  int32_t target{};
+
+  REACT_FIELD(contentInset)
+  MovingLightSpec_onEventWithInlineTypes2 contentInset;
+
+  REACT_FIELD(contentOffset)
+  MovingLightSpec_onEventWithInlineTypes3 contentOffset;
+
+  REACT_FIELD(contentSize)
+  MovingLightSpec_onEventWithInlineTypes4 contentSize;
+
+  REACT_FIELD(layoutMeasurement)
+  MovingLightSpec_onEventWithInlineTypes5 layoutMeasurement;
+
+  REACT_FIELD(velocity)
+  MovingLightSpec_onEventWithInlineTypes6 velocity;
+
+  REACT_FIELD(isUserTriggered)
+  bool isUserTriggered{};
+};
+
+REACT_STRUCT(MovingLightSpec_onTestObjectEvent)
+struct MovingLightSpec_onTestObjectEvent {
+  REACT_FIELD(target)
+  int32_t target{};
+
+  REACT_FIELD(testObject)
+  winrt::Microsoft::ReactNative::JSValue testObject{nullptr};
+};
+
+REACT_STRUCT(MovingLightSpec_onSomething)
+struct MovingLightSpec_onSomething {
   REACT_FIELD(value)
   std::string value;
 
@@ -73,10 +236,31 @@ struct MovingLightEventEmitter {
   MovingLightEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnSomething = MovingLight_OnSomething;
+  using OnSomething = MovingLightSpec_onSomething;
+  using OnTestObjectEvent = MovingLightSpec_onTestObjectEvent;
+  using OnEventWithInlineTypes = MovingLightSpec_onEventWithInlineTypes;
+  using OnEventWithMultipleAliasTypes = MovingLightSpec_onEventWithMultipleAliasTypes;
 
   void onSomething(OnSomething &value) const {
-    m_eventEmitter.DispatchEvent(L"something", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"something", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+      winrt::Microsoft::ReactNative::WriteValue(writer, value);
+    });
+  }
+
+  void onTestObjectEvent(OnTestObjectEvent &value) const {
+    m_eventEmitter.DispatchEvent(L"testObjectEvent", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+      winrt::Microsoft::ReactNative::WriteValue(writer, value);
+    });
+  }
+
+  void onEventWithInlineTypes(OnEventWithInlineTypes &value) const {
+    m_eventEmitter.DispatchEvent(L"eventWithInlineTypes", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+      winrt::Microsoft::ReactNative::WriteValue(writer, value);
+    });
+  }
+
+  void onEventWithMultipleAliasTypes(OnEventWithMultipleAliasTypes &value) const {
+    m_eventEmitter.DispatchEvent(L"eventWithMultipleAliasTypes", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
