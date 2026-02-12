@@ -71,6 +71,8 @@ import typeof VirtualizedList from './Libraries/Lists/VirtualizedList';
 import typeof VirtualizedSectionList from './Libraries/Lists/VirtualizedSectionList';
 import typeof LogBox from './Libraries/LogBox/LogBox';
 import typeof Modal from './Libraries/Modal/Modal';
+import typeof {NativeText as unstable_NativeText} from './Libraries/Text/TextNativeComponent';
+import typeof unstable_NativeView from './Libraries/Components/View/ViewNativeComponent';
 // $FlowFixMe[invalid-exported-annotation]
 import typeof NativeDialogManagerAndroid from './Libraries/NativeModules/specs/NativeDialogManagerAndroid';
 import typeof * as NativeComponentRegistry from './Libraries/NativeComponent/NativeComponentRegistry';
@@ -153,6 +155,12 @@ module.exports = {
   },
   get Modal(): Modal {
     return require('./Libraries/Modal/Modal').default;
+  },
+  get unstable_NativeText(): unstable_NativeText {
+    return require('./Libraries/Text/TextNativeComponent').NativeText;
+  },
+  get unstable_NativeView(): unstable_NativeView {
+    return require('./Libraries/Components/View/ViewNativeComponent').default;
   },
   get Pressable(): Pressable {
     return require('./Libraries/Components/Pressable/Pressable').default;

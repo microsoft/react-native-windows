@@ -9,6 +9,8 @@ import ComboBox from './FabricXamlComboBoxNativeComponent'
 
 import CustomAccessibility from './CustomAccessibilityNativeComponent';
 
+import PickerXaml from './PickerXamlNativeComponent';
+
 export {
     CustomAccessibility,
     DrawingIsland,
@@ -16,4 +18,5 @@ export {
     MovingLightHandle,
     CalendarView,
     ComboBox,
+    PickerXaml,
 };

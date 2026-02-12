@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.82.0-nightly-20250902-9731e8ebc",
+  "baseVersion": "0.83.0-nightly-20250917-18cb4edfa",
   "overrides": [
     {
       "type": "copy",
@@ -43,7 +43,7 @@
       "type": "patch",
       "file": "src/js/examples/FlatList/BaseFlatListExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/BaseFlatListExample.js",
-      "baseHash": "7a516e491b4cbe22678baf899dfe855567468a6f",
+      "baseHash": "6a140eb7fd8961bbee46fbe6af9d592c0fcf5a2b",
       "issue": 12869
     },
     {
@@ -156,7 +156,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "8cd219abae140e98f9578432954fc9ef62421308"
+      "baseHash": "aeb0275507e7c508cdf7c2ceec49f9e95ef4e1ec"
     }
   ]
 }
