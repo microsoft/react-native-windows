@@ -93,10 +93,6 @@ namespace Microsoft.ReactNative.Composition
   [webhosthidden]
   runtimeclass ContentIslandComponentView : ViewComponentView { 
     void Connect(Microsoft.UI.Content.ContentIsland contentIsland);
-
-    // Issue #15557: Event fired when a parent ScrollView starts scrolling.
-    // 3rd party XAML components should subscribe to this event to dismiss any open popups.
-    event Windows.Foundation.EventHandler<IInspectable> DismissPopupsRequest;
   };
 
   [experimental]
@@ -158,9 +154,9 @@ namespace Microsoft.ReactNative.Composition
   [webhosthidden]
   [default_interface]
   runtimeclass ScrollViewComponentView : ViewComponentView {
-    // Issue #15557: Event fired when scroll drag begins.
-    // ContentIslandComponentView uses this to know when to dismiss popups (light dismiss).
-    event Windows.Foundation.EventHandler<IInspectable> ScrollBeginDrag;
+    // Issue #15557: Event fired when scroll position changes.
+    // ContentIslandComponentView uses this to update LocalToParentTransformMatrix.
+    event Windows.Foundation.EventHandler<IInspectable> ViewChanged;
   };
 
   [experimental]

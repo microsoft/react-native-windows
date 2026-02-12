@@ -118,10 +118,10 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   double getVerticalSize() noexcept;
   double getHorizontalSize() noexcept;
 
-  // Issue #15557: Event accessors for ScrollBeginDrag (used by ContentIslandComponentView for light dismiss)
-  winrt::event_token ScrollBeginDrag(
+  // Issue #15557: Event accessors for ViewChanged (used by ContentIslandComponentView for transform update)
+  winrt::event_token ViewChanged(
       winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept;
-  void ScrollBeginDrag(winrt::event_token const &token) noexcept;
+  void ViewChanged(winrt::event_token const &token) noexcept;
 
  private:
   void updateDecelerationRate(float value) noexcept;
@@ -134,10 +134,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool scrollRight(float delta, bool animate) noexcept;
   void updateBackgroundColor(const facebook::react::SharedColor &color) noexcept;
   void updateStateWithContentOffset() noexcept;
-  // Issue #15557: Notify ContentIslandComponentView instances that scroll position has changed
-  void FireLayoutMetricsChangedForScrollPositionChange() noexcept;
-  // Issue #15557: Fire DismissPopupsRequest event on child ContentIslandComponentView instances when scroll begins
-  void DismissChildContentIslandPopups() noexcept;
+  // Issue #15557: Notify listeners that scroll position has changed
+  void FireViewChanged() noexcept;
   facebook::react::ScrollViewEventEmitter::Metrics getScrollMetrics(
       facebook::react::SharedViewEventEmitter const &eventEmitter,
       winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) noexcept;
@@ -170,9 +168,9 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   std::chrono::steady_clock::time_point m_lastScrollEventTime{};
   std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
 
-  // Issue #15557: Event for notifying ContentIslandComponentView instances when scroll begins
+  // Issue #15557: Event for notifying listeners when scroll position changes
   winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable>>
-      m_scrollBeginDragEvent;
+      m_viewChangedEvent;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

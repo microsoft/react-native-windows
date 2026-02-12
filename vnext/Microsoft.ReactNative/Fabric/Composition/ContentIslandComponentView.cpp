@@ -65,8 +65,9 @@ void ContentIslandComponentView::ConnectInternal() noexcept {
   // Note: getClientRect() returns physical pixels, but LocalToParentTransformMatrix expects DIPs.
   auto clientRect = getClientRect();
   float scaleFactor = m_layoutMetrics.pointScaleFactor;
-  m_childSiteLink.LocalToParentTransformMatrix(winrt::Windows::Foundation::Numerics::make_float4x4_translation(
-      static_cast<float>(clientRect.left) / scaleFactor, static_cast<float>(clientRect.top) / scaleFactor, 0.0f));
+  m_childSiteLink.LocalToParentTransformMatrix(
+      winrt::Windows::Foundation::Numerics::make_float4x4_translation(
+          static_cast<float>(clientRect.left) / scaleFactor, static_cast<float>(clientRect.top) / scaleFactor, 0.0f));
 
   m_navigationHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteLink(m_childSiteLink);
 
@@ -101,16 +102,16 @@ void ContentIslandComponentView::ConnectInternal() noexcept {
           }
         }));
 
-    // Issue #15557: Register for ScrollBeginDrag on parent ScrollViews for light dismiss.
-    // This is more efficient than walking the tree on every scroll begin.
+    // Issue #15557: Register for ViewChanged on parent ScrollViews to update transform
+    // when scroll position changes, ensuring correct XAML popup positioning.
     if (auto scrollView = view.try_as<winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView>()) {
       auto token =
-          scrollView.ScrollBeginDrag([wkThis = get_weak()](const winrt::IInspectable &, const winrt::IInspectable &) {
+          scrollView.ViewChanged([wkThis = get_weak()](const winrt::IInspectable &, const winrt::IInspectable &) {
             if (auto strongThis = wkThis.get()) {
-              strongThis->FireDismissPopupsRequest();
+              strongThis->ParentLayoutChanged();
             }
           });
-      m_scrollBeginDragSubscriptions.push_back({scrollView, token});
+      m_viewChangedSubscriptions.push_back({scrollView, token});
     }
 
     view = view.Parent();
@@ -150,12 +151,12 @@ void ContentIslandComponentView::OnUnmounted() noexcept {
   m_layoutMetricChangedRevokers.clear();
 
   // Issue #15557: Unsubscribe from parent ScrollView events
-  for (auto &subscription : m_scrollBeginDragSubscriptions) {
+  for (auto &subscription : m_viewChangedSubscriptions) {
     if (auto scrollView = subscription.scrollView.get()) {
-      scrollView.ScrollBeginDrag(subscription.token);
+      scrollView.ViewChanged(subscription.token);
     }
   }
-  m_scrollBeginDragSubscriptions.clear();
+  m_viewChangedSubscriptions.clear();
 
   if (m_navigationHostDepartFocusRequestedToken && m_navigationHost) {
     m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
@@ -240,22 +241,6 @@ void ContentIslandComponentView::onGotFocus(
   auto gotFocusEventArgs = args.as<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>();
   const auto navigationReason = GetFocusNavigationReason(gotFocusEventArgs->Direction());
   m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(navigationReason));
-}
-
-// Issue #15557: Fire event to notify 3P component to dismiss popups when scroll begins.
-// The 3P component is responsible for closing its own popups.
-void ContentIslandComponentView::FireDismissPopupsRequest() noexcept {
-  m_dismissPopupsRequestEvent(*this, nullptr);
-}
-
-// Issue #15557: Event accessors for DismissPopupsRequest
-winrt::event_token ContentIslandComponentView::DismissPopupsRequest(
-    winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept {
-  return m_dismissPopupsRequestEvent.add(handler);
-}
-
-void ContentIslandComponentView::DismissPopupsRequest(winrt::event_token const &token) noexcept {
-  m_dismissPopupsRequestEvent.remove(token);
 }
 
 ContentIslandComponentView::~ContentIslandComponentView() noexcept {

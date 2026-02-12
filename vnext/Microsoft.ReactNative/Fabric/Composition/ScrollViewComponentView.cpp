@@ -1329,10 +1329,9 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
           }
         }
 
-        // Issue #15557: Fire LayoutMetricsChanged to notify ContentIslandComponentView instances
-        // that scroll position has changed, so they can update their LocalToParentTransformMatrix
-        // for correct XAML popup positioning
-        FireLayoutMetricsChangedForScrollPositionChange();
+        // Issue #15557: Notify listeners that scroll position has changed,
+        // so ContentIslandComponentView can update LocalToParentTransformMatrix
+        FireViewChanged();
       });
 
   m_scrollBeginDragRevoker = m_scrollVisual.ScrollBeginDrag(
@@ -1340,8 +1339,8 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
-        // Issue #15557: Dismiss any open XAML popups when scroll begins (light dismiss behavior)
-        DismissChildContentIslandPopups();
+        // Issue #15557: Notify listeners that scroll position has changed
+        FireViewChanged();
 
         m_allowNextScrollNoMatterWhat = true; // Ensure next scroll event is recorded, regardless of throttle
         updateStateWithContentOffset();
@@ -1490,40 +1489,19 @@ void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
 }
 
-// Issue #15557: Fire LayoutMetricsChanged to notify ContentIslandComponentView instances
-// that scroll position has changed, so they can update their LocalToParentTransformMatrix
-// for correct XAML popup positioning.
-void ScrollViewComponentView::FireLayoutMetricsChangedForScrollPositionChange() noexcept {
-  // Create LayoutMetricsChangedArgs with same old/new metrics
-  // The actual scroll offset is handled in getClientOffset() which ContentIslandComponentView
-  // uses when calculating the transform matrix via getClientRect()
-  winrt::Microsoft::ReactNative::LayoutMetrics metrics{
-      {m_layoutMetrics.frame.origin.x,
-       m_layoutMetrics.frame.origin.y,
-       m_layoutMetrics.frame.size.width,
-       m_layoutMetrics.frame.size.height},
-      m_layoutMetrics.pointScaleFactor};
-
-  m_layoutMetricsChangedEvent(
-      *this, winrt::make<winrt::Microsoft::ReactNative::implementation::LayoutMetricsChangedArgs>(metrics, metrics));
+// Issue #15557: Notify listeners that scroll position has changed.
+// ContentIslandComponentView subscribes to this to update LocalToParentTransformMatrix.
+void ScrollViewComponentView::FireViewChanged() noexcept {
+  m_viewChangedEvent(*this, nullptr);
 }
 
-// Issue #15557: Event accessors for ScrollBeginDrag
-winrt::event_token ScrollViewComponentView::ScrollBeginDrag(
+// Issue #15557: Event accessors for ViewChanged
+winrt::event_token ScrollViewComponentView::ViewChanged(
     winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept {
-  return m_scrollBeginDragEvent.add(handler);
+  return m_viewChangedEvent.add(handler);
 }
 
-void ScrollViewComponentView::ScrollBeginDrag(winrt::event_token const &token) noexcept {
-  m_scrollBeginDragEvent.remove(token);
-}
-
-// Issue #15557: Fire ScrollBeginDrag event to notify registered ContentIslandComponentView instances.
-// ContentIslandComponentViews register during their OnMounted by walking up the tree and subscribing
-// to this event on any parent ScrollViewComponentViews. This is more efficient than walking the tree
-// on every scroll begin.
-void ScrollViewComponentView::DismissChildContentIslandPopups() noexcept {
-  // Fire the event to all registered listeners (ContentIslandComponentViews that are descendants of this ScrollView)
-  m_scrollBeginDragEvent(*this, nullptr);
+void ScrollViewComponentView::ViewChanged(winrt::event_token const &token) noexcept {
+  m_viewChangedEvent.remove(token);
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

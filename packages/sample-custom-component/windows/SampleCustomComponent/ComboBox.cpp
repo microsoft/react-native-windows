@@ -9,6 +9,7 @@
 
 #include "codegen/react/components/SampleCustomComponent/ComboBox.g.h"
 
+#include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.Media.h>
@@ -17,8 +18,8 @@ namespace winrt::SampleCustomComponent {
 
 // ComboBox component to test popup positioning issue #15557
 // When inside a ScrollView, the dropdown popup should appear at the correct position
-// Bug 1: After scrolling, the popup appears at the wrong offset (FIXED via LayoutMetricsChanged)
-// Bug 2: When popup is open and user scrolls, popup should dismiss (FIXED via DismissPopupsRequest event)
+// Bug 1: After scrolling, the popup appears at the wrong offset (FIXED via ViewChanged + transform update)
+// Bug 2: When popup is open and user scrolls, popup should dismiss (FIXED via ViewChanged + DismissPopups)
 
 struct ComboBoxComponentView : public winrt::implements<ComboBoxComponentView, winrt::IInspectable>,
                                Codegen::BaseComboBox<ComboBoxComponentView> {
@@ -42,14 +43,17 @@ struct ComboBoxComponentView : public winrt::implements<ComboBoxComponentView, w
     m_xamlIsland.Content(m_comboBox);
     islandView.Connect(m_xamlIsland.ContentIsland());
 
-    // Issue #15557 Bug 2 Fix: Subscribe to DismissPopupsRequest event to close popups when scroll begins.
-    // This is the pattern that ANY 3rd party XAML component should use:
-    // 1. Subscribe to the DismissPopupsRequest event
-    // 2. When the event fires, use VisualTreeHelper to find and close your open popups
-    // This works for ComboBox, DatePicker, TimePicker, Flyouts, etc. - any XAML popup!
-    m_dismissPopupsRequestToken = islandView.DismissPopupsRequest(
-        [this](winrt::Windows::Foundation::IInspectable const &, winrt::Windows::Foundation::IInspectable const &) {
-          DismissPopups();
+    // Issue #15557 Bug 2 Fix: Subscribe to Mounted event to walk parent tree and register
+    // for ViewChanged on parent ScrollViews. When scroll position changes, dismiss any open popups.
+    // This pattern keeps ContentIslandComponentView XAML-agnostic - the 3P component handles its own popups.
+    m_mountedToken = islandView.Mounted(
+        [this](
+            const winrt::Windows::Foundation::IInspectable &,
+            const winrt::Microsoft::ReactNative::ComponentView &view) { RegisterForParentScrollViewEvents(view); });
+
+    m_unmountedToken = islandView.Unmounted(
+        [this](const winrt::Windows::Foundation::IInspectable &, const winrt::Microsoft::ReactNative::ComponentView &) {
+          UnregisterFromParentScrollViewEvents();
         });
 
     m_selectionChangedToken =
@@ -70,6 +74,30 @@ struct ComboBoxComponentView : public winrt::implements<ComboBoxComponentView, w
         });
   }
 
+  // Issue #15557: Walk up the parent tree to find ScrollViews and subscribe to ViewChanged.
+  // When scroll position changes, dismiss any open popups (light dismiss on scroll).
+  void RegisterForParentScrollViewEvents(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+    auto parent = view.Parent();
+    while (parent) {
+      if (auto scrollView = parent.try_as<winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView>()) {
+        auto token = scrollView.ViewChanged(
+            [this](const winrt::IInspectable &, const winrt::IInspectable &) { DismissPopups(); });
+        m_viewChangedSubscriptions.push_back({scrollView, token});
+      }
+      parent = parent.Parent();
+    }
+  }
+
+  // Issue #15557: Unsubscribe from parent ScrollView ViewChanged events
+  void UnregisterFromParentScrollViewEvents() noexcept {
+    for (auto &subscription : m_viewChangedSubscriptions) {
+      if (auto scrollView = subscription.scrollView.get()) {
+        scrollView.ViewChanged(subscription.token);
+      }
+    }
+    m_viewChangedSubscriptions.clear();
+  }
+
   // Dismiss any open popups for this component's XamlRoot
   void DismissPopups() noexcept {
     if (auto xamlRoot = m_comboBox.XamlRoot()) {
@@ -86,7 +114,15 @@ struct ComboBoxComponentView : public winrt::implements<ComboBoxComponentView, w
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
   winrt::Microsoft::UI::Xaml::Controls::ComboBox m_comboBox{nullptr};
   winrt::event_token m_selectionChangedToken{};
-  winrt::event_token m_dismissPopupsRequestToken{};
+  winrt::event_token m_mountedToken{};
+  winrt::event_token m_unmountedToken{};
+
+  // Issue #15557: Store ViewChanged subscriptions to parent ScrollViews for light dismiss
+  struct ViewChangedSubscription {
+    winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView> scrollView;
+    winrt::event_token token;
+  };
+  std::vector<ViewChangedSubscription> m_viewChangedSubscriptions;
 };
 
 } // namespace winrt::SampleCustomComponent
