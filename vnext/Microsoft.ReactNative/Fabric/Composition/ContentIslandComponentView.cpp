@@ -79,7 +79,6 @@ void ContentIslandComponentView::ConnectInternal() noexcept {
     m_childSiteLink.Connect(m_islandToConnect);
     m_islandToConnect = nullptr;
   }
-  UnregisterForRootIslandEvents();
 
   ParentLayoutChanged();
   auto view = Parent();
@@ -101,33 +100,34 @@ void ContentIslandComponentView::ConnectInternal() noexcept {
   }
 }
 
-void ContentIslandComponentView::RegisterForRootIslandEvents() noexcept {
+void ContentIslandComponentView::ConnectIfParentIsConnectedElsePost() noexcept {
+  if (!isMounted())
+    return;
+
   m_parentContentIsland = ParentContentIsland();
 
   if (m_parentContentIsland.IsConnected()) {
     ConnectInternal();
   } else {
-    m_islandStateChangedToken = m_parentContentIsland.StateChanged(
-        [wkThis = get_weak()](
-            const winrt::Microsoft::UI::Content::ContentIsland & /*island*/,
-            const winrt::Microsoft::UI::Content::ContentIslandStateChangedEventArgs & /*args*/) {
-          if (auto strongThis = wkThis.get()) {
-            strongThis->ConnectInternal();
-          }
-        });
-  }
-}
+    if (!m_postedConnectTask) {
+      m_postedConnectTask = true;
+      // Ideally we'd use m_parentContentIsland.Connected event, but that doesn't exist yet.
+      // So we use the dispatcher to post a task and we'll poll for IsConnected
+      winrt::Microsoft::UI::Dispatching::DispatcherQueue dispatcherQueue = m_parentContentIsland.DispatcherQueue();
 
-void ContentIslandComponentView::UnregisterForRootIslandEvents() noexcept {
-  if (m_islandStateChangedToken) {
-    m_parentContentIsland.StateChanged(m_islandStateChangedToken);
-    m_islandStateChangedToken = {};
-    m_parentContentIsland = nullptr;
+      bool result = dispatcherQueue.TryEnqueue(
+          winrt::Microsoft::UI::Dispatching::DispatcherQueuePriority::Normal, [wkThis = get_weak()] {
+            if (auto strongThis = wkThis.get()) {
+              strongThis->m_postedConnectTask = false;
+              strongThis->ConnectIfParentIsConnectedElsePost();
+            }
+          });
+    }
   }
 }
 
 void ContentIslandComponentView::OnMounted() noexcept {
-  RegisterForRootIslandEvents();
+  ConnectIfParentIsConnectedElsePost();
 }
 
 void ContentIslandComponentView::OnUnmounted() noexcept {
@@ -136,7 +136,6 @@ void ContentIslandComponentView::OnUnmounted() noexcept {
     m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
     m_navigationHostDepartFocusRequestedToken = {};
   }
-  UnregisterForRootIslandEvents();
 }
 
 void ContentIslandComponentView::ParentLayoutChanged() noexcept {
@@ -221,7 +220,8 @@ void ContentIslandComponentView::onGotFocus(
   m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(navigationReason));
 }
 
-void ContentIslandComponentView::onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
+void ContentIslandComponentView::onLostFocus(
+    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   if (m_pendingFocus) {
     m_pendingFocus = std::nullopt;
   }
