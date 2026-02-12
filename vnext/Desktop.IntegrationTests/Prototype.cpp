@@ -21,11 +21,10 @@ namespace msrn = winrt::Microsoft::ReactNative;
 
 struct TestUIDispatcher : public winrt::implements<TestUIDispatcher, msrn::IReactDispatcher>
 {
-  TestUIDispatcher() = default;
-
-  TestUIDispatcher(::Mso::DispatchQueue &&queue) : m_queue{std::move(queue)}
+  TestUIDispatcher(winrt::Microsoft::UI::Dispatching::DispatcherQueue const& dispatcherQueue)
+    : m_dispatcherQueue{dispatcherQueue}
   {
-    m_queue.Post([self = get_strong()]() noexcept
+    m_dispatcherQueue.TryEnqueue([self = get_strong()]() noexcept
     {
       self->m_threadId = GetCurrentThreadId();
     });
@@ -38,14 +37,14 @@ struct TestUIDispatcher : public winrt::implements<TestUIDispatcher, msrn::IReac
 
   void Post(msrn::ReactDispatcherCallback const& callback)
   {
-    m_queue.Post([callback]() noexcept
+    m_dispatcherQueue.TryEnqueue([callback]() noexcept
     {
       callback();
     });
   }
 
 private:
-  Mso::DispatchQueue m_queue;
+  winrt::Microsoft::UI::Dispatching::DispatcherQueue m_dispatcherQueue;
   DWORD m_threadId{0};
 };
 
@@ -83,15 +82,15 @@ TestReactNativeHostHolder::TestReactNativeHostHolder(
     Options &&options) noexcept {
   m_host = winrt::Microsoft::ReactNative::ReactNativeHost{};
 
-  // Create UI dispatcher for headless tests (required by Desktop DLL)
-  m_uiDispatcher = winrt::make<TestUIDispatcher>(Mso::DispatchQueue::MakeSerialQueue());
-
   // Subscribe to InstanceCreated event BEFORE launching async work
   m_host.InstanceSettings().InstanceCreated([this](auto&&, auto&&) {
     SetEvent(m_instanceCreatedEvent.get());
   });
 
   m_queueController = winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnDedicatedThread();
+
+  // Create UI dispatcher for headless tests using the queue controller's dispatcher
+  m_uiDispatcher = winrt::make<TestUIDispatcher>(m_queueController.DispatcherQueue());
   m_queueController.DispatcherQueue().TryEnqueue([this,
                                                   jsBundle = std::wstring{jsBundle},
                                                   hostInitializer = std::move(hostInitializer),
@@ -194,8 +193,8 @@ TEST_CLASS (Prototype) {
     bool succeeded = true;
 
     {
-      msrn::IReactDispatcher dispatcher =
-          winrt::make<TestUIDispatcher>(Mso::DispatchQueue::MakeSerialQueue());
+      auto queueController = winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnDedicatedThread();
+      msrn::IReactDispatcher dispatcher = winrt::make<TestUIDispatcher>(queueController.DispatcherQueue());
 
       msrn::ReactNativeHost host{};
 
@@ -209,6 +208,8 @@ TEST_CLASS (Prototype) {
       auto action = host.ReloadInstance();
 
       action.get();
+
+      queueController.ShutdownQueueAsync().get();
     }
 
     Assert::IsTrue(succeeded);
