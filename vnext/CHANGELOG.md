@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 02 Feb 2026 11:34:36 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 11 Feb 2026 09:48:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.10
+
+Wed, 11 Feb 2026 09:48:46 GMT
+
+### Changes
+
+- enables word-extension during drag after a double-click selection (74712637+iamAbhi-916@users.noreply.github.com)
+- Fix switch Component's layout change (66076509+vineethkuttan@users.noreply.github.com)
+- Fix SHIFT+F10 keyboard shortcut for context menu in TextInput (nitchaudhary@microsoft.com)
 
 ## 0.82.0-preview.9
 
