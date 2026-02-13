@@ -45,9 +45,16 @@ enum SnapPointsAlignment {
   void Opacity(Single value);
   void BlurRadius(Single value);
   void Color(Windows.UI.Color value);
+  void Mask(IBrush mask);
+  void SourcePolicy(CompositionDropShadowSourcePolicy policy);
 }
 
-    [webhosthidden][experimental] interface IVisual {
+[webhosthidden][experimental] enum CompositionDropShadowSourcePolicy {
+  Default = 0,
+  InheritedOnly = 1
+};
+
+[webhosthidden][experimental] interface IVisual {
   void InsertAt(IVisual visual, Int32 index);
   void Remove(IVisual visual);
   IVisual GetAt(UInt32 index);
