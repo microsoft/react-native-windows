@@ -118,6 +118,11 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   double getVerticalSize() noexcept;
   double getHorizontalSize() noexcept;
 
+  // Issue #15557: Event accessors for ViewChanged (used by ContentIslandComponentView for transform update)
+  winrt::event_token ViewChanged(
+      winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept;
+  void ViewChanged(winrt::event_token const &token) noexcept;
+
  protected:
   // ScrollView mounts children into m_scrollVisual (not Visual()), and scroll visuals
   // inherently clip their content, so we skip the children container clipping logic.
@@ -136,6 +141,8 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool scrollRight(float delta, bool animate) noexcept;
   void updateBackgroundColor(const facebook::react::SharedColor &color) noexcept;
   void updateStateWithContentOffset() noexcept;
+  // Issue #15557: Notify listeners that scroll position has changed
+  void FireViewChanged() noexcept;
   facebook::react::ScrollViewEventEmitter::Metrics getScrollMetrics(
       facebook::react::SharedViewEventEmitter const &eventEmitter,
       winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) noexcept;
@@ -167,6 +174,9 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool m_allowNextScrollNoMatterWhat{false};
   std::chrono::steady_clock::time_point m_lastScrollEventTime{};
   std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
+
+  // Issue #15557: Event for notifying listeners when scroll position changes
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable>> m_viewChangedEvent;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
