@@ -887,6 +887,13 @@ void ScrollViewComponentView::updateContentVisualSize() noexcept {
 
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
 
+void ScrollViewComponentView::updateChildrenClippingPath(
+    facebook::react::LayoutMetrics const & /*layoutMetrics*/,
+    const facebook::react::ViewProps & /*viewProps*/) noexcept {
+  // No-op: ScrollView mounts children into m_scrollVisual (not Visual()),
+  // and scroll visuals inherently clip their content.
+}
+
 /*
 ScrollViewComponentView::ScrollInteractionTrackerOwner::ScrollInteractionTrackerOwner(
     ScrollViewComponentView *outer)

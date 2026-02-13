@@ -123,6 +123,13 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept;
   void ViewChanged(winrt::event_token const &token) noexcept;
 
+ protected:
+  // ScrollView mounts children into m_scrollVisual (not Visual()), and scroll visuals
+  // inherently clip their content, so we skip the children container clipping logic.
+  void updateChildrenClippingPath(
+      facebook::react::LayoutMetrics const &layoutMetrics,
+      const facebook::react::ViewProps &viewProps) noexcept override;
+
  private:
   void updateDecelerationRate(float value) noexcept;
   void updateContentVisualSize() noexcept;
