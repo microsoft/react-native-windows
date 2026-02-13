@@ -58,15 +58,29 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   void OnMounted() noexcept;
   void OnUnmounted() noexcept;
   void ParentLayoutChanged() noexcept;
+  void ConnectInternal() noexcept;
+  void RegisterForRootIslandEvents() noexcept;
+  void UnregisterForRootIslandEvents() noexcept;
+  winrt::Microsoft::UI::Content::ContentIsland ParentContentIsland() noexcept;
 
   bool m_layoutChangePosted{false};
+  winrt::Microsoft::UI::Content::ContentIsland m_parentContentIsland{nullptr};
   winrt::Microsoft::UI::Content::ContentIsland m_islandToConnect{nullptr};
+  winrt::event_token m_islandStateChangedToken;
+
   winrt::event_token m_mountedToken;
   winrt::event_token m_unmountedToken;
   std::vector<winrt::Microsoft::ReactNative::ComponentView::LayoutMetricsChanged_revoker> m_layoutMetricChangedRevokers;
   winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
   winrt::Microsoft::UI::Input::InputFocusNavigationHost m_navigationHost{nullptr};
   winrt::event_token m_navigationHostDepartFocusRequestedToken{};
+
+  // Issue #15557: Store ViewChanged subscriptions to parent ScrollViews for transform updates
+  struct ViewChangedSubscription {
+    winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView> scrollView;
+    winrt::event_token token;
+  };
+  std::vector<ViewChangedSubscription> m_viewChangedSubscriptions;
 
   // Automation
   void ConfigureChildSiteLinkAutomation() noexcept;

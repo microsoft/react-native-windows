@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Picker Xaml NativeComponent added to Sample Fabric",
+  "packageName": "react-native-windows",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -112,9 +112,9 @@ const View: component(
         : undefined;
 
     const _keyDown = (event: KeyEvent) => {
-      if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
-        for (const el of otherProps.keyDownEvents) {
+      const keyDownEvents = otherProps.keyDownEvents;
+      if (keyDownEvents != null && event.isPropagationStopped() !== true) {
+        for (const el of keyDownEvents) {
           if (
             event.nativeEvent.code === el.code &&
             event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
@@ -131,9 +131,9 @@ const View: component(
     };
 
     const _keyUp = (event: KeyEvent) => {
-      if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
-        for (const el of otherProps.keyUpEvents) {
+      const keyUpEvents = otherProps.keyUpEvents;
+      if (keyUpEvents != null && event.isPropagationStopped() !== true) {
+        for (const el of keyUpEvents) {
           if (
             event.nativeEvent.code === el.code &&
             event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
@@ -150,9 +150,9 @@ const View: component(
     };
 
     const _keyDownCapture = (event: KeyEvent) => {
-      if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
-        for (const el of otherProps.keyDownEvents) {
+      const keyDownEvents = otherProps.keyDownEvents;
+      if (keyDownEvents != null && event.isPropagationStopped() !== true) {
+        for (const el of keyDownEvents) {
           if (
             event.nativeEvent.code === el.code &&
             event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
@@ -169,9 +169,9 @@ const View: component(
     };
 
     const _keyUpCapture = (event: KeyEvent) => {
-      if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
-        for (const el of otherProps.keyUpEvents) {
+      const keyUpEvents = otherProps.keyUpEvents;
+      if (keyUpEvents != null && event.isPropagationStopped() !== true) {
+        for (const el of keyUpEvents) {
           if (
             event.nativeEvent.code === el.code &&
             event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
@@ -188,11 +188,13 @@ const View: component(
     };
 
     // [Windows
-    // $FlowFixMe - children typing
-    const childrenWithImportantForAccessibility = children => {
+    const childrenWithImportantForAccessibility = (
+      children: React.Node,
+    ): React.Node => {
       return React.Children.map(children, child => {
         if (React.isValidElement(child)) {
           // $FlowFixMe[incompatible-use]
+          // $FlowFixMe[prop-missing]
           if (child.props.children) {
             // $FlowFixMe[incompatible-call] - React.Children.map types child as mixed
             // $FlowFixMe[incompatible-type]

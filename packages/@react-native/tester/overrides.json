@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.82.0-nightly-20250902-9731e8ebc",
+  "baseVersion": "0.83.0-nightly-20250917-18cb4edfa",
   "overrides": [
     {
       "type": "copy",
@@ -138,28 +138,28 @@
       "type": "copy",
       "directory": "js/examples/DrawerLayoutAndroid",
       "baseDirectory": "packages/rn-tester/js/examples/DrawerLayoutAndroid",
-      "baseHash": "6c0cb892ffc283ad7f3dff057de76490b146883e",
+      "baseHash": "e7b75e74ce128d84347963ab910239d585f1e4ea",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "3ae2ed4d6120dea8b317822395530f4edddcf6f1",
+      "baseHash": "90d7895059bfda9f8c9badfb412609e65b7e8902",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Filter",
       "baseDirectory": "packages/rn-tester/js/examples/Filter",
-      "baseHash": "9eb2dab1c611cfd1587a234ec834f59030da9054",
+      "baseHash": "08fcf4c3e652a2c569f52db516f9cdb08967065a",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "68baba17c05eeb1f038396bdbbb63c1dfed64f69",
+      "baseHash": "a320e9a30c2215964837a0acef05eb1e23f37c60",
       "issue": 4054
     },
     {
@@ -278,7 +278,7 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseHash": "408ae7ff893047dc3a187b878fd8ac9c61883547"
+      "baseHash": "e03913cdeff804265a1c4dc8b5e4b002ba7ef00f"
     },
     {
       "type": "copy",
@@ -375,7 +375,7 @@
       "type": "copy",
       "directory": "js/examples/SectionList",
       "baseDirectory": "packages/rn-tester/js/examples/SectionList",
-      "baseHash": "bf3816be6589a5bdc5c81ef7e911ce9569adf61c",
+      "baseHash": "9ff3083a91d4a633da8304d3edaed4f91a334f96",
       "issue": 4054
     },
     {
@@ -424,14 +424,14 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "3c104a4709628d576c22ed0962ae685e715b67a9",
+      "baseHash": "1190301a021dcd2904b075f382d82169b1f04b91",
       "issue": 4054
     },
     {
       "type": "copy",
       "file": "js/examples/TextInput/ExampleTextInput.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/ExampleTextInput.js",
-      "baseHash": "07f3b91f5f3295f91da6c3fb23d4d7e2c8381db9",
+      "baseHash": "c960b92b526c746915e470d1329ddf897a185808",
       "issue": 14292
     },
     {
@@ -584,14 +584,14 @@
       "type": "copy",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "8cd219abae140e98f9578432954fc9ef62421308",
+      "baseHash": "aeb0275507e7c508cdf7c2ceec49f9e95ef4e1ec",
       "issue": 13228
     },
     {
       "type": "copy",
       "file": "js/utils/RNTesterList.ios.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
-      "baseHash": "6872f4b3f0d2495a64c33fdd4328272d547f9108",
+      "baseHash": "a93dea4da7d61b0ad13e1d90f9a0b34dbac57994",
       "issue": 13228
     },
     {
