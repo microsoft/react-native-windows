@@ -6,6 +6,7 @@
 
 #include "ScrollViewComponentView.h"
 
+#include <Fabric/ComponentView.h>
 #include <Utils/ValueUtils.h>
 
 #pragma warning(push)
@@ -19,6 +20,8 @@
 #include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
 #include <unicode.h>
+#include <functional>
+#include "ContentIslandComponentView.h"
 #include "JSValueReader.h"
 #include "RootComponentView.h"
 
@@ -1332,6 +1335,10 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
             m_allowNextScrollNoMatterWhat = false;
           }
         }
+
+        // Issue #15557: Notify listeners that scroll position has changed,
+        // so ContentIslandComponentView can update LocalToParentTransformMatrix
+        FireViewChanged();
       });
 
   m_scrollBeginDragRevoker = m_scrollVisual.ScrollBeginDrag(
@@ -1339,6 +1346,9 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        // Issue #15557: Notify listeners that scroll position has changed
+        FireViewChanged();
+
         m_allowNextScrollNoMatterWhat = true; // Ensure next scroll event is recorded, regardless of throttle
         updateStateWithContentOffset();
         auto eventEmitter = GetEventEmitter();
@@ -1484,5 +1494,21 @@ void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noe
 
 void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
+}
+
+// Issue #15557: Notify listeners that scroll position has changed.
+// ContentIslandComponentView subscribes to this to update LocalToParentTransformMatrix.
+void ScrollViewComponentView::FireViewChanged() noexcept {
+  m_viewChangedEvent(*this, nullptr);
+}
+
+// Issue #15557: Event accessors for ViewChanged
+winrt::event_token ScrollViewComponentView::ViewChanged(
+    winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept {
+  return m_viewChangedEvent.add(handler);
+}
+
+void ScrollViewComponentView::ViewChanged(winrt::event_token const &token) noexcept {
+  m_viewChangedEvent.remove(token);
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
