@@ -83,53 +83,53 @@ struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microso
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(ModalHostView_OnRequestClose)
-struct ModalHostView_OnRequestClose {
-};
-
-REACT_STRUCT(ModalHostView_OnShow)
-struct ModalHostView_OnShow {
-};
-
-REACT_STRUCT(ModalHostView_OnDismiss)
-struct ModalHostView_OnDismiss {
-};
-
-REACT_STRUCT(ModalHostView_OnOrientationChange)
-struct ModalHostView_OnOrientationChange {
+REACT_STRUCT(ModalHostViewSpec_onOrientationChange)
+struct ModalHostViewSpec_onOrientationChange {
   REACT_FIELD(orientation)
   std::string orientation;
+};
+
+REACT_STRUCT(ModalHostViewSpec_onDismiss)
+struct ModalHostViewSpec_onDismiss {
+};
+
+REACT_STRUCT(ModalHostViewSpec_onShow)
+struct ModalHostViewSpec_onShow {
+};
+
+REACT_STRUCT(ModalHostViewSpec_onRequestClose)
+struct ModalHostViewSpec_onRequestClose {
 };
 
 struct ModalHostViewEventEmitter {
   ModalHostViewEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnRequestClose = ModalHostView_OnRequestClose;
-  using OnShow = ModalHostView_OnShow;
-  using OnDismiss = ModalHostView_OnDismiss;
-  using OnOrientationChange = ModalHostView_OnOrientationChange;
+  using OnRequestClose = ModalHostViewSpec_onRequestClose;
+  using OnShow = ModalHostViewSpec_onShow;
+  using OnDismiss = ModalHostViewSpec_onDismiss;
+  using OnOrientationChange = ModalHostViewSpec_onOrientationChange;
 
   void onRequestClose(OnRequestClose &value) const {
-    m_eventEmitter.DispatchEvent(L"requestClose", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"requestClose", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
 
   void onShow(OnShow &value) const {
-    m_eventEmitter.DispatchEvent(L"show", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"show", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
 
   void onDismiss(OnDismiss &value) const {
-    m_eventEmitter.DispatchEvent(L"dismiss", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"dismiss", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
 
   void onOrientationChange(OnOrientationChange &value) const {
-    m_eventEmitter.DispatchEvent(L"orientationChange", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"orientationChange", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

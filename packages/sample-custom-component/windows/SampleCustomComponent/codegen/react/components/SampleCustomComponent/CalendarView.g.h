@@ -39,8 +39,8 @@ struct CalendarViewProps : winrt::implements<CalendarViewProps, winrt::Microsoft
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(CalendarView_OnSelectedDatesChanged)
-struct CalendarView_OnSelectedDatesChanged {
+REACT_STRUCT(CalendarViewSpec_onSelectedDatesChanged)
+struct CalendarViewSpec_onSelectedDatesChanged {
   REACT_FIELD(value)
   bool value{};
 
@@ -52,10 +52,10 @@ struct CalendarViewEventEmitter {
   CalendarViewEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnSelectedDatesChanged = CalendarView_OnSelectedDatesChanged;
+  using OnSelectedDatesChanged = CalendarViewSpec_onSelectedDatesChanged;
 
   void onSelectedDatesChanged(OnSelectedDatesChanged &value) const {
-    m_eventEmitter.DispatchEvent(L"selectedDatesChanged", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+    m_eventEmitter.DispatchEvent(L"selectedDatesChanged", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

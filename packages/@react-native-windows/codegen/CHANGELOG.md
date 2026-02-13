@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Tue, 27 Jan 2026 19:33:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 11 Feb 2026 16:10:54 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.2
+
+Wed, 11 Feb 2026 16:10:54 GMT
+
+### Patches
+
+- Fix issues with more complex props and event types (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.1
 

@@ -2,6 +2,75 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Feb 2026 16:10:54 GMT",
+      "version": "0.81.4",
+      "tag": "react-native-windows_v0.81.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4300483b801e2a095e18911a9e6ba4ff694eb47e",
+            "comment": "Fix selectable text not working inside ScrollView"
+          },
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4300483b801e2a095e18911a9e6ba4ff694eb47e",
+            "comment": "Fix memoryStram getting unitialized"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5cff7ee2752e6c30b10067be3ee0b8703b0a2b9c",
+            "comment": "enables word-extension during drag after a double-click selection"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cde74771341bc0255fdf8a7feac840a785109cf3",
+            "comment": "update codegen'd files"
+          },
+          {
+            "author": "protikbiswas@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0caaf1cb5628e25ccba89ff736974be910a8edcb",
+            "comment": "adding fix for shadow in rounded box"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4300483b801e2a095e18911a9e6ba4ff694eb47e",
+            "comment": "Fix issue when creating a ContentIslandComponentView when the root ReactNativeIsland is not connected"
+          },
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4300483b801e2a095e18911a9e6ba4ff694eb47e",
+            "comment": "Fix crash in ABIViewManager::RemoveAllChildren during shutdown"
+          },
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4300483b801e2a095e18911a9e6ba4ff694eb47e",
+            "comment": "visual studio 2026 strict check fix"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.81.2",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.81.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Jan 2026 19:33:59 GMT",
       "version": "0.81.3",
       "tag": "react-native-windows_v0.81.3",
