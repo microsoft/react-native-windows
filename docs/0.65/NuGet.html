@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Using react-native-windows NuGet packages · React Native for Windows</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&gt;**This documentation and the underlying platform code is a work in progress.**"/><meta name="docsearch:version" content="0.65"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Using react-native-windows NuGet packages · React Native for Windows"/><meta property="og:type" content="website"/><meta property="og:url" content="https://microsoft.github.io/react-native-windows/"/><meta property="og:description" content="&gt;**This documentation and the underlying platform code is a work in progress.**"/><meta property="og:image" content="https://microsoft.github.io/react-native-windows/img/undraw_online.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://microsoft.github.io/react-native-windows/img/undraw_tweetstorm.svg"/><link rel="shortcut icon" href="/react-native-windows/img/favicon.ico"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><link rel="stylesheet" href="/react-native-windows/css/code-block-buttons.css"/><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/focus-visible@5.0.2/dist/focus-visible.min.js"></script><script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script><script type="text/javascript" src="/react-native-windows/js/code-block-buttons.js"></script><script type="text/javascript" src="/react-native-windows/js/nav-buttons.js"></script><script src="https://unpkg.com/vanilla-back-to-top@7.1.14/dist/vanilla-back-to-top.min.js"></script><script>
+        document.addEventListener('DOMContentLoaded', function() {
+          addBackToTop(
+            {"zIndex":100}
+          )
+        });
+        </script><script src="/react-native-windows/js/scrollSpy.js"></script><link rel="stylesheet" href="/react-native-windows/css/prism.css"/><link rel="stylesheet" href="/react-native-windows/css/main.css"/><script src="/react-native-windows/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/react-native-windows/"><img class="logo" src="/react-native-windows/img/header_logo.svg" alt="React Native for Windows"/><h2 class="headerTitleWithLogo">React Native for Windows</h2></a><a href="/react-native-windows/versions"><h3>0.65</h3></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/react-native-windows/docs/0.65/getting-started" target="_self">Docs</a></li><li class=""><a href="/react-native-windows/docs/0.65/flyout-component" target="_self">APIs</a></li><li class=""><a href="https://devblogs.microsoft.com/react-native/" target="_self">Blog</a></li><li class=""><a href="/react-native-windows/resources" target="_self">Resources</a></li><li class=""><a href="https://github.com/microsoft/react-native-windows-samples/tree/main/samples" target="_self">Samples</a></li><li class=""><a href="/react-native-windows/support" target="_self">Support</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Experimental</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">The Basics (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/getting-started">Get Started with Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/rnw-dependencies">System Requirements</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/run-windows-cli">React Native Windows CLI</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/parity-status">API Parity</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/config">React Native Config Schema</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/windowsbrush-and-theme">Using PlatformColor and Responding to Themes</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/releases">Release Strategy</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/platform">Platform Detection</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Native Modules (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/native-modules">Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/view-managers">Native UI Components</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/native-modules-setup">Native Module Setup</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/native-modules-using">Using Community Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/native-modules-autolinking">Autolinking Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/native-modules-advanced">Native Modules (Advanced)</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/supported-community-modules">Supported Community Modules</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Native Development (Windows)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/native-code">Working with native code on Windows</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/native-code-language-choice">Choosing C++ or C# for native code</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/native-modules-marshalling-data">Marshaling Data</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/native-modules-async">Using Asynchronous Windows APIs</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/native-modules-jsvalue">Using JSValue</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/native-modules-csharp-codegen">Compile time code generation for C#</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/win10-vm">Developing Windows apps on a non-Windows PC</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/customizing-SDK-versions">Customizing SDK versions</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">The Basics (MacOS)<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/rnm-getting-started">Get Started with macOS</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/rnm-dependencies">System Requirements</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Troubleshooting<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/native-modules-troubleshooting">Troubleshooting Native Modules</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/metro-config-out-tree-platforms">Metro config for out of tree platforms</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Experimental<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/hermes">Hermes on Windows + macOS</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/react-native-windows/docs/0.65/NuGet">Using react-native-windows NuGet packages</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/nuget-update">Updating NuGet packages</a></li><li class="navListItem"><a class="navItem" href="/react-native-windows/docs/0.65/winui3">WinUI 3 Support in RNW</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><a class="edit-page-link button" href="https://github.com/microsoft/react-native-windows-samples/blob/main/docs/nuget.md" target="_blank" rel="noreferrer noopener">Edit</a><h1 id="__docusaurus" class="postHeaderTitle">Using react-native-windows NuGet packages</h1></header><article><div><span><blockquote>
+<p><strong>This documentation and the underlying platform code is a work in progress.</strong></p>
+</blockquote>
+<p>The default for react-native-windows has been to build all code from source. This includes building all the code shipped by the react-native-windows team in the npm package from source. This code can be quite large and take a long time to build as well as require a high-performance computer. Some configurations have problems building this code with only 8 GB of memory. Especially if you are used to working only with managed code, this can be a big surprise.</p>
+<p>Starting with version 0.64 the team offers experimental NuGet packages that can be used as a replacement of compiling the sources.</p>
+<blockquote>
+<p>Disclaimer: There are known compatibility issues with <a href="/react-native-windows/docs/0.65/supported-community-modules">community modules</a>, as they still rely on building the shared code from source. So the solution still needs to have all the source projects which puts all the build performance problems back.</p>
+</blockquote>
+<blockquote>
+<p>Disclaimer: NuGet packages are not compatible with experimental feature <a href="winui3.md">WinUI 3</a>.</p>
+</blockquote>
+<p>The benefit of using NuGet packages is that you get improved compilation times for your Windows project and can develop on a less powerful computer.</p>
+<p>The other benefit will be that it will be easier to update your projects to future versions or react-native-windows.</p>
+<h1><a class="anchor" aria-hidden="true" id="how-to-enable-on-new-projects"></a><a href="#how-to-enable-on-new-projects" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How to enable on new projects</h1>
+<p>When you enable react-native-windows on your new project, you can pass <code>--experimentalNuGetDependency true</code>:</p>
+<ol>
+<li><code>npx react-native init &lt;projectName&gt;</code></li>
+<li><code>pushd &lt;projectName&gt;</code></li>
+<li><code>npx react-native-windows-init --overwrite --experimentalNuGetDependency true</code></li>
+</ol>
+<p>Of course all the other flags still work.</p>
+<h1><a class="anchor" aria-hidden="true" id="how-to-update-a-previously-created-project"></a><a href="#how-to-update-a-previously-created-project" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>How to update a previously created project</h1>
+<div class="tabs"><div class="nav-tabs"><div id="tab-group-575-tab-576" class="nav-link active" data-group="group_575" data-tab="tab-group-575-content-576">C# projects</div><div id="tab-group-575-tab-577" class="nav-link" data-group="group_575" data-tab="tab-group-575-content-577">C++ projects</div></div><div class="tab-content"><div id="tab-group-575-content-576" class="tab-pane active" data-group="group_575" tabindex="-1"><div><span><ol>
+<li><p>Update the solution file <code>windows\&lt;projectName&gt;.sln</code>:</p>
+<ol>
+<li>Open the project in Visual Studio</li>
+<li>Remove all projects except your own app project</li>
+</ol></li>
+<li><p>Edit the project file <code>windows\&lt;projectName&gt;\&lt;projectName.csproj&gt;</code></p>
+<ol>
+<li>Add the the NuGet flag to the first property group
+<pre><code class="hljs css language-diff"><span class="hljs-addition">+   &lt;UseExperimentalNuGet&gt;true&lt;/UseExperimentalNuGet&gt;</span><br />  &lt;/PropertyGroup&gt;<br /></code></pre></li>
+<li>Remove any <code>&lt;ProjectReference&gt;</code> references for <code>Microsoft.ReactNative.*</code> projects.</li>
+<li>Add a NuGet reference to <code>Microsoft.ReactNative.Managed</code>.
+You can do this either through Visual Studio's UI or by adding:
+<pre><code class="hljs css language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">ItemGroup</span>&gt;</span><br />  <span class="hljs-tag">&lt;<span class="hljs-name">PackageReference</span> <span class="hljs-attr">Include</span>=<span class="hljs-string">"Microsoft.ReactNative.Managed"</span>&gt;</span><br />    <span class="hljs-tag">&lt;<span class="hljs-name">Version</span>&gt;</span>0.65.0<span class="hljs-tag">&lt;/<span class="hljs-name">Version</span>&gt;</span><br />  <span class="hljs-tag">&lt;/<span class="hljs-name">PackageReference</span>&gt;</span><br /><span class="hljs-tag">&lt;/<span class="hljs-name">ItemGroup</span>&gt;</span><br /></code></pre>
+<blockquote>
+<p>Note: You'll need to match the NuGet version with the npm version</p>
+</blockquote></li>
+</ol></li>
+<li><p>Update the C# logic for the new <a href="/react-native-windows/docs/0.65/native-modules-csharp-codegen">compile-time C# codeGen</a></p></li>
+</ol>
+</span></div></div><div id="tab-group-575-content-577" class="tab-pane" data-group="group_575" tabindex="-1"><div><span><ol>
+<li>Update the solution file <code>windows\&lt;projectName&gt;.sln</code>:
+<ol>
+<li>Open the project in Visual Studio</li>
+<li>Remove all projects that are not your project</li>
+</ol></li>
+<li>Edit the project file <code>windows\&lt;projectName&gt;\&lt;projectName.vcxproj&gt;</code>
+<ol>
+<li><p>Remove any <code>&lt;ProjectReference&gt;</code> references for <code>Microsoft.ReactNative.*</code> projects.</p></li>
+<li><p>Add the the NuGet flag to the first property group</p>
+<pre><code class="hljs css language-diff">  &lt;PropertyGroup Label="ReactNativeWindowsProps"&gt;<br />    &lt;ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''"&gt;...&lt;/ReactNativeWindowsDir&gt;<br /><span class="hljs-addition">+   &lt;UseExperimentalNuGet&gt;true&lt;/UseExperimentalNuGet&gt;</span><br />  &lt;/PropertyGroup&gt;<br /></code></pre></li>
+<li><p>Add NuGet references to the following NuGet packages:</p>
+<ul>
+<li><code>Microsoft.ReactNative</code></li>
+<li><code>Microsoft.ReactNative.Cxx</code></li>
+</ul>
+<p>C++ packages do not support <code>PackageReference</code> so it is not recommended to manually add these dependencies to the project file, instead add the dependencies via the Visual Studio IDE.</p>
+<blockquote>
+<p>Note: You'll need to match the NuGet version with the npm version</p>
+</blockquote></li>
+</ol></li>
+</ol>
+</span></div></div></div></div>
+<h1><a class="anchor" aria-hidden="true" id="version-match"></a><a href="#version-match" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Version match</h1>
+<p>The versions of the NuGet package in your project must match the npm package version. If you need to update the NuGet packages there is a separate page on <a href="nuget-update.md">Updating NuGet packages</a></p>
+</span></div></article></div><div class="docLastUpdate"><em>Last updated on 2/13/2026</em></div><div class="docs-prevnext"><a class="docs-prev button" href="/react-native-windows/docs/0.65/hermes"><span class="arrow-prev">← </span><span>Hermes on Windows</span></a><a class="docs-next button" href="/react-native-windows/docs/0.65/nuget-update"><span>Next</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><div><h5>React Native Docs</h5><a href="https://reactnative.dev/docs/getting-started">Getting Started</a><a href="https://reactnative.dev/docs/tutorial">Tutorial</a><a href="https://reactnative.dev/docs/components-and-apis">Components and APIs</a><a href="https://reactnative.dev/docs/more-resources">More Resources</a></div><div><h5>React Native for Windows Docs</h5><div style="color:white;font-weight:500;font-size:16px"><a href="/react-native-windows/docs/getting-started">Get Started with Windows</a></div><a href="/react-native-windows/docs/parity-status">React Native Windows Components and APIs</a><a href="/react-native-windows/docs/native-modules">Native Modules</a><a href="/react-native-windows/docs/view-managers">Native UI Components</a></div><div><h5>Connect With Us On</h5><a href="https://devblogs.microsoft.com/react-native/">Blog</a><a href="https://twitter.com/ReactNativeMSFT" target="_blank">Twitter</a><a href="https://github.com/microsoft/react-native-windows" target="_blank">GitHub</a><a href="https://github.com/microsoft/react-native-windows-samples/tree/main/samples" target="_blank">Samples</a></div></section></footer></div></body></html>
