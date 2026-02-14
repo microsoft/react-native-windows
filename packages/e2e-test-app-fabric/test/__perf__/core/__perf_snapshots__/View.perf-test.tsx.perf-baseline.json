@@ -1,0 +1,128 @@
+{
+  "View Performance mount time 1": {
+    "metrics": {
+      "name": "View mount",
+      "meanDuration": 2.3,
+      "medianDuration": 2,
+      "stdDev": 0.6749485577105528,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-09T17:42:10.575Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-09T17:42:10.576Z"
+  },
+  "View Performance unmount time 1": {
+    "metrics": {
+      "name": "View unmount",
+      "meanDuration": 2.2,
+      "medianDuration": 2,
+      "stdDev": 0.7888106377466155,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-09T17:42:10.633Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-09T17:42:10.635Z"
+  },
+  "View Performance rerender time 1": {
+    "metrics": {
+      "name": "View rerender",
+      "meanDuration": 2.6,
+      "medianDuration": 2.5,
+      "stdDev": 0.6992058987801011,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-09T17:42:10.734Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-09T17:42:10.736Z"
+  },
+  "View Performance View-Specific Scenarios nested-views-50 1": {
+    "metrics": {
+      "name": "View nested-50",
+      "meanDuration": 2.8,
+      "medianDuration": 2,
+      "stdDev": 1.3038404810405297,
+      "renderCount": 0,
+      "runs": 5,
+      "timestamp": "2026-02-09T17:42:10.774Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-09T17:42:10.776Z"
+  },
+  "View Performance View-Specific Scenarios nested-views-100 1": {
+    "metrics": {
+      "name": "View nested-100",
+      "meanDuration": 2.8,
+      "medianDuration": 3,
+      "stdDev": 0.8366600265340756,
+      "renderCount": 0,
+      "runs": 5,
+      "timestamp": "2026-02-09T17:42:10.816Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-09T17:42:10.818Z"
+  },
+  "View Performance View-Specific Scenarios with-shadow 1": {
+    "metrics": {
+      "name": "View shadow",
+      "meanDuration": 3.8,
+      "medianDuration": 4,
+      "stdDev": 1.0327955589886444,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-09T17:42:10.910Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-09T17:42:10.912Z"
+  },
+  "View Performance View-Specific Scenarios with-border-radius 1": {
+    "metrics": {
+      "name": "View border-radius",
+      "meanDuration": 3.7,
+      "medianDuration": 3,
+      "stdDev": 1.636391694484477,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-09T17:42:10.996Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-09T17:42:10.998Z"
+  }
+}

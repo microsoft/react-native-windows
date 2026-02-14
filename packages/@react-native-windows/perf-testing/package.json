@@ -1,0 +1,67 @@
+{
+  "name": "@react-native-windows/perf-testing",
+  "version": "0.0.0-canary.1031",
+  "description": "Performance testing utilities for React Native Windows components",
+  "main": "lib-commonjs/index.js",
+  "types": "lib-commonjs/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows",
+    "directory": "packages/@react-native-windows/perf-testing"
+  },
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "rnw-scripts build",
+    "clean": "rnw-scripts clean",
+    "lint": "rnw-scripts lint",
+    "lint:fix": "rnw-scripts lint:fix",
+    "watch": "rnw-scripts watch"
+  },
+  "dependencies": {
+    "@react-native-windows/fs": "0.82.0-preview.1"
+  },
+  "devDependencies": {
+    "@rnw-scripts/eslint-config": "1.2.38",
+    "@rnw-scripts/just-task": "2.3.58",
+    "@rnw-scripts/ts-config": "2.0.6",
+    "@types/jest": "^29.2.2",
+    "@types/node": "^22.14.0",
+    "@types/react": "^19.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "eslint": "^8.19.0",
+    "prettier": "2.8.8",
+    "typescript": "5.0.4"
+  },
+  "peerDependencies": {
+    "jest": ">=29.0.3",
+    "react": ">=18.0.0",
+    "react-native": ">=0.72.0",
+    "react-test-renderer": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-test-renderer": {
+      "optional": true
+    }
+  },
+  "files": [
+    "lib-commonjs",
+    "README.md"
+  ],
+  "beachball": {
+    "defaultNpmTag": "preview",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch",
+      "premajor",
+      "preminor",
+      "prepatch"
+    ]
+  },
+  "promoteRelease": true,
+  "engines": {
+    "node": ">= 22"
+  }
+}

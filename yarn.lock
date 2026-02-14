@@ -2087,6 +2087,14 @@
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.4.tgz#7fb09506ee00a82989125cc03e8495204c8afc01"
   integrity sha512-Kf8h1AMnBo54b1fdiVylP2P/iFcZqzpMYcglC28EEFB1DEnOjsNr6Ucqc+3R9e91vHxEDnhZFbYDmAe79P2gjA==
 
+"@react-native-windows/fs@0.82.0-preview.1":
+  version "0.82.0-preview.1"
+  resolved "https://registry.yarnpkg.com/@react-native-windows/fs/-/fs-0.82.0-preview.1.tgz#78dc306c0877807b3c0a6f06bcb377ae7bfc7887"
+  integrity sha512-8nUWpFeLY7vGrsD4Xxroy7EvSkaeDC/YXcvqILBBsoTipiQX4kmtPYGPWJpWOvEGVCLicb3m1U7/0MEpmfZOHA==
+  dependencies:
+    graceful-fs "^4.2.8"
+    minimatch "^10.0.3"
+
 "@react-native/assets-registry@0.82.0-nightly-20250902-9731e8ebc":
   version "0.82.0-nightly-20250902-9731e8ebc"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.82.0-nightly-20250902-9731e8ebc.tgz#d32973e28c8b43020e2d5bc08849dec1a1201943"

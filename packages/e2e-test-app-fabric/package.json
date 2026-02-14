@@ -11,7 +11,14 @@
     "e2etest": "npx @react-native-community/cli rnx-test --platform windows",
     "e2etest:updateSnapshots": "npx @react-native-community/cli rnx-test --platform windows -u",
     "e2etest:debug": "npx @react-native-community/cli rnx-test --platform windows --config ./jest.debug.config.js",
-    "bundle:debug": "npx @react-native-community/cli bundle --entry-file index.js --bundle-output ./windows/x64/Debug/RNTesterApp-Fabric/Bundle/index.windows.bundle --assets-dest ./windows/x64/Debug/RNTesterApp-Fabric/Bundle --platform windows"
+    "bundle:debug": "npx @react-native-community/cli bundle --entry-file index.js --bundle-output ./windows/x64/Debug/RNTesterApp-Fabric/Bundle/index.windows.bundle --assets-dest ./windows/x64/Debug/RNTesterApp-Fabric/Bundle --platform windows",
+    "perf": "jest --config jest.perf.config.js",
+    "perf:update": "jest --config jest.perf.config.js -u",
+    "perf:core": "jest --config jest.perf.config.js --testPathPattern=__perf__/core",
+    "perf:extended": "jest --config jest.perf.config.js --testPathPattern=__perf__/extended",
+    "perf:ci": "jest --config jest.perf.config.js --ci --forceExit",
+    "perf:ci:compare": "node ../../scripts/perf/compare-results.js",
+    "perf:ci:report": "node ../../scripts/perf/post-pr-comment.js"
   },
   "dependencies": {
     "@react-native-windows/automation-channel": "0.0.0-canary.1031",
@@ -33,6 +40,7 @@
     "@react-native/metro-config": "0.82.0-nightly-20250902-9731e8ebc",
     "@react-native-windows/automation": "0.0.0-canary.1031",
     "@react-native-windows/automation-commands": "0.0.0-canary.1031",
+    "@react-native-windows/perf-testing": "0.0.0-canary.1031",
     "@rnw-scripts/babel-node-config": "2.3.3",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",
