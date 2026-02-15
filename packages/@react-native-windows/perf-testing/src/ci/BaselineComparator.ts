@@ -46,10 +46,11 @@ export class BaselineComparator {
       const baseEntry = baseSnapshots[key];
       const threshold = {
         ...defaultThreshold,
-        ...(headEntry.threshold || {}),
+        ...headEntry.threshold,
         ...(options.thresholdOverrides?.[key] || {}),
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!baseEntry) {
         comparisons.push({
           metrics: headEntry.metrics,
@@ -70,6 +71,7 @@ export class BaselineComparator {
 
     // Flag scenarios removed in head
     for (const key of Object.keys(baseSnapshots)) {
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!headSnapshots[key]) {
         comparisons.push({
           metrics: {
@@ -102,7 +104,8 @@ export class BaselineComparator {
 
     const percentChange =
       base.medianDuration > 0
-        ? ((head.medianDuration - base.medianDuration) / base.medianDuration) * 100
+        ? ((head.medianDuration - base.medianDuration) / base.medianDuration) *
+          100
         : 0;
 
     const errors: string[] = [];
@@ -114,7 +117,9 @@ export class BaselineComparator {
       absoluteDelta > resolved.minAbsoluteDelta
     ) {
       errors.push(
-        `Duration increased by ${percentChange.toFixed(1)}% / +${absoluteDelta.toFixed(2)}ms ` +
+        `Duration increased by ${percentChange.toFixed(
+          1,
+        )}% / +${absoluteDelta.toFixed(2)}ms ` +
           `(threshold: ${resolved.maxDurationIncrease}% & ${resolved.minAbsoluteDelta}ms)`,
       );
     }

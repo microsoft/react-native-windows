@@ -112,11 +112,7 @@ class ButtonPerfTest extends ComponentPerfTestBase {
     const ButtonList = () => (
       <View style={styles.container}>
         {Array.from({length: count}, (_, i) => (
-          <Button
-            key={i}
-            title={`Button ${i}`}
-            onPress={() => {}}
-          />
+          <Button key={i} title={`Button ${i}`} onPress={() => {}} />
         ))}
       </View>
     );
@@ -174,7 +170,10 @@ describe('Button Performance', () => {
     test('multiple-buttons-50', async () => {
       const scenario = buttonPerfTest.getCustomScenarios()[4];
       const perf = await scenario.run();
-      expect(perf).toMatchPerfSnapshot({maxDurationIncrease: 15, minAbsoluteDelta: 5});
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 15,
+        minAbsoluteDelta: 5,
+      });
     });
   });
 });

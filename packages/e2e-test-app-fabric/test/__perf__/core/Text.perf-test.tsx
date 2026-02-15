@@ -50,13 +50,10 @@ class TextPerfTest extends ComponentPerfTestBase {
 
   private async measureLongText(length: number): Promise<PerfMetrics> {
     const longString = 'A'.repeat(length);
-    return measurePerf(
-      <Text testID={this.testId}>{longString}</Text>,
-      {
-        name: `${this.componentName} long-${length}`,
-        runs: 10,
-      },
-    );
+    return measurePerf(<Text testID={this.testId}>{longString}</Text>, {
+      name: `${this.componentName} long-${length}`,
+      runs: 10,
+    });
   }
 
   private async measureNestedText(): Promise<PerfMetrics> {
@@ -64,8 +61,7 @@ class TextPerfTest extends ComponentPerfTestBase {
       <Text testID={this.testId} style={styles.default}>
         Outer text{' '}
         <Text style={styles.bold}>
-          bold text{' '}
-          <Text style={styles.italic}>italic text</Text>
+          bold text <Text style={styles.italic}>italic text</Text>
         </Text>
       </Text>,
       {

@@ -41,9 +41,7 @@ function choose(rl, question, options, defaultIndex = 0) {
     rl.question(`Choice [${defaultIndex + 1}]: `, answer => {
       const idx = parseInt(answer, 10) - 1;
       resolve(
-        idx >= 0 && idx < options.length
-          ? options[idx]
-          : options[defaultIndex],
+        idx >= 0 && idx < options.length ? options[idx] : options[defaultIndex],
       );
     });
   });
@@ -218,14 +216,27 @@ async function main() {
   console.log('This will create a new .perf-test.tsx file with mount,');
   console.log('unmount, and rerender tests for your component.\n');
   console.log('Examples:');
-  console.log('  Component: ScrollView   | Import: react-native | Category: core     | Children: yes');
-  console.log('  Component: Button       | Import: react-native | Category: core     | Children: no');
-  console.log('  Component: Image        | Import: react-native | Category: core     | Children: no');
-  console.log('  Component: Pressable    | Import: react-native | Category: interactive | Children: yes');
-  console.log('  Component: Slider       | Import: @react-native-community/slider | Category: community | Children: no');
+  console.log(
+    '  Component: ScrollView   | Import: react-native | Category: core     | Children: yes',
+  );
+  console.log(
+    '  Component: Button       | Import: react-native | Category: core     | Children: no',
+  );
+  console.log(
+    '  Component: Image        | Import: react-native | Category: core     | Children: no',
+  );
+  console.log(
+    '  Component: Pressable    | Import: react-native | Category: interactive | Children: yes',
+  );
+  console.log(
+    '  Component: Slider       | Import: @react-native-community/slider | Category: community | Children: no',
+  );
   console.log('');
 
-  const rawName = await ask(rl, 'Component name (e.g. ScrollView, Image, Pressable)');
+  const rawName = await ask(
+    rl,
+    'Component name (e.g. ScrollView, Image, Pressable)',
+  );
   if (!rawName) {
     console.error('❌  Component name is required.');
     rl.close();
@@ -287,12 +298,16 @@ async function main() {
   const categoryDir = path.join(PERF_TEST_ROOT, category);
   if (!fs.existsSync(categoryDir)) {
     fs.mkdirSync(categoryDir, {recursive: true});
-    console.log(`\n📁  Created directory: ${path.relative(process.cwd(), categoryDir)}`);
+    console.log(
+      `\n📁  Created directory: ${path.relative(process.cwd(), categoryDir)}`,
+    );
   }
 
   const outputFile = path.join(categoryDir, `${pascalName}.perf-test.tsx`);
   if (fs.existsSync(outputFile)) {
-    console.error(`\n❌  File already exists: ${path.relative(process.cwd(), outputFile)}`);
+    console.error(
+      `\n❌  File already exists: ${path.relative(process.cwd(), outputFile)}`,
+    );
     console.error('    Delete it first or choose a different name.');
     process.exit(1);
   }
@@ -316,7 +331,9 @@ async function main() {
   console.log(`  1. Review and customize the generated test file`);
   console.log(`  2. Add any component-specific custom scenarios`);
   console.log(`  3. Run:  yarn perf --testPathPattern=${pascalName}`);
-  console.log(`  4. Generate baseline:  yarn perf:update --testPathPattern=${pascalName}`);
+  console.log(
+    `  4. Generate baseline:  yarn perf:update --testPathPattern=${pascalName}`,
+  );
   console.log('');
 }
 

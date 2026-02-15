@@ -81,7 +81,8 @@ class FlatListPerfTest extends ComponentPerfTestBase {
       },
       {
         name: 'with-header-footer',
-        description: 'FlatList with ListHeaderComponent and ListFooterComponent',
+        description:
+          'FlatList with ListHeaderComponent and ListFooterComponent',
         run: () => this.measureWithHeaderFooter(),
       },
       {

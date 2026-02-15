@@ -262,7 +262,10 @@ describe('TouchableOpacity Performance', () => {
     test('multiple-touchables-50', async () => {
       const scenario = touchableOpacityPerfTest.getCustomScenarios()[7];
       const perf = await scenario.run();
-      expect(perf).toMatchPerfSnapshot({maxDurationIncrease: 15, minAbsoluteDelta: 5});
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 15,
+        minAbsoluteDelta: 5,
+      });
     });
   });
 });

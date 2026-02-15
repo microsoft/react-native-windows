@@ -13,14 +13,13 @@ import {PerfProfiler} from './PerfProfiler';
 
 // React 19 requires all state-updating calls to be wrapped in act().
 // We lazy-require react-test-renderer, so we also lazy-resolve act.
-let _act: (cb: () => void) => void;
+let cachedAct: ((cb: () => void) => void) | undefined;
 function getAct(): (cb: () => void) => void {
-  if (!_act) {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+  if (!cachedAct) {
     const {act} = require('react-test-renderer');
-    _act = act;
+    cachedAct = act;
   }
-  return _act;
+  return cachedAct;
 }
 
 /**
@@ -69,7 +68,7 @@ export async function measurePerf(
   } = options;
 
   // Lazy-require react-test-renderer to keep it as a peerDep
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+
   const TestRenderer = require('react-test-renderer');
 
   const durations: number[] = [];
@@ -112,7 +111,7 @@ export async function measurePerf(
  * Execute a single measurement iteration.
  */
 async function runSingleMeasurement(
-  TestRenderer: typeof import('react-test-renderer'),
+  testRenderer: typeof import('react-test-renderer'),
   component: React.ReactElement,
   profilerId: string,
   scenario?: (helpers: RenderHelpers) => Promise<void>,
@@ -130,13 +129,13 @@ async function runSingleMeasurement(
     children: component,
   });
 
-  let renderer!: ReturnType<typeof TestRenderer.create>;
+  let renderer!: ReturnType<typeof testRenderer.create>;
 
   const act = getAct();
 
   if (measureUnmount) {
     act(() => {
-      renderer = TestRenderer.create(wrappedComponent);
+      renderer = testRenderer.create(wrappedComponent);
     });
 
     results.length = 0;
@@ -156,7 +155,7 @@ async function runSingleMeasurement(
   // Measure mount
   const mountStart = performance.now();
   act(() => {
-    renderer = TestRenderer.create(wrappedComponent);
+    renderer = testRenderer.create(wrappedComponent);
   });
   const mountDuration = performance.now() - mountStart;
 
@@ -182,14 +181,12 @@ async function runSingleMeasurement(
   }
 
   // Clean up
-  if (renderer) {
-    try {
-      act(() => {
-        renderer.unmount();
-      });
-    } catch {
-      // Already unmounted
-    }
+  try {
+    act(() => {
+      renderer.unmount();
+    });
+  } catch {
+    // Already unmounted
   }
 
   // Prefer Profiler actualDuration, fallback to manual timing

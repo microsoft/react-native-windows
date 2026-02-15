@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as fs from 'fs';
+import fs from '@react-native-windows/fs';
 import * as path from 'path';
 import {SnapshotManager} from '../matchers/snapshotManager';
 import type {SnapshotFile} from '../matchers/snapshotManager';
@@ -44,7 +44,7 @@ export interface CIRunResults {
  * and writes a JSON results file for CI.
  */
 export class PerfJsonReporter {
-  private outputFile: string;
+  private readonly outputFile: string;
 
   constructor(
     _globalConfig: Record<string, unknown>,
@@ -107,13 +107,13 @@ export class PerfJsonReporter {
 
     const ciResults: CIRunResults = {
       timestamp: new Date().toISOString(),
-      branch: process.env.BUILD_SOURCEBRANCH ||
+      branch:
+        process.env.BUILD_SOURCEBRANCH ||
         process.env.GITHUB_HEAD_REF ||
         process.env.GITHUB_REF ||
         'unknown',
-      commitSha: process.env.BUILD_SOURCEVERSION ||
-        process.env.GITHUB_SHA ||
-        'unknown',
+      commitSha:
+        process.env.BUILD_SOURCEVERSION || process.env.GITHUB_SHA || 'unknown',
       suites,
       summary: {
         totalSuites: results.numTotalTestSuites,

@@ -22,19 +22,19 @@ function generateSections(
   sectionCount: number,
   itemsPerSection: number,
 ): SectionType[] {
-  return Array.from({length: sectionCount}, (_, s) => ({
+  return Array.from({length: sectionCount}, (_unused, s) => ({
     title: `Section ${s}`,
-    data: Array.from({length: itemsPerSection}, (__, i) => ({
+    data: Array.from({length: itemsPerSection}, (_item, i) => ({
       id: `${s}-${i}`,
       title: `Item ${s}-${i}`,
     })),
   }));
 }
 
-const SECTIONS_3x5 = generateSections(3, 5);
-const SECTIONS_5x10 = generateSections(5, 10);
-const SECTIONS_10x20 = generateSections(10, 20);
-const SECTIONS_20x10 = generateSections(20, 10);
+const sections3x5 = generateSections(3, 5);
+const sections5x10 = generateSections(5, 10);
+const sections10x20 = generateSections(10, 20);
+const sections20x10 = generateSections(20, 10);
 
 const renderItem = ({item}: {item: ItemType}) => (
   <View style={styles.item}>
@@ -59,7 +59,7 @@ class SectionListPerfTest extends ComponentPerfTestBase {
     return (
       <SectionList
         testID={this.testId}
-        sections={SECTIONS_3x5}
+        sections={sections3x5}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         keyExtractor={keyExtractor}
@@ -74,22 +74,22 @@ class SectionListPerfTest extends ComponentPerfTestBase {
       {
         name: 'with-3-sections-5-items',
         description: 'SectionList with 3 sections × 5 items each',
-        run: () => this.measureWithSections(SECTIONS_3x5),
+        run: () => this.measureWithSections(sections3x5),
       },
       {
         name: 'with-5-sections-10-items',
         description: 'SectionList with 5 sections × 10 items each',
-        run: () => this.measureWithSections(SECTIONS_5x10),
+        run: () => this.measureWithSections(sections5x10),
       },
       {
         name: 'with-10-sections-20-items',
         description: 'SectionList with 10 sections × 20 items each (200 total)',
-        run: () => this.measureWithSections(SECTIONS_10x20),
+        run: () => this.measureWithSections(sections10x20),
       },
       {
         name: 'with-20-sections-10-items',
         description: 'SectionList with 20 sections × 10 items each (200 total)',
-        run: () => this.measureWithSections(SECTIONS_20x10),
+        run: () => this.measureWithSections(sections20x10),
       },
       {
         name: 'with-section-separator',
@@ -103,7 +103,8 @@ class SectionListPerfTest extends ComponentPerfTestBase {
       },
       {
         name: 'with-header-footer',
-        description: 'SectionList with ListHeaderComponent and ListFooterComponent',
+        description:
+          'SectionList with ListHeaderComponent and ListFooterComponent',
         run: () => this.measureWithHeaderFooter(),
       },
       {
@@ -148,7 +149,7 @@ class SectionListPerfTest extends ComponentPerfTestBase {
     return measurePerf(
       <SectionList
         testID={this.testId}
-        sections={SECTIONS_5x10}
+        sections={sections5x10}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         keyExtractor={keyExtractor}
@@ -165,13 +166,11 @@ class SectionListPerfTest extends ComponentPerfTestBase {
     return measurePerf(
       <SectionList
         testID={this.testId}
-        sections={SECTIONS_5x10}
+        sections={sections5x10}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         keyExtractor={keyExtractor}
-        ItemSeparatorComponent={() => (
-          <View style={styles.itemSeparator} />
-        )}
+        ItemSeparatorComponent={() => <View style={styles.itemSeparator} />}
         style={styles.default}
       />,
       {name: `${this.componentName} with-item-separator`, runs: 10},
@@ -182,7 +181,7 @@ class SectionListPerfTest extends ComponentPerfTestBase {
     return measurePerf(
       <SectionList
         testID={this.testId}
-        sections={SECTIONS_5x10}
+        sections={sections5x10}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         keyExtractor={keyExtractor}
@@ -206,7 +205,7 @@ class SectionListPerfTest extends ComponentPerfTestBase {
     return measurePerf(
       <SectionList
         testID={this.testId}
-        sections={SECTIONS_5x10}
+        sections={sections5x10}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         renderSectionFooter={({section}) => (
@@ -225,7 +224,7 @@ class SectionListPerfTest extends ComponentPerfTestBase {
     return measurePerf(
       <SectionList
         testID={this.testId}
-        sections={SECTIONS_5x10}
+        sections={sections5x10}
         renderItem={renderItem}
         renderSectionHeader={renderSectionHeader}
         keyExtractor={keyExtractor}

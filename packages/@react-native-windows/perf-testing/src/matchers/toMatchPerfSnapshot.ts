@@ -31,13 +31,11 @@ expect.extend({
     const testName = expect.getState().currentTestName!;
 
     // Resolve snapshot file location
-    const {file: snapshotFile} =
-      SnapshotManager.getSnapshotPath(testPath);
+    const {file: snapshotFile} = SnapshotManager.getSnapshotPath(testPath);
     const snapshotKey = SnapshotManager.buildKey(testName);
 
     const isUpdateMode =
-      process.argv.includes('-u') ||
-      process.argv.includes('--updateSnapshot');
+      process.argv.includes('-u') || process.argv.includes('--updateSnapshot');
 
     // Load existing snapshots
     const snapshots = SnapshotManager.load(snapshotFile);
@@ -46,6 +44,7 @@ expect.extend({
     const threshold: PerfThreshold = {...DEFAULT_THRESHOLD, ...customThreshold};
 
     // UPDATE MODE or FIRST RUN: write new baseline
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (isUpdateMode || !baseline) {
       snapshots[snapshotKey] = {
         metrics: received,
@@ -58,8 +57,13 @@ expect.extend({
       return {
         pass: true,
         message: () =>
-          `✅ Perf snapshot ${baseline ? 'updated' : 'created'}: ${received.name}` +
-          ` (${received.meanDuration.toFixed(2)}ms, ${received.renderCount} renders)`,
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+          `✅ Perf snapshot ${baseline ? 'updated' : 'created'}: ${
+            received.name
+          }` +
+          ` (${received.meanDuration.toFixed(2)}ms, ${
+            received.renderCount
+          } renders)`,
       };
     }
 
@@ -73,13 +77,22 @@ expect.extend({
           baseline.metrics.medianDuration) *
         100;
 
-      const absoluteDelta = received.medianDuration - baseline.metrics.medianDuration;
-      const minAbsoluteDelta = threshold.minAbsoluteDelta ?? DEFAULT_THRESHOLD.minAbsoluteDelta;
+      const absoluteDelta =
+        received.medianDuration - baseline.metrics.medianDuration;
+      const minAbsoluteDelta =
+        threshold.minAbsoluteDelta ?? DEFAULT_THRESHOLD.minAbsoluteDelta;
 
-      if (percentChange > threshold.maxDurationIncrease && absoluteDelta > minAbsoluteDelta) {
+      if (
+        percentChange > threshold.maxDurationIncrease &&
+        absoluteDelta > minAbsoluteDelta
+      ) {
         errors.push(
-          `Duration regression: +${percentChange.toFixed(1)}% / +${absoluteDelta.toFixed(2)}ms ` +
-            `(baseline median: ${baseline.metrics.medianDuration.toFixed(2)}ms → ` +
+          `Duration regression: +${percentChange.toFixed(
+            1,
+          )}% / +${absoluteDelta.toFixed(2)}ms ` +
+            `(baseline median: ${baseline.metrics.medianDuration.toFixed(
+              2,
+            )}ms → ` +
             `current median: ${received.medianDuration.toFixed(2)}ms, ` +
             `threshold: ${threshold.maxDurationIncrease}% & ${minAbsoluteDelta}ms)`,
         );
@@ -131,7 +144,9 @@ expect.extend({
       message: () =>
         `✅ "${received.name}" within threshold ` +
         `(median: ${received.medianDuration.toFixed(2)}ms, ` +
-        `${improvement > 0 ? `-${improvement.toFixed(1)}% faster` : 'no change'})`,
+        `${
+          improvement > 0 ? `-${improvement.toFixed(1)}% faster` : 'no change'
+        })`,
     };
   },
 });

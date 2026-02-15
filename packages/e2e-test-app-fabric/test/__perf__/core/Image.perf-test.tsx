@@ -226,7 +226,10 @@ describe('Image Performance', () => {
     test('multiple-images-50', async () => {
       const scenario = imagePerfTest.getCustomScenarios()[6];
       const perf = await scenario.run();
-      expect(perf).toMatchPerfSnapshot({maxDurationIncrease: 15, minAbsoluteDelta: 5});
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 15,
+        minAbsoluteDelta: 5,
+      });
     });
   });
 });

@@ -112,14 +112,19 @@ function compareEntry(head, base, threshold) {
   // Use median for comparison — robust to outlier spikes
   const percentChange =
     base.medianDuration > 0
-      ? ((head.medianDuration - base.medianDuration) / base.medianDuration) * 100
+      ? ((head.medianDuration - base.medianDuration) / base.medianDuration) *
+        100
       : 0;
 
   const errors = [];
 
   const absoluteDelta = head.medianDuration - base.medianDuration;
-  const minAbsoluteDelta = threshold.minAbsoluteDelta ?? DEFAULT_THRESHOLD.minAbsoluteDelta;
-  if (percentChange > threshold.maxDurationIncrease && absoluteDelta > minAbsoluteDelta) {
+  const minAbsoluteDelta =
+    threshold.minAbsoluteDelta ?? DEFAULT_THRESHOLD.minAbsoluteDelta;
+  if (
+    percentChange > threshold.maxDurationIncrease &&
+    absoluteDelta > minAbsoluteDelta
+  ) {
     errors.push(
       `Duration increased by ${percentChange.toFixed(1)}% / +${absoluteDelta.toFixed(2)}ms (threshold: ${threshold.maxDurationIncrease}% & ${minAbsoluteDelta}ms)`,
     );
@@ -261,9 +266,7 @@ function generateMarkdown(suiteComparisons, ciResults) {
   }
 
   // New scenarios
-  const allNew = suiteComparisons.flatMap(s =>
-    s.results.filter(r => r.isNew),
-  );
+  const allNew = suiteComparisons.flatMap(s => s.results.filter(r => r.isNew));
   if (allNew.length > 0) {
     md += '\n### 🆕 New Scenarios\n\n';
     md += `${allNew.length} new scenario(s) added (no baseline comparison).  \n`;
@@ -284,9 +287,7 @@ function main() {
   // 1. Load CI results JSON
   if (!fs.existsSync(opts.results)) {
     console.error(`❌ Results file not found: ${opts.results}`);
-    console.error(
-      'Run perf tests with CI=true first: CI=true yarn perf:ci',
-    );
+    console.error('Run perf tests with CI=true first: CI=true yarn perf:ci');
     process.exit(1);
   }
 
@@ -325,9 +326,7 @@ function main() {
       `  📋 ${suite.suiteName}: ${Object.keys(headSnaps).length} head / ${Object.keys(baseSnaps).length} base snapshots`,
     );
 
-    suiteComparisons.push(
-      compareSuite(suite.suiteName, headSnaps, baseSnaps),
-    );
+    suiteComparisons.push(compareSuite(suite.suiteName, headSnaps, baseSnaps));
   }
 
   // 3. Generate markdown report
@@ -350,12 +349,14 @@ function main() {
       0,
     ),
     regressions: suiteComparisons.flatMap(s =>
-      s.results.filter(r => !r.passed).map(r => ({
-        suite: s.suiteName,
-        scenario: r.name,
-        percentChange: r.percentChange,
-        errors: r.errors,
-      })),
+      s.results
+        .filter(r => !r.passed)
+        .map(r => ({
+          suite: s.suiteName,
+          scenario: r.name,
+          percentChange: r.percentChange,
+          errors: r.errors,
+        })),
     ),
   };
   fs.writeFileSync(summaryPath, JSON.stringify(summaryData, null, 2) + '\n');

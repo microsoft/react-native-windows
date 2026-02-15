@@ -174,9 +174,7 @@ class TouchableHighlightPerfTest extends ComponentPerfTestBase {
     );
   }
 
-  private async measureMultipleTouchables(
-    count: number,
-  ): Promise<PerfMetrics> {
+  private async measureMultipleTouchables(count: number): Promise<PerfMetrics> {
     const items = Array.from({length: count}, (_, i) => (
       <TouchableHighlight
         key={i}
@@ -186,10 +184,10 @@ class TouchableHighlightPerfTest extends ComponentPerfTestBase {
         <Text>{`Item ${i}`}</Text>
       </TouchableHighlight>
     ));
-    return measurePerf(
-      <View testID={this.testId}>{items}</View>,
-      {name: `${this.componentName} multiple-touchables-${count}`, runs: 10},
-    );
+    return measurePerf(<View testID={this.testId}>{items}</View>, {
+      name: `${this.componentName} multiple-touchables-${count}`,
+      runs: 10,
+    });
   }
 }
 

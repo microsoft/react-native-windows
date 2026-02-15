@@ -13,9 +13,7 @@ import type {PerfMetrics} from '../interfaces/PerfMetrics';
 export class ConsoleReporter {
   static report(results: PerfMetrics[]): void {
     console.log('\n⚡ Performance Test Results\n');
-    console.log(
-      '─'.repeat(72),
-    );
+    console.log('─'.repeat(72));
     console.log(
       padRight('Scenario', 30) +
         padRight('Mean (ms)', 12) +
@@ -23,9 +21,7 @@ export class ConsoleReporter {
         padRight('StdDev', 10) +
         padRight('Renders', 8),
     );
-    console.log(
-      '─'.repeat(72),
-    );
+    console.log('─'.repeat(72));
 
     for (const result of results) {
       console.log(
@@ -37,9 +33,7 @@ export class ConsoleReporter {
       );
     }
 
-    console.log(
-      '─'.repeat(72),
-    );
+    console.log('─'.repeat(72));
     console.log(`\nTotal scenarios: ${results.length}`);
     console.log(`Timestamp: ${new Date().toISOString()}\n`);
   }
@@ -47,7 +41,9 @@ export class ConsoleReporter {
   static reportSingle(result: PerfMetrics): void {
     console.log(
       `  ${result.name}: ` +
-        `${result.meanDuration.toFixed(2)}ms (±${result.stdDev.toFixed(2)}ms) ` +
+        `${result.meanDuration.toFixed(2)}ms (±${result.stdDev.toFixed(
+          2,
+        )}ms) ` +
         `[${result.renderCount} renders, ${result.runs} runs]`,
     );
   }

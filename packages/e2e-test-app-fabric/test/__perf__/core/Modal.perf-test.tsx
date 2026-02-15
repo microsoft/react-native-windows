@@ -22,10 +22,7 @@ class ModalPerfTest extends ComponentPerfTestBase {
 
   createComponent(props?: Record<string, unknown>): React.ReactElement {
     return (
-      <Modal
-        testID={this.testId}
-        visible={true}
-        {...props}>
+      <Modal testID={this.testId} visible={true} {...props}>
         <View style={styles.centeredView}>
           <Text>Modal Content</Text>
         </View>

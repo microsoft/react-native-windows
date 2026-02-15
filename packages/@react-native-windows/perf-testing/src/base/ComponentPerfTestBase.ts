@@ -32,9 +32,7 @@ export abstract class ComponentPerfTestBase implements IComponentPerfTest {
     return DEFAULT_THRESHOLD;
   }
 
-  abstract createComponent(
-    props?: Record<string, unknown>,
-  ): React.ReactElement;
+  abstract createComponent(props?: Record<string, unknown>): React.ReactElement;
 
   async measureMount(): Promise<PerfMetrics> {
     return measurePerf(this.createComponent(), {
@@ -74,28 +72,26 @@ export abstract class ComponentPerfTestBase implements IComponentPerfTest {
   }
 
   generateTestSuite(customThreshold?: Partial<PerfThreshold>): void {
-    const self = this;
-
     describe(`${this.componentName} Performance`, () => {
       test('mount time', async () => {
-        const perf = await self.measureMount();
+        const perf = await this.measureMount();
         expect(perf).toMatchPerfSnapshot(customThreshold);
       });
 
       test('unmount time', async () => {
-        const perf = await self.measureUnmount();
+        const perf = await this.measureUnmount();
         expect(perf).toMatchPerfSnapshot(customThreshold);
       });
 
       test('rerender time', async () => {
-        const perf = await self.measureRerender();
+        const perf = await this.measureRerender();
         expect(perf).toMatchPerfSnapshot(customThreshold);
       });
 
       // Custom scenarios
-      const customScenarios = self.getCustomScenarios();
+      const customScenarios = this.getCustomScenarios();
       if (customScenarios.length > 0) {
-        describe(`${self.componentName}-Specific Scenarios`, () => {
+        describe(`${this.componentName}-Specific Scenarios`, () => {
           for (const scenario of customScenarios) {
             test(scenario.name, async () => {
               const perf = await scenario.run();

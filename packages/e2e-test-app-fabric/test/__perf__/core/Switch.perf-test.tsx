@@ -72,13 +72,10 @@ class SwitchPerfTest extends ComponentPerfTestBase {
   }
 
   private async measureValueTrue(): Promise<PerfMetrics> {
-    return measurePerf(
-      <Switch testID={this.testId} value={true} />,
-      {
-        name: `${this.componentName} value-true`,
-        runs: 10,
-      },
-    );
+    return measurePerf(<Switch testID={this.testId} value={true} />, {
+      name: `${this.componentName} value-true`,
+      runs: 10,
+    });
   }
 
   private async measureDisabled(): Promise<PerfMetrics> {
@@ -109,11 +106,7 @@ class SwitchPerfTest extends ComponentPerfTestBase {
 
   private async measureWithOnValueChange(): Promise<PerfMetrics> {
     return measurePerf(
-      <Switch
-        testID={this.testId}
-        value={false}
-        onValueChange={() => {}}
-      />,
+      <Switch testID={this.testId} value={false} onValueChange={() => {}} />,
       {
         name: `${this.componentName} on-value-change`,
         runs: 10,
@@ -142,11 +135,7 @@ class SwitchPerfTest extends ComponentPerfTestBase {
     const SwitchList = () => (
       <View style={styles.container}>
         {Array.from({length: count}, (_, i) => (
-          <Switch
-            key={i}
-            value={i % 2 === 0}
-            onValueChange={() => {}}
-          />
+          <Switch key={i} value={i % 2 === 0} onValueChange={() => {}} />
         ))}
       </View>
     );
@@ -216,7 +205,10 @@ describe('Switch Performance', () => {
     test('multiple-switches-50', async () => {
       const scenario = switchPerfTest.getCustomScenarios()[6];
       const perf = await scenario.run();
-      expect(perf).toMatchPerfSnapshot({maxDurationIncrease: 15, minAbsoluteDelta: 5});
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 15,
+        minAbsoluteDelta: 5,
+      });
     });
   });
 });

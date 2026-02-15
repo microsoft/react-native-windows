@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as fs from 'fs';
+import fs from '@react-native-windows/fs';
 import * as path from 'path';
 import type {PerfMetrics} from '../interfaces/PerfMetrics';
 import type {PerfThreshold} from '../interfaces/PerfThreshold';
@@ -47,7 +47,7 @@ export class SnapshotManager {
       const parsed = JSON.parse(content) as SnapshotFile;
       // JSON.stringify turns Infinity into null — restore it on load
       for (const entry of Object.values(parsed)) {
-        if (entry.threshold && entry.threshold.maxDuration === null) {
+        if ((entry.threshold.maxDuration as unknown) === null) {
           (entry.threshold as {maxDuration: number}).maxDuration = Infinity;
         }
       }
@@ -56,10 +56,7 @@ export class SnapshotManager {
     return {};
   }
 
-  static save(
-    snapshotFilePath: string,
-    snapshots: SnapshotFile,
-  ): void {
+  static save(snapshotFilePath: string, snapshots: SnapshotFile): void {
     const dir = path.dirname(snapshotFilePath);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, {recursive: true});

@@ -198,7 +198,10 @@ describe('ActivityIndicator Performance', () => {
     test('multiple-indicators-50', async () => {
       const scenario = activityIndicatorPerfTest.getCustomScenarios()[6];
       const perf = await scenario.run();
-      expect(perf).toMatchPerfSnapshot({maxDurationIncrease: 15, minAbsoluteDelta: 5});
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 15,
+        minAbsoluteDelta: 5,
+      });
     });
   });
 });

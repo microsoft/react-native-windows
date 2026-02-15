@@ -36,7 +36,8 @@ class PressablePerfTest extends ComponentPerfTestBase {
     return [
       {
         name: 'with-all-handlers',
-        description: 'Pressable with onPressIn, onPressOut, onLongPress handlers',
+        description:
+          'Pressable with onPressIn, onPressOut, onLongPress handlers',
         run: () => this.measureWithAllHandlers(),
       },
       {
@@ -95,10 +96,7 @@ class PressablePerfTest extends ComponentPerfTestBase {
       <Pressable
         testID={this.testId}
         onPress={() => {}}
-        style={({pressed}) => [
-          styles.default,
-          pressed && styles.pressed,
-        ]}>
+        style={({pressed}) => [styles.default, pressed && styles.pressed]}>
         <Text>Style Function</Text>
       </Pressable>,
       {
@@ -142,16 +140,9 @@ class PressablePerfTest extends ComponentPerfTestBase {
 
   private async measureNestedPressables(): Promise<PerfMetrics> {
     return measurePerf(
-      <Pressable
-        testID={this.testId}
-        style={styles.default}
-        onPress={() => {}}>
-        <Pressable
-          style={styles.nested}
-          onPress={() => {}}>
-          <Pressable
-            style={styles.nested}
-            onPress={() => {}}>
+      <Pressable testID={this.testId} style={styles.default} onPress={() => {}}>
+        <Pressable style={styles.nested} onPress={() => {}}>
+          <Pressable style={styles.nested} onPress={() => {}}>
             <Text>Deeply Nested</Text>
           </Pressable>
         </Pressable>
@@ -239,7 +230,10 @@ describe('Pressable Performance', () => {
     test('multiple-pressables-50', async () => {
       const scenario = pressablePerfTest.getCustomScenarios()[6];
       const perf = await scenario.run();
-      expect(perf).toMatchPerfSnapshot({maxDurationIncrease: 15, minAbsoluteDelta: 5});
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 15,
+        minAbsoluteDelta: 5,
+      });
     });
   });
 });

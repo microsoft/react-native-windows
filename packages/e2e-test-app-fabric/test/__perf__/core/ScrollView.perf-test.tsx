@@ -22,10 +22,7 @@ class ScrollViewPerfTest extends ComponentPerfTestBase {
 
   createComponent(props?: Record<string, unknown>): React.ReactElement {
     return (
-      <ScrollView
-        testID={this.testId}
-        style={styles.default}
-        {...props}>
+      <ScrollView testID={this.testId} style={styles.default} {...props}>
         <Text>Sample Content</Text>
       </ScrollView>
     );
@@ -217,7 +214,10 @@ describe('ScrollView Performance', () => {
     test('with-children-100', async () => {
       const scenario = scrollViewPerfTest.getCustomScenarios()[1];
       const perf = await scenario.run();
-      expect(perf).toMatchPerfSnapshot({maxDurationIncrease: 15, minAbsoluteDelta: 5});
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 15,
+        minAbsoluteDelta: 5,
+      });
     });
 
     test('horizontal', async () => {
