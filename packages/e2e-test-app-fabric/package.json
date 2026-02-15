@@ -17,8 +17,8 @@
     "perf:core": "jest --config jest.perf.config.js --testPathPattern=__perf__/core",
     "perf:extended": "jest --config jest.perf.config.js --testPathPattern=__perf__/extended",
     "perf:ci": "jest --config jest.perf.config.js --ci --forceExit",
-    "perf:ci:compare": "node ../../scripts/perf/compare-results.js",
-    "perf:ci:report": "node ../../scripts/perf/post-pr-comment.js"
+    "perf:ci:compare": "node ../../vnext/Scripts/perf/compare-results.js",
+    "perf:ci:report": "node ../../vnext/Scripts/perf/post-pr-comment.js"
   },
   "dependencies": {
     "@react-native-windows/automation-channel": "0.0.0-canary.1031",

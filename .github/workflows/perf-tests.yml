@@ -8,7 +8,7 @@ on:
     paths:
       - 'vnext/**'
       - 'packages/**'
-      - 'scripts/perf/**'
+      - 'vnext/Scripts/perf/**'
       - '.github/workflows/perf-tests.yml'
   push:
     branches: [main]

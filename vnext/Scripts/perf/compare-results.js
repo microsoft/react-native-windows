@@ -7,7 +7,7 @@
  * comparison report and exits with non-zero if regressions detected.
  *
  * Usage:
- *   node scripts/perf/compare-results.js [options]
+ *   node vnext/Scripts/perf/compare-results.js [options]
  *
  * Options:
  *   --results <path>    Path to CI results JSON (default: .perf-results/results.json)

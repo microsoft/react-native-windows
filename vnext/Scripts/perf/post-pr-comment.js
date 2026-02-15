@@ -8,7 +8,7 @@
  * or create a new one. Designed to be called from GitHub Actions.
  *
  * Usage:
- *   node scripts/perf/post-pr-comment.js [options]
+ *   node vnext/Scripts/perf/post-pr-comment.js [options]
  *
  * Options:
  *   --report <path>     Path to markdown report (default: .perf-results/report.md)
