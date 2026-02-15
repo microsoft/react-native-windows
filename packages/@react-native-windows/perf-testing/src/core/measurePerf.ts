@@ -19,7 +19,7 @@ function getAct(): (cb: () => void) => void {
     const {act} = require('react-test-renderer');
     cachedAct = act;
   }
-  return cachedAct;
+  return cachedAct!;
 }
 
 /**
