@@ -26,14 +26,8 @@ export type SnapshotFile = Record<string, SnapshotEntry>;
 
 /**
  * Manages reading and writing of perf snapshot files.
- *
- * Snapshot files live in `__perf_snapshots__/` adjacent to the test file
- * and are committed to git, mirroring Jest's visual snapshot pattern.
  */
 export class SnapshotManager {
-  /**
-   * Resolve the snapshot directory and file path for a given test file.
-   */
   static getSnapshotPath(testFilePath: string): {
     dir: string;
     file: string;
@@ -47,9 +41,6 @@ export class SnapshotManager {
     return {dir: snapshotDir, file: snapshotFile};
   }
 
-  /**
-   * Load an existing snapshot file, or return an empty object.
-   */
   static load(snapshotFilePath: string): SnapshotFile {
     if (fs.existsSync(snapshotFilePath)) {
       const content = fs.readFileSync(snapshotFilePath, 'utf-8');
@@ -65,10 +56,6 @@ export class SnapshotManager {
     return {};
   }
 
-  /**
-   * Save a snapshot file to disk.
-   * Creates the directory if it doesn't exist.
-   */
   static save(
     snapshotFilePath: string,
     snapshots: SnapshotFile,
@@ -84,10 +71,7 @@ export class SnapshotManager {
     );
   }
 
-  /**
-   * Build a snapshot key from the test name.
-   * Follows Jest's `"test name 1"` convention.
-   */
+  // Follows Jest's "test name 1" convention
   static buildKey(testName: string): string {
     return `${testName} 1`;
   }

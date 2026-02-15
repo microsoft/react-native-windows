@@ -168,8 +168,6 @@ class ImagePerfTest extends ComponentPerfTestBase {
   }
 }
 
-// ─── TEST SUITE ───
-
 const imagePerfTest = new ImagePerfTest();
 
 describe('Image Performance', () => {

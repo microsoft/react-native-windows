@@ -88,8 +88,6 @@ class TextPerfTest extends ComponentPerfTestBase {
   }
 }
 
-// ─── TEST SUITE ───
-
 const textPerfTest = new TextPerfTest();
 
 describe('Text Performance', () => {

@@ -88,12 +88,9 @@ class ViewPerfTest extends ComponentPerfTestBase {
   }
 }
 
-// ─── TEST SUITE ───
-
 const viewPerfTest = new ViewPerfTest();
 
 describe('View Performance', () => {
-  // Standard scenarios
   test('mount time', async () => {
     const perf = await viewPerfTest.measureMount();
     expect(perf).toMatchPerfSnapshot();
@@ -109,7 +106,6 @@ describe('View Performance', () => {
     expect(perf).toMatchPerfSnapshot();
   });
 
-  // Custom scenarios
   describe('View-Specific Scenarios', () => {
     test('nested-views-50', async () => {
       const scenario = viewPerfTest.getCustomScenarios()[0];

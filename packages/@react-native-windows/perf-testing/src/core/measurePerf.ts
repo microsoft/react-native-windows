@@ -27,24 +27,10 @@ function getAct(): (cb: () => void) => void {
  * Options for the `measurePerf` function.
  */
 export interface MeasurePerfOptions {
-  /** Scenario name for identification in snapshots and reports */
   name: string;
-
-  /** Number of measurement runs. Default: 10 */
   runs?: number;
-
-  /** Warmup runs that are not recorded. Default: 1 */
   warmupRuns?: number;
-
-  /**
-   * Optional async callback executed after each render.
-   * Use this to simulate user interactions (scroll, type, press).
-   *
-   * @param helpers - Render helpers providing access to the rendered tree.
-   */
   scenario?: (helpers: RenderHelpers) => Promise<void>;
-
-  /** Whether to measure unmount time instead of mount time. Default: false */
   measureUnmount?: boolean;
 }
 
@@ -52,15 +38,7 @@ export interface MeasurePerfOptions {
  * Helpers passed to scenario callbacks during measurement.
  */
 export interface RenderHelpers {
-  /**
-   * Trigger a re-render by updating the component.
-   * Implementations should call `rerender()` from the test renderer.
-   */
   rerender: (element: React.ReactElement) => void;
-
-  /**
-   * Unmount the rendered component tree.
-   */
   unmount: () => void;
 }
 
@@ -77,22 +55,6 @@ interface SingleRunResult {
  *
  * Renders a component multiple times wrapped in React.Profiler,
  * collects timing data, and returns aggregated metrics.
- *
- * This function is the foundation of all perf tests. Both the base class
- * and individual scenarios use this to collect measurements.
- *
- * @param component - The React element to measure.
- * @param options - Configuration for the measurement run.
- * @returns Aggregated performance metrics.
- *
- * @example
- * ```typescript
- * const metrics = await measurePerf(
- *   <View testID="perf-view" style={{ flex: 1 }} />,
- *   { name: 'View mount', runs: 10 }
- * );
- * expect(metrics).toMatchPerfSnapshot();
- * ```
  */
 export async function measurePerf(
   component: React.ReactElement,
@@ -113,7 +75,6 @@ export async function measurePerf(
   const durations: number[] = [];
   let totalRenderCount = 0;
 
-  // Warmup runs — not recorded, stabilize JIT/caches
   for (let i = 0; i < warmupRuns; i++) {
     await runSingleMeasurement(
       TestRenderer,
@@ -124,7 +85,6 @@ export async function measurePerf(
     );
   }
 
-  // Actual measurement runs
   for (let i = 0; i < runs; i++) {
     const result = await runSingleMeasurement(
       TestRenderer,
@@ -175,15 +135,12 @@ async function runSingleMeasurement(
   const act = getAct();
 
   if (measureUnmount) {
-    // Mount first (not measured)
     act(() => {
       renderer = TestRenderer.create(wrappedComponent);
     });
 
-    // Clear results from mount phase
     results.length = 0;
 
-    // Measure unmount
     const unmountStart = performance.now();
     act(() => {
       renderer.unmount();
@@ -203,7 +160,6 @@ async function runSingleMeasurement(
   });
   const mountDuration = performance.now() - mountStart;
 
-  // Execute custom scenario if provided
   if (scenario) {
     const helpers: RenderHelpers = {
       rerender: (element: React.ReactElement) => {
@@ -232,11 +188,11 @@ async function runSingleMeasurement(
         renderer.unmount();
       });
     } catch {
-      // Already unmounted by scenario
+      // Already unmounted
     }
   }
 
-  // Use Profiler actualDuration if available, fallback to manual timing
+  // Prefer Profiler actualDuration, fallback to manual timing
   const totalActualDuration = results.reduce(
     (sum, r) => sum + r.actualDuration,
     0,

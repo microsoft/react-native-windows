@@ -181,8 +181,6 @@ class PressablePerfTest extends ComponentPerfTestBase {
   }
 }
 
-// ─── TEST SUITE ───
-
 const pressablePerfTest = new PressablePerfTest();
 
 describe('Pressable Performance', () => {

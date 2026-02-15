@@ -198,8 +198,6 @@ class TouchableOpacityPerfTest extends ComponentPerfTestBase {
   }
 }
 
-// ─── TEST SUITE ───
-
 const touchableOpacityPerfTest = new TouchableOpacityPerfTest();
 
 describe('TouchableOpacity Performance', () => {

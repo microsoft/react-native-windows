@@ -189,8 +189,6 @@ class ScrollViewPerfTest extends ComponentPerfTestBase {
   }
 }
 
-// ─── TEST SUITE ───
-
 const scrollViewPerfTest = new ScrollViewPerfTest();
 
 describe('ScrollView Performance', () => {

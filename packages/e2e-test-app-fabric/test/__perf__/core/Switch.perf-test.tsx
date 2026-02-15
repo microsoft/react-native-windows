@@ -158,8 +158,6 @@ class SwitchPerfTest extends ComponentPerfTestBase {
   }
 }
 
-// ─── TEST SUITE ───
-
 const switchPerfTest = new SwitchPerfTest();
 
 describe('Switch Performance', () => {

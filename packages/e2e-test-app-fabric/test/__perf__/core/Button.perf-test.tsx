@@ -128,8 +128,6 @@ class ButtonPerfTest extends ComponentPerfTestBase {
   }
 }
 
-// ─── TEST SUITE ───
-
 const buttonPerfTest = new ButtonPerfTest();
 
 describe('Button Performance', () => {

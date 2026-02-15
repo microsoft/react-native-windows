@@ -15,8 +15,6 @@ import {
 } from '@react-native-windows/perf-testing';
 import type {IScenario, PerfMetrics} from '@react-native-windows/perf-testing';
 
-// ─── Test data generators ───
-
 type ItemType = {id: string; title: string};
 type SectionType = {title: string; data: ItemType[]};
 
@@ -257,8 +255,6 @@ class SectionListPerfTest extends ComponentPerfTestBase {
     );
   }
 }
-
-// ─── TEST SUITE ───
 
 const sectionListPerfTest = new SectionListPerfTest();
 

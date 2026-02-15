@@ -9,28 +9,11 @@ import type {PerfThreshold} from '../interfaces/PerfThreshold';
 
 /**
  * Pre-configured threshold presets for different component categories.
- *
- * Use these as starting points when configuring component tests.
- * Override individual fields as needed.
- *
- * @example
- * ```typescript
- * import { ThresholdPresets } from '@react-native-windows/perf-testing';
- *
- * class MyListPerfTest extends ComponentPerfTestBase {
- *   get defaultThreshold() {
- *     return ThresholdPresets.list;
- *   }
- * }
- * ```
  */
 export const ThresholdPresets: Readonly<
   Record<string, Required<PerfThreshold>>
 > = {
-  /**
-   * For stable core components (View, Text, Image).
-   * Tight thresholds — these should not regress.
-   */
+  /** Stable core components (View, Text, Image) — tight thresholds */
   core: {
     maxDurationIncrease: 10,
     maxDuration: Infinity,
@@ -39,10 +22,7 @@ export const ThresholdPresets: Readonly<
     minRuns: 10,
   },
 
-  /**
-   * For complex list/scroll components (FlatList, SectionList, ScrollView).
-   * Slightly relaxed — these have more variability.
-   */
+  /** Complex list/scroll components — slightly relaxed */
   list: {
     maxDurationIncrease: 15,
     maxDuration: Infinity,
@@ -51,10 +31,7 @@ export const ThresholdPresets: Readonly<
     minRuns: 5,
   },
 
-  /**
-   * For interactive components with animations (RefreshControl, Touchable).
-   * More relaxed to account for animation overhead.
-   */
+  /** Interactive components with animations — more relaxed */
   interactive: {
     maxDurationIncrease: 20,
     maxDuration: Infinity,
@@ -63,10 +40,7 @@ export const ThresholdPresets: Readonly<
     minRuns: 10,
   },
 
-  /**
-   * For community/custom native components.
-   * Most relaxed — gives new components room to stabilize.
-   */
+  /** Community/custom components — most relaxed */
   community: {
     maxDurationIncrease: 25,
     maxDuration: Infinity,

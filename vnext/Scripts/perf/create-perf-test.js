@@ -22,8 +22,6 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 
-// ─── Helpers ───
-
 function ask(rl, question, defaultValue) {
   const suffix = defaultValue ? ` (${defaultValue})` : '';
   return new Promise(resolve => {
@@ -101,8 +99,6 @@ function splitProps(propsStr) {
   return props;
 }
 
-// ─── Categories & their output directories ───
-
 const CATEGORIES = ['core', 'extended', 'interactive', 'list', 'community'];
 
 const PERF_TEST_ROOT = path.resolve(
@@ -125,8 +121,6 @@ const KNOWN_REQUIRED_PROPS = {
   Pressable: 'onPress={() => {}}',
 };
 
-// ─── Template ───
-
 function generateTestFile({
   componentName,
   pascalName,
@@ -140,7 +134,6 @@ function generateTestFile({
   const testId = `perf-test-${kebabName}`;
   const instanceName = `${pascalName.charAt(0).toLowerCase() + pascalName.slice(1)}PerfTest`;
 
-  // Build the createComponent body
   const allProps = [`testID={this.testId}`];
   if (requiredProps) {
     // Parse individual JSX props, handling nested braces like {() => {}}
@@ -153,7 +146,6 @@ function generateTestFile({
     const propLines = allProps.map(p => `        ${p}`).join('\n');
     createComponentBody = `    return (\n      <${componentName}\n${propLines}>\n        ${childrenText}\n      </${componentName}>\n    );`;
   } else if (allProps.length > 3) {
-    // Multi-line JSX when there are many props
     const propLines = allProps.map(p => `        ${p}`).join('\n');
     createComponentBody = `    return (\n      <${componentName}\n${propLines}\n      />\n    );`;
   } else {
@@ -187,31 +179,9 @@ ${createComponentBody}
   }
 
   getCustomScenarios(): IScenario[] {
-    // TODO: Add component-specific scenarios here.
-    // Example:
-    // return [
-    //   {
-    //     name: 'custom-scenario',
-    //     description: 'Describe what this measures',
-    //     run: () => this.measureCustomScenario(),
-    //   },
-    // ];
     return [];
   }
-
-  // Example custom scenario method – uncomment and adapt:
-  // private async measureCustomScenario(): Promise<PerfMetrics> {
-  //   return measurePerf(
-  //     <${componentName} testID={this.testId} style={styles.default} />,
-  //     {
-  //       name: \`\${this.componentName} custom-scenario\`,
-  //       runs: 10,
-  //     },
-  //   );
-  // }
 }
-
-// ─── TEST SUITE ───
 
 const ${instanceName} = new ${pascalName}PerfTest();
 
@@ -230,26 +200,13 @@ describe('${componentName} Performance', () => {
     const perf = await ${instanceName}.measureRerender();
     expect(perf).toMatchPerfSnapshot();
   });
-
-  // Uncomment when you add custom scenarios above:
-  // describe('${componentName}-Specific Scenarios', () => {
-  //   test('custom-scenario', async () => {
-  //     const scenario = ${instanceName}.getCustomScenarios()[0];
-  //     const perf = await scenario.run();
-  //     expect(perf).toMatchPerfSnapshot();
-  //   });
-  // });
 });
 
 const styles = StyleSheet.create({
   default: {
-    // Add base styles for your component here
-  },
 });
 `;
 }
-
-// ─── Main ───
 
 async function main() {
   const rl = readline.createInterface({
@@ -268,7 +225,6 @@ async function main() {
   console.log('  Component: Slider       | Import: @react-native-community/slider | Category: community | Children: no');
   console.log('');
 
-  // 1. Component name
   const rawName = await ask(rl, 'Component name (e.g. ScrollView, Image, Pressable)');
   if (!rawName) {
     console.error('❌  Component name is required.');
@@ -279,14 +235,12 @@ async function main() {
   const pascalName = toPascalCase(rawName);
   const kebabName = toKebabCase(rawName);
 
-  // 2. Import path
   const importPath = await ask(
     rl,
     'Import path for the component',
     'react-native',
   );
 
-  // 3. Category
   const category = await choose(
     rl,
     'Select component category:',
@@ -294,7 +248,6 @@ async function main() {
     0,
   );
 
-  // 4. Does the component have children?
   const hasChildrenAnswer = await ask(
     rl,
     'Does this component render children? (y/N)',
@@ -311,7 +264,6 @@ async function main() {
     childrenText = customChildren;
   }
 
-  // 5. Required props (auto-detect from known list, or ask)
   let requiredProps = KNOWN_REQUIRED_PROPS[rawName] || '';
   if (requiredProps) {
     console.log(`\n  Auto-detected required props: ${requiredProps}`);
@@ -332,7 +284,6 @@ async function main() {
 
   rl.close();
 
-  // 5. Determine output path
   const categoryDir = path.join(PERF_TEST_ROOT, category);
   if (!fs.existsSync(categoryDir)) {
     fs.mkdirSync(categoryDir, {recursive: true});
@@ -346,7 +297,6 @@ async function main() {
     process.exit(1);
   }
 
-  // 6. Generate and write
   const content = generateTestFile({
     componentName: rawName,
     pascalName,

@@ -193,8 +193,6 @@ class TouchableHighlightPerfTest extends ComponentPerfTestBase {
   }
 }
 
-// ─── TEST SUITE ───
-
 const touchableHighlightPerfTest = new TouchableHighlightPerfTest();
 
 describe('TouchableHighlight Performance', () => {

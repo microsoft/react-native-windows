@@ -19,14 +19,9 @@ export interface ComparisonResult {
 }
 
 /**
- * Reporter that generates Markdown-formatted perf results.
- *
- * Used for CI/CD PR comments and artifact reports.
+ * Generates Markdown-formatted perf results for CI.
  */
 export class MarkdownReporter {
-  /**
-   * Generate a full markdown report from comparison results.
-   */
   static generate(comparisons: ComparisonResult[]): string {
     const passed = comparisons.filter(c => c.passed);
     const failed = comparisons.filter(c => !c.passed);
@@ -73,9 +68,6 @@ export class MarkdownReporter {
     return md;
   }
 
-  /**
-   * Generate a short summary line for use in PR comments.
-   */
   static summary(comparisons: ComparisonResult[]): string {
     const passed = comparisons.filter(c => c.passed).length;
     const failed = comparisons.filter(c => !c.passed).length;

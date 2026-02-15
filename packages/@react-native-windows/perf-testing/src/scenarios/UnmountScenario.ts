@@ -11,16 +11,7 @@ import type {PerfMetrics} from '../interfaces/PerfMetrics';
 import {measurePerf} from '../core/measurePerf';
 
 /**
- * A reusable scenario that measures component unmount time.
- *
- * @example
- * ```typescript
- * const unmountScenario = new UnmountScenario(
- *   'View unmount',
- *   <View testID="perf-view" style={{ flex: 1 }} />,
- * );
- * const metrics = await unmountScenario.run();
- * ```
+ * Reusable scenario that measures component unmount time.
  */
 export class UnmountScenario implements IScenario {
   readonly name: string;

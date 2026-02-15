@@ -15,8 +15,6 @@ import {
 } from '@react-native-windows/perf-testing';
 import type {IScenario, PerfMetrics} from '@react-native-windows/perf-testing';
 
-// ─── Test data generators ───
-
 function generateItems(count: number): Array<{id: string; title: string}> {
   return Array.from({length: count}, (_, i) => ({
     id: String(i),
@@ -240,8 +238,6 @@ class FlatListPerfTest extends ComponentPerfTestBase {
     );
   }
 }
-
-// ─── TEST SUITE ───
 
 const flatListPerfTest = new FlatListPerfTest();
 

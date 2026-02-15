@@ -105,8 +105,6 @@ class TextInputPerfTest extends ComponentPerfTestBase {
   }
 }
 
-// ─── TEST SUITE ───
-
 const textInputPerfTest = new TextInputPerfTest();
 
 describe('TextInput Performance', () => {

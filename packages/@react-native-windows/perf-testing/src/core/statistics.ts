@@ -5,9 +5,6 @@
  * @format
  */
 
-/**
- * Calculate the arithmetic mean of an array of numbers.
- */
 export function mean(values: number[]): number {
   if (values.length === 0) {
     return 0;
@@ -15,9 +12,6 @@ export function mean(values: number[]): number {
   return values.reduce((sum, v) => sum + v, 0) / values.length;
 }
 
-/**
- * Calculate the median of an array of numbers.
- */
 export function median(values: number[]): number {
   if (values.length === 0) {
     return 0;
@@ -29,9 +23,6 @@ export function median(values: number[]): number {
     : (sorted[mid - 1] + sorted[mid]) / 2;
 }
 
-/**
- * Calculate the standard deviation of an array of numbers.
- */
 export function standardDeviation(values: number[]): number {
   if (values.length < 2) {
     return 0;

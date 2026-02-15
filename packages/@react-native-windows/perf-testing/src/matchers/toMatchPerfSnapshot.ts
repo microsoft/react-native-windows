@@ -23,27 +23,6 @@ declare global {
 }
 
 expect.extend({
-  /**
-   * Jest matcher that compares PerfMetrics against a stored baseline.
-   *
-   * On first run (or with `-u` flag), the baseline is written to a
-   * `.perf.snap` file inside `__perf_snapshots__/`.
-   *
-   * On subsequent runs, it compares the new metrics against the baseline
-   * and fails if any threshold is exceeded.
-   *
-   * @param received - The PerfMetrics from the current test run.
-   * @param customThreshold - Optional per-test threshold overrides.
-   *
-   * @example
-   * ```typescript
-   * const perf = await viewPerfTest.measureMount();
-   * expect(perf).toMatchPerfSnapshot();
-   *
-   * // With a relaxed threshold:
-   * expect(perf).toMatchPerfSnapshot({ maxDurationIncrease: 20 });
-   * ```
-   */
   toMatchPerfSnapshot(
     received: PerfMetrics,
     customThreshold?: Partial<PerfThreshold>,
@@ -66,7 +45,7 @@ expect.extend({
 
     const threshold: PerfThreshold = {...DEFAULT_THRESHOLD, ...customThreshold};
 
-    // ─── UPDATE MODE or FIRST RUN: write new baseline ───
+    // UPDATE MODE or FIRST RUN: write new baseline
     if (isUpdateMode || !baseline) {
       snapshots[snapshotKey] = {
         metrics: received,
@@ -84,10 +63,10 @@ expect.extend({
       };
     }
 
-    // ─── COMPARE MODE: check against baseline ───
+    // COMPARE MODE: check against baseline
     const errors: string[] = [];
 
-    // Check duration regression using MEDIAN (robust to outlier spikes)
+    // Check duration regression using MEDIAN
     if (threshold.maxDurationIncrease !== undefined) {
       const percentChange =
         ((received.medianDuration - baseline.metrics.medianDuration) /
@@ -107,7 +86,7 @@ expect.extend({
       }
     }
 
-    // Check absolute duration limit (use median for consistency)
+    // Check absolute duration limit
     if (
       threshold.maxDuration !== undefined &&
       threshold.maxDuration !== Infinity &&

@@ -2,9 +2,6 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
- * Compares current perf results against stored baselines.
- * Used in CI to detect regressions and generate comparison reports.
- *
  * @format
  */
 
@@ -18,14 +15,7 @@ import type {ComparisonResult} from '../reporters/MarkdownReporter';
  * Options for baseline comparison.
  */
 export interface CompareOptions {
-  /**
-   * Default threshold applied when a snapshot entry has none.
-   */
   defaultThreshold?: PerfThreshold;
-
-  /**
-   * Per-scenario threshold overrides, keyed by snapshot key.
-   */
   thresholdOverrides?: Record<string, Partial<PerfThreshold>>;
 }
 
@@ -40,18 +30,8 @@ export interface SuiteComparison {
 
 /**
  * Compares head (current) perf snapshots against base (main) snapshots.
- *
- * Produces ComparisonResult[] that can be fed into MarkdownReporter.
  */
 export class BaselineComparator {
-  /**
-   * Compare a single suite's head snapshot against its baseline.
-   *
-   * @param suiteName - Human-readable suite name (e.g., 'View')
-   * @param headSnapshots - Snapshots from the current (PR) run
-   * @param baseSnapshots - Snapshots from the baseline (main) branch
-   * @param options - Comparison options
-   */
   static compareSuite(
     suiteName: string,
     headSnapshots: SnapshotFile,
@@ -71,7 +51,6 @@ export class BaselineComparator {
       };
 
       if (!baseEntry) {
-        // New scenario — no baseline to compare
         comparisons.push({
           metrics: headEntry.metrics,
           baselineMetrics: undefined,
@@ -89,7 +68,7 @@ export class BaselineComparator {
       comparisons.push(result);
     }
 
-    // Flag scenarios removed in head (existed in base but not in head)
+    // Flag scenarios removed in head
     for (const key of Object.keys(baseSnapshots)) {
       if (!headSnapshots[key]) {
         comparisons.push({
@@ -99,7 +78,7 @@ export class BaselineComparator {
           },
           baselineMetrics: baseSnapshots[key].metrics,
           percentChange: undefined,
-          passed: true, // Removal is not a regression
+          passed: true,
         });
       }
     }
@@ -111,21 +90,16 @@ export class BaselineComparator {
     };
   }
 
-  /**
-   * Compare a single entry's metrics against its baseline.
-   */
   static compareEntry(
     head: PerfMetrics,
     base: PerfMetrics,
     threshold: PerfThreshold,
   ): ComparisonResult {
-    // Merge with defaults so all fields are guaranteed defined
     const resolved: Required<PerfThreshold> = {
       ...DEFAULT_THRESHOLD,
       ...threshold,
     };
 
-    // Use median for comparison — robust to outlier spikes
     const percentChange =
       base.medianDuration > 0
         ? ((head.medianDuration - base.medianDuration) / base.medianDuration) * 100

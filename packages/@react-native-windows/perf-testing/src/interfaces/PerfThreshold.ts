@@ -32,13 +32,6 @@ export interface PerfThreshold {
   minRuns?: number;
 }
 
-/**
- * Default thresholds applied to all component tests unless overridden.
- *
- * - 10% regression threshold balances noise filtering vs real detection.
- * - 5 max render count is generous for most single-component scenarios.
- * - 10 runs provides statistical significance without being too slow.
- */
 export const DEFAULT_THRESHOLD: Readonly<Required<PerfThreshold>> = {
   maxDurationIncrease: 10,
   maxDuration: Infinity,

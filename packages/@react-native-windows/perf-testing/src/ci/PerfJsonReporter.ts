@@ -2,10 +2,6 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
- * Custom Jest reporter that writes perf results to a JSON file.
- * Used in CI to produce machine-readable output for downstream comparison
- * and PR comment generation.
- *
  * @format
  */
 
@@ -44,18 +40,8 @@ export interface CIRunResults {
 }
 
 /**
- * Custom Jest reporter that collects all perf snapshot data
- * after tests complete and writes a single JSON results file.
- *
- * Add to jest config:
- * ```js
- * reporters: [
- *   'default',
- *   ['@react-native-windows/perf-testing/lib-commonjs/ci/PerfJsonReporter', {
- *     outputFile: '.perf-results/results.json'
- *   }]
- * ]
- * ```
+ * Custom Jest reporter that collects perf snapshot data
+ * and writes a JSON results file for CI.
  */
 export class PerfJsonReporter {
   private outputFile: string;
@@ -67,9 +53,6 @@ export class PerfJsonReporter {
     this.outputFile = options.outputFile || '.perf-results/results.json';
   }
 
-  /**
-   * Called by Jest after all test suites have completed.
-   */
   onRunComplete(
     _testContexts: Set<unknown>,
     results: {

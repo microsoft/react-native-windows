@@ -175,8 +175,6 @@ class ModalPerfTest extends ComponentPerfTestBase {
   }
 }
 
-// ─── TEST SUITE ───
-
 const modalPerfTest = new ModalPerfTest();
 
 describe('Modal Performance', () => {

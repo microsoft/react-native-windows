@@ -12,24 +12,7 @@ import {measurePerf} from '../core/measurePerf';
 import type {RenderHelpers} from '../core/measurePerf';
 
 /**
- * A reusable scenario that measures component re-render time.
- *
- * Accepts an optional `triggerRerender` callback to simulate
- * prop changes or state updates specific to the component.
- *
- * @example
- * ```typescript
- * const rerenderScenario = new RerenderScenario(
- *   'Text rerender',
- *   <Text testID="perf-text">Hello</Text>,
- *   {
- *     triggerRerender: (helpers) => {
- *       helpers.rerender(<Text testID="perf-text">Updated</Text>);
- *     },
- *   }
- * );
- * const metrics = await rerenderScenario.run();
- * ```
+ * Reusable scenario that measures component re-render time.
  */
 export class RerenderScenario implements IScenario {
   readonly name: string;

@@ -140,8 +140,6 @@ class ActivityIndicatorPerfTest extends ComponentPerfTestBase {
   }
 }
 
-// ─── TEST SUITE ───
-
 const activityIndicatorPerfTest = new ActivityIndicatorPerfTest();
 
 describe('ActivityIndicator Performance', () => {
