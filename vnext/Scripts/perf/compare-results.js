@@ -23,10 +23,6 @@
 const fs = require('fs');
 const path = require('path');
 
-// ---------------------------------------------------------------------------
-// Argument parsing
-// ---------------------------------------------------------------------------
-
 function parseArgs() {
   const args = process.argv.slice(2);
   const opts = {
@@ -58,32 +54,18 @@ function parseArgs() {
   return opts;
 }
 
-// ---------------------------------------------------------------------------
-// Snapshot loading helpers
-// ---------------------------------------------------------------------------
-
-/**
- * Resolve the __perf_snapshots__ path for a given test file.
- */
 function getSnapshotPath(testFilePath) {
   const dir = path.dirname(testFilePath);
   const basename = path.basename(testFilePath);
   return path.join(dir, '__perf_snapshots__', `${basename}.perf-baseline.json`);
 }
 
-/**
- * Load a .perf.snap JSON file.
- */
 function loadSnapshot(filePath) {
   if (fs.existsSync(filePath)) {
     return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
   }
   return {};
 }
-
-// ---------------------------------------------------------------------------
-// Comparison engine (mirrors BaselineComparator logic)
-// ---------------------------------------------------------------------------
 
 const DEFAULT_THRESHOLD = {
   maxDurationIncrease: 10,
@@ -93,9 +75,6 @@ const DEFAULT_THRESHOLD = {
   minRuns: 10,
 };
 
-/**
- * Restore Infinity values that were serialized as null in JSON.
- */
 function resolveThreshold(threshold) {
   return {
     ...DEFAULT_THRESHOLD,
@@ -194,10 +173,6 @@ function compareSuite(suiteName, headSnaps, baseSnaps) {
   return {suiteName, results, hasRegressions: results.some(r => !r.passed)};
 }
 
-// ---------------------------------------------------------------------------
-// Markdown generation
-// ---------------------------------------------------------------------------
-
 function generateMarkdown(suiteComparisons, ciResults) {
   let md = '## ⚡ Performance Test Results\n\n';
 
@@ -276,10 +251,6 @@ function generateMarkdown(suiteComparisons, ciResults) {
 
   return md;
 }
-
-// ---------------------------------------------------------------------------
-// Main
-// ---------------------------------------------------------------------------
 
 function main() {
   const opts = parseArgs();

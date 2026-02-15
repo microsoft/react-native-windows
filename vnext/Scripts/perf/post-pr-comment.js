@@ -30,15 +30,7 @@ const fs = require('fs');
 const https = require('https');
 const path = require('path');
 
-// ---------------------------------------------------------------------------
-// Constants
-// ---------------------------------------------------------------------------
-
 const COMMENT_MARKER = '<!-- rnw-perf-results -->';
-
-// ---------------------------------------------------------------------------
-// Argument parsing
-// ---------------------------------------------------------------------------
 
 function parseArgs() {
   const args = process.argv.slice(2);
@@ -84,10 +76,6 @@ function parseArgs() {
 
   return opts;
 }
-
-// ---------------------------------------------------------------------------
-// GitHub API helpers
-// ---------------------------------------------------------------------------
 
 function githubRequest(method, apiPath, body) {
   const token = process.env.GITHUB_TOKEN;
@@ -137,9 +125,6 @@ function githubRequest(method, apiPath, body) {
   });
 }
 
-/**
- * Find an existing perf results comment on the PR.
- */
 async function findExistingComment(prNumber) {
   let page = 1;
   while (true) {
@@ -159,10 +144,6 @@ async function findExistingComment(prNumber) {
   }
   return null;
 }
-
-// ---------------------------------------------------------------------------
-// Main
-// ---------------------------------------------------------------------------
 
 async function main() {
   const opts = parseArgs();
