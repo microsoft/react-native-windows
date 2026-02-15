@@ -1,1 +1,0 @@
-{"version":3,"file":"toMatchPerfSnapshot.d.ts","sourceRoot":"","sources":["../../src/matchers/toMatchPerfSnapshot.ts"],"names":[],"mappings":"AAAA;;;;;GAKG;AAGH,OAAO,KAAK,EAAC,aAAa,EAAC,MAAM,6BAA6B,CAAC;AAI/D;;GAEG;AACH,OAAO,CAAC,MAAM,CAAC;IAEb,UAAU,IAAI,CAAC;QACb,UAAU,QAAQ,CAAC,CAAC;YAClB,mBAAmB,CAAC,SAAS,CAAC,EAAE,OAAO,CAAC,aAAa,CAAC,GAAG,CAAC,CAAC;SAC5D;KACF;CACF"}
