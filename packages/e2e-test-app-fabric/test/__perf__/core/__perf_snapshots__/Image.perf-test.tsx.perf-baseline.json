@@ -1,0 +1,192 @@
+{
+  "Image Performance mount time 1": {
+    "metrics": {
+      "name": "Image mount",
+      "meanDuration": 0.5,
+      "medianDuration": 0.5,
+      "stdDev": 0.5270462766947299,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:19:26.096Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:19:26.099Z"
+  },
+  "Image Performance unmount time 1": {
+    "metrics": {
+      "name": "Image unmount",
+      "meanDuration": 0,
+      "medianDuration": 0,
+      "stdDev": 0,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:19:26.107Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:19:26.119Z"
+  },
+  "Image Performance rerender time 1": {
+    "metrics": {
+      "name": "Image rerender",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 2,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:19:26.128Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:19:26.136Z"
+  },
+  "Image Performance Image-Specific Scenarios with-resize-mode 1": {
+    "metrics": {
+      "name": "Image with-resize-mode",
+      "meanDuration": 0.1,
+      "medianDuration": 0,
+      "stdDev": 0.31622776601683794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:19:26.141Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:19:26.153Z"
+  },
+  "Image Performance Image-Specific Scenarios with-border-radius 1": {
+    "metrics": {
+      "name": "Image with-border-radius",
+      "meanDuration": 0.3,
+      "medianDuration": 0,
+      "stdDev": 0.48304589153964794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:19:26.159Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:19:26.172Z"
+  },
+  "Image Performance Image-Specific Scenarios with-tint-color 1": {
+    "metrics": {
+      "name": "Image with-tint-color",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:19:26.177Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:19:26.191Z"
+  },
+  "Image Performance Image-Specific Scenarios with-blur-radius 1": {
+    "metrics": {
+      "name": "Image with-blur-radius",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:19:26.196Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:19:26.210Z"
+  },
+  "Image Performance Image-Specific Scenarios with-accessibility 1": {
+    "metrics": {
+      "name": "Image with-accessibility",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:19:26.215Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:19:26.229Z"
+  },
+  "Image Performance Image-Specific Scenarios multiple-images-10 1": {
+    "metrics": {
+      "name": "Image multiple-10",
+      "meanDuration": 1,
+      "medianDuration": 1,
+      "stdDev": 0.3779644730092272,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-15T18:19:26.277Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:19:26.279Z"
+  },
+  "Image Performance Image-Specific Scenarios multiple-images-50 1": {
+    "metrics": {
+      "name": "Image multiple-50",
+      "meanDuration": 4.133333333333334,
+      "medianDuration": 4,
+      "stdDev": 0.9154754164341267,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-15T18:19:26.349Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:19:26.351Z"
+  }
+}

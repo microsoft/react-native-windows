@@ -1,0 +1,154 @@
+{
+  "Button Performance mount time 1": {
+    "metrics": {
+      "name": "Button mount",
+      "meanDuration": 0.7,
+      "medianDuration": 1,
+      "stdDev": 0.48304589153964794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:06:49.433Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:06:49.436Z"
+  },
+  "Button Performance unmount time 1": {
+    "metrics": {
+      "name": "Button unmount",
+      "meanDuration": 0,
+      "medianDuration": 0,
+      "stdDev": 0,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:06:49.449Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:06:49.456Z"
+  },
+  "Button Performance rerender time 1": {
+    "metrics": {
+      "name": "Button rerender",
+      "meanDuration": 1.2,
+      "medianDuration": 1,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 2,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:06:49.479Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:06:49.481Z"
+  },
+  "Button Performance Button-Specific Scenarios disabled 1": {
+    "metrics": {
+      "name": "Button disabled",
+      "meanDuration": 0.7,
+      "medianDuration": 1,
+      "stdDev": 0.48304589153964794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:06:49.492Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:06:49.500Z"
+  },
+  "Button Performance Button-Specific Scenarios with-color 1": {
+    "metrics": {
+      "name": "Button with-color",
+      "meanDuration": 0.5,
+      "medianDuration": 0.5,
+      "stdDev": 0.5270462766947299,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:06:49.510Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:06:49.518Z"
+  },
+  "Button Performance Button-Specific Scenarios with-accessibility 1": {
+    "metrics": {
+      "name": "Button with-accessibility",
+      "meanDuration": 0.5,
+      "medianDuration": 0.5,
+      "stdDev": 0.5270462766947299,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:06:49.529Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:06:49.539Z"
+  },
+  "Button Performance Button-Specific Scenarios multiple-buttons-10 1": {
+    "metrics": {
+      "name": "Button multiple-10",
+      "meanDuration": 5.533333333333333,
+      "medianDuration": 5,
+      "stdDev": 0.9904304018720251,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-15T18:06:49.647Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:06:49.648Z"
+  },
+  "Button Performance Button-Specific Scenarios multiple-buttons-50 1": {
+    "metrics": {
+      "name": "Button multiple-50",
+      "meanDuration": 26.533333333333335,
+      "medianDuration": 27,
+      "stdDev": 12.838928897618183,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-15T18:06:50.106Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:06:50.108Z"
+  }
+}

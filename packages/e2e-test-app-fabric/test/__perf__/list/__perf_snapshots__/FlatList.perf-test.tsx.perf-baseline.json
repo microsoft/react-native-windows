@@ -1,0 +1,249 @@
+{
+  "FlatList Performance mount time 1": {
+    "metrics": {
+      "name": "FlatList mount",
+      "meanDuration": 4.6,
+      "medianDuration": 5,
+      "stdDev": 0.5163977794943222,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:22.557Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:22.578Z"
+  },
+  "FlatList Performance unmount time 1": {
+    "metrics": {
+      "name": "FlatList unmount",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:22.641Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:22.643Z"
+  },
+  "FlatList Performance rerender time 1": {
+    "metrics": {
+      "name": "FlatList rerender",
+      "meanDuration": 10,
+      "medianDuration": 10,
+      "stdDev": 1.247219128924647,
+      "renderCount": 2,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:22.777Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:22.780Z"
+  },
+  "FlatList Performance FlatList-Specific Scenarios with-10-items 1": {
+    "metrics": {
+      "name": "FlatList with-10-items",
+      "meanDuration": 4.8,
+      "medianDuration": 5,
+      "stdDev": 0.4216370213557839,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:22.847Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:22.850Z"
+  },
+  "FlatList Performance FlatList-Specific Scenarios with-100-items 1": {
+    "metrics": {
+      "name": "FlatList with-100-items",
+      "meanDuration": 4.9,
+      "medianDuration": 5,
+      "stdDev": 0.5676462121975466,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:22.916Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:22.918Z"
+  },
+  "FlatList Performance FlatList-Specific Scenarios with-500-items 1": {
+    "metrics": {
+      "name": "FlatList with-500-items",
+      "meanDuration": 5.4,
+      "medianDuration": 5,
+      "stdDev": 1.505545305418162,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:22.986Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 10,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:22.988Z"
+  },
+  "FlatList Performance FlatList-Specific Scenarios horizontal 1": {
+    "metrics": {
+      "name": "FlatList horizontal",
+      "meanDuration": 4.9,
+      "medianDuration": 5,
+      "stdDev": 0.3162277660168379,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:23.050Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:23.052Z"
+  },
+  "FlatList Performance FlatList-Specific Scenarios with-separator 1": {
+    "metrics": {
+      "name": "FlatList with-separator",
+      "meanDuration": 6.5,
+      "medianDuration": 6,
+      "stdDev": 4.453463071962462,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:23.137Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:23.140Z"
+  },
+  "FlatList Performance FlatList-Specific Scenarios with-header-footer 1": {
+    "metrics": {
+      "name": "FlatList with-header-footer",
+      "meanDuration": 1.9,
+      "medianDuration": 2,
+      "stdDev": 0.31622776601683794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:23.168Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:23.170Z"
+  },
+  "FlatList Performance FlatList-Specific Scenarios with-empty-list 1": {
+    "metrics": {
+      "name": "FlatList with-empty-list",
+      "meanDuration": 0.5,
+      "medianDuration": 0.5,
+      "stdDev": 0.5270462766947299,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:23.180Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:23.193Z"
+  },
+  "FlatList Performance FlatList-Specific Scenarios with-get-item-layout 1": {
+    "metrics": {
+      "name": "FlatList with-get-item-layout",
+      "meanDuration": 1.7,
+      "medianDuration": 2,
+      "stdDev": 0.48304589153964794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:23.219Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:23.222Z"
+  },
+  "FlatList Performance FlatList-Specific Scenarios inverted 1": {
+    "metrics": {
+      "name": "FlatList inverted",
+      "meanDuration": 1.8,
+      "medianDuration": 2,
+      "stdDev": 0.6324555320336759,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:23.251Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:23.253Z"
+  },
+  "FlatList Performance FlatList-Specific Scenarios with-num-columns 1": {
+    "metrics": {
+      "name": "FlatList with-num-columns",
+      "meanDuration": 3.3,
+      "medianDuration": 3,
+      "stdDev": 0.48304589153964794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T19:10:23.298Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T19:10:23.300Z"
+  }
+}

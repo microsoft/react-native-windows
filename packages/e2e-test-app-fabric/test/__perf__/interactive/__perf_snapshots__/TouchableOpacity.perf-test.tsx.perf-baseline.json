@@ -1,0 +1,211 @@
+{
+  "TouchableOpacity Performance mount time 1": {
+    "metrics": {
+      "name": "TouchableOpacity mount",
+      "meanDuration": 1.2,
+      "medianDuration": 1,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:54:31.333Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:54:31.336Z"
+  },
+  "TouchableOpacity Performance unmount time 1": {
+    "metrics": {
+      "name": "TouchableOpacity unmount",
+      "meanDuration": 0,
+      "medianDuration": 0,
+      "stdDev": 0,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:54:31.351Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:54:31.360Z"
+  },
+  "TouchableOpacity Performance rerender time 1": {
+    "metrics": {
+      "name": "TouchableOpacity rerender",
+      "meanDuration": 1.5,
+      "medianDuration": 2,
+      "stdDev": 0.7071067811865476,
+      "renderCount": 2,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:54:31.391Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:54:31.394Z"
+  },
+  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios custom-active-opacity 1": {
+    "metrics": {
+      "name": "TouchableOpacity custom-active-opacity",
+      "meanDuration": 0.8,
+      "medianDuration": 1,
+      "stdDev": 0.4216370213557839,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:54:31.407Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:54:31.415Z"
+  },
+  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios disabled 1": {
+    "metrics": {
+      "name": "TouchableOpacity disabled",
+      "meanDuration": 0.8,
+      "medianDuration": 1,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:54:31.429Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:54:31.436Z"
+  },
+  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios with-all-handlers 1": {
+    "metrics": {
+      "name": "TouchableOpacity with-all-handlers",
+      "meanDuration": 0.9,
+      "medianDuration": 1,
+      "stdDev": 0.31622776601683794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:54:31.449Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:54:31.455Z"
+  },
+  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios with-hit-slop 1": {
+    "metrics": {
+      "name": "TouchableOpacity with-hit-slop",
+      "meanDuration": 0.7,
+      "medianDuration": 1,
+      "stdDev": 0.48304589153964794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:54:31.468Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:54:31.476Z"
+  },
+  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios with-delay 1": {
+    "metrics": {
+      "name": "TouchableOpacity with-delay",
+      "meanDuration": 0.8,
+      "medianDuration": 1,
+      "stdDev": 0.4216370213557839,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:54:31.489Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:54:31.496Z"
+  },
+  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios nested-touchables 1": {
+    "metrics": {
+      "name": "TouchableOpacity nested",
+      "meanDuration": 2.2,
+      "medianDuration": 2,
+      "stdDev": 1.1352924243950935,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-15T18:54:31.529Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:54:31.532Z"
+  },
+  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios multiple-touchables-10 1": {
+    "metrics": {
+      "name": "TouchableOpacity multiple-10",
+      "meanDuration": 6.533333333333333,
+      "medianDuration": 6,
+      "stdDev": 1.1872336794093272,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-15T18:54:31.659Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:54:31.661Z"
+  },
+  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios multiple-touchables-50 1": {
+    "metrics": {
+      "name": "TouchableOpacity multiple-50",
+      "meanDuration": 33.06666666666667,
+      "medianDuration": 32,
+      "stdDev": 2.7115274205474953,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-15T18:54:32.249Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-15T18:54:32.252Z"
+  }
+}
