@@ -2,127 +2,134 @@
   "View Performance mount time 1": {
     "metrics": {
       "name": "View mount",
-      "meanDuration": 2.3,
-      "medianDuration": 2,
-      "stdDev": 0.6749485577105528,
-      "renderCount": 0,
+      "meanDuration": 0.7,
+      "medianDuration": 1,
+      "stdDev": 0.48304589153964794,
+      "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-09T17:42:10.575Z"
+      "timestamp": "2026-02-14T18:13:20.717Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
       "maxDuration": null,
+      "minAbsoluteDelta": 3,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:10.576Z"
+    "capturedAt": "2026-02-14T18:13:20.720Z"
   },
   "View Performance unmount time 1": {
     "metrics": {
       "name": "View unmount",
-      "meanDuration": 2.2,
-      "medianDuration": 2,
-      "stdDev": 0.7888106377466155,
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-09T17:42:10.633Z"
+      "timestamp": "2026-02-14T18:13:20.726Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
       "maxDuration": null,
+      "minAbsoluteDelta": 3,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:10.635Z"
+    "capturedAt": "2026-02-14T18:13:20.740Z"
   },
   "View Performance rerender time 1": {
     "metrics": {
       "name": "View rerender",
-      "meanDuration": 2.6,
-      "medianDuration": 2.5,
-      "stdDev": 0.6992058987801011,
-      "renderCount": 0,
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-09T17:42:10.734Z"
+      "timestamp": "2026-02-14T18:13:20.749Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
       "maxDuration": null,
+      "minAbsoluteDelta": 3,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:10.736Z"
+    "capturedAt": "2026-02-14T18:13:20.760Z"
   },
   "View Performance View-Specific Scenarios nested-views-50 1": {
     "metrics": {
       "name": "View nested-50",
-      "meanDuration": 2.8,
-      "medianDuration": 2,
-      "stdDev": 1.3038404810405297,
-      "renderCount": 0,
-      "runs": 5,
-      "timestamp": "2026-02-09T17:42:10.774Z"
+      "meanDuration": 3.6,
+      "medianDuration": 4,
+      "stdDev": 0.9102589898327995,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-14T18:13:20.832Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
       "maxDuration": null,
+      "minAbsoluteDelta": 5,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:10.776Z"
+    "capturedAt": "2026-02-14T18:13:20.834Z"
   },
   "View Performance View-Specific Scenarios nested-views-100 1": {
     "metrics": {
       "name": "View nested-100",
-      "meanDuration": 2.8,
-      "medianDuration": 3,
-      "stdDev": 0.8366600265340756,
-      "renderCount": 0,
-      "runs": 5,
-      "timestamp": "2026-02-09T17:42:10.816Z"
+      "meanDuration": 7.333333333333333,
+      "medianDuration": 7,
+      "stdDev": 1.1126972805283735,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-14T18:13:20.968Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
       "maxDuration": null,
+      "minAbsoluteDelta": 5,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:10.818Z"
+    "capturedAt": "2026-02-14T18:13:20.970Z"
   },
   "View Performance View-Specific Scenarios with-shadow 1": {
     "metrics": {
       "name": "View shadow",
-      "meanDuration": 3.8,
-      "medianDuration": 4,
-      "stdDev": 1.0327955589886444,
-      "renderCount": 0,
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-09T17:42:10.910Z"
+      "timestamp": "2026-02-14T18:13:20.976Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
       "maxDuration": null,
+      "minAbsoluteDelta": 3,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:10.912Z"
+    "capturedAt": "2026-02-14T18:13:20.992Z"
   },
   "View Performance View-Specific Scenarios with-border-radius 1": {
     "metrics": {
       "name": "View border-radius",
-      "meanDuration": 3.7,
-      "medianDuration": 3,
-      "stdDev": 1.636391694484477,
-      "renderCount": 0,
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-09T17:42:10.996Z"
+      "timestamp": "2026-02-14T18:13:20.996Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
       "maxDuration": null,
+      "minAbsoluteDelta": 3,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:10.998Z"
+    "capturedAt": "2026-02-14T18:13:21.011Z"
   }
 }

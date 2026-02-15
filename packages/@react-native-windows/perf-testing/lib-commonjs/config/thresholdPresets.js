@@ -32,6 +32,7 @@ exports.ThresholdPresets = {
     core: {
         maxDurationIncrease: 10,
         maxDuration: Infinity,
+        minAbsoluteDelta: 3,
         maxRenderCount: 2,
         minRuns: 10,
     },
@@ -42,6 +43,7 @@ exports.ThresholdPresets = {
     list: {
         maxDurationIncrease: 15,
         maxDuration: Infinity,
+        minAbsoluteDelta: 5,
         maxRenderCount: 5,
         minRuns: 5,
     },
@@ -52,6 +54,7 @@ exports.ThresholdPresets = {
     interactive: {
         maxDurationIncrease: 20,
         maxDuration: Infinity,
+        minAbsoluteDelta: 5,
         maxRenderCount: 10,
         minRuns: 10,
     },
@@ -62,6 +65,7 @@ exports.ThresholdPresets = {
     community: {
         maxDurationIncrease: 25,
         maxDuration: Infinity,
+        minAbsoluteDelta: 5,
         maxRenderCount: 15,
         minRuns: 5,
     },

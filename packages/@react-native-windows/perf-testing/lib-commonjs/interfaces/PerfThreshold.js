@@ -17,6 +17,7 @@ exports.DEFAULT_THRESHOLD = void 0;
 exports.DEFAULT_THRESHOLD = {
     maxDurationIncrease: 10,
     maxDuration: Infinity,
+    minAbsoluteDelta: 3,
     maxRenderCount: 5,
     minRuns: 10,
 };

@@ -15,6 +15,12 @@ export interface PerfThreshold {
     maxDurationIncrease?: number;
     /** Absolute max duration (ms) — fails if exceeded regardless of baseline */
     maxDuration?: number;
+    /**
+     * Minimum absolute duration change (ms) required to flag a regression.
+     * Even if the percentage threshold is exceeded, regressions below this
+     * absolute delta are treated as environmental noise. Default: 3
+     */
+    minAbsoluteDelta?: number;
     /** Max allowed render count per measurement */
     maxRenderCount?: number;
     /** Minimum runs required for a valid measurement. Default: 10 */

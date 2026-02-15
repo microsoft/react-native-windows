@@ -2,109 +2,115 @@
   "Text Performance mount time 1": {
     "metrics": {
       "name": "Text mount",
-      "meanDuration": 3.3,
-      "medianDuration": 3,
-      "stdDev": 0.6749485577105528,
-      "renderCount": 0,
+      "meanDuration": 0.3,
+      "medianDuration": 0,
+      "stdDev": 0.4830458915396479,
+      "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-09T17:42:09.693Z"
+      "timestamp": "2026-02-14T18:13:21.955Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
       "maxDuration": null,
+      "minAbsoluteDelta": 3,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:09.694Z"
+    "capturedAt": "2026-02-14T18:13:21.958Z"
   },
   "Text Performance unmount time 1": {
     "metrics": {
       "name": "Text unmount",
-      "meanDuration": 3.2,
-      "medianDuration": 3,
-      "stdDev": 1.1352924243950935,
+      "meanDuration": 0,
+      "medianDuration": 0,
+      "stdDev": 0,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-09T17:42:09.776Z"
+      "timestamp": "2026-02-14T18:13:21.964Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
       "maxDuration": null,
+      "minAbsoluteDelta": 3,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:09.779Z"
+    "capturedAt": "2026-02-14T18:13:21.981Z"
   },
   "Text Performance rerender time 1": {
     "metrics": {
       "name": "Text rerender",
-      "meanDuration": 5.5,
-      "medianDuration": 3,
-      "stdDev": 5.233439489369194,
-      "renderCount": 0,
+      "meanDuration": 0.1,
+      "medianDuration": 0,
+      "stdDev": 0.31622776601683794,
+      "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-09T17:42:09.946Z"
+      "timestamp": "2026-02-14T18:13:21.988Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
       "maxDuration": null,
+      "minAbsoluteDelta": 3,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:09.949Z"
+    "capturedAt": "2026-02-14T18:13:22.002Z"
   },
   "Text Performance Text-Specific Scenarios long-text 1": {
     "metrics": {
       "name": "Text long-1000",
-      "meanDuration": 5.2,
-      "medianDuration": 3,
-      "stdDev": 6.268084945889684,
-      "renderCount": 0,
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-09T17:42:10.063Z"
+      "timestamp": "2026-02-14T18:13:22.009Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
       "maxDuration": null,
+      "minAbsoluteDelta": 3,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:10.065Z"
+    "capturedAt": "2026-02-14T18:13:22.023Z"
   },
   "Text Performance Text-Specific Scenarios nested-text 1": {
     "metrics": {
       "name": "Text nested",
-      "meanDuration": 2.9,
-      "medianDuration": 3,
-      "stdDev": 0.7378647873726218,
-      "renderCount": 0,
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-09T17:42:10.132Z"
+      "timestamp": "2026-02-14T18:13:22.029Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
       "maxDuration": null,
+      "minAbsoluteDelta": 3,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:10.134Z"
+    "capturedAt": "2026-02-14T18:13:22.043Z"
   },
   "Text Performance Text-Specific Scenarios styled-text 1": {
     "metrics": {
       "name": "Text styled",
-      "meanDuration": 3.2,
-      "medianDuration": 3,
-      "stdDev": 0.9189365834726815,
-      "renderCount": 0,
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-09T17:42:10.210Z"
+      "timestamp": "2026-02-14T18:13:22.047Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
       "maxDuration": null,
+      "minAbsoluteDelta": 3,
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-09T17:42:10.213Z"
+    "capturedAt": "2026-02-14T18:13:22.061Z"
   }
 }

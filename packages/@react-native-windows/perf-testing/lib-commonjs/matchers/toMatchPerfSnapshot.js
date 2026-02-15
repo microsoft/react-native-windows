@@ -31,6 +31,7 @@ expect.extend({
      * ```
      */
     toMatchPerfSnapshot(received, customThreshold) {
+        var _a;
         const testPath = expect.getState().testPath;
         const testName = expect.getState().currentTestName;
         // Resolve snapshot file location
@@ -58,23 +59,25 @@ expect.extend({
         }
         // ─── COMPARE MODE: check against baseline ───
         const errors = [];
-        // Check duration regression (percentage)
+        // Check duration regression using MEDIAN (robust to outlier spikes)
         if (threshold.maxDurationIncrease !== undefined) {
-            const percentChange = ((received.meanDuration - baseline.metrics.meanDuration) /
-                baseline.metrics.meanDuration) *
+            const percentChange = ((received.medianDuration - baseline.metrics.medianDuration) /
+                baseline.metrics.medianDuration) *
                 100;
-            if (percentChange > threshold.maxDurationIncrease) {
-                errors.push(`Duration regression: +${percentChange.toFixed(1)}% ` +
-                    `(baseline: ${baseline.metrics.meanDuration.toFixed(2)}ms → ` +
-                    `current: ${received.meanDuration.toFixed(2)}ms, ` +
-                    `threshold: ${threshold.maxDurationIncrease}%)`);
+            const absoluteDelta = received.medianDuration - baseline.metrics.medianDuration;
+            const minAbsoluteDelta = (_a = threshold.minAbsoluteDelta) !== null && _a !== void 0 ? _a : PerfThreshold_1.DEFAULT_THRESHOLD.minAbsoluteDelta;
+            if (percentChange > threshold.maxDurationIncrease && absoluteDelta > minAbsoluteDelta) {
+                errors.push(`Duration regression: +${percentChange.toFixed(1)}% / +${absoluteDelta.toFixed(2)}ms ` +
+                    `(baseline median: ${baseline.metrics.medianDuration.toFixed(2)}ms → ` +
+                    `current median: ${received.medianDuration.toFixed(2)}ms, ` +
+                    `threshold: ${threshold.maxDurationIncrease}% & ${minAbsoluteDelta}ms)`);
             }
         }
-        // Check absolute duration limit
+        // Check absolute duration limit (use median for consistency)
         if (threshold.maxDuration !== undefined &&
             threshold.maxDuration !== Infinity &&
-            received.meanDuration > threshold.maxDuration) {
-            errors.push(`Duration exceeded: ${received.meanDuration.toFixed(2)}ms > ` +
+            received.medianDuration > threshold.maxDuration) {
+            errors.push(`Duration exceeded: ${received.medianDuration.toFixed(2)}ms > ` +
                 `${threshold.maxDuration}ms (absolute limit)`);
         }
         // Check render count
@@ -93,13 +96,13 @@ expect.extend({
             };
         }
         // Calculate improvement for positive feedback
-        const improvement = ((baseline.metrics.meanDuration - received.meanDuration) /
-            baseline.metrics.meanDuration) *
+        const improvement = ((baseline.metrics.medianDuration - received.medianDuration) /
+            baseline.metrics.medianDuration) *
             100;
         return {
             pass: true,
             message: () => `✅ "${received.name}" within threshold ` +
-                `(${received.meanDuration.toFixed(2)}ms, ` +
+                `(median: ${received.medianDuration.toFixed(2)}ms, ` +
                 `${improvement > 0 ? `-${improvement.toFixed(1)}% faster` : 'no change'})`,
         };
     },

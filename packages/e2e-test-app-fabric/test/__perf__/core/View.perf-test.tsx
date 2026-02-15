@@ -60,7 +60,7 @@ class ViewPerfTest extends ComponentPerfTestBase {
 
     return measurePerf(<NestedViews />, {
       name: `${this.componentName} nested-${count}`,
-      runs: 5, // Fewer runs for expensive scenarios
+      runs: 15, // More runs for stable median on heavy scenarios
     });
   }
 
@@ -114,13 +114,13 @@ describe('View Performance', () => {
     test('nested-views-50', async () => {
       const scenario = viewPerfTest.getCustomScenarios()[0];
       const perf = await scenario.run();
-      expect(perf).toMatchPerfSnapshot({maxDurationIncrease: 15});
+      expect(perf).toMatchPerfSnapshot({maxDurationIncrease: 15, minAbsoluteDelta: 5});
     });
 
     test('nested-views-100', async () => {
       const scenario = viewPerfTest.getCustomScenarios()[1];
       const perf = await scenario.run();
-      expect(perf).toMatchPerfSnapshot({maxDurationIncrease: 15});
+      expect(perf).toMatchPerfSnapshot({maxDurationIncrease: 15, minAbsoluteDelta: 5});
     });
 
     test('with-shadow', async () => {

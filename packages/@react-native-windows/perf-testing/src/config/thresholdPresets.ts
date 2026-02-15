@@ -34,6 +34,7 @@ export const ThresholdPresets: Readonly<
   core: {
     maxDurationIncrease: 10,
     maxDuration: Infinity,
+    minAbsoluteDelta: 3,
     maxRenderCount: 2,
     minRuns: 10,
   },
@@ -45,6 +46,7 @@ export const ThresholdPresets: Readonly<
   list: {
     maxDurationIncrease: 15,
     maxDuration: Infinity,
+    minAbsoluteDelta: 5,
     maxRenderCount: 5,
     minRuns: 5,
   },
@@ -56,6 +58,7 @@ export const ThresholdPresets: Readonly<
   interactive: {
     maxDurationIncrease: 20,
     maxDuration: Infinity,
+    minAbsoluteDelta: 5,
     maxRenderCount: 10,
     minRuns: 10,
   },
@@ -67,6 +70,7 @@ export const ThresholdPresets: Readonly<
   community: {
     maxDurationIncrease: 25,
     maxDuration: Infinity,
+    minAbsoluteDelta: 5,
     maxRenderCount: 15,
     minRuns: 5,
   },

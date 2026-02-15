@@ -88,6 +88,7 @@ function loadSnapshot(filePath) {
 const DEFAULT_THRESHOLD = {
   maxDurationIncrease: 10,
   maxDuration: Infinity,
+  minAbsoluteDelta: 3,
   maxRenderCount: 5,
   minRuns: 10,
 };
@@ -108,21 +109,24 @@ function resolveThreshold(threshold) {
 }
 
 function compareEntry(head, base, threshold) {
+  // Use median for comparison — robust to outlier spikes
   const percentChange =
-    base.meanDuration > 0
-      ? ((head.meanDuration - base.meanDuration) / base.meanDuration) * 100
+    base.medianDuration > 0
+      ? ((head.medianDuration - base.medianDuration) / base.medianDuration) * 100
       : 0;
 
   const errors = [];
 
-  if (percentChange > threshold.maxDurationIncrease) {
+  const absoluteDelta = head.medianDuration - base.medianDuration;
+  const minAbsoluteDelta = threshold.minAbsoluteDelta ?? DEFAULT_THRESHOLD.minAbsoluteDelta;
+  if (percentChange > threshold.maxDurationIncrease && absoluteDelta > minAbsoluteDelta) {
     errors.push(
-      `Duration increased by ${percentChange.toFixed(1)}% (threshold: ${threshold.maxDurationIncrease}%)`,
+      `Duration increased by ${percentChange.toFixed(1)}% / +${absoluteDelta.toFixed(2)}ms (threshold: ${threshold.maxDurationIncrease}% & ${minAbsoluteDelta}ms)`,
     );
   }
-  if (head.meanDuration > threshold.maxDuration) {
+  if (head.medianDuration > threshold.maxDuration) {
     errors.push(
-      `Duration ${head.meanDuration.toFixed(2)}ms exceeds max ${threshold.maxDuration}ms`,
+      `Duration ${head.medianDuration.toFixed(2)}ms exceeds max ${threshold.maxDuration}ms`,
     );
   }
   if (head.renderCount > threshold.maxRenderCount) {

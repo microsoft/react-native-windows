@@ -120,8 +120,8 @@ export abstract class ComponentPerfTestBase implements IComponentPerfTest {
       runs: this.defaultThreshold.minRuns ?? 10,
       warmupRuns: 1,
       scenario: async helpers => {
-        // Default re-render: update with same element (forces reconciliation)
-        helpers.rerender(this.createComponent({key: Date.now()}));
+        // Default re-render: update with a changed prop to force reconciliation
+        helpers.rerender(this.createComponent({__perfRerenderKey: Date.now()}));
       },
     });
   }

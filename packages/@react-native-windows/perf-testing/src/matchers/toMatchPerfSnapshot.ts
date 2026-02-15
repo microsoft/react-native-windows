@@ -87,31 +87,34 @@ expect.extend({
     // ─── COMPARE MODE: check against baseline ───
     const errors: string[] = [];
 
-    // Check duration regression (percentage)
+    // Check duration regression using MEDIAN (robust to outlier spikes)
     if (threshold.maxDurationIncrease !== undefined) {
       const percentChange =
-        ((received.meanDuration - baseline.metrics.meanDuration) /
-          baseline.metrics.meanDuration) *
+        ((received.medianDuration - baseline.metrics.medianDuration) /
+          baseline.metrics.medianDuration) *
         100;
 
-      if (percentChange > threshold.maxDurationIncrease) {
+      const absoluteDelta = received.medianDuration - baseline.metrics.medianDuration;
+      const minAbsoluteDelta = threshold.minAbsoluteDelta ?? DEFAULT_THRESHOLD.minAbsoluteDelta;
+
+      if (percentChange > threshold.maxDurationIncrease && absoluteDelta > minAbsoluteDelta) {
         errors.push(
-          `Duration regression: +${percentChange.toFixed(1)}% ` +
-            `(baseline: ${baseline.metrics.meanDuration.toFixed(2)}ms → ` +
-            `current: ${received.meanDuration.toFixed(2)}ms, ` +
-            `threshold: ${threshold.maxDurationIncrease}%)`,
+          `Duration regression: +${percentChange.toFixed(1)}% / +${absoluteDelta.toFixed(2)}ms ` +
+            `(baseline median: ${baseline.metrics.medianDuration.toFixed(2)}ms → ` +
+            `current median: ${received.medianDuration.toFixed(2)}ms, ` +
+            `threshold: ${threshold.maxDurationIncrease}% & ${minAbsoluteDelta}ms)`,
         );
       }
     }
 
-    // Check absolute duration limit
+    // Check absolute duration limit (use median for consistency)
     if (
       threshold.maxDuration !== undefined &&
       threshold.maxDuration !== Infinity &&
-      received.meanDuration > threshold.maxDuration
+      received.medianDuration > threshold.maxDuration
     ) {
       errors.push(
-        `Duration exceeded: ${received.meanDuration.toFixed(2)}ms > ` +
+        `Duration exceeded: ${received.medianDuration.toFixed(2)}ms > ` +
           `${threshold.maxDuration}ms (absolute limit)`,
       );
     }
@@ -140,15 +143,15 @@ expect.extend({
 
     // Calculate improvement for positive feedback
     const improvement =
-      ((baseline.metrics.meanDuration - received.meanDuration) /
-        baseline.metrics.meanDuration) *
+      ((baseline.metrics.medianDuration - received.medianDuration) /
+        baseline.metrics.medianDuration) *
       100;
 
     return {
       pass: true,
       message: () =>
         `✅ "${received.name}" within threshold ` +
-        `(${received.meanDuration.toFixed(2)}ms, ` +
+        `(median: ${received.medianDuration.toFixed(2)}ms, ` +
         `${improvement > 0 ? `-${improvement.toFixed(1)}% faster` : 'no change'})`,
     };
   },

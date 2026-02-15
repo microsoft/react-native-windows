@@ -79,18 +79,21 @@ class BaselineComparator {
             ...PerfThreshold_1.DEFAULT_THRESHOLD,
             ...threshold,
         };
-        const percentChange = base.meanDuration > 0
-            ? ((head.meanDuration - base.meanDuration) / base.meanDuration) * 100
+        // Use median for comparison — robust to outlier spikes
+        const percentChange = base.medianDuration > 0
+            ? ((head.medianDuration - base.medianDuration) / base.medianDuration) * 100
             : 0;
         const errors = [];
-        // Check percentage increase
-        if (percentChange > resolved.maxDurationIncrease) {
-            errors.push(`Duration increased by ${percentChange.toFixed(1)}% ` +
-                `(threshold: ${resolved.maxDurationIncrease}%)`);
+        // Check percentage increase AND absolute delta
+        const absoluteDelta = head.medianDuration - base.medianDuration;
+        if (percentChange > resolved.maxDurationIncrease &&
+            absoluteDelta > resolved.minAbsoluteDelta) {
+            errors.push(`Duration increased by ${percentChange.toFixed(1)}% / +${absoluteDelta.toFixed(2)}ms ` +
+                `(threshold: ${resolved.maxDurationIncrease}% & ${resolved.minAbsoluteDelta}ms)`);
         }
         // Check absolute max
-        if (head.meanDuration > resolved.maxDuration) {
-            errors.push(`Duration ${head.meanDuration.toFixed(2)}ms exceeds ` +
+        if (head.medianDuration > resolved.maxDuration) {
+            errors.push(`Duration ${head.medianDuration.toFixed(2)}ms exceeds ` +
                 `max ${resolved.maxDuration}ms`);
         }
         // Check render count

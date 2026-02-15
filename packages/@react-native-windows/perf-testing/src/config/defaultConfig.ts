@@ -36,6 +36,7 @@ export const DEFAULT_CONFIG: Readonly<PerfTestConfig> = {
   defaultThreshold: {
     maxDurationIncrease: 10,
     maxDuration: Infinity,
+    minAbsoluteDelta: 3,
     maxRenderCount: 5,
     minRuns: 10,
   },

@@ -98,8 +98,8 @@ class ComponentPerfTestBase {
             runs: (_a = this.defaultThreshold.minRuns) !== null && _a !== void 0 ? _a : 10,
             warmupRuns: 1,
             scenario: async (helpers) => {
-                // Default re-render: update with same element (forces reconciliation)
-                helpers.rerender(this.createComponent({ key: Date.now() }));
+                // Default re-render: update with a changed prop to force reconciliation
+                helpers.rerender(this.createComponent({ __perfRerenderKey: Date.now() }));
             },
         });
     }

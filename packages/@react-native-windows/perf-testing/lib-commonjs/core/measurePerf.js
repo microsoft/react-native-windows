@@ -33,6 +33,17 @@ exports.measurePerf = void 0;
 const React = __importStar(require("react"));
 const statistics_1 = require("./statistics");
 const PerfProfiler_1 = require("./PerfProfiler");
+// React 19 requires all state-updating calls to be wrapped in act().
+// We lazy-require react-test-renderer, so we also lazy-resolve act.
+let _act;
+function getAct() {
+    if (!_act) {
+        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        const { act } = require('react-test-renderer');
+        _act = act;
+    }
+    return _act;
+}
 /**
  * Core measurement function.
  *
@@ -97,14 +108,19 @@ async function runSingleMeasurement(TestRenderer, component, profilerId, scenari
         children: component,
     });
     let renderer;
+    const act = getAct();
     if (measureUnmount) {
         // Mount first (not measured)
-        renderer = TestRenderer.create(wrappedComponent);
+        act(() => {
+            renderer = TestRenderer.create(wrappedComponent);
+        });
         // Clear results from mount phase
         results.length = 0;
         // Measure unmount
         const unmountStart = performance.now();
-        renderer.unmount();
+        act(() => {
+            renderer.unmount();
+        });
         const unmountDuration = performance.now() - unmountStart;
         return {
             duration: unmountDuration,
@@ -113,7 +129,9 @@ async function runSingleMeasurement(TestRenderer, component, profilerId, scenari
     }
     // Measure mount
     const mountStart = performance.now();
-    renderer = TestRenderer.create(wrappedComponent);
+    act(() => {
+        renderer = TestRenderer.create(wrappedComponent);
+    });
     const mountDuration = performance.now() - mountStart;
     // Execute custom scenario if provided
     if (scenario) {
@@ -124,10 +142,14 @@ async function runSingleMeasurement(TestRenderer, component, profilerId, scenari
                     onResult,
                     children: element,
                 });
-                renderer.update(wrappedUpdate);
+                act(() => {
+                    renderer.update(wrappedUpdate);
+                });
             },
             unmount: () => {
-                renderer.unmount();
+                act(() => {
+                    renderer.unmount();
+                });
             },
         };
         await scenario(helpers);
@@ -135,7 +157,9 @@ async function runSingleMeasurement(TestRenderer, component, profilerId, scenari
     // Clean up
     if (renderer) {
         try {
-            renderer.unmount();
+            act(() => {
+                renderer.unmount();
+            });
         }
         catch (_a) {
             // Already unmounted by scenario

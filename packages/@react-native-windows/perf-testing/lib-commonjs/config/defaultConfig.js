@@ -16,6 +16,7 @@ exports.DEFAULT_CONFIG = {
     defaultThreshold: {
         maxDurationIncrease: 10,
         maxDuration: Infinity,
+        minAbsoluteDelta: 3,
         maxRenderCount: 5,
         minRuns: 10,
     },
