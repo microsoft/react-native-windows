@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix XAML popup positioning and light dismiss in ScrollView (#15557)",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "nitchaudhary@microsoft.com",
+  "dependentChangeType": "patch"
+}
