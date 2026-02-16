@@ -37,7 +37,7 @@
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.6",
     "@rnx-kit/jest-preset": "^0.1.16",
-    "@types/react": "^19.0.0",
+    "@types/react": "^19.2.0",
     "@types/react-test-renderer": "^19.0.0",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
