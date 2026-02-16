@@ -33,7 +33,7 @@
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
     "prettier": "2.8.8",
-    "react-test-renderer": "19.0.0",
+    "react-test-renderer": "19.1.0",
     "sample-custom-component": "0.0.1"
   },
   "engines": {
