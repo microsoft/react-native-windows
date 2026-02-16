@@ -31,7 +31,6 @@ jobs:
 
     permissions:
       contents: read
-      pull-requests: write    # For PR comments
       actions: read
 
     steps:
@@ -70,15 +69,10 @@ jobs:
         run: yarn perf:ci:compare
         continue-on-error: true
 
-      - name: Post PR comment
+      - name: Save PR number
         if: github.event_name == 'pull_request'
-        working-directory: packages/e2e-test-app-fabric
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: yarn perf:ci:report
-        continue-on-error: true
+        run: echo "${{ github.event.pull_request.number }}" > packages/e2e-test-app-fabric/.perf-results/pr-number.txt
 
-      # ── Artifacts ──────────────────────────────────────────
       - name: Upload perf results
         if: always()
         uses: actions/upload-artifact@v4
