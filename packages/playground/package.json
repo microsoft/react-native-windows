@@ -11,10 +11,10 @@
   "dependencies": {
     "@react-native-picker/picker": "^2.5.1",
     "@react-native-windows/tester": "0.0.1",
-    "@types/react": "^19.1.1",
+    "@types/react": "^19.2.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
-    "react": "^19.1.1",
+    "react": "^19.2.0",
     "react-native": "0.83.0-nightly-20251012-6f482708b",
     "react-native-windows": "^0.0.0-canary.1031"
   },

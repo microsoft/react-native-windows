@@ -11,14 +11,14 @@
     "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
-    "@react-native/tester": "0.82.0-main",
+    "@react-native/tester": "0.83.0-nightly-20251012-6f482708b",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "flow-enums-runtime": "^0.0.6"
   },
   "peerDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.305",
-    "react": "19.1.1",
+    "react": "19.2.0",
     "react-native": "0.83.0-nightly-20251012-6f482708b"
   },
   "devDependencies": {
