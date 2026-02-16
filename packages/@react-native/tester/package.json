@@ -26,13 +26,8 @@
     "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
-<<<<<<< Upstream
-    "@react-native/new-app-screen": "0.83.0-main",
-    "@react-native/popup-menu-android": "0.83.0-main",
-=======
     "@react-native/new-app-screen": "0.83.0-nightly-20251012-6f482708b",
     "@react-native/popup-menu-android": "0.83.0-nightly-20251012-6f482708b",
->>>>>>> Override
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"

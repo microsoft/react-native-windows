@@ -318,17 +318,13 @@ module.exports = {
   /**
    * @deprecated
    */
-<<<<<<< Upstream
-  get InteractionManager() {
+  get InteractionManager(): InteractionManager {
     warnOnce(
       'interaction-manager-deprecated',
       'InteractionManager has been deprecated and will be removed in a ' +
         'future release. Please refactor long tasks into smaller ones, and ' +
         " use 'requestIdleCallback' instead.",
     );
-=======
-  get InteractionManager(): InteractionManager {
->>>>>>> Override
     return require('./Libraries/Interaction/InteractionManager').default;
   },
   get Keyboard(): Keyboard {

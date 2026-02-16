@@ -51,13 +51,8 @@
     "@jest/create-cache-key-function": "^29.7.0",
     "@microsoft/api-extractor": "^7.52.2",
     "@octokit/rest": "^22.0.0",
-<<<<<<< Upstream
-    "@react-native/metro-babel-transformer": "0.83.0-main",
-    "@react-native/metro-config": "0.83.0-main",
-=======
     "@react-native/metro-babel-transformer": "0.83.0-nightly-20251012-6f482708b",
     "@react-native/metro-config": "0.83.0-nightly-20251012-6f482708b",
->>>>>>> Override
     "@tsconfig/node22": "22.0.2",
     "@types/react": "^19.1.0",
     "@typescript-eslint/parser": "^8.36.0",
@@ -99,14 +94,9 @@
     "markdownlint-cli2": "^0.17.2",
     "markdownlint-rule-relative-links": "^3.0.0",
     "memfs": "^4.38.2",
-<<<<<<< Upstream
     "metro-babel-register": "^0.83.3",
     "metro-transform-plugins": "^0.83.3",
-=======
-    "metro-babel-register": "^0.83.1",
     "metro-memory-fs": "^0.82.4",
-    "metro-transform-plugins": "^0.83.1",
->>>>>>> Override
     "micromatch": "^4.0.4",
     "node-fetch": "^2.2.0",
     "nullthrows": "^1.1.1",
