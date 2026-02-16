@@ -2422,6 +2422,11 @@
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.83.0-nightly-20250917-18cb4edfa.tgz#2093768a82222000f831fd9530405c74a63f0f82"
   integrity sha512-Qi+ZECOJbhac3wvHljMdteGcnV+WgNa58d7lTF8w3IwcvXQ94pGHoJK9WDJwQXxZkdljgcggSn2VuMXmeUuY2Q==
 
+"@react-native/assets-registry@0.83.0-nightly-20251012-6f482708b":
+  version "0.83.0-nightly-20251012-6f482708b"
+  resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.83.0-nightly-20251012-6f482708b.tgz#ea42aa216f4c28015878ed70461116830253bbbc"
+  integrity sha512-ToCYjnTV9Wexs+aqPu4Ib+6T92JXzjtDYwYj6CiCtjHrAIFbVCk49MmJQD/CF3aNp5PvfZ3WUc5FTqdaSKA0ZQ==
+
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
@@ -2499,6 +2504,19 @@
     nullthrows "^1.1.1"
     yargs "^17.6.2"
 
+"@react-native/codegen@0.83.0-nightly-20251012-6f482708b":
+  version "0.83.0-nightly-20251012-6f482708b"
+  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.83.0-nightly-20251012-6f482708b.tgz#eb2a6e6430e290443bda403e37cd7744a8866472"
+  integrity sha512-CkWyKkJ0pnhuc6bWrSST54LbG9Ck3j23bVmztsRl2mGhSjANfLUrMMiTpiUW6Rd+1bX1S1ArlXNtE0Umb+c5tw==
+  dependencies:
+    "@babel/core" "^7.25.2"
+    "@babel/parser" "^7.25.3"
+    glob "^7.1.1"
+    hermes-parser "0.32.0"
+    invariant "^2.2.4"
+    nullthrows "^1.1.1"
+    yargs "^17.6.2"
+
 "@react-native/community-cli-plugin@0.83.0-nightly-20250917-18cb4edfa":
   version "0.83.0-nightly-20250917-18cb4edfa"
   resolved "https://registry.yarnpkg.com/@react-native/community-cli-plugin/-/community-cli-plugin-0.83.0-nightly-20250917-18cb4edfa.tgz#dcc9ceda26e6583c8cee8e978a48d5cec8dc84c1"
@@ -2512,15 +2530,41 @@
     metro-core "^0.83.1"
     semver "^7.1.3"
 
+"@react-native/community-cli-plugin@0.83.0-nightly-20251012-6f482708b":
+  version "0.83.0-nightly-20251012-6f482708b"
+  resolved "https://registry.yarnpkg.com/@react-native/community-cli-plugin/-/community-cli-plugin-0.83.0-nightly-20251012-6f482708b.tgz#893b2598412f6dd12be581716ef7bc3da5300dde"
+  integrity sha512-4ggWsC9Ijxd8m2u91PJPfDwUKcfXBnaW+xbh7lRx1zFDL2V3H+DD+hpWmWyoPTXv8lZqV5s4XEGG5i52gMTLlw==
+  dependencies:
+    "@react-native/dev-middleware" "0.83.0-nightly-20251012-6f482708b"
+    debug "^4.4.0"
+    invariant "^2.2.4"
+    metro "^0.83.3"
+    metro-config "^0.83.3"
+    metro-core "^0.83.3"
+    semver "^7.1.3"
+
 "@react-native/debugger-frontend@0.83.0-nightly-20250917-18cb4edfa":
   version "0.83.0-nightly-20250917-18cb4edfa"
   resolved "https://registry.yarnpkg.com/@react-native/debugger-frontend/-/debugger-frontend-0.83.0-nightly-20250917-18cb4edfa.tgz#89768fdb814cd59e1876200dae076f07da110631"
   integrity sha512-bHrsNDgKqSLzCsOKeZma6ruckNRHsXzGFBUVnTnW3H6gt87WWdSU2urMEHzfddaXdlUrSeFZLfAlD7nqJcPanw==
 
+"@react-native/debugger-frontend@0.83.0-nightly-20251012-6f482708b":
+  version "0.83.0-nightly-20251012-6f482708b"
+  resolved "https://registry.yarnpkg.com/@react-native/debugger-frontend/-/debugger-frontend-0.83.0-nightly-20251012-6f482708b.tgz#fabc17792c69f2ff9c5a375f27e9e81ff0437e2d"
+  integrity sha512-iDwRBiEVqqqlOi0xhtzmrttwp53aTRb3U66P/0mBEYqIeGTgxZ37kI2lzxqyyITI5EcCNOUl/47w8stR4asLfw==
+
 "@react-native/debugger-shell@0.83.0-nightly-20250917-18cb4edfa":
   version "0.83.0-nightly-20250917-18cb4edfa"
   resolved "https://registry.yarnpkg.com/@react-native/debugger-shell/-/debugger-shell-0.83.0-nightly-20250917-18cb4edfa.tgz#60124f0649e71646c132f52313b9d4f40d21dd07"
   integrity sha512-W1XtdrNxRGbhpdtnSku8LNKsLhiKMkkOAyaXPaVFoalWAdB0u7xTbLoH37ErIxDha+QzGem26PyTVz1OhxfeHA==
+  dependencies:
+    cross-spawn "^7.0.6"
+    fb-dotslash "0.5.8"
+
+"@react-native/debugger-shell@0.83.0-nightly-20251012-6f482708b":
+  version "0.83.0-nightly-20251012-6f482708b"
+  resolved "https://registry.yarnpkg.com/@react-native/debugger-shell/-/debugger-shell-0.83.0-nightly-20251012-6f482708b.tgz#490d9bbf98aebd841fa53019f0d7878c20772d95"
+  integrity sha512-ptlUK1v/DZopiVKJdqCifBKedGGxJpb0aRnu40kWWClJhqy6znI9YIHcVVFcph1VzTw7Pa70NEHP18CqPr3teQ==
   dependencies:
     cross-spawn "^7.0.6"
     fb-dotslash "0.5.8"
@@ -2533,6 +2577,24 @@
     "@isaacs/ttlcache" "^1.4.1"
     "@react-native/debugger-frontend" "0.83.0-nightly-20250917-18cb4edfa"
     "@react-native/debugger-shell" "0.83.0-nightly-20250917-18cb4edfa"
+    chrome-launcher "^0.15.2"
+    chromium-edge-launcher "^0.2.0"
+    connect "^3.6.5"
+    debug "^4.4.0"
+    invariant "^2.2.4"
+    nullthrows "^1.1.1"
+    open "^7.0.3"
+    serve-static "^1.16.2"
+    ws "^7.5.10"
+
+"@react-native/dev-middleware@0.83.0-nightly-20251012-6f482708b":
+  version "0.83.0-nightly-20251012-6f482708b"
+  resolved "https://registry.yarnpkg.com/@react-native/dev-middleware/-/dev-middleware-0.83.0-nightly-20251012-6f482708b.tgz#7c487b42c57928d4a1b824840fd3a126065c4ffe"
+  integrity sha512-cjr4L62EZu+VselhnF29FEGgzcB65Gx12ObiQu0pWXQ3oJUxJMGAaHBO3/AmWlkU59mUzpmgeyjUrMZBwd6Luw==
+  dependencies:
+    "@isaacs/ttlcache" "^1.4.1"
+    "@react-native/debugger-frontend" "0.83.0-nightly-20251012-6f482708b"
+    "@react-native/debugger-shell" "0.83.0-nightly-20251012-6f482708b"
     chrome-launcher "^0.15.2"
     chromium-edge-launcher "^0.2.0"
     connect "^3.6.5"
@@ -2571,10 +2633,20 @@
   resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.83.0-nightly-20250917-18cb4edfa.tgz#9f53ae9cf957a581709712b11f822b05c4b32e46"
   integrity sha512-Ifahs2wFl9TDbtcvXcWmYG1552AKbDw4dgf1x6DwWe84Ddf62r9T0g7BReuQ8DZ1pmjMFIX0UTatqbw8z31ixg==
 
+"@react-native/gradle-plugin@0.83.0-nightly-20251012-6f482708b":
+  version "0.83.0-nightly-20251012-6f482708b"
+  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.83.0-nightly-20251012-6f482708b.tgz#1656b7d7943c73b1b5fa86a8ae29721e6a67a096"
+  integrity sha512-B+thkpA3Kx7ESKyyDEGxLOw/lfQwwqR272DmaM7g3Xp4kY760xr9ky2H/qK3Cy89fZXNOUWGOImgEWrCaY6QKg==
+
 "@react-native/js-polyfills@0.83.0-nightly-20250917-18cb4edfa":
   version "0.83.0-nightly-20250917-18cb4edfa"
   resolved "https://registry.yarnpkg.com/@react-native/js-polyfills/-/js-polyfills-0.83.0-nightly-20250917-18cb4edfa.tgz#025b9588df0c2d2c8fb62ccd89afd9ea30cb88cd"
   integrity sha512-zqEEUqT3GASDhn+Nfxxb6Ts71VRNAOu1zfpFdWzTjUB7HvYvAGLp9tSz9iPeYyTApfFDHAtqWJKXo2DNZVcjLg==
+
+"@react-native/js-polyfills@0.83.0-nightly-20251012-6f482708b":
+  version "0.83.0-nightly-20251012-6f482708b"
+  resolved "https://registry.yarnpkg.com/@react-native/js-polyfills/-/js-polyfills-0.83.0-nightly-20251012-6f482708b.tgz#c5dfe91a9bb3ebb1974e74d93425aa82ffc564de"
+  integrity sha512-PbzaH7/PQ8ocpgbdg6uIU0pilXfknhvUs3OxtFSWq3TrTzW+FXm+ultia1Oy1txMKtk1s7kmxjTp3NXUNBUqqA==
 
 "@react-native/metro-babel-transformer@0.83.0-nightly-20250917-18cb4edfa":
   version "0.83.0-nightly-20250917-18cb4edfa"
@@ -2611,6 +2683,11 @@
   resolved "https://registry.yarnpkg.com/@react-native/normalize-colors/-/normalize-colors-0.83.0-nightly-20250917-18cb4edfa.tgz#9cff5ff14b390e6d6cb426c24dfbaa80f0c0431a"
   integrity sha512-rqPYgFERY7KWU7SUwWIklieyuzCgKNQaSnFVgXyrl5kVBysBChdyRxSc82A5dV04Eh3m9+XwdnwoAoxr4tnzQg==
 
+"@react-native/normalize-colors@0.83.0-nightly-20251012-6f482708b":
+  version "0.83.0-nightly-20251012-6f482708b"
+  resolved "https://registry.yarnpkg.com/@react-native/normalize-colors/-/normalize-colors-0.83.0-nightly-20251012-6f482708b.tgz#59979dd490bcce94cc14eb570fc418476d304a84"
+  integrity sha512-7cXFv5T44g8qEACrpbsewVGpruLYJVCHdCua0Ti2c4L95oyrNSsi51LpUIPXgO7A0Lx66TIfGxmpB4KO3K94fg==
+
 "@react-native/popup-menu-android@0.83.0-nightly-20250917-18cb4edfa":
   version "0.83.0-nightly-20250917-18cb4edfa"
   resolved "https://registry.yarnpkg.com/@react-native/popup-menu-android/-/popup-menu-android-0.83.0-nightly-20250917-18cb4edfa.tgz#7a01806bbd6e668fd03870985860130e8041c21c"
@@ -2622,6 +2699,14 @@
   version "0.83.0-nightly-20250917-18cb4edfa"
   resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.83.0-nightly-20250917-18cb4edfa.tgz#f43e944bbdc6b991073589716c8dc27010195a81"
   integrity sha512-fLcKrFcm/jfOgpIcYfj+HdG4po0/i79TLcwAtgRomx49wP/MoXASpPvnhmtVyzxw3Tg4U4B+rIKoXegbc3pDew==
+  dependencies:
+    invariant "^2.2.4"
+    nullthrows "^1.1.1"
+
+"@react-native/virtualized-lists@0.83.0-nightly-20251012-6f482708b":
+  version "0.83.0-nightly-20251012-6f482708b"
+  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.83.0-nightly-20251012-6f482708b.tgz#54e72c5b079d6957c34629a4ca42f95c93c49bd5"
+  integrity sha512-l4awg00aSdobMmqEvfBimI++GXebH0BV8CtZ84l5RTAI8dvjDPVqKHS4HX4XGKniIBT2RqCgEH4FtNxUnzGiNw==
   dependencies:
     invariant "^2.2.4"
     nullthrows "^1.1.1"
@@ -9209,7 +9294,7 @@ metro-cache@0.83.3:
     https-proxy-agent "^7.0.5"
     metro-core "0.83.3"
 
-metro-config@0.83.3, metro-config@^0.83.1:
+metro-config@0.83.3, metro-config@^0.83.1, metro-config@^0.83.3:
   version "0.83.3"
   resolved "https://registry.yarnpkg.com/metro-config/-/metro-config-0.83.3.tgz#a30e7a69b5cf8c4ac4c4b68b1b4c33649ae129a2"
   integrity sha512-mTel7ipT0yNjKILIan04bkJkuCzUUkm2SeEaTads8VfEecCh+ltXchdq6DovXJqzQAXuR2P9cxZB47Lg4klriA==
@@ -9223,7 +9308,7 @@ metro-config@0.83.3, metro-config@^0.83.1:
     metro-runtime "0.83.3"
     yaml "^2.6.1"
 
-metro-core@0.83.3, metro-core@^0.83.1:
+metro-core@0.83.3, metro-core@^0.83.1, metro-core@^0.83.3:
   version "0.83.3"
   resolved "https://registry.yarnpkg.com/metro-core/-/metro-core-0.83.3.tgz#007e93f7d1983777da8988dfb103ad897c9835b8"
   integrity sha512-M+X59lm7oBmJZamc96usuF1kusd5YimqG/q97g4Ac7slnJ3YiGglW5CsOlicTR5EWf8MQFxxjDoB6ytTqRe8Hw==
@@ -9269,7 +9354,7 @@ metro-resolver@0.83.3:
   dependencies:
     flow-enums-runtime "^0.0.6"
 
-metro-runtime@0.83.3, metro-runtime@^0.83.1:
+metro-runtime@0.83.3, metro-runtime@^0.83.1, metro-runtime@^0.83.3:
   version "0.83.3"
   resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.83.3.tgz#ff504df5d93f38b1af396715b327e589ba8d184d"
   integrity sha512-JHCJb9ebr9rfJ+LcssFYA2x1qPYuSD/bbePupIGhpMrsla7RCwC/VL3yJ9cSU+nUhU4c9Ixxy8tBta+JbDeZWw==
@@ -9277,7 +9362,7 @@ metro-runtime@0.83.3, metro-runtime@^0.83.1:
     "@babel/runtime" "^7.25.0"
     flow-enums-runtime "^0.0.6"
 
-metro-source-map@0.83.3, metro-source-map@^0.83.1:
+metro-source-map@0.83.3, metro-source-map@^0.83.1, metro-source-map@^0.83.3:
   version "0.83.3"
   resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.83.3.tgz#04bb464f7928ea48bcdfd18912c8607cf317c898"
   integrity sha512-xkC3qwUBh2psVZgVavo8+r2C9Igkk3DibiOXSAht1aYRRcztEZNFtAMtfSB7sdO2iFMx2Mlyu++cBxz/fhdzQg==
@@ -9336,7 +9421,7 @@ metro-transform-worker@0.83.3:
     metro-transform-plugins "0.83.3"
     nullthrows "^1.1.1"
 
-metro@0.83.3, metro@^0.83.1:
+metro@0.83.3, metro@^0.83.1, metro@^0.83.3:
   version "0.83.3"
   resolved "https://registry.yarnpkg.com/metro/-/metro-0.83.3.tgz#1e7e04c15519af746f8932c7f9c553d92c39e922"
   integrity sha512-+rP+/GieOzkt97hSJ0MrPOuAH/jpaS21ZDvL9DJ35QYRDlQcwzcvUlGUf79AnQxq/2NPiS/AULhhM4TKutIt8Q==
@@ -10945,19 +11030,19 @@ react-native-platform-override@0.0.0-canary.1017:
     upath "^1.2.0"
     yargs "^16.2.0"
 
-react-native@0.83.0-nightly-20250917-18cb4edfa:
-  version "0.83.0-nightly-20250917-18cb4edfa"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.83.0-nightly-20250917-18cb4edfa.tgz#5502b8c21675f6d9031e9637538c597f378919b3"
-  integrity sha512-eMMVWbw/grpV8ief7Xiw8es1ACsFkLd64Hd7zxvoN1lj9khMMU57XCUDNMplT8ErpooRsXsc1b5ZFE/qbswQRw==
+react-native@0.83.0-nightly-20251012-6f482708b:
+  version "0.83.0-nightly-20251012-6f482708b"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.83.0-nightly-20251012-6f482708b.tgz#a08c869954b21aa950f9b15cc0bf3cf3d43409dd"
+  integrity sha512-XW54IzcjLtZQQ9cz3N7v+UwQj0T/aJtczqiibcmMp0jPQYXyCGLOVcWPnxtvs7Mts/Ciy4xXuqGY+G6fNwPfwQ==
   dependencies:
     "@jest/create-cache-key-function" "^29.7.0"
-    "@react-native/assets-registry" "0.83.0-nightly-20250917-18cb4edfa"
-    "@react-native/codegen" "0.83.0-nightly-20250917-18cb4edfa"
-    "@react-native/community-cli-plugin" "0.83.0-nightly-20250917-18cb4edfa"
-    "@react-native/gradle-plugin" "0.83.0-nightly-20250917-18cb4edfa"
-    "@react-native/js-polyfills" "0.83.0-nightly-20250917-18cb4edfa"
-    "@react-native/normalize-colors" "0.83.0-nightly-20250917-18cb4edfa"
-    "@react-native/virtualized-lists" "0.83.0-nightly-20250917-18cb4edfa"
+    "@react-native/assets-registry" "0.83.0-nightly-20251012-6f482708b"
+    "@react-native/codegen" "0.83.0-nightly-20251012-6f482708b"
+    "@react-native/community-cli-plugin" "0.83.0-nightly-20251012-6f482708b"
+    "@react-native/gradle-plugin" "0.83.0-nightly-20251012-6f482708b"
+    "@react-native/js-polyfills" "0.83.0-nightly-20251012-6f482708b"
+    "@react-native/normalize-colors" "0.83.0-nightly-20251012-6f482708b"
+    "@react-native/virtualized-lists" "0.83.0-nightly-20251012-6f482708b"
     abort-controller "^3.0.0"
     anser "^1.4.9"
     ansi-regex "^5.0.0"
@@ -10971,15 +11056,15 @@ react-native@0.83.0-nightly-20250917-18cb4edfa:
     invariant "^2.2.4"
     jest-environment-node "^29.7.0"
     memoize-one "^5.0.0"
-    metro-runtime "^0.83.1"
-    metro-source-map "^0.83.1"
+    metro-runtime "^0.83.3"
+    metro-source-map "^0.83.3"
     nullthrows "^1.1.1"
     pretty-format "^29.7.0"
     promise "^8.3.0"
     react-devtools-core "^6.1.5"
     react-refresh "^0.14.0"
     regenerator-runtime "^0.13.2"
-    scheduler "0.26.0"
+    scheduler "0.27.0"
     semver "^7.1.3"
     stacktrace-parser "^0.1.10"
     whatwg-fetch "^3.0.0"
@@ -11460,6 +11545,11 @@ scheduler@0.26.0, scheduler@^0.26.0:
   version "0.26.0"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.26.0.tgz#4ce8a8c2a2095f13ea11bf9a445be50c555d6337"
   integrity sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==
+
+scheduler@0.27.0:
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.27.0.tgz#0c4ef82d67d1e5c1e359e8fc76d3a87f045fe5bd"
+  integrity sha512-eNv+WrVbKu1f3vbYJT/xtiF5syA5HPIMtf9IgY/nKg0sWqzAUEvqY/xm7OcZc/qafLx/iO9FgOmeSAp4v5ti/Q==
 
 scheduler@^0.25.0:
   version "0.25.0"

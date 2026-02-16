@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.83.0-nightly-20250917-18cb4edfa",
+  "baseVersion": "0.83.0-nightly-20251012-6f482708b",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "8a6739338afdae4cbcfad614e33e66ae2948f497"
+      "baseHash": "40952c5ed2905d0daf6988169293ed3e24f77241"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "02a8ea6efd164de036681159f18135cc3393cb21"
+      "baseHash": "a1db6ce79c25843956a583b2dbd34aa11d15da0f"
     },
     {
       "type": "platform",
@@ -114,7 +114,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "547fa57cd844cece1f4401b93be75b2edd2a757f"
+      "baseHash": "f037eaadc2960fb8d1e935c635116c8ebc702a8c"
     },
     {
       "type": "patch",
@@ -335,7 +335,7 @@
       "type": "copy",
       "file": "src-win/Libraries/Network/RCTNetworking.win32.js",
       "baseFile": "packages/react-native/Libraries/Network/RCTNetworking.ios.js",
-      "baseHash": "1c7dcc3e3cf7339c3450e7722b7b0a355266a001",
+      "baseHash": "f1afed4408683b8e6a2b66ab88bb873aa5f81696",
       "issue": 4318
     },
     {
@@ -394,7 +394,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Renderer/shims/ReactNativeTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Renderer/shims/ReactNativeTypes.js",
-      "baseHash": "333afc05f5a42a5321196f5f7a14d14c8fd5dd0f",
+      "baseHash": "41da351b1e8d090e5ecf0859738218a5dcd4c08f",
       "issue": 0
     },
     {
