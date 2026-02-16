@@ -31,7 +31,7 @@ const ViewWin32: React.AbstractComponent<
       accessibilityControls,
       ...rest
     }: ViewProps,
-    forwardedRef,
+    forwardedRef: React.RefSetter<React.ElementRef<typeof View>>,
   ) => {
     /**
      * Process accessibility refs into node handles after initial DOM render, before sent across the bridge.
