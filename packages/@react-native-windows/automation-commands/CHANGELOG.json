@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Mon, 16 Feb 2026 05:47:16 GMT",
+      "version": "0.82.0-preview.11",
+      "tag": "@react-native-windows/automation-commands_v0.82.0-preview.11",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "d7ba35e21aee54fe408ad39cd45ad5254334c673",
+            "comment": "Fix XAML popup positioning and light dismiss in ScrollView (#15557)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.82.0-preview.11",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Feb 2026 09:48:46 GMT",
       "version": "0.82.0-preview.10",
       "tag": "@react-native-windows/automation-commands_v0.82.0-preview.10",

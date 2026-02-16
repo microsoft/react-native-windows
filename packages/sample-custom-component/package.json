@@ -23,7 +23,7 @@
     "@types/react": "^19.1.1",
     "react": "^19.1.1",
     "react-native": "0.82.1",
-    "react-native-windows": "0.82.0-preview.10"
+    "react-native-windows": "0.82.0-preview.11"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

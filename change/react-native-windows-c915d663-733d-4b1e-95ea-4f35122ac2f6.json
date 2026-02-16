@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update WinAppSdk to 1.8.260209005",
-  "packageName": "react-native-windows",
-  "email": "66076509+vineethkuttan@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
