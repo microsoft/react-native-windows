@@ -2407,10 +2407,10 @@
     prompts "^2.4.2"
     semver "^7.5.2"
 
-"@react-native-community/template@0.82.0-nightly-20251017-e319a2f":
-  version "0.82.0-nightly-20251017-e319a2f"
-  resolved "https://registry.yarnpkg.com/@react-native-community/template/-/template-0.82.0-nightly-20251017-e319a2f.tgz#025b37e9445a73ac34c3ee6dbe445821e9f28cb0"
-  integrity sha512-Wy0A8Czvht1AgLVfDQg3tjPNUXk7H46x83Dizs5avHdz9+Om3zPneYJQzfCiu+kzq536TOr9XDAVSW96A8bkUg==
+"@react-native-community/template@0.82.0-nightly-20251010-a46309b":
+  version "0.82.0-nightly-20251010-a46309b"
+  resolved "https://registry.yarnpkg.com/@react-native-community/template/-/template-0.82.0-nightly-20251010-a46309b.tgz#34f96c4d8f505303ab948a7f32e91b6b665eef47"
+  integrity sha512-MKR05C+DQt2zzSor30q8PhvTN5PaGglycf+lbLbCbh8suumfaQj/QKRSCvT+H0+AIm77Wj9HSvumfS+wJONshQ==
 
 "@react-native-picker/picker@^2.5.1":
   version "2.11.4"

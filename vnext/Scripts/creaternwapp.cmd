@@ -117,7 +117,7 @@ if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   REM Do not change, this makes sure we always get a nightly template when still consuming a nightly RN and NOT a later "stable" template that may have been released
   REM set RNCLI_TEMPLATE=--template "@react-native-community/template@^%RN_VERSION:~0,4%.0-"
   REM Windows we need to manually update this with every integration #15124
-  set RNCLI_TEMPLATE=--template "@react-native-community/template@0.82.0-nightly-20251017-e319a2f"
+  set RNCLI_TEMPLATE=--template "@react-native-community/template@0.82.0-nightly-20251010-a46309b"
 )
 
 @echo creaternwapp.cmd: Creating base RN app project with: npx --yes @react-native-community/cli@%RNCLI_VERSION% init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true
