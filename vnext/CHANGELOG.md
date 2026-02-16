@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 11 Feb 2026 09:48:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 16 Feb 2026 05:47:17 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.11
+
+Mon, 16 Feb 2026 05:47:17 GMT
+
+### Changes
+
+- Fix XAML popup positioning and light dismiss in ScrollView (#15557) (nitchaudhary@microsoft.com)
+- Implement overflow property support for Fabric architecture (nitchaudhary@microsoft.com)
+- Update WinAppSdk to 1.8.260209005 (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.82.0-preview.10
 

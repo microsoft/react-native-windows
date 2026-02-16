@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Wed, 11 Feb 2026 09:48:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 16 Feb 2026 05:47:16 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.11
+
+Mon, 16 Feb 2026 05:47:16 GMT
+
+### Changes
+
+- Update WinAppSdk to 1.8.260209005 (66076509+vineethkuttan@users.noreply.github.com)
+- Fix XAML popup positioning and light dismiss in ScrollView (#15557) (nitchaudhary@microsoft.com)
+- Bump react-native-windows to v0.82.0-preview.11
 
 ## 0.82.0-preview.10
 
