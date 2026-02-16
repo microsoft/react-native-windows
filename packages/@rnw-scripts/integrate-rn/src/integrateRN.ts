@@ -26,12 +26,12 @@ import {
 
 import runCommand from './runCommand';
 import upgradeDependencies from './upgradeDependencies';
-import {Logger, CompositeLogger, ConsoleLogger, MarkdownLogger} from './logger';
+import { Logger, CompositeLogger, ConsoleLogger, MarkdownLogger } from './logger';
 
 let logger: Logger;
 
 (async () => {
-  const {argv} = yargs
+  const { argv } = yargs
     .options({
       reportPath: {
         type: 'string',
@@ -70,11 +70,13 @@ async function performSteps(newVersion: string) {
     `Updating packages and dependents to react-native@${newVersion}`,
     async () => {
       await upgradeDependencies(newVersion);
-      return {status: 'success'};
+      return { status: 'success' };
     },
   );
 
-  await funcStep('Upgrading out-of-date overrides', upgradePlatformOverrides);
+  await funcStep('Upgrading out-of-date overrides', () =>
+    upgradePlatformOverrides(newVersion),
+  );
   await funcStep(
     'Performing additional override validation',
     validatePlatformOverrides,
@@ -103,13 +105,15 @@ async function isOverridePackage(pkg: NpmPackage): Promise<boolean> {
  * Upgrade platform overrides in the repo to the current version of react
  * native, disallowing files with conflicts to be written
  */
-async function upgradePlatformOverrides(): Promise<StepResult> {
+async function upgradePlatformOverrides(
+  newVersion: string,
+): Promise<StepResult> {
   const overridesWithConflicts: string[] = [];
 
   for (const pkg of await enumerateOverridePackages()) {
     const results = await upgradeOverrides(
       path.join(pkg.path, 'overrides.json'),
-      {allowConflicts: false},
+      { reactNativeVersion: newVersion, allowConflicts: false },
     );
 
     overridesWithConflicts.push(
@@ -121,7 +125,7 @@ async function upgradePlatformOverrides(): Promise<StepResult> {
   }
 
   if (overridesWithConflicts.length === 0) {
-    return {status: 'success'};
+    return { status: 'success' };
   } else {
     return {
       status: 'warn',
@@ -151,7 +155,7 @@ async function validatePlatformOverrides(): Promise<StepResult> {
       body: 'Override validation failed. Run `yarn validate-overrides` for more information',
     };
   } else {
-    return {status: 'success'};
+    return { status: 'success' };
   }
 }
 
@@ -198,7 +202,7 @@ async function funcStep(
 async function commandStep(cmd: string) {
   return funcStep(cmd, async () => {
     await runCommand(cmd);
-    return {status: 'success'};
+    return { status: 'success' };
   });
 }
 
