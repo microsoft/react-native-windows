@@ -36,10 +36,11 @@ constexpr float FOCUS_VISUAL_RADIUS = 3.0f;
 
 // m_outerVisual
 //   |
-//   |
 //   ----- m_visual <-- Background / clip - Can be a custom visual depending on Component type
 //            |
 //            ----- Border Visuals x N (BorderPrimitive attached to m_visual)
+//            ----- <children> (default: directly in m_visual after border visuals)
+//            ----- m_childrenContainer (created on demand when overflow:hidden, children moved here)
 //   ------Focus Visual Container (created when hosting focus visuals)
 //           |
 //           |------Inner Focus Visual
@@ -971,23 +972,26 @@ void ComponentView::updateClippingPath(
     const facebook::react::ViewProps &viewProps) noexcept {
   auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
 
-  if (borderMetrics.borderRadii.topLeft.horizontal == 0 && borderMetrics.borderRadii.topRight.horizontal == 0 &&
-      borderMetrics.borderRadii.bottomLeft.horizontal == 0 && borderMetrics.borderRadii.bottomRight.horizontal == 0 &&
-      borderMetrics.borderRadii.topLeft.vertical == 0 && borderMetrics.borderRadii.topRight.vertical == 0 &&
-      borderMetrics.borderRadii.bottomLeft.vertical == 0 && borderMetrics.borderRadii.bottomRight.vertical == 0) {
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
-  } else {
+  bool hasRoundedCorners = borderMetrics.borderRadii.topLeft.horizontal != 0 ||
+      borderMetrics.borderRadii.topRight.horizontal != 0 || borderMetrics.borderRadii.bottomLeft.horizontal != 0 ||
+      borderMetrics.borderRadii.bottomRight.horizontal != 0 || borderMetrics.borderRadii.topLeft.vertical != 0 ||
+      borderMetrics.borderRadii.topRight.vertical != 0 || borderMetrics.borderRadii.bottomLeft.vertical != 0 ||
+      borderMetrics.borderRadii.bottomRight.vertical != 0;
+
+  const float scale = layoutMetrics.pointScaleFactor;
+  const float viewWidth = layoutMetrics.frame.size.width * scale;
+  const float viewHeight = layoutMetrics.frame.size.height * scale;
+
+  // Apply clipping to m_visual only for rounded corners
+  // overflow:hidden clipping is handled separately via m_childrenContainer in ViewComponentView
+  if (hasRoundedCorners) {
     winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
-        m_compContext,
-        borderMetrics.borderRadii,
-        {0, 0, 0, 0},
-        {0,
-         0,
-         layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-         layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+        m_compContext, borderMetrics.borderRadii, {0, 0, 0, 0}, {0, 0, viewWidth, viewHeight});
 
     Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
         pathGeometry.get());
+  } else {
+    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
   }
 }
 
@@ -1162,6 +1166,11 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 ViewComponentView::VisualToMountChildrenInto() noexcept {
   if (m_builder && m_builder->VisualToMountChildrenIntoHandler())
     return m_builder->VisualToMountChildrenIntoHandler()(*this);
+  // When overflow:hidden, children are hosted in m_childrenContainer (child of m_visual)
+  // so we can apply clipping without affecting borders/background.
+  // Otherwise children go directly into Visual() (the original behavior).
+  if (m_childrenContainer)
+    return m_childrenContainer;
   return Visual();
 }
 
@@ -1170,8 +1179,13 @@ void ViewComponentView::MountChildComponentView(
     uint32_t index) noexcept {
   base_type::MountChildComponentView(childComponentView, index);
 
-  indexOffsetForBorder(index);
   ensureVisual();
+
+  // When children are in Visual() directly, offset past border visuals.
+  // When children are in m_childrenContainer, no offset needed.
+  if (!m_childrenContainer) {
+    indexOffsetForBorder(index);
+  }
 
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
     auto visualIndex = index;
@@ -1184,6 +1198,7 @@ void ViewComponentView::MountChildComponentView(
         }
       }
     }
+
     VisualToMountChildrenInto().InsertAt(compositionChild->OuterVisual(), visualIndex);
   } else {
     m_hasNonVisualChildren = true;
@@ -1195,7 +1210,6 @@ void ViewComponentView::UnmountChildComponentView(
     uint32_t index) noexcept {
   base_type::UnmountChildComponentView(childComponentView, index);
 
-  indexOffsetForBorder(index);
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
     VisualToMountChildrenInto().Remove(compositionChild->OuterVisual());
   }
@@ -1395,6 +1409,57 @@ void ViewComponentView::updateLayoutMetrics(
   Visual().Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+
+  // Update children container clipping for overflow:hidden
+  updateChildrenClippingPath(layoutMetrics, *viewProps());
+}
+
+void ViewComponentView::updateChildrenClippingPath(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    const facebook::react::ViewProps &viewProps) noexcept {
+  const float scale = layoutMetrics.pointScaleFactor;
+  const float viewWidth = layoutMetrics.frame.size.width * scale;
+  const float viewHeight = layoutMetrics.frame.size.height * scale;
+
+  if (viewProps.getClipsContentToBounds()) {
+    // Create m_childrenContainer on demand (like iOS _containerView pattern)
+    // m_childrenContainer is a child of m_visual, placed after border visuals.
+    if (!m_childrenContainer) {
+      m_childrenContainer = m_compContext.CreateSpriteVisual();
+
+      // Insert at the end of m_visual's children (after border visuals + existing children)
+      // Then move existing children from m_visual into m_childrenContainer
+      uint32_t borderCount = 0;
+      indexOffsetForBorder(borderCount);
+
+      // Move existing child visuals from m_visual to m_childrenContainer
+      uint32_t childVisualIndex = 0;
+      for (auto it = m_children.begin(); it != m_children.end(); ++it) {
+        if (auto compositionChild = (*it).try_as<ComponentView>()) {
+          Visual().Remove(compositionChild->OuterVisual());
+          m_childrenContainer.InsertAt(compositionChild->OuterVisual(), childVisualIndex++);
+        }
+      }
+
+      // Insert m_childrenContainer after border visuals in m_visual
+      Visual().InsertAt(m_childrenContainer, borderCount);
+
+      // Use relative sizing so container automatically tracks parent's size
+      m_childrenContainer.RelativeSizeWithOffset({0, 0}, {1, 1});
+    }
+
+    // Clip children to view bounds using outer border radii (matches iOS default behavior)
+    auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
+    winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
+        m_compContext, borderMetrics.borderRadii, {0, 0, 0, 0}, {0, 0, viewWidth, viewHeight});
+
+    m_childrenContainer.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
+        pathGeometry.get());
+  } else if (m_childrenContainer) {
+    // overflow changed from hidden to visible. Keep container, just remove clip.
+    m_childrenContainer.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
+        nullptr);
+  }
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}
