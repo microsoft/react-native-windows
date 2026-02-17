@@ -14,7 +14,7 @@ import {
   findRepoPackage,
 } from '@react-native-windows/package-utils';
 import runCommand from './runCommand';
-import { upgradeOverrides } from 'react-native-platform-override';
+import {upgradeOverrides} from 'react-native-platform-override';
 
 /**
  * Describes the dependencies of a package
@@ -58,7 +58,7 @@ const OUT_OF_TREE_PLATFORMS = [
 export default async function upgradeDependencies(
   newReactNativeVersion: string,
 ) {
-  const { reactNativeDiff, templateDiff } = await upgradeReactNative(
+  const {reactNativeDiff, templateDiff} = await upgradeReactNative(
     newReactNativeVersion,
   );
   const repoConfigDiff = await upgradeRepoConfig(newReactNativeVersion);
@@ -114,7 +114,7 @@ export default async function upgradeDependencies(
  */
 async function upgradeReactNative(
   newReactNativeVersion: string,
-): Promise<{ reactNativeDiff: PackageDiff; templateDiff: PackageDiff }> {
+): Promise<{reactNativeDiff: PackageDiff; templateDiff: PackageDiff}> {
   const platformPackages = await enumerateRepoPackages(async pkg =>
     OUT_OF_TREE_PLATFORMS.includes(pkg.json.name),
   );
@@ -125,7 +125,7 @@ async function upgradeReactNative(
     );
   }
 
-  const findRnOpts = { searchPath: platformPackages[0].path };
+  const findRnOpts = {searchPath: platformPackages[0].path};
   const origJson = (await findPackage('react-native', findRnOpts))!.json;
   const origTemplateJson = (await findPackage(
     '@react-native-community/template',
@@ -201,7 +201,7 @@ async function upgradeRepoConfig(
       .forEach(prop => {
         internalDevDependencies[prop] = newReactNativeVersion;
       });
-    await newPackage.mergeProps({ devDependencies: internalDevDependencies });
+    await newPackage.mergeProps({devDependencies: internalDevDependencies});
   }
 
   return extractPackageDiff(origPackage.json, newPackage.json);
@@ -223,7 +223,7 @@ function extractPackageDiff(origJson: any, newJson: any): PackageDiff {
 function extractPackageDeps(json: any): PackageDeps {
   return {
     packageName: json.name,
-    ...(json.dependencies && { dependencies: json.dependencies }),
+    ...(json.dependencies && {dependencies: json.dependencies}),
     ...(json.peerDependencies && {
       peerDependencies: json.peerDependencies,
     }),
@@ -251,7 +251,11 @@ export function calcPackageDependencies(
     const newPackage: LocalPackageDeps = _.cloneDeep(pkg);
 
     if (newPackage.outOfTreePlatform) {
-      syncReactNativeDependencies(newPackage, reactNativePackageDiff, newReactNativeVersion);
+      syncReactNativeDependencies(
+        newPackage,
+        reactNativePackageDiff,
+        newReactNativeVersion,
+      );
     }
 
     if (newPackage.dependencies && newPackage.dependencies['react-native']) {
@@ -328,7 +332,7 @@ function bumpReactNativeNightlyDeps(
   if (!newReactNativeVersion.includes('nightly')) {
     return deps;
   }
-  const result = { ...deps };
+  const result = {...deps};
   for (const [dep, version] of Object.entries(result)) {
     if (dep.startsWith('@react-native/') && version.includes('nightly')) {
       result[dep] = newReactNativeVersion;
@@ -354,10 +358,13 @@ function syncReactNativeDependencies(
     Object.keys(pkg.dependencies || {}),
     Object.keys(reactNativePackageDiff.oldPackage.dependencies || {}),
   );
-  const newDeps = bumpReactNativeNightlyDeps({
-    ..._.pick(pkg.dependencies, extraDeps),
-    ...reactNativePackageDiff.newPackage.dependencies,
-  } as Record<string, string>, newReactNativeVersion);
+  const newDeps = bumpReactNativeNightlyDeps(
+    {
+      ..._.pick(pkg.dependencies, extraDeps),
+      ...reactNativePackageDiff.newPackage.dependencies,
+    } as Record<string, string>,
+    newReactNativeVersion,
+  );
   if (Object.keys(newDeps).length === 0) {
     delete pkg.dependencies;
   } else {

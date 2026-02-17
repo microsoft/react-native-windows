@@ -26,12 +26,12 @@ import {
 
 import runCommand from './runCommand';
 import upgradeDependencies from './upgradeDependencies';
-import { Logger, CompositeLogger, ConsoleLogger, MarkdownLogger } from './logger';
+import {Logger, CompositeLogger, ConsoleLogger, MarkdownLogger} from './logger';
 
 let logger: Logger;
 
 (async () => {
-  const { argv } = yargs
+  const {argv} = yargs
     .options({
       reportPath: {
         type: 'string',
@@ -70,7 +70,7 @@ async function performSteps(newVersion: string) {
     `Updating packages and dependents to react-native@${newVersion}`,
     async () => {
       await upgradeDependencies(newVersion);
-      return { status: 'success' };
+      return {status: 'success'};
     },
   );
 
@@ -113,7 +113,7 @@ async function upgradePlatformOverrides(
   for (const pkg of await enumerateOverridePackages()) {
     const results = await upgradeOverrides(
       path.join(pkg.path, 'overrides.json'),
-      { reactNativeVersion: newVersion, allowConflicts: false },
+      {reactNativeVersion: newVersion, allowConflicts: false},
     );
 
     overridesWithConflicts.push(
@@ -125,7 +125,7 @@ async function upgradePlatformOverrides(
   }
 
   if (overridesWithConflicts.length === 0) {
-    return { status: 'success' };
+    return {status: 'success'};
   } else {
     return {
       status: 'warn',
@@ -155,7 +155,7 @@ async function validatePlatformOverrides(): Promise<StepResult> {
       body: 'Override validation failed. Run `yarn validate-overrides` for more information',
     };
   } else {
-    return { status: 'success' };
+    return {status: 'success'};
   }
 }
 
@@ -202,7 +202,7 @@ async function funcStep(
 async function commandStep(cmd: string) {
   return funcStep(cmd, async () => {
     await runCommand(cmd);
-    return { status: 'success' };
+    return {status: 'success'};
   });
 }
 
