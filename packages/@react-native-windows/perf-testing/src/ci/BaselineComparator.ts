@@ -107,8 +107,8 @@ export class BaselineComparator {
         ? ((head.medianDuration - base.medianDuration) / base.medianDuration) *
           100
         : head.medianDuration > 0
-          ? Infinity
-          : 0;
+        ? Infinity
+        : 0;
 
     const errors: string[] = [];
 
