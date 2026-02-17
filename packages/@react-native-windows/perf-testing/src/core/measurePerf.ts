@@ -185,8 +185,11 @@ async function runSingleMeasurement(
     act(() => {
       renderer.unmount();
     });
-  } catch {
-    // Already unmounted
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e);
+    if (!msg.includes('unmount') && !msg.includes('not mounted')) {
+      throw e;
+    }
   }
 
   // Prefer Profiler actualDuration, fallback to manual timing

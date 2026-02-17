@@ -88,12 +88,14 @@ function resolveThreshold(threshold) {
 }
 
 function compareEntry(head, base, threshold) {
-  // Use median for comparison — robust to outlier spikes
+  // median for comparison
   const percentChange =
     base.medianDuration > 0
       ? ((head.medianDuration - base.medianDuration) / base.medianDuration) *
         100
-      : 0;
+      : head.medianDuration > 0
+        ? Infinity
+        : 0;
 
   const errors = [];
 
