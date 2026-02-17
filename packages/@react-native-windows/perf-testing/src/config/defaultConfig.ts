@@ -24,6 +24,8 @@ export const DEFAULT_CONFIG: Readonly<PerfTestConfig> = {
     minAbsoluteDelta: 3,
     maxRenderCount: 5,
     minRuns: 10,
+    maxCV: 0.5,
+    mode: 'gate',
   },
   verbose: false,
   outputDir: '.perf-results',
