@@ -1226,6 +1226,7 @@ void WindowsTextInputComponentView::updateState(
     m_comingFromState = true;
     auto &fragments = m_state->getData().attributedStringBox.getValue().getFragments();
     {
+      // DrawBlock defers DrawText() until after UpdateText completes
       DrawBlock db(*this);
       UpdateText(fragments.size() ? fragments[0].string : "");
     }
