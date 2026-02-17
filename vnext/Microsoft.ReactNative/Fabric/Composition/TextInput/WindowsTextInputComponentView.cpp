@@ -1227,8 +1227,11 @@ void WindowsTextInputComponentView::updateState(
   if (m_mostRecentEventCount == m_state->getData().mostRecentEventCount) {
     m_comingFromState = true;
     auto &fragments = m_state->getData().attributedStringBox.getValue().getFragments();
-    UpdateText(fragments.size() ? fragments[0].string : "");
-
+    {
+      // DrawBlock defers DrawText() until after UpdateText completes
+      DrawBlock db(*this);
+      UpdateText(fragments.size() ? fragments[0].string : "");
+    }
     m_comingFromState = false;
   }
 }
@@ -1377,7 +1380,7 @@ void WindowsTextInputComponentView::EmitOnScrollEvent() noexcept {
 }
 
 void WindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end) noexcept {
-  if (m_eventEmitter && !m_comingFromState /* && !m_comingFromJS ?? */) {
+  if (m_eventEmitter && !m_comingFromState && !m_comingFromJS) {
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     facebook::react::WindowsTextInputEventEmitter::OnSelectionChange onSelectionChangeArgs;
     onSelectionChangeArgs.selection.start = start;
