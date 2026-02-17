@@ -2,12 +2,12 @@
   "View Performance mount time 1": {
     "metrics": {
       "name": "View mount",
-      "meanDuration": 0.7,
-      "medianDuration": 1,
-      "stdDev": 0.48304589153964794,
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-14T18:13:20.717Z"
+      "timestamp": "2026-02-17T10:04:12.889Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,17 +16,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:20.720Z"
+    "capturedAt": "2026-02-17T10:04:12.908Z"
   },
   "View Performance unmount time 1": {
     "metrics": {
       "name": "View unmount",
-      "meanDuration": 0.2,
+      "meanDuration": 0,
       "medianDuration": 0,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-14T18:13:20.726Z"
+      "timestamp": "2026-02-17T10:04:12.914Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,7 +35,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:20.740Z"
+    "capturedAt": "2026-02-17T10:04:12.931Z"
   },
   "View Performance rerender time 1": {
     "metrics": {
@@ -45,7 +45,7 @@
       "stdDev": 0.42163702135578396,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-14T18:13:20.749Z"
+      "timestamp": "2026-02-17T10:04:12.939Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,17 +54,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:20.760Z"
+    "capturedAt": "2026-02-17T10:04:12.955Z"
   },
   "View Performance View-Specific Scenarios nested-views-50 1": {
     "metrics": {
       "name": "View nested-50",
-      "meanDuration": 3.6,
+      "meanDuration": 3.7333333333333334,
       "medianDuration": 4,
-      "stdDev": 0.9102589898327995,
+      "stdDev": 0.8837151016885368,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-14T18:13:20.832Z"
+      "timestamp": "2026-02-17T10:04:13.027Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -73,17 +73,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:20.834Z"
+    "capturedAt": "2026-02-17T10:04:13.032Z"
   },
   "View Performance View-Specific Scenarios nested-views-100 1": {
     "metrics": {
       "name": "View nested-100",
-      "meanDuration": 7.333333333333333,
-      "medianDuration": 7,
-      "stdDev": 1.1126972805283735,
+      "meanDuration": 11,
+      "medianDuration": 9,
+      "stdDev": 5.42481072744215,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-14T18:13:20.968Z"
+      "timestamp": "2026-02-17T10:04:13.219Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -92,7 +92,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:20.970Z"
+    "capturedAt": "2026-02-17T10:04:13.225Z"
   },
   "View Performance View-Specific Scenarios with-shadow 1": {
     "metrics": {
@@ -102,7 +102,7 @@
       "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-14T18:13:20.976Z"
+      "timestamp": "2026-02-17T10:04:13.233Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -111,17 +111,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:20.992Z"
+    "capturedAt": "2026-02-17T10:04:13.249Z"
   },
   "View Performance View-Specific Scenarios with-border-radius 1": {
     "metrics": {
       "name": "View border-radius",
-      "meanDuration": 0.2,
+      "meanDuration": 0.1,
       "medianDuration": 0,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0.31622776601683794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-14T18:13:20.996Z"
+      "timestamp": "2026-02-17T10:04:13.256Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -130,6 +130,6 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:21.011Z"
+    "capturedAt": "2026-02-17T10:04:13.271Z"
   }
 }

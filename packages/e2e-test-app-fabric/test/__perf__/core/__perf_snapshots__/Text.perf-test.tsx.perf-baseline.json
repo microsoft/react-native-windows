@@ -2,12 +2,12 @@
   "Text Performance mount time 1": {
     "metrics": {
       "name": "Text mount",
-      "meanDuration": 0.3,
+      "meanDuration": 0.1,
       "medianDuration": 0,
-      "stdDev": 0.4830458915396479,
+      "stdDev": 0.31622776601683794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-14T18:13:21.955Z"
+      "timestamp": "2026-02-17T10:04:25.490Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,7 +16,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:21.958Z"
+    "capturedAt": "2026-02-17T10:04:25.508Z"
   },
   "Text Performance unmount time 1": {
     "metrics": {
@@ -26,7 +26,7 @@
       "stdDev": 0,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-14T18:13:21.964Z"
+      "timestamp": "2026-02-17T10:04:25.515Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,7 +35,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:21.981Z"
+    "capturedAt": "2026-02-17T10:04:25.530Z"
   },
   "Text Performance rerender time 1": {
     "metrics": {
@@ -45,7 +45,7 @@
       "stdDev": 0.31622776601683794,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-14T18:13:21.988Z"
+      "timestamp": "2026-02-17T10:04:25.537Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,17 +54,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:22.002Z"
+    "capturedAt": "2026-02-17T10:04:25.550Z"
   },
   "Text Performance Text-Specific Scenarios long-text 1": {
     "metrics": {
       "name": "Text long-1000",
-      "meanDuration": 0.2,
+      "meanDuration": 0.1,
       "medianDuration": 0,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0.31622776601683794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-14T18:13:22.009Z"
+      "timestamp": "2026-02-17T10:04:25.556Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -73,17 +73,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:22.023Z"
+    "capturedAt": "2026-02-17T10:04:25.571Z"
   },
   "Text Performance Text-Specific Scenarios nested-text 1": {
     "metrics": {
       "name": "Text nested",
-      "meanDuration": 0.2,
+      "meanDuration": 0.3,
       "medianDuration": 0,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0.4830458915396479,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-14T18:13:22.029Z"
+      "timestamp": "2026-02-17T10:04:25.577Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -92,7 +92,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:22.043Z"
+    "capturedAt": "2026-02-17T10:04:25.593Z"
   },
   "Text Performance Text-Specific Scenarios styled-text 1": {
     "metrics": {
@@ -102,7 +102,7 @@
       "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-14T18:13:22.047Z"
+      "timestamp": "2026-02-17T10:04:25.598Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -111,6 +111,6 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-14T18:13:22.061Z"
+    "capturedAt": "2026-02-17T10:04:25.615Z"
   }
 }

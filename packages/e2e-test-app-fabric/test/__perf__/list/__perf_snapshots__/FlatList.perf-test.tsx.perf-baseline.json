@@ -2,12 +2,12 @@
   "FlatList Performance mount time 1": {
     "metrics": {
       "name": "FlatList mount",
-      "meanDuration": 4.6,
-      "medianDuration": 5,
-      "stdDev": 0.5163977794943222,
+      "meanDuration": 4.3,
+      "medianDuration": 4,
+      "stdDev": 0.6749485577105528,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:22.557Z"
+      "timestamp": "2026-02-17T10:04:17.410Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,17 +16,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:22.578Z"
+    "capturedAt": "2026-02-17T10:04:17.431Z"
   },
   "FlatList Performance unmount time 1": {
     "metrics": {
       "name": "FlatList unmount",
-      "meanDuration": 0.2,
+      "meanDuration": 0.1,
       "medianDuration": 0,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0.31622776601683794,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:22.641Z"
+      "timestamp": "2026-02-17T10:04:17.497Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,17 +35,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:22.643Z"
+    "capturedAt": "2026-02-17T10:04:17.500Z"
   },
   "FlatList Performance rerender time 1": {
     "metrics": {
       "name": "FlatList rerender",
-      "meanDuration": 10,
-      "medianDuration": 10,
-      "stdDev": 1.247219128924647,
+      "meanDuration": 12.5,
+      "medianDuration": 11,
+      "stdDev": 2.592724864350674,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:22.777Z"
+      "timestamp": "2026-02-17T10:04:17.653Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,17 +54,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:22.780Z"
+    "capturedAt": "2026-02-17T10:04:17.655Z"
   },
   "FlatList Performance FlatList-Specific Scenarios with-10-items 1": {
     "metrics": {
       "name": "FlatList with-10-items",
-      "meanDuration": 4.8,
+      "meanDuration": 5.1,
       "medianDuration": 5,
-      "stdDev": 0.4216370213557839,
+      "stdDev": 0.5676462121975467,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:22.847Z"
+      "timestamp": "2026-02-17T10:04:17.721Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -73,17 +73,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:22.850Z"
+    "capturedAt": "2026-02-17T10:04:17.724Z"
   },
   "FlatList Performance FlatList-Specific Scenarios with-100-items 1": {
     "metrics": {
       "name": "FlatList with-100-items",
-      "meanDuration": 4.9,
+      "meanDuration": 5,
       "medianDuration": 5,
-      "stdDev": 0.5676462121975466,
+      "stdDev": 0.4714045207910317,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:22.916Z"
+      "timestamp": "2026-02-17T10:04:17.793Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -92,17 +92,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:22.918Z"
+    "capturedAt": "2026-02-17T10:04:17.795Z"
   },
   "FlatList Performance FlatList-Specific Scenarios with-500-items 1": {
     "metrics": {
       "name": "FlatList with-500-items",
-      "meanDuration": 5.4,
-      "medianDuration": 5,
-      "stdDev": 1.505545305418162,
+      "meanDuration": 4.6,
+      "medianDuration": 4.5,
+      "stdDev": 0.699205898780101,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:22.986Z"
+      "timestamp": "2026-02-17T10:04:17.858Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -111,17 +111,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:22.988Z"
+    "capturedAt": "2026-02-17T10:04:17.860Z"
   },
   "FlatList Performance FlatList-Specific Scenarios horizontal 1": {
     "metrics": {
       "name": "FlatList horizontal",
-      "meanDuration": 4.9,
+      "meanDuration": 5.1,
       "medianDuration": 5,
       "stdDev": 0.3162277660168379,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:23.050Z"
+      "timestamp": "2026-02-17T10:04:17.927Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -130,17 +130,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:23.052Z"
+    "capturedAt": "2026-02-17T10:04:17.930Z"
   },
   "FlatList Performance FlatList-Specific Scenarios with-separator 1": {
     "metrics": {
       "name": "FlatList with-separator",
-      "meanDuration": 6.5,
-      "medianDuration": 6,
-      "stdDev": 4.453463071962462,
+      "meanDuration": 4.6,
+      "medianDuration": 5.5,
+      "stdDev": 1.9550504398153572,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:23.137Z"
+      "timestamp": "2026-02-17T10:04:17.996Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -149,17 +149,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:23.140Z"
+    "capturedAt": "2026-02-17T10:04:17.998Z"
   },
   "FlatList Performance FlatList-Specific Scenarios with-header-footer 1": {
     "metrics": {
       "name": "FlatList with-header-footer",
-      "meanDuration": 1.9,
+      "meanDuration": 1.8,
       "medianDuration": 2,
-      "stdDev": 0.31622776601683794,
+      "stdDev": 0.4216370213557839,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:23.168Z"
+      "timestamp": "2026-02-17T10:04:18.025Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -168,17 +168,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:23.170Z"
+    "capturedAt": "2026-02-17T10:04:18.027Z"
   },
   "FlatList Performance FlatList-Specific Scenarios with-empty-list 1": {
     "metrics": {
       "name": "FlatList with-empty-list",
-      "meanDuration": 0.5,
-      "medianDuration": 0.5,
-      "stdDev": 0.5270462766947299,
+      "meanDuration": 0.6,
+      "medianDuration": 1,
+      "stdDev": 0.5163977794943223,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:23.180Z"
+      "timestamp": "2026-02-17T10:04:18.036Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -187,17 +187,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:23.193Z"
+    "capturedAt": "2026-02-17T10:04:18.051Z"
   },
   "FlatList Performance FlatList-Specific Scenarios with-get-item-layout 1": {
     "metrics": {
       "name": "FlatList with-get-item-layout",
-      "meanDuration": 1.7,
+      "meanDuration": 1.8,
       "medianDuration": 2,
-      "stdDev": 0.48304589153964794,
+      "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:23.219Z"
+      "timestamp": "2026-02-17T10:04:18.076Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -206,17 +206,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:23.222Z"
+    "capturedAt": "2026-02-17T10:04:18.078Z"
   },
   "FlatList Performance FlatList-Specific Scenarios inverted 1": {
     "metrics": {
       "name": "FlatList inverted",
-      "meanDuration": 1.8,
+      "meanDuration": 2.4,
       "medianDuration": 2,
-      "stdDev": 0.6324555320336759,
+      "stdDev": 0.9660917830792959,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:23.251Z"
+      "timestamp": "2026-02-17T10:04:18.116Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -225,17 +225,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:23.253Z"
+    "capturedAt": "2026-02-17T10:04:18.118Z"
   },
   "FlatList Performance FlatList-Specific Scenarios with-num-columns 1": {
     "metrics": {
       "name": "FlatList with-num-columns",
-      "meanDuration": 3.3,
+      "meanDuration": 2.9,
       "medianDuration": 3,
-      "stdDev": 0.48304589153964794,
+      "stdDev": 0.5676462121975467,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T19:10:23.298Z"
+      "timestamp": "2026-02-17T10:04:18.165Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -244,6 +244,6 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T19:10:23.300Z"
+    "capturedAt": "2026-02-17T10:04:18.168Z"
   }
 }

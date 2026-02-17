@@ -2,12 +2,12 @@
   "ActivityIndicator Performance mount time 1": {
     "metrics": {
       "name": "ActivityIndicator mount",
-      "meanDuration": 0.5,
-      "medianDuration": 0.5,
-      "stdDev": 0.5270462766947299,
+      "meanDuration": 0.4,
+      "medianDuration": 0,
+      "stdDev": 0.966091783079296,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T18:47:20.099Z"
+      "timestamp": "2026-02-17T10:04:24.229Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,7 +16,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:47:20.103Z"
+    "capturedAt": "2026-02-17T10:04:24.248Z"
   },
   "ActivityIndicator Performance unmount time 1": {
     "metrics": {
@@ -26,7 +26,7 @@
       "stdDev": 0,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-15T18:47:20.109Z"
+      "timestamp": "2026-02-17T10:04:24.253Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,17 +35,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:47:20.123Z"
+    "capturedAt": "2026-02-17T10:04:24.268Z"
   },
   "ActivityIndicator Performance rerender time 1": {
     "metrics": {
       "name": "ActivityIndicator rerender",
-      "meanDuration": 0.2,
+      "meanDuration": 0.3,
       "medianDuration": 0,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0.4830458915396479,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-15T18:47:20.132Z"
+      "timestamp": "2026-02-17T10:04:24.276Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,7 +54,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:47:20.144Z"
+    "capturedAt": "2026-02-17T10:04:24.289Z"
   },
   "ActivityIndicator Performance ActivityIndicator-Specific Scenarios size-large 1": {
     "metrics": {
@@ -64,7 +64,7 @@
       "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T18:47:20.150Z"
+      "timestamp": "2026-02-17T10:04:24.295Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -73,36 +73,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:47:20.165Z"
+    "capturedAt": "2026-02-17T10:04:24.310Z"
   },
   "ActivityIndicator Performance ActivityIndicator-Specific Scenarios size-small 1": {
     "metrics": {
       "name": "ActivityIndicator size-small",
-      "meanDuration": 0.1,
-      "medianDuration": 0,
-      "stdDev": 0.31622776601683794,
-      "renderCount": 1,
-      "runs": 10,
-      "timestamp": "2026-02-15T18:47:20.171Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-15T18:47:20.186Z"
-  },
-  "ActivityIndicator Performance ActivityIndicator-Specific Scenarios with-color 1": {
-    "metrics": {
-      "name": "ActivityIndicator with-color",
       "meanDuration": 0.2,
       "medianDuration": 0,
       "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T18:47:20.191Z"
+      "timestamp": "2026-02-17T10:04:24.316Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -111,7 +92,26 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:47:20.207Z"
+    "capturedAt": "2026-02-17T10:04:24.333Z"
+  },
+  "ActivityIndicator Performance ActivityIndicator-Specific Scenarios with-color 1": {
+    "metrics": {
+      "name": "ActivityIndicator with-color",
+      "meanDuration": 0.1,
+      "medianDuration": 0,
+      "stdDev": 0.31622776601683794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-17T10:04:24.338Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-17T10:04:24.353Z"
   },
   "ActivityIndicator Performance ActivityIndicator-Specific Scenarios not-animating 1": {
     "metrics": {
@@ -121,7 +121,7 @@
       "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T18:47:20.214Z"
+      "timestamp": "2026-02-17T10:04:24.358Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -130,17 +130,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:47:20.227Z"
+    "capturedAt": "2026-02-17T10:04:24.373Z"
   },
   "ActivityIndicator Performance ActivityIndicator-Specific Scenarios with-accessibility 1": {
     "metrics": {
       "name": "ActivityIndicator with-accessibility",
-      "meanDuration": 0.2,
+      "meanDuration": 0.1,
       "medianDuration": 0,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0.31622776601683794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T18:47:20.232Z"
+      "timestamp": "2026-02-17T10:04:24.378Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -149,17 +149,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:47:20.244Z"
+    "capturedAt": "2026-02-17T10:04:24.394Z"
   },
   "ActivityIndicator Performance ActivityIndicator-Specific Scenarios multiple-indicators-10 1": {
     "metrics": {
       "name": "ActivityIndicator multiple-10",
-      "meanDuration": 0.9333333333333333,
+      "meanDuration": 0.8,
       "medianDuration": 1,
-      "stdDev": 0.4577377082170634,
+      "stdDev": 0.41403933560541256,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-15T18:47:20.266Z"
+      "timestamp": "2026-02-17T10:04:24.413Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -168,17 +168,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:47:20.268Z"
+    "capturedAt": "2026-02-17T10:04:24.416Z"
   },
   "ActivityIndicator Performance ActivityIndicator-Specific Scenarios multiple-indicators-50 1": {
     "metrics": {
       "name": "ActivityIndicator multiple-50",
-      "meanDuration": 3.6,
+      "meanDuration": 4.266666666666667,
       "medianDuration": 4,
-      "stdDev": 0.5070925528371101,
+      "stdDev": 0.961150104723255,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-15T18:47:20.331Z"
+      "timestamp": "2026-02-17T10:04:24.493Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -187,6 +187,6 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:47:20.335Z"
+    "capturedAt": "2026-02-17T10:04:24.495Z"
   }
 }

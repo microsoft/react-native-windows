@@ -2,12 +2,12 @@
   "Pressable Performance mount time 1": {
     "metrics": {
       "name": "Pressable mount",
-      "meanDuration": 1.1,
-      "medianDuration": 1,
-      "stdDev": 0.5676462121975467,
+      "meanDuration": 0.5,
+      "medianDuration": 0.5,
+      "stdDev": 0.5270462766947299,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T18:15:25.973Z"
+      "timestamp": "2026-02-17T10:04:18.679Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,7 +16,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:15:25.976Z"
+    "capturedAt": "2026-02-17T10:04:18.697Z"
   },
   "Pressable Performance unmount time 1": {
     "metrics": {
@@ -26,7 +26,7 @@
       "stdDev": 0,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-15T18:15:25.985Z"
+      "timestamp": "2026-02-17T10:04:18.705Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,17 +35,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:15:25.997Z"
+    "capturedAt": "2026-02-17T10:04:18.716Z"
   },
   "Pressable Performance rerender time 1": {
     "metrics": {
       "name": "Pressable rerender",
-      "meanDuration": 0.7,
-      "medianDuration": 1,
-      "stdDev": 0.48304589153964794,
+      "meanDuration": 0.5,
+      "medianDuration": 0.5,
+      "stdDev": 0.5270462766947299,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-15T18:15:26.013Z"
+      "timestamp": "2026-02-17T10:04:18.731Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,17 +54,36 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:15:26.016Z"
+    "capturedAt": "2026-02-17T10:04:18.740Z"
   },
   "Pressable Performance Pressable-Specific Scenarios with-all-handlers 1": {
     "metrics": {
       "name": "Pressable with-all-handlers",
+      "meanDuration": 0.4,
+      "medianDuration": 0,
+      "stdDev": 0.5163977794943223,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-17T10:04:18.748Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-17T10:04:18.761Z"
+  },
+  "Pressable Performance Pressable-Specific Scenarios with-style-function 1": {
+    "metrics": {
+      "name": "Pressable with-style-function",
       "meanDuration": 0.3,
       "medianDuration": 0,
       "stdDev": 0.4830458915396479,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T18:15:26.025Z"
+      "timestamp": "2026-02-17T10:04:18.769Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -73,36 +92,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:15:26.035Z"
-  },
-  "Pressable Performance Pressable-Specific Scenarios with-style-function 1": {
-    "metrics": {
-      "name": "Pressable with-style-function",
-      "meanDuration": 0.5,
-      "medianDuration": 0.5,
-      "stdDev": 0.5270462766947299,
-      "renderCount": 1,
-      "runs": 10,
-      "timestamp": "2026-02-15T18:15:26.043Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-15T18:15:26.056Z"
+    "capturedAt": "2026-02-17T10:04:18.783Z"
   },
   "Pressable Performance Pressable-Specific Scenarios disabled 1": {
     "metrics": {
       "name": "Pressable disabled",
       "meanDuration": 0.3,
       "medianDuration": 0,
-      "stdDev": 0.48304589153964794,
+      "stdDev": 0.4830458915396479,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T18:15:26.064Z"
+      "timestamp": "2026-02-17T10:04:18.791Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -111,17 +111,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:15:26.076Z"
+    "capturedAt": "2026-02-17T10:04:18.805Z"
   },
   "Pressable Performance Pressable-Specific Scenarios with-hit-slop 1": {
     "metrics": {
       "name": "Pressable with-hit-slop",
-      "meanDuration": 0.3,
-      "medianDuration": 0,
-      "stdDev": 0.4830458915396479,
+      "meanDuration": 0.5,
+      "medianDuration": 0.5,
+      "stdDev": 0.5270462766947299,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T18:15:26.083Z"
+      "timestamp": "2026-02-17T10:04:18.817Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -130,17 +130,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:15:26.095Z"
+    "capturedAt": "2026-02-17T10:04:18.827Z"
   },
   "Pressable Performance Pressable-Specific Scenarios nested-pressables 1": {
     "metrics": {
       "name": "Pressable nested",
-      "meanDuration": 0.9,
+      "meanDuration": 0.8,
       "medianDuration": 1,
-      "stdDev": 0.31622776601683794,
+      "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-15T18:15:26.109Z"
+      "timestamp": "2026-02-17T10:04:18.841Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -149,17 +149,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:15:26.116Z"
+    "capturedAt": "2026-02-17T10:04:18.849Z"
   },
   "Pressable Performance Pressable-Specific Scenarios multiple-pressables-10 1": {
     "metrics": {
       "name": "Pressable multiple-10",
-      "meanDuration": 3.2666666666666666,
+      "meanDuration": 3.533333333333333,
       "medianDuration": 3,
-      "stdDev": 0.8837151016885371,
+      "stdDev": 0.833809387832792,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-15T18:15:26.180Z"
+      "timestamp": "2026-02-17T10:04:18.916Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -168,17 +168,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:15:26.181Z"
+    "capturedAt": "2026-02-17T10:04:18.919Z"
   },
   "Pressable Performance Pressable-Specific Scenarios multiple-pressables-50 1": {
     "metrics": {
       "name": "Pressable multiple-50",
-      "meanDuration": 16.2,
-      "medianDuration": 15,
-      "stdDev": 3.895051806000605,
+      "meanDuration": 16.933333333333334,
+      "medianDuration": 16,
+      "stdDev": 1.533747356112131,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-15T18:15:26.470Z"
+      "timestamp": "2026-02-17T10:04:19.228Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -187,6 +187,6 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-15T18:15:26.472Z"
+    "capturedAt": "2026-02-17T10:04:19.230Z"
   }
 }
