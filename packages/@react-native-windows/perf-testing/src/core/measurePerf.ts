@@ -103,6 +103,7 @@ export async function measurePerf(
     stdDev: standardDeviation(durations),
     renderCount: Math.round(totalRenderCount / runs),
     runs,
+    durations,
     timestamp: new Date().toISOString(),
   };
 }

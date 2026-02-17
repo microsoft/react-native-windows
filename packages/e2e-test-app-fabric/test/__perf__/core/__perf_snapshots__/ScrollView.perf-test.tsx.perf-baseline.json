@@ -2,12 +2,12 @@
   "ScrollView Performance mount time 1": {
     "metrics": {
       "name": "ScrollView mount",
-      "meanDuration": 0.5,
-      "medianDuration": 0.5,
-      "stdDev": 0.5270462766947299,
+      "meanDuration": 0.4,
+      "medianDuration": 0,
+      "stdDev": 0.5163977794943223,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:09.812Z"
+      "timestamp": "2026-02-17T14:49:16.912Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,7 +16,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:09.829Z"
+    "capturedAt": "2026-02-17T14:49:16.927Z"
   },
   "ScrollView Performance unmount time 1": {
     "metrics": {
@@ -26,7 +26,7 @@
       "stdDev": 0.31622776601683794,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:09.843Z"
+      "timestamp": "2026-02-17T14:49:16.936Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,17 +35,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:09.850Z"
+    "capturedAt": "2026-02-17T14:49:16.946Z"
   },
   "ScrollView Performance rerender time 1": {
     "metrics": {
       "name": "ScrollView rerender",
-      "meanDuration": 0.7,
-      "medianDuration": 1,
-      "stdDev": 0.48304589153964794,
+      "meanDuration": 0.5,
+      "medianDuration": 0.5,
+      "stdDev": 0.5270462766947299,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:09.866Z"
+      "timestamp": "2026-02-17T14:49:16.957Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,17 +54,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:09.870Z"
+    "capturedAt": "2026-02-17T14:49:16.963Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios with-children-20 1": {
     "metrics": {
       "name": "ScrollView children-20",
-      "meanDuration": 3.6666666666666665,
+      "meanDuration": 3.1333333333333333,
       "medianDuration": 3,
-      "stdDev": 1.0465362369445672,
+      "stdDev": 0.5163977794943222,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T10:04:09.940Z"
+      "timestamp": "2026-02-17T14:49:17.019Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -73,17 +73,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:09.943Z"
+    "capturedAt": "2026-02-17T14:49:17.021Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios with-children-100 1": {
     "metrics": {
       "name": "ScrollView children-100",
-      "meanDuration": 17.666666666666668,
-      "medianDuration": 16,
-      "stdDev": 3.5989416433697485,
+      "meanDuration": 15.266666666666667,
+      "medianDuration": 15,
+      "stdDev": 1.4375905768565218,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T10:04:10.251Z"
+      "timestamp": "2026-02-17T14:49:17.281Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -92,17 +92,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:10.254Z"
+    "capturedAt": "2026-02-17T14:49:17.283Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios horizontal 1": {
     "metrics": {
       "name": "ScrollView horizontal",
-      "meanDuration": 4.2,
-      "medianDuration": 4,
-      "stdDev": 1.2292725943057186,
+      "meanDuration": 3.1,
+      "medianDuration": 3,
+      "stdDev": 0.5676462121975467,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:10.306Z"
+      "timestamp": "2026-02-17T14:49:17.323Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -111,17 +111,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:10.308Z"
+    "capturedAt": "2026-02-17T14:49:17.325Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios with-sticky-headers 1": {
     "metrics": {
       "name": "ScrollView sticky-headers",
-      "meanDuration": 3.7,
-      "medianDuration": 4,
-      "stdDev": 1.4181364924121764,
+      "meanDuration": 3,
+      "medianDuration": 3,
+      "stdDev": 1.0540925533894598,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:10.358Z"
+      "timestamp": "2026-02-17T14:49:17.364Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -130,17 +130,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:10.360Z"
+    "capturedAt": "2026-02-17T14:49:17.366Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios with-scroll-indicators 1": {
     "metrics": {
       "name": "ScrollView scroll-indicators",
       "meanDuration": 0.8,
       "medianDuration": 1,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0.6324555320336759,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:10.373Z"
+      "timestamp": "2026-02-17T14:49:17.378Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -149,17 +149,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:10.381Z"
+    "capturedAt": "2026-02-17T14:49:17.387Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios nested-scroll-views 1": {
     "metrics": {
       "name": "ScrollView nested",
-      "meanDuration": 2.1,
-      "medianDuration": 2,
-      "stdDev": 1.449137674618944,
+      "meanDuration": 1,
+      "medianDuration": 1,
+      "stdDev": 0,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:10.410Z"
+      "timestamp": "2026-02-17T14:49:17.405Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -168,17 +168,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:10.412Z"
+    "capturedAt": "2026-02-17T14:49:17.407Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios with-content-container-style 1": {
     "metrics": {
       "name": "ScrollView content-container-style",
-      "meanDuration": 1.2,
+      "meanDuration": 0.7,
       "medianDuration": 1,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0.48304589153964794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:10.431Z"
+      "timestamp": "2026-02-17T14:49:17.417Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -187,6 +187,6 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:10.438Z"
+    "capturedAt": "2026-02-17T14:49:17.422Z"
   }
 }

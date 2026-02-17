@@ -10,6 +10,7 @@ import type {PerfThreshold} from '../interfaces/PerfThreshold';
 import {DEFAULT_THRESHOLD} from '../interfaces/PerfThreshold';
 import type {SnapshotFile} from '../matchers/snapshotManager';
 import type {ComparisonResult} from '../reporters/MarkdownReporter';
+import {coefficientOfVariation, mannWhitneyU} from '../core/statistics';
 
 /**
  * Options for baseline comparison.
@@ -111,10 +112,36 @@ export class BaselineComparator {
         : 0;
 
     const errors: string[] = [];
+    const isTrackMode = resolved.mode === 'track';
+
+    // CV gate: skip regression check if measurement is too noisy
+    const cv =
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      head.durations && head.durations.length >= 2
+        ? coefficientOfVariation(head.durations)
+        : 0;
+    const tooNoisy = cv > resolved.maxCV;
+
+    // Statistical significance gate (Mann-Whitney U)
+    let statSignificant = true;
+    if (
+      !tooNoisy &&
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      head.durations &&
+      head.durations.length >= 2 &&
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      base.durations &&
+      base.durations.length >= 2
+    ) {
+      const mwResult = mannWhitneyU(base.durations, head.durations);
+      statSignificant = mwResult.significant;
+    }
 
     // Check percentage increase AND absolute delta
     const absoluteDelta = head.medianDuration - base.medianDuration;
     if (
+      !tooNoisy &&
+      statSignificant &&
       percentChange > resolved.maxDurationIncrease &&
       absoluteDelta > resolved.minAbsoluteDelta
     ) {
@@ -142,11 +169,14 @@ export class BaselineComparator {
       );
     }
 
+    // Track mode: report but never fail
+    const passed = isTrackMode ? true : errors.length === 0;
+
     return {
       metrics: head,
       baselineMetrics: base,
       percentChange,
-      passed: errors.length === 0,
+      passed,
       error: errors.length > 0 ? errors.join('; ') : undefined,
     };
   }

@@ -29,6 +29,9 @@ export interface PerfMetrics {
   /** Number of test runs performed */
   runs: number;
 
+  /** Raw durations from each run (ms), used for statistical comparison */
+  durations: number[];
+
   /** ISO timestamp of when the measurement was taken */
   timestamp: string;
 

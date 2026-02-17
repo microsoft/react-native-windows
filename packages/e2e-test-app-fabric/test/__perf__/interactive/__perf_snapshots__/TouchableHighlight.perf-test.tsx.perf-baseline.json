@@ -2,12 +2,69 @@
   "TouchableHighlight Performance mount time 1": {
     "metrics": {
       "name": "TouchableHighlight mount",
+      "meanDuration": 1.2,
+      "medianDuration": 1,
+      "stdDev": 1.0327955589886442,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-17T14:49:02.897Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-17T14:49:02.916Z"
+  },
+  "TouchableHighlight Performance unmount time 1": {
+    "metrics": {
+      "name": "TouchableHighlight unmount",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-17T14:49:02.928Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-17T14:49:02.935Z"
+  },
+  "TouchableHighlight Performance rerender time 1": {
+    "metrics": {
+      "name": "TouchableHighlight rerender",
+      "meanDuration": 0.5,
+      "medianDuration": 0.5,
+      "stdDev": 0.5270462766947299,
+      "renderCount": 2,
+      "runs": 10,
+      "timestamp": "2026-02-17T14:49:02.951Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-17T14:49:02.954Z"
+  },
+  "TouchableHighlight Performance TouchableHighlight-Specific Scenarios custom-underlay-color 1": {
+    "metrics": {
+      "name": "TouchableHighlight custom-underlay-color",
       "meanDuration": 0.5,
       "medianDuration": 0.5,
       "stdDev": 0.5270462766947299,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:10.902Z"
+      "timestamp": "2026-02-17T14:49:02.962Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,64 +73,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:10.920Z"
-  },
-  "TouchableHighlight Performance unmount time 1": {
-    "metrics": {
-      "name": "TouchableHighlight unmount",
-      "meanDuration": 0,
-      "medianDuration": 0,
-      "stdDev": 0,
-      "renderCount": 0,
-      "runs": 10,
-      "timestamp": "2026-02-17T10:04:10.929Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-17T10:04:10.939Z"
-  },
-  "TouchableHighlight Performance rerender time 1": {
-    "metrics": {
-      "name": "TouchableHighlight rerender",
-      "meanDuration": 1.4,
-      "medianDuration": 1,
-      "stdDev": 1.2649110640673518,
-      "renderCount": 2,
-      "runs": 10,
-      "timestamp": "2026-02-17T10:04:10.960Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-17T10:04:10.962Z"
-  },
-  "TouchableHighlight Performance TouchableHighlight-Specific Scenarios custom-underlay-color 1": {
-    "metrics": {
-      "name": "TouchableHighlight custom-underlay-color",
-      "meanDuration": 0.7,
-      "medianDuration": 1,
-      "stdDev": 0.48304589153964794,
-      "renderCount": 1,
-      "runs": 10,
-      "timestamp": "2026-02-17T10:04:10.974Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-17T10:04:10.985Z"
+    "capturedAt": "2026-02-17T14:49:02.972Z"
   },
   "TouchableHighlight Performance TouchableHighlight-Specific Scenarios custom-active-opacity 1": {
     "metrics": {
@@ -83,7 +83,7 @@
       "stdDev": 0.5163977794943223,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:10.994Z"
+      "timestamp": "2026-02-17T14:49:02.979Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -92,17 +92,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:11.006Z"
+    "capturedAt": "2026-02-17T14:49:02.987Z"
   },
   "TouchableHighlight Performance TouchableHighlight-Specific Scenarios disabled 1": {
     "metrics": {
       "name": "TouchableHighlight disabled",
-      "meanDuration": 0.5,
-      "medianDuration": 0.5,
-      "stdDev": 0.5270462766947299,
+      "meanDuration": 0.4,
+      "medianDuration": 0,
+      "stdDev": 0.5163977794943223,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:11.014Z"
+      "timestamp": "2026-02-17T14:49:02.995Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -111,7 +111,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:11.028Z"
+    "capturedAt": "2026-02-17T14:49:03.004Z"
   },
   "TouchableHighlight Performance TouchableHighlight-Specific Scenarios with-all-handlers 1": {
     "metrics": {
@@ -121,7 +121,7 @@
       "stdDev": 0.4830458915396479,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:11.036Z"
+      "timestamp": "2026-02-17T14:49:03.011Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -130,7 +130,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:11.047Z"
+    "capturedAt": "2026-02-17T14:49:03.019Z"
   },
   "TouchableHighlight Performance TouchableHighlight-Specific Scenarios with-hit-slop 1": {
     "metrics": {
@@ -140,7 +140,7 @@
       "stdDev": 0.4830458915396479,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:11.055Z"
+      "timestamp": "2026-02-17T14:49:03.026Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -149,17 +149,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:11.068Z"
+    "capturedAt": "2026-02-17T14:49:03.036Z"
   },
   "TouchableHighlight Performance TouchableHighlight-Specific Scenarios nested-touchables 1": {
     "metrics": {
       "name": "TouchableHighlight nested-touchables",
-      "meanDuration": 1.1,
+      "meanDuration": 0.9,
       "medianDuration": 1,
       "stdDev": 0.31622776601683794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:11.085Z"
+      "timestamp": "2026-02-17T14:49:03.048Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -168,17 +168,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:11.089Z"
+    "capturedAt": "2026-02-17T14:49:03.051Z"
   },
   "TouchableHighlight Performance TouchableHighlight-Specific Scenarios multiple-touchables-10 1": {
     "metrics": {
       "name": "TouchableHighlight multiple-touchables-10",
-      "meanDuration": 3.1,
-      "medianDuration": 3,
-      "stdDev": 0.7378647873726218,
+      "meanDuration": 2.6,
+      "medianDuration": 2,
+      "stdDev": 0.9660917830792959,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:11.131Z"
+      "timestamp": "2026-02-17T14:49:03.088Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -187,17 +187,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:11.134Z"
+    "capturedAt": "2026-02-17T14:49:03.090Z"
   },
   "TouchableHighlight Performance TouchableHighlight-Specific Scenarios multiple-touchables-50 1": {
     "metrics": {
       "name": "TouchableHighlight multiple-touchables-50",
-      "meanDuration": 13.9,
-      "medianDuration": 13.5,
-      "stdDev": 1.4491376746189437,
+      "meanDuration": 13,
+      "medianDuration": 12.5,
+      "stdDev": 1.5634719199411433,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:11.313Z"
+      "timestamp": "2026-02-17T14:49:03.247Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -206,6 +206,6 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:11.316Z"
+    "capturedAt": "2026-02-17T14:49:03.249Z"
   }
 }

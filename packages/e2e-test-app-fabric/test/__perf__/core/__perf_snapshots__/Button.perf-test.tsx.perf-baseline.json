@@ -2,12 +2,12 @@
   "Button Performance mount time 1": {
     "metrics": {
       "name": "Button mount",
-      "meanDuration": 0.7,
+      "meanDuration": 0.6,
       "medianDuration": 1,
-      "stdDev": 0.48304589153964794,
+      "stdDev": 0.5163977794943222,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:13.832Z"
+      "timestamp": "2026-02-17T14:49:15.809Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,7 +16,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:13.849Z"
+    "capturedAt": "2026-02-17T14:49:15.827Z"
   },
   "Button Performance unmount time 1": {
     "metrics": {
@@ -26,7 +26,7 @@
       "stdDev": 0,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:13.860Z"
+      "timestamp": "2026-02-17T14:49:15.836Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,17 +35,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:13.870Z"
+    "capturedAt": "2026-02-17T14:49:15.845Z"
   },
   "Button Performance rerender time 1": {
     "metrics": {
       "name": "Button rerender",
-      "meanDuration": 1.3,
+      "meanDuration": 0.9,
       "medianDuration": 1,
-      "stdDev": 1.0593499054713802,
+      "stdDev": 0.5676462121975466,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:13.893Z"
+      "timestamp": "2026-02-17T14:49:15.863Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,17 +54,36 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:13.896Z"
+    "capturedAt": "2026-02-17T14:49:15.865Z"
   },
   "Button Performance Button-Specific Scenarios disabled 1": {
     "metrics": {
       "name": "Button disabled",
+      "meanDuration": 0.9,
+      "medianDuration": 1,
+      "stdDev": 0.31622776601683794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-17T14:49:15.879Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-17T14:49:15.887Z"
+  },
+  "Button Performance Button-Specific Scenarios with-color 1": {
+    "metrics": {
+      "name": "Button with-color",
       "meanDuration": 0.7,
       "medianDuration": 1,
       "stdDev": 0.48304589153964794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:13.907Z"
+      "timestamp": "2026-02-17T14:49:15.897Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -73,36 +92,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:13.917Z"
-  },
-  "Button Performance Button-Specific Scenarios with-color 1": {
-    "metrics": {
-      "name": "Button with-color",
-      "meanDuration": 0.5,
-      "medianDuration": 0.5,
-      "stdDev": 0.5270462766947299,
-      "renderCount": 1,
-      "runs": 10,
-      "timestamp": "2026-02-17T10:04:13.929Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-17T10:04:13.940Z"
+    "capturedAt": "2026-02-17T14:49:15.904Z"
   },
   "Button Performance Button-Specific Scenarios with-accessibility 1": {
     "metrics": {
       "name": "Button with-accessibility",
-      "meanDuration": 0.6,
+      "meanDuration": 0.7,
       "medianDuration": 1,
-      "stdDev": 0.5163977794943223,
+      "stdDev": 0.48304589153964794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:13.950Z"
+      "timestamp": "2026-02-17T14:49:15.917Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -111,17 +111,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:13.959Z"
+    "capturedAt": "2026-02-17T14:49:15.923Z"
   },
   "Button Performance Button-Specific Scenarios multiple-buttons-10 1": {
     "metrics": {
       "name": "Button multiple-10",
-      "meanDuration": 6.266666666666667,
-      "medianDuration": 6,
-      "stdDev": 1.0327955589886446,
+      "meanDuration": 5.533333333333333,
+      "medianDuration": 5,
+      "stdDev": 1.1254628677422756,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T10:04:14.074Z"
+      "timestamp": "2026-02-17T14:49:16.026Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -130,17 +130,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:14.077Z"
+    "capturedAt": "2026-02-17T14:49:16.028Z"
   },
   "Button Performance Button-Specific Scenarios multiple-buttons-50 1": {
     "metrics": {
       "name": "Button multiple-50",
-      "meanDuration": 25.2,
-      "medianDuration": 30,
-      "stdDev": 7.8029298526716415,
+      "meanDuration": 25.6,
+      "medianDuration": 26,
+      "stdDev": 13.521411591567333,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T10:04:14.529Z"
+      "timestamp": "2026-02-17T14:49:16.475Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -149,6 +149,6 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:14.532Z"
+    "capturedAt": "2026-02-17T14:49:16.477Z"
   }
 }

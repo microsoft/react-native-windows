@@ -9,6 +9,131 @@ import type {PerfMetrics} from '../interfaces/PerfMetrics';
 import type {PerfThreshold} from '../interfaces/PerfThreshold';
 import {DEFAULT_THRESHOLD} from '../interfaces/PerfThreshold';
 import {SnapshotManager} from './snapshotManager';
+import type {SnapshotEntry} from './snapshotManager';
+import {coefficientOfVariation, mannWhitneyU} from '../core/statistics';
+
+interface CompareResult {
+  errors: string[];
+  warnings: string[];
+}
+
+function checkNoiseGates(
+  received: PerfMetrics,
+  baseline: SnapshotEntry,
+  threshold: PerfThreshold,
+): {tooNoisy: boolean; statSignificant: boolean; warnings: string[]} {
+  const warnings: string[] = [];
+
+  // CV gate
+  const cv =
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    received.durations && received.durations.length >= 2
+      ? coefficientOfVariation(received.durations)
+      : 0;
+  const maxCV = threshold.maxCV ?? DEFAULT_THRESHOLD.maxCV;
+  const tooNoisy = cv > maxCV;
+
+  if (tooNoisy) {
+    warnings.push(
+      `High variance (CV=${(cv * 100).toFixed(1)}% > ${(maxCV * 100).toFixed(
+        0,
+      )}%) — skipping regression check`,
+    );
+  }
+
+  // Mann-Whitney U statistical significance
+  let statSignificant = true;
+  if (
+    !tooNoisy &&
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    received.durations &&
+    received.durations.length >= 2 &&
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    baseline.metrics.durations &&
+    baseline.metrics.durations.length >= 2
+  ) {
+    const mwResult = mannWhitneyU(
+      baseline.metrics.durations,
+      received.durations,
+    );
+    statSignificant = mwResult.significant;
+    if (!statSignificant) {
+      warnings.push(
+        `Not statistically significant (p=${mwResult.p.toFixed(
+          3,
+        )}) — difference may be noise`,
+      );
+    }
+  }
+
+  return {tooNoisy, statSignificant, warnings};
+}
+
+function compareAgainstBaseline(
+  received: PerfMetrics,
+  baseline: SnapshotEntry,
+  threshold: PerfThreshold,
+): CompareResult {
+  const {tooNoisy, statSignificant, warnings} = checkNoiseGates(
+    received,
+    baseline,
+    threshold,
+  );
+  const errors: string[] = [];
+
+  // Check duration regression using MEDIAN
+  if (!tooNoisy && threshold.maxDurationIncrease !== undefined) {
+    const pctChange =
+      ((received.medianDuration - baseline.metrics.medianDuration) /
+        baseline.metrics.medianDuration) *
+      100;
+    const absDelta = received.medianDuration - baseline.metrics.medianDuration;
+    const minDelta =
+      threshold.minAbsoluteDelta ?? DEFAULT_THRESHOLD.minAbsoluteDelta;
+
+    if (
+      pctChange > threshold.maxDurationIncrease &&
+      absDelta > minDelta &&
+      statSignificant
+    ) {
+      errors.push(
+        `Duration regression: +${pctChange.toFixed(1)}% / +${absDelta.toFixed(
+          2,
+        )}ms ` +
+          `(baseline median: ${baseline.metrics.medianDuration.toFixed(
+            2,
+          )}ms → ` +
+          `current median: ${received.medianDuration.toFixed(2)}ms, ` +
+          `threshold: ${threshold.maxDurationIncrease}% & ${minDelta}ms)`,
+      );
+    }
+  }
+
+  // Check absolute duration limit
+  if (
+    threshold.maxDuration !== undefined &&
+    threshold.maxDuration !== Infinity &&
+    received.medianDuration > threshold.maxDuration
+  ) {
+    errors.push(
+      `Duration exceeded: ${received.medianDuration.toFixed(2)}ms > ` +
+        `${threshold.maxDuration}ms (absolute limit)`,
+    );
+  }
+
+  // Check render count
+  if (
+    threshold.maxRenderCount !== undefined &&
+    received.renderCount > threshold.maxRenderCount
+  ) {
+    errors.push(
+      `Render count exceeded: ${received.renderCount} > ` +
+        `${threshold.maxRenderCount}`,
+    );
+  }
+
+  return {errors, warnings};
+}
 
 /**
  * Extend Jest's Matchers interface so `toMatchPerfSnapshot` is recognized.
@@ -67,59 +192,27 @@ expect.extend({
       };
     }
 
-    // COMPARE MODE: check against baseline
-    const errors: string[] = [];
+    // COMPARE MODE
+    const {errors, warnings} = compareAgainstBaseline(
+      received,
+      baseline,
+      threshold,
+    );
+    const isTrackMode = threshold.mode === 'track';
+    const warningText =
+      warnings.length > 0
+        ? '\n' + warnings.map(w => `  ℹ ${w}`).join('\n')
+        : '';
 
-    // Check duration regression using MEDIAN
-    if (threshold.maxDurationIncrease !== undefined) {
-      const percentChange =
-        ((received.medianDuration - baseline.metrics.medianDuration) /
-          baseline.metrics.medianDuration) *
-        100;
-
-      const absoluteDelta =
-        received.medianDuration - baseline.metrics.medianDuration;
-      const minAbsoluteDelta =
-        threshold.minAbsoluteDelta ?? DEFAULT_THRESHOLD.minAbsoluteDelta;
-
-      if (
-        percentChange > threshold.maxDurationIncrease &&
-        absoluteDelta > minAbsoluteDelta
-      ) {
-        errors.push(
-          `Duration regression: +${percentChange.toFixed(
-            1,
-          )}% / +${absoluteDelta.toFixed(2)}ms ` +
-            `(baseline median: ${baseline.metrics.medianDuration.toFixed(
-              2,
-            )}ms → ` +
-            `current median: ${received.medianDuration.toFixed(2)}ms, ` +
-            `threshold: ${threshold.maxDurationIncrease}% & ${minAbsoluteDelta}ms)`,
-        );
-      }
-    }
-
-    // Check absolute duration limit
-    if (
-      threshold.maxDuration !== undefined &&
-      threshold.maxDuration !== Infinity &&
-      received.medianDuration > threshold.maxDuration
-    ) {
-      errors.push(
-        `Duration exceeded: ${received.medianDuration.toFixed(2)}ms > ` +
-          `${threshold.maxDuration}ms (absolute limit)`,
-      );
-    }
-
-    // Check render count
-    if (
-      threshold.maxRenderCount !== undefined &&
-      received.renderCount > threshold.maxRenderCount
-    ) {
-      errors.push(
-        `Render count exceeded: ${received.renderCount} > ` +
-          `${threshold.maxRenderCount}`,
-      );
+    if (isTrackMode && errors.length > 0) {
+      return {
+        pass: true,
+        message: () =>
+          `⚠️ [TRACK] "${received.name}" would have failed:\n\n` +
+          errors.map(e => `  • ${e}`).join('\n') +
+          warningText +
+          `\n\n💡 Mode is 'track' — not blocking CI.`,
+      };
     }
 
     if (errors.length > 0) {
@@ -128,6 +221,7 @@ expect.extend({
         message: () =>
           `❌ Performance regression detected in "${received.name}":\n\n` +
           errors.map(e => `  • ${e}`).join('\n') +
+          warningText +
           `\n\n📊 Baseline captured: ${baseline.capturedAt}` +
           `\n💡 Run with -u flag to update baseline if intentional.`,
       };

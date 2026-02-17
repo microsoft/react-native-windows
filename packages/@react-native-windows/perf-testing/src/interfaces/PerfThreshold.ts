@@ -30,6 +30,19 @@ export interface PerfThreshold {
 
   /** Minimum runs required for a valid measurement. Default: 10 */
   minRuns?: number;
+
+  /**
+   * Max coefficient of variation (stdDev/mean) allowed for reliable comparison.
+   * Tests above this CV are too noisy to gate on — they warn instead of fail.
+   * Default: 0.5 (50%). Set lower for stricter noise filtering.
+   */
+  maxCV?: number;
+
+  /**
+   * 'gate' = fail CI on regression (default for stable tests).
+   * 'track' = warn only, never fail (for inherently noisy bulk scenarios).
+   */
+  mode?: 'gate' | 'track';
 }
 
 export const DEFAULT_THRESHOLD: Readonly<Required<PerfThreshold>> = {
@@ -38,4 +51,6 @@ export const DEFAULT_THRESHOLD: Readonly<Required<PerfThreshold>> = {
   minAbsoluteDelta: 3,
   maxRenderCount: 5,
   minRuns: 10,
+  maxCV: 0.5,
+  mode: 'gate',
 };

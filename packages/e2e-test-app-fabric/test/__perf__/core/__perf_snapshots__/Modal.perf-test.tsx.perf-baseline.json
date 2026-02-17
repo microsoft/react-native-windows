@@ -2,12 +2,12 @@
   "Modal Performance mount time 1": {
     "metrics": {
       "name": "Modal mount",
-      "meanDuration": 0.3,
+      "meanDuration": 0.1,
       "medianDuration": 0,
-      "stdDev": 0.4830458915396479,
+      "stdDev": 0.31622776601683794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:22.809Z"
+      "timestamp": "2026-02-17T14:49:12.098Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,7 +16,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:22.827Z"
+    "capturedAt": "2026-02-17T14:49:12.113Z"
   },
   "Modal Performance unmount time 1": {
     "metrics": {
@@ -26,7 +26,7 @@
       "stdDev": 0,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:22.834Z"
+      "timestamp": "2026-02-17T14:49:12.119Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,17 +35,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:22.847Z"
+    "capturedAt": "2026-02-17T14:49:12.131Z"
   },
   "Modal Performance rerender time 1": {
     "metrics": {
       "name": "Modal rerender",
-      "meanDuration": 0.6,
-      "medianDuration": 1,
-      "stdDev": 0.5163977794943223,
+      "meanDuration": 0.5,
+      "medianDuration": 0.5,
+      "stdDev": 0.5270462766947299,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:22.858Z"
+      "timestamp": "2026-02-17T14:49:12.142Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,74 +54,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:22.867Z"
+    "capturedAt": "2026-02-17T14:49:12.148Z"
   },
   "Modal Performance Modal-Specific Scenarios slide-animation 1": {
     "metrics": {
       "name": "Modal slide-animation",
-      "meanDuration": 0.4,
-      "medianDuration": 0,
-      "stdDev": 0.5163977794943223,
-      "renderCount": 1,
-      "runs": 10,
-      "timestamp": "2026-02-17T10:04:22.876Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-17T10:04:22.890Z"
-  },
-  "Modal Performance Modal-Specific Scenarios fade-animation 1": {
-    "metrics": {
-      "name": "Modal fade-animation",
-      "meanDuration": 0.5,
-      "medianDuration": 0.5,
-      "stdDev": 0.5270462766947299,
-      "renderCount": 1,
-      "runs": 10,
-      "timestamp": "2026-02-17T10:04:22.900Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-17T10:04:22.912Z"
-  },
-  "Modal Performance Modal-Specific Scenarios transparent 1": {
-    "metrics": {
-      "name": "Modal transparent",
-      "meanDuration": 0.4,
-      "medianDuration": 0,
-      "stdDev": 0.5163977794943223,
-      "renderCount": 1,
-      "runs": 10,
-      "timestamp": "2026-02-17T10:04:22.919Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-17T10:04:22.932Z"
-  },
-  "Modal Performance Modal-Specific Scenarios with-callbacks 1": {
-    "metrics": {
-      "name": "Modal with-callbacks",
       "meanDuration": 0.3,
       "medianDuration": 0,
       "stdDev": 0.4830458915396479,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:22.939Z"
+      "timestamp": "2026-02-17T14:49:12.154Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -130,17 +73,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:22.953Z"
+    "capturedAt": "2026-02-17T14:49:12.166Z"
   },
-  "Modal Performance Modal-Specific Scenarios with-rich-content 1": {
+  "Modal Performance Modal-Specific Scenarios fade-animation 1": {
     "metrics": {
-      "name": "Modal rich-content",
-      "meanDuration": 1.5,
-      "medianDuration": 1.5,
-      "stdDev": 0.5270462766947299,
+      "name": "Modal fade-animation",
+      "meanDuration": 0.3,
+      "medianDuration": 0,
+      "stdDev": 0.4830458915396479,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:22.984Z"
+      "timestamp": "2026-02-17T14:49:12.171Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -149,17 +92,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:22.987Z"
+    "capturedAt": "2026-02-17T14:49:12.181Z"
   },
-  "Modal Performance Modal-Specific Scenarios with-accessibility 1": {
+  "Modal Performance Modal-Specific Scenarios transparent 1": {
     "metrics": {
-      "name": "Modal with-accessibility",
+      "name": "Modal transparent",
       "meanDuration": 0.2,
       "medianDuration": 0,
       "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:22.993Z"
+      "timestamp": "2026-02-17T14:49:12.187Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -168,6 +111,63 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:23.007Z"
+    "capturedAt": "2026-02-17T14:49:12.198Z"
+  },
+  "Modal Performance Modal-Specific Scenarios with-callbacks 1": {
+    "metrics": {
+      "name": "Modal with-callbacks",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-17T14:49:12.204Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-17T14:49:12.217Z"
+  },
+  "Modal Performance Modal-Specific Scenarios with-rich-content 1": {
+    "metrics": {
+      "name": "Modal rich-content",
+      "meanDuration": 2.7,
+      "medianDuration": 2,
+      "stdDev": 1.5670212364724214,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-17T14:49:12.329Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-17T14:49:12.331Z"
+  },
+  "Modal Performance Modal-Specific Scenarios with-accessibility 1": {
+    "metrics": {
+      "name": "Modal with-accessibility",
+      "meanDuration": 0.3,
+      "medianDuration": 0,
+      "stdDev": 0.48304589153964794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-17T14:49:12.337Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-17T14:49:12.351Z"
   }
 }

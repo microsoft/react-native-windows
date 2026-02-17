@@ -9,7 +9,14 @@ export {measurePerf} from './core/measurePerf';
 export type {MeasurePerfOptions, RenderHelpers} from './core/measurePerf';
 export {PerfProfiler} from './core/PerfProfiler';
 export type {ProfilerResult} from './core/PerfProfiler';
-export {mean, median, standardDeviation} from './core/statistics';
+export {
+  mean,
+  median,
+  standardDeviation,
+  coefficientOfVariation,
+  mannWhitneyU,
+} from './core/statistics';
+export type {MannWhitneyResult} from './core/statistics';
 
 export type {PerfMetrics} from './interfaces/PerfMetrics';
 export type {PerfThreshold} from './interfaces/PerfThreshold';

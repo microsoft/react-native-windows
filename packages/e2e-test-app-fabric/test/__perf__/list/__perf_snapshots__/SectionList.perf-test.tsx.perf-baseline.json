@@ -2,12 +2,12 @@
   "SectionList Performance mount time 1": {
     "metrics": {
       "name": "SectionList mount",
-      "meanDuration": 5.2,
+      "meanDuration": 4.7,
       "medianDuration": 5,
-      "stdDev": 0.7888106377466155,
+      "stdDev": 0.6749485577105528,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:15.979Z"
+      "timestamp": "2026-02-17T14:49:13.505Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,17 +16,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:15.997Z"
+    "capturedAt": "2026-02-17T14:49:13.522Z"
   },
   "SectionList Performance unmount time 1": {
     "metrics": {
       "name": "SectionList unmount",
-      "meanDuration": 0.4,
+      "meanDuration": 0.2,
       "medianDuration": 0,
-      "stdDev": 0.5163977794943222,
+      "stdDev": 0.42163702135578396,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:16.072Z"
+      "timestamp": "2026-02-17T14:49:13.587Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,17 +35,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:16.074Z"
+    "capturedAt": "2026-02-17T14:49:13.589Z"
   },
   "SectionList Performance rerender time 1": {
     "metrics": {
       "name": "SectionList rerender",
-      "meanDuration": 12.6,
-      "medianDuration": 12,
-      "stdDev": 1.0749676997731399,
+      "meanDuration": 10.8,
+      "medianDuration": 11,
+      "stdDev": 1.5491933384829668,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:16.224Z"
+      "timestamp": "2026-02-17T14:49:13.722Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,17 +54,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:16.227Z"
+    "capturedAt": "2026-02-17T14:49:13.724Z"
   },
   "SectionList Performance SectionList-Specific Scenarios with-3-sections-5-items 1": {
     "metrics": {
       "name": "SectionList with-3-sections-15-items",
-      "meanDuration": 5.9,
-      "medianDuration": 5.5,
-      "stdDev": 1.523883926754995,
+      "meanDuration": 5.2,
+      "medianDuration": 5,
+      "stdDev": 0.6324555320336759,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:16.302Z"
+      "timestamp": "2026-02-17T14:49:13.788Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -73,17 +73,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:16.304Z"
+    "capturedAt": "2026-02-17T14:49:13.790Z"
   },
   "SectionList Performance SectionList-Specific Scenarios with-5-sections-10-items 1": {
     "metrics": {
       "name": "SectionList with-5-sections-50-items",
-      "meanDuration": 6.4,
+      "meanDuration": 6.1,
       "medianDuration": 6,
-      "stdDev": 1.1737877907772671,
+      "stdDev": 1.1005049346146119,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:16.386Z"
+      "timestamp": "2026-02-17T14:49:13.862Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -92,17 +92,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:16.389Z"
+    "capturedAt": "2026-02-17T14:49:13.864Z"
   },
   "SectionList Performance SectionList-Specific Scenarios with-10-sections-20-items 1": {
     "metrics": {
       "name": "SectionList with-10-sections-200-items",
-      "meanDuration": 6.4,
-      "medianDuration": 6,
-      "stdDev": 1.3498971154211057,
+      "meanDuration": 5.5,
+      "medianDuration": 5.5,
+      "stdDev": 0.5270462766947299,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:16.469Z"
+      "timestamp": "2026-02-17T14:49:13.932Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -111,17 +111,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:16.472Z"
+    "capturedAt": "2026-02-17T14:49:13.934Z"
   },
   "SectionList Performance SectionList-Specific Scenarios with-20-sections-10-items 1": {
     "metrics": {
       "name": "SectionList with-20-sections-200-items",
-      "meanDuration": 4.7,
-      "medianDuration": 5,
-      "stdDev": 1.3374935098492586,
+      "meanDuration": 4.8,
+      "medianDuration": 5.5,
+      "stdDev": 1.6193277068654826,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:16.536Z"
+      "timestamp": "2026-02-17T14:49:14.000Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -130,17 +130,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:16.539Z"
+    "capturedAt": "2026-02-17T14:49:14.002Z"
   },
   "SectionList Performance SectionList-Specific Scenarios with-section-separator 1": {
     "metrics": {
       "name": "SectionList with-section-separator",
-      "meanDuration": 2.5,
+      "meanDuration": 2,
       "medianDuration": 2,
-      "stdDev": 1.2692955176439846,
+      "stdDev": 0.4714045207910317,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:16.573Z"
+      "timestamp": "2026-02-17T14:49:14.030Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -149,17 +149,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:16.575Z"
+    "capturedAt": "2026-02-17T14:49:14.032Z"
   },
   "SectionList Performance SectionList-Specific Scenarios with-item-separator 1": {
     "metrics": {
       "name": "SectionList with-item-separator",
-      "meanDuration": 2.3,
+      "meanDuration": 2.6,
       "medianDuration": 2,
-      "stdDev": 0.6749485577105528,
+      "stdDev": 1.3498971154211057,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:16.609Z"
+      "timestamp": "2026-02-17T14:49:14.068Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -168,17 +168,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:16.612Z"
+    "capturedAt": "2026-02-17T14:49:14.070Z"
   },
   "SectionList Performance SectionList-Specific Scenarios with-header-footer 1": {
     "metrics": {
       "name": "SectionList with-header-footer",
-      "meanDuration": 2.6,
-      "medianDuration": 3,
-      "stdDev": 0.5163977794943223,
+      "meanDuration": 1.8,
+      "medianDuration": 2,
+      "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:16.647Z"
+      "timestamp": "2026-02-17T14:49:14.099Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -187,17 +187,36 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:16.650Z"
+    "capturedAt": "2026-02-17T14:49:14.101Z"
   },
   "SectionList Performance SectionList-Specific Scenarios with-section-footer 1": {
     "metrics": {
       "name": "SectionList with-section-footer",
+      "meanDuration": 2.2,
+      "medianDuration": 2,
+      "stdDev": 1.7511900715418263,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-17T14:49:14.131Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-17T14:49:14.133Z"
+  },
+  "SectionList Performance SectionList-Specific Scenarios with-sticky-section-headers 1": {
+    "metrics": {
+      "name": "SectionList with-sticky-section-headers",
       "meanDuration": 1.9,
       "medianDuration": 2,
       "stdDev": 0.31622776601683794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:16.682Z"
+      "timestamp": "2026-02-17T14:49:14.158Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -206,36 +225,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:16.685Z"
-  },
-  "SectionList Performance SectionList-Specific Scenarios with-sticky-section-headers 1": {
-    "metrics": {
-      "name": "SectionList with-sticky-section-headers",
-      "meanDuration": 2.1,
-      "medianDuration": 2,
-      "stdDev": 0.7378647873726218,
-      "renderCount": 1,
-      "runs": 10,
-      "timestamp": "2026-02-17T10:04:16.715Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 5,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-17T10:04:16.717Z"
+    "capturedAt": "2026-02-17T14:49:14.160Z"
   },
   "SectionList Performance SectionList-Specific Scenarios with-empty-list 1": {
     "metrics": {
       "name": "SectionList with-empty-list",
-      "meanDuration": 0.5,
-      "medianDuration": 0.5,
-      "stdDev": 0.5270462766947299,
+      "meanDuration": 0.4,
+      "medianDuration": 0,
+      "stdDev": 0.5163977794943223,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:16.727Z"
+      "timestamp": "2026-02-17T14:49:14.169Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -244,6 +244,6 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:16.739Z"
+    "capturedAt": "2026-02-17T14:49:14.177Z"
   }
 }

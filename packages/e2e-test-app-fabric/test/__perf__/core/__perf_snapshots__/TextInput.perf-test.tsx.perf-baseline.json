@@ -2,12 +2,12 @@
   "TextInput Performance mount time 1": {
     "metrics": {
       "name": "TextInput mount",
-      "meanDuration": 0.2,
+      "meanDuration": 0,
       "medianDuration": 0,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:25.001Z"
+      "timestamp": "2026-02-17T14:49:21.415Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,7 +16,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:25.018Z"
+    "capturedAt": "2026-02-17T14:49:21.430Z"
   },
   "TextInput Performance unmount time 1": {
     "metrics": {
@@ -26,7 +26,7 @@
       "stdDev": 0,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:25.023Z"
+      "timestamp": "2026-02-17T14:49:21.435Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,17 +35,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:25.037Z"
+    "capturedAt": "2026-02-17T14:49:21.447Z"
   },
   "TextInput Performance rerender time 1": {
     "metrics": {
       "name": "TextInput rerender",
-      "meanDuration": 0.1,
+      "meanDuration": 0.2,
       "medianDuration": 0,
-      "stdDev": 0.31622776601683794,
+      "stdDev": 0.42163702135578396,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:25.045Z"
+      "timestamp": "2026-02-17T14:49:21.453Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,7 +54,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:25.058Z"
+    "capturedAt": "2026-02-17T14:49:21.463Z"
   },
   "TextInput Performance TextInput-Specific Scenarios multiline 1": {
     "metrics": {
@@ -64,7 +64,7 @@
       "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:25.063Z"
+      "timestamp": "2026-02-17T14:49:21.467Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -73,17 +73,36 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:25.080Z"
+    "capturedAt": "2026-02-17T14:49:21.481Z"
   },
   "TextInput Performance TextInput-Specific Scenarios with-value 1": {
     "metrics": {
       "name": "TextInput with-value",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-17T14:49:21.485Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-17T14:49:21.496Z"
+  },
+  "TextInput Performance TextInput-Specific Scenarios styled-input 1": {
+    "metrics": {
+      "name": "TextInput styled",
       "meanDuration": 0.1,
       "medianDuration": 0,
       "stdDev": 0.31622776601683794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:25.085Z"
+      "timestamp": "2026-02-17T14:49:21.500Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -92,25 +111,6 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:25.100Z"
-  },
-  "TextInput Performance TextInput-Specific Scenarios styled-input 1": {
-    "metrics": {
-      "name": "TextInput styled",
-      "meanDuration": 0.5,
-      "medianDuration": 0,
-      "stdDev": 0.97182531580755,
-      "renderCount": 1,
-      "runs": 10,
-      "timestamp": "2026-02-17T10:04:25.109Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-17T10:04:25.120Z"
+    "capturedAt": "2026-02-17T14:49:21.511Z"
   }
 }

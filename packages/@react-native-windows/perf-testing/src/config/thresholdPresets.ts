@@ -20,6 +20,8 @@ export const ThresholdPresets: Readonly<
     minAbsoluteDelta: 3,
     maxRenderCount: 2,
     minRuns: 10,
+    maxCV: 0.4,
+    mode: 'gate',
   },
 
   /** Complex list/scroll components — slightly relaxed */
@@ -29,6 +31,8 @@ export const ThresholdPresets: Readonly<
     minAbsoluteDelta: 5,
     maxRenderCount: 5,
     minRuns: 5,
+    maxCV: 0.5,
+    mode: 'gate',
   },
 
   /** Interactive components with animations — more relaxed */
@@ -38,6 +42,8 @@ export const ThresholdPresets: Readonly<
     minAbsoluteDelta: 5,
     maxRenderCount: 10,
     minRuns: 10,
+    maxCV: 0.5,
+    mode: 'gate',
   },
 
   /** Community/custom components — most relaxed */
@@ -47,5 +53,7 @@ export const ThresholdPresets: Readonly<
     minAbsoluteDelta: 5,
     maxRenderCount: 15,
     minRuns: 5,
+    maxCV: 0.6,
+    mode: 'track',
   },
 };

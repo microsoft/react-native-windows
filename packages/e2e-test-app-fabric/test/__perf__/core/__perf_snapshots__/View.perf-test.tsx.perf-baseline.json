@@ -7,7 +7,7 @@
       "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:12.889Z"
+      "timestamp": "2026-02-17T14:49:20.190Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,17 +16,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:12.908Z"
+    "capturedAt": "2026-02-17T14:49:20.205Z"
   },
   "View Performance unmount time 1": {
     "metrics": {
       "name": "View unmount",
-      "meanDuration": 0,
+      "meanDuration": 0.1,
       "medianDuration": 0,
-      "stdDev": 0,
+      "stdDev": 0.31622776601683794,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:12.914Z"
+      "timestamp": "2026-02-17T14:49:20.210Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,7 +35,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:12.931Z"
+    "capturedAt": "2026-02-17T14:49:20.224Z"
   },
   "View Performance rerender time 1": {
     "metrics": {
@@ -45,7 +45,7 @@
       "stdDev": 0.42163702135578396,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:12.939Z"
+      "timestamp": "2026-02-17T14:49:20.230Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,17 +54,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:12.955Z"
+    "capturedAt": "2026-02-17T14:49:20.239Z"
   },
   "View Performance View-Specific Scenarios nested-views-50 1": {
     "metrics": {
       "name": "View nested-50",
       "meanDuration": 3.7333333333333334,
       "medianDuration": 4,
-      "stdDev": 0.8837151016885368,
+      "stdDev": 0.7988086367179803,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T10:04:13.027Z"
+      "timestamp": "2026-02-17T14:49:20.304Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -73,17 +73,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:13.032Z"
+    "capturedAt": "2026-02-17T14:49:20.306Z"
   },
   "View Performance View-Specific Scenarios nested-views-100 1": {
     "metrics": {
       "name": "View nested-100",
-      "meanDuration": 11,
-      "medianDuration": 9,
-      "stdDev": 5.42481072744215,
+      "meanDuration": 7.333333333333333,
+      "medianDuration": 7,
+      "stdDev": 1.1126972805283735,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T10:04:13.219Z"
+      "timestamp": "2026-02-17T14:49:20.433Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -92,17 +92,36 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:13.225Z"
+    "capturedAt": "2026-02-17T14:49:20.435Z"
   },
   "View Performance View-Specific Scenarios with-shadow 1": {
     "metrics": {
       "name": "View shadow",
+      "meanDuration": 0,
+      "medianDuration": 0,
+      "stdDev": 0,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-17T14:49:20.439Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-17T14:49:20.452Z"
+  },
+  "View Performance View-Specific Scenarios with-border-radius 1": {
+    "metrics": {
+      "name": "View border-radius",
       "meanDuration": 0.2,
       "medianDuration": 0,
       "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:13.233Z"
+      "timestamp": "2026-02-17T14:49:20.456Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -111,25 +130,6 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:13.249Z"
-  },
-  "View Performance View-Specific Scenarios with-border-radius 1": {
-    "metrics": {
-      "name": "View border-radius",
-      "meanDuration": 0.1,
-      "medianDuration": 0,
-      "stdDev": 0.31622776601683794,
-      "renderCount": 1,
-      "runs": 10,
-      "timestamp": "2026-02-17T10:04:13.256Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-17T10:04:13.271Z"
+    "capturedAt": "2026-02-17T14:49:20.467Z"
   }
 }

@@ -7,7 +7,7 @@
       "stdDev": 0.5270462766947299,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:18.679Z"
+      "timestamp": "2026-02-17T14:49:17.839Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,17 +16,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:18.697Z"
+    "capturedAt": "2026-02-17T14:49:17.854Z"
   },
   "Pressable Performance unmount time 1": {
     "metrics": {
       "name": "Pressable unmount",
-      "meanDuration": 0,
+      "meanDuration": 0.3,
       "medianDuration": 0,
-      "stdDev": 0,
+      "stdDev": 0.9486832980505139,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:18.705Z"
+      "timestamp": "2026-02-17T14:49:17.863Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,17 +35,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:18.716Z"
+    "capturedAt": "2026-02-17T14:49:17.872Z"
   },
   "Pressable Performance rerender time 1": {
     "metrics": {
       "name": "Pressable rerender",
-      "meanDuration": 0.5,
-      "medianDuration": 0.5,
-      "stdDev": 0.5270462766947299,
+      "meanDuration": 0.6,
+      "medianDuration": 1,
+      "stdDev": 0.5163977794943223,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:18.731Z"
+      "timestamp": "2026-02-17T14:49:17.883Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,7 +54,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:18.740Z"
+    "capturedAt": "2026-02-17T14:49:17.889Z"
   },
   "Pressable Performance Pressable-Specific Scenarios with-all-handlers 1": {
     "metrics": {
@@ -64,7 +64,7 @@
       "stdDev": 0.5163977794943223,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:18.748Z"
+      "timestamp": "2026-02-17T14:49:17.895Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -73,17 +73,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:18.761Z"
+    "capturedAt": "2026-02-17T14:49:17.905Z"
   },
   "Pressable Performance Pressable-Specific Scenarios with-style-function 1": {
     "metrics": {
       "name": "Pressable with-style-function",
-      "meanDuration": 0.3,
+      "meanDuration": 0.2,
       "medianDuration": 0,
-      "stdDev": 0.4830458915396479,
+      "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:18.769Z"
+      "timestamp": "2026-02-17T14:49:17.911Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -92,17 +92,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:18.783Z"
+    "capturedAt": "2026-02-17T14:49:17.921Z"
   },
   "Pressable Performance Pressable-Specific Scenarios disabled 1": {
     "metrics": {
       "name": "Pressable disabled",
       "meanDuration": 0.3,
       "medianDuration": 0,
-      "stdDev": 0.4830458915396479,
+      "stdDev": 0.48304589153964794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:18.791Z"
+      "timestamp": "2026-02-17T14:49:17.927Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -111,17 +111,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:18.805Z"
+    "capturedAt": "2026-02-17T14:49:17.937Z"
   },
   "Pressable Performance Pressable-Specific Scenarios with-hit-slop 1": {
     "metrics": {
       "name": "Pressable with-hit-slop",
-      "meanDuration": 0.5,
-      "medianDuration": 0.5,
-      "stdDev": 0.5270462766947299,
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:18.817Z"
+      "timestamp": "2026-02-17T14:49:17.943Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -130,17 +130,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:18.827Z"
+    "capturedAt": "2026-02-17T14:49:17.956Z"
   },
   "Pressable Performance Pressable-Specific Scenarios nested-pressables 1": {
     "metrics": {
       "name": "Pressable nested",
-      "meanDuration": 0.8,
+      "meanDuration": 0.9,
       "medianDuration": 1,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0.31622776601683794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T10:04:18.841Z"
+      "timestamp": "2026-02-17T14:49:17.969Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -149,17 +149,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:18.849Z"
+    "capturedAt": "2026-02-17T14:49:17.977Z"
   },
   "Pressable Performance Pressable-Specific Scenarios multiple-pressables-10 1": {
     "metrics": {
       "name": "Pressable multiple-10",
-      "meanDuration": 3.533333333333333,
+      "meanDuration": 2.933333333333333,
       "medianDuration": 3,
-      "stdDev": 0.833809387832792,
+      "stdDev": 0.2581988897471611,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T10:04:18.916Z"
+      "timestamp": "2026-02-17T14:49:18.035Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -168,17 +168,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:18.919Z"
+    "capturedAt": "2026-02-17T14:49:18.037Z"
   },
   "Pressable Performance Pressable-Specific Scenarios multiple-pressables-50 1": {
     "metrics": {
       "name": "Pressable multiple-50",
-      "meanDuration": 16.933333333333334,
-      "medianDuration": 16,
-      "stdDev": 1.533747356112131,
+      "meanDuration": 15,
+      "medianDuration": 15,
+      "stdDev": 1.3627702877384937,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T10:04:19.228Z"
+      "timestamp": "2026-02-17T14:49:18.296Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -187,6 +187,6 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T10:04:19.230Z"
+    "capturedAt": "2026-02-17T14:49:18.298Z"
   }
 }
