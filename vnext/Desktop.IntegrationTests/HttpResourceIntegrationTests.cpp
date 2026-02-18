@@ -9,7 +9,6 @@
 #include <Networking/IHttpResource.h>
 #include <Networking/OriginPolicy.h>
 #include <RuntimeOptions.h>
-#include <Test/HttpServer.h>
 #include <unicode.h>
 
 // Boost Library
@@ -17,6 +16,8 @@
 
 // Standard Library
 #include <future>
+
+#include "HttpServer.h"
 
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

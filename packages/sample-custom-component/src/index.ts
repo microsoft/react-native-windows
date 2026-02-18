@@ -5,6 +5,8 @@ import DrawingIsland from './DrawingIsland';
 
 import CalendarView from './FabricXamlCalendarViewNativeComponent'
 
+import ComboBox from './FabricXamlComboBoxNativeComponent'
+
 import CustomAccessibility from './CustomAccessibilityNativeComponent';
 
 export {
@@ -13,4 +15,5 @@ export {
     MovingLight,
     MovingLightHandle,
     CalendarView,
+    ComboBox,
 };

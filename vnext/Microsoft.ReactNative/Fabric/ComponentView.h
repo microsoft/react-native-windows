@@ -167,6 +167,10 @@ struct ComponentView
       winrt::Windows::Foundation::EventHandler<
           winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs> const &handler) noexcept;
   void CharacterReceived(winrt::event_token const &token) noexcept;
+  winrt::event_token ContextMenuKey(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Input::ContextMenuKeyEventArgs> const &handler) noexcept;
+  void ContextMenuKey(winrt::event_token const &token) noexcept;
   winrt::event_token PointerPressed(
       winrt::Windows::Foundation::EventHandler<
           winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs> const &handler) noexcept;
@@ -253,6 +257,8 @@ struct ComponentView
   virtual void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
   virtual void OnCharacterReceived(
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
+  virtual void OnContextMenuKey(
+      const winrt::Microsoft::ReactNative::Composition::Input::ContextMenuKeyEventArgs &args) noexcept;
 
  protected:
   winrt::com_ptr<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder> m_builder;
@@ -277,6 +283,9 @@ struct ComponentView
   winrt::event<winrt::Windows::Foundation::EventHandler<
       winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs>>
       m_characterReceivedEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<
+      winrt::Microsoft::ReactNative::Composition::Input::ContextMenuKeyEventArgs>>
+      m_contextMenuKeyEvent;
   winrt::event<winrt::Windows::Foundation::EventHandler<
       winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs>>
       m_pointerPressedEvent;
