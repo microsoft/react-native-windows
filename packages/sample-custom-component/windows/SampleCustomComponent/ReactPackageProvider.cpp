@@ -12,7 +12,6 @@
 #include "CustomAccessibility.h"
 #include "DrawingIsland.h"
 #include "MovingLight.h"
-#include "PickerXaml.h"
 
 using namespace winrt::Microsoft::ReactNative;
 
@@ -27,7 +26,6 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
   RegisterCalendarViewComponentView(packageBuilder);
   RegisterCustomAccessibilityComponentView(packageBuilder);
   RegisterComboBoxComponentView(packageBuilder);
-  RegisterPickerXamlComponentView(packageBuilder);
 #endif // #ifdef RNW_NEW_ARCH
 }
 
