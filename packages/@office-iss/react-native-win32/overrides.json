@@ -25,7 +25,7 @@
       "type": "derived",
       "file": "src-win/index.win32.js.flow",
       "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "6d9f0f7e75b7575870821c3fca5db41ba7e14809",
+      "baseHash": "6d9f0f7e75b7575870821c3fca5db41ba7e14809"
     },
     {
       "type": "platform",
