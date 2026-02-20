@@ -222,6 +222,7 @@ extends:
               BuildDropPath: $(System.DefaultWorkingDirectory)
 
           templateContext:
+            type: releaseJob
             outputs:
               - output: pipelineArtifact
                 displayName: 'Publish npm pack artifacts'
@@ -433,7 +434,6 @@ extends:
           # Symbol Publishing for Work Item 59264834 - MSRC Compliance
           - task: PublishSymbols@2
             displayName: 'Publish Symbols to Microsoft Symbol Server'
-            condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
             env:
               ARTIFACTSERVICES_SYMBOL_ACCOUNTNAME: microsoft
             inputs:
@@ -447,6 +447,7 @@ extends:
               TreatNotIndexedAsWarning: false
 
           templateContext:
+            type: releaseJob
             sdl:
               binskim:
                 analyzeTargetGlob: '$(System.DefaultWorkingDirectory)\NugetRoot\**\Microsoft.ReactNative\Microsoft.ReactNative.dll;$(System.DefaultWorkingDirectory)\NugetRoot\**\React.Windows.Desktop.DLL\react-native-win32.dll'

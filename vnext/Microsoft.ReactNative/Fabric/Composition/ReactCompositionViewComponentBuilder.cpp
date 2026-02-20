@@ -113,6 +113,16 @@ void ReactCompositionViewComponentBuilder::SetContentIslandComponentViewInitiali
   };
 }
 
+void ReactCompositionViewComponentBuilder::SetContentIslandChildSiteAutomationOption(
+    winrt::Microsoft::UI::Content::ContentAutomationOptions automationOption) noexcept {
+  m_contentIslandChildSiteAutomationOption = automationOption;
+}
+
+std::optional<winrt::Microsoft::UI::Content::ContentAutomationOptions>
+ReactCompositionViewComponentBuilder::ContentIslandChildSiteAutomationOption() const noexcept {
+  return m_contentIslandChildSiteAutomationOption;
+}
+
 void ReactCompositionViewComponentBuilder::SetPortalComponentViewInitializer(
     const PortalComponentViewInitializer &initializer) noexcept {
   m_fnCreateView = [initializer](

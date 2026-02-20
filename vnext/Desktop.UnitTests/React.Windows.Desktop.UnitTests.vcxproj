@@ -126,7 +126,6 @@
   <ItemGroup>
     <PackageReference Include="boost" Version="1.83.0.0" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
-    <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
   </ItemGroup>
   <!-- Remove the WinMD references we're picking up from Microsoft.WindowsAppSDK in the React.Windows.Desktop.vcxproj",
        which we don't need here. -->
