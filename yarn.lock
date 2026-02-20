@@ -2685,9 +2685,9 @@
     find-up "^5.0.0"
 
 "@rnx-kit/metro-config@^2.1.2":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-2.2.1.tgz#d03384a3759c1b247401e3e8f0f8fb7613681027"
-  integrity sha512-N3SuB1hXLlS6uhzrQ8Tqg6704soLvkx0SRWLxobDf9+lChskI4W14tjvA4gvATZgQcDEBrTwjKLEEWN/8dy7EA==
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-2.2.4.tgz#56890c33d799a6bb272faa2b6de4aa61e0677bba"
+  integrity sha512-OPdGePL/RuzhbyM8hzUR3qcp1PVNju8G5D9f2evYfiowjorYRAP2lIey/zmbGDNezZSTbAzvHxN3BeEYWR4wKQ==
   dependencies:
     "@rnx-kit/tools-node" "^3.0.0"
     "@rnx-kit/tools-react-native" "^2.3.1"
@@ -2710,12 +2710,13 @@
     "@rnx-kit/tools-node" "^2.0.0"
 
 "@rnx-kit/metro-plugin-duplicates-checker@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-duplicates-checker/-/metro-plugin-duplicates-checker-3.0.2.tgz#19a06208a9046d8bf6663f5b5264bc3b19dc7c5f"
-  integrity sha512-DAGSJCo+6nG6MJw6c1UuXmM4ZxusOdMhxmUQC3UXgmpNJH87t/VqrmJDDMzfUTbMK0nmbZ7tes0Wg67r6A68qw==
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-duplicates-checker/-/metro-plugin-duplicates-checker-3.0.3.tgz#c786d7ebe00a49c9f80cf0025c6955deec2d0fc4"
+  integrity sha512-Xj7mSPQjfgL5RXARBEK8rAA3twuHxz1NOnO6AwnEZoHPw+pRdEYUp8P+3fCVACd/Esse/YJvLuI8uXd6yizCpQ==
   dependencies:
     "@rnx-kit/console" "^2.0.0"
-    "@rnx-kit/tools-node" "^3.0.0"
+    "@rnx-kit/tools-node" "^3.0.4"
+    "@rnx-kit/types-plugin-duplicates-checker" "^1.0.0"
 
 "@rnx-kit/metro-plugin-typescript@^0.4.4":
   version "0.4.5"
@@ -2787,10 +2788,12 @@
   resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-2.1.2.tgz#8f854b0136beadfc8b8a6c2c8f5f0f0cfefadfc4"
   integrity sha512-pCpiUpC/032ZoN4iFZFWtKp3Vrjma115nXwv2gyD2XFxj6DFyTX6pYjSK70xT7gwLMU0C3bZonN1JxiOBlGb0A==
 
-"@rnx-kit/tools-node@^3.0.0":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-3.0.2.tgz#9993e86ee3f06af71662eae75ffdb07b8d7313c5"
-  integrity sha512-nz0kq7FxJ89Vh5NLHZjmexl3sdGeoPaPZMSWQhW6g9JzryGVdU+CyLQtQbajtwaDMQB2qH/IqpmOzAxNFr5pgg==
+"@rnx-kit/tools-node@^3.0.0", "@rnx-kit/tools-node@^3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-3.0.4.tgz#49843d7d4a4fd9f495d84528714bc98f71bca18c"
+  integrity sha512-jkBrQC71S1rjuWH3y+YPtT/1rgjF69z0EhzY7znUzQJGajKHtb4jjGjS85G41ZB0Bnt45N3NjliiVqUo4O1dzA==
+  dependencies:
+    "@rnx-kit/types-node" "^1.0.0"
 
 "@rnx-kit/tools-react-native@^1.3.2", "@rnx-kit/tools-react-native@^1.3.4", "@rnx-kit/tools-react-native@^1.4.0", "@rnx-kit/tools-react-native@^1.4.1":
   version "1.4.2"
@@ -2816,6 +2819,50 @@
     micromatch "^4.0.0"
     read-yaml-file "^2.1.0"
     strip-json-comments "^3.1.1"
+
+"@rnx-kit/types-bundle-config@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/types-bundle-config/-/types-bundle-config-1.0.0.tgz#99a7350770c801f51a6110af5ec3d4f8893aa390"
+  integrity sha512-nM5EEWr1pvi1bxKLBfHyj5LB5tv5cpRP0e4Pms8OIhIBMdhRJg6JWYDJSZTL57ZB7FigrAXESBYTWi8CjyqTog==
+  dependencies:
+    "@rnx-kit/types-metro-serializer-esbuild" "^1.0.0"
+    "@rnx-kit/types-plugin-cyclic-dependencies" "^1.0.0"
+    "@rnx-kit/types-plugin-duplicates-checker" "^1.0.0"
+    "@rnx-kit/types-plugin-typescript" "^1.0.0"
+
+"@rnx-kit/types-kit-config@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/types-kit-config/-/types-kit-config-1.0.0.tgz#9b40f2a5e88ea57a82bac8ee2a5136885af02430"
+  integrity sha512-2ZeAWxgqbnK5rUdty0OeUHn6R9sc8fxSYzjQsa3OYxCwY2ASfKb/8zMr8M7KH2maAU2AQofFi8ud90WPoP9CQQ==
+  dependencies:
+    "@rnx-kit/types-bundle-config" "^1.0.0"
+
+"@rnx-kit/types-metro-serializer-esbuild@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/types-metro-serializer-esbuild/-/types-metro-serializer-esbuild-1.0.0.tgz#1303ef3b321d10657fc79869963db53ea138980b"
+  integrity sha512-Di28VHO+y6q5Y4oij0hwhyAb7kT+AUB1aANXNgAzVrWo8rH7jjDXiELMVdwIL8uUuQd0oVo5a0/USsPWpHKTOQ==
+
+"@rnx-kit/types-node@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/types-node/-/types-node-1.0.0.tgz#86e1668424fbab7fd6da13e321e119f2e7ab28e2"
+  integrity sha512-MSSb47OqfpcboyLQfSN/UfDk5zeUP7mMGBDbBIGXyhBwkKfHKEhSj/rY32uv8B0qIsxLaQ7o6+QLx2kLKGOd3Q==
+  dependencies:
+    "@rnx-kit/types-kit-config" "^1.0.0"
+
+"@rnx-kit/types-plugin-cyclic-dependencies@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/types-plugin-cyclic-dependencies/-/types-plugin-cyclic-dependencies-1.0.0.tgz#2b8d122db29611eb7c3dc8086be142d26d78129e"
+  integrity sha512-L/Gi2OzKHYJxqe+w9mOnXBu9uhsLi5LvdCf1Xu/xSWOlHFG/M20qt22iaAiIlWnHSoDKkNQEmHTrBpKZd43HIQ==
+
+"@rnx-kit/types-plugin-duplicates-checker@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/types-plugin-duplicates-checker/-/types-plugin-duplicates-checker-1.0.0.tgz#b3119263d42ac174c3bfdc85bc12587281016e72"
+  integrity sha512-y3JjElRuDe9+jdUQxalLb1nQlhaTpId39Qr4vdXjdOR4Z3/NEi9SUcmxWzgtsIh5rwaq/1AXDsSx7llEEASEjg==
+
+"@rnx-kit/types-plugin-typescript@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/types-plugin-typescript/-/types-plugin-typescript-1.0.0.tgz#55f8c11924b2b4b6c3c8bfa37a1944df9b845e7f"
+  integrity sha512-5zFk5wPiAEinfT5XH+t7Ka5I/CUnRf/fqnCS7LDj21ReOgGfdrUQ1wXVsV7EoClCNCgUHvWFDdWkbNOFeFa60A==
 
 "@rnx-kit/typescript-service@^1.5.7":
   version "1.5.8"
