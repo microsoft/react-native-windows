@@ -34,7 +34,7 @@ jobs:
           DEFAULT_DAYS=180
           COPILOT_CUTOFF=$(date -d "$COPILOT_DAYS days ago" +%s)
           DEFAULT_CUTOFF=$(date -d "$DEFAULT_DAYS days ago" +%s)
-          PROTECTED='^(main|master|develop|release/|hotfix/|archive/)'
+          PROTECTED='^(main|master|develop|release/|hotfix/|archive/|[0-9]+\.[0-9]+-stable|preview-)'
 
           echo "Stale threshold: copilot/* = $COPILOT_DAYS days, others = $DEFAULT_DAYS days | Dry run: $DRY_RUN"
 
