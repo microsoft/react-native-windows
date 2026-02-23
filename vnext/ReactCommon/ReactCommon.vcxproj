@@ -166,6 +166,7 @@
     <ClCompile Include="$(YogaDir)\yoga\debug\Log.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\node\LayoutResults.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\node\Node.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\Uuid.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
