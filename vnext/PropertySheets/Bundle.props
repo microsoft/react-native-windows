@@ -51,11 +51,14 @@
     <BundleEntryFile Condition="'$(BundleEntryFile)' == '' and Exists('$(BundleCommandWorkingDir)\index.windows.js')">index.windows.js</BundleEntryFile>
     <BundleEntryFile Condition="'$(BundleEntryFile)' == ''">index.js</BundleEntryFile>
 
-    <FullOutDir Condition="'$([System.IO.Path]::GetFullPath($(OutDir)))' == '$(OutDir)'">$(OutDir)</FullOutDir>
-    <FullOutDir Condition="'$([System.IO.Path]::GetFullPath($(OutDir)))' != '$(OutDir)'">$(ProjectDir)$(OutDir)</FullOutDir>
+    <BundleOutDir>$(OutDir)</BundleOutDir>
+    <!-- OutDir isn't set this early in .NET projects, need to re-create it -->
+    <BundleOutDir Condition="'$(BundleOutDir)'=='' And '$(MSBuildProjectExtension)' == '.csproj'">bin\$(Platform)\$(Configuration)\$(TargetFramework)</BundleOutDir>
+    <BundleFullOutDir Condition="'$([System.IO.Path]::GetFullPath($(BundleOutDir)))' == '$(BundleOutDir)'">$(BundleOutDir)</BundleFullOutDir>
+    <BundleFullOutDir Condition="'$([System.IO.Path]::GetFullPath($(BundleOutDir)))' != '$(BundleOutDir)'">$(ProjectDir)$(BundleOutDir)</BundleFullOutDir>
     
     <!-- Location where source map file for the JS bundle will be created -->
-    <BundleSourceMapDir Condition="'$(BundleSourceMapDir)' == ''">$([MSBuild]::NormalizePath('$(FullOutDir)\sourcemaps\react'))</BundleSourceMapDir>
+    <BundleSourceMapDir Condition="'$(BundleSourceMapDir)' == ''">$([MSBuild]::NormalizePath('$(BundleFullOutDir)\sourcemaps\react'))</BundleSourceMapDir>
 
     <!-- Base (extensionless) filename for bundle sourcemaps -->
     <BaseBundleSourceMap Condition="'$(BaseBundleSourceMap)' == ''">$(BundleSourceMapDir)\$(BundleAssetName)</BaseBundleSourceMap>

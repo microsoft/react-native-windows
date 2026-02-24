@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Implement New Architecture C# template `cs-app`",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
