@@ -32,6 +32,8 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
       uint32_t index) noexcept override;
   void Connect(const winrt::Microsoft::UI::Content::ContentIsland &contentIsland) noexcept;
 
+  winrt::Microsoft::UI::Content::ChildSiteLink ChildSiteLink() noexcept;
+
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept;
@@ -59,14 +61,12 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   void OnUnmounted() noexcept;
   void ParentLayoutChanged() noexcept;
   void ConnectInternal() noexcept;
-  void RegisterForRootIslandEvents() noexcept;
-  void UnregisterForRootIslandEvents() noexcept;
   winrt::Microsoft::UI::Content::ContentIsland ParentContentIsland() noexcept;
 
   bool m_layoutChangePosted{false};
   winrt::Microsoft::UI::Content::ContentIsland m_parentContentIsland{nullptr};
   winrt::Microsoft::UI::Content::ContentIsland m_islandToConnect{nullptr};
-  winrt::event_token m_islandStateChangedToken;
+  std::optional<winrt::Microsoft::UI::Input::FocusNavigationReason> m_pendingNavigateFocus;
 
   winrt::event_token m_mountedToken;
   winrt::event_token m_unmountedToken;
@@ -74,6 +74,7 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
   winrt::Microsoft::UI::Input::InputFocusNavigationHost m_navigationHost{nullptr};
   winrt::event_token m_navigationHostDepartFocusRequestedToken{};
+  std::optional<winrt::Microsoft::UI::Input::FocusNavigationReason> m_pendingFocus;
 
   // Automation
   void ConfigureChildSiteLinkAutomation() noexcept;
