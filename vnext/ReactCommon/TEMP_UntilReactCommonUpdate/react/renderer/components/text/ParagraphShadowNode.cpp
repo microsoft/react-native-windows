@@ -36,7 +36,7 @@
 namespace facebook::react {
 using Content = ParagraphShadowNode::Content;
 
-// NOLINTNEXTLINE(facebook-hte-CArray)
+// NOLINTNEXTLINE(facebook-hte-CArray, modernize-avoid-c-arrays)
 const char ParagraphComponentName[] = "Paragraph";
 
 void ParagraphShadowNode::initialize() noexcept {

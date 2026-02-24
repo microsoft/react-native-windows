@@ -140,8 +140,10 @@ class Stream : public NetworkRequestListener,
     // called with it.
     if (initCb_) {
       auto cb = std::move(initCb_);
-      (*cb)(
-          InitStreamResult{httpStatusCode, headers, this->shared_from_this()});
+      (*cb)(InitStreamResult{
+          .httpStatusCode = httpStatusCode,
+          .headers = headers,
+          .stream = this->shared_from_this()});
     }
   }
 
@@ -281,15 +283,15 @@ bool NetworkIOAgent::handleRequest(
     if (req.method == "Network.enable") {
       networkHandler.setFrontendChannel(frontendChannel_);
       networkHandler.enable();
-      frontendChannel_(cdp::jsonResult(req.id));
-      return true;
+      // NOTE: Domain enable/disable responses are sent by HostAgent.
+      return false;
     }
 
     // @cdp Network.disable support is experimental.
     if (req.method == "Network.disable") {
       networkHandler.disable();
-      frontendChannel_(cdp::jsonResult(req.id));
-      return true;
+      // NOTE: Domain enable/disable responses are sent by HostAgent.
+      return false;
     }
 
     // @cdp Network.getResponseBody support is experimental.
