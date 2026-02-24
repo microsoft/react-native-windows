@@ -128,7 +128,15 @@ void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layout
   // flowing to Java, so we just ensure it's a noop in those cases.
 
   setStateData(
+<<<<<<< Upstream
+      AndroidTextInputState{
+          AttributedStringBox(newAttributedString),
+          reactTreeAttributedString,
+          props.paragraphAttributes,
+          newEventCount});
+=======
       WindowsTextInputState{AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
+>>>>>>> Override
 }
 
 AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutContext &layoutContext) const {

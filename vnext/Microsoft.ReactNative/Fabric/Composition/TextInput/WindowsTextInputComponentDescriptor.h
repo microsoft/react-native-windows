@@ -18,6 +18,19 @@ namespace facebook::react {
 /*
  * Descriptor for <WindowsTextInput> component.
  */
+<<<<<<< Upstream
+class AndroidTextInputComponentDescriptor final : public ConcreteComponentDescriptor<AndroidTextInputShadowNode> {
+ public:
+  AndroidTextInputComponentDescriptor(const ComponentDescriptorParameters &parameters)
+      : ConcreteComponentDescriptor<AndroidTextInputShadowNode>(parameters),
+        textLayoutManager_(std::make_shared<TextLayoutManager>(contextContainer_))
+  {
+  }
+
+  virtual State::Shared createInitialState(const Props::Shared &props, const ShadowNodeFamily::Shared &family)
+      const override
+  {
+=======
 class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescriptor<WindowsTextInputShadowNode> {
  public:
   WindowsTextInputComponentDescriptor(const ComponentDescriptorParameters &parameters)
@@ -28,89 +41,89 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
 virtual State::Shared createInitialState(
       const Props::Shared& props,
       const ShadowNodeFamily::Shared& family) const override {
+>>>>>>> Override
     int surfaceId = family->getSurfaceId();
 
     ThemePadding theme;
     // TODO: figure out RTL/start/end/left/right stuff here
-    if (surfaceIdToThemePaddingMap_.find(surfaceId) !=
-        surfaceIdToThemePaddingMap_.end()) {
+    if (surfaceIdToThemePaddingMap_.find(surfaceId) != surfaceIdToThemePaddingMap_.end()) {
       theme = surfaceIdToThemePaddingMap_[surfaceId];
     } else {
-      const jni::global_ref<jobject>& fabricUIManager =
+      const jni::global_ref<jobject> &fabricUIManager =
           contextContainer_->at<jni::global_ref<jobject>>("FabricUIManager");
 
       auto env = jni::Environment::current();
       auto defaultTextInputPaddingArray = env->NewFloatArray(4);
       static auto getThemeData =
-          jni::findClassStatic(UIManagerJavaDescriptor)
-              ->getMethod<jboolean(jint, jfloatArray)>("getThemeData");
+          jni::findClassStatic(UIManagerJavaDescriptor)->getMethod<jboolean(jint, jfloatArray)>("getThemeData");
 
-      if (getThemeData(
-              fabricUIManager, surfaceId, defaultTextInputPaddingArray) != 0u) {
-        jfloat* defaultTextInputPadding =
-            env->GetFloatArrayElements(defaultTextInputPaddingArray, nullptr);
+      if (getThemeData(fabricUIManager, surfaceId, defaultTextInputPaddingArray) != 0u) {
+        jfloat *defaultTextInputPadding = env->GetFloatArrayElements(defaultTextInputPaddingArray, nullptr);
         theme.start = defaultTextInputPadding[0];
         theme.end = defaultTextInputPadding[1];
         theme.top = defaultTextInputPadding[2];
         theme.bottom = defaultTextInputPadding[3];
         surfaceIdToThemePaddingMap_.emplace(std::make_pair(surfaceId, theme));
-        env->ReleaseFloatArrayElements(
-            defaultTextInputPaddingArray, defaultTextInputPadding, JNI_ABORT);
+        env->ReleaseFloatArrayElements(defaultTextInputPaddingArray, defaultTextInputPadding, JNI_ABORT);
       }
 
     return std::make_shared<AndroidTextInputShadowNode::ConcreteState>(
-        std::make_shared<const AndroidTextInputState>(
-            AndroidTextInputState({}, {}, {}, 0)),
-        family);
+        std::make_shared<const AndroidTextInputState>(AndroidTextInputState({}, {}, {}, 0)), family);
   }
   */
 
  protected:
+<<<<<<< Upstream
+  void adopt(ShadowNode &shadowNode) const override
+  {
+    auto &textInputShadowNode = static_cast<AndroidTextInputShadowNode &>(shadowNode);
+=======
   void adopt(ShadowNode &shadowNode) const override {
     auto &textInputShadowNode = static_cast<WindowsTextInputShadowNode &>(shadowNode);
+>>>>>>> Override
 
     // `TextInputShadowNode` uses `TextLayoutManager` to measure text content
     // and communicate text rendering metrics to mounting layer.
     textInputShadowNode.setTextLayoutManager(textLayoutManager_);
 
+<<<<<<< Upstream
+    int surfaceId = textInputShadowNode.getSurfaceId();
+    if (surfaceIdToThemePaddingMap_.find(surfaceId) != surfaceIdToThemePaddingMap_.end()) {
+      const auto &theme = surfaceIdToThemePaddingMap_[surfaceId];
+=======
     /*
             int surfaceId = textInputShadowNode.getSurfaceId();
     if (surfaceIdToThemePaddingMap_.find(surfaceId) !=
         surfaceIdToThemePaddingMap_.end()) {
       const auto& theme = surfaceIdToThemePaddingMap_[surfaceId];
+>>>>>>> Override
 
-      auto& textInputProps = textInputShadowNode.getConcreteProps();
+      auto &textInputProps = textInputShadowNode.getConcreteProps();
 
       // Override padding
       // Node is still unsealed during adoption, before layout is complete
       // TODO: T62959168 account for RTL and paddingLeft when setting default
       // paddingStart, and vice-versa with paddingRight/paddingEnd.
       // For now this assumes no RTL.
-      auto& style = const_cast<yoga::Style&>(textInputProps.yogaStyle);
+      auto &style = const_cast<yoga::Style &>(textInputProps.yogaStyle);
       bool changedPadding = false;
-      if (!textInputProps.hasPadding && !textInputProps.hasPaddingStart &&
-          !textInputProps.hasPaddingLeft &&
+      if (!textInputProps.hasPadding && !textInputProps.hasPaddingStart && !textInputProps.hasPaddingLeft &&
           !textInputProps.hasPaddingHorizontal) {
         changedPadding = true;
-        style.setPadding(
-            yoga::Edge::Start, yoga::StyleLength::points(theme.start));
+        style.setPadding(yoga::Edge::Start, yoga::StyleLength::points(theme.start));
       }
-      if (!textInputProps.hasPadding && !textInputProps.hasPaddingEnd &&
-          !textInputProps.hasPaddingRight &&
+      if (!textInputProps.hasPadding && !textInputProps.hasPaddingEnd && !textInputProps.hasPaddingRight &&
           !textInputProps.hasPaddingHorizontal) {
         changedPadding = true;
         style.setPadding(yoga::Edge::End, yoga::StyleLength::points(theme.end));
       }
-      if (!textInputProps.hasPadding && !textInputProps.hasPaddingTop &&
-          !textInputProps.hasPaddingVertical) {
+      if (!textInputProps.hasPadding && !textInputProps.hasPaddingTop && !textInputProps.hasPaddingVertical) {
         changedPadding = true;
         style.setPadding(yoga::Edge::Top, yoga::StyleLength::points(theme.top));
       }
-      if (!textInputProps.hasPadding && !textInputProps.hasPaddingBottom &&
-          !textInputProps.hasPaddingVertical) {
+      if (!textInputProps.hasPadding && !textInputProps.hasPaddingBottom && !textInputProps.hasPaddingVertical) {
         changedPadding = true;
-        style.setPadding(
-            yoga::Edge::Bottom, yoga::StyleLength::points(theme.bottom));
+        style.setPadding(yoga::Edge::Bottom, yoga::StyleLength::points(theme.bottom));
       }
 
       // If the TextInput initially does not have paddingLeft or paddingStart, a
@@ -118,13 +131,11 @@ virtual State::Shared createInitialState(
       // paddingLeft update, we must explicitly unset paddingStart... (same with
       // paddingEnd)
       // TODO: support RTL
-      if ((textInputProps.hasPadding || textInputProps.hasPaddingLeft ||
-           textInputProps.hasPaddingHorizontal) &&
+      if ((textInputProps.hasPadding || textInputProps.hasPaddingLeft || textInputProps.hasPaddingHorizontal) &&
           !textInputProps.hasPaddingStart) {
         style.setPadding(yoga::Edge::Start, yoga::StyleLength::undefined());
       }
-      if ((textInputProps.hasPadding || textInputProps.hasPaddingRight ||
-           textInputProps.hasPaddingHorizontal) &&
+      if ((textInputProps.hasPadding || textInputProps.hasPaddingRight || textInputProps.hasPaddingHorizontal) &&
           !textInputProps.hasPaddingEnd) {
         style.setPadding(yoga::Edge::End, yoga::StyleLength::undefined());
       }

@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.83.0-nightly-20251012-6f482708b",
+  "baseVersion": "0.83.0-nightly-20251104-502efe1cc",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "40952c5ed2905d0daf6988169293ed3e24f77241"
+      "baseHash": "5a5f25ce055b9b4465410b513de9dc6d4db39a90"
     },
     {
       "type": "derived",
@@ -47,7 +47,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "b77b87e32a86265a3c8c29ebbbee46558596aec8"
+      "baseHash": "93b9eb92a1237885cdbff255d473584226421dd3"
     },
     {
       "type": "copy",
@@ -214,7 +214,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewWin32.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/View.d.ts",
-      "baseHash": "c71957187cbae0b40995198a2d7a18d5cae6d662"
+      "baseHash": "27bf94d4a6d5ae4034c2da165fb5bc06fd98d1a3"
     },
     {
       "type": "platform",
@@ -400,7 +400,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Renderer/shims/ReactNativeTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Renderer/shims/ReactNativeTypes.js",
-      "baseHash": "41da351b1e8d090e5ecf0859738218a5dcd4c08f",
+      "baseHash": "333afc05f5a42a5321196f5f7a14d14c8fd5dd0f",
       "issue": 0
     },
     {
@@ -425,7 +425,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.d.ts",
       "baseFile": "packages/react-native/Libraries/Text/Text.d.ts",
-      "baseHash": "3540a1a36fc487e54c1cec9b0c57b4fdc2124b60"
+      "baseHash": "0289a5c0fbb168f20602451fe314f3787f1ac66f"
     },
     {
       "type": "derived",

@@ -11,7 +11,7 @@
     "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
-    "@react-native/tester": "0.83.0-nightly-20251012-6f482708b",
+    "@react-native/tester": "0.83.0-nightly-20251104-502efe1cc",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "flow-enums-runtime": "^0.0.6"
@@ -19,7 +19,7 @@
   "peerDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.305",
     "react": "19.2.0",
-    "react-native": "0.83.0-nightly-20251012-6f482708b"
+    "react-native": "0.83.0-nightly-20251104-502efe1cc"
   },
   "devDependencies": {
     "@office-iss/react-native-win32": "^0.0.0-canary.305",
@@ -30,7 +30,7 @@
     "@types/node": "^22.14.0",
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
-    "react-native": "0.83.0-nightly-20251012-6f482708b",
+    "react-native": "0.83.0-nightly-20251104-502efe1cc",
     "react-native-platform-override": "0.0.0-canary.1019",
     "typescript": "5.0.4"
   },

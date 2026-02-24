@@ -30,7 +30,8 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
  public:
   using ConcreteViewShadowNode::ConcreteViewShadowNode;
 
-  static ShadowNodeTraits BaseTraits() {
+  static ShadowNodeTraits BaseTraits()
+  {
     auto traits = ConcreteViewShadowNode::BaseTraits();
     traits.set(ShadowNodeTraits::Trait::LeafYogaNode);
     traits.set(ShadowNodeTraits::Trait::MeasurableYogaNode);
@@ -51,10 +52,14 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
 
   void layout(LayoutContext layoutContext) override;
 
+<<<<<<< Upstream
+  Float baseline(const LayoutContext &layoutContext, Size size) const override;
+=======
   Float baseline(const LayoutContext &layoutContext, Size size) const override {
     // Calculate baseline as 80% of the text height
     return size.height * 0.8f;
   }
+>>>>>>> Override
 
   std::shared_ptr<const TextLayoutManager> textLayoutManager_;
 

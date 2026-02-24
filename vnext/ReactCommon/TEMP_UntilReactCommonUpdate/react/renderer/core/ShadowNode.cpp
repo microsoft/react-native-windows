@@ -420,9 +420,13 @@ std::shared_ptr<ShadowNode> cloneMultipleRecursive(
   std::shared_ptr<std::vector<std::shared_ptr<const ShadowNode>>> newChildren;
   auto count = childrenCount.at(family);
 
+<<<<<<< Upstream
+  for (size_t i = 0; count > 0 && i < children.size(); i++) {
+=======
   // [Windows Remove when issue #15292 is resolved (the fix goes upstream and comes back)
   for (size_t i = 0; count > 0 && i < children.size(); i++) {
   // Windows]
+>>>>>>> Override
     const auto childFamily = &children[i]->getFamily();
     if (childrenCount.contains(childFamily)) {
       count--;

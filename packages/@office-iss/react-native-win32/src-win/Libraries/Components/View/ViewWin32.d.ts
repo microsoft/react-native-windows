@@ -10,7 +10,11 @@
 import type * as React from 'react';
 import {Constructor} from 'react-native/types/private/Utilities';
 import {ViewProps} from './ViewPropTypes';
+<<<<<<< Upstream
+import {HostInstance} from '../../../types/public/ReactNativeTypes';
+=======
 import {NativeMethods} from 'react-native/types/public/ReactNativeTypes';
+>>>>>>> Override
 
 /**
  * The most fundamental component for building UI, View is a container that supports layout with flexbox, style, some touch handling,
@@ -18,10 +22,16 @@ import {NativeMethods} from 'react-native/types/public/ReactNativeTypes';
  * View maps directly to the native view equivalent on whatever platform React is running on,
  * whether that is a UIView, <div>, android.view, etc.
  */
+<<<<<<< Upstream
+declare class ViewComponent extends React.Component<ViewProps> {}
+declare const ViewBase: Constructor<HostInstance> & typeof ViewComponent;
+export class View extends ViewBase {
+=======
 declare class ViewWin32Component extends React.Component<ViewProps> {}
 declare const ViewWin32Base: Constructor<NativeMethods> &
   typeof ViewWin32Component;
 export class ViewWin32 extends ViewWin32Base {
+>>>>>>> Override
   /**
    * Is 3D Touch / Force Touch available (i.e. will touch events include `force`)
    * @platform ios
