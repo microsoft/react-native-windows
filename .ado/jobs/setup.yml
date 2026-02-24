@@ -44,6 +44,7 @@ jobs:
       - ${{ if endsWith(parameters.buildEnvironment, 'PullRequest') }}:
         - script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "##vso[task.logissue type=error]Run \"yarn change\" from root of repo to generate a change file."
           displayName: Check for change files
+          condition: not(startsWith(variables['System.PullRequest.SourceBranch'], 'refs/heads/prepare-release/'))
 
       - script: npx beachball bump --branch origin/$(BeachBallBranchName) --yes --verbose
         displayName: beachball bump

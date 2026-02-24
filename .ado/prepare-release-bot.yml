@@ -1,0 +1,48 @@
+name: $(Date:yyyyMMdd).$(Rev:r)
+
+trigger: none
+pr: none
+
+schedules:
+  - cron: "0 */4 * * *"
+    displayName: Prepare release
+    branches:
+      include:
+        - main
+        - "*-stable"
+    always: true
+
+parameters:
+  - name: AgentPool
+    type: object
+    default:
+      Small:
+        name: rnw-pool-2-microsoft
+        demands: ImageOverride -equals rnw-img-vs2022-node22
+
+variables:
+  - template: variables/windows.yml
+  - group: RNW Secrets
+
+jobs:
+  - job: PrepareRelease
+    displayName: Prepare Release Bot
+    pool: ${{ parameters.AgentPool.Small }}
+    timeoutInMinutes: 30
+
+    steps:
+      - template: templates/checkout-full.yml
+        parameters:
+          persistCredentials: true
+
+      - script: |
+          git config user.name "React-Native-Windows Bot"
+          git config user.email "53619745+rnbot@users.noreply.github.com"
+        displayName: Configure Git Identity
+
+      - template: templates/prepare-js-env.yml
+
+      - script: npx prepare-release --branch $(Build.SourceBranchName) --no-color
+        displayName: Prepare Release
+        env:
+          GH_TOKEN: $(githubAuthToken)
