@@ -70,7 +70,7 @@
     "typescript": "5.0.4"
   },
   "peerDependencies": {
-    "react-native": "^0.81.0-0"
+    "react-native": "^0.81.0"
   },
   "beachball": {
     "defaultNpmTag": "latest",

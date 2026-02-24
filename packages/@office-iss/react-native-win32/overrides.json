@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.81.5",
+  "baseVersion": "0.81.6",
   "overrides": [
     {
       "type": "derived",
@@ -394,7 +394,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Renderer/shims/ReactNativeTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Renderer/shims/ReactNativeTypes.js",
-      "baseHash": "9e91759d01c9a6d459c5781b357533f4ac8727a7",
+      "baseHash": "7d2d4e348d5e2c324cc6f8884039d1320c470eda",
       "issue": 0
     },
     {
