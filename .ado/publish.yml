@@ -349,7 +349,7 @@ extends:
 
             - template: .ado/templates/authenticate-office-react-native-windows-bot.yml@self
 
-           # Make symbols available through http://symweb.
+            # Make symbols available through http://symweb.
             - task: PublishSymbols@2
               displayName: Publish symbols
               enabled: true
