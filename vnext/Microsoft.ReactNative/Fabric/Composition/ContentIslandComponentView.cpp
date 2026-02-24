@@ -50,15 +50,23 @@ winrt::Microsoft::UI::Content::ContentIsland ContentIslandComponentView::ParentC
   return root->parentContentIsland();
 }
 
+winrt::Microsoft::UI::Content::ChildSiteLink ContentIslandComponentView::ChildSiteLink() noexcept {
+  if (!isMounted())
+    return nullptr;
+  if (!m_childSiteLink) {
+    m_childSiteLink = winrt::Microsoft::UI::Content::ChildSiteLink::Create(
+      m_parentContentIsland,
+      winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
+          .as<winrt::Microsoft::UI::Composition::ContainerVisual>());
+  }
+  return m_childSiteLink;
+}
+
 void ContentIslandComponentView::ConnectInternal() noexcept {
   if (!m_islandToConnect)
     return;
 
-  m_childSiteLink = winrt::Microsoft::UI::Content::ChildSiteLink::Create(
-      m_parentContentIsland,
-      winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
-          .as<winrt::Microsoft::UI::Composition::ContainerVisual>());
-  m_childSiteLink.ActualSize({m_layoutMetrics.frame.size.width, m_layoutMetrics.frame.size.height});
+  ChildSiteLink().ActualSize({m_layoutMetrics.frame.size.width, m_layoutMetrics.frame.size.height});
 
   m_navigationHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteLink(m_childSiteLink);
 

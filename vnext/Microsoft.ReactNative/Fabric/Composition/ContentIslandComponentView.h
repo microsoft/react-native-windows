@@ -32,6 +32,8 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
       uint32_t index) noexcept override;
   void Connect(const winrt::Microsoft::UI::Content::ContentIsland &contentIsland) noexcept;
 
+  winrt::Microsoft::UI::Content::ChildSiteLink ChildSiteLink() noexcept;
+
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept;

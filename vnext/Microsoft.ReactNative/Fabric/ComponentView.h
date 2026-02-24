@@ -121,7 +121,7 @@ struct ComponentView
   virtual void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
   virtual void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
   virtual void onMounted() noexcept;
-  bool isMounted() noexcept;
+  bool isMounted() const noexcept;
   virtual void onUnmounted() noexcept;
   void onDestroying() noexcept;
 
