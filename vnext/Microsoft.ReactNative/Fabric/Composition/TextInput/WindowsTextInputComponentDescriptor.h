@@ -18,19 +18,6 @@ namespace facebook::react {
 /*
  * Descriptor for <WindowsTextInput> component.
  */
-<<<<<<< Upstream
-class AndroidTextInputComponentDescriptor final : public ConcreteComponentDescriptor<AndroidTextInputShadowNode> {
- public:
-  AndroidTextInputComponentDescriptor(const ComponentDescriptorParameters &parameters)
-      : ConcreteComponentDescriptor<AndroidTextInputShadowNode>(parameters),
-        textLayoutManager_(std::make_shared<TextLayoutManager>(contextContainer_))
-  {
-  }
-
-  virtual State::Shared createInitialState(const Props::Shared &props, const ShadowNodeFamily::Shared &family)
-      const override
-  {
-=======
 class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescriptor<WindowsTextInputShadowNode> {
  public:
   WindowsTextInputComponentDescriptor(const ComponentDescriptorParameters &parameters)
@@ -41,7 +28,6 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
 virtual State::Shared createInitialState(
       const Props::Shared& props,
       const ShadowNodeFamily::Shared& family) const override {
->>>>>>> Override
     int surfaceId = family->getSurfaceId();
 
     ThemePadding theme;
@@ -73,30 +59,18 @@ virtual State::Shared createInitialState(
   */
 
  protected:
-<<<<<<< Upstream
-  void adopt(ShadowNode &shadowNode) const override
-  {
-    auto &textInputShadowNode = static_cast<AndroidTextInputShadowNode &>(shadowNode);
-=======
   void adopt(ShadowNode &shadowNode) const override {
     auto &textInputShadowNode = static_cast<WindowsTextInputShadowNode &>(shadowNode);
->>>>>>> Override
 
     // `TextInputShadowNode` uses `TextLayoutManager` to measure text content
     // and communicate text rendering metrics to mounting layer.
     textInputShadowNode.setTextLayoutManager(textLayoutManager_);
 
-<<<<<<< Upstream
-    int surfaceId = textInputShadowNode.getSurfaceId();
-    if (surfaceIdToThemePaddingMap_.find(surfaceId) != surfaceIdToThemePaddingMap_.end()) {
-      const auto &theme = surfaceIdToThemePaddingMap_[surfaceId];
-=======
     /*
             int surfaceId = textInputShadowNode.getSurfaceId();
     if (surfaceIdToThemePaddingMap_.find(surfaceId) !=
         surfaceIdToThemePaddingMap_.end()) {
       const auto& theme = surfaceIdToThemePaddingMap_[surfaceId];
->>>>>>> Override
 
       auto &textInputProps = textInputShadowNode.getConcreteProps();
 

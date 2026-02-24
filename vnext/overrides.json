@@ -201,20 +201,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/conversions.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/conversions.h",
-      "baseHash": "07075be2e9ae81728bab85d0ddf2d334fee2d43a",
-      "issue": 14698
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/ShadowNode.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/ShadowNode.cpp",
-      "baseHash": "8078adaeb0c8187fd9ff5bc857f041f2cbfc3b3e",
-      "issue": 15292
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/primitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/primitives.h",
       "baseHash": "bba2fec2301bbf05f8e47436ad48723c8890e4d7",

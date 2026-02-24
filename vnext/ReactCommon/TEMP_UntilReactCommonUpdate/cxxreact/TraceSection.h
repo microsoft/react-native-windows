@@ -84,17 +84,10 @@ using TraceSectionUnwrapped = TraceSection;
 struct ConcreteTraceSection {
  public:
   template <typename... ConvertsToStringPiece>
-<<<<<<< Upstream
-  explicit ConcreteTraceSection(const char *name, ConvertsToStringPiece &&...args)
-      : m_section(TRACE_TAG_REACT, name, args...)
-  {
-  }
-=======
   explicit ConcreteTraceSection(
       const char* name,
       ConvertsToStringPiece&&... args)
       : m_section(TRACE_TAG_REACT_CXX_BRIDGE, name, args...) {} // [Windows][issue #14819]
->>>>>>> Override
 
  private:
   fbsystrace::FbSystraceSection m_section;

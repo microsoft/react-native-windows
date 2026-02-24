@@ -36,22 +36,12 @@ class WindowsTextInputState final {
   {
   }
 
-<<<<<<< Upstream
-  AndroidTextInputState(const AndroidTextInputState &previousState, const folly::dynamic &data)
-=======
   WindowsTextInputState(const WindowsTextInputState &previousState, const folly::dynamic &data)
->>>>>>> Override
       : attributedStringBox(previousState.attributedStringBox),
         reactTreeAttributedString(previousState.reactTreeAttributedString),
         paragraphAttributes(previousState.paragraphAttributes),
         mostRecentEventCount(data.getDefault("mostRecentEventCount", previousState.mostRecentEventCount).getInt()),
-<<<<<<< Upstream
-        cachedAttributedStringId(data.getDefault("opaqueCacheId", previousState.cachedAttributedStringId).getInt())
-  {
-  }
-=======
         cachedAttributedStringId(data.getDefault("opaqueCacheId", previousState.cachedAttributedStringId).getInt()) {}
->>>>>>> Override
 
   folly::dynamic getDynamic() const;
   MapBuffer getMapBuffer() const;
