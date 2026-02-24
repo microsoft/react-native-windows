@@ -55,9 +55,9 @@ winrt::Microsoft::UI::Content::ChildSiteLink ContentIslandComponentView::ChildSi
     return nullptr;
   if (!m_childSiteLink) {
     m_childSiteLink = winrt::Microsoft::UI::Content::ChildSiteLink::Create(
-      m_parentContentIsland,
-      winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
-          .as<winrt::Microsoft::UI::Composition::ContainerVisual>());
+        m_parentContentIsland,
+        winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
+            .as<winrt::Microsoft::UI::Composition::ContainerVisual>());
   }
   return m_childSiteLink;
 }
