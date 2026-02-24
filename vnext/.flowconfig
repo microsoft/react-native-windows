@@ -143,7 +143,7 @@ module.name_mapper='^react-native-windows$' -> '<PROJECT_ROOT>/index.windows.js'
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^react-native-windows/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@react-native/dev-middleware$' -> '<PROJECT_ROOT>/\1'
-module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\|xml\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
+module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\|xml\|ktx\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
 
 module.system.haste.module_ref_prefix=m#
 
@@ -173,4 +173,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.281.0
+^0.287.0
