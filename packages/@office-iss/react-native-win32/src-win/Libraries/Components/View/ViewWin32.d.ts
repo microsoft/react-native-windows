@@ -19,7 +19,8 @@ import {HostInstance} from 'react-native/types/public/ReactNativeTypes';
  * whether that is a UIView, <div>, android.view, etc.
  */
 declare class ViewWin32Component extends React.Component<ViewProps> {}
-declare const ViewWin32Base: Constructor<HostInstance> & typeof ViewWin32Component;
+declare const ViewWin32Base: Constructor<HostInstance> &
+  typeof ViewWin32Component;
 export class ViewWin32 extends ViewWin32Base {
   /**
    * Is 3D Touch / Force Touch available (i.e. will touch events include `force`)
