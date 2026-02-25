@@ -29,3 +29,16 @@ Cherry-picks a specific commit into a target branch.
 - The workflow will fail if there are merge conflicts during cherry-pick
 - If conflicts occur, you'll need to resolve them manually
 - The commit will be pushed directly to the target branch after successful cherry-pick
+### Trigger AZP on Dependabot PRs
+
+**File:** `dependabot-azp-trigger.yml`
+
+Automatically comments `/azp run PR` on pull requests opened or updated by Dependabot, triggering Azure Pipelines CI without manual intervention.
+
+**Trigger:** Runs on `pull_request_target` events (`opened`, `synchronize`, `reopened`) when the PR author is `dependabot[bot]`.
+
+**Notes:**
+
+- Uses `pull_request_target` so the workflow has write permissions to comment on Dependabot PRs
+- Checks `github.event.pull_request.user.login` (not `github.actor`) so it still triggers when a maintainer clicks "Update branch"
+- Fires on `opened`, `synchronize` (new pushes/rebases), and `reopened` events
