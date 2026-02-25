@@ -8,7 +8,7 @@
  */
 
 import * as React from 'react';
-import {TextInput, StyleSheet} from 'react-native';
+import {TextInput, View, StyleSheet} from 'react-native';
 import {
   ComponentPerfTestBase,
   measurePerf,
@@ -55,6 +55,11 @@ class TextInputPerfTest extends ComponentPerfTestBase {
         name: 'styled-input',
         description: 'TextInput with custom styles',
         run: () => this.measureStyledInput(),
+      },
+      {
+        name: 'multiple-text-inputs-100',
+        description: 'Render 100 sibling TextInput components (stress gate)',
+        run: () => this.measureMultipleTextInputs(100),
       },
     ];
   }
@@ -103,6 +108,27 @@ class TextInputPerfTest extends ComponentPerfTestBase {
       },
     );
   }
+
+  private async measureMultipleTextInputs(
+    count: number,
+  ): Promise<PerfMetrics> {
+    const TextInputList = () => (
+      <View testID={this.testId}>
+        {Array.from({length: count}, (_, i) => (
+          <TextInput
+            key={i}
+            style={styles.default}
+            placeholder={`Input ${i}`}
+          />
+        ))}
+      </View>
+    );
+
+    return measurePerf(<TextInputList />, {
+      name: `${this.componentName} multiple-${count}`,
+      runs: 15,
+    });
+  }
 }
 
 const textInputPerfTest = new TextInputPerfTest();
@@ -140,6 +166,16 @@ describe('TextInput Performance', () => {
       const scenario = textInputPerfTest.getCustomScenarios()[2];
       const perf = await scenario.run();
       expect(perf).toMatchPerfSnapshot();
+    });
+
+    test('multiple-text-inputs-100', async () => {
+      const scenario = textInputPerfTest.getCustomScenarios()[3];
+      const perf = await scenario.run();
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 10,
+        minAbsoluteDelta: 10,
+        mode: 'gate',
+      });
     });
   });
 });

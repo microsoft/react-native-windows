@@ -8,7 +8,7 @@
  */
 
 import * as React from 'react';
-import {Text, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 import {
   ComponentPerfTestBase,
   measurePerf,
@@ -44,6 +44,11 @@ class TextPerfTest extends ComponentPerfTestBase {
         name: 'styled-text',
         description: 'Text with multiple styles',
         run: () => this.measureStyledText(),
+      },
+      {
+        name: 'multiple-text-100',
+        description: 'Render 100 sibling Text components (stress gate)',
+        run: () => this.measureMultipleTexts(100),
       },
     ];
   }
@@ -82,6 +87,23 @@ class TextPerfTest extends ComponentPerfTestBase {
       },
     );
   }
+
+  private async measureMultipleTexts(count: number): Promise<PerfMetrics> {
+    const TextList = () => (
+      <View testID={this.testId}>
+        {Array.from({length: count}, (_, i) => (
+          <Text key={i} style={styles.default}>
+            {`Text item ${i} with some content`}
+          </Text>
+        ))}
+      </View>
+    );
+
+    return measurePerf(<TextList />, {
+      name: `${this.componentName} multiple-${count}`,
+      runs: 15,
+    });
+  }
 }
 
 const textPerfTest = new TextPerfTest();
@@ -119,6 +141,16 @@ describe('Text Performance', () => {
       const scenario = textPerfTest.getCustomScenarios()[2];
       const perf = await scenario.run();
       expect(perf).toMatchPerfSnapshot();
+    });
+
+    test('multiple-text-100', async () => {
+      const scenario = textPerfTest.getCustomScenarios()[3];
+      const perf = await scenario.run();
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 10,
+        minAbsoluteDelta: 10,
+        mode: 'gate',
+      });
     });
   });
 });

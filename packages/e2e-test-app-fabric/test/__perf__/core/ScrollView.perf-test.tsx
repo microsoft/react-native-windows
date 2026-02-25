@@ -65,6 +65,11 @@ class ScrollViewPerfTest extends ComponentPerfTestBase {
         description: 'ScrollView with contentContainerStyle',
         run: () => this.measureWithContentContainerStyle(),
       },
+      {
+        name: 'with-children-500',
+        description: 'ScrollView with 500 child items (stress gate)',
+        run: () => this.measureWithChildren(500),
+      },
     ];
   }
 
@@ -248,6 +253,16 @@ describe('ScrollView Performance', () => {
       const scenario = scrollViewPerfTest.getCustomScenarios()[6];
       const perf = await scenario.run();
       expect(perf).toMatchPerfSnapshot();
+    });
+
+    test('with-children-500', async () => {
+      const scenario = scrollViewPerfTest.getCustomScenarios()[7];
+      const perf = await scenario.run();
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 10,
+        minAbsoluteDelta: 10,
+        mode: 'gate',
+      });
     });
   });
 });

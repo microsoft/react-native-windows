@@ -46,6 +46,11 @@ class ViewPerfTest extends ComponentPerfTestBase {
         description: 'View with complex border radius',
         run: () => this.measureWithBorderRadius(),
       },
+      {
+        name: 'stress-views-500',
+        description: 'Render 500 sibling View components (stress gate)',
+        run: () => this.measureNestedViews(500),
+      },
     ];
   }
 
@@ -135,6 +140,16 @@ describe('View Performance', () => {
       const scenario = viewPerfTest.getCustomScenarios()[3];
       const perf = await scenario.run();
       expect(perf).toMatchPerfSnapshot();
+    });
+
+    test('stress-views-500', async () => {
+      const scenario = viewPerfTest.getCustomScenarios()[4];
+      const perf = await scenario.run();
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 10,
+        minAbsoluteDelta: 10,
+        mode: 'gate',
+      });
     });
   });
 });

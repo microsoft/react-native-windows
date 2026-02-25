@@ -25,6 +25,7 @@ function generateItems(count: number): Array<{id: string; title: string}> {
 const DATA_10 = generateItems(10);
 const DATA_100 = generateItems(100);
 const DATA_500 = generateItems(500);
+const DATA_1000 = generateItems(1000);
 
 const renderItem = ({item}: {item: {id: string; title: string}}) => (
   <View style={styles.item}>
@@ -68,6 +69,11 @@ class FlatListPerfTest extends ComponentPerfTestBase {
         name: 'with-500-items',
         description: 'FlatList rendering 500 items',
         run: () => this.measureWithItems(DATA_500),
+      },
+      {
+        name: 'with-1000-items',
+        description: 'FlatList rendering 1000 items (stress gate)',
+        run: () => this.measureWithItems(DATA_1000),
       },
       {
         name: 'horizontal',
@@ -279,38 +285,47 @@ describe('FlatList Performance', () => {
       });
     });
 
-    test('horizontal', async () => {
+    test('with-1000-items', async () => {
       const perf = await scenarios[3].run();
-      expect(perf).toMatchPerfSnapshot({minAbsoluteDelta: 5});
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 10,
+        minAbsoluteDelta: 10,
+        mode: 'gate',
+      });
     });
 
-    test('with-separator', async () => {
+    test('horizontal', async () => {
       const perf = await scenarios[4].run();
       expect(perf).toMatchPerfSnapshot({minAbsoluteDelta: 5});
     });
 
-    test('with-header-footer', async () => {
+    test('with-separator', async () => {
       const perf = await scenarios[5].run();
       expect(perf).toMatchPerfSnapshot({minAbsoluteDelta: 5});
     });
 
-    test('with-empty-list', async () => {
+    test('with-header-footer', async () => {
       const perf = await scenarios[6].run();
+      expect(perf).toMatchPerfSnapshot({minAbsoluteDelta: 5});
+    });
+
+    test('with-empty-list', async () => {
+      const perf = await scenarios[7].run();
       expect(perf).toMatchPerfSnapshot();
     });
 
     test('with-get-item-layout', async () => {
-      const perf = await scenarios[7].run();
-      expect(perf).toMatchPerfSnapshot({minAbsoluteDelta: 5});
-    });
-
-    test('inverted', async () => {
       const perf = await scenarios[8].run();
       expect(perf).toMatchPerfSnapshot({minAbsoluteDelta: 5});
     });
 
-    test('with-num-columns', async () => {
+    test('inverted', async () => {
       const perf = await scenarios[9].run();
+      expect(perf).toMatchPerfSnapshot({minAbsoluteDelta: 5});
+    });
+
+    test('with-num-columns', async () => {
+      const perf = await scenarios[10].run();
       expect(perf).toMatchPerfSnapshot({minAbsoluteDelta: 5});
     });
   });

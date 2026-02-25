@@ -2,12 +2,12 @@
   "ScrollView Performance mount time 1": {
     "metrics": {
       "name": "ScrollView mount",
-      "meanDuration": 0.4,
+      "meanDuration": 0.3,
       "medianDuration": 0,
-      "stdDev": 0.5163977794943223,
+      "stdDev": 0.4830458915396479,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:16.912Z"
+      "timestamp": "2026-02-25T08:49:05.724Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,17 +16,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:16.927Z"
+    "capturedAt": "2026-02-25T08:49:05.740Z"
   },
   "ScrollView Performance unmount time 1": {
     "metrics": {
       "name": "ScrollView unmount",
-      "meanDuration": 0.1,
+      "meanDuration": 0,
       "medianDuration": 0,
-      "stdDev": 0.31622776601683794,
+      "stdDev": 0,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:16.936Z"
+      "timestamp": "2026-02-25T08:49:05.747Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,17 +35,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:16.946Z"
+    "capturedAt": "2026-02-25T08:49:05.758Z"
   },
   "ScrollView Performance rerender time 1": {
     "metrics": {
       "name": "ScrollView rerender",
-      "meanDuration": 0.5,
-      "medianDuration": 0.5,
-      "stdDev": 0.5270462766947299,
+      "meanDuration": 0.6,
+      "medianDuration": 1,
+      "stdDev": 0.5163977794943222,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:16.957Z"
+      "timestamp": "2026-02-25T08:49:05.770Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,17 +54,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:16.963Z"
+    "capturedAt": "2026-02-25T08:49:05.778Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios with-children-20 1": {
     "metrics": {
       "name": "ScrollView children-20",
-      "meanDuration": 3.1333333333333333,
-      "medianDuration": 3,
-      "stdDev": 0.5163977794943222,
+      "meanDuration": 3.8666666666666667,
+      "medianDuration": 4,
+      "stdDev": 0.990430401872025,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T14:49:17.019Z"
+      "timestamp": "2026-02-25T08:49:05.848Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -73,17 +73,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:17.021Z"
+    "capturedAt": "2026-02-25T08:49:05.850Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios with-children-100 1": {
     "metrics": {
       "name": "ScrollView children-100",
-      "meanDuration": 15.266666666666667,
-      "medianDuration": 15,
-      "stdDev": 1.4375905768565218,
+      "meanDuration": 15.6,
+      "medianDuration": 16,
+      "stdDev": 1.6388149028228558,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T14:49:17.281Z"
+      "timestamp": "2026-02-25T08:49:06.122Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -92,17 +92,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:17.283Z"
+    "capturedAt": "2026-02-25T08:49:06.125Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios horizontal 1": {
     "metrics": {
       "name": "ScrollView horizontal",
-      "meanDuration": 3.1,
-      "medianDuration": 3,
-      "stdDev": 0.5676462121975467,
+      "meanDuration": 4,
+      "medianDuration": 4,
+      "stdDev": 1.1547005383792515,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:17.323Z"
+      "timestamp": "2026-02-25T08:49:06.175Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -111,17 +111,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:17.325Z"
+    "capturedAt": "2026-02-25T08:49:06.177Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios with-sticky-headers 1": {
     "metrics": {
       "name": "ScrollView sticky-headers",
-      "meanDuration": 3,
+      "meanDuration": 2.7,
       "medianDuration": 3,
-      "stdDev": 1.0540925533894598,
+      "stdDev": 1.0593499054713802,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:17.364Z"
+      "timestamp": "2026-02-25T08:49:06.214Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -130,17 +130,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:17.366Z"
+    "capturedAt": "2026-02-25T08:49:06.217Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios with-scroll-indicators 1": {
     "metrics": {
       "name": "ScrollView scroll-indicators",
       "meanDuration": 0.8,
       "medianDuration": 1,
-      "stdDev": 0.6324555320336759,
+      "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:17.378Z"
+      "timestamp": "2026-02-25T08:49:06.229Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -149,17 +149,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:17.387Z"
+    "capturedAt": "2026-02-25T08:49:06.235Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios nested-scroll-views 1": {
     "metrics": {
       "name": "ScrollView nested",
-      "meanDuration": 1,
+      "meanDuration": 1.3,
       "medianDuration": 1,
-      "stdDev": 0,
+      "stdDev": 0.48304589153964794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:17.405Z"
+      "timestamp": "2026-02-25T08:49:06.254Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -168,7 +168,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:17.407Z"
+    "capturedAt": "2026-02-25T08:49:06.256Z"
   },
   "ScrollView Performance ScrollView-Specific Scenarios with-content-container-style 1": {
     "metrics": {
@@ -178,7 +178,7 @@
       "stdDev": 0.48304589153964794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:17.417Z"
+      "timestamp": "2026-02-25T08:49:06.267Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -187,6 +187,26 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:17.422Z"
+    "capturedAt": "2026-02-25T08:49:06.274Z"
+  },
+  "ScrollView Performance ScrollView-Specific Scenarios with-children-500 1": {
+    "metrics": {
+      "name": "ScrollView children-500",
+      "meanDuration": 19.666666666666668,
+      "medianDuration": 19,
+      "stdDev": 2.058663459163551,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-25T08:49:06.642Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 10,
+      "maxRenderCount": 5,
+      "minRuns": 10,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-02-25T08:49:06.643Z"
   }
 }

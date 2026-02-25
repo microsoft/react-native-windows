@@ -61,6 +61,11 @@ class ActivityIndicatorPerfTest extends ComponentPerfTestBase {
         description: 'Render 50 sibling ActivityIndicators',
         run: () => this.measureMultiple(50),
       },
+      {
+        name: 'multiple-indicators-100',
+        description: 'Render 100 sibling ActivityIndicators (stress gate)',
+        run: () => this.measureMultiple(100),
+      },
     ];
   }
 
@@ -201,6 +206,16 @@ describe('ActivityIndicator Performance', () => {
       expect(perf).toMatchPerfSnapshot({
         maxDurationIncrease: 15,
         minAbsoluteDelta: 5,
+      });
+    });
+
+    test('multiple-indicators-100', async () => {
+      const scenario = activityIndicatorPerfTest.getCustomScenarios()[7];
+      const perf = await scenario.run();
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 10,
+        minAbsoluteDelta: 10,
+        mode: 'gate',
       });
     });
   });

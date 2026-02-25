@@ -68,6 +68,11 @@ class SwitchPerfTest extends ComponentPerfTestBase {
         description: 'Render 50 sibling Switches',
         run: () => this.measureMultipleSwitches(50),
       },
+      {
+        name: 'multiple-switches-100',
+        description: 'Render 100 sibling Switches (stress gate)',
+        run: () => this.measureMultipleSwitches(100),
+      },
     ];
   }
 
@@ -208,6 +213,16 @@ describe('Switch Performance', () => {
       expect(perf).toMatchPerfSnapshot({
         maxDurationIncrease: 15,
         minAbsoluteDelta: 5,
+      });
+    });
+
+    test('multiple-switches-100', async () => {
+      const scenario = switchPerfTest.getCustomScenarios()[7];
+      const perf = await scenario.run();
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 10,
+        minAbsoluteDelta: 10,
+        mode: 'gate',
       });
     });
   });

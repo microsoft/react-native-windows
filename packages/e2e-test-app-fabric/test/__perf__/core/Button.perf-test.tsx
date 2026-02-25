@@ -58,6 +58,11 @@ class ButtonPerfTest extends ComponentPerfTestBase {
         description: 'Render 50 sibling Buttons',
         run: () => this.measureMultipleButtons(50),
       },
+      {
+        name: 'multiple-buttons-100',
+        description: 'Render 100 sibling Buttons (stress gate)',
+        run: () => this.measureMultipleButtons(100),
+      },
     ];
   }
 
@@ -173,6 +178,16 @@ describe('Button Performance', () => {
       expect(perf).toMatchPerfSnapshot({
         maxDurationIncrease: 15,
         minAbsoluteDelta: 5,
+      });
+    });
+
+    test('multiple-buttons-100', async () => {
+      const scenario = buttonPerfTest.getCustomScenarios()[5];
+      const perf = await scenario.run();
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 10,
+        minAbsoluteDelta: 10,
+        mode: 'gate',
       });
     });
   });

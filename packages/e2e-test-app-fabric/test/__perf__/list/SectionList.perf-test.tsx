@@ -35,6 +35,7 @@ const sections3x5 = generateSections(3, 5);
 const sections5x10 = generateSections(5, 10);
 const sections10x20 = generateSections(10, 20);
 const sections20x10 = generateSections(20, 10);
+const sections50x20 = generateSections(50, 20);
 
 const renderItem = ({item}: {item: ItemType}) => (
   <View style={styles.item}>
@@ -121,6 +122,12 @@ class SectionListPerfTest extends ComponentPerfTestBase {
         name: 'with-empty-list',
         description: 'SectionList with empty sections and ListEmptyComponent',
         run: () => this.measureWithEmptyList(),
+      },
+      {
+        name: 'with-50-sections-20-items',
+        description:
+          'SectionList with 50 sections × 20 items each (1000 total, stress gate)',
+        run: () => this.measureWithSections(sections50x20),
       },
     ];
   }
@@ -330,6 +337,15 @@ describe('SectionList Performance', () => {
     test('with-empty-list', async () => {
       const perf = await scenarios[9].run();
       expect(perf).toMatchPerfSnapshot();
+    });
+
+    test('with-50-sections-20-items', async () => {
+      const perf = await scenarios[10].run();
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 10,
+        minAbsoluteDelta: 10,
+        mode: 'gate',
+      });
     });
   });
 });

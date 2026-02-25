@@ -7,7 +7,7 @@
       "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:20.190Z"
+      "timestamp": "2026-02-25T08:49:17.919Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,17 +16,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:20.205Z"
+    "capturedAt": "2026-02-25T08:49:17.936Z"
   },
   "View Performance unmount time 1": {
     "metrics": {
       "name": "View unmount",
-      "meanDuration": 0.1,
+      "meanDuration": 0,
       "medianDuration": 0,
-      "stdDev": 0.31622776601683794,
+      "stdDev": 0,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:20.210Z"
+      "timestamp": "2026-02-25T08:49:17.940Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,17 +35,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:20.224Z"
+    "capturedAt": "2026-02-25T08:49:17.953Z"
   },
   "View Performance rerender time 1": {
     "metrics": {
       "name": "View rerender",
-      "meanDuration": 0.2,
+      "meanDuration": 0.4,
       "medianDuration": 0,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0.5163977794943223,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:20.230Z"
+      "timestamp": "2026-02-25T08:49:17.960Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,17 +54,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:20.239Z"
+    "capturedAt": "2026-02-25T08:49:17.970Z"
   },
   "View Performance View-Specific Scenarios nested-views-50 1": {
     "metrics": {
       "name": "View nested-50",
-      "meanDuration": 3.7333333333333334,
-      "medianDuration": 4,
-      "stdDev": 0.7988086367179803,
+      "meanDuration": 3.466666666666667,
+      "medianDuration": 3,
+      "stdDev": 0.915475416434127,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T14:49:20.304Z"
+      "timestamp": "2026-02-25T08:49:18.034Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -73,17 +73,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:20.306Z"
+    "capturedAt": "2026-02-25T08:49:18.036Z"
   },
   "View Performance View-Specific Scenarios nested-views-100 1": {
     "metrics": {
       "name": "View nested-100",
       "meanDuration": 7.333333333333333,
       "medianDuration": 7,
-      "stdDev": 1.1126972805283735,
+      "stdDev": 1.1751393027860062,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T14:49:20.433Z"
+      "timestamp": "2026-02-25T08:49:18.165Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -92,7 +92,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:20.435Z"
+    "capturedAt": "2026-02-25T08:49:18.167Z"
   },
   "View Performance View-Specific Scenarios with-shadow 1": {
     "metrics": {
@@ -102,7 +102,7 @@
       "stdDev": 0,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:20.439Z"
+      "timestamp": "2026-02-25T08:49:18.171Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -111,17 +111,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:20.452Z"
+    "capturedAt": "2026-02-25T08:49:18.187Z"
   },
   "View Performance View-Specific Scenarios with-border-radius 1": {
     "metrics": {
       "name": "View border-radius",
-      "meanDuration": 0.2,
+      "meanDuration": 0.1,
       "medianDuration": 0,
-      "stdDev": 0.42163702135578396,
+      "stdDev": 0.31622776601683794,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:20.456Z"
+      "timestamp": "2026-02-25T08:49:18.191Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -130,6 +130,26 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:20.467Z"
+    "capturedAt": "2026-02-25T08:49:18.204Z"
+  },
+  "View Performance View-Specific Scenarios stress-views-500 1": {
+    "metrics": {
+      "name": "View nested-500",
+      "meanDuration": 16.2,
+      "medianDuration": 10,
+      "stdDev": 11.477929131287453,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-25T08:49:18.512Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 10,
+      "maxRenderCount": 5,
+      "minRuns": 10,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-02-25T08:49:18.514Z"
   }
 }

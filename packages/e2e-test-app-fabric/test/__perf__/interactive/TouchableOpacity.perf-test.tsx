@@ -74,6 +74,11 @@ class TouchableOpacityPerfTest extends ComponentPerfTestBase {
         description: 'Render 50 sibling TouchableOpacity items',
         run: () => this.measureMultipleTouchables(50),
       },
+      {
+        name: 'multiple-touchables-100',
+        description: 'Render 100 sibling TouchableOpacity items (stress gate)',
+        run: () => this.measureMultipleTouchables(100),
+      },
     ];
   }
 
@@ -265,6 +270,16 @@ describe('TouchableOpacity Performance', () => {
       expect(perf).toMatchPerfSnapshot({
         maxDurationIncrease: 15,
         minAbsoluteDelta: 5,
+      });
+    });
+
+    test('multiple-touchables-100', async () => {
+      const scenario = touchableOpacityPerfTest.getCustomScenarios()[8];
+      const perf = await scenario.run();
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 10,
+        minAbsoluteDelta: 10,
+        mode: 'gate',
       });
     });
   });

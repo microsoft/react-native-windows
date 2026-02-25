@@ -2,12 +2,12 @@
   "TouchableOpacity Performance mount time 1": {
     "metrics": {
       "name": "TouchableOpacity mount",
-      "meanDuration": 1,
+      "meanDuration": 0.8,
       "medianDuration": 1,
-      "stdDev": 0,
+      "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:06.381Z"
+      "timestamp": "2026-02-25T08:49:03.880Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -16,17 +16,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:06.395Z"
+    "capturedAt": "2026-02-25T08:49:03.893Z"
   },
   "TouchableOpacity Performance unmount time 1": {
     "metrics": {
       "name": "TouchableOpacity unmount",
-      "meanDuration": 0.1,
+      "meanDuration": 0,
       "medianDuration": 0,
-      "stdDev": 0.31622776601683794,
+      "stdDev": 0,
       "renderCount": 0,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:06.409Z"
+      "timestamp": "2026-02-25T08:49:03.908Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -35,17 +35,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:06.414Z"
+    "capturedAt": "2026-02-25T08:49:03.911Z"
   },
   "TouchableOpacity Performance rerender time 1": {
     "metrics": {
       "name": "TouchableOpacity rerender",
-      "meanDuration": 1.4,
-      "medianDuration": 1.5,
-      "stdDev": 0.6992058987801011,
+      "meanDuration": 1,
+      "medianDuration": 1,
+      "stdDev": 0.6666666666666666,
       "renderCount": 2,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:06.440Z"
+      "timestamp": "2026-02-25T08:49:03.933Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -54,17 +54,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:06.442Z"
+    "capturedAt": "2026-02-25T08:49:03.936Z"
   },
   "TouchableOpacity Performance TouchableOpacity-Specific Scenarios custom-active-opacity 1": {
     "metrics": {
       "name": "TouchableOpacity custom-active-opacity",
-      "meanDuration": 0.7,
+      "meanDuration": 0.8,
       "medianDuration": 1,
-      "stdDev": 0.48304589153964794,
+      "stdDev": 0.42163702135578396,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:06.453Z"
+      "timestamp": "2026-02-25T08:49:03.947Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -73,7 +73,7 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:06.460Z"
+    "capturedAt": "2026-02-25T08:49:03.954Z"
   },
   "TouchableOpacity Performance TouchableOpacity-Specific Scenarios disabled 1": {
     "metrics": {
@@ -83,7 +83,7 @@
       "stdDev": 0.5163977794943223,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:06.471Z"
+      "timestamp": "2026-02-25T08:49:03.965Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -92,55 +92,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:06.478Z"
+    "capturedAt": "2026-02-25T08:49:03.973Z"
   },
   "TouchableOpacity Performance TouchableOpacity-Specific Scenarios with-all-handlers 1": {
     "metrics": {
       "name": "TouchableOpacity with-all-handlers",
-      "meanDuration": 0.7,
-      "medianDuration": 1,
-      "stdDev": 0.48304589153964794,
-      "renderCount": 1,
-      "runs": 10,
-      "timestamp": "2026-02-17T14:49:06.488Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-17T14:49:06.495Z"
-  },
-  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios with-hit-slop 1": {
-    "metrics": {
-      "name": "TouchableOpacity with-hit-slop",
-      "meanDuration": 0.7,
-      "medianDuration": 1,
-      "stdDev": 0.48304589153964794,
-      "renderCount": 1,
-      "runs": 10,
-      "timestamp": "2026-02-17T14:49:06.506Z"
-    },
-    "threshold": {
-      "maxDurationIncrease": 10,
-      "maxDuration": null,
-      "minAbsoluteDelta": 3,
-      "maxRenderCount": 5,
-      "minRuns": 10
-    },
-    "capturedAt": "2026-02-17T14:49:06.513Z"
-  },
-  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios with-delay 1": {
-    "metrics": {
-      "name": "TouchableOpacity with-delay",
       "meanDuration": 0.6,
       "medianDuration": 1,
       "stdDev": 0.5163977794943223,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:06.524Z"
+      "timestamp": "2026-02-25T08:49:03.984Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -149,17 +111,55 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:06.529Z"
+    "capturedAt": "2026-02-25T08:49:03.993Z"
+  },
+  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios with-hit-slop 1": {
+    "metrics": {
+      "name": "TouchableOpacity with-hit-slop",
+      "meanDuration": 0.6,
+      "medianDuration": 1,
+      "stdDev": 0.5163977794943223,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:04.004Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:04.011Z"
+  },
+  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios with-delay 1": {
+    "metrics": {
+      "name": "TouchableOpacity with-delay",
+      "meanDuration": 0.9,
+      "medianDuration": 1,
+      "stdDev": 0.8755950357709131,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:04.025Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:04.030Z"
   },
   "TouchableOpacity Performance TouchableOpacity-Specific Scenarios nested-touchables 1": {
     "metrics": {
       "name": "TouchableOpacity nested",
-      "meanDuration": 1.7,
-      "medianDuration": 1.5,
-      "stdDev": 0.9486832980505138,
+      "meanDuration": 1.4,
+      "medianDuration": 1,
+      "stdDev": 0.5163977794943223,
       "renderCount": 1,
       "runs": 10,
-      "timestamp": "2026-02-17T14:49:06.553Z"
+      "timestamp": "2026-02-25T08:49:04.053Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -168,17 +168,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:06.556Z"
+    "capturedAt": "2026-02-25T08:49:04.055Z"
   },
   "TouchableOpacity Performance TouchableOpacity-Specific Scenarios multiple-touchables-10 1": {
     "metrics": {
       "name": "TouchableOpacity multiple-10",
-      "meanDuration": 5.933333333333334,
+      "meanDuration": 6.6,
       "medianDuration": 6,
-      "stdDev": 0.7988086367179804,
+      "stdDev": 1.7647338933351153,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T14:49:06.668Z"
+      "timestamp": "2026-02-25T08:49:04.179Z"
     },
     "threshold": {
       "maxDurationIncrease": 10,
@@ -187,17 +187,17 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:06.671Z"
+    "capturedAt": "2026-02-25T08:49:04.181Z"
   },
   "TouchableOpacity Performance TouchableOpacity-Specific Scenarios multiple-touchables-50 1": {
     "metrics": {
       "name": "TouchableOpacity multiple-50",
-      "meanDuration": 30.666666666666668,
+      "meanDuration": 28.933333333333334,
       "medianDuration": 29,
-      "stdDev": 5.777625150609235,
+      "stdDev": 1.667618775665584,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-17T14:49:07.211Z"
+      "timestamp": "2026-02-25T08:49:04.692Z"
     },
     "threshold": {
       "maxDurationIncrease": 15,
@@ -206,6 +206,26 @@
       "maxRenderCount": 5,
       "minRuns": 10
     },
-    "capturedAt": "2026-02-17T14:49:07.213Z"
+    "capturedAt": "2026-02-25T08:49:04.694Z"
+  },
+  "TouchableOpacity Performance TouchableOpacity-Specific Scenarios multiple-touchables-100 1": {
+    "metrics": {
+      "name": "TouchableOpacity multiple-100",
+      "meanDuration": 30.666666666666668,
+      "medianDuration": 30,
+      "stdDev": 3.6774732526300613,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-25T08:49:05.289Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 10,
+      "maxRenderCount": 5,
+      "minRuns": 10,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-02-25T08:49:05.290Z"
   }
 }

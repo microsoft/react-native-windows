@@ -74,6 +74,11 @@ class TouchableHighlightPerfTest extends ComponentPerfTestBase {
         description: 'Render 50 TouchableHighlight components',
         run: () => this.measureMultipleTouchables(50),
       },
+      {
+        name: 'multiple-touchables-100',
+        description: 'Render 100 TouchableHighlight components (stress gate)',
+        run: () => this.measureMultipleTouchables(100),
+      },
     ];
   }
 
@@ -252,6 +257,15 @@ describe('TouchableHighlight Performance', () => {
       expect(perf).toMatchPerfSnapshot({
         maxDurationIncrease: 15,
         minAbsoluteDelta: 5,
+      });
+    });
+
+    test('multiple-touchables-100', async () => {
+      const perf = await scenarios[8].run();
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 10,
+        minAbsoluteDelta: 10,
+        mode: 'gate',
       });
     });
   });

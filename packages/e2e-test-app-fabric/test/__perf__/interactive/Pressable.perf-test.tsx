@@ -70,6 +70,11 @@ class PressablePerfTest extends ComponentPerfTestBase {
         description: 'Render 50 sibling Pressables',
         run: () => this.measureMultiplePressables(50),
       },
+      {
+        name: 'multiple-pressables-100',
+        description: 'Render 100 sibling Pressables (stress gate)',
+        run: () => this.measureMultiplePressables(100),
+      },
     ];
   }
 
@@ -233,6 +238,16 @@ describe('Pressable Performance', () => {
       expect(perf).toMatchPerfSnapshot({
         maxDurationIncrease: 15,
         minAbsoluteDelta: 5,
+      });
+    });
+
+    test('multiple-pressables-100', async () => {
+      const scenario = pressablePerfTest.getCustomScenarios()[7];
+      const perf = await scenario.run();
+      expect(perf).toMatchPerfSnapshot({
+        maxDurationIncrease: 10,
+        minAbsoluteDelta: 10,
+        mode: 'gate',
       });
     });
   });
