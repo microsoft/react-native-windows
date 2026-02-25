@@ -553,7 +553,6 @@
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryCircularBuffer.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceObserver.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryKeyedBuffer.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\cdpmetrics\CdpPerfIssuesReporter.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jserrorhandler\JsErrorHandler.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jserrorhandler\StackTraceParser.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\native\NativeComponentRegistryBinding.cpp" />

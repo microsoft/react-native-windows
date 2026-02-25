@@ -242,7 +242,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerCallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\cdpmetrics\CdpMetricsReporter.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\cdpmetrics\CdpPerfIssuesReporter.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\cdpmetrics\CdpInteractionTypes.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollEvent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\BackgroundImagePropsConversions.cpp" />
@@ -289,7 +288,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TooltipService.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\BorderPrimitive.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\TracingAgent.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\codegen\rnwcoreJSI-generated.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\TraceEventSerializer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\ConsoleTimeStamp.cpp" />
