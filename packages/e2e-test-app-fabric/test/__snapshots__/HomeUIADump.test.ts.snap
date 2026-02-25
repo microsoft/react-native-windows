@@ -4839,7 +4839,7 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
     },
     "Comment": "RTLExample",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "966, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5354,7 +5354,7 @@ exports[`Home UIA Tree Dump Share 1`] = `
     },
     "Comment": "Share",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "966, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6331,12 +6331,12 @@ exports[`Home UIA Tree Dump URL 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "32, 25",
+        "Size": "32, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "32, 25",
+            "Size": "32, 24",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -6493,12 +6493,12 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "89, 24",
+        "Size": "89, 25",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "89, 24",
+            "Size": "89, 25",
             "Visual Type": "SpriteVisual",
           },
         ],
