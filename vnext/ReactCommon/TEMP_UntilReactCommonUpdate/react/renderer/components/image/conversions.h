@@ -18,7 +18,8 @@
 
 namespace facebook::react {
 
-inline void fromRawValue(const PropsParserContext &context, const RawValue &value, ImageSource &result) {
+inline void fromRawValue(const PropsParserContext &context, const RawValue &value, ImageSource &result)
+{
   if (value.hasType<std::string>()) {
     result = {
         /* .type = */ ImageSource::Type::Remote,

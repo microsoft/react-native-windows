@@ -67,10 +67,9 @@ virtual State::Shared createInitialState(
     textInputShadowNode.setTextLayoutManager(textLayoutManager_);
 
     /*
-            int surfaceId = textInputShadowNode.getSurfaceId();
-    if (surfaceIdToThemePaddingMap_.find(surfaceId) !=
-        surfaceIdToThemePaddingMap_.end()) {
-      const auto& theme = surfaceIdToThemePaddingMap_[surfaceId];
+      int surfaceId = textInputShadowNode.getSurfaceId();
+      if (surfaceIdToThemePaddingMap_.find(surfaceId) != surfaceIdToThemePaddingMap_.end()) {
+        const auto &theme = surfaceIdToThemePaddingMap_[surfaceId];
 
       auto &textInputProps = textInputShadowNode.getConcreteProps();
 

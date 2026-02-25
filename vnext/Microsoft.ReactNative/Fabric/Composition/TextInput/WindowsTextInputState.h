@@ -32,9 +32,7 @@ class WindowsTextInputState final {
       : attributedStringBox(std::move(attributedStringBox)),
         reactTreeAttributedString(std::move(reactTreeAttributedString)),
         paragraphAttributes(std::move(paragraphAttributes)),
-        mostRecentEventCount(mostRecentEventCount)
-  {
-  }
+        mostRecentEventCount(mostRecentEventCount) {}
 
   WindowsTextInputState(const WindowsTextInputState &previousState, const folly::dynamic &data)
       : attributedStringBox(previousState.attributedStringBox),
