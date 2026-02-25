@@ -22,6 +22,12 @@
       "baseHash": "c5d0dfd40d0fb7c197790b1f23f4f8b9ca835047"
     },
     {
+      "type": "derived",
+      "file": "src-win/index.win32.js.flow",
+      "baseFile": "packages/react-native/index.js.flow",
+      "baseHash": "bb6c7873aa350c235aad233dd75656237d16d79c"
+    },
+    {
       "type": "platform",
       "file": "src-win/Libraries/__tests__/ButtonWin32-test.js"
     },
@@ -238,6 +244,12 @@
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
       "baseHash": "5d62f4a6c4edfe3007eb3b80704a1dfb68e5ff8a",
       "issue": 4320
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/Image/Image.win32.js.flow",
+      "baseFile": "packages/react-native/Libraries/Image/Image.js.flow",
+      "baseHash": "eaa13a0cc7a34e33dadd9297029339779f489ae3"
     },
     {
       "type": "platform",
