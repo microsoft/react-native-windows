@@ -18,14 +18,14 @@
   },
   "peerDependencies": {
     "@react-native-picker/picker": "2.11.0",
-    "react": "19.1.1",
-    "react-native": "0.83.0-nightly-20250917-18cb4edfa",
+    "react": "19.2.0",
+    "react-native": "0.83.0-nightly-20251012-6f482708b",
     "react-native-windows": "^0.0.0-canary.1031",
     "react-native-xaml": "^0.0.80"
   },
   "devDependencies": {
-    "@react-native/new-app-screen": "0.83.0-nightly-20250917-18cb4edfa",
-    "@react-native/tester": "0.82.0-main",
+    "@react-native/new-app-screen": "0.83.0-nightly-20251012-6f482708b",
+    "@react-native/tester": "0.83.0-nightly-20251012-6f482708b",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",
     "@rnw-scripts/just-task": "2.3.58",
@@ -33,7 +33,7 @@
     "@types/node": "^22.14.0",
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
-    "react-native": "0.83.0-nightly-20250917-18cb4edfa",
+    "react-native": "0.83.0-nightly-20251012-6f482708b",
     "react-native-platform-override": "0.0.0-canary.1019",
     "react-native-windows": "^0.0.0-canary.1031",
     "typescript": "5.0.4"

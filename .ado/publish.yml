@@ -434,7 +434,6 @@ extends:
           # Symbol Publishing for Work Item 59264834 - MSRC Compliance
           - task: PublishSymbols@2
             displayName: 'Publish Symbols to Microsoft Symbol Server'
-            condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
             env:
               ARTIFACTSERVICES_SYMBOL_ACCOUNTNAME: microsoft
             inputs:

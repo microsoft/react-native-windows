@@ -191,7 +191,7 @@ const TouchableWithoutFeedback: React.AbstractComponent<
   React.ElementRef<typeof Animated.View>,
 > = React.forwardRef(function TouchableWithoutFeedback(
   props: TouchableWithoutFeedbackProps,
-  ref,
+  ref: React.RefSetter<React.ElementRef<typeof Animated.View>>,
 ): React.Node {
   const {
     disabled,
