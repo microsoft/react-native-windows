@@ -4,9 +4,6 @@ on:
   pull_request_target:
     types: [opened, synchronize, reopened]
 
-permissions:
-  pull-requests: write
-
 jobs:
   trigger-azp:
     if: github.event.pull_request.user.login == 'dependabot[bot]'
@@ -14,7 +11,7 @@ jobs:
     steps:
       - name: Comment /azp run PR
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.RNBOT_GITHUB_PAT }}
         run: |
           gh pr comment "${{ github.event.pull_request.number }}" \
             --repo "${{ github.repository }}" \
