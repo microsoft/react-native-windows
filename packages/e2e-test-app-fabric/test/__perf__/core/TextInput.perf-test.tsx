@@ -109,9 +109,7 @@ class TextInputPerfTest extends ComponentPerfTestBase {
     );
   }
 
-  private async measureMultipleTextInputs(
-    count: number,
-  ): Promise<PerfMetrics> {
+  private async measureMultipleTextInputs(count: number): Promise<PerfMetrics> {
     const TextInputList = () => (
       <View testID={this.testId}>
         {Array.from({length: count}, (_, i) => (
