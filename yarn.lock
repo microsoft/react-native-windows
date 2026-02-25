@@ -11761,9 +11761,9 @@ signedsource@^2.0.0:
   integrity sha512-MscTxXbMij5JVgrW1xDiMIc+vFa0+H0+HP+rRrFjwa7ef2VAxIP/4L/E75I5H4xvyb4l1X+a9ch+6Zy5uFu7Fg==
 
 simple-git@^3.3.0:
-  version "3.31.1"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.31.1.tgz#c7ada78d6aff0d80147a22436081d42c670cf8cd"
-  integrity sha512-oiWP4Q9+kO8q9hHqkX35uuHmxiEbZNTrZ5IPxgMGrJwN76pzjm/jabkZO0ItEcqxAincqGAzL3QHSaHt4+knBg==
+  version "3.32.2"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.32.2.tgz#fb0260126d03d329cc8f9ed56d5883415aa11bd9"
+  integrity sha512-n/jhNmvYh8dwyfR6idSfpXrFazuyd57jwNMzgjGnKZV/1lTh0HKvPq20v4AQ62rP+l19bWjjXPTCdGHMt0AdrQ==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
