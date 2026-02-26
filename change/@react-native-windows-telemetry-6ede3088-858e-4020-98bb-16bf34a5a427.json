@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fix telemetry test.",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "yicyao@microsoft.com",
+  "dependentChangeType": "none"
+}
