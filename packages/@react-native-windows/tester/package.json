@@ -14,7 +14,7 @@
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "flow-enums-runtime": "^0.0.6",
-    "sample-custom-component": "0.0.1"
+    "@rnw-scripts/sample-custom-component": "0.0.1"
   },
   "peerDependencies": {
     "@react-native-picker/picker": "2.11.0",
