@@ -46,9 +46,8 @@ struct MovingLight : public winrt::implements<MovingLight, winrt::IInspectable>,
             const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs & /*args*/) {
           if (auto strongThis = wkThis.get()) {
             if (auto eventEmitter = strongThis->EventEmitter()) {
-              Codegen::MovingLightEventEmitter::OnSomething eventArgs;
-              eventArgs.value = strongThis->m_eventParam ? *strongThis->m_eventParam : "No eventParam set";
-              eventEmitter->onSomething(eventArgs);
+              eventEmitter->onSomething(
+                  {.value = strongThis->m_eventParam ? *strongThis->m_eventParam : "No eventParam set"});
             }
           }
         });
