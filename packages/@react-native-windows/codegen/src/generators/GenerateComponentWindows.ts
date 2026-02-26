@@ -69,8 +69,8 @@ struct ::_OBJECT_NAME_:: {
 ::_OBJECT_FIELDS_::};
 `;
 
-const eventEmitterMethodTemplate = `  void ::_EVENT_NAME_::(::_EVENT_OBJECT_TYPE_:: &value) const {
-    m_eventEmitter.DispatchEvent(L"::_EVENT_NAME_NO_ON_::", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+const eventEmitterMethodTemplate = `  void ::_EVENT_NAME_::(::_EVENT_OBJECT_TYPE_:: &&value) const {
+    m_eventEmitter.DispatchEvent(L"::_EVENT_NAME_NO_ON_::", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }`;
