@@ -69,8 +69,8 @@ struct AndroidSwipeRefreshLayoutEventEmitter {
 
   using OnRefresh = AndroidSwipeRefreshLayoutSpec_onRefresh;
 
-  void onRefresh(OnRefresh &value) const {
-    m_eventEmitter.DispatchEvent(L"refresh", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onRefresh(OnRefresh &&value) const {
+    m_eventEmitter.DispatchEvent(L"refresh", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
