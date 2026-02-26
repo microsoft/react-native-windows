@@ -16,7 +16,7 @@
     "@types/react": "^19.1.4",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
-    "react": "^19.1.4",
+    "react": "19.1.4",
     "react-native": "0.81.6",
     "react-native-windows": "0.81.4"
   },
