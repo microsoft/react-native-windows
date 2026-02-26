@@ -241,26 +241,26 @@ struct MovingLightEventEmitter {
   using OnEventWithInlineTypes = MovingLightSpec_onEventWithInlineTypes;
   using OnEventWithMultipleAliasTypes = MovingLightSpec_onEventWithMultipleAliasTypes;
 
-  void onSomething(OnSomething &value) const {
-    m_eventEmitter.DispatchEvent(L"something", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onSomething(OnSomething &&value) const {
+    m_eventEmitter.DispatchEvent(L"something", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
 
-  void onTestObjectEvent(OnTestObjectEvent &value) const {
-    m_eventEmitter.DispatchEvent(L"testObjectEvent", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onTestObjectEvent(OnTestObjectEvent &&value) const {
+    m_eventEmitter.DispatchEvent(L"testObjectEvent", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
 
-  void onEventWithInlineTypes(OnEventWithInlineTypes &value) const {
-    m_eventEmitter.DispatchEvent(L"eventWithInlineTypes", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onEventWithInlineTypes(OnEventWithInlineTypes &&value) const {
+    m_eventEmitter.DispatchEvent(L"eventWithInlineTypes", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
 
-  void onEventWithMultipleAliasTypes(OnEventWithMultipleAliasTypes &value) const {
-    m_eventEmitter.DispatchEvent(L"eventWithMultipleAliasTypes", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onEventWithMultipleAliasTypes(OnEventWithMultipleAliasTypes &&value) const {
+    m_eventEmitter.DispatchEvent(L"eventWithMultipleAliasTypes", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

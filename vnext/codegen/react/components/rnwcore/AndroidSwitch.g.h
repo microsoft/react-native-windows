@@ -86,8 +86,8 @@ struct AndroidSwitchEventEmitter {
 
   using OnChange = AndroidSwitchSpec_onChange;
 
-  void onChange(OnChange &value) const {
-    m_eventEmitter.DispatchEvent(L"change", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onChange(OnChange &&value) const {
+    m_eventEmitter.DispatchEvent(L"change", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

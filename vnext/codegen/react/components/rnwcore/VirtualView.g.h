@@ -91,8 +91,8 @@ struct VirtualViewEventEmitter {
 
   using OnModeChange = VirtualViewSpec_onModeChange;
 
-  void onModeChange(OnModeChange &value) const {
-    m_eventEmitter.DispatchEvent(L"modeChange", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onModeChange(OnModeChange &&value) const {
+    m_eventEmitter.DispatchEvent(L"modeChange", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

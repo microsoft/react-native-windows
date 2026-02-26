@@ -88,26 +88,26 @@ struct AndroidDrawerLayoutEventEmitter {
   using OnDrawerOpen = AndroidDrawerLayoutSpec_onDrawerOpen;
   using OnDrawerClose = AndroidDrawerLayoutSpec_onDrawerClose;
 
-  void onDrawerSlide(OnDrawerSlide &value) const {
-    m_eventEmitter.DispatchEvent(L"drawerSlide", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onDrawerSlide(OnDrawerSlide &&value) const {
+    m_eventEmitter.DispatchEvent(L"drawerSlide", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
 
-  void onDrawerStateChanged(OnDrawerStateChanged &value) const {
-    m_eventEmitter.DispatchEvent(L"drawerStateChanged", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onDrawerStateChanged(OnDrawerStateChanged &&value) const {
+    m_eventEmitter.DispatchEvent(L"drawerStateChanged", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
 
-  void onDrawerOpen(OnDrawerOpen &value) const {
-    m_eventEmitter.DispatchEvent(L"drawerOpen", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onDrawerOpen(OnDrawerOpen &&value) const {
+    m_eventEmitter.DispatchEvent(L"drawerOpen", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
 
-  void onDrawerClose(OnDrawerClose &value) const {
-    m_eventEmitter.DispatchEvent(L"drawerClose", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onDrawerClose(OnDrawerClose &&value) const {
+    m_eventEmitter.DispatchEvent(L"drawerClose", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
