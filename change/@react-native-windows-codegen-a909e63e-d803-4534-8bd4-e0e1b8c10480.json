@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Integrate 0.81.6",
+  "packageName": "@react-native-windows/codegen",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
