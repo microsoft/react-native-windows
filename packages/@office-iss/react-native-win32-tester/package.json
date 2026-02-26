@@ -18,7 +18,7 @@
   },
   "peerDependencies": {
     "@office-iss/react-native-win32": "0.81.3",
-    "react": "19.1.0",
+    "react": "19.1.4",
     "react-native": "^0.81.0"
   },
   "devDependencies": {

@@ -18,7 +18,7 @@
   },
   "peerDependencies": {
     "@react-native-picker/picker": "2.11.0",
-    "react": "19.1.0",
+    "react": "19.1.4",
     "react-native": "^0.81.0",
     "react-native-windows": "0.81.4",
     "react-native-xaml": "^0.0.80"
