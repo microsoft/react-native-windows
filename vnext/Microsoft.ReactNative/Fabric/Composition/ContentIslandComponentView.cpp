@@ -285,13 +285,8 @@ void ContentIslandComponentView::prepareForRecycle() noexcept {
 }
 
 void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
-  // Determine the automation option to use:
-  // 1. If explicitly set via builder, use that
-  // 2. Otherwise, default to FrameworkBased
-  if (m_builder) {
-    m_childSiteLink.AutomationOption(m_builder->ContentIslandChildSiteAutomationOption().value_or(
-        winrt::Microsoft::UI::Content::ContentAutomationOptions::FrameworkBased));
-  }
+
+  m_childSiteLink.AutomationOption(winrt::Microsoft::UI::Content::ContentAutomationOptions::FrameworkBased);
 
   if (m_innerAutomationProvider) {
     m_innerAutomationProvider->SetChildSiteLink(m_childSiteLink);
