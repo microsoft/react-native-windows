@@ -13,16 +13,16 @@ import type {
   ObjectTypeAnnotation,
   CommandParamTypeAnnotation,
 } from '@react-native/codegen/lib/CodegenSchema';
-import { getAliasCppName, setPreferredModuleName } from './AliasManaging';
+import {getAliasCppName, setPreferredModuleName} from './AliasManaging';
 import {
   translateComponentPropsFieldType,
   translateComponentEventType,
   translateCommandParamType,
 } from './PropObjectTypes';
-import type { CppStringTypes } from './ObjectTypes';
-import type { AliasMap } from './AliasManaging';
+import type {CppStringTypes} from './ObjectTypes';
+import type {AliasMap} from './AliasManaging';
 
-export type { CppStringTypes } from './ObjectTypes';
+export type {CppStringTypes} from './ObjectTypes';
 
 type FilesOutput = Map<string, string>;
 
@@ -297,7 +297,7 @@ export function createComponentGenerator({
   ): FilesOutput => {
     const files = new Map<string, string>();
 
-    const cppCodegenOptions = { cppStringType };
+    const cppCodegenOptions = {cppStringType};
 
     for (const componentName of Object.keys(schema.modules)) {
       const component = schema.modules[componentName];
@@ -324,7 +324,7 @@ export function createComponentGenerator({
         // Props
         const propObjectAliases: AliasMap<
           ObjectTypeAnnotation<PropTypeAnnotation>
-        > = { types: {}, jobs: [] };
+        > = {types: {}, jobs: []};
         const propsName = `${componentName}Props`;
         const propsFields = componentShape.props
           .map(prop => {
@@ -334,10 +334,11 @@ export function createComponentGenerator({
               `${propsName}_${prop.name}`,
               cppCodegenOptions,
             );
-            return `  REACT_FIELD(${prop.name})\n  ${prop.optional && !propType.alreadySupportsOptionalOrHasDefault
+            return `  REACT_FIELD(${prop.name})\n  ${
+              prop.optional && !propType.alreadySupportsOptionalOrHasDefault
                 ? `std::optional<${propType.type}>`
                 : propType.type
-              } ${prop.name}${propType.initializer};\n`;
+            } ${prop.name}${propType.initializer};\n`;
           })
           .join('\n');
 
@@ -360,11 +361,12 @@ export function createComponentGenerator({
                   `${propsName}_${property.name}`,
                   cppCodegenOptions,
                 );
-                return `  REACT_FIELD(${property.name})\n  ${property.optional &&
-                    !propType.alreadySupportsOptionalOrHasDefault
+                return `  REACT_FIELD(${property.name})\n  ${
+                  property.optional &&
+                  !propType.alreadySupportsOptionalOrHasDefault
                     ? `std::optional<${propType.type}>`
                     : propType.type
-                  } ${property.name}${propType.initializer};\n`;
+                } ${property.name}${propType.initializer};\n`;
               })
               .join('\n');
 
@@ -380,7 +382,7 @@ export function createComponentGenerator({
         // Events
         const eventObjectAliases: AliasMap<
           ObjectTypeAnnotation<EventTypeAnnotation>
-        > = { types: {}, jobs: [] };
+        > = {types: {}, jobs: []};
         const eventEmitterName = `${componentName}EventEmitter`;
         const eventEmitterMethods = componentShape.events
           .filter(event => event.typeAnnotation.argument)
@@ -416,8 +418,9 @@ export function createComponentGenerator({
 
         const eventObjectUsings = eventObjectAliases.jobs
           .map(eventObjectTypeName => {
-            return `  using ${eventObjectTypeName.replace('on', 'On')} = ${getAliasCppName(eventObjectTypeName) /*.replace('_on', '_On')*/
-              };`;
+            return `  using ${eventObjectTypeName.replace('on', 'On')} = ${
+              getAliasCppName(eventObjectTypeName) /*.replace('_on', '_On')*/
+            };`;
           })
           .join('\n');
 
@@ -448,11 +451,12 @@ export function createComponentGenerator({
                   eventObjectTypeName,
                   cppCodegenOptions,
                 );
-                return `  REACT_FIELD(${property.name})\n  ${property.optional &&
-                    !eventPropType.alreadySupportsOptionalOrHasDefault
+                return `  REACT_FIELD(${property.name})\n  ${
+                  property.optional &&
+                  !eventPropType.alreadySupportsOptionalOrHasDefault
                     ? `std::optional<${eventPropType.type}>`
                     : eventPropType.type
-                  } ${property.name}${eventPropType.initializer};\n`;
+                } ${property.name}${eventPropType.initializer};\n`;
               })
               .join('\n');
             return eventsObjectTemplate
@@ -472,34 +476,36 @@ export function createComponentGenerator({
         // Commands
         const commandAliases: AliasMap<
           ObjectTypeAnnotation<CommandParamTypeAnnotation>
-        > = { types: {}, jobs: [] };
+        > = {types: {}, jobs: []};
         const hasAnyCommands = componentShape.commands.length !== 0;
         const commandHandlers = hasAnyCommands
           ? componentShape.commands
-            .map(command => {
-              const commandArgs = command.typeAnnotation.params
-                .map(param => {
-                  const commandArgType = translateCommandParamType(
-                    param.typeAnnotation,
-                    commandAliases,
-                    `${componentName}_${command.name}`,
-                    cppCodegenOptions,
-                  );
-                  return `${param.optional &&
+              .map(command => {
+                const commandArgs = command.typeAnnotation.params
+                  .map(param => {
+                    const commandArgType = translateCommandParamType(
+                      param.typeAnnotation,
+                      commandAliases,
+                      `${componentName}_${command.name}`,
+                      cppCodegenOptions,
+                    );
+                    return `${
+                      param.optional &&
                       !commandArgType.alreadySupportsOptionalOrHasDefault
-                      ? `std::optional<${commandArgType.type}>`
-                      : commandArgType.type
+                        ? `std::optional<${commandArgType.type}>`
+                        : commandArgType.type
                     } ${param.name}`;
-                })
-                .join(', ');
+                  })
+                  .join(', ');
 
-              return `  // You must provide an implementation of this method to handle the "${command.name
+                return `  // You must provide an implementation of this method to handle the "${
+                  command.name
                 }" command
   virtual void Handle${capitalizeFirstLetter(
-                  command.name,
-                )}Command(${commandArgs}) noexcept = 0;`;
-            })
-            .join('\n\n')
+    command.name,
+  )}Command(${commandArgs}) noexcept = 0;`;
+              })
+              .join('\n\n')
           : '';
 
         const commandHandler = hasAnyCommands
@@ -507,37 +513,39 @@ export function createComponentGenerator({
     auto userData = view.UserData().as<TUserData>();
     auto commandName = args.CommandName();
 ${componentShape.commands
-            .map(command => {
-              const commaSeparatedCommandArgs = command.typeAnnotation.params
-                .map(param => param.name)
-                .join(', ');
-              return `    if (commandName == L"${command.name}") {
-${command.typeAnnotation.params.length !== 0
-                  ? `      ${command.typeAnnotation.params
-                    .map(param => {
-                      const commandArgType = translateCommandParamType(
-                        param.typeAnnotation,
-                        commandAliases,
-                        `${componentName}_${command.name}`,
-                        cppCodegenOptions,
-                      );
-                      return `${param.optional &&
-                          !commandArgType.alreadySupportsOptionalOrHasDefault
-                          ? `std::optional<${commandArgType.type}>`
-                          : commandArgType.type
-                        } ${param.name};`;
-                    })
-                    .join('\n')}
+  .map(command => {
+    const commaSeparatedCommandArgs = command.typeAnnotation.params
+      .map(param => param.name)
+      .join(', ');
+    return `    if (commandName == L"${command.name}") {
+${
+  command.typeAnnotation.params.length !== 0
+    ? `      ${command.typeAnnotation.params
+        .map(param => {
+          const commandArgType = translateCommandParamType(
+            param.typeAnnotation,
+            commandAliases,
+            `${componentName}_${command.name}`,
+            cppCodegenOptions,
+          );
+          return `${
+            param.optional &&
+            !commandArgType.alreadySupportsOptionalOrHasDefault
+              ? `std::optional<${commandArgType.type}>`
+              : commandArgType.type
+          } ${param.name};`;
+        })
+        .join('\n')}
       winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), ${commaSeparatedCommandArgs});`
-                  : ''
-                }
+    : ''
+}
       userData->Handle${capitalizeFirstLetter(
-                  command.name,
-                )}Command(${commaSeparatedCommandArgs});
+        command.name,
+      )}Command(${commaSeparatedCommandArgs});
       return;
     }`;
-            })
-            .join('\n\n')}
+  })
+  .join('\n\n')}
   }`
           : '';
 
