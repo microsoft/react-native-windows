@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "manually updates RNW to preview 12",
+  "packageName": "@react-native-windows/automation",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
