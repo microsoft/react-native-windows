@@ -42,24 +42,24 @@ jsi::Value deepCopyJSIValue(jsi::Runtime &rt, const jsi::Value &value);
 jsi::Object deepCopyJSIObject(jsi::Runtime &rt, const jsi::Object &obj);
 jsi::Array deepCopyJSIArray(jsi::Runtime &rt, const jsi::Array &arr);
 
-struct MySimpleTurboModule : react::NativeMySimpleTurboModuleCxxCxxSpecJSI {
+struct MySimpleTurboModule : react::NativeMySimpleTurboModuleCxxCxxSpec<MySimpleTurboModule> {
   MySimpleTurboModule(std::shared_ptr<react::CallInvoker> jsInvoker);
 
-  void logAction(jsi::Runtime &rt, const jsi::String actionName, jsi::Value value) override;
-  void voidFunc(jsi::Runtime &rt) override;
-  bool getBool(jsi::Runtime &rt, bool arg) override;
-  double getNumber(jsi::Runtime &rt, double arg) override;
-  jsi::String getString(jsi::Runtime &rt, jsi::String arg) override;
-  jsi::Array getArray(jsi::Runtime &rt, jsi::Array arg) override;
-  jsi::Object getObject(jsi::Runtime &rt, jsi::Object arg) override;
-  jsi::Object getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) override;
-  void getValueWithCallback(jsi::Runtime &rt, jsi::Function callback) override;
-  jsi::Value getValueWithPromise(jsi::Runtime &rt, bool error) override;
-  jsi::Object getConstants(jsi::Runtime &rt) override;
+  void logAction(jsi::Runtime &rt, const jsi::String actionName, jsi::Value value);
+  void voidFunc(jsi::Runtime &rt);
+  bool getBool(jsi::Runtime &rt, bool arg);
+  double getNumber(jsi::Runtime &rt, double arg);
+  jsi::String getString(jsi::Runtime &rt, jsi::String arg);
+  jsi::Array getArray(jsi::Runtime &rt, jsi::Array arg);
+  jsi::Object getObject(jsi::Runtime &rt, jsi::Object arg);
+  jsi::Object getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z);
+  void getValueWithCallback(jsi::Runtime &rt, jsi::Function callback);
+  jsi::Value getValueWithPromise(jsi::Runtime &rt, bool error);
+  jsi::Object getConstants(jsi::Runtime &rt);
 };
 
 MySimpleTurboModule::MySimpleTurboModule(std::shared_ptr<react::CallInvoker> jsInvoker)
-    : NativeMySimpleTurboModuleCxxCxxSpecJSI(std::move(jsInvoker)) {}
+    : NativeMySimpleTurboModuleCxxCxxSpec(std::move(jsInvoker)) {}
 
 void MySimpleTurboModule::logAction(jsi::Runtime &rt, jsi::String actionName, jsi::Value value) {
   JSValue jsValue{};

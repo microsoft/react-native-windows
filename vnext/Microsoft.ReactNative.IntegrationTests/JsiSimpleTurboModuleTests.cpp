@@ -22,14 +22,14 @@ using namespace Microsoft::ReactNative;
 
 namespace ReactNativeIntegrationTests {
 
-struct MyTrivialTurboModule : react::NativeMyTrivialTurboModuleCxxSpecJSI {
+struct MyTrivialTurboModule : react::NativeMyTrivialTurboModuleCxxSpec<MyTrivialTurboModule> {
   MyTrivialTurboModule(std::shared_ptr<react::CallInvoker> jsInvoker);
 
-  void startFromJS(jsi::Runtime &rt) override;
+  void startFromJS(jsi::Runtime &rt);
 };
 
 MyTrivialTurboModule::MyTrivialTurboModule(std::shared_ptr<react::CallInvoker> jsInvoker)
-    : NativeMyTrivialTurboModuleCxxSpecJSI(std::move(jsInvoker)) {}
+    : NativeMyTrivialTurboModuleCxxSpec(std::move(jsInvoker)) {}
 
 void MyTrivialTurboModule::startFromJS(jsi::Runtime & /*rt*/) {
   TestEventService::LogEvent("startFromJS called", nullptr);
