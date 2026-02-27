@@ -54,8 +54,8 @@ struct CalendarViewEventEmitter {
 
   using OnSelectedDatesChanged = CalendarViewSpec_onSelectedDatesChanged;
 
-  void onSelectedDatesChanged(OnSelectedDatesChanged &value) const {
-    m_eventEmitter.DispatchEvent(L"selectedDatesChanged", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onSelectedDatesChanged(OnSelectedDatesChanged &&value) const {
+    m_eventEmitter.DispatchEvent(L"selectedDatesChanged", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
