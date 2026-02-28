@@ -2,6 +2,27 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Sat, 28 Feb 2026 16:57:29 GMT",
+      "version": "0.0.0-canary.130",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.130",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "8f763bfb52d85cc410e099d38d92fedb2e4cf5f7",
+            "comment": "Fix issues with more complex props and event types"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "3c9fc70121112b5a08ece7f3c053e1fa05df844c",
+            "comment": "Fix lifetime issue with codegen'd eventemitter args"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 10 Jan 2026 06:40:18 GMT",
       "version": "0.0.0-canary.129",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.129",

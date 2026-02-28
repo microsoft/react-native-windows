@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Sat, 10 Jan 2026 06:40:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 28 Feb 2026 16:57:29 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.130
+
+Sat, 28 Feb 2026 16:57:29 GMT
+
+### Changes
+
+- Fix issues with more complex props and event types (30809111+acoates-ms@users.noreply.github.com)
+- Fix lifetime issue with codegen'd eventemitter args (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.129
 

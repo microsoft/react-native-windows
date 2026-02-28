@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Expose AutomationOption Setter for ChildSite",
-  "packageName": "react-native-windows",
-  "email": "66076509+vineethkuttan@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

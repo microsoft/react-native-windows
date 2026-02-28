@@ -2,6 +2,39 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 28 Feb 2026 16:57:32 GMT",
+      "version": "0.0.0-canary.306",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.306",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "9a59a5e833886b5d9bdccb1bf20f99a35d7500bc",
+            "comment": "Integrate 0.83.0-nightly-20250917-18cb4edfa"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "25db080987460d9b4b5f145aeffc5b4b0a669a72",
+            "comment": "Fix TextWin32 export"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "9cc99209e10b79a9b5223465538f81c3954bec4e",
+            "comment": "Integrate 0.83.0-nightly-20251012-6f482708b"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e2dc99a36053b8bbc04be9f613e33f3f7efb4cc4",
+            "comment": "Fix TouchableWin32 and LogBox"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jan 2026 13:00:13 GMT",
       "version": "0.0.0-canary.305",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.305",

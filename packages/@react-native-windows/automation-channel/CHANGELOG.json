@@ -2,6 +2,45 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Sat, 28 Feb 2026 16:57:31 GMT",
+      "version": "0.0.0-canary.1032",
+      "tag": "@react-native-windows/automation-channel_v0.0.0-canary.1032",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "6fbe27bbc0ab04a0eb70a50251625b93341c0aae",
+            "comment": "Fix XAML popup positioning and light dismiss in ScrollView (#15557)"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "9cc99209e10b79a9b5223465538f81c3954bec4e",
+            "comment": "Integrate 0.83.0-nightly-20251012-6f482708b"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "9a59a5e833886b5d9bdccb1bf20f99a35d7500bc",
+            "comment": "Integrate 0.83.0-nightly-20250917-18cb4edfa"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "46e5b09b4e461d93b2e78fbc7686a7d678d8f270",
+            "comment": "Update WinAppSdk to 1.8.260209005"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.1032",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 17 Jan 2026 06:40:58 GMT",
       "version": "0.0.0-canary.1031",
       "tag": "@react-native-windows/automation-channel_v0.0.0-canary.1031",

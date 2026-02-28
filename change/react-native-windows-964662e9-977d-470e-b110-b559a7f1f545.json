@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "adding defensive check to ensure device contetxt is valid before performing D2D operation",
-  "packageName": "react-native-windows",
-  "email": "protikbiswas@microsoft.com",
-  "dependentChangeType": "patch"
-}
