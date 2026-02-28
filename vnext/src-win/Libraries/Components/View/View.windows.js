@@ -66,7 +66,6 @@ component View(
   ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
   ...props: ViewProps
 ) {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const hasTextAncestor = use(TextAncestorContext);
 
   let actualView;

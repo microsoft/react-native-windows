@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.83.0-nightly-20251012-6f482708b",
+  "baseVersion": "0.83.0-nightly-20251104-502efe1cc",
   "overrides": [
     {
       "type": "copy",
@@ -96,7 +96,7 @@
       "type": "copy",
       "directory": "js/examples/ContentURLAndroid",
       "baseDirectory": "packages/rn-tester/js/examples/ContentURLAndroid",
-      "baseHash": "b68ab3fbff1dd27263c6f79cac4b100387031ba6",
+      "baseHash": "0f61e3c10482cf7847be84e53e5a2aedd89e12e2",
       "issue": 14844
     },
     {
@@ -152,7 +152,7 @@
       "type": "copy",
       "directory": "js/examples/Filter",
       "baseDirectory": "packages/rn-tester/js/examples/Filter",
-      "baseHash": "82f47b13c7ca626f0f663ae1282ee8eab9c669cf",
+      "baseHash": "9bc059e0a4229fb148b6498d0d3fa0fa50fbe059",
       "issue": 4054
     },
     {
@@ -215,7 +215,7 @@
       "type": "copy",
       "directory": "js/examples/LinearGradient",
       "baseDirectory": "packages/rn-tester/js/examples/LinearGradient/",
-      "baseHash": "1f9a8cb4d023214e768ba729b7c97870de8f61ab",
+      "baseHash": "8ac057256faa96b22b3a41c4506d6379959fbf00",
       "issue": 4054
     },
     {
@@ -584,14 +584,14 @@
       "type": "copy",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "aeb0275507e7c508cdf7c2ceec49f9e95ef4e1ec",
+      "baseHash": "419d588f738d7f9fc252019e74ca7bc92c6a03bf",
       "issue": 13228
     },
     {
       "type": "copy",
       "file": "js/utils/RNTesterList.ios.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
-      "baseHash": "a93dea4da7d61b0ad13e1d90f9a0b34dbac57994",
+      "baseHash": "b164cd5f108ebdeed2fc45512e72ab4d53e6e5ed",
       "issue": 13228
     },
     {
@@ -654,7 +654,7 @@
       "type": "copy",
       "file": "NativeModuleExample/NativeScreenshotManager.js",
       "baseFile": "packages/rn-tester/NativeModuleExample/NativeScreenshotManager.js",
-      "baseHash": "8eeff755fab7fa507c7663e3681963579f19d900",
+      "baseHash": "6eca67ffe577705a40034632effffd4cb2a96308",
       "issue": 4054
     },
     {
