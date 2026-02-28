@@ -5,6 +5,7 @@
 #include <Fabric/AbiComponentDescriptor.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProvider.h>
 #include <react/renderer/core/ReactPrimitives.h>
+#include <optional>
 #include "winrt/Microsoft.ReactNative.Composition.Experimental.h"
 #include "winrt/Microsoft.ReactNative.Composition.h"
 #include "winrt/Microsoft.ReactNative.h"

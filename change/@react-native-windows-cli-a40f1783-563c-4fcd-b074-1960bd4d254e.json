@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Scope various foo and bar test package to rnw-scripts.\"",
+  "packageName": "@react-native-windows/cli",
+  "email": "yicyao@microsoft.com",
+  "dependentChangeType": "none"
+}

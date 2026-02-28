@@ -69,6 +69,9 @@ class HermesRuntimeTargetDelegate : public facebook::react::jsinspector_modern::
    */
   facebook::react::jsinspector_modern::tracing::RuntimeSamplingProfile collectSamplingProfile() override;
 
+  std::optional<folly::dynamic> serializeStackTrace(
+      const facebook::react::jsinspector_modern::StackTrace &stackTrace) override;
+
  private:
   std::shared_ptr<HermesRuntimeHolder> hermesRuntimeHolder_;
   const HermesUniqueCdpDebugApi hermesCdpDebugApi_;

@@ -466,6 +466,12 @@ function InternalTextInput(props: TextInputProps): React.Node {
         before we can get to the long term breaking change.
       */
       if (instance != null) {
+        // Register the input immediately when the ref is set so that focus()
+        // can be called from ref callbacks
+        // Double registering during useLayoutEffect is fine, because the underlying
+        // state is a Set.
+        TextInputState.registerInput(instance);
+
         // $FlowFixMe[prop-missing] - See the explanation above.
         // $FlowFixMe[unsafe-object-assign]
         Object.assign(instance, {
@@ -646,9 +652,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
   const {onBlur, onFocus, ...eventHandlers} = usePressability(config);
   const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
   const _keyDown = (event: KeyEvent) => {
-    if (props.keyDownEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
-      for (const el of props.keyDownEvents) {
+    const keyDownEvents = props.keyDownEvents;
+    if (keyDownEvents != null && event.isPropagationStopped() !== true) {
+      for (const el of keyDownEvents) {
         if (
           event.nativeEvent.code === el.code &&
           event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
@@ -665,9 +671,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
   };
 
   const _keyUp = (event: KeyEvent) => {
-    if (props.keyUpEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
-      for (const el of props.keyUpEvents) {
+    const keyUpEvents = props.keyUpEvents;
+    if (keyUpEvents != null && event.isPropagationStopped() !== true) {
+      for (const el of keyUpEvents) {
         if (
           event.nativeEvent.code === el.code &&
           event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
@@ -684,9 +690,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
   };
 
   const _keyDownCapture = (event: KeyEvent) => {
-    if (props.keyDownEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
-      for (const el of props.keyDownEvents) {
+    const keyDownEvents = props.keyDownEvents;
+    if (keyDownEvents != null && event.isPropagationStopped() !== true) {
+      for (const el of keyDownEvents) {
         if (
           event.nativeEvent.code === el.code &&
           event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
@@ -703,9 +709,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
   };
 
   const _keyUpCapture = (event: KeyEvent) => {
-    if (props.keyUpEvents && event.isPropagationStopped() !== true) {
-      // $FlowFixMe - keyDownEvents was already checked to not be undefined
-      for (const el of props.keyUpEvents) {
+    const keyUpEvents = props.keyUpEvents;
+    if (keyUpEvents != null && event.isPropagationStopped() !== true) {
+      for (const el of keyUpEvents) {
         if (
           event.nativeEvent.code === el.code &&
           event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&

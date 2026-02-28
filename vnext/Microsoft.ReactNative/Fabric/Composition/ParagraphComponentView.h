@@ -100,6 +100,7 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
 
   // Selects the word at the given character position
   void SelectWordAtPosition(int32_t charPosition) noexcept;
+  std::pair<int32_t, int32_t> GetWordBoundariesAtPosition(int32_t charPosition) noexcept;
 
   // Shows a context menu with Copy/Select All options on right-click
   void ShowContextMenu() noexcept;
@@ -117,6 +118,11 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   std::optional<int32_t> m_selectionStart;
   std::optional<int32_t> m_selectionEnd;
   bool m_isSelecting{false};
+
+  // Double click + drag selection
+  bool m_isWordSelecting{false};
+  int32_t m_wordAnchorStart{0};
+  int32_t m_wordAnchorEnd{0};
 
   // Double-click detection
   std::chrono::steady_clock::time_point m_lastClickTime{};

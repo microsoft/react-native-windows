@@ -7,7 +7,9 @@
  * @noformat
  * @nolint
  * @flow strict
- * @generated SignedSource<<deb7924d11c790f99448a1c2f0edddb9>>
+ * @generated SignedSource<<989e6e2e860dc2af7ba983849111bda8>>
+ *
+ * This file was sync'd from the facebook/react repository.
  */
 
 import type {
@@ -139,6 +141,7 @@ export type RenderRootOptions = {
     error: mixed,
     errorInfo: {+componentStack?: ?string},
   ) => void,
+  onDefaultTransitionIndicator?: () => void | (() => void),
 };
 
 /**

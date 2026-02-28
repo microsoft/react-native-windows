@@ -12,7 +12,7 @@
 
 import React, {useState} from 'react';
 import {Alert, Button, Text, View, ScrollView} from 'react-native';
-import {CalendarView} from 'sample-custom-component';
+import {CalendarView} from '@rnw-scripts/sample-custom-component';
 
 const XamlContentExample = () => {
   const [selectedDate, setSelectedDate] = useState(true);

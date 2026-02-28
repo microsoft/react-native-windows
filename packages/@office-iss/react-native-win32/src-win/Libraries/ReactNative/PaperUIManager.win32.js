@@ -101,22 +101,22 @@ const UIManagerJS: UIManagerJSInterface = {
 for (const propName of Object.getOwnPropertyNames(
   Object.getPrototypeOf(NativeUIManager),
 )) {
-  // $FlowFixMe
+  // $FlowFixMe[incompatible-type]
   UIManagerJS[propName] = NativeUIManager[propName];
 }
 // Windows]
 
-/* $FlowFixMe(>=0.123.0 site=react_native_fb) This comment suppresses an error
+/* $FlowFixMe[cannot-write] (>=0.123.0 site=react_native_fb) This comment suppresses an error
  * found when Flow v0.123.0 was deployed. To see the error, delete this comment
  * and run Flow. */
 //const UIManagerJS = {
 //  ...NativeUIManager,
-// $FlowFixMe
+// $FlowFixMe[cannot-write]
 UIManagerJS.getConstants = getConstants;
 //  },
-// $FlowFixMe
+// $FlowFixMe[cannot-write]
 UIManagerJS.getViewManagerConfig = getViewManagerConfig;
-// $FlowFixMe
+// $FlowFixMe[cannot-write]
 UIManagerJS.hasViewManagerConfig = (viewManagerName: string) =>
   getViewManagerConfig(viewManagerName) != null;
 
@@ -130,7 +130,7 @@ UIManagerJS.hasViewManagerConfig = (viewManagerName: string) =>
 //            getViewManagerConfig is implemented on the JSI object, so we don't
 //            need to hook this unless we are running in webdebugger
 if (!global.nativeCallSyncHook)
-  // $FlowFixMe
+  // $FlowFixMe[prop-missing]
   NativeUIManager.getViewManagerConfig = UIManagerJS.getViewManagerConfig;
 
 function lazifyViewManagerConfig(viewName: string) {
@@ -199,7 +199,7 @@ if (!global.nativeCallSyncHook) {
             `Accessing view manager configs directly off UIManager via UIManager['${viewManagerName}'] ` +
               `is no longer supported. Use UIManager.getViewManagerConfig('${viewManagerName}') instead.`,
           );
-          // $FlowFixMe
+          // $FlowFixMe[incompatible-return]
           return UIManagerJS.getViewManagerConfig(viewManagerName);
         },
       });

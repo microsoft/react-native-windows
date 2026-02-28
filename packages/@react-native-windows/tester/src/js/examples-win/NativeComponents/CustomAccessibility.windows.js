@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {View} from 'react-native';
-import {CustomAccessibility} from 'sample-custom-component';
+import {CustomAccessibility} from '@rnw-scripts/sample-custom-component';
 import RNTesterText from '../../components/RNTesterText';
 
 const CustomAccessibilityExample = () => {

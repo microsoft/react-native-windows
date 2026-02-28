@@ -21,6 +21,7 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   delegate void ComponentIslandComponentViewInitializer(ContentIslandComponentView view);
 
+
   [webhosthidden]
   [experimental]
   delegate void PortalComponentViewInitializer(PortalComponentView view);

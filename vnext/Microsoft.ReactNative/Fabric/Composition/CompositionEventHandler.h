@@ -175,6 +175,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   winrt::event_token m_keyDownToken;
   winrt::event_token m_keyUpToken;
   winrt::event_token m_characterReceivedToken;
+  winrt::event_token m_contextMenuKeyToken;
 };
 
 } // namespace Microsoft::ReactNative
