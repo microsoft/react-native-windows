@@ -72,6 +72,11 @@ export class GitRepo {
     return this.git('rev-parse', ref);
   }
 
+  /** Get the current branch name, or 'HEAD' if in detached state. */
+  async currentBranch(): Promise<string> {
+    return this.git('rev-parse', '--abbrev-ref', 'HEAD');
+  }
+
   /** Check for uncommitted changes (git status --porcelain). */
   async statusPorcelain(pathspec?: string): Promise<string> {
     const args = ['status', '--porcelain'];

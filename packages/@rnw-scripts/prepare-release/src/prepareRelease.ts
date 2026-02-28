@@ -107,6 +107,22 @@ function normalizeGitUrl(url: string): string {
 }
 
 /**
+ * Extract "owner/repo" from a git URL for use with `gh --repo`.
+ *
+ * E.g. "git@github.com:microsoft/react-native-windows.git"
+ *   -> "microsoft/react-native-windows"
+ */
+function extractGitHubRepo(url: string): string {
+  const normalized = normalizeGitUrl(url);
+  // normalized is like "github.com/owner/repo"
+  const match = normalized.match(/github\.com\/(.+)/);
+  if (!match) {
+    throw new Error(`Could not extract GitHub owner/repo from "${url}"`);
+  }
+  return match[1];
+}
+
+/**
  * Detect which git remote matches the repository URL from package.json.
  *
  * Parses `git remote -v` output and matches against the normalized repo URL.
@@ -196,6 +212,10 @@ async function detectRemote(
     const remoteName = await detectRemote(git, repoUrl);
     console.log(`${colorize('Git remote:', ansi.bright)} ${remoteName}`);
 
+    // 4b. Extract GitHub owner/repo for gh CLI --repo flag
+    const githubRepo = extractGitHubRepo(repoUrl);
+    console.log(`${colorize('GitHub repo:', ansi.bright)} ${githubRepo}`);
+
     // 5. Fetch from remote
     console.log(colorize(`Fetching from ${remoteName}...`, ansi.dim));
     await git.fetch(remoteName);
@@ -215,7 +235,11 @@ async function detectRemote(
     console.log(
       colorize(`Looking for existing PR from ${prBranch}...`, ansi.dim),
     );
-    const existingPR = await findPR({head: prBranch, cwd: repoRoot});
+    const existingPR = await findPR({
+      head: prBranch,
+      cwd: repoRoot,
+      repo: githubRepo,
+    });
 
     if (existingPR) {
       console.log(
@@ -227,116 +251,145 @@ async function detectRemote(
       );
     }
 
-    // 8. Create/reset the prepare-release branch from target branch HEAD
+    // 8. Save original branch so we can restore it when done
+    const originalBranch = await git.currentBranch();
     console.log(
-      colorize(
-        `Creating branch ${prBranch} from ${remoteName}/${targetBranch}...`,
-        ansi.dim,
-      ),
+      colorize(`Saving current branch: ${originalBranch}`, ansi.dim),
     );
-    await git.checkoutNewBranch(prBranch, `${remoteName}/${targetBranch}`);
 
-    // 9. Run beachball bump
-    console.log(colorize('Running beachball bump...', ansi.bright));
-    await bumpVersions({
-      targetBranch,
-      remote: remoteName,
-      cwd: repoRoot,
-    });
-
-    // 10. Check if beachball actually changed anything
-    const status = await git.statusPorcelain();
-    if (!status) {
+    try {
+      // 9. Create/reset the prepare-release branch from target branch HEAD
       console.log(
         colorize(
-          'beachball bump made no changes. Nothing to commit.',
-          ansi.yellow,
+          `Creating branch ${prBranch} from ${remoteName}/${targetBranch}...`,
+          ansi.dim,
         ),
       );
-      process.exit(0);
-    }
+      await git.checkoutNewBranch(prBranch, `${remoteName}/${targetBranch}`);
 
-    // 11. Collect bumped package info for PR description
-    //     Parse changed package.json paths from git status --porcelain output
-    const changedFiles = status
-      .split('\n')
-      .map(line => line.trim().split(/\s+/).pop()!)
-      .filter(f => f.endsWith('package.json'));
+      // 10. Run beachball bump
+      console.log(colorize('Running beachball bump...', ansi.bright));
+      await bumpVersions({
+        targetBranch,
+        remote: remoteName,
+        cwd: repoRoot,
+      });
 
-    const bumpedPackages = collectBumpedPackages(changedFiles, repoRoot);
-    console.log(generateConsoleSummary(bumpedPackages));
+      // 11. Check if beachball actually changed anything
+      const status = await git.statusPorcelain();
+      if (!status) {
+        console.log(
+          colorize(
+            'beachball bump made no changes. Nothing to commit.',
+            ansi.yellow,
+          ),
+        );
+        process.exit(0);
+      }
 
-    // 12. Stage all + commit
-    const commitMessage = `Version Packages (${targetBranch})`;
-    console.log(colorize(`Committing: "${commitMessage}"...`, ansi.dim));
-    await git.stageAll();
-    await git.commit(commitMessage);
+      // 12. Collect bumped package info for PR description
+      //     Parse changed package.json paths from git status --porcelain output
+      const changedFiles = status
+        .split('\n')
+        .map(line => line.trim().split(/\s+/).pop()!)
+        .filter(f => f.endsWith('package.json'));
 
-    // 13. Force-push the branch
-    if (dryRun) {
-      console.log(
-        colorize(
-          `[DRY RUN] Would force-push ${prBranch} to ${remoteName}`,
-          ansi.yellow,
-        ),
-      );
-    } else {
-      console.log(
-        colorize(`Force-pushing ${prBranch} to ${remoteName}...`, ansi.dim),
-      );
-      await git.push(remoteName, prBranch, {force: true});
-    }
+      const bumpedPackages = collectBumpedPackages(changedFiles, repoRoot);
+      console.log(generateConsoleSummary(bumpedPackages));
 
-    // 14. Create or update PR
-    const prTitle = `Version Packages (${targetBranch})`;
-    const prBody = generatePRBody(targetBranch, bumpedPackages);
+      // 13. Stage all + commit
+      const commitMessage = `Version Packages (${targetBranch})`;
+      console.log(colorize(`Committing: "${commitMessage}"...`, ansi.dim));
+      await git.stageAll();
+      await git.commit(commitMessage);
 
-    if (existingPR) {
+      // 14. Force-push the branch
       if (dryRun) {
         console.log(
           colorize(
-            `[DRY RUN] Would update PR #${existingPR.number}`,
+            `[DRY RUN] Would force-push ${prBranch} to ${remoteName}`,
             ansi.yellow,
           ),
         );
       } else {
         console.log(
-          colorize(`Updating PR #${existingPR.number}...`, ansi.dim),
+          colorize(
+            `Force-pushing ${prBranch} to ${remoteName}...`,
+            ansi.dim,
+          ),
         );
-        await updatePR({
-          number: existingPR.number,
-          body: prBody,
-          cwd: repoRoot,
-        });
-        console.log(
-          `${colorize('PR updated:', ansi.green)} ${existingPR.url}`,
-        );
+        await git.push(remoteName, prBranch, {force: true});
       }
-    } else {
-      if (dryRun) {
-        console.log(
-          colorize(`[DRY RUN] Would create PR: "${prTitle}"`, ansi.yellow),
-        );
+
+      // 15. Create or update PR
+      const prTitle = `Version Packages (${targetBranch})`;
+      const prBody = generatePRBody(targetBranch, bumpedPackages);
+
+      if (existingPR) {
+        if (dryRun) {
+          console.log(
+            colorize(
+              `[DRY RUN] Would update PR #${existingPR.number}`,
+              ansi.yellow,
+            ),
+          );
+        } else {
+          console.log(
+            colorize(`Updating PR #${existingPR.number}...`, ansi.dim),
+          );
+          await updatePR({
+            number: existingPR.number,
+            body: prBody,
+            cwd: repoRoot,
+            repo: githubRepo,
+          });
+          console.log(
+            `${colorize('PR updated:', ansi.green)} ${existingPR.url}`,
+          );
+        }
       } else {
-        console.log(colorize('Creating pull request...', ansi.dim));
-        const newPR = await createPR({
-          head: prBranch,
-          base: targetBranch,
-          title: prTitle,
-          body: prBody,
-          cwd: repoRoot,
-        });
-        console.log(`${colorize('PR created:', ansi.green)} ${newPR.url}`);
+        if (dryRun) {
+          console.log(
+            colorize(
+              `[DRY RUN] Would create PR: "${prTitle}"`,
+              ansi.yellow,
+            ),
+          );
+        } else {
+          console.log(colorize('Creating pull request...', ansi.dim));
+          const newPR = await createPR({
+            head: prBranch,
+            base: targetBranch,
+            title: prTitle,
+            body: prBody,
+            cwd: repoRoot,
+            repo: githubRepo,
+          });
+          console.log(
+            `${colorize('PR created:', ansi.green)} ${newPR.url}`,
+          );
+        }
       }
-    }
 
-    // 15. Done
-    console.log('');
-    console.log(colorize('Done!', ansi.green + ansi.bright));
+      // 16. Done
+      console.log('');
+      console.log(colorize('Done!', ansi.green + ansi.bright));
 
-    if (dryRun) {
-      console.log(colorize('\nPR body that would be used:', ansi.dim));
-      console.log(prBody);
+      if (dryRun) {
+        console.log(colorize('\nPR body that would be used:', ansi.dim));
+        console.log(prBody);
+      }
+    } finally {
+      // Always restore the original branch
+      if (originalBranch && originalBranch !== 'HEAD') {
+        console.log(
+          colorize(
+            `Restoring original branch: ${originalBranch}`,
+            ansi.dim,
+          ),
+        );
+        await git.checkout(originalBranch);
+      }
     }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);

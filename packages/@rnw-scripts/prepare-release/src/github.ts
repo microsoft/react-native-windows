@@ -21,9 +21,11 @@ export interface PRInfo {
 export async function findPR(opts: {
   head: string;
   cwd: string;
+  repo?: string;
 }): Promise<PRInfo | null> {
+  const repoFlag = opts.repo ? ` --repo "${opts.repo}"` : '';
   const result = await exec(
-    `gh pr list --head "${opts.head}" --json number,url --limit 1`,
+    `gh pr list --head "${opts.head}" --json number,url --limit 1${repoFlag}`,
     {cwd: opts.cwd, fallback: '[]'},
   );
 
@@ -50,11 +52,13 @@ export async function createPR(opts: {
   title: string;
   body: string;
   cwd: string;
+  repo?: string;
 }): Promise<PRInfo> {
+  const repoFlag = opts.repo ? ` --repo "${opts.repo}"` : '';
   const result = await exec(
     `gh pr create --head "${opts.head}" --base "${opts.base}"` +
       ` --title "${escapeForShell(opts.title)}"` +
-      ` --body "${escapeForShell(opts.body)}"`,
+      ` --body "${escapeForShell(opts.body)}"${repoFlag}`,
     {cwd: opts.cwd},
   );
 
@@ -73,9 +77,11 @@ export async function updatePR(opts: {
   number: number;
   body: string;
   cwd: string;
+  repo?: string;
 }): Promise<void> {
+  const repoFlag = opts.repo ? ` --repo "${opts.repo}"` : '';
   await exec(
-    `gh pr edit ${opts.number} --body "${escapeForShell(opts.body)}"`,
+    `gh pr edit ${opts.number} --body "${escapeForShell(opts.body)}"${repoFlag}`,
     {cwd: opts.cwd},
   );
 }
