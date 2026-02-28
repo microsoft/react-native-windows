@@ -3161,9 +3161,9 @@
   integrity sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw==
 
 "@types/node@^22.0.0", "@types/node@^22.14.0":
-  version "22.19.12"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.19.12.tgz#c83b74c80429fcccba25f6d6c4c7d1753a9cabb2"
-  integrity sha512-0QEp0aPJYSyf6RrTjDB7HlKgNMTY+V2C7ESTaVt6G9gQ0rPLzTGz7OF2NXTLR5vcy7HJEtIUsyWLsfX0kTqJBA==
+  version "22.19.13"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.19.13.tgz#c03cab3d1f0e5542fa358ecfff08f9b34834884e"
+  integrity sha512-akNQMv0wW5uyRpD2v2IEyRSZiR+BeGuoB6L310EgGObO44HSMNT8z1xzio28V8qOrgYaopIDNA18YgdXd+qTiw==
   dependencies:
     undici-types "~6.21.0"
 
@@ -4641,7 +4641,7 @@ brace-expansion@^1.1.7:
     balanced-match "^1.0.0"
     concat-map "0.0.1"
 
-brace-expansion@^2.0.1:
+brace-expansion@^2.0.1, brace-expansion@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-2.0.2.tgz#54fc53237a613d854c7bd37463aad17df87214e7"
   integrity sha512-Jt0vHyM+jmUBqojB7E1NIYadt0vI0Qxjxd2TErW94wDz+E2LAm5vKMXXwg6ZZBTHPuUlDgQHKXvjGBdfcF1ZDQ==
@@ -8638,9 +8638,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 lage@^2.7.1:
-  version "2.14.18"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.14.18.tgz#11138dc6b564142655502fd0f8f6efcaff756d69"
-  integrity sha512-pVW45DnILDaLxr8KiuSK5yQnWTQSmk0MlBgRlvixrk11EwptGEJNXrBfpWFjEJ2WkBUp/6ifdoWLro81GHFi0w==
+  version "2.14.19"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.14.19.tgz#e8b9661c452d6f10ac10b931f6b10e0cc74f47d5"
+  integrity sha512-a30kw7cTOQ+obYkLPYby3O8+uH2j5RXIIyrn7sj+X0CvmOAhvSCL4NHUP/In3mCrcHF5slBCUJH6W1B+MmF0Cg==
   dependencies:
     glob-hasher "^1.4.2"
   optionalDependencies:
@@ -9804,11 +9804,11 @@ minimatch@^7.4.6:
     brace-expansion "^2.0.1"
 
 minimatch@^9.0.0, minimatch@^9.0.3, minimatch@^9.0.4:
-  version "9.0.5"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-9.0.5.tgz#d74f9dd6b57d83d8e98cfb82133b03978bc929e5"
-  integrity sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==
+  version "9.0.9"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-9.0.9.tgz#9b0cb9fcb78087f6fd7eababe2511c4d3d60574e"
+  integrity sha512-OBwBN9AL4dqmETlpS2zasx+vTeWclWzkblfZk7KTA5j3jeOONz/tRCnZomUyvNg83wL5Zv9Ss6HMJXAgL8R2Yg==
   dependencies:
-    brace-expansion "^2.0.1"
+    brace-expansion "^2.0.2"
 
 minimist@^1.2.5, minimist@^1.2.6, minimist@^1.2.8:
   version "1.2.8"
