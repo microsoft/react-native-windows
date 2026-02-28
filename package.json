@@ -37,6 +37,7 @@
     "@rnw-scripts/format-files": "*",
     "@rnw-scripts/integrate-rn": "*",
     "@rnw-scripts/just-task": "*",
+    "@rnw-scripts/prepare-release": "*",
     "@rnw-scripts/promote-release": "*",
     "@rnw-scripts/stamp-version": "0.0.0",
     "@rnw-scripts/take-screenshot": "*",

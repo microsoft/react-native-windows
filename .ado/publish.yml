@@ -1,18 +1,6 @@
 name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 parameters:
-- name: skipNpmPublish
-  displayName: Skip Npm Publish
-  type: boolean
-  default: false
-- name: skipGitPush
-  displayName: Skip Git Push
-  type: boolean
-  default: false
-- name: stopOnNoCI
-  displayName: Stop if latest commit is ***NO_CI***
-  type: boolean
-  default: true
 - name: performBeachballCheck
   displayName: Perform Beachball Check (Disable when promoting)
   type: boolean
@@ -74,14 +62,10 @@ parameters:
 variables:
   - template: variables/windows.yml
   - group: RNW Secrets
-  - name: SkipGitPushPublishArgs
-    value: ''
   - name: FailCGOnAlert
     value: false
   - name: EnableCodesign
     value: false
-  - name: SourceBranchWithFolders
-    value: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
 
 trigger: none
 pr: none
@@ -112,20 +96,9 @@ extends:
           timeoutInMinutes: 120
           cancelTimeoutInMinutes: 5
           steps:
-          - powershell: |
-              Write-Host "Stopping because commit message contains ***NO_CI***."
-              $uri = "https://dev.azure.com/microsoft/ReactNative/_apis/build/builds/$(Build.BuildId)?api-version=5.1"
-              $json = @{status="Cancelling"} | ConvertTo-Json -Compress
-              $build = Invoke-RestMethod -Uri $uri -Method Patch -Headers @{Authorization = "Bearer $(System.AccessToken)"} -ContentType "application/json" -Body $json
-              Write-Host $build
-              Write-Host "Waiting 60 seconds for build cancellation..."
-              Start-Sleep -Seconds 60
-            displayName: Stop pipeline if latest commit message contains ***NO_CI***
-            condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
-
           - template: .ado/templates/checkout-full.yml@self
             parameters:
-              persistCredentials: false # We're going to use rnbot's git creds to publish
+              persistCredentials: false
 
           - powershell: gci env:/BUILD_*
             displayName: Show build information
@@ -146,7 +119,7 @@ extends:
             condition: ${{ parameters.performBeachballCheck }}
 
         - job: RnwNpmPublish
-          displayName: React-Native-Windows Npm Build Rev Publish
+          displayName: React-Native-Windows Npm Pack
           dependsOn: RnwPublishPrep
           pool:
             name: Azure-Pipelines-1ESPT-ExDShared
@@ -159,35 +132,11 @@ extends:
             parameters:
               agentImage: HostedImage
 
-          - template: .ado/templates/configure-git.yml@self
-
-          - pwsh: |
-              Write-Host "##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push"
-            displayName: Enable No-Publish (git)
-            condition: ${{ parameters.skipGitPush }}
-
-          # Beachball publishes NPM packages to the "$(Pipeline.Workspace)\published-packages" folder.
-          # It pushes NPM version updates to Git depending on the SkipGitPushPublishArgs variable derived from the skipGitPush parameter.
-          - script: |
-              if exist "$(Pipeline.Workspace)\published-packages" rd /s /q "$(Pipeline.Workspace)\published-packages"
-              mkdir "$(Pipeline.Workspace)\published-packages"
-              npx beachball publish --no-publish $(SkipGitPushPublishArgs) --pack-to-path "$(Pipeline.Workspace)\published-packages" --branch origin/$(SourceBranchWithFolders) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
-            displayName: Beachball Publish
+          - script: node .ado/scripts/npmPack.js --clean --no-color "$(Pipeline.Workspace)\published-packages"
+            displayName: Pack npm packages
 
           - script: dir /s "$(Pipeline.Workspace)\published-packages"
             displayName: Show created npm packages
-
-          # Beachball reverts to local state after publish, but we want the updates it added
-          - script: git pull origin $(SourceBranchWithFolders)
-            displayName: git pull
-
-          - script: npx @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
-            displayName: Create GitHub Releases (New Canary Version)
-            condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ eq(variables['Build.SourceBranchName'], 'main') }} )
-
-          - script: npx --yes @rnw-scripts/create-github-releases@latest --yes --authToken $(githubAuthToken)
-            displayName: Create GitHub Releases (New Stable Version)
-            condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'main') }} )
 
           - template: .ado/templates/set-version-vars.yml@self
             parameters:
@@ -195,26 +144,6 @@ extends:
 
           - script: echo NpmDistTag is $(NpmDistTag)
             displayName: Show NPM dist tag
-
-          - script: dir /s "$(Pipeline.Workspace)\published-packages"
-            displayName: Show npm packages before ESRP release
-
-          - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
-            displayName: 'ESRP Release to npmjs.com'
-            condition: and(succeeded(), ne(variables['NpmDistTag'], ''))
-            inputs:
-              connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
-              usemanagedidentity: false
-              keyvaultname: 'OGX-JSHost-KV'
-              authcertname: 'OGX-JSHost-Auth4'
-              signcertname: 'OGX-JSHost-Sign3'
-              clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
-              domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
-              contenttype: npm
-              folderlocation: '$(Pipeline.Workspace)\published-packages'
-              productstate: '$(NpmDistTag)'
-              owners: 'vmorozov@microsoft.com'
-              approvers: 'khosany@microsoft.com'
 
           - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
             displayName: 📒 Generate Manifest Npm
