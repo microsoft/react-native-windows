@@ -319,6 +319,21 @@ async function detectRemote(
           ),
         );
         await git.push(remoteName, prBranch, {force: true});
+
+        // Verify the branch landed on the remote
+        const lsRemoteOut = await git.lsRemote(remoteName, prBranch);
+        if (!lsRemoteOut) {
+          throw new Error(
+            `Push verification failed: branch "${prBranch}" not found on ` +
+              `"${remoteName}" after push. Check your push permissions.`,
+          );
+        }
+        console.log(
+          colorize(
+            `Push verified: ${prBranch} exists on ${remoteName}`,
+            ansi.green,
+          ),
+        );
       }
 
       // 15. Create or update PR

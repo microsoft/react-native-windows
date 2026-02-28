@@ -7,11 +7,39 @@
  * @format
  */
 
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
+
 import {exec} from './proc';
 
 export interface PRInfo {
   number: number;
   url: string;
+}
+
+/**
+ * Run a callback with a temporary file containing the given content.
+ * The file is cleaned up after the callback completes (success or failure).
+ */
+async function withTempFile<T>(
+  content: string,
+  fn: (filePath: string) => Promise<T>,
+): Promise<T> {
+  const tmpFile = path.join(
+    os.tmpdir(),
+    `gh-pr-body-${process.pid}-${Date.now()}.md`,
+  );
+  fs.writeFileSync(tmpFile, content, 'utf8');
+  try {
+    return await fn(tmpFile);
+  } finally {
+    try {
+      fs.unlinkSync(tmpFile);
+    } catch {
+      // Ignore cleanup errors
+    }
+  }
 }
 
 /**
@@ -45,6 +73,9 @@ export async function findPR(opts: {
 
 /**
  * Create a new pull request. Returns the PR number and URL.
+ *
+ * Uses --body-file with a temp file to avoid shell escaping issues
+ * with multiline markdown content on Windows cmd.exe.
  */
 export async function createPR(opts: {
   head: string;
@@ -54,24 +85,29 @@ export async function createPR(opts: {
   cwd: string;
   repo?: string;
 }): Promise<PRInfo> {
-  const repoFlag = opts.repo ? ` --repo "${opts.repo}"` : '';
-  const result = await exec(
-    `gh pr create --head "${opts.head}" --base "${opts.base}"` +
-      ` --title "${escapeForShell(opts.title)}"` +
-      ` --body "${escapeForShell(opts.body)}"${repoFlag}`,
-    {cwd: opts.cwd},
-  );
+  return withTempFile(opts.body, async bodyFile => {
+    const repoFlag = opts.repo ? ` --repo "${opts.repo}"` : '';
+    const result = await exec(
+      `gh pr create --head "${opts.head}" --base "${opts.base}"` +
+        ` --title "${escapeForShell(opts.title)}"` +
+        ` --body-file "${bodyFile}"${repoFlag}`,
+      {cwd: opts.cwd},
+    );
 
-  // gh pr create outputs the PR URL on success
-  const url = result.trim();
-  const match = url.match(/\/pull\/(\d+)/);
-  const number = match ? parseInt(match[1], 10) : 0;
+    // gh pr create outputs the PR URL on success
+    const url = result.trim();
+    const match = url.match(/\/pull\/(\d+)/);
+    const number = match ? parseInt(match[1], 10) : 0;
 
-  return {number, url};
+    return {number, url};
+  });
 }
 
 /**
  * Update an existing pull request's body text.
+ *
+ * Uses --body-file with a temp file to avoid shell escaping issues
+ * with multiline markdown content on Windows cmd.exe.
  */
 export async function updatePR(opts: {
   number: number;
@@ -79,15 +115,18 @@ export async function updatePR(opts: {
   cwd: string;
   repo?: string;
 }): Promise<void> {
-  const repoFlag = opts.repo ? ` --repo "${opts.repo}"` : '';
-  await exec(
-    `gh pr edit ${opts.number} --body "${escapeForShell(opts.body)}"${repoFlag}`,
-    {cwd: opts.cwd},
-  );
+  await withTempFile(opts.body, async bodyFile => {
+    const repoFlag = opts.repo ? ` --repo "${opts.repo}"` : '';
+    await exec(
+      `gh pr edit ${opts.number} --body-file "${bodyFile}"${repoFlag}`,
+      {cwd: opts.cwd},
+    );
+  });
 }
 
 /**
  * Escape a string for safe inclusion in a double-quoted shell argument.
+ * Used for single-line values like titles; multiline content uses --body-file.
  */
 function escapeForShell(str: string): string {
   return str

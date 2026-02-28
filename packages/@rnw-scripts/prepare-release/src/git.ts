@@ -116,6 +116,11 @@ export class GitRepo {
     return this.git(...args);
   }
 
+  /** Check if a branch exists on a remote. Returns the ls-remote output or empty. */
+  async lsRemote(remote: string, branch: string): Promise<string> {
+    return this.git('ls-remote', '--heads', remote, `refs/heads/${branch}`);
+  }
+
   /** Internal helper: run git with the repo's cwd. */
   private async git(...args: string[]): Promise<string> {
     return spawn('git', args, {cwd: this.dir});
