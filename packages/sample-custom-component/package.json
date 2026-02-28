@@ -1,5 +1,5 @@
 {
-  "name": "sample-custom-component",
+  "name": "@rnw-scripts/sample-custom-component",
   "version": "0.0.1",
   "private": true,
   "scripts": {
