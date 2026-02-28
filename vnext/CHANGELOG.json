@@ -2,6 +2,155 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 28 Feb 2026 16:57:29 GMT",
+      "version": "0.0.0-canary.1032",
+      "tag": "react-native-windows_v0.0.0-canary.1032",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "eac4dbda52e0f691371904fa5dc169594f624e40",
+            "comment": "fix: Apply fontStyle italic to TextInput component"
+          },
+          {
+            "author": "protikbiswas@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "baa67dad2985f4618e1321cd37ae71f2990570e5",
+            "comment": "adding changes for adding shadow for rounded views"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3c9fc70121112b5a08ece7f3c053e1fa05df844c",
+            "comment": "Fix lifetime issue with codegen'd eventemitter args"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "206c4ee2984c54e369626645f31084b51c00d740",
+            "comment": "Fix selectable text not working inside ScrollView"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8de80ec15bcd089f1472156e7c7e089c9c6dee8c",
+            "comment": "implements selectionColor"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b5e109f14ce9cc132fc3020df19716e35836dc7e",
+            "comment": "enables word-extension during drag after a double-click selection"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "27ce28e4b42211c75987dc4109761d6da1e47df4",
+            "comment": "Use automationoption as frameworkbased for childsite"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6fbe27bbc0ab04a0eb70a50251625b93341c0aae",
+            "comment": "Fix XAML popup positioning and light dismiss in ScrollView (#15557)"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9a59a5e833886b5d9bdccb1bf20f99a35d7500bc",
+            "comment": "Integrate 0.83.0-nightly-20250917-18cb4edfa"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "56810ff9980770159564878af8aea69cf090f5c4",
+            "comment": "Implement overflow property support for Fabric architecture"
+          },
+          {
+            "author": "protikbiswas@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b556619c728115add498da682dde2c320f86e968",
+            "comment": "adding defensive check to ensure device contetxt is valid before performing D2D operation"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3889efa3c151e13be4a83390eca55d2c1ec0d624",
+            "comment": "Fix SHIFT+F10 keyboard shortcut for context menu in TextInput"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "514158602335b4d8b24b665af1feaea6d065917d",
+            "comment": "Remove dependency ReactWindows.OpenSSL.StdCall.Static"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6f317b091b1c9dcfefec41a621c5805d5a674d1c",
+            "comment": "Fix TextInput selection crash and feedback loop"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4ef6b370e3b4e2cb5b0bdd5b30b2e01e77f9c364",
+            "comment": "Fix issue when creating a ContentIslandComponentView when the root ReactNativeIsland is not connected"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "46e5b09b4e461d93b2e78fbc7686a7d678d8f270",
+            "comment": "Update WinAppSdk to 1.8.260209005"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "03e6bfd3b0dac79d246fe571ae763dc436972918",
+            "comment": "Fix issue when creating a ContentIslandComponentView when the root ReactNativeIsland is not connected"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "30939243e2a24ccb9e252694ddfb7d94fd4fa317",
+            "comment": "Expose AutomationOption Setter for ChildSite"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9cc99209e10b79a9b5223465538f81c3954bec4e",
+            "comment": "Integrate 0.83.0-nightly-20251012-6f482708b"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.284",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.130",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "596a0a2356f407454c46637b22e373d567c6b4e2",
+            "comment": "Fix rnw-dependencies.ps1 Node.js installation failures"
+          },
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fb3a6fad574348c0a906b6796f59aedeee7d0c0b",
+            "comment": "fix getSize"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 17 Jan 2026 06:40:58 GMT",
       "version": "0.0.0-canary.1031",
       "tag": "react-native-windows_v0.0.0-canary.1031",

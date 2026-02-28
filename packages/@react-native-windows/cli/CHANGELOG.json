@@ -2,6 +2,35 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 28 Feb 2026 16:57:29 GMT",
+      "version": "0.0.0-canary.284",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.284",
+      "comments": {
+        "none": [
+          {
+            "author": "yicyao@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ee894a645cb0dd5498211d8786b24288639545ff",
+            "comment": "Scope various foo and bar test package to rnw-scripts.\""
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "7bfa8bf5abd5d9d4ed67741e2f3bb070165ce1f0",
+            "comment": "Fixed template info not detecting mixed architecture projects"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.130",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jan 2026 13:00:14 GMT",
       "version": "0.0.0-canary.283",
       "tag": "@react-native-windows/cli_v0.0.0-canary.283",

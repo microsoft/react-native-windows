@@ -1,8 +1,19 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Tue, 13 Jan 2026 13:00:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 28 Feb 2026 16:57:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.306
+
+Sat, 28 Feb 2026 16:57:32 GMT
+
+### Changes
+
+- Integrate 0.83.0-nightly-20250917-18cb4edfa (66076509+vineethkuttan@users.noreply.github.com)
+- Fix TextWin32 export (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.83.0-nightly-20251012-6f482708b (66076509+vineethkuttan@users.noreply.github.com)
+- Fix TouchableWin32 and LogBox (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.305
 

@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Tue, 13 Jan 2026 13:00:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 28 Feb 2026 16:57:29 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.284
+
+Sat, 28 Feb 2026 16:57:29 GMT
+
+### Changes
+
+- Fixed template info not detecting mixed architecture projects (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.130
 
 ## 0.0.0-canary.283
 
