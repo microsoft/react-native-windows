@@ -1312,7 +1312,7 @@ std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const no
       hdc,
       nullptr,
       nullptr,
-      static_cast<DWORD>(TXTNS_FITTOCONTENTWSP),
+      static_cast<DWORD>(TXTNS_FITTOCONTENT),
       reinterpret_cast<SIZEL *>(&extentHimetric),
       &naturalSize.cx,
       &naturalSize.cy);
