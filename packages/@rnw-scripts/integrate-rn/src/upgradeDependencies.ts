@@ -251,12 +251,25 @@ export function calcPackageDependencies(
     const newPackage: LocalPackageDeps = _.cloneDeep(pkg);
 
     if (newPackage.outOfTreePlatform) {
-      syncReactNativeDependencies(newPackage, reactNativePackageDiff);
+      syncReactNativeDependencies(
+        newPackage,
+        reactNativePackageDiff,
+        newReactNativeVersion,
+      );
     }
 
     if (newPackage.dependencies && newPackage.dependencies['react-native']) {
       newPackage.dependencies['react-native'] = bumpSemver(
         newPackage.dependencies['react-native'],
+        newReactNativeVersion,
+      );
+    }
+
+    // All @react-native/* packages are published with matching nightly
+    // versions. Bump any that reference a nightly version across all packages.
+    if (newPackage.dependencies) {
+      newPackage.dependencies = bumpReactNativeNightlyDeps(
+        newPackage.dependencies,
         newReactNativeVersion,
       );
     }
@@ -308,12 +321,34 @@ function sortByKeys<T>(obj: Record<string, T>): Record<string, T> {
 }
 
 /**
+ * All @react-native/* packages are published with matching nightly versions.
+ * Bump any @react-native/* dependency referencing a nightly version to the
+ * new nightly version.
+ */
+function bumpReactNativeNightlyDeps(
+  deps: Record<string, string>,
+  newReactNativeVersion: string,
+): Record<string, string> {
+  if (!newReactNativeVersion.includes('nightly')) {
+    return deps;
+  }
+  const result = {...deps};
+  for (const [dep, version] of Object.entries(result)) {
+    if (dep.startsWith('@react-native/') && version.includes('nightly')) {
+      result[dep] = newReactNativeVersion;
+    }
+  }
+  return result;
+}
+
+/**
  * Matches dependencies + peer dependencies of an out-of-tree platform to
  * those used by react-native.
  */
 function syncReactNativeDependencies(
   pkg: LocalPackageDeps,
   reactNativePackageDiff: PackageDiff,
+  newReactNativeVersion: string,
 ) {
   // Because we host JS from RN core, we need to provide all of the
   // dependencies and peerDependencies declared by react-native. Pick all of
@@ -323,10 +358,13 @@ function syncReactNativeDependencies(
     Object.keys(pkg.dependencies || {}),
     Object.keys(reactNativePackageDiff.oldPackage.dependencies || {}),
   );
-  const newDeps = {
-    ..._.pick(pkg.dependencies, extraDeps),
-    ...reactNativePackageDiff.newPackage.dependencies,
-  } as Record<string, string>;
+  const newDeps = bumpReactNativeNightlyDeps(
+    {
+      ..._.pick(pkg.dependencies, extraDeps),
+      ...reactNativePackageDiff.newPackage.dependencies,
+    } as Record<string, string>,
+    newReactNativeVersion,
+  );
   if (Object.keys(newDeps).length === 0) {
     delete pkg.dependencies;
   } else {
@@ -373,16 +411,13 @@ function syncDependencies(
     ...templateDiff.newPackage.devDependencies,
   };
 
-  // below packages rely on internal builds upstream in their package.json but still publish a new matching nightly version. Update our package.json to the matching nightly version.
-  if (pkg[dependencyType]?.['@react-native/metro-config']) {
-    pkg[dependencyType]!['@react-native/metro-config'] = newReactNativeVersion;
-  }
-  if (pkg[dependencyType]?.['@react-native/metro-babel-transformer']) {
-    pkg[dependencyType]!['@react-native/metro-babel-transformer'] =
-      newReactNativeVersion;
-  }
-  if (pkg[dependencyType]?.['@react-native/babel-preset']) {
-    pkg[dependencyType]!['@react-native/babel-preset'] = newReactNativeVersion;
+  // All @react-native/* packages are published with matching nightly versions.
+  // Bump any that reference a nightly version to the new nightly version.
+  if (pkg[dependencyType]) {
+    pkg[dependencyType] = bumpReactNativeNightlyDeps(
+      pkg[dependencyType]!,
+      newReactNativeVersion,
+    );
   }
 
   for (const [dependency, version] of devDependencies) {
@@ -463,16 +498,13 @@ function ensureValidReactNativePeerDep(
     newReactNativeVersion,
   );
 
-  // below packages rely on internal builds upstream in their package.json but still publish a new matching nightly version. Update our package.json to the matching nightly version.
-  if (pkg.dependencies?.['@react-native/metro-config']) {
-    pkg.dependencies['@react-native/metro-config'] = newReactNativeVersion;
-  }
-  if (pkg.dependencies?.['@react-native/metro-babel-transformer']) {
-    pkg.dependencies['@react-native/metro-babel-transformer'] =
-      newReactNativeVersion;
-  }
-  if (pkg.dependencies?.['@react-native/babel-preset']) {
-    pkg.dependencies['@react-native/babel-preset'] = newReactNativeVersion;
+  // All @react-native/* packages are published with matching nightly versions.
+  // Bump any that reference a nightly version to the new nightly version.
+  if (pkg.dependencies) {
+    pkg.dependencies = bumpReactNativeNightlyDeps(
+      pkg.dependencies,
+      newReactNativeVersion,
+    );
   }
 }
 
