@@ -112,13 +112,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Bridging.h",
-      "baseFile": "packages/react-native/ReactCommon/react/bridging/Bridging.h",
-      "baseHash": "5678d5ac212112184b7e63b5d58c6ae713e03cd5",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModule.h",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModule.h",
       "baseHash": "a0bc700b3960f771cf6d4e63be30ab45f6ef3683",
