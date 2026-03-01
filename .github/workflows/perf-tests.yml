@@ -1,0 +1,91 @@
+name: Perf Tests
+
+# Triggers on PRs touching source that could affect perf,
+# and on pushes to main/stable for baseline updates.
+on:
+  pull_request:
+    branches: [main, '*-stable']
+    paths:
+      - 'vnext/**'
+      - 'packages/**'
+      - 'vnext/Scripts/perf/**'
+      - '.github/workflows/perf-tests.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'packages/e2e-test-app-fabric/test/__perf__/**'
+
+  # Allow manual trigger for debugging
+  workflow_dispatch:
+
+# Cancel in-progress runs for the same PR
+concurrency:
+  group: perf-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  perf-tests:
+    name: Component Performance Tests
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+      actions: read
+
+    steps:
+      # ── Setup ──────────────────────────────────────────────
+      - name: Checkout head (PR)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # Need history for baseline comparison
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build perf-testing package
+        run: yarn workspace @react-native-windows/perf-testing build
+
+      # ── Run Tests ──────────────────────────────────────────
+      - name: Run perf tests
+        id: perf-run
+        working-directory: packages/e2e-test-app-fabric
+        env:
+          CI: 'true'
+          RN_TARGET_PLATFORM: windows
+        run: yarn perf:ci
+        continue-on-error: true   # Don't fail here — let comparison decide
+
+      # ── Compare & Report ───────────────────────────────────
+      - name: Compare against baselines
+        id: compare
+        working-directory: packages/e2e-test-app-fabric
+        run: yarn perf:ci:compare
+        continue-on-error: true
+
+      - name: Save PR number
+        if: github.event_name == 'pull_request'
+        run: echo "${{ github.event.pull_request.number }}" > packages/e2e-test-app-fabric/.perf-results/pr-number.txt
+
+      - name: Upload perf results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: perf-results
+          path: |
+            packages/e2e-test-app-fabric/.perf-results/
+            packages/e2e-test-app-fabric/test/__perf__/**/__perf_snapshots__/
+          retention-days: 30
+
+      # ── Status Gate ────────────────────────────────────────
+      - name: Check for regressions
+        if: steps.compare.outcome == 'failure'
+        run: |
+          echo "::error::Performance regressions detected. See PR comment for details."
+          exit 1

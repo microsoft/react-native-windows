@@ -2417,6 +2417,14 @@
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.4.tgz#7fb09506ee00a82989125cc03e8495204c8afc01"
   integrity sha512-Kf8h1AMnBo54b1fdiVylP2P/iFcZqzpMYcglC28EEFB1DEnOjsNr6Ucqc+3R9e91vHxEDnhZFbYDmAe79P2gjA==
 
+"@react-native-windows/fs@0.82.0-preview.1":
+  version "0.82.0-preview.1"
+  resolved "https://registry.yarnpkg.com/@react-native-windows/fs/-/fs-0.82.0-preview.1.tgz#78dc306c0877807b3c0a6f06bcb377ae7bfc7887"
+  integrity sha512-8nUWpFeLY7vGrsD4Xxroy7EvSkaeDC/YXcvqILBBsoTipiQX4kmtPYGPWJpWOvEGVCLicb3m1U7/0MEpmfZOHA==
+  dependencies:
+    graceful-fs "^4.2.8"
+    minimatch "^10.0.3"
+
 "@react-native/assets-registry@0.83.0-nightly-20251012-6f482708b":
   version "0.83.0-nightly-20251012-6f482708b"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.83.0-nightly-20251012-6f482708b.tgz#ea42aa216f4c28015878ed70461116830253bbbc"
@@ -3249,7 +3257,7 @@
   dependencies:
     csstype "^3.2.2"
 
-"@types/react@^19.2.0":
+"@types/react@^19.0.0", "@types/react@^19.2.0":
   version "19.2.14"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-19.2.14.tgz#39604929b5e3957e3a6fa0001dafb17c7af70bad"
   integrity sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==

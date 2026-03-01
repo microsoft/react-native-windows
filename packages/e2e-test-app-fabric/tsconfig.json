@@ -5,7 +5,9 @@
   },
   "include": [
     "app",
-    "test", "index.js",
+    "test",
+    "index.js",
+    "jest.perf.setup.ts"
   ],
   "exclude": [
     "node_modules"

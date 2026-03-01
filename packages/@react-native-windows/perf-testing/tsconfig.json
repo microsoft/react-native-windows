@@ -1,0 +1,10 @@
+{
+  "extends": "@rnw-scripts/ts-config",
+  "compilerOptions": {
+    "outDir": "lib-commonjs",
+    "rootDir": "src",
+    "composite": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
