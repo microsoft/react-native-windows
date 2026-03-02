@@ -231,8 +231,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 
       // dispatch onShow event
       if (auto eventEmitter = EventEmitter()) {
-        ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnShow eventArgs;
-        eventEmitter->onShow(eventArgs);
+        eventEmitter->onShow({});
       }
     }
   }
@@ -261,8 +260,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 
     // Dispatch onDismiss event
     if (auto eventEmitter = EventEmitter()) {
-      ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnDismiss eventArgs;
-      eventEmitter->onDismiss(eventArgs);
+      eventEmitter->onDismiss({});
     }
   }
 
@@ -326,8 +324,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
             if (auto strongThis = wkThis.get()) {
               // Dispatch onRequestClose event
               if (auto eventEmitter = strongThis->EventEmitter()) {
-                ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnRequestClose eventArgs;
-                eventEmitter->onRequestClose(eventArgs);
+                eventEmitter->onRequestClose({});
               }
             }
           });
