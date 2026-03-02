@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update canary version",
+  "packageName": "@react-native-windows/automation-commands",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
