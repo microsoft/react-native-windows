@@ -732,7 +732,17 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
         jsMessageThread->quitSynchronous();
         m_whenDestroyed.SetValue();
       });
+    } else {
+      m_whenDestroyed.SetValue();
     }
+  } else {
+    // m_bridgelessReactInstance is null: initialization failed or was not yet complete.
+    // Quit the JS thread if it was created, then settle m_whenDestroyed so the ReactHost
+    // does not hang waiting for the destroy future.
+    if (auto jsMessageThread = m_jsMessageThread.Exchange(nullptr)) {
+      jsMessageThread->quitSynchronous();
+    }
+    m_whenDestroyed.SetValue();
   }
 
   return m_whenDestroyedResult;
@@ -831,6 +841,14 @@ void ReactInstanceWin::OnErrorWithMessage(const std::string &errorMessage) noexc
 void ReactInstanceWin::OnError(const Mso::ErrorCode &errorCode) noexcept {
   m_state = ReactInstanceState::HasError;
   AbandonJSCallQueue();
+
+  // Ensure m_whenLoaded is settled if initialization failed before LoadJSBundlesBridgeless was called.
+  // This uses compare_exchange_strong (same guard pattern as OnReactInstanceLoaded) to prevent
+  // double-settling: in the normal error path OnReactInstanceLoaded sets m_isLoaded first.
+  bool isLoadedExpected = false;
+  if (m_isLoaded.compare_exchange_strong(isLoadedExpected, true)) {
+    m_whenLoaded.SetError(errorCode);
+  }
 
   if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
     ErrorInfo errorInfo;
