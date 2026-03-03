@@ -13,15 +13,21 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-struct ReactNativeWindow
-    : ReactNativeWindowT<ReactNativeWindow> {
+struct ReactNativeWindow : ReactNativeWindowT<ReactNativeWindow> {
   ~ReactNativeWindow() noexcept;
   ReactNativeWindow() noexcept;
 
-  static winrt::Microsoft::ReactNative::ReactNativeWindow CreateFromCompositor(const winrt::Microsoft::UI::Composition::Compositor& compositor) noexcept;
-  static winrt::Microsoft::ReactNative::ReactNativeWindow CreateFromWindow(const winrt::Microsoft::UI::Windowing::AppWindow& appWindow, const winrt::Microsoft::UI::Composition::Compositor& compositor) noexcept;
-  static winrt::Microsoft::ReactNative::ReactNativeWindow CreateFromWindowAndIsland(const winrt::Microsoft::UI::Windowing::AppWindow& appWindow, const winrt::Microsoft::ReactNative::ReactNativeIsland& island) noexcept;
-  static winrt::Microsoft::ReactNative::ReactNativeWindow CreateFromContentSiteBridgeAndIsland(const winrt::Microsoft::UI::Content::IContentSiteBridge& bridge, const winrt::Microsoft::ReactNative::ReactNativeIsland& island);
+  static winrt::Microsoft::ReactNative::ReactNativeWindow CreateFromCompositor(
+      const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
+  static winrt::Microsoft::ReactNative::ReactNativeWindow CreateFromWindow(
+      const winrt::Microsoft::UI::Windowing::AppWindow &appWindow,
+      const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
+  static winrt::Microsoft::ReactNative::ReactNativeWindow CreateFromWindowAndIsland(
+      const winrt::Microsoft::UI::Windowing::AppWindow &appWindow,
+      const winrt::Microsoft::ReactNative::ReactNativeIsland &island) noexcept;
+  static winrt::Microsoft::ReactNative::ReactNativeWindow CreateFromContentSiteBridgeAndIsland(
+      const winrt::Microsoft::UI::Content::IContentSiteBridge &bridge,
+      const winrt::Microsoft::ReactNative::ReactNativeIsland &island);
 
   winrt::Microsoft::ReactNative::ReactNativeIsland ReactNativeIsland() noexcept;
 
@@ -38,31 +44,33 @@ struct ReactNativeWindow
   void Close() noexcept;
 
  private:
-
-   void Connect(winrt::Microsoft::UI::Content::ContentIsland contentIsland) noexcept;
+  void Connect(winrt::Microsoft::UI::Content::ContentIsland contentIsland) noexcept;
   winrt::Microsoft::UI::Composition::Compositor Compositor() noexcept;
-  void AppWindow(const winrt::Microsoft::UI::Windowing::AppWindow &appWindow ) noexcept;
+  void AppWindow(const winrt::Microsoft::UI::Windowing::AppWindow &appWindow) noexcept;
   void AppWindow_Changed(
-                      winrt::Microsoft::UI::Windowing::AppWindow const &window,
-                      winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) noexcept;
-  
+      winrt::Microsoft::UI::Windowing::AppWindow const &window,
+      winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) noexcept;
+
   void ReactNativeIsland(const winrt::Microsoft::ReactNative::ReactNativeIsland &value) noexcept;
 
   void UpdateIslandScaleFactor() noexcept;
   void EnsureResizePolicyState() noexcept;
   void UpdateRootViewSizeToAppWindow(
-    winrt::Microsoft::ReactNative::ReactNativeIsland const &rootView,
-    winrt::Microsoft::UI::Windowing::AppWindow const &window) noexcept;
-
+      winrt::Microsoft::ReactNative::ReactNativeIsland const &rootView,
+      winrt::Microsoft::UI::Windowing::AppWindow const &window) noexcept;
 
   winrt::Microsoft::UI::Composition::Compositor m_compositor{nullptr};
-  winrt::Microsoft::ReactNative::ReactNativeIsland m_island { nullptr };
+  winrt::Microsoft::ReactNative::ReactNativeIsland m_island{nullptr};
   winrt::event_token m_appWindowChangedToken;
   winrt::Microsoft::ReactNative::ReactNativeIsland::SizeChanged_revoker m_sizeChangedRevoker;
-  winrt::Microsoft::ReactNative::ContentSizePolicy m_resizePolicy{winrt::Microsoft::ReactNative::ContentSizePolicy::ResizeContentToParentWindow};
+  winrt::Microsoft::ReactNative::ContentSizePolicy m_resizePolicy{
+      winrt::Microsoft::ReactNative::ContentSizePolicy::ResizeContentToParentWindow};
   winrt::Microsoft::UI::Content::IContentSiteBridge m_bridge{nullptr};
   winrt::Microsoft::UI::Windowing::AppWindow m_appWindow{nullptr};
-  winrt::Microsoft::ReactNative::LayoutConstraints m_layoutConstraints{{0, 0}, {0, 0}, winrt::Microsoft::ReactNative::LayoutDirection::Undefined};
+  winrt::Microsoft::ReactNative::LayoutConstraints m_layoutConstraints{
+      {0, 0},
+      {0, 0},
+      winrt::Microsoft::ReactNative::LayoutDirection::Undefined};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
