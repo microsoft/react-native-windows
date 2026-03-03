@@ -15,34 +15,10 @@
 #include "winrt/Microsoft.UI.Interop.h"
 #include "winrt/Microsoft.UI.Windowing.h"
 
-// Scaling factor for the window's content based on the DPI of the display where the window is located.
-float ScaleFactor(HWND hwnd) noexcept {
-  return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
-}
-
-void UpdateRootViewSizeToAppWindow(
-    winrt::Microsoft::ReactNative::ReactNativeIsland const &rootView,
-    winrt::Microsoft::UI::Windowing::AppWindow const &window) {
-  auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
-  auto scaleFactor = ScaleFactor(hwnd);
-  winrt::Windows::Foundation::Size size{
-      window.ClientSize().Width / scaleFactor, window.ClientSize().Height / scaleFactor};
-  // Do not relayout when minimized
-  if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() !=
-      winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized) {
-    winrt::Microsoft::ReactNative::LayoutConstraints constraints;
-    constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
-    constraints.MaximumSize = constraints.MinimumSize = size;
-    rootView.Arrange(constraints, {0, 0});
-  }
-}
-
 namespace winrt::Microsoft::ReactNative::implementation {
 ReactNativeWin32App::ReactNativeWin32App() {}
 
 ReactNativeWin32App::~ReactNativeWin32App() {
-  m_desktopChildSiteBridge = nullptr;
-
   // Destroy all Composition objects
   if (m_compositor != nullptr) {
     m_compositor.Close();
@@ -51,7 +27,7 @@ ReactNativeWin32App::~ReactNativeWin32App() {
 }
 
 winrt::Microsoft::UI::Windowing::AppWindow ReactNativeWin32App::AppWindow() {
-  return m_appWindow;
+  return ReactNativeWindow().AppWindow();
 }
 
 void ReactNativeWin32App::AppWindow(winrt::Microsoft::UI::Windowing::AppWindow const &appWindow) {
@@ -59,29 +35,19 @@ void ReactNativeWin32App::AppWindow(winrt::Microsoft::UI::Windowing::AppWindow c
 }
 
 winrt::Microsoft::UI::Composition::Compositor ReactNativeWin32App::Compositor() {
+  if (m_compositor == nullptr) {
+    // Create a DispatcherQueue for this thread. This is needed for Composition, Content, and Input APIs.
+    m_dispatcherQueueController = winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread();
+
+    // Currently set the property to use current thread dispatcher as a default UI dispatcher.
+    ReactNativeHost().InstanceSettings().Properties().Set(
+        ReactDispatcherHelper::UIDispatcherProperty(), ReactDispatcherHelper::UIThreadDispatcher());
+
+    m_compositor = winrt::Microsoft::UI::Composition::Compositor();
+    winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
+        ReactNativeHost().InstanceSettings(), m_compositor);
+  }
   return m_compositor;
-}
-
-void ReactNativeWin32App::Compositor(winrt::Microsoft::UI::Composition::Compositor const &compositor) {
-  m_compositor = compositor;
-}
-
-void ReactNativeWin32App::DesktopChildSiteBridge(
-    winrt::Microsoft::UI::Content::DesktopChildSiteBridge const &desktopChildSiteBridge) {
-  m_desktopChildSiteBridge = desktopChildSiteBridge;
-}
-
-winrt::Microsoft::UI::Content::DesktopChildSiteBridge ReactNativeWin32App::DesktopChildSiteBridge() {
-  return m_desktopChildSiteBridge;
-}
-
-winrt::Microsoft::UI::Dispatching::DispatcherQueueController ReactNativeWin32App::DispatcherQueueController() {
-  return m_dispatcherQueueController;
-}
-
-void ReactNativeWin32App::DispatcherQueueController(
-    winrt::Microsoft::UI::Dispatching::DispatcherQueueController const &dispatcherQueueController) {
-  m_dispatcherQueueController = dispatcherQueueController;
 }
 
 winrt::Microsoft::ReactNative::ReactNativeHost ReactNativeWin32App::ReactNativeHost() {
@@ -89,18 +55,6 @@ winrt::Microsoft::ReactNative::ReactNativeHost ReactNativeWin32App::ReactNativeH
     m_host = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactNativeHost>();
   }
   return m_host;
-}
-
-void ReactNativeWin32App::ReactNativeHost(winrt::Microsoft::ReactNative::ReactNativeHost const &host) {
-  m_host = host;
-}
-
-winrt::Microsoft::ReactNative::ReactNativeIsland ReactNativeWin32App::ReactNativeIsland() {
-  return m_reactNativeIsland;
-}
-
-void ReactNativeWin32App::ReactNativeIsland(winrt::Microsoft::ReactNative::ReactNativeIsland const &reactNativeIsland) {
-  m_reactNativeIsland = reactNativeIsland;
 }
 
 winrt::Microsoft::ReactNative::ReactViewOptions ReactNativeWin32App::ReactViewOptions() {
@@ -114,44 +68,35 @@ void ReactNativeWin32App::ReactViewOptions(winrt::Microsoft::ReactNative::ReactV
   m_reactViewOptions = viewOptions;
 }
 
+winrt::Microsoft::ReactNative::ReactNativeWindow ReactNativeWin32App::ReactNativeWindow() noexcept {
+  if (!m_rnWindow) {
+    if (m_appWindow) {
+      m_rnWindow = winrt::Microsoft::ReactNative::ReactNativeWindow::CreateFromWindow(m_appWindow, Compositor());
+    } else {
+      m_rnWindow = winrt::Microsoft::ReactNative::ReactNativeWindow::CreateFromCompositor(Compositor());
+      m_appWindow = m_rnWindow.AppWindow();
+      m_appWindow.Title(L"ReactNativeWin32App");
+      m_appWindow.Resize({1000, 1000});
+    }
+  }
+
+  return m_rnWindow;
+}
+
 void ReactNativeWin32App::Start() {
   // Show the hosting AppWindow
-  m_appWindow.Show();
-
-  // Currently set the property to use current thread dispatcher as a default UI dispatcher.
-  // TODO: Use the correct dispatcher from a developer-provided DispatcherQueueController
-  ReactNativeHost().InstanceSettings().Properties().Set(
-      ReactDispatcherHelper::UIDispatcherProperty(), ReactDispatcherHelper::UIThreadDispatcher());
+  AppWindow().Show();
 
   auto hwnd{winrt::Microsoft::UI::GetWindowFromWindowId(m_appWindow.Id())};
 
   winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
       ReactNativeHost().InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
-  winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
-      ReactNativeHost().InstanceSettings(), m_compositor);
-
   // Start the react-native instance, which will create a JavaScript runtime and load the applications bundle.
   ReactNativeHost().ReloadInstance();
 
-  // Create a RootView which will present a react-native component
-  if (m_reactNativeIsland == nullptr) {
-    m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland(m_compositor);
-  }
-
-  m_reactNativeIsland.ReactViewHost(
+  m_rnWindow.ReactNativeIsland().ReactViewHost(
       winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(ReactNativeHost(), ReactViewOptions()));
-
-  // Update the size of the RootView when the AppWindow changes size
-  m_appWindow.Changed([wkRootView = winrt::make_weak(m_reactNativeIsland)](
-                          winrt::Microsoft::UI::Windowing::AppWindow const &window,
-                          winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) {
-    if (args.DidSizeChange() || args.DidVisibilityChange()) {
-      if (auto rootView = wkRootView.get()) {
-        UpdateRootViewSizeToAppWindow(rootView, window);
-      }
-    }
-  });
 
   // Quit application when main window is closed
   m_appWindow.Destroying([this](
@@ -166,28 +111,13 @@ void ReactNativeWin32App::Start() {
     });
   });
 
-  // DesktopChildSiteBridge create a ContentSite that can host the RootView ContentIsland
-  m_desktopChildSiteBridge =
-      winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(m_compositor, m_appWindow.Id());
-
-  m_desktopChildSiteBridge.Connect(m_reactNativeIsland.Island());
-
-  m_desktopChildSiteBridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
-
-  auto scaleFactor = ScaleFactor(hwnd);
-  m_reactNativeIsland.ScaleFactor(scaleFactor);
-
-  UpdateRootViewSizeToAppWindow(m_reactNativeIsland, m_appWindow);
-
-  m_desktopChildSiteBridge.Show();
-
   // Run the main application event loop
   m_dispatcherQueueController.DispatcherQueue().RunEventLoop();
+
+  m_appWindow.Destroy();
 
   // Rundown the DispatcherQueue. This drains the queue and raises events to let components
   // know the message loop has finished.
   m_dispatcherQueueController.ShutdownQueue();
-
-  m_desktopChildSiteBridge.Close();
 }
 } // namespace winrt::Microsoft::ReactNative::implementation
