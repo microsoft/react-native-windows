@@ -1,5 +1,5 @@
 {
-  "name": "sample-apps",
+  "name": "@rnw-scripts/sample-apps",
   "version": "0.0.0",
   "private": true,
   "scripts": {
