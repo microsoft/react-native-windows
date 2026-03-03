@@ -25,6 +25,7 @@ struct CustomAccessibilityProps : winrt::implements<CustomAccessibilityProps, wi
   {
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<CustomAccessibilityProps>();
+
   
      }
   }

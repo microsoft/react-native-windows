@@ -26,7 +26,8 @@ struct ComboBoxProps : winrt::implements<ComboBoxProps, winrt::Microsoft::ReactN
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<ComboBoxProps>();
        selectedIndex = cloneFromProps->selectedIndex;
-       placeholder = cloneFromProps->placeholder;  
+       placeholder = cloneFromProps->placeholder;
+       onSelectionChanged = cloneFromProps->onSelectionChanged;  
      }
   }
 
@@ -39,6 +40,10 @@ struct ComboBoxProps : winrt::implements<ComboBoxProps, winrt::Microsoft::ReactN
 
   REACT_FIELD(placeholder)
   std::optional<std::string> placeholder;
+
+   // These fields can be used to determine if JS has registered for this event
+  REACT_FIELD(onSelectionChanged)
+  bool onSelectionChanged{false};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
