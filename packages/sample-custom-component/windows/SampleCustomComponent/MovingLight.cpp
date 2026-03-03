@@ -29,29 +29,23 @@ struct MovingLight : public winrt::implements<MovingLight, winrt::IInspectable>,
       m_eventParam = newProps->eventParam;
     }
 
-    if (!oldProps || oldProps->onSomething != newProps->onSomething)
-    {
-       if (newProps->onSomething)
-       {
-          m_pointerPressedRevoker = view.PointerPressed(winrt::auto_revoke,
-             [wkThis = get_weak()](
-                const winrt::IInspectable& /*sender*/,
-                const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs& /*args*/)
-          {
-             if (auto strongThis = wkThis.get())
-             {
-                if (auto eventEmitter = strongThis->EventEmitter())
-                {
-                   eventEmitter->onSomething(
-                      { .value = strongThis->m_eventParam ? *strongThis->m_eventParam : "No eventParam set" });
+    if (!oldProps || oldProps->onSomething != newProps->onSomething) {
+      if (newProps->onSomething) {
+        m_pointerPressedRevoker = view.PointerPressed(
+            winrt::auto_revoke,
+            [wkThis = get_weak()](
+                const winrt::IInspectable & /*sender*/,
+                const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs & /*args*/) {
+              if (auto strongThis = wkThis.get()) {
+                if (auto eventEmitter = strongThis->EventEmitter()) {
+                  eventEmitter->onSomething(
+                      {.value = strongThis->m_eventParam ? *strongThis->m_eventParam : "No eventParam set"});
                 }
-             }
-          });
-       }
-       else
-       {
-          m_pointerPressedRevoker.revoke();
-       }
+              }
+            });
+      } else {
+        m_pointerPressedRevoker.revoke();
+      }
     }
 
     Codegen::BaseMovingLight<MovingLight>::UpdateProps(sender, newProps, oldProps);
