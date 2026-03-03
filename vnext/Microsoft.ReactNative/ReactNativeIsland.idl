@@ -80,9 +80,6 @@ namespace Microsoft.ReactNative
   DOC_STRING("A windows composition component that hosts React Native UI elements.")
   runtimeclass ReactNativeIsland
   {
-    DOC_STRING("Creates a new instance of @ReactNativeIsland. Can be implemented with a ReactViewHost or a ComponentView with reactContext")
-    ReactNativeIsland();
-
     ReactNativeIsland(Microsoft.UI.Composition.Compositor compositor);
 
     DOC_STRING("Used to create react portals, such as a native modal component.")
@@ -97,6 +94,8 @@ namespace Microsoft.ReactNative
     Microsoft.UI.Composition.Visual RootVisual { get; };
 
     Windows.Foundation.Size Size { get; };
+
+    Microsoft.UI.Composition.Compositor Compositor { get; };
 
     DOC_STRING("ScaleFactor for this windows (DPI/96)")
     Single ScaleFactor {get; set;};
