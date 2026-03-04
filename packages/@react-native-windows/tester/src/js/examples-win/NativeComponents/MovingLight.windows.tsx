@@ -2,8 +2,8 @@
 
 import React, { useRef, useState } from 'react';
 import {Button, Text, View} from 'react-native';
-import {MovingLight} from 'sample-custom-component';
-import type {MovingLightHandle} from 'sample-custom-component';
+import {MovingLight} from '@rnw-scripts/sample-custom-component';
+import type {MovingLightHandle} from '@rnw-scripts/sample-custom-component';
 
 const colors = ['white', 'red', 'green', 'blue'];
 
