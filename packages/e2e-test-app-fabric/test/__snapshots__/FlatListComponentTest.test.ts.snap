@@ -280,6 +280,13 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
                                             "Offset": "0, 0, 0",
                                             "Size": "50, 50",
                                             "Visual Type": "SpriteVisual",
+                                            "__Children": [
+                                              {
+                                                "Offset": "0, 0, 0",
+                                                "Size": "0, 0",
+                                                "Visual Type": "SpriteVisual",
+                                              },
+                                            ],
                                           },
                                         ],
                                       },

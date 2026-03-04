@@ -25,7 +25,8 @@ struct InputAccessoryProps : winrt::implements<InputAccessoryProps, winrt::Micro
   {
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<InputAccessoryProps>();
-       backgroundColor = cloneFromProps->backgroundColor;  
+       backgroundColor = cloneFromProps->backgroundColor;
+  
      }
   }
 

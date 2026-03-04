@@ -168,9 +168,6 @@ winrt::Microsoft::ReactNative::ReactNativeIsland ReactNativeIsland::CreatePortal
   return winrt::make<ReactNativeIsland>(portal);
 }
 
-ReactNativeIsland::ReactNativeIsland() noexcept
-    : ReactNativeIsland(winrt::Microsoft::UI::Composition::Compositor{nullptr}) {}
-
 ReactNativeIsland::~ReactNativeIsland() noexcept {
 #ifdef USE_WINUI3
   if (m_island) {
@@ -218,6 +215,10 @@ void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewH
     auto viewInstance = winrt::make<CompositionReactViewInstance>(this->get_weak());
     m_reactViewHost.AttachViewInstance(viewInstance);
   }
+}
+
+winrt::Microsoft::UI::Composition::Compositor ReactNativeIsland::Compositor() noexcept {
+  return m_compositor;
 }
 
 winrt::Microsoft::UI::Composition::Visual ReactNativeIsland::RootVisual() noexcept {

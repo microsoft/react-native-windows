@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix TextInput selection crash and feedback loop",
+  "packageName": "react-native-windows",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

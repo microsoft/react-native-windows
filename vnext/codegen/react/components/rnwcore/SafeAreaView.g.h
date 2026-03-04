@@ -25,6 +25,7 @@ struct SafeAreaViewProps : winrt::implements<SafeAreaViewProps, winrt::Microsoft
   {
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<SafeAreaViewProps>();
+
   
      }
   }

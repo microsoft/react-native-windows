@@ -36,7 +36,11 @@ struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microso
        allowSwipeDismissal = cloneFromProps->allowSwipeDismissal;
        supportedOrientations = cloneFromProps->supportedOrientations;
        identifier = cloneFromProps->identifier;
-       title = cloneFromProps->title;  
+       title = cloneFromProps->title;
+       onRequestClose = cloneFromProps->onRequestClose;
+       onShow = cloneFromProps->onShow;
+       onDismiss = cloneFromProps->onDismiss;
+       onOrientationChange = cloneFromProps->onOrientationChange;  
      }
   }
 
@@ -79,6 +83,19 @@ struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microso
 
   REACT_FIELD(title)
   std::optional<std::string> title;
+
+   // These fields can be used to determine if JS has registered for this event
+  REACT_FIELD(onRequestClose)
+  bool onRequestClose{false};
+
+  REACT_FIELD(onShow)
+  bool onShow{false};
+
+  REACT_FIELD(onDismiss)
+  bool onDismiss{false};
+
+  REACT_FIELD(onOrientationChange)
+  bool onOrientationChange{false};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };

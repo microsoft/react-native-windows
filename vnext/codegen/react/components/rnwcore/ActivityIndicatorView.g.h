@@ -28,7 +28,8 @@ struct ActivityIndicatorViewProps : winrt::implements<ActivityIndicatorViewProps
        hidesWhenStopped = cloneFromProps->hidesWhenStopped;
        animating = cloneFromProps->animating;
        color = cloneFromProps->color;
-       size = cloneFromProps->size;  
+       size = cloneFromProps->size;
+  
      }
   }
 

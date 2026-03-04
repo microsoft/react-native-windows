@@ -29,7 +29,8 @@ struct PullToRefreshViewProps : winrt::implements<PullToRefreshViewProps, winrt:
        titleColor = cloneFromProps->titleColor;
        title = cloneFromProps->title;
        progressViewOffset = cloneFromProps->progressViewOffset;
-       refreshing = cloneFromProps->refreshing;  
+       refreshing = cloneFromProps->refreshing;
+       onRefresh = cloneFromProps->onRefresh;  
      }
   }
 
@@ -51,6 +52,10 @@ struct PullToRefreshViewProps : winrt::implements<PullToRefreshViewProps, winrt:
 
   REACT_FIELD(refreshing)
   bool refreshing{};
+
+   // These fields can be used to determine if JS has registered for this event
+  REACT_FIELD(onRefresh)
+  bool onRefresh{false};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };

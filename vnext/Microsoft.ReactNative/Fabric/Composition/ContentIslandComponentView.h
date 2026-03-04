@@ -76,6 +76,13 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   winrt::event_token m_navigationHostDepartFocusRequestedToken{};
   std::optional<winrt::Microsoft::UI::Input::FocusNavigationReason> m_pendingFocus;
 
+  // Issue #15557: Store ViewChanged subscriptions to parent ScrollViews for transform updates
+  struct ViewChangedSubscription {
+    winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView> scrollView;
+    winrt::event_token token;
+  };
+  std::vector<ViewChangedSubscription> m_viewChangedSubscriptions;
+
   // Automation
   void ConfigureChildSiteLinkAutomation() noexcept;
   winrt::event_token m_fragmentRootAutomationProviderRequestedToken{};

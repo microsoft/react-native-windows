@@ -25,7 +25,8 @@ struct UnimplementedNativeViewProps : winrt::implements<UnimplementedNativeViewP
   {
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<UnimplementedNativeViewProps>();
-       name = cloneFromProps->name;  
+       name = cloneFromProps->name;
+  
      }
   }
 
