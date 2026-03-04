@@ -10,6 +10,9 @@ const crypto = require('crypto');
 const existsSync = require('fs').existsSync;
 const path = require('path');
 const username = require('username');
+const util = require('util');
+
+const glob = util.promisify(require('glob'));
 
 const templateUtils = require('../templateUtils');
 
@@ -59,6 +62,9 @@ async function preInstall(config = {}, options = {}) {
   const {exExists, exConfig, exOptions} = resolveArgs(config, options);
 
   if (exExists) {
+    if (exOptions?.logging) {
+      console.log('Running cpp-app template preInstall() for example...');
+    }
     await exampleTemplateConfig.preInstall(exConfig, exOptions);
   }
 }
@@ -85,22 +91,27 @@ async function getFileMappings(config = {}, options = {}) {
     libConfig?.project?.windows?.projects[0]?.projectGuid
       ?.replace('{', '')
       .replace('}', '') ?? crypto.randomUUID();
-  const currentUser = username.sync();
+  const currentUser = username.sync(); // Gets the current username depending on the platform.
 
-  const pkgJsonPath = path.join(projectRoot, 'package.json');
-  if (!existsSync(pkgJsonPath)) {
-    throw new Error('package.json not found in user library root');
+  // Check for existing codegen spec files
+  const codegenPath = path.join(projectRoot, 'windows', projectName, 'codegen');
+  let existingSpecFiles = [];
+  let firstSpecName = null;
+  if (existsSync(codegenPath)) {
+    try {
+      const specFiles = await glob('*Spec.g.h', {cwd: codegenPath});
+      existingSpecFiles = specFiles;
+      if (specFiles.length > 0) {
+        // Extract the spec name from filename (e.g., "NativeMyModuleSpec.g.h" -> "MyModuleSpec")
+        const firstFile = specFiles[0];
+        firstSpecName = firstFile.replace(/^Native/, '').replace(/\.g\.h$/, '');
+      }
+    } catch (e) {
+      // If we can't read the codegen directory, continue with empty array
+    }
   }
 
-  const pkgJson = require(pkgJsonPath);
-
-  if (!pkgJson.codegenConfig?.name) {
-    throw new Error(
-      'codegenConfig.name is required in package.json for C++ libraries',
-    );
-  }
-
-  const codegenName = pkgJson.codegenConfig.name;
+  const cppNugetPackages = [];
 
   const replacements = {
     useMustache: true,
@@ -108,11 +119,16 @@ async function getFileMappings(config = {}, options = {}) {
 
     name: projectName,
     pascalName: templateUtils.pascalCase(projectName),
-    namespace,
-    namespaceCpp,
-    codegenName,
+    namespace: namespace,
+    namespaceCpp: namespaceCpp,
 
-    rnwVersion,
+    // Codegen spec files information
+    existingSpecFiles: existingSpecFiles,
+    hasExistingSpecFiles: existingSpecFiles.length > 0,
+    firstSpecFile: existingSpecFiles.length > 0 ? existingSpecFiles[0] : null,
+    firstSpecName: firstSpecName,
+
+    rnwVersion: rnwVersion,
     rnwPathFromProjectRoot: path
       .relative(projectRoot, rnwPath)
       .replace(/\//g, '\\'),
@@ -124,21 +140,27 @@ async function getFileMappings(config = {}, options = {}) {
     projectGuidUpper: `{${projectGuid.toUpperCase()}}`,
 
     currentUser,
+
     devMode,
+
     useNuGets: !devMode, // default is to use published NuGets except in devMode, change to true here if you want to test devMode and nugets simultaneously
     addReactNativePublicAdoFeed: true || isCanary, // Temporary true for all new projects until code-signing is restored, see issue #14030
 
-    cppNugetPackages: [],
+    cppNugetPackages,
   };
 
   let fileMappings = [];
 
-  const templateFiles = templateUtils.getTemplateFiles(__dirname);
+  const templateFiles = await glob('**/*', {
+    cwd: __dirname,
+    ignore: 'template.config.js',
+    nodir: true,
+  });
 
   for (const file of templateFiles) {
     const fileMapping = {
-      from: file.from,
-      to: file.to.replace(/MyLib/g, projectName),
+      from: path.resolve(__dirname, path.normalize(file)),
+      to: path.normalize(file),
       replacements,
     };
 
@@ -147,9 +169,27 @@ async function getFileMappings(config = {}, options = {}) {
       continue;
     }
 
+    // Perform simple file renames
+    const fileName = path.basename(fileMapping.to);
+    switch (fileName) {
+      case '_gitignore':
+        fileMapping.to = path.join(path.dirname(fileMapping.to), '.gitignore');
+        break;
+      case 'NuGet_Config':
+        fileMapping.to = path.join(
+          path.dirname(fileMapping.to),
+          'NuGet.config',
+        );
+        break;
+    }
+
+    // Rename files with MyLib in the name
+    fileMapping.to = fileMapping.to.replace(/MyLib/g, projectName);
+
     fileMappings.push(fileMapping);
   }
 
+  // Add the file mappings from the cpp-app template for the example app
   if (exExists) {
     const exampleFileMappings = await exampleTemplateConfig.getFileMappings(
       exConfig,
@@ -158,7 +198,11 @@ async function getFileMappings(config = {}, options = {}) {
 
     for (const exFileMap of exampleFileMappings) {
       exFileMap.to = path.join('example', exFileMap.to);
-      fileMappings.push(exFileMap);
+
+      // Only add the file map if there isn't a mapping from this cpp-lib template
+      if (fileMappings.filter(fm => fm.to === exFileMap.to).length === 0) {
+        fileMappings.push(exFileMap);
+      }
     }
   }
 
@@ -166,13 +210,15 @@ async function getFileMappings(config = {}, options = {}) {
 }
 
 async function postInstall(config = {}, options = {}) {
-  const {libConfig, libOptions} = resolveArgs(config, options);
+  const {libConfig, libOptions, exExists, exConfig, exOptions} = resolveArgs(
+    config,
+    options,
+  );
 
   const projectName =
     libConfig?.project?.windows?.projects[0]?.projectName ??
     libOptions?.name ??
     'MyLib';
-
   const namespace = libOptions?.namespace ?? projectName;
   const namespaceCpp = namespace.replace(/\./g, '::');
 
@@ -183,7 +229,7 @@ async function postInstall(config = {}, options = {}) {
     {
       codegenConfig: {
         windows: {
-          namespace: `${namespaceCpp}Codegen`,
+          namespace: namespaceCpp + 'Codegen',
           outputDirectory: `windows/${projectName}/codegen`,
           separateDataTypes: true,
         },
@@ -192,6 +238,31 @@ async function postInstall(config = {}, options = {}) {
     true, // save options from command
     true, // if a "files" property exists, make sure "windows" is included
   );
+
+  if (exExists) {
+    const {rnwVersion} = templateUtils.getRnwInfo(exConfig, exOptions);
+
+    // Update example package.json with new scripts and dependencies
+    await templateUtils.updateProjectPackageJson(exConfig, exOptions, {
+      scripts: {
+        windows: 'npx @react-native-community/cli run-windows',
+        'test:windows': 'jest --config jest.config.windows.js',
+      },
+      dependencies: {
+        'react-native-windows': rnwVersion,
+      },
+      devDependencies: {
+        '@rnx-kit/jest-preset': '^0.1.17',
+      },
+    });
+
+    // Install recently added dependencies
+    await templateUtils.runNpmInstall(libConfig, libOptions);
+
+    console.log(
+      '\nRun the example app on Windows:\n\n  > yarn example windows\n',
+    );
+  }
 }
 
 module.exports = {

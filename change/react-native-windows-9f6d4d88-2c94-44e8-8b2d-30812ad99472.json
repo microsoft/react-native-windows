@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix init-windows C++ codegen include to use codegenConfig.name",
-  "packageName": "react-native-windows",
-  "email": "nisargakshetty@gmail.com",
-  "dependentChangeType": "none"
-}
