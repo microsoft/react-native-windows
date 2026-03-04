@@ -32,7 +32,8 @@ struct SwitchProps : winrt::implements<SwitchProps, winrt::Microsoft::ReactNativ
        thumbTintColor = cloneFromProps->thumbTintColor;
        thumbColor = cloneFromProps->thumbColor;
        trackColorForFalse = cloneFromProps->trackColorForFalse;
-       trackColorForTrue = cloneFromProps->trackColorForTrue;  
+       trackColorForTrue = cloneFromProps->trackColorForTrue;
+       onChange = cloneFromProps->onChange;  
      }
   }
 
@@ -63,6 +64,10 @@ struct SwitchProps : winrt::implements<SwitchProps, winrt::Microsoft::ReactNativ
 
   REACT_FIELD(trackColorForTrue)
   winrt::Microsoft::ReactNative::Color trackColorForTrue{nullptr};
+
+   // These fields can be used to determine if JS has registered for this event
+  REACT_FIELD(onChange)
+  bool onChange{false};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };

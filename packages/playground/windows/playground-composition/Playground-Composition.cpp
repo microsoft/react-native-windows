@@ -3,6 +3,7 @@
 
 #include <windows.h>
 #include <windowsx.h>
+#include <unordered_set>
 
 // Disabled until we have a 3rd party story for custom components
 // #include "AutolinkedNativeModules.g.h"
@@ -19,14 +20,18 @@
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Composition.interop.h>
 #include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.UI.Dispatching.h>
 #include <winrt/Microsoft.UI.Windowing.h>
 #include <winrt/Microsoft.UI.interop.h>
 
 // Includes from sample-custom-component
 #include <winrt/SampleCustomComponent.h>
 
+struct WindowData;
+
 winrt::Microsoft::UI::Dispatching::DispatcherQueueController g_liftedDispatcherQueueController{nullptr};
 winrt::Microsoft::UI::Composition::Compositor g_liftedCompositor{nullptr};
+std::unordered_set<std::unique_ptr<WindowData>> g_windows{};
 
 void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept;
 
@@ -99,21 +104,19 @@ struct CompReactPackageProvider
 
 constexpr auto WindowDataProperty = L"WindowData";
 
-int RunPlayground(int showCmd);
+void CreateNewWindow(int showCmd);
 
 struct WindowData {
   static HINSTANCE s_instance;
   static constexpr uint16_t defaultDebuggerPort = 9229;
 
   std::wstring m_bundleFile;
-  winrt::Microsoft::ReactNative::ReactNativeIsland m_compRootView{nullptr};
-  winrt::Microsoft::UI::Content::DesktopChildSiteBridge m_bridge{nullptr};
-  winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
+  winrt::Microsoft::ReactNative::ReactNativeWindow m_rnWindow{nullptr};
+  static winrt::Microsoft::ReactNative::ReactNativeHost m_host;
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   bool m_sizeToContent{false};
   bool m_forceRTL{false};
-  LONG m_height{0};
-  LONG m_width{0};
+  static PCWSTR m_appName;
 
   WindowData() {}
 
@@ -126,6 +129,23 @@ struct WindowData {
     if (!m_host) {
       m_host = winrt::Microsoft::ReactNative::ReactNativeHost();
       m_host.InstanceSettings(InstanceSettings());
+
+      // Register ellipse:// uri hander for images
+      m_host.PackageProviders().Append(winrt::make<EllipseReactPackageProvider>());
+
+      // Some of the images in RNTester require a user-agent header to properly fetch
+      winrt::Microsoft::ReactNative::HttpSettings::SetDefaultUserAgent(
+          m_host.InstanceSettings(), L"React Native Windows Playground");
+
+      m_host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+
+      m_host.PackageProviders().Append(winrt::SampleCustomComponent::ReactPackageProvider());
+
+      // By setting the compositor here we opt into using the new architecture.
+      winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
+          InstanceSettings(), g_liftedCompositor);
+
+      m_host.InstanceSettings().UseDeveloperSupport(true);
     }
 
     return m_host;
@@ -140,9 +160,47 @@ struct WindowData {
     return m_instanceSettings;
   }
 
-  void ApplyConstraintsForContentSizedWindow(winrt::Microsoft::ReactNative::LayoutConstraints &constraints) {
-    constraints.MinimumSize = {300, 300};
-    constraints.MaximumSize = {1000, 1000};
+  void OnCreate(HWND hwnd) {
+    if (!m_rnWindow) {
+      m_rnWindow = winrt::Microsoft::ReactNative::ReactNativeWindow::CreateFromWindow(
+          winrt::Microsoft::UI::Windowing::AppWindow::GetFromWindowId(
+              winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd)),
+          g_liftedCompositor);
+
+      winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+      constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
+      constraints.MinimumSize = {300, 300};
+      constraints.MaximumSize = {1000, 1000};
+
+      m_rnWindow.LayoutConstraints(constraints);
+
+      UpdateRNWindowSettings();
+      UpdateViewOptions();
+    }
+  }
+
+  void UpdateRNWindowSettings() {
+    m_rnWindow.AppWindow().Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().IsResizable(
+        !m_sizeToContent);
+
+    m_rnWindow.ResizePolicy(
+        m_sizeToContent ? winrt::Microsoft::ReactNative::ContentSizePolicy::ResizeParentWindowToContent
+                        : winrt::Microsoft::ReactNative::ContentSizePolicy::ResizeContentToParentWindow);
+
+    if (m_forceRTL) {
+      m_rnWindow.ContentSiteBridge().LayoutDirectionOverride(
+          winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
+    }
+  }
+
+  void UpdateViewOptions() {
+    if (!m_appName || !m_rnWindow)
+      return;
+
+    winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
+    viewOptions.ComponentName(m_appName);
+    m_rnWindow.ReactNativeIsland().ReactViewHost(
+        winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(Host(), viewOptions));
   }
 
   LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {
@@ -151,7 +209,7 @@ struct WindowData {
         DialogBox(s_instance, MAKEINTRESOURCE(IDD_OPENJSBUNDLEBOX), hwnd, &Bundle);
 
         if (!m_bundleFile.empty()) {
-          PCWSTR appName = (m_bundleFile == LR"(Samples\rntester)") ? L"RNTesterApp" : L"Bootstrap";
+          m_appName = (m_bundleFile == LR"(Samples\rntester)") ? L"RNTesterApp" : L"Bootstrap";
 
           WCHAR appDirectory[MAX_PATH];
           GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
@@ -165,99 +223,22 @@ struct WindowData {
 
           host.InstanceSettings().BundleRootPath(
               std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
-          host.InstanceSettings().UseDeveloperSupport(true);
-
-          // Some of the images in RNTester require a user-agent header to properly fetch
-          winrt::Microsoft::ReactNative::HttpSettings::SetDefaultUserAgent(
-              host.InstanceSettings(), L"React Native Windows Playground");
-
-          host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
-
-          host.PackageProviders().Append(winrt::SampleCustomComponent::ReactPackageProvider());
 
           winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
-          winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-          viewOptions.ComponentName(appName);
-
-          if (!m_compRootView) {
-            m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(g_liftedCompositor);
-
-            // By setting the compositor here we opt into using the new architecture.
-            winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
-                InstanceSettings(), g_liftedCompositor);
-
-            // Register ellipse:// uri hander for images
-            host.PackageProviders().Append(winrt::make<EllipseReactPackageProvider>());
-
-            m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
-                g_liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
-
-            if (m_forceRTL) {
-              m_bridge.LayoutDirectionOverride(winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
-            }
-
-            auto appContent = m_compRootView.Island();
-
-            m_bridge.Connect(appContent);
-            m_bridge.Show();
-
-            m_compRootView.ScaleFactor(ScaleFactor(hwnd));
-            winrt::Microsoft::ReactNative::LayoutConstraints constraints;
-            constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
-            constraints.MaximumSize =
-                constraints.MinimumSize = {m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
-
-            if (m_sizeToContent) {
-              ApplyConstraintsForContentSizedWindow(constraints);
-
-              // Disable user sizing of the hwnd
-              ::SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SIZEBOX);
-              m_compRootView.SizeChanged([hwnd, props = InstanceSettings().Properties()](
-                                             auto /*sender*/,
-                                             const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
-                auto compositor =
-                    winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(props);
-                auto async = compositor.RequestCommitAsync();
-                async.Completed([hwnd, size = args.Size()](
-                                    auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
-                  RECT rcClient, rcWindow;
-                  GetClientRect(hwnd, &rcClient);
-                  GetWindowRect(hwnd, &rcWindow);
-
-                  SetWindowPos(
-                      hwnd,
-                      nullptr,
-                      0,
-                      0,
-                      static_cast<int>(size.Width) + rcClient.left - rcClient.right + rcWindow.right - rcWindow.left,
-                      static_cast<int>(size.Height) + rcClient.top - rcClient.bottom + rcWindow.bottom - rcWindow.top,
-                      SWP_DEFERERASE | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-                });
-              });
-            }
-            m_compRootView.Arrange(constraints, {0, 0});
-
-            m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
-          }
-
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
 
-          m_compRootView.ReactViewHost(
-              winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
+          for (auto &window : g_windows) {
+            window->UpdateViewOptions();
+          }
         }
 
         break;
       }
       case IDM_NEWWINDOW: {
-        std::thread playgroundThread{([]() {
-          // For subsequent RN windows do not use the web debugger by default,
-          // since one instance can be connected to it at a time.
-          RunPlayground(SW_SHOW);
-        })};
-        playgroundThread.detach();
+        CreateNewWindow(SW_SHOW);
         break;
       }
       case IDM_ABOUT:
@@ -280,27 +261,27 @@ struct WindowData {
           OutputDebugStringA("Instance Unload completed\n");
 
           uidispatch.Post([&]() {
-            if (m_bridge) {
-              m_bridge.Close();
-              m_bridge = nullptr;
+            if (m_rnWindow) {
+              m_rnWindow.Close();
+              m_rnWindow = nullptr;
             }
           });
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
         });
-        m_compRootView = nullptr;
+        m_rnWindow = nullptr;
         m_instanceSettings = nullptr;
         m_host = nullptr;
       } break;
       case IDM_TOGGLE_LAYOUT_DIRECTION: {
-        if (m_bridge) {
-          m_bridge.LayoutDirectionOverride(
+        if (m_rnWindow) {
+          m_rnWindow.ContentSiteBridge().LayoutDirectionOverride(
               (m_forceRTL) ? winrt::Microsoft::UI::Content::ContentLayoutDirection::LeftToRight
                            : winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
         }
         m_forceRTL = !m_forceRTL;
       }
       case IDM_SETPROPS: {
-        m_compRootView.SetProperties([](const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {
+        m_rnWindow.ReactNativeIsland().SetProperties([](const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {
           static int value = 123;
           writer.WriteObjectBegin();
           winrt::Microsoft::ReactNative::WriteProperty(writer, L"testProp1", value++);
@@ -315,29 +296,6 @@ struct WindowData {
 
   float ScaleFactor(HWND hwnd) noexcept {
     return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
-  }
-
-  void UpdateSize(HWND hwnd) noexcept {
-    RECT rc;
-    if (GetClientRect(hwnd, &rc)) {
-      if (m_height != (rc.bottom - rc.top) || m_width != (rc.right - rc.left)) {
-        m_height = rc.bottom - rc.top;
-        m_width = rc.right - rc.left;
-
-        if (m_compRootView) {
-          winrt::Windows::Foundation::Size size{m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
-          if (!IsIconic(hwnd)) {
-            winrt::Microsoft::ReactNative::LayoutConstraints constraints;
-            constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
-            constraints.MinimumSize = constraints.MaximumSize = size;
-            if (m_sizeToContent) {
-              ApplyConstraintsForContentSizedWindow(constraints);
-            }
-            m_compRootView.Arrange(constraints, {0, 0});
-          }
-        }
-      }
-    }
   }
 
   /// Message handler for about box.
@@ -357,28 +315,16 @@ struct WindowData {
     return FALSE;
   }
 
-  static constexpr std::wstring_view g_bundleFiles[] = {
-      LR"(Samples\rntester)",
-      LR"(Samples\accessible)",
-      LR"(Samples\callbackTest)",
-      LR"(Samples\calculator)",
-      LR"(Samples\click)",
-      LR"(Samples\customViewManager)",
-      LR"(Samples\control)",
-      LR"(Samples\flexbox)",
-      LR"(Samples\focusTest)",
-      LR"(Samples\geosample)",
-      LR"(Samples\image)",
-      LR"(Samples\index)",
-      LR"(Samples\nativeFabricComponent)",
-      LR"(Samples\mouse)",
-      LR"(Samples\scrollViewSnapSample)",
-      LR"(Samples\simple)",
-      LR"(Samples\text)",
-      LR"(Samples\textinput)",
-      LR"(Samples\ticTacToe)",
-      LR"(Samples\view)",
-      LR"(Samples\debugTest01)"};
+  static constexpr std::wstring_view g_bundleFiles[] = {LR"(Samples\rntester)",     LR"(Samples\accessible)",
+                                                        LR"(Samples\callbackTest)", LR"(Samples\calculator)",
+                                                        LR"(Samples\click)",        LR"(Samples\control)",
+                                                        LR"(Samples\flexbox)",      LR"(Samples\focusTest)",
+                                                        LR"(Samples\geosample)",    LR"(Samples\image)",
+                                                        LR"(Samples\index)",        LR"(Samples\nativeFabricComponent)",
+                                                        LR"(Samples\mouse)",        LR"(Samples\scrollViewSnapSample)",
+                                                        LR"(Samples\simple)",       LR"(Samples\text)",
+                                                        LR"(Samples\textinput)",    LR"(Samples\ticTacToe)",
+                                                        LR"(Samples\view)",         LR"(Samples\debugTest01)"};
 
   static INT_PTR CALLBACK Bundle(HWND hwnd, UINT message, WPARAM wparam, LPARAM /*lparam*/) noexcept {
     switch (message) {
@@ -434,7 +380,11 @@ struct WindowData {
             self->InstanceSettings().UseDirectDebugger(IsDlgButtonChecked(hwnd, IDC_DIRECTDEBUGGER) == BST_CHECKED);
             self->InstanceSettings().DebuggerBreakOnNextLine(
                 IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED);
-            self->m_sizeToContent = (IsDlgButtonChecked(hwnd, IDC_SIZETOCONTENT) == BST_CHECKED);
+
+            if (self->m_sizeToContent != (IsDlgButtonChecked(hwnd, IDC_SIZETOCONTENT) == BST_CHECKED)) {
+              self->m_sizeToContent = (IsDlgButtonChecked(hwnd, IDC_SIZETOCONTENT) == BST_CHECKED);
+              self->UpdateRNWindowSettings();
+            }
 
             WCHAR buffer[6] = {};
             auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
@@ -465,6 +415,9 @@ struct WindowData {
   }
 };
 
+winrt::Microsoft::ReactNative::ReactNativeHost WindowData::m_host{nullptr};
+PCWSTR WindowData::m_appName{nullptr};
+
 extern "C" IMAGE_DOS_HEADER __ImageBase;
 HINSTANCE WindowData::s_instance = reinterpret_cast<HINSTANCE>(&__ImageBase);
 
@@ -478,32 +431,44 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
     }
     case WM_DESTROY: {
       auto data = WindowData::GetFromWindow(hwnd);
-      // Before we shutdown the application - gracefully unload the ReactNativeHost instance
-      bool shouldPostQuitMessage = true;
-      if (data->m_host) {
-        shouldPostQuitMessage = false;
 
-        winrt::Microsoft::ReactNative::ReactPropertyBag properties(data->m_host.InstanceSettings().Properties());
-
-        properties.Remove(winrt::Microsoft::ReactNative::ReactPropertyId<
-                          winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext>{
-            L"ReactNative.Composition", L"CompositionContext"});
-
-        auto async = data->m_host.UnloadInstance();
-        async.Completed([host = data->m_host](auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
-          asyncStatus;
-          assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
-          host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
-        });
-        data->m_compRootView = nullptr;
-        data->m_instanceSettings = nullptr;
-        data->m_host = nullptr;
+      std::unique_ptr<WindowData> spWindowData;
+      for (auto &it : g_windows) {
+        if (it.get() == data) {
+          auto q = g_windows.extract(it);
+          std::swap(q.value(), spWindowData);
+          break;
+        }
       }
 
-      delete WindowData::GetFromWindow(hwnd);
-      SetProp(hwnd, WindowDataProperty, 0);
-      if (shouldPostQuitMessage) {
-        PostQuitMessage(0);
+      // On last window close - shutdown the ReactNativeHost, then quit the message loop.
+      if (g_windows.empty()) {
+        bool shouldPostQuitMessage = true;
+        if (data->m_host) {
+          shouldPostQuitMessage = false;
+
+          winrt::Microsoft::ReactNative::ReactPropertyBag properties(data->m_host.InstanceSettings().Properties());
+
+          properties.Remove(winrt::Microsoft::ReactNative::ReactPropertyId<
+                            winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext>{
+              L"ReactNative.Composition", L"CompositionContext"});
+
+          auto async = data->m_host.UnloadInstance();
+          async.Completed(
+              [host = data->m_host](auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+                asyncStatus;
+                assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
+                host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
+              });
+          data->m_rnWindow = nullptr;
+          data->m_instanceSettings = nullptr;
+          data->m_host = nullptr;
+        }
+
+        SetProp(hwnd, WindowDataProperty, 0);
+        if (shouldPostQuitMessage) {
+          PostQuitMessage(0);
+        }
       }
       return 0;
     }
@@ -512,11 +477,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       windowData = static_cast<WindowData *>(cs->lpCreateParams);
       WINRT_ASSERT(windowData);
       SetProp(hwnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
+      windowData->OnCreate(hwnd);
       break;
     }
     case WM_WINDOWPOSCHANGED: {
-      windowData->UpdateSize(hwnd);
-
+      // TODO RNWindow should do this automatically
       winrt::Microsoft::ReactNative::ReactNotificationService rns(windowData->InstanceSettings().Notifications());
       winrt::Microsoft::ReactNative::ForwardWindowMessage(rns, hwnd, message, wparam, lparam);
       break;
@@ -528,7 +493,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
 
 constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_COMPOSITION";
 
-int RunPlayground(int showCmd) {
+void CreateNewWindow(int showCmd) {
   constexpr PCWSTR appName = L"React Native Playground (Composition)";
 
   auto windowData = std::make_unique<WindowData>();
@@ -544,22 +509,13 @@ int RunPlayground(int showCmd) {
       nullptr,
       WindowData::s_instance,
       windowData.get());
+  g_windows.insert(std::move(windowData));
 
   WINRT_VERIFY(hwnd);
-
-  windowData.release();
 
   ShowWindow(hwnd, showCmd);
   UpdateWindow(hwnd);
   SetFocus(hwnd);
-
-  g_liftedDispatcherQueueController.DispatcherQueue().RunEventLoop();
-
-  // Rundown the DispatcherQueue. This drains the queue and raises events to let components
-  // know the message loop has finished.
-  g_liftedDispatcherQueueController.ShutdownQueue();
-
-  return 0;
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
@@ -592,5 +548,13 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // in Microsoft.ui.xaml.controls.dll.
   auto playgroundApp{winrt::make<winrt::Playground::implementation::App>()};
 
-  return RunPlayground(showCmd);
+  CreateNewWindow(showCmd);
+
+  g_liftedDispatcherQueueController.DispatcherQueue().RunEventLoop();
+
+  // Rundown the DispatcherQueue. This drains the queue and raises events to let components
+  // know the message loop has finished.
+  g_liftedDispatcherQueueController.ShutdownQueue();
+
+  return 0;
 }

@@ -12,6 +12,7 @@
 #ifdef USE_FABRIC
 #include <Fabric/Composition/CompositionContextHelper.h>
 #include <Fabric/Composition/CompositionUIService.h>
+#include <winrt/Microsoft.UI.Windowing.h>
 #include <winrt/Windows.UI.Composition.h>
 #else
 #include <UI.Xaml.Controls.Primitives.h>
@@ -22,16 +23,14 @@ namespace Microsoft::ReactNative {
 
 LogBox::~LogBox() {
 #ifdef USE_FABRIC
-  if (m_hwnd) {
-    m_context.UIDispatcher().Post([hwnd = m_hwnd]() { DestroyWindow(hwnd); });
-    m_hwnd = nullptr;
+  if (m_rnWindow) {
+    m_context.UIDispatcher().Post([rnWindow = m_rnWindow]() { rnWindow.Close(); });
+    m_rnWindow = nullptr;
   }
 #endif
 }
 
 #ifdef USE_FABRIC
-constexpr PCWSTR c_logBoxWindowClassName = L"MS_REACTNATIVE_LOGBOX";
-constexpr auto CompHostProperty = L"CompHost";
 const int LOGBOX_DEFAULT_WIDTH = 700;
 const int LOGBOX_DEFAULT_HEIGHT = 1000;
 #endif // USE_FABRIC
@@ -54,69 +53,6 @@ void LogBox::Hide() noexcept {
     }
   });
 }
-
-#ifdef USE_FABRIC
-LRESULT CALLBACK LogBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
-  auto data = reinterpret_cast<::IUnknown *>(GetProp(hwnd, CompHostProperty));
-  winrt::com_ptr<winrt::IUnknown> spunk;
-  React::CompositionHwndHost host{nullptr};
-
-  if (data) {
-    winrt::check_hresult(data->QueryInterface(winrt::guid_of<React::CompositionHwndHost>(), winrt::put_abi(host)));
-    auto result = static_cast<LRESULT>(host.TranslateMessage(message, wparam, lparam));
-    if (result)
-      return result;
-  }
-
-  switch (message) {
-    case WM_NCCREATE: {
-      auto cs = reinterpret_cast<CREATESTRUCT *>(lparam);
-      auto windowData = static_cast<::IUnknown *>(cs->lpCreateParams);
-      SetProp(hwnd, CompHostProperty, reinterpret_cast<::IUnknown *>(windowData));
-      break;
-    }
-    case WM_CREATE: {
-      host.Initialize((uint64_t)hwnd);
-      break;
-    }
-    case WM_CLOSE: {
-      // Just hide the window instead of destroying it
-      ::ShowWindow(hwnd, SW_HIDE);
-      return 0;
-    }
-    case WM_DESTROY: {
-      data->Release();
-      SetProp(hwnd, CompHostProperty, nullptr);
-    }
-  }
-
-  return DefWindowProc(hwnd, message, wparam, lparam);
-}
-
-void LogBox::RegisterWndClass() noexcept {
-  static bool registered = false;
-  if (registered)
-    return;
-
-  HINSTANCE hInstance = GetModuleHandle(NULL);
-
-  WNDCLASSEXW wcex = {};
-  wcex.cbSize = sizeof(WNDCLASSEX);
-  wcex.style = CS_HREDRAW | CS_VREDRAW;
-  wcex.lpfnWndProc = &LogBoxWndProc;
-  wcex.cbClsExtra = DLGWINDOWEXTRA;
-  wcex.cbWndExtra = sizeof(winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *);
-  wcex.hInstance = hInstance;
-  wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
-  wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-  wcex.lpszClassName = c_logBoxWindowClassName;
-  ATOM classId = RegisterClassEx(&wcex);
-  WINRT_VERIFY(classId);
-  winrt::check_win32(!classId);
-
-  registered = true;
-}
-#endif // USE_FABRIC
 
 void LogBox::ShowOnUIThread() noexcept {
   auto host = React::implementation::ReactNativeHost::GetReactNativeHost(m_context.Properties());
@@ -173,45 +109,34 @@ void LogBox::ShowOnUIThread() noexcept {
   }
 #else
   else {
-    RegisterWndClass();
-
-    if (!m_hwnd) {
+    if (!m_rnWindow) {
+      m_rnWindow = winrt::Microsoft::ReactNative::ReactNativeWindow::CreateFromCompositor(
+          winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(
+              host.InstanceSettings().Properties()));
       auto CompositionHwndHost = React::CompositionHwndHost();
       winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
       viewOptions.ComponentName(L"LogBox");
-      CompositionHwndHost.ReactViewHost(
+      m_rnWindow.AppWindow().Title(L"LogBox");
+      m_rnWindow.AppWindow().Closing([](winrt::Microsoft::UI::Windowing::AppWindow const & /*appWindow*/,
+                                        winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs const &args) {
+        // Prevent default close behavior - as JS will never try to show the logbox again if it isn't hidden through JS
+        args.Cancel(true);
+      });
+      m_rnWindow.ReactNativeIsland().ReactViewHost(
           winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
-      HINSTANCE hInstance = GetModuleHandle(NULL);
-      winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *pHost{nullptr};
-      winrt::com_ptr<::IUnknown> spunk;
-      CompositionHwndHost.as(spunk);
-      spunk->AddRef(); // Will be stored in windowData
-
-      m_hwnd = CreateWindow(
-          c_logBoxWindowClassName,
-          L"React-Native LogBox",
-          WS_OVERLAPPEDWINDOW,
-          CW_USEDEFAULT,
-          CW_USEDEFAULT,
-          LOGBOX_DEFAULT_WIDTH,
-          LOGBOX_DEFAULT_HEIGHT,
-          nullptr,
-          nullptr,
-          hInstance,
-          spunk.get());
+      m_rnWindow.AppWindow().ResizeClient({LOGBOX_DEFAULT_WIDTH, LOGBOX_DEFAULT_HEIGHT});
     }
 
-    ShowWindow(m_hwnd, SW_NORMAL);
-    BringWindowToTop(m_hwnd);
-    SetFocus(m_hwnd);
+    m_rnWindow.AppWindow().Show(true);
+    m_rnWindow.AppWindow().MoveInZOrderAtTop();
   }
 #endif // USE_FABRIC
 }
 
 void LogBox::HideOnUIThread() noexcept {
 #ifdef USE_FABRIC
-  if (m_hwnd) {
-    ::ShowWindow(m_hwnd, SW_HIDE);
+  if (m_rnWindow) {
+    m_rnWindow.AppWindow().Hide();
   }
 #else // USE_FABRIC
   if (m_popup) {

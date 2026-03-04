@@ -31,7 +31,7 @@ struct LogBox : public std::enable_shared_from_this<LogBox> {
 
   winrt::Microsoft::ReactNative::ReactContext m_context;
 #ifdef USE_FABRIC
-  HWND m_hwnd{nullptr};
+  winrt::Microsoft::ReactNative::ReactNativeWindow m_rnWindow{nullptr};
 #else
   xaml::Controls::Primitives::Popup m_popup{nullptr};
   winrt::Microsoft::ReactNative::ReactRootView m_logBoxContent{nullptr};

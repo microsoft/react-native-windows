@@ -26,7 +26,8 @@ struct VirtualViewProps : winrt::implements<VirtualViewProps, winrt::Microsoft::
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<VirtualViewProps>();
        initialHidden = cloneFromProps->initialHidden;
-       renderState = cloneFromProps->renderState;  
+       renderState = cloneFromProps->renderState;
+       onModeChange = cloneFromProps->onModeChange;  
      }
   }
 
@@ -39,6 +40,10 @@ struct VirtualViewProps : winrt::implements<VirtualViewProps, winrt::Microsoft::
 
   REACT_FIELD(renderState)
   int32_t renderState{};
+
+   // These fields can be used to determine if JS has registered for this event
+  REACT_FIELD(onModeChange)
+  bool onModeChange{false};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };

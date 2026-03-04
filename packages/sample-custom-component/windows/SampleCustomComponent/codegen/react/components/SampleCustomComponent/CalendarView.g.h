@@ -25,7 +25,8 @@ struct CalendarViewProps : winrt::implements<CalendarViewProps, winrt::Microsoft
   {
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<CalendarViewProps>();
-       label = cloneFromProps->label;  
+       label = cloneFromProps->label;
+       onSelectedDatesChanged = cloneFromProps->onSelectedDatesChanged;  
      }
   }
 
@@ -35,6 +36,10 @@ struct CalendarViewProps : winrt::implements<CalendarViewProps, winrt::Microsoft
 
   REACT_FIELD(label)
   std::string label;
+
+   // These fields can be used to determine if JS has registered for this event
+  REACT_FIELD(onSelectedDatesChanged)
+  bool onSelectedDatesChanged{false};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };

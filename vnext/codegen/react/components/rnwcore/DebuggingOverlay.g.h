@@ -25,6 +25,7 @@ struct DebuggingOverlayProps : winrt::implements<DebuggingOverlayProps, winrt::M
   {
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<DebuggingOverlayProps>();
+
   
      }
   }

@@ -31,34 +31,13 @@ constexpr PCWSTR mainComponentName = L"RNTesterApp";
 std::vector<std::string> g_Errors;
 std::vector<std::string> g_Warnings;
 HWND global_hwnd;
-winrt::Microsoft::ReactNative::ReactNativeIsland *global_rootView{nullptr};
+winrt::Microsoft::ReactNative::ReactNativeIsland global_rootView{nullptr};
 winrt::Microsoft::ReactNative::IReactContext global_reactContext{nullptr};
 
 // Forward declarations of functions included in this code module:
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload);
 winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload);
 winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server);
-
-float ScaleFactor(HWND hwnd) noexcept {
-  return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
-}
-
-void UpdateRootViewSizeToAppWindow(
-    winrt::Microsoft::ReactNative::ReactNativeIsland const &rootView,
-    winrt::Microsoft::UI::Windowing::AppWindow const &window) {
-  auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
-  auto scaleFactor = ScaleFactor(hwnd);
-  winrt::Windows::Foundation::Size size{
-      window.ClientSize().Width / scaleFactor, window.ClientSize().Height / scaleFactor};
-  // Do not relayout when minimized
-  if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() !=
-      winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized) {
-    winrt::Microsoft::ReactNative::LayoutConstraints constraints;
-    constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
-    constraints.MaximumSize = constraints.MinimumSize = size;
-    rootView.Arrange(constraints, {0, 0});
-  }
-}
 
 // Create and configure the ReactNativeHost
 winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
@@ -136,13 +115,13 @@ WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* show
   auto compositor{winrt::Microsoft::UI::Composition::Compositor()};
 
   // Create a top-level window.
-  auto window = winrt::Microsoft::UI::Windowing::AppWindow::Create();
-  window.Title(windowTitle);
-  window.Resize({1000, 1000});
-  window.Show();
-  auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
+  auto reactNativeWindow = winrt::Microsoft::ReactNative::ReactNativeWindow::CreateFromCompositor(compositor);
+  auto appWindow = reactNativeWindow.AppWindow();
+  appWindow.Title(windowTitle);
+  appWindow.Resize({1000, 1000});
+  appWindow.Show();
+  auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(appWindow.Id());
   global_hwnd = hwnd;
-  auto scaleFactor = ScaleFactor(hwnd);
 
   auto host = CreateReactNativeHost(hwnd, compositor);
 
@@ -152,23 +131,12 @@ WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* show
   // Create a RootView which will present a react-native component
   winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
   viewOptions.ComponentName(mainComponentName);
-  auto rootView = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
-  rootView.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
-
-  // Update the size of the RootView when the AppWindow changes size
-  window.Changed([wkRootView = winrt::make_weak(rootView)](
-                     winrt::Microsoft::UI::Windowing::AppWindow const &window,
-                     winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) {
-    if (args.DidSizeChange() || args.DidVisibilityChange()) {
-      if (auto rootView = wkRootView.get()) {
-        UpdateRootViewSizeToAppWindow(rootView, window);
-      }
-    }
-  });
+  reactNativeWindow.ReactNativeIsland().ReactViewHost(
+      winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
 
   // Quit application when main window is closed
-  window.Destroying(
-      [host](winrt::Microsoft::UI::Windowing::AppWindow const & /*window*/, winrt::IInspectable const & /*args*/) {
+  appWindow.Destroying(
+      [host](winrt::Microsoft::UI::Windowing::AppWindow const & /*appWindow*/, winrt::IInspectable const & /*args*/) {
         // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any
         // state
         auto async = host.UnloadInstance();
@@ -179,23 +147,11 @@ WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* show
         });
       });
 
-  // DesktopChildSiteBridge create a ContentSite that can host the RootView ContentIsland
-  auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(compositor, window.Id());
-  bridge.Connect(rootView.Island());
-  bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
-
-  rootView.ScaleFactor(scaleFactor);
-
-  // Set the intialSize of the root view
-  UpdateRootViewSizeToAppWindow(rootView, window);
-
-  bridge.Show();
-
   // Set Up Servers for E2E Testing
   winrt::AutomationChannel::CommandHandler handler;
   handler.BindOperation(L"DumpVisualTree", DumpVisualTree);
   handler.BindOperation(L"ListErrors", ListErrors);
-  global_rootView = &rootView;
+  global_rootView = reactNativeWindow.ReactNativeIsland();
 
   auto server = winrt::AutomationChannel::Server(handler);
   auto asyncAction = LoopServer(server);
@@ -207,8 +163,10 @@ WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* show
   // know the message loop has finished.
   dispatcherQueueController.ShutdownQueue();
 
-  bridge.Close();
-  bridge = nullptr;
+  global_rootView = nullptr;
+
+  reactNativeWindow.Close();
+  reactNativeWindow = nullptr;
 
   // Destroy all Composition objects
   compositor.Close();
@@ -785,7 +743,7 @@ winrt::Windows::Data::Json::JsonObject DumpNativeComponentTreeRecurse(
 winrt::Windows::Data::Json::JsonObject DumpVisualTreeHelper(winrt::Windows::Data::Json::JsonObject payloadObj) {
   auto accessibilityId = payloadObj.GetNamedString(L"accessibilityId");
   winrt::Windows::Data::Json::JsonObject visualTree;
-  auto root = global_rootView->RootVisual();
+  auto root = global_rootView.RootVisual();
   visualTree = DumpVisualTreeRecurse(root, accessibilityId, false);
   return visualTree;
 }
@@ -794,7 +752,7 @@ winrt::Windows::Data::Json::JsonObject DumpNativeComponentTreeHelper(
     winrt::Windows::Data::Json::JsonObject payloadObj) {
   auto accessibilityId = payloadObj.GetNamedString(L"accessibilityId");
   winrt::Windows::Data::Json::JsonObject visualTree;
-  auto rootTag = global_rootView->RootTag();
+  auto rootTag = global_rootView.RootTag();
   if (auto root = winrt::Microsoft::ReactNative::Composition::CompositionUIService::ComponentFromReactTag(
           global_reactContext, rootTag)) {
     visualTree = DumpNativeComponentTreeRecurse(root, accessibilityId, false);
