@@ -7,7 +7,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 
 export interface BumpedPackage {
@@ -58,17 +58,13 @@ export function collectBumpedPackages(
 
     if (fs.existsSync(changelogPath)) {
       try {
-        const changelog = JSON.parse(
-          fs.readFileSync(changelogPath, 'utf8'),
-        );
+        const changelog = JSON.parse(fs.readFileSync(changelogPath, 'utf8'));
 
         // CHANGELOG.json structure:
         // { entries: [{ version, comments: { <changeType>: [{ comment, author }] } }] }
         const latest = changelog.entries?.[0];
         if (latest && latest.version === version) {
-          for (const typeComments of Object.values(
-            latest.comments || {},
-          )) {
+          for (const typeComments of Object.values(latest.comments || {})) {
             for (const c of typeComments as Array<{
               comment: string;
               author: string;

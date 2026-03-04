@@ -7,7 +7,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import os from 'os';
 import path from 'path';
 

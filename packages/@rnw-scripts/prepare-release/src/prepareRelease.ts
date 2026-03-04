@@ -13,7 +13,7 @@
  */
 
 import {parseArgs} from 'node:util';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 
 import findRepoRoot from '@react-native-windows/find-repo-root';
@@ -128,10 +128,7 @@ function extractGitHubRepo(url: string): string {
  * Parses `git remote -v` output and matches against the normalized repo URL.
  * On CI this is typically "origin"; on developer machines it may differ.
  */
-async function detectRemote(
-  git: GitRepo,
-  repoUrl: string,
-): Promise<string> {
+async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
   const canonical = normalizeGitUrl(repoUrl);
   const remoteOutput = await git.remoteList();
 
@@ -184,7 +181,7 @@ async function detectRemote(
     process.exit(1);
   }
 
-  const dryRun = values['dry-run'] ?? false;
+  const dryRun = values['dry-run'];
 
   if (dryRun) {
     console.log(colorize('[DRY RUN MODE]', ansi.yellow));
@@ -201,9 +198,7 @@ async function detectRemote(
     const repoUrl: string = rootPkgJson.repository?.url ?? '';
 
     if (!repoUrl) {
-      throw new Error(
-        'Could not find repository.url in root package.json',
-      );
+      throw new Error('Could not find repository.url in root package.json');
     }
     console.log(`${colorize('Repository URL:', ansi.bright)} ${repoUrl}`);
 
@@ -243,19 +238,17 @@ async function detectRemote(
 
     if (existingPR) {
       console.log(
-        `${colorize('Found existing PR:', ansi.bright)} #${existingPR.number} (${existingPR.url})`,
+        `${colorize('Found existing PR:', ansi.bright)} #${
+          existingPR.number
+        } (${existingPR.url})`,
       );
     } else {
-      console.log(
-        colorize('No existing PR found. Will create one.', ansi.dim),
-      );
+      console.log(colorize('No existing PR found. Will create one.', ansi.dim));
     }
 
     // 8. Save original branch so we can restore it when done
     const originalBranch = await git.currentBranch();
-    console.log(
-      colorize(`Saving current branch: ${originalBranch}`, ansi.dim),
-    );
+    console.log(colorize(`Saving current branch: ${originalBranch}`, ansi.dim));
 
     try {
       // 9. Create/reset the prepare-release branch from target branch HEAD
@@ -313,10 +306,7 @@ async function detectRemote(
         );
       } else {
         console.log(
-          colorize(
-            `Force-pushing ${prBranch} to ${remoteName}...`,
-            ansi.dim,
-          ),
+          colorize(`Force-pushing ${prBranch} to ${remoteName}...`, ansi.dim),
         );
         await git.push(remoteName, prBranch, {force: true});
 
@@ -366,10 +356,7 @@ async function detectRemote(
       } else {
         if (dryRun) {
           console.log(
-            colorize(
-              `[DRY RUN] Would create PR: "${prTitle}"`,
-              ansi.yellow,
-            ),
+            colorize(`[DRY RUN] Would create PR: "${prTitle}"`, ansi.yellow),
           );
         } else {
           console.log(colorize('Creating pull request...', ansi.dim));
@@ -381,9 +368,7 @@ async function detectRemote(
             cwd: repoRoot,
             repo: githubRepo,
           });
-          console.log(
-            `${colorize('PR created:', ansi.green)} ${newPR.url}`,
-          );
+          console.log(`${colorize('PR created:', ansi.green)} ${newPR.url}`);
         }
       }
 
@@ -399,10 +384,7 @@ async function detectRemote(
       // Always restore the original branch
       if (originalBranch && originalBranch !== 'HEAD') {
         console.log(
-          colorize(
-            `Restoring original branch: ${originalBranch}`,
-            ansi.dim,
-          ),
+          colorize(`Restoring original branch: ${originalBranch}`, ansi.dim),
         );
         await git.checkout(originalBranch);
       }

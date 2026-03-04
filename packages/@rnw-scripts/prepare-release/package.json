@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@react-native-windows/find-repo-root": "^0.0.0-canary.99",
+    "@react-native-windows/fs": "^0.0.0-canary.70",
     "@react-native-windows/package-utils": "^0.0.0-canary.96",
     "source-map-support": "^0.5.19"
   },
