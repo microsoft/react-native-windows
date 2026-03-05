@@ -72,7 +72,7 @@ void ComponentView::onMounted() noexcept {
   m_mountedEvent(*this, *this);
 }
 
-bool ComponentView::isMounted() noexcept {
+bool ComponentView::isMounted() const noexcept {
   return m_mounted;
 }
 

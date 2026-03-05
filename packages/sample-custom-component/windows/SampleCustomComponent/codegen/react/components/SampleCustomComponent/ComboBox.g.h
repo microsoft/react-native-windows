@@ -26,7 +26,8 @@ struct ComboBoxProps : winrt::implements<ComboBoxProps, winrt::Microsoft::ReactN
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<ComboBoxProps>();
        selectedIndex = cloneFromProps->selectedIndex;
-       placeholder = cloneFromProps->placeholder;  
+       placeholder = cloneFromProps->placeholder;
+       onSelectionChanged = cloneFromProps->onSelectionChanged;  
      }
   }
 
@@ -40,11 +41,15 @@ struct ComboBoxProps : winrt::implements<ComboBoxProps, winrt::Microsoft::ReactN
   REACT_FIELD(placeholder)
   std::optional<std::string> placeholder;
 
+   // These fields can be used to determine if JS has registered for this event
+  REACT_FIELD(onSelectionChanged)
+  bool onSelectionChanged{false};
+
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(ComboBox_OnSelectionChanged)
-struct ComboBox_OnSelectionChanged {
+REACT_STRUCT(ComboBoxSpec_onSelectionChanged)
+struct ComboBoxSpec_onSelectionChanged {
   REACT_FIELD(selectedIndex)
   int32_t selectedIndex{};
 
@@ -56,10 +61,10 @@ struct ComboBoxEventEmitter {
   ComboBoxEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnSelectionChanged = ComboBox_OnSelectionChanged;
+  using OnSelectionChanged = ComboBoxSpec_onSelectionChanged;
 
-  void onSelectionChanged(OnSelectionChanged &value) const {
-    m_eventEmitter.DispatchEvent(L"selectionChanged", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onSelectionChanged(OnSelectionChanged &&value) const {
+    m_eventEmitter.DispatchEvent(L"selectionChanged", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

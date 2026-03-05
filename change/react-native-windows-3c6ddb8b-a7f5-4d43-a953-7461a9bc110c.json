@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "enables word-extension during drag after a double-click selection",
-  "packageName": "react-native-windows",
-  "email": "74712637+iamAbhi-916@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

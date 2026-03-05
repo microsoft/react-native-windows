@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Sat, 17 Jan 2026 06:40:58 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 04 Mar 2026 22:34:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1033
+
+Wed, 04 Mar 2026 22:34:20 GMT
+
+### Changes
+
+- Update canary version (66076509+vineethkuttan@users.noreply.github.com)
+- Fix XAML popup positioning and light dismiss in ScrollView (#15557) (nitchaudhary@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1033
 
 ## 0.0.0-canary.1031
 

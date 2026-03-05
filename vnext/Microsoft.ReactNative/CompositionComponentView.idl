@@ -93,6 +93,8 @@ namespace Microsoft.ReactNative.Composition
   [webhosthidden]
   runtimeclass ContentIslandComponentView : ViewComponentView { 
     void Connect(Microsoft.UI.Content.ContentIsland contentIsland);
+    DOC_STRING("The ChildSiteLink will be unavailable until after the ContentIslandComponentView is mounted")
+    Microsoft.UI.Content.ChildSiteLink ChildSiteLink { get; };
   };
 
   [experimental]
