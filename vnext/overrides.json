@@ -573,6 +573,12 @@
     },
     {
       "type": "derived",
+      "file": "src-win/Libraries/NativeComponent/ViewConfigIgnore.windows.js",
+      "baseFile": "packages/react-native/Libraries/NativeComponent/ViewConfigIgnore.js",
+      "baseHash": "ad955a66606d12afc8402e82afdd8103c5ca8b03"
+    },
+    {
+      "type": "derived",
       "file": "src-win/Libraries/NativeModules/specs/NativeDialogManagerWindows.js",
       "baseFile": "packages/react-native/Libraries/NativeModules/specs/NativeDialogManagerAndroid.js",
       "baseHash": "84f66ca78aa4240cc09c4d4ffb5d8e1648bf1ff4"

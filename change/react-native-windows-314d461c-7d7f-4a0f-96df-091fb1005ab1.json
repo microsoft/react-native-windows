@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix: typo in AdditionalDependencies MSBuild metadata reference",
+  "packageName": "react-native-windows",
+  "email": "PHILLIPS71@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
