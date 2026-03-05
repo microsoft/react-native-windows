@@ -110,7 +110,7 @@ function checkFilesForChanges(
 
     const currentContents = fs.readFileSync(fileName, 'utf8');
     // The current file may be saved using crlf, in which case the new lines may differ from the new output
-    if (currentContents.replaceAll("\r\n", "\n") === contents) {
+    if (currentContents.replaceAll('\r\n', '\n') === contents) {
       console.log(`- ${fileName} has changed`);
       hasChanges = true;
       continue;
@@ -148,7 +148,7 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
         const currentContents = fs.readFileSync(fileName, 'utf8');
         // Don't update the files if there are no changes as this breaks incremental builds
         // The current file may be saved using crlf, in which case the new lines may differ from the new output
-        if (currentContents.replaceAll("\r\n", "\n") === contents) {
+        if (currentContents.replaceAll('\r\n', '\n') === contents) {
           continue;
         }
       }
