@@ -1,5 +1,5 @@
 {
-  "name": "e2e-test-app-fabric",
+  "name": "@rnw-scripts/e2e-test-app-fabric",
   "version": "0.0.0",
   "private": true,
   "scripts": {

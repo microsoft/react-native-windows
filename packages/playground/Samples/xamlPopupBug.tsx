@@ -12,7 +12,7 @@
 
 import React from 'react';
 import {AppRegistry, ScrollView, View, Text, StyleSheet} from 'react-native';
-import {ComboBox} from 'sample-custom-component';
+import {ComboBox} from '@rnw-scripts/sample-custom-component';
 
 const XamlPopupBugRepro = () => {
   const [selectedValue, setSelectedValue] = React.useState('(click to select)');
