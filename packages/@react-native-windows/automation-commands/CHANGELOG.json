@@ -2,6 +2,33 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Wed, 04 Mar 2026 22:34:21 GMT",
+      "version": "0.0.0-canary.1033",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1033",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "d544f369b09781b4da9b9785f15061592267ae29",
+            "comment": "Update canary version"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "6fbe27bbc0ab04a0eb70a50251625b93341c0aae",
+            "comment": "Fix XAML popup positioning and light dismiss in ScrollView (#15557)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1033",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 17 Jan 2026 06:40:58 GMT",
       "version": "0.0.0-canary.1031",
       "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1031",

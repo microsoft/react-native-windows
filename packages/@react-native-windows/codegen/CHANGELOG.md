@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Sat, 10 Jan 2026 06:40:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 04 Mar 2026 22:34:21 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.130
+
+Wed, 04 Mar 2026 22:34:21 GMT
+
+### Changes
+
+- Generate fields to notify native if a JS event is being listened to (30809111+acoates-ms@users.noreply.github.com)
+- Fix issues with more complex props and event types (30809111+acoates-ms@users.noreply.github.com)
+- Fix lifetime issue with codegen'd eventemitter args (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.129
 

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed template info not detecting mixed architecture projects",
-  "packageName": "@react-native-windows/cli",
-  "email": "4123478+tido64@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
