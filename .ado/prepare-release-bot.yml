@@ -1,7 +1,24 @@
 name: $(Date:yyyyMMdd).$(Rev:r)
 
+# Triggers are configured in the ADO pipeline UI:
+# - CI triggers on pushes to main and *-stable branches
+# - Scheduled triggers for daily runs
+# - Manual runs with optional branch override
 trigger: none
 pr: none
+
+parameters:
+  - name: targetBranch
+    displayName: Target branch for version bump (use default to use pipeline source branch)
+    type: string
+    default: (source branch)
+    values:
+      - (source branch)
+      - main
+      - 0.82-stable
+      - 0.81-stable
+      - 0.80-stable
+      - 0.74-stable
 
 jobs:
   - job: PrepareRelease
@@ -24,7 +41,14 @@ jobs:
         parameters:
           agentImage: HostedImage
 
-      - script: npx prepare-release --branch $(Build.SourceBranchName) --no-color
-        displayName: Prepare Release
-        env:
-          GH_TOKEN: $(githubAuthToken)
+      - ${{ if ne(parameters.targetBranch, '(source branch)') }}:
+        - script: npx prepare-release --branch ${{ parameters.targetBranch }} --no-color
+          displayName: Prepare Release
+          env:
+            GH_TOKEN: $(githubAuthToken)
+
+      - ${{ else }}:
+        - script: npx prepare-release --branch $(Build.SourceBranchName) --no-color
+          displayName: Prepare Release
+          env:
+            GH_TOKEN: $(githubAuthToken)
