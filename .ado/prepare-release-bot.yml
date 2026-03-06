@@ -1,48 +1,69 @@
 name: $(Date:yyyyMMdd).$(Rev:r)
 
+# Triggers are configured in the ADO pipeline UI:
+# - CI triggers on pushes to main and *-stable branches
+# - Scheduled triggers for daily runs
+# - Manual runs with optional branch override
 trigger: none
 pr: none
 
-schedules:
-  - cron: "0 */4 * * *"
-    displayName: Prepare release
-    branches:
-      include:
-        - main
-        - "*-stable"
-    always: true
-
 parameters:
-  - name: AgentPool
-    type: object
-    default:
-      Small:
-        name: rnw-pool-2-microsoft
-        demands: ImageOverride -equals rnw-img-vs2022-node22
-
-variables:
-  - template: variables/windows.yml
-  - group: RNW Secrets
+  - name: targetBranch
+    displayName: Target branch for version bump (use default to use pipeline source branch)
+    type: string
+    default: (source branch)
+    values:
+      - (source branch)
+      - main
+      - 0.82-stable
+      - 0.81-stable
+      - 0.80-stable
+      - 0.74-stable
 
 jobs:
   - job: PrepareRelease
     displayName: Prepare Release Bot
-    pool: ${{ parameters.AgentPool.Small }}
+    pool:
+      vmImage: windows-latest
     timeoutInMinutes: 30
 
     steps:
-      - template: templates/checkout-full.yml
-        parameters:
-          persistCredentials: true
+      - checkout: self
+        persistCredentials: true
+        fetchDepth: 1
+        fetchTags: false
 
       - script: |
           git config user.name "React-Native-Windows Bot"
           git config user.email "53619745+rnbot@users.noreply.github.com"
         displayName: Configure Git Identity
 
-      - template: templates/prepare-js-env.yml
+      # Extract OAuth token from persistCredentials for GitHub API access (gh CLI)
+      - pwsh: |
+          $headerLine = git config --get-regexp "http.*\.extraheader" 2>$null | Select-Object -First 1
+          if (-not $headerLine) {
+            Write-Host "##[error]No HTTP extraheader found. persistCredentials may not be working."
+            exit 1
+          }
+          $encoded = ($headerLine.Split(' ')[-1]).Trim()
+          $decoded = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($encoded))
+          $token = $decoded.Split(':')[-1]
+          Write-Host "Extracted GitHub OAuth token (length=$($token.Length))"
+          Write-Host "##vso[task.setvariable variable=GitHubOAuthToken;issecret=true]$token"
+        displayName: Extract GitHub OAuth token
 
-      - script: npx prepare-release --branch $(Build.SourceBranchName) --no-color
+      - template: templates/prepare-js-env.yml
+        parameters:
+          agentImage: HostedImage
+
+      - ${{ if ne(parameters.targetBranch, '(source branch)') }}:
+        - script: echo ##vso[task.setvariable variable=TargetBranch]${{ parameters.targetBranch }}
+          displayName: Set target branch from parameter
+      - ${{ else }}:
+        - script: echo ##vso[task.setvariable variable=TargetBranch]$(Build.SourceBranchName)
+          displayName: Set target branch from source
+
+      - script: npx prepare-release --branch $(TargetBranch) --no-color
         displayName: Prepare Release
         env:
-          GH_TOKEN: $(githubAuthToken)
+          GH_TOKEN: $(GitHubOAuthToken)
