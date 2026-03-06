@@ -63,6 +63,9 @@ jobs:
       - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile
         displayName: yarn install
 
+      - script: npx lage build --scope @rnw-scripts/prepare-release
+        displayName: Build prepare-release and dependencies
+
       - ${{ if ne(parameters.targetBranch, '(source branch)') }}:
         - pwsh: Write-Host "##vso[task.setvariable variable=TargetBranch]${{ parameters.targetBranch }}"
           displayName: Set target branch from parameter
