@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update dumpVisualTree to handle uris from rnx-kit asset plugin",
+  "packageName": "@react-native-windows/automation-commands",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

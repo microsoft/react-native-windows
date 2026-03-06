@@ -111,16 +111,12 @@ struct WindowData {
   static constexpr uint16_t defaultDebuggerPort = 9229;
 
   std::wstring m_bundleFile;
-  winrt::Microsoft::ReactNative::ReactNativeIsland m_compRootView{nullptr};
-  winrt::Microsoft::UI::Content::DesktopChildSiteBridge m_bridge{nullptr};
+  winrt::Microsoft::ReactNative::ReactNativeWindow m_rnWindow{nullptr};
   static winrt::Microsoft::ReactNative::ReactNativeHost m_host;
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   bool m_sizeToContent{false};
   bool m_forceRTL{false};
   static PCWSTR m_appName;
-  LONG m_height{0};
-  LONG m_width{0};
-  HWND m_hwnd{0};
 
   WindowData() {}
 
@@ -164,79 +160,47 @@ struct WindowData {
     return m_instanceSettings;
   }
 
-  winrt::Microsoft::ReactNative::LayoutConstraints GetLayoutConstraints() {
-    winrt::Microsoft::ReactNative::LayoutConstraints constraints;
-    constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
-    constraints.MaximumSize = constraints.MinimumSize = {m_width / ScaleFactor(m_hwnd), m_height / ScaleFactor(m_hwnd)};
+  void OnCreate(HWND hwnd) {
+    if (!m_rnWindow) {
+      m_rnWindow = winrt::Microsoft::ReactNative::ReactNativeWindow::CreateFromWindow(
+          winrt::Microsoft::UI::Windowing::AppWindow::GetFromWindowId(
+              winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd)),
+          g_liftedCompositor);
 
-    if (m_sizeToContent) {
+      winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+      constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
       constraints.MinimumSize = {300, 300};
       constraints.MaximumSize = {1000, 1000};
-    }
-    return constraints;
-  }
 
-  void OnCreate() {
-    if (!m_compRootView) {
-      m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(g_liftedCompositor);
+      m_rnWindow.LayoutConstraints(constraints);
 
-      m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
-          g_liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
-
-      if (m_forceRTL) {
-        m_bridge.LayoutDirectionOverride(winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
-      }
-
-      auto appContent = m_compRootView.Island();
-
-      m_bridge.Connect(appContent);
-      m_bridge.Show();
-
-      m_compRootView.ScaleFactor(ScaleFactor(m_hwnd));
-      winrt::Microsoft::ReactNative::LayoutConstraints constraints = GetLayoutConstraints();
-
-      if (m_sizeToContent) {
-        // Disable user sizing of the hwnd
-        ::SetWindowLong(m_hwnd, GWL_STYLE, GetWindowLong(m_hwnd, GWL_STYLE) & ~WS_SIZEBOX);
-        m_compRootView.SizeChanged(
-            [hwnd = m_hwnd, props = InstanceSettings().Properties()](
-                auto /*sender*/, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
-              auto compositor = winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(props);
-              auto async = compositor.RequestCommitAsync();
-              async.Completed([hwnd, size = args.Size()](
-                                  auto /*asyncInfo*/, winrt::Windows::Foundation::AsyncStatus /*asyncStatus*/) {
-                RECT rcClient, rcWindow;
-                GetClientRect(hwnd, &rcClient);
-                GetWindowRect(hwnd, &rcWindow);
-
-                SetWindowPos(
-                    hwnd,
-                    nullptr,
-                    0,
-                    0,
-                    static_cast<int>(size.Width) + rcClient.left - rcClient.right + rcWindow.right - rcWindow.left,
-                    static_cast<int>(size.Height) + rcClient.top - rcClient.bottom + rcWindow.bottom - rcWindow.top,
-                    SWP_DEFERERASE | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-              });
-            });
-      }
-      m_compRootView.Arrange(constraints, {0, 0});
-
-      m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+      UpdateRNWindowSettings();
       UpdateViewOptions();
     }
   }
 
+  void UpdateRNWindowSettings() {
+    m_rnWindow.AppWindow().Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().IsResizable(
+        !m_sizeToContent);
+
+    m_rnWindow.ResizePolicy(
+        m_sizeToContent ? winrt::Microsoft::ReactNative::ContentSizePolicy::ResizeParentWindowToContent
+                        : winrt::Microsoft::ReactNative::ContentSizePolicy::ResizeContentToParentWindow);
+
+    if (m_forceRTL) {
+      m_rnWindow.ContentSiteBridge().LayoutDirectionOverride(
+          winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
+    }
+  }
+
   void UpdateViewOptions() {
-    if (!m_appName || !m_compRootView)
+    if (!m_appName || !m_rnWindow)
       return;
 
     winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
     viewOptions.ComponentName(m_appName);
-    m_compRootView.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(Host(), viewOptions));
-
-    winrt::Microsoft::ReactNative::LayoutConstraints constraints = GetLayoutConstraints();
-    m_compRootView.Arrange(constraints, {0, 0});
+    m_rnWindow.ReactNativeIsland().ReactViewHost(
+        winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(Host(), viewOptions));
   }
 
   LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {
@@ -297,27 +261,27 @@ struct WindowData {
           OutputDebugStringA("Instance Unload completed\n");
 
           uidispatch.Post([&]() {
-            if (m_bridge) {
-              m_bridge.Close();
-              m_bridge = nullptr;
+            if (m_rnWindow) {
+              m_rnWindow.Close();
+              m_rnWindow = nullptr;
             }
           });
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
         });
-        m_compRootView = nullptr;
+        m_rnWindow = nullptr;
         m_instanceSettings = nullptr;
         m_host = nullptr;
       } break;
       case IDM_TOGGLE_LAYOUT_DIRECTION: {
-        if (m_bridge) {
-          m_bridge.LayoutDirectionOverride(
+        if (m_rnWindow) {
+          m_rnWindow.ContentSiteBridge().LayoutDirectionOverride(
               (m_forceRTL) ? winrt::Microsoft::UI::Content::ContentLayoutDirection::LeftToRight
                            : winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
         }
         m_forceRTL = !m_forceRTL;
       }
       case IDM_SETPROPS: {
-        m_compRootView.SetProperties([](const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {
+        m_rnWindow.ReactNativeIsland().SetProperties([](const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {
           static int value = 123;
           writer.WriteObjectBegin();
           winrt::Microsoft::ReactNative::WriteProperty(writer, L"testProp1", value++);
@@ -332,25 +296,6 @@ struct WindowData {
 
   float ScaleFactor(HWND hwnd) noexcept {
     return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
-  }
-
-  void UpdateSize() noexcept {
-    RECT rc;
-    if (GetClientRect(m_hwnd, &rc)) {
-      if (m_height != (rc.bottom - rc.top) || m_width != (rc.right - rc.left)) {
-        m_height = rc.bottom - rc.top;
-        m_width = rc.right - rc.left;
-        m_bridge.MoveAndResize(winrt::Windows::Graphics::RectInt32{0, 0, m_width, m_height});
-
-        if (m_compRootView) {
-          winrt::Windows::Foundation::Size size{m_width / ScaleFactor(m_hwnd), m_height / ScaleFactor(m_hwnd)};
-          if (!IsIconic(m_hwnd)) {
-            winrt::Microsoft::ReactNative::LayoutConstraints constraints = GetLayoutConstraints();
-            m_compRootView.Arrange(constraints, {0, 0});
-          }
-        }
-      }
-    }
   }
 
   /// Message handler for about box.
@@ -436,7 +381,11 @@ struct WindowData {
             self->InstanceSettings().UseDirectDebugger(IsDlgButtonChecked(hwnd, IDC_DIRECTDEBUGGER) == BST_CHECKED);
             self->InstanceSettings().DebuggerBreakOnNextLine(
                 IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED);
-            self->m_sizeToContent = (IsDlgButtonChecked(hwnd, IDC_SIZETOCONTENT) == BST_CHECKED);
+
+            if (self->m_sizeToContent != (IsDlgButtonChecked(hwnd, IDC_SIZETOCONTENT) == BST_CHECKED)) {
+              self->m_sizeToContent = (IsDlgButtonChecked(hwnd, IDC_SIZETOCONTENT) == BST_CHECKED);
+              self->UpdateRNWindowSettings();
+            }
 
             WCHAR buffer[6] = {};
             auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
@@ -512,7 +461,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
                 assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
                 host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
               });
-          data->m_compRootView = nullptr;
+          data->m_rnWindow = nullptr;
           data->m_instanceSettings = nullptr;
           data->m_host = nullptr;
         }
@@ -529,13 +478,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       windowData = static_cast<WindowData *>(cs->lpCreateParams);
       WINRT_ASSERT(windowData);
       SetProp(hwnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
-      windowData->m_hwnd = hwnd;
-      windowData->OnCreate();
+      windowData->OnCreate(hwnd);
       break;
     }
     case WM_WINDOWPOSCHANGED: {
-      windowData->UpdateSize();
-
+      // TODO RNWindow should do this automatically
       winrt::Microsoft::ReactNative::ReactNotificationService rns(windowData->InstanceSettings().Notifications());
       winrt::Microsoft::ReactNative::ForwardWindowMessage(rns, hwnd, message, wparam, lparam);
       break;

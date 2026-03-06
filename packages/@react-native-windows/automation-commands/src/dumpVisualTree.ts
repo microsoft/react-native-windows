@@ -148,6 +148,15 @@ function removeGuidsFromImageSourcesHelper(node: ComponentNode) {
             '<localOrBundlerUri>',
           );
 
+          // When using rnx-kit's asset monorepo plugin assets outside the project root become something like:
+          // file://D:\\a\\_work\\1\\s\\packages\\e2e-test-app-fabric\\windows\\RNTesterApp-Fabric.Package\\bin\\x64\\Release\\AppX\\RNTesterApp-Fabric\\Bundle\\assets?unstable_path=_@react-native-windows/tester/js/assets/dislike.png
+          // becomes
+          // <localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png
+          source.Uri = source.Uri.replace(
+            new RegExp(`file://${packagesPath}.*\\\\Bundle\\\\assets?`),
+            '<localOrBundlerUri>',
+          );
+
           // When loading the bundle from metro local paths will be replaced with paths to localhost, which will not align with snapshots made with prebuilt bundles.
           // This logic replaces the localhost uri, with the same uri that we would have gotten from a prebuild bundle.  This makes it easier to debug without breaking snapshots
           // http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224

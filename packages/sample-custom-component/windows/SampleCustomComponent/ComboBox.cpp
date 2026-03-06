@@ -69,7 +69,7 @@ struct ComboBoxComponentView : public winrt::implements<ComboBoxComponentView, w
             } else {
               args.selectedValue = "";
             }
-            emitter->onSelectionChanged(args);
+            emitter->onSelectionChanged(std::move(args));
           }
         });
   }

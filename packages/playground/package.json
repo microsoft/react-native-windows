@@ -1,9 +1,9 @@
 {
-  "name": "playground",
+  "name": "@rnw-scripts/playground",
   "version": "0.0.54",
   "private": true,
   "scripts": {
-    "start": "npx @react-native-community/cli start --client-logs",
+    "start": "npx @react-native-community/cli rnx-start",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
     "windows": "npx @react-native-community/cli run-windows"
@@ -16,7 +16,7 @@
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^19.2.0",
     "react-native": "0.83.0-nightly-20251012-6f482708b",
-    "react-native-windows": "^0.0.0-canary.1031"
+    "react-native-windows": "^0.0.0-canary.1033"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -28,13 +28,26 @@
     "@rnw-scripts/just-task": "2.3.58",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.6",
+    "@rnx-kit/cli": "^1.1.0",
     "@types/node": "^22.14.0",
     "@types/react": "^19.2.0",
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
     "prettier": "2.8.8",
     "react-test-renderer": "19.1.0",
-    "sample-custom-component": "0.0.1"
+    "@rnw-scripts/sample-custom-component": "0.0.1"
+  },
+  "rnx-kit": {
+    "bundle": {
+      "plugins": [
+        [
+          "@rnx-kit/metro-plugin-cyclic-dependencies-detector",
+          {
+            "throwOnError": false
+          }
+        ]
+      ]
+    }
   },
   "engines": {
     "node": ">= 22"
