@@ -1,5 +1,5 @@
 {
-  "name": "debug-test",
+  "name": "@rnw-scripts/debug-test",
   "version": "0.0.0",
   "private": true,
   "scripts": {
