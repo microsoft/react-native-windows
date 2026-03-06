@@ -55,7 +55,7 @@ jobs:
       - task: NodeTool@0
         displayName: Set Node Version
         inputs:
-          versionSpec: '22.x'
+          versionSpec: '24.x'
 
       - script: if not exist %APPDATA%\npm (mkdir %APPDATA%\npm)
         displayName: Ensure npm directory for npx commands
@@ -63,16 +63,13 @@ jobs:
       - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile
         displayName: yarn install
 
-      - script: npx lage build --scope @rnw-scripts/prepare-release
-        displayName: Build prepare-release script
-
       - pwsh: |
           $branch = "${{ if ne(parameters.targetBranch, '(source branch)') }}${{ parameters.targetBranch }}${{ else }}$(Build.SourceBranchName)${{ endif }}"
           Write-Host "Target branch: $branch"
           Write-Host "##vso[task.setvariable variable=TargetBranch]$branch"
         displayName: Resolve target branch
 
-      - script: npx prepare-release --branch $(TargetBranch) --no-color
+      - script: node packages/@rnw-scripts/prepare-release/src/prepareRelease.ts --branch $(TargetBranch) --no-color
         displayName: Prepare Release
         env:
           GH_TOKEN: $(GitHubOAuthToken)
