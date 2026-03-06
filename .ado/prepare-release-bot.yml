@@ -63,11 +63,12 @@ jobs:
       - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile
         displayName: yarn install
 
-      - pwsh: |
-          $branch = "${{ if ne(parameters.targetBranch, '(source branch)') }}${{ parameters.targetBranch }}${{ else }}$(Build.SourceBranchName)${{ endif }}"
-          Write-Host "Target branch: $branch"
-          Write-Host "##vso[task.setvariable variable=TargetBranch]$branch"
-        displayName: Resolve target branch
+      - ${{ if ne(parameters.targetBranch, '(source branch)') }}:
+        - pwsh: Write-Host "##vso[task.setvariable variable=TargetBranch]${{ parameters.targetBranch }}"
+          displayName: Set target branch from parameter
+      - ${{ else }}:
+        - pwsh: Write-Host "##vso[task.setvariable variable=TargetBranch]$(Build.SourceBranchName)"
+          displayName: Set target branch from source
 
       - script: node packages/@rnw-scripts/prepare-release/src/prepareRelease.ts --branch $(TargetBranch) --no-color
         displayName: Prepare Release
