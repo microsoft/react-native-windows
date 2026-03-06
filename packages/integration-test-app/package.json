@@ -1,5 +1,5 @@
 {
-  "name": "@rnw-scripts/integration-test-app",
+  "name": "integration-test-app",
   "version": "0.0.0",
   "private": true,
   "scripts": {
