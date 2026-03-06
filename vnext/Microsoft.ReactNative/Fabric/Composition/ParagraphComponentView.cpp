@@ -9,12 +9,12 @@
 
 #include <AutoDraw.h>
 #include <Fabric/ReactTaggedView.h>
+#include <Resources/StringResourceIds.h>
 #include <Utils/IcuUtils.h>
+#include <Utils/LocalizedStrings.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/ParagraphState.h>
-#include <Resources/StringResourceIds.h>
-#include <Utils/LocalizedStrings.h>
 #include <unicode.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Input.h>

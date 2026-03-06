@@ -8,14 +8,14 @@
 #include <AutoDraw.h>
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Fabric/platform/react/renderer/graphics/PlatformColorUtils.h>
+#include <Resources/StringResourceIds.h>
+#include <Utils/LocalizedStrings.h>
 #include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/textinput/TextInputState.h>
 #include <react/renderer/graphics/HostPlatformColor.h>
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <tom.h>
-#include <Resources/StringResourceIds.h>
-#include <Utils/LocalizedStrings.h>
 #include <unicode.h>
 #include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.System.h>

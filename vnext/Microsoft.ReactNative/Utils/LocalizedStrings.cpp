@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include <windows.h>
 #include "LocalizedStrings.h"
+#include <windows.h>
 
 namespace Microsoft::ReactNative {
 
