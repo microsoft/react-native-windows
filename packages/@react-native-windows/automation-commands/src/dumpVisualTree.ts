@@ -138,7 +138,6 @@ function removeGuidsFromImageSourcesHelper(node: ComponentNode) {
           // When getting files from a prebuilt bundle the uri is going to include a local path, which would make snapshots inconsistent,
           // This logic replaces the local path so that we get consistent results.
           // file://E:\\repos\\react-native-windows\\packages\\e2e-test-app-fabric\\windows\\RNTesterApp-Fabric.Package\\bin\\x64\\Release\\AppX\\RNTesterApp-Fabric\\Bundle\\@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png
-          file://D:\\a\\_work\\1\\s\\packages\\e2e-test-app-fabric\\windows\\RNTesterApp-Fabric.Package\\bin\\x64\\Release\\AppX\\RNTesterApp-Fabric\\Bundle\\assets?unstable_path=_@react-native-windows/tester/js/assets/dislike.png
           // becomes
           // <localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png
           const packagesPath = require('path')
