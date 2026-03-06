@@ -11,7 +11,7 @@ jobs:
   - job: FakeGitProbe
     displayName: Test branch push without PAT (no 1ES template)
     pool:
-      name: Azure-Pipelines-1ESPT-ExDShared
+      vmImage: windows-latest
     timeoutInMinutes: 10
     steps:
       - checkout: self
