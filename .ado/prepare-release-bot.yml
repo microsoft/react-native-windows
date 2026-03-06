@@ -1,113 +1,69 @@
-# Experiment: Test GitHub access from ms/react-native-windows project.
-# Same code as publish.yml probe (which works in microsoft/ReactNative project).
-# Goal: determine if the ADO project is the differentiating factor.
+name: $(Date:yyyyMMdd).$(Rev:r)
 
-name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
-
+# Triggers are configured in the ADO pipeline UI:
+# - CI triggers on pushes to main and *-stable branches
+# - Scheduled triggers for daily runs
+# - Manual runs with optional branch override
 trigger: none
 pr: none
 
+parameters:
+  - name: targetBranch
+    displayName: Target branch for version bump (use default to use pipeline source branch)
+    type: string
+    default: (source branch)
+    values:
+      - (source branch)
+      - main
+      - 0.82-stable
+      - 0.81-stable
+      - 0.80-stable
+      - 0.74-stable
+
 jobs:
-  - job: FakeGitProbe
-    displayName: Test branch push without PAT (ms/react-native-windows project)
+  - job: PrepareRelease
+    displayName: Prepare Release Bot
     pool:
       vmImage: windows-latest
-    timeoutInMinutes: 10
+    timeoutInMinutes: 30
+
     steps:
       - checkout: self
         persistCredentials: true
+        fetchDepth: 1
+        fetchTags: false
 
       - script: |
-          echo Repository: $(Build.Repository.Name)
-          echo Source branch: $(Build.SourceBranch)
-          git --version
-        displayName: Show repo info
+          git config user.name "React-Native-Windows Bot"
+          git config user.email "53619745+rnbot@users.noreply.github.com"
+        displayName: Configure Git Identity
 
-      - script: git status -sb
-        displayName: Show working tree status
-
-      - pwsh: |
-          $branch = "user/vmorozov/probe-$(Build.BuildId)"
-          Write-Host "Creating branch $branch"
-          git checkout -b $branch
-          Set-Content -Path release-probe.txt -Value "release probe $(Build.BuildId)"
-          git add release-probe.txt
-          git status -sb
-          git config user.name "Azure Pipelines Probe"
-          git config user.email "azure-pipelines-probe@microsoft.com"
-          git commit -m "chore: release probe (***No CI***)"
-          git push origin HEAD
-          Write-Host "Branch $branch pushed."
-        displayName: Create, commit, and push branch
-
-      - pwsh: |
-          $tag = "user-vmorozov-probe-tag-$(Build.BuildId)"
-          Write-Host "Creating tag $tag"
-          git tag -a $tag -m "probe tag $(Build.BuildId)"
-          git push origin $tag
-          Write-Host "Tag $tag pushed."
-        displayName: Create and push annotated tag
-
-      - script: git config --list --show-origin | findstr /I extraheader
-        displayName: Inspect git extraheader entries
-
+      # Extract OAuth token from persistCredentials for GitHub API access (gh CLI)
       - pwsh: |
           $headerLine = git config --get-regexp "http.*\.extraheader" 2>$null | Select-Object -First 1
           if (-not $headerLine) {
-            Write-Host "No HTTP extraheader found; skipping PR creation."
-            Write-Host "##vso[task.setvariable variable=CanCreatePr]false"
-            return
+            Write-Host "##[error]No HTTP extraheader found. persistCredentials may not be working."
+            exit 1
           }
           $encoded = ($headerLine.Split(' ')[-1]).Trim()
           $decoded = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($encoded))
           $token = $decoded.Split(':')[-1]
+          Write-Host "Extracted GitHub OAuth token (length=$($token.Length))"
           Write-Host "##vso[task.setvariable variable=GitHubOAuthToken;issecret=true]$token"
-          Write-Host "##vso[task.setvariable variable=CanCreatePr]true"
         displayName: Extract GitHub OAuth token
 
-      - pwsh: |
-          $branch = "user/vmorozov/probe-$(Build.BuildId)"
-          $token = '$(GitHubOAuthToken)'
-          if (-not $token) { throw "GitHub token not available." }
-          $body = [ordered]@{
-            title = "Probe PR $(Build.BuildId)"
-            head  = $branch
-            base  = "main"
-            body  = "Automation probe to validate OAuth permissions."
-            draft = $true
-          } | ConvertTo-Json
-          $headers = @{
-            Authorization = "Bearer $token"
-            Accept        = "application/vnd.github+json"
-            "User-Agent"  = "azure-pipelines-probe"
-            "X-GitHub-Api-Version" = "2022-11-28"
-          }
-          $resp = Invoke-RestMethod -Method Post -Uri "https://api.github.com/repos/microsoft/react-native-windows/pulls" -Headers $headers -Body $body -ContentType 'application/json'
-          Write-Host "Created draft PR #$($resp.number): $($resp.html_url)"
-          Write-Host "##vso[task.setvariable variable=ProbePrNumber]$($resp.number)"
-        displayName: Create draft PR via GitHub API
-        condition: and(succeeded(), eq(variables['CanCreatePr'], 'true'))
+      - template: templates/prepare-js-env.yml
+        parameters:
+          agentImage: HostedImage
 
-      - pwsh: |
-          $token = '$(GitHubOAuthToken)'
-          $pr = '$(ProbePrNumber)'
-          if ($pr) {
-            $headers = @{
-              Authorization = "Bearer $token"
-              Accept        = "application/vnd.github+json"
-              "User-Agent"  = "azure-pipelines-probe"
-              "X-GitHub-Api-Version" = "2022-11-28"
-            }
-            Invoke-RestMethod -Method Patch -Uri "https://api.github.com/repos/microsoft/react-native-windows/pulls/$pr" -Headers $headers -Body '{"state":"closed"}' -ContentType 'application/json' | Out-Null
-            Write-Host "Closed draft PR #$pr"
-          } else {
-            Write-Host "No PR number recorded; skipping close."
-          }
-        displayName: Close draft PR
-        condition: and(succeeded(), eq(variables['CanCreatePr'], 'true'), ne(variables['ProbePrNumber'], ''))
+      - ${{ if ne(parameters.targetBranch, '(source branch)') }}:
+        - script: npx prepare-release --branch ${{ parameters.targetBranch }} --no-color
+          displayName: Prepare Release
+          env:
+            GH_TOKEN: $(GitHubOAuthToken)
 
-      - script: git ls-remote --heads origin user/vmorozov/probe-$(Build.BuildId)
-        displayName: Confirm remote branch
-
-      - script: git ls-remote --tags origin user-vmorozov-probe-tag-$(Build.BuildId)
-        displayName: Confirm remote tag
+      - ${{ else }}:
+        - script: npx prepare-release --branch $(Build.SourceBranchName) --no-color
+          displayName: Prepare Release
+          env:
+            GH_TOKEN: $(GitHubOAuthToken)
