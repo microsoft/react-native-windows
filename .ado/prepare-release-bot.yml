@@ -3,31 +3,11 @@ name: $(Date:yyyyMMdd).$(Rev:r)
 trigger: none
 pr: none
 
-schedules:
-  - cron: "0 */4 * * *"
-    displayName: Prepare release
-    branches:
-      include:
-        - main
-        - "*-stable"
-    always: true
-
-parameters:
-  - name: AgentPool
-    type: object
-    default:
-      Small:
-        name: rnw-pool-2-microsoft
-        demands: ImageOverride -equals rnw-img-vs2022-node22
-
-variables:
-  - template: variables/windows.yml
-  - group: RNW Secrets
-
 jobs:
   - job: PrepareRelease
     displayName: Prepare Release Bot
-    pool: ${{ parameters.AgentPool.Small }}
+    pool:
+      vmImage: windows-latest
     timeoutInMinutes: 30
 
     steps:
