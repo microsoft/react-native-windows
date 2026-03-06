@@ -317,8 +317,8 @@ jobs:
                   targetType: 'inline'
                   script: |
                     # Test website
-                    Invoke-WebRequest -Uri 'http://localhost:5555'
-                    Invoke-WebRequest -Uri 'https://localhost:5543'
+                    Invoke-WebRequest -UseBasicParsing -Uri 'http://localhost:5555'
+                    Invoke-WebRequest -UseBasicParsing -Uri 'https://localhost:5543'
 
                     # Bundler
                     Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true"
