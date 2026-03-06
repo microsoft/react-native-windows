@@ -57,13 +57,13 @@ jobs:
           agentImage: HostedImage
 
       - ${{ if ne(parameters.targetBranch, '(source branch)') }}:
-        - script: npx prepare-release --branch ${{ parameters.targetBranch }} --no-color
-          displayName: Prepare Release
-          env:
-            GH_TOKEN: $(GitHubOAuthToken)
-
+        - script: echo ##vso[task.setvariable variable=TargetBranch]${{ parameters.targetBranch }}
+          displayName: Set target branch from parameter
       - ${{ else }}:
-        - script: npx prepare-release --branch $(Build.SourceBranchName) --no-color
-          displayName: Prepare Release
-          env:
-            GH_TOKEN: $(GitHubOAuthToken)
+        - script: echo ##vso[task.setvariable variable=TargetBranch]$(Build.SourceBranchName)
+          displayName: Set target branch from source
+
+      - script: npx prepare-release --branch $(TargetBranch) --no-color
+        displayName: Prepare Release
+        env:
+          GH_TOKEN: $(GitHubOAuthToken)
