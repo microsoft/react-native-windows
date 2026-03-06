@@ -1,135 +1,113 @@
-# Experimental pipeline to test GitHub access via stock 1ES template
-# Mirrors the publish pipeline structure but performs only git operations
-# using the OAuth creds supplied by the GitHub service connection (no PATs).
+# Experiment: Test GitHub access WITHOUT the 1ES template.
+# Same pool (Azure-Pipelines-1ESPT-ExDShared), same project (microsoft/ReactNative).
+# Goal: determine if the 1ES template is required for the OAuth token to work with GitHub API.
 
 name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 trigger: none
 pr: none
 
-resources:
-  repositories:
-    - repository: 1ESPipelineTemplates
-      type: git
-      name: 1ESPipelineTemplates/1ESPipelineTemplates
-      ref: refs/tags/release
-
-extends:
-  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
-  parameters:
+jobs:
+  - job: FakeGitProbe
+    displayName: Test branch push without PAT (no 1ES template)
     pool:
       name: Azure-Pipelines-1ESPT-ExDShared
-    customBuildTags: []
-    sdl:
-      credscan:
-        enabled: false
-      binskim:
-        enabled: false
-      spotBugs:
-        enabled: false
-    stages:
-      - stage: FakePublish
-        displayName: GitHub OAuth Capability Probe
-        jobs:
-          - job: FakeGitProbe
-            displayName: Test branch push without PAT
-            pool:
-              name: Azure-Pipelines-1ESPT-ExDShared
-            steps:
-              - checkout: self
-                persistCredentials: true   # reuse the GitHub connection OAuth token
+    timeoutInMinutes: 10
+    steps:
+      - checkout: self
+        persistCredentials: true
 
-              - script: |
-                  echo Repository: $(Build.Repository.Name)
-                  echo Source branch: $(Build.SourceBranch)
-                  git --version
-                displayName: Show repo info
+      - script: |
+          echo Repository: $(Build.Repository.Name)
+          echo Source branch: $(Build.SourceBranch)
+          git --version
+        displayName: Show repo info
 
-              - script: git status -sb
-                displayName: Show working tree status
+      - script: git status -sb
+        displayName: Show working tree status
 
-              - pwsh: |
-                  $branch = "user/vmorozov/probe-$(Build.BuildId)"
-                  Write-Host "Creating branch $branch"
-                  git checkout -b $branch
-                  Set-Content -Path release-probe.txt -Value "release probe $(Build.BuildId)"
-                  git add release-probe.txt
-                  git status -sb
-                  git config user.name "Azure Pipelines Probe"
-                  git config user.email "azure-pipelines-probe@microsoft.com"
-                  git commit -m "chore: release probe (***No CI***)"
-                  git push origin HEAD
-                  Write-Host "Branch $branch pushed."
-                displayName: Create, commit, and push branch
+      - pwsh: |
+          $branch = "user/vmorozov/probe-$(Build.BuildId)"
+          Write-Host "Creating branch $branch"
+          git checkout -b $branch
+          Set-Content -Path release-probe.txt -Value "release probe $(Build.BuildId)"
+          git add release-probe.txt
+          git status -sb
+          git config user.name "Azure Pipelines Probe"
+          git config user.email "azure-pipelines-probe@microsoft.com"
+          git commit -m "chore: release probe (***No CI***)"
+          git push origin HEAD
+          Write-Host "Branch $branch pushed."
+        displayName: Create, commit, and push branch
 
-              - pwsh: |
-                  $tag = "user-vmorozov-probe-tag-$(Build.BuildId)"
-                  Write-Host "Creating tag $tag"
-                  git tag -a $tag -m "probe tag $(Build.BuildId)"
-                  git push origin $tag
-                  Write-Host "Tag $tag pushed."
-                displayName: Create and push annotated tag
+      - pwsh: |
+          $tag = "user-vmorozov-probe-tag-$(Build.BuildId)"
+          Write-Host "Creating tag $tag"
+          git tag -a $tag -m "probe tag $(Build.BuildId)"
+          git push origin $tag
+          Write-Host "Tag $tag pushed."
+        displayName: Create and push annotated tag
 
-              - script: git config --list --show-origin | findstr /I extraheader
-                displayName: Inspect git extraheader entries
+      - script: git config --list --show-origin | findstr /I extraheader
+        displayName: Inspect git extraheader entries
 
-              - pwsh: |
-                  $headerLine = git config --get-regexp "http.*\.extraheader" 2>$null | Select-Object -First 1
-                  if (-not $headerLine) {
-                    Write-Host "No HTTP extraheader found; skipping PR creation."
-                    Write-Host "##vso[task.setvariable variable=CanCreatePr]false"
-                    return
-                  }
-                  $encoded = ($headerLine.Split(' ')[-1]).Trim()
-                  $decoded = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($encoded))
-                  $token = $decoded.Split(':')[-1]
-                  Write-Host "##vso[task.setvariable variable=GitHubOAuthToken;issecret=true]$token"
-                  Write-Host "##vso[task.setvariable variable=CanCreatePr]true"
-                displayName: Extract GitHub OAuth token
+      - pwsh: |
+          $headerLine = git config --get-regexp "http.*\.extraheader" 2>$null | Select-Object -First 1
+          if (-not $headerLine) {
+            Write-Host "No HTTP extraheader found; skipping PR creation."
+            Write-Host "##vso[task.setvariable variable=CanCreatePr]false"
+            return
+          }
+          $encoded = ($headerLine.Split(' ')[-1]).Trim()
+          $decoded = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($encoded))
+          $token = $decoded.Split(':')[-1]
+          Write-Host "##vso[task.setvariable variable=GitHubOAuthToken;issecret=true]$token"
+          Write-Host "##vso[task.setvariable variable=CanCreatePr]true"
+        displayName: Extract GitHub OAuth token
 
-              - pwsh: |
-                  $branch = "user/vmorozov/probe-$(Build.BuildId)"
-                  $token = '$(GitHubOAuthToken)'
-                  if (-not $token) { throw "GitHub token not available." }
-                  $body = [ordered]@{
-                    title = "Probe PR $(Build.BuildId)"
-                    head  = $branch
-                    base  = "main"
-                    body  = "Automation probe to validate OAuth permissions."
-                    draft = $true
-                  } | ConvertTo-Json
-                  $headers = @{
-                    Authorization = "Bearer $token"
-                    Accept        = "application/vnd.github+json"
-                    "User-Agent"  = "azure-pipelines-probe"
-                    "X-GitHub-Api-Version" = "2022-11-28"
-                  }
-                  $resp = Invoke-RestMethod -Method Post -Uri "https://api.github.com/repos/microsoft/react-native-windows/pulls" -Headers $headers -Body $body -ContentType 'application/json'
-                  Write-Host "Created draft PR #$($resp.number): $($resp.html_url)"
-                  Write-Host "##vso[task.setvariable variable=ProbePrNumber]$($resp.number)"
-                displayName: Create draft PR via GitHub API
-                condition: and(succeeded(), eq(variables['CanCreatePr'], 'true'))
+      - pwsh: |
+          $branch = "user/vmorozov/probe-$(Build.BuildId)"
+          $token = '$(GitHubOAuthToken)'
+          if (-not $token) { throw "GitHub token not available." }
+          $body = [ordered]@{
+            title = "Probe PR $(Build.BuildId)"
+            head  = $branch
+            base  = "main"
+            body  = "Automation probe to validate OAuth permissions."
+            draft = $true
+          } | ConvertTo-Json
+          $headers = @{
+            Authorization = "Bearer $token"
+            Accept        = "application/vnd.github+json"
+            "User-Agent"  = "azure-pipelines-probe"
+            "X-GitHub-Api-Version" = "2022-11-28"
+          }
+          $resp = Invoke-RestMethod -Method Post -Uri "https://api.github.com/repos/microsoft/react-native-windows/pulls" -Headers $headers -Body $body -ContentType 'application/json'
+          Write-Host "Created draft PR #$($resp.number): $($resp.html_url)"
+          Write-Host "##vso[task.setvariable variable=ProbePrNumber]$($resp.number)"
+        displayName: Create draft PR via GitHub API
+        condition: and(succeeded(), eq(variables['CanCreatePr'], 'true'))
 
-              - pwsh: |
-                  $token = '$(GitHubOAuthToken)'
-                  $pr = '$(ProbePrNumber)'
-                  if ($pr) {
-                    $headers = @{
-                      Authorization = "Bearer $token"
-                      Accept        = "application/vnd.github+json"
-                      "User-Agent"  = "azure-pipelines-probe"
-                      "X-GitHub-Api-Version" = "2022-11-28"
-                    }
-                    Invoke-RestMethod -Method Patch -Uri "https://api.github.com/repos/microsoft/react-native-windows/pulls/$pr" -Headers $headers -Body '{"state":"closed"}' -ContentType 'application/json' | Out-Null
-                    Write-Host "Closed draft PR #$pr"
-                  } else {
-                    Write-Host "No PR number recorded; skipping close."
-                  }
-                displayName: Close draft PR
-                condition: and(succeeded(), eq(variables['CanCreatePr'], 'true'), ne(variables['ProbePrNumber'], ''))
+      - pwsh: |
+          $token = '$(GitHubOAuthToken)'
+          $pr = '$(ProbePrNumber)'
+          if ($pr) {
+            $headers = @{
+              Authorization = "Bearer $token"
+              Accept        = "application/vnd.github+json"
+              "User-Agent"  = "azure-pipelines-probe"
+              "X-GitHub-Api-Version" = "2022-11-28"
+            }
+            Invoke-RestMethod -Method Patch -Uri "https://api.github.com/repos/microsoft/react-native-windows/pulls/$pr" -Headers $headers -Body '{"state":"closed"}' -ContentType 'application/json' | Out-Null
+            Write-Host "Closed draft PR #$pr"
+          } else {
+            Write-Host "No PR number recorded; skipping close."
+          }
+        displayName: Close draft PR
+        condition: and(succeeded(), eq(variables['CanCreatePr'], 'true'), ne(variables['ProbePrNumber'], ''))
 
-              - script: git ls-remote --heads origin user/vmorozov/probe-$(Build.BuildId)
-                displayName: Confirm remote branch
+      - script: git ls-remote --heads origin user/vmorozov/probe-$(Build.BuildId)
+        displayName: Confirm remote branch
 
-              - script: git ls-remote --tags origin user-vmorozov-probe-tag-$(Build.BuildId)
-                displayName: Confirm remote tag
+      - script: git ls-remote --tags origin user-vmorozov-probe-tag-$(Build.BuildId)
+        displayName: Confirm remote tag
