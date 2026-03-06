@@ -1,7 +1,7 @@
 name: $(Date:yyyyMMdd).$(Rev:r)
 
 # Minimal probe pipeline to test GitHub permissions for prepare-release bot.
-# Tests: branch push, PR create via gh CLI, PR close, branch cleanup.
+# Tests: branch push, PR create via GitHub REST API, PR close, branch cleanup.
 trigger: none
 pr: none
 
@@ -43,7 +43,7 @@ jobs:
           $decoded = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($base64))
           $token = $decoded.TrimStart(':')
           Write-Host "Extracted OAuth token (length=$($token.Length))"
-          Write-Host "##vso[task.setvariable variable=GH_TOKEN;issecret=true]$token"
+          Write-Host "##vso[task.setvariable variable=GitHubOAuthToken;issecret=true]$token"
         displayName: Extract GitHub OAuth token
 
       # Test 1: Create and push a branch
@@ -56,19 +56,62 @@ jobs:
           echo Branch pushed successfully.
         displayName: "Test 1: Push branch"
 
-      # Test 2: Create a draft PR using gh CLI
+      # Test 2a: Try gh CLI with token type "bearer" via GH_TOKEN
       - script: |
           gh pr create --head probe/prepare-release-test-$(Build.BuildId) --base main --title "Probe PR $(Build.BuildId)" --body "Automation probe - will be closed immediately." --draft --repo microsoft/react-native-windows
-        displayName: "Test 2: Create draft PR via gh CLI"
+        displayName: "Test 2a: Create draft PR via gh CLI (GH_TOKEN)"
         env:
-          GH_TOKEN: $(GH_TOKEN)
+          GH_TOKEN: $(GitHubOAuthToken)
+        continueOnError: true
+
+      # Test 2b: Try gh CLI with gh auth login using the token
+      - pwsh: |
+          $token = '$(GitHubOAuthToken)'
+          $token | gh auth login --with-token 2>&1
+          Write-Host "gh auth status:"
+          gh auth status 2>&1
+          gh pr create --head "probe/prepare-release-test-$(Build.BuildId)" --base main --title "Probe PR $(Build.BuildId)" --body "Automation probe - will be closed immediately." --draft --repo microsoft/react-native-windows
+        displayName: "Test 2b: Create draft PR via gh auth login"
+        env:
+          GH_TOKEN: ''
+        continueOnError: true
+
+      # Test 2c: Create PR via GitHub REST API directly (known working from fake-publish)
+      - pwsh: |
+          $token = '$(GitHubOAuthToken)'
+          $body = [ordered]@{
+            title = "Probe PR $(Build.BuildId)"
+            head  = "probe/prepare-release-test-$(Build.BuildId)"
+            base  = "main"
+            body  = "Automation probe - will be closed immediately."
+            draft = $true
+          } | ConvertTo-Json
+          $headers = @{
+            Authorization = "Bearer $token"
+            Accept        = "application/vnd.github+json"
+            "User-Agent"  = "rnw-prepare-release-bot"
+            "X-GitHub-Api-Version" = "2022-11-28"
+          }
+          $resp = Invoke-RestMethod -Method Post -Uri "https://api.github.com/repos/microsoft/react-native-windows/pulls" -Headers $headers -Body $body -ContentType 'application/json'
+          Write-Host "Created draft PR #$($resp.number): $($resp.html_url)"
+          Write-Host "##vso[task.setvariable variable=ProbePrNumber]$($resp.number)"
+        displayName: "Test 2c: Create draft PR via REST API"
 
       # Test 3: Close the PR
-      - script: |
-          gh pr close probe/prepare-release-test-$(Build.BuildId) --repo microsoft/react-native-windows
+      - pwsh: |
+          $token = '$(GitHubOAuthToken)'
+          $pr = '$(ProbePrNumber)'
+          if ($pr) {
+            $headers = @{
+              Authorization = "Bearer $token"
+              Accept        = "application/vnd.github+json"
+              "User-Agent"  = "rnw-prepare-release-bot"
+              "X-GitHub-Api-Version" = "2022-11-28"
+            }
+            Invoke-RestMethod -Method Patch -Uri "https://api.github.com/repos/microsoft/react-native-windows/pulls/$pr" -Headers $headers -Body '{"state":"closed"}' -ContentType 'application/json' | Out-Null
+            Write-Host "Closed draft PR #$pr"
+          }
         displayName: "Test 3: Close draft PR"
-        env:
-          GH_TOKEN: $(GH_TOKEN)
 
       # Cleanup: delete the remote branch
       - script: git push origin --delete probe/prepare-release-test-$(Build.BuildId)
