@@ -6,9 +6,10 @@
  * @ts-check
  */
 
-const fs = require('fs');
-const path = require('path');
-const os = require('os');
+const fs = require('node:fs');
+const path = require('node:path');
+const os = require('node:os');
+const {spawnSync} = require('node:child_process');
 
 const {
   argv,
@@ -33,8 +34,6 @@ const findUp = require('find-up');
 // when running without hoisting
 addResolvePath(__dirname);
 
-const depcheck = require('depcheck');
-
 option('updateSnapshot', {alias: 'u', boolean: true});
 
 task('clean', cleanTask(['lib-commonjs']));
@@ -48,24 +47,21 @@ task('build', series('ts'));
 
 task('rebuild', series('clean', 'build'));
 
-task('depcheck', async () => {
-  const depcheckConfig = path.join(process.cwd(), 'depcheck.config.js');
-  const userDepcheckOptions = fs.existsSync(depcheckConfig)
-    ? require(depcheckConfig)
-    : {};
-  const depcheckOptions = {
-    ...userDepcheckOptions,
-    specials: [depcheck.special.eslint, depcheck.special.jest],
-  };
+task('depcheck', () => {
+  const bin = path.join(
+    path.dirname(path.dirname(require.resolve('knip'))),
+    'bin',
+    'knip.js'
+  );
 
-  const result = await depcheck(process.cwd(), depcheckOptions);
-  if (Object.keys(result.missing).length !== 0) {
-    logger.error(
-      `The following dependencies are used, but not declared in "package.json": ` +
-        `${JSON.stringify(result.missing, null, 2)}`,
-    );
+  const result = spawnSync(process.execPath, [bin, '--include', 'unlisted'], {
+    cwd: process.cwd(),
+    stdio: 'inherit',
+  });
 
-    process.exit(1);
+  if (result.status !== 0) {
+    logger.error("knip found undeclared dependencies (see above)");
+    process.exit(result.status ?? 1);
   }
 });
 
