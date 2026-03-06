@@ -3,7 +3,7 @@
   "version": "0.0.54",
   "private": true,
   "scripts": {
-    "start": "npx @react-native-community/cli start --client-logs",
+    "start": "npx @react-native-community/cli rnx-start",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
     "windows": "npx @react-native-community/cli run-windows"
@@ -28,6 +28,7 @@
     "@rnw-scripts/just-task": "2.3.58",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.6",
+    "@rnx-kit/cli": "^1.1.0",
     "@types/node": "^22.14.0",
     "@types/react": "^19.2.0",
     "eslint": "^8.19.0",
@@ -35,6 +36,18 @@
     "prettier": "2.8.8",
     "react-test-renderer": "19.1.0",
     "@rnw-scripts/sample-custom-component": "0.0.1"
+  },
+  "rnx-kit": {
+    "bundle": {
+      "plugins": [
+        [
+          "@rnx-kit/metro-plugin-cyclic-dependencies-detector",
+          {
+            "throwOnError": false
+          }
+        ]
+      ]
+    }
   },
   "engines": {
     "node": ">= 22"
