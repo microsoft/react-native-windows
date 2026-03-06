@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Fix SHIFT+F10 keyboard shortcut for context menu in TextInput",
   "packageName": "react-native-windows",
   "email": "nitchaudhary@microsoft.com",
