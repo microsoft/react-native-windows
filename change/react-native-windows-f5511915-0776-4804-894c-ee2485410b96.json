@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "TextInputs are zero height if there is no value and no placeholder text",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
