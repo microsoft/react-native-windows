@@ -24,6 +24,7 @@
 #include "ContentIslandComponentView.h"
 #include "JSValueReader.h"
 #include "RootComponentView.h"
+#include "TooltipService.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
@@ -1310,6 +1311,11 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        // Dismiss any visible tooltips when scroll position changes, since
+        // scrolling moves child components and the tooltip would be left at
+        // the wrong position on screen.
+        TooltipService::GetCurrent(m_reactContext.Properties())->DismissAllTooltips();
+
         auto now = std::chrono::steady_clock::now();
         auto elapsed = std::chrono::duration_cast<std::chrono::duration<double>>(now - m_lastScrollEventTime).count();
 
