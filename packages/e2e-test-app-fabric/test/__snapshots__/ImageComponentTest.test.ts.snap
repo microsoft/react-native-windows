@@ -12,9 +12,8 @@ exports[`Image Tests A network Image example 1`] = `
     "_Props": {
       "Sources": [
         {
-          "Size": "6000, 5340",
-          "Type": "Local",
-          "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/very-large-image.png",
+          "Type": "Remote",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1",
         },
       ],
       "TestId": "image-network",
@@ -1937,7 +1936,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1950,7 +1949,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1963,7 +1962,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1976,63 +1975,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2049,7 +1992,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2062,7 +2005,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2075,7 +2018,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2088,7 +2031,63 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -3376,7 +3375,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -3389,7 +3388,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_selected@2x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_selected@2x.png",
             },
           ],
         },
@@ -3402,7 +3401,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_comment_normal@2x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_comment_normal@2x.png",
             },
           ],
         },
@@ -3415,7 +3414,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_comment_highlighted@2x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_comment_highlighted@2x.png",
             },
           ],
         },
