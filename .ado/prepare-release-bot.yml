@@ -73,7 +73,7 @@ jobs:
         - pwsh: Write-Host "##vso[task.setvariable variable=TargetBranch]$(Build.SourceBranchName)"
           displayName: Set target branch from source
 
-      - script: node packages/@rnw-scripts/prepare-release/src/prepareRelease.ts --branch $(TargetBranch) --no-color
+      - script: npx prepare-release --branch $(TargetBranch) --no-color
         displayName: Prepare Release
         env:
           GH_TOKEN: $(GitHubOAuthToken)
