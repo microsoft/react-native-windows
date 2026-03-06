@@ -5,7 +5,7 @@
  * @format
  */
 
-import { AutomationClient } from '@react-native-windows/automation-channel';
+import {AutomationClient} from '@react-native-windows/automation-channel';
 
 /**
  * Schema of tree dumped node
@@ -45,7 +45,7 @@ export type ComponentNode = {
   Type: string;
   _Props?: {
     TestId?: string;
-    Sources?: [{ Uri?: string }];
+    Sources?: [{Uri?: string}];
   };
   __Children?: [ComponentNode];
 };
@@ -153,7 +153,7 @@ function removeGuidsFromImageSourcesHelper(node: ComponentNode) {
           // becomes
           // <localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png
           source.Uri = source.Uri.replace(
-            new RegExp(`file://${packagesPath}.*\\\\Bundle\\\\assets\?`),
+            new RegExp(`file://${packagesPath}.*\\\\Bundle\\\\assets?`),
             '<localOrBundlerUri>',
           );
 
