@@ -1,54 +1,76 @@
 name: $(Date:yyyyMMdd).$(Rev:r)
 
-# Triggers are configured in the ADO pipeline UI:
-# - CI triggers on pushes to main and *-stable branches
-# - Scheduled triggers for daily runs
-# - Manual runs with optional branch override
+# Minimal probe pipeline to test GitHub permissions for prepare-release bot.
+# Tests: branch push, PR create via gh CLI, PR close, branch cleanup.
 trigger: none
 pr: none
 
-parameters:
-  - name: targetBranch
-    displayName: Target branch for version bump (use default to use pipeline source branch)
-    type: string
-    default: (source branch)
-    values:
-      - (source branch)
-      - main
-      - 0.82-stable
-      - 0.81-stable
-      - 0.80-stable
-      - 0.74-stable
-
 jobs:
-  - job: PrepareRelease
-    displayName: Prepare Release Bot
+  - job: ProbePermissions
+    displayName: Test GitHub Permissions
     pool:
       vmImage: windows-latest
-    timeoutInMinutes: 30
+    timeoutInMinutes: 10
 
     steps:
-      - template: templates/checkout-full.yml
-        parameters:
-          persistCredentials: true
+      - checkout: self
+        persistCredentials: true
+
+      - script: |
+          echo "Build.BuildId = $(Build.BuildId)"
+          echo "Build.SourceBranch = $(Build.SourceBranch)"
+          echo "Build.SourceBranchName = $(Build.SourceBranchName)"
+          git --version
+          gh --version
+        displayName: Show environment info
 
       - script: |
           git config user.name "React-Native-Windows Bot"
           git config user.email "53619745+rnbot@users.noreply.github.com"
         displayName: Configure Git Identity
 
-      - template: templates/prepare-js-env.yml
-        parameters:
-          agentImage: HostedImage
+      # Extract OAuth token from git extraheader (set by persistCredentials)
+      - pwsh: |
+          $headerLine = git config --get-regexp "http.*\.extraheader" 2>$null | Select-Object -First 1
+          if (-not $headerLine) {
+            Write-Host "##[error]No HTTP extraheader found. persistCredentials may not be working."
+            exit 1
+          }
+          # The header value is "AUTHORIZATION: basic <base64>" where base64 decodes to ":<token>"
+          $parts = $headerLine -split '\s+', 2
+          $headerValue = $parts[1]  # "AUTHORIZATION: basic <base64>"
+          $base64 = ($headerValue -split '\s+')[-1]
+          $decoded = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($base64))
+          $token = $decoded.TrimStart(':')
+          Write-Host "Extracted OAuth token (length=$($token.Length))"
+          Write-Host "##vso[task.setvariable variable=GH_TOKEN;issecret=true]$token"
+        displayName: Extract GitHub OAuth token
 
-      - ${{ if ne(parameters.targetBranch, '(source branch)') }}:
-        - script: npx prepare-release --branch ${{ parameters.targetBranch }} --no-color
-          displayName: Prepare Release
-          env:
-            GH_TOKEN: $(githubAuthToken)
+      # Test 1: Create and push a branch
+      - script: |
+          git checkout -b probe/prepare-release-test-$(Build.BuildId)
+          echo probe $(Build.BuildId) > probe-test.txt
+          git add probe-test.txt
+          git commit -m "chore: prepare-release permission probe (***NO_CI***)"
+          git push origin HEAD
+          echo Branch pushed successfully.
+        displayName: "Test 1: Push branch"
 
-      - ${{ else }}:
-        - script: npx prepare-release --branch $(Build.SourceBranchName) --no-color
-          displayName: Prepare Release
-          env:
-            GH_TOKEN: $(githubAuthToken)
+      # Test 2: Create a draft PR using gh CLI
+      - script: |
+          gh pr create --head probe/prepare-release-test-$(Build.BuildId) --base main --title "Probe PR $(Build.BuildId)" --body "Automation probe - will be closed immediately." --draft --repo microsoft/react-native-windows
+        displayName: "Test 2: Create draft PR via gh CLI"
+        env:
+          GH_TOKEN: $(GH_TOKEN)
+
+      # Test 3: Close the PR
+      - script: |
+          gh pr close probe/prepare-release-test-$(Build.BuildId) --repo microsoft/react-native-windows
+        displayName: "Test 3: Close draft PR"
+        env:
+          GH_TOKEN: $(GH_TOKEN)
+
+      # Cleanup: delete the remote branch
+      - script: git push origin --delete probe/prepare-release-test-$(Build.BuildId)
+        displayName: "Cleanup: Delete probe branch"
+        condition: always()
