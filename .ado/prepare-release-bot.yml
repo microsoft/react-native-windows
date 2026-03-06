@@ -21,6 +21,8 @@ jobs:
         displayName: Configure Git Identity
 
       - template: templates/prepare-js-env.yml
+        parameters:
+          agentImage: HostedImage
 
       - script: npx prepare-release --branch $(Build.SourceBranchName) --no-color
         displayName: Prepare Release
