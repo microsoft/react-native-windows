@@ -354,7 +354,6 @@ extends:
           - task: PublishSymbols@2
             displayName: 'Publish Symbols to Microsoft Symbol Server'
             enabled: true
-            continueOnError: true
             inputs:
               UseNetCoreClientTool: true
               ConnectedServiceName: Office-React-Native-Windows-Bot
