@@ -256,10 +256,6 @@ export function generate(
     rncodegenPath,
     'lib/generators/modules/GenerateModuleH',
   )).generate;
-  const generateJsiModuleCpp = require(path.resolve(
-    rncodegenPath,
-    'lib/generators/modules/GenerateModuleCpp',
-  )).generate;
   const generatorPropsH = require(path.resolve(
     rncodegenPath,
     'lib/generators/components/GeneratePropsH',
@@ -305,7 +301,6 @@ export function generate(
 
   if (modulesCxx) {
     moduleGenerators.push(generateJsiModuleH);
-    moduleGenerators.push(generateJsiModuleCpp);
   }
 
   if (modulesTypeScriptTypes) {

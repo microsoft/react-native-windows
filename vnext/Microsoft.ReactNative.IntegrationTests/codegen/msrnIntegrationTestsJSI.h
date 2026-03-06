@@ -15,201 +15,135 @@
 namespace facebook::react {
 
 
-  class JSI_EXPORT NativeMySimpleTurboModuleCxxCxxSpecJSI : public TurboModule {
-protected:
-  NativeMySimpleTurboModuleCxxCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
-  virtual void logAction(jsi::Runtime &rt, jsi::String actionName, jsi::Value value) = 0;
-  virtual void voidFunc(jsi::Runtime &rt) = 0;
-  virtual bool getBool(jsi::Runtime &rt, bool arg) = 0;
-  virtual double getNumber(jsi::Runtime &rt, double arg) = 0;
-  virtual jsi::String getString(jsi::Runtime &rt, jsi::String arg) = 0;
-  virtual jsi::Array getArray(jsi::Runtime &rt, jsi::Array arg) = 0;
-  virtual jsi::Object getObject(jsi::Runtime &rt, jsi::Object arg) = 0;
-  virtual jsi::Object getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) = 0;
-  virtual void getValueWithCallback(jsi::Runtime &rt, jsi::Function callback) = 0;
-  virtual jsi::Value getValueWithPromise(jsi::Runtime &rt, bool error) = 0;
-
-};
-
 template <typename T>
 class JSI_EXPORT NativeMySimpleTurboModuleCxxCxxSpec : public TurboModule {
 public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
   static constexpr std::string_view kModuleName = "MySimpleTurboModuleCxx";
 
 protected:
-  NativeMySimpleTurboModuleCxxCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeMySimpleTurboModuleCxxCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
+  NativeMySimpleTurboModuleCxxCxxSpec(std::shared_ptr<CallInvoker> jsInvoker) : TurboModule(std::string{NativeMySimpleTurboModuleCxxCxxSpec::kModuleName}, jsInvoker) {
+    methodMap_["getConstants"] = MethodMetadata {.argCount = 0, .invoker = __getConstants};
+    methodMap_["logAction"] = MethodMetadata {.argCount = 2, .invoker = __logAction};
+    methodMap_["voidFunc"] = MethodMetadata {.argCount = 0, .invoker = __voidFunc};
+    methodMap_["getBool"] = MethodMetadata {.argCount = 1, .invoker = __getBool};
+    methodMap_["getNumber"] = MethodMetadata {.argCount = 1, .invoker = __getNumber};
+    methodMap_["getString"] = MethodMetadata {.argCount = 1, .invoker = __getString};
+    methodMap_["getArray"] = MethodMetadata {.argCount = 1, .invoker = __getArray};
+    methodMap_["getObject"] = MethodMetadata {.argCount = 1, .invoker = __getObject};
+    methodMap_["getValue"] = MethodMetadata {.argCount = 3, .invoker = __getValue};
+    methodMap_["getValueWithCallback"] = MethodMetadata {.argCount = 1, .invoker = __getValueWithCallback};
+    methodMap_["getValueWithPromise"] = MethodMetadata {.argCount = 1, .invoker = __getValueWithPromise};
+  }
+  
 private:
-  class Delegate : public NativeMySimpleTurboModuleCxxCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeMySimpleTurboModuleCxxCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+  static jsi::Value __getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::getConstants) == 1,
+      "Expected getConstants(...) to have 1 parameters");
+    return bridging::callFromJs<jsi::Object>(rt, &T::getConstants,  static_cast<NativeMySimpleTurboModuleCxxCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));
+  }
 
-    }
+  static jsi::Value __logAction(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::logAction) == 3,
+      "Expected logAction(...) to have 3 parameters");
+    bridging::callFromJs<void>(rt, &T::logAction,  static_cast<NativeMySimpleTurboModuleCxxCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt),
+      count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : jsi::Value(rt, args[1]));return jsi::Value::undefined();
+  }
 
-    jsi::Object getConstants(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getConstants) == 1,
-          "Expected getConstants(...) to have 1 parameters");
+  static jsi::Value __voidFunc(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::voidFunc) == 1,
+      "Expected voidFunc(...) to have 1 parameters");
+    bridging::callFromJs<void>(rt, &T::voidFunc,  static_cast<NativeMySimpleTurboModuleCxxCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));return jsi::Value::undefined();
+  }
 
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getConstants, jsInvoker_, instance_);
-    }
-    void logAction(jsi::Runtime &rt, jsi::String actionName, jsi::Value value) override {
-      static_assert(
-          bridging::getParameterCount(&T::logAction) == 3,
-          "Expected logAction(...) to have 3 parameters");
+  static jsi::Value __getBool(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::getBool) == 2,
+      "Expected getBool(...) to have 2 parameters");
+    return bridging::callFromJs<bool>(rt, &T::getBool,  static_cast<NativeMySimpleTurboModuleCxxCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool());
+  }
 
-      return bridging::callFromJs<void>(
-          rt, &T::logAction, jsInvoker_, instance_, std::move(actionName), std::move(value));
-    }
-    void voidFunc(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::voidFunc) == 1,
-          "Expected voidFunc(...) to have 1 parameters");
+  static jsi::Value __getNumber(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::getNumber) == 2,
+      "Expected getNumber(...) to have 2 parameters");
+    return bridging::callFromJs<double>(rt, &T::getNumber,  static_cast<NativeMySimpleTurboModuleCxxCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber());
+  }
 
-      return bridging::callFromJs<void>(
-          rt, &T::voidFunc, jsInvoker_, instance_);
-    }
-    bool getBool(jsi::Runtime &rt, bool arg) override {
-      static_assert(
-          bridging::getParameterCount(&T::getBool) == 2,
-          "Expected getBool(...) to have 2 parameters");
+  static jsi::Value __getString(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::getString) == 2,
+      "Expected getString(...) to have 2 parameters");
+    return bridging::callFromJs<jsi::String>(rt, &T::getString,  static_cast<NativeMySimpleTurboModuleCxxCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt));
+  }
 
-      return bridging::callFromJs<bool>(
-          rt, &T::getBool, jsInvoker_, instance_, std::move(arg));
-    }
-    double getNumber(jsi::Runtime &rt, double arg) override {
-      static_assert(
-          bridging::getParameterCount(&T::getNumber) == 2,
-          "Expected getNumber(...) to have 2 parameters");
+  static jsi::Value __getArray(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::getArray) == 2,
+      "Expected getArray(...) to have 2 parameters");
+    return bridging::callFromJs<jsi::Array>(rt, &T::getArray,  static_cast<NativeMySimpleTurboModuleCxxCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt).asArray(rt));
+  }
 
-      return bridging::callFromJs<double>(
-          rt, &T::getNumber, jsInvoker_, instance_, std::move(arg));
-    }
-    jsi::String getString(jsi::Runtime &rt, jsi::String arg) override {
-      static_assert(
-          bridging::getParameterCount(&T::getString) == 2,
-          "Expected getString(...) to have 2 parameters");
+  static jsi::Value __getObject(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::getObject) == 2,
+      "Expected getObject(...) to have 2 parameters");
+    return bridging::callFromJs<jsi::Object>(rt, &T::getObject,  static_cast<NativeMySimpleTurboModuleCxxCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt));
+  }
 
-      return bridging::callFromJs<jsi::String>(
-          rt, &T::getString, jsInvoker_, instance_, std::move(arg));
-    }
-    jsi::Array getArray(jsi::Runtime &rt, jsi::Array arg) override {
-      static_assert(
-          bridging::getParameterCount(&T::getArray) == 2,
-          "Expected getArray(...) to have 2 parameters");
+  static jsi::Value __getValue(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::getValue) == 4,
+      "Expected getValue(...) to have 4 parameters");
+    return bridging::callFromJs<jsi::Object>(rt, &T::getValue,  static_cast<NativeMySimpleTurboModuleCxxCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber(),
+      count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asString(rt),
+      count <= 2 ? throw jsi::JSError(rt, "Expected argument in position 2 to be passed") : args[2].asObject(rt));
+  }
 
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::getArray, jsInvoker_, instance_, std::move(arg));
-    }
-    jsi::Object getObject(jsi::Runtime &rt, jsi::Object arg) override {
-      static_assert(
-          bridging::getParameterCount(&T::getObject) == 2,
-          "Expected getObject(...) to have 2 parameters");
+  static jsi::Value __getValueWithCallback(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::getValueWithCallback) == 2,
+      "Expected getValueWithCallback(...) to have 2 parameters");
+    bridging::callFromJs<void>(rt, &T::getValueWithCallback,  static_cast<NativeMySimpleTurboModuleCxxCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt).asFunction(rt));return jsi::Value::undefined();
+  }
 
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getObject, jsInvoker_, instance_, std::move(arg));
-    }
-    jsi::Object getValue(jsi::Runtime &rt, double x, jsi::String y, jsi::Object z) override {
-      static_assert(
-          bridging::getParameterCount(&T::getValue) == 4,
-          "Expected getValue(...) to have 4 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getValue, jsInvoker_, instance_, std::move(x), std::move(y), std::move(z));
-    }
-    void getValueWithCallback(jsi::Runtime &rt, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::getValueWithCallback) == 2,
-          "Expected getValueWithCallback(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::getValueWithCallback, jsInvoker_, instance_, std::move(callback));
-    }
-    jsi::Value getValueWithPromise(jsi::Runtime &rt, bool error) override {
-      static_assert(
-          bridging::getParameterCount(&T::getValueWithPromise) == 2,
-          "Expected getValueWithPromise(...) to have 2 parameters");
-
-      return bridging::callFromJs<jsi::Value>(
-          rt, &T::getValueWithPromise, jsInvoker_, instance_, std::move(error));
-    }
-
-  private:
-    friend class NativeMySimpleTurboModuleCxxCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
+  static jsi::Value __getValueWithPromise(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+    static_assert(
+      bridging::getParameterCount(&T::getValueWithPromise) == 2,
+      "Expected getValueWithPromise(...) to have 2 parameters");
+    return bridging::callFromJs<jsi::Value>(rt, &T::getValueWithPromise,  static_cast<NativeMySimpleTurboModuleCxxCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule),
+      count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asBool());
+  }
 };
 
-
-  class JSI_EXPORT NativeMyTrivialTurboModuleCxxSpecJSI : public TurboModule {
-protected:
-  NativeMyTrivialTurboModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void startFromJS(jsi::Runtime &rt) = 0;
-
-};
 
 template <typename T>
 class JSI_EXPORT NativeMyTrivialTurboModuleCxxSpec : public TurboModule {
 public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
   static constexpr std::string_view kModuleName = "MyTrivialTurboModule";
 
 protected:
-  NativeMyTrivialTurboModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeMyTrivialTurboModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
+  NativeMyTrivialTurboModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker) : TurboModule(std::string{NativeMyTrivialTurboModuleCxxSpec::kModuleName}, jsInvoker) {
+    methodMap_["startFromJS"] = MethodMetadata {.argCount = 0, .invoker = __startFromJS};
+  }
+  
 private:
-  class Delegate : public NativeMyTrivialTurboModuleCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeMyTrivialTurboModuleCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void startFromJS(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::startFromJS) == 1,
-          "Expected startFromJS(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::startFromJS, jsInvoker_, instance_);
-    }
-
-  private:
-    friend class NativeMyTrivialTurboModuleCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
+  static jsi::Value __startFromJS(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* /*args*/, size_t /*count*/) {
+    static_assert(
+      bridging::getParameterCount(&T::startFromJS) == 1,
+      "Expected startFromJS(...) to have 1 parameters");
+    bridging::callFromJs<void>(rt, &T::startFromJS,  static_cast<NativeMyTrivialTurboModuleCxxSpec*>(&turboModule)->jsInvoker_, static_cast<T*>(&turboModule));return jsi::Value::undefined();
+  }
 };
 
 } // namespace facebook::react

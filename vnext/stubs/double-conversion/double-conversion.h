@@ -32,6 +32,11 @@ class StringBuilder {
     return m_buffer; // Returns char* that will convert to std::string
   }
 
+  void AddCharacter(char c) {
+    DCHECK(c != '\0');
+    m_ss.put(c);
+  }
+
   char *m_buffer;
   std::stringstream m_ss;
 };

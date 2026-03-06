@@ -106,7 +106,7 @@ const AccessibilityInfo = {
             reject,
           );
         } else {
-          reject(null);
+          reject(new Error('NativeAccessibilityManagerIOS is not available'));
         }
       });
     }
@@ -126,7 +126,11 @@ const AccessibilityInfo = {
         if (NativeAccessibilityInfoAndroid?.isGrayscaleEnabled != null) {
           NativeAccessibilityInfoAndroid.isGrayscaleEnabled(resolve);
         } else {
-          reject(null);
+          reject(
+            new Error(
+              'NativeAccessibilityInfoAndroid.isGrayscaleEnabled is not available',
+            ),
+          );
         }
       });
     } else if (Platform.OS === 'windows') {
@@ -139,7 +143,7 @@ const AccessibilityInfo = {
             reject,
           );
         } else {
-          reject(null);
+          reject(new Error('AccessibilityInfo native module is not available'));
         }
       });
     }
@@ -159,7 +163,11 @@ const AccessibilityInfo = {
         if (NativeAccessibilityInfoAndroid?.isInvertColorsEnabled != null) {
           NativeAccessibilityInfoAndroid.isInvertColorsEnabled(resolve);
         } else {
-          reject(null);
+          reject(
+            new Error(
+              'NativeAccessibilityInfoAndroid.isInvertColorsEnabled is not available',
+            ),
+          );
         }
       });
     } else if (Platform.OS === 'windows') {
@@ -172,7 +180,7 @@ const AccessibilityInfo = {
             reject,
           );
         } else {
-          reject(null);
+          reject(new Error('AccessibilityInfo native module is not available'));
         }
       });
     }
@@ -192,7 +200,7 @@ const AccessibilityInfo = {
         if (NativeAccessibilityInfo != null) {
           NativeAccessibilityInfo.isReduceMotionEnabled(resolve);
         } else {
-          reject(null);
+          reject(new Error('AccessibilityInfo native module is not available'));
         }
       } else {
         if (NativeAccessibilityManagerIOS != null) {
@@ -201,7 +209,7 @@ const AccessibilityInfo = {
             reject,
           );
         } else {
-          reject(null);
+          reject(new Error('NativeAccessibilityManagerIOS is not available'));
         }
       }
     });
@@ -219,7 +227,11 @@ const AccessibilityInfo = {
         if (NativeAccessibilityInfo?.isHighTextContrastEnabled != null) {
           NativeAccessibilityInfo.isHighTextContrastEnabled(resolve);
         } else {
-          reject(null);
+          reject(
+            new Error(
+              'NativeAccessibilityInfoAndroid.isHighTextContrastEnabled is not available',
+            ),
+          );
         }
       } else {
         return Promise.resolve(false);
@@ -247,7 +259,11 @@ const AccessibilityInfo = {
             reject,
           );
         } else {
-          reject(null);
+          reject(
+            new Error(
+              'NativeAccessibilityManagerIOS.getCurrentDarkerSystemColorsState is not available',
+            ),
+          );
         }
       }
     });
@@ -275,7 +291,11 @@ const AccessibilityInfo = {
             reject,
           );
         } else {
-          reject(null);
+          reject(
+            new Error(
+              'NativeAccessibilityManagerIOS.getCurrentPrefersCrossFadeTransitionsState is not available',
+            ),
+          );
         }
       }
     });
@@ -300,7 +320,7 @@ const AccessibilityInfo = {
             reject,
           );
         } else {
-          reject(null);
+          reject(new Error('NativeAccessibilityManagerIOS is not available'));
         }
       });
     }
@@ -320,7 +340,7 @@ const AccessibilityInfo = {
         if (NativeAccessibilityInfo != null) {
           NativeAccessibilityInfo.isTouchExplorationEnabled(resolve);
         } else {
-          reject(null);
+          reject(new Error('NativeAccessibilityInfoAndroid is not available'));
         }
       } else {
         if (NativeAccessibilityManagerIOS != null) {
@@ -329,7 +349,7 @@ const AccessibilityInfo = {
             reject,
           );
         } else {
-          reject(null);
+          reject(new Error('NativeAccessibilityManagerIOS is not available'));
         }
       }
     });
@@ -354,10 +374,18 @@ const AccessibilityInfo = {
         ) {
           NativeAccessibilityInfo.isAccessibilityServiceEnabled(resolve);
         } else {
-          reject(null);
+          reject(
+            new Error(
+              'NativeAccessibilityInfoAndroid.isAccessibilityServiceEnabled is not available',
+            ),
+          );
         }
       } else {
-        reject(null);
+        reject(
+          new Error(
+            'isAccessibilityServiceEnabled is only available on Android',
+          ),
+        );
       }
     });
   },
