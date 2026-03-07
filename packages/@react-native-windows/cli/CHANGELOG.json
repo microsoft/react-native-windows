@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2026 00:07:43 GMT",
+      "version": "0.74.12",
+      "tag": "@react-native-windows/cli_v0.74.12",
+      "comments": {
+        "none": [
+          {
+            "author": "yicyao@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "d3ed6d4a5e4e632c3cbbb0d912e07f6bf9fe20d2",
+            "comment": "Scope various foo and bar test package to rnw-scripts.\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Sep 2025 15:31:50 GMT",
       "version": "0.74.12",
       "tag": "@react-native-windows/cli_v0.74.12",
