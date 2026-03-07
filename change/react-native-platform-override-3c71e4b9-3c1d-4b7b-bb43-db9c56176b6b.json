@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "refactor: replace depcheck with knip",
-  "packageName": "react-native-platform-override",
-  "email": "PHILLIPS71@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

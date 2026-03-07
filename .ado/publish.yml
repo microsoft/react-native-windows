@@ -151,7 +151,6 @@ extends:
               BuildDropPath: $(System.DefaultWorkingDirectory)
 
           templateContext:
-            type: releaseJob
             outputs:
               - output: pipelineArtifact
                 displayName: 'Publish npm pack artifacts'
@@ -269,15 +268,6 @@ extends:
 
             - template: .ado/templates/component-governance.yml@self
 
-            # Make symbols available through http://symweb.
-            - task: PublishSymbols@2
-              displayName: Publish symbols
-              env:
-                ARTIFACTSERVICES_SYMBOL_ACCOUNTNAME: microsoft
-              inputs:
-                SearchPattern: vnext/target/**/*.pdb
-                SymbolServerType: TeamServices
-
             templateContext:
               sdl:
                 binskim:
@@ -363,9 +353,10 @@ extends:
           # Symbol Publishing for Work Item 59264834 - MSRC Compliance
           - task: PublishSymbols@2
             displayName: 'Publish Symbols to Microsoft Symbol Server'
-            env:
-              ARTIFACTSERVICES_SYMBOL_ACCOUNTNAME: microsoft
+            enabled: true
             inputs:
+              UseNetCoreClientTool: true
+              ConnectedServiceName: Office-React-Native-Windows-Bot
               SymbolsFolder: '$(System.DefaultWorkingDirectory)\NugetRoot'
               SearchPattern: '**/*.pdb'
               SymbolServerType: 'TeamServices'
@@ -376,7 +367,6 @@ extends:
               TreatNotIndexedAsWarning: false
 
           templateContext:
-            type: releaseJob
             sdl:
               binskim:
                 analyzeTargetGlob: '$(System.DefaultWorkingDirectory)\NugetRoot\**\Microsoft.ReactNative\Microsoft.ReactNative.dll;$(System.DefaultWorkingDirectory)\NugetRoot\**\React.Windows.Desktop.DLL\react-native-win32.dll'

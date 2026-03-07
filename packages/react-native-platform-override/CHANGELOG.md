@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Tue, 13 Jan 2026 13:00:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Mar 2026 04:06:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1020
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- refactor: replace depcheck with knip (PHILLIPS71@users.noreply.github.com)
 
 ## 0.0.0-canary.1019
 

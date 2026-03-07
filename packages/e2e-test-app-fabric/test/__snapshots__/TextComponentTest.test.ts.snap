@@ -943,7 +943,7 @@ exports[`Text Tests Text can have inline views/images 1`] = `
               "Scale": 3,
               "Size": "33, 33",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/flux@3x.png",
+              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/flux@3x.png",
             },
           ],
         },

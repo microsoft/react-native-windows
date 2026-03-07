@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-commands
 
-<!-- This log was last generated on Wed, 04 Mar 2026 22:34:21 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Mar 2026 04:06:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1034
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- Update dumpVisualTree to handle uris from rnx-kit asset plugin (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1034
 
 ## 0.0.0-canary.1033
 

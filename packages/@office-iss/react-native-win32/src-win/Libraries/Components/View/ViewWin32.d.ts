@@ -10,7 +10,7 @@
 import type * as React from 'react';
 import {Constructor} from 'react-native/types/private/Utilities';
 import {ViewProps} from './ViewPropTypes';
-import {NativeMethods} from 'react-native/types/public/ReactNativeTypes';
+import {HostInstance} from 'react-native/types/public/ReactNativeTypes';
 
 /**
  * The most fundamental component for building UI, View is a container that supports layout with flexbox, style, some touch handling,
@@ -19,7 +19,7 @@ import {NativeMethods} from 'react-native/types/public/ReactNativeTypes';
  * whether that is a UIView, <div>, android.view, etc.
  */
 declare class ViewWin32Component extends React.Component<ViewProps> {}
-declare const ViewWin32Base: Constructor<NativeMethods> &
+declare const ViewWin32Base: Constructor<HostInstance> &
   typeof ViewWin32Component;
 export class ViewWin32 extends ViewWin32Base {
   /**

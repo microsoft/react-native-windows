@@ -5,13 +5,13 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.83.0-nightly-20251012-6f482708b",
+  "baseVersion": "0.83.0-nightly-20251104-502efe1cc",
   "overrides": [
     {
       "type": "copy",
       "file": "js/examples/ContentURLAndroid/ContentURLAndroid.js",
       "baseFile": "packages/rn-tester/js/examples/ContentURLAndroid/ContentURLAndroid.js",
-      "baseHash": "f85a06b7cdb2820871b524a0946f23738aa4eabe",
+      "baseHash": "99a33bffbea3e776edbfca9f26de146995cbe9d0",
       "issue": 14844
     },
     {
@@ -156,7 +156,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "aeb0275507e7c508cdf7c2ceec49f9e95ef4e1ec"
+      "baseHash": "419d588f738d7f9fc252019e74ca7bc92c6a03bf"
     }
   ]
 }

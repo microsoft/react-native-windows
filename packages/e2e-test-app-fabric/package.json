@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npx @react-native-community/cli start",
+    "start": "npx @react-native-community/cli rnx-start",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
@@ -22,14 +22,14 @@
     "perf:create": "node ../../vnext/Scripts/perf/create-perf-test.js"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "0.0.0-canary.1033",
+    "@react-native-windows/automation-channel": "0.0.0-canary.1034",
     "@react-native-windows/tester": "0.0.1",
     "@types/react": "^19.2.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^19.2.0",
-    "react-native": "0.83.0-nightly-20251012-6f482708b",
-    "react-native-windows": "^0.0.0-canary.1033"
+    "react-native": "0.83.0-nightly-20251104-502efe1cc",
+    "react-native-windows": "^0.0.0-canary.1034"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -38,18 +38,18 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "20.0.0",
-    "@react-native/metro-config": "0.83.0-nightly-20251012-6f482708b",
     "@react-native-windows/perf-testing": "0.0.0-canary.1033",
-    "@react-native-windows/automation": "0.0.0-canary.1033",
-    "@react-native-windows/automation-commands": "0.0.0-canary.1033",
+    "@react-native/metro-config": "0.83.0-nightly-20251104-502efe1cc",
+    "@react-native-windows/automation": "0.0.0-canary.1034",
+    "@react-native-windows/automation-commands": "0.0.0-canary.1034",
     "@rnw-scripts/babel-node-config": "2.3.3",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",
     "@rnw-scripts/just-task": "2.3.58",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.6",
-    "@rnx-kit/cli": "^0.16.10",
-    "@rnx-kit/jest-preset": "^0.1.16",
+    "@rnx-kit/cli": "^1.1.0",
+    "@rnx-kit/jest-preset": "^0.3.1",
     "@types/jest": "^29.2.2",
     "@types/node": "^22.14.0",
     "@types/react": "^19.2.0",
@@ -60,6 +60,18 @@
     "react-test-renderer": "19.1.0",
     "sanitize-filename": "^1.6.3",
     "typescript": "5.0.4"
+  },
+  "rnx-kit": {
+    "bundle": {
+      "plugins": [
+        [
+          "@rnx-kit/metro-plugin-cyclic-dependencies-detector",
+          {
+            "throwOnError": false
+          }
+        ]
+      ]
+    }
   },
   "engines": {
     "node": ">= 22"
