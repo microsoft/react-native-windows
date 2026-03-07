@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2026 00:07:11 GMT",
+      "version": "0.80.6",
+      "tag": "react-native-windows_v0.80.6",
+      "comments": {
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b376c7147ea2b8acddb7b9de9d117df5014d2861",
+            "comment": "Fix watson bug"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Dec 2025 14:58:52 GMT",
       "version": "0.80.6",
       "tag": "react-native-windows_v0.80.6",
