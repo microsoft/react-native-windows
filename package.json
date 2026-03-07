@@ -37,6 +37,7 @@
     "@rnw-scripts/format-files": "1.1.59",
     "@rnw-scripts/integrate-rn": "1.4.65",
     "@rnw-scripts/just-task": "2.3.56",
+    "@rnw-scripts/prepare-release": "*",
     "@rnw-scripts/promote-release": "2.1.63",
     "@rnw-scripts/stamp-version": "0.0.0",
     "@rnw-scripts/take-screenshot": "1.1.63",
