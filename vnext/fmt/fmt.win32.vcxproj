@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4A98E8E8-F0B2-4F45-8A0E-9F4C7A81A239}</ProjectGuid>
+    <ProjectName>fmt.win32</ProjectName>
+    <Keyword>StaticLibrary</Keyword>
+    <ReactTargetWin32>true</ReactTargetWin32>
+  </PropertyGroup>
+  <Import Project="fmt.vcxproj" />
+</Project>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BFF1EAC8-4C70-4A55-9A88-3810052E8FBA}</ProjectGuid>
+    <ProjectName>Folly.win32</ProjectName>
+    <Keyword>StaticLibrary</Keyword>
+    <ReactTargetWin32>true</ReactTargetWin32>
+  </PropertyGroup>
+  <Import Project="Folly.vcxproj" />
+</Project>
