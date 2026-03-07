@@ -307,6 +307,7 @@
     <ClInclude Include="Utils\UwpPreparedScriptStore.h" />
     <ClInclude Include="Utils\UwpScriptStore.h" />
     <ClInclude Include="Utils\IcuUtils.h" />
+    <ClInclude Include="Utils\LocalizedStrings.h" />
     <ClInclude Include="Utils\ValueUtils.h" />
     <ClInclude Include="Utils\XamlIslandUtils.h" />
     <ClInclude Include="Utils\XamlUtils.h" />
@@ -372,6 +373,7 @@
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="Utils\KeyboardUtils.cpp" />
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
+    <ClCompile Include="Utils\LocalizedStrings.cpp" />
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" />
     <ClCompile Include="Utils\UwpScriptStore.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
@@ -410,6 +412,10 @@
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
     </ResourceCompile>
+    <ResourceCompile Include="Resources\Strings.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Resources\StringResourceIds.h" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />

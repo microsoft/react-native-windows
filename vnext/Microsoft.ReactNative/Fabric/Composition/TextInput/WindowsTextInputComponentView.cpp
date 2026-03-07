@@ -8,6 +8,8 @@
 #include <AutoDraw.h>
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Fabric/platform/react/renderer/graphics/PlatformColorUtils.h>
+#include <Resources/StringResourceIds.h>
+#include <Utils/LocalizedStrings.h>
 #include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/textinput/TextInputState.h>
@@ -1900,7 +1902,7 @@ void WindowsTextInputComponentView::OnContextMenuKey(
 }
 
 void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept {
-  HMENU menu = CreatePopupMenu();
+  std::unique_ptr<std::remove_pointer_t<HMENU>, decltype(&DestroyMenu)> menu(CreatePopupMenu(), &DestroyMenu);
   if (!menu)
     return;
 
@@ -1913,15 +1915,20 @@ void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Founda
   bool isReadOnly = windowsTextInputProps().editable == false;
   bool canPaste = !isReadOnly && IsClipboardFormatAvailable(CF_UNICODETEXT);
 
-  AppendMenuW(menu, MF_STRING | (hasSelection && !isReadOnly ? 0 : MF_GRAYED), 1, L"Cut");
-  AppendMenuW(menu, MF_STRING | (hasSelection ? 0 : MF_GRAYED), 2, L"Copy");
-  AppendMenuW(menu, MF_STRING | (canPaste ? 0 : MF_GRAYED), 3, L"Paste");
-  AppendMenuW(menu, MF_STRING | (!isEmpty && !isReadOnly ? 0 : MF_GRAYED), 4, L"Select All");
+  auto cutStr = ::Microsoft::ReactNative::GetLocalizedString(IDS_CONTEXT_MENU_CUT);
+  auto copyStr = ::Microsoft::ReactNative::GetLocalizedString(IDS_CONTEXT_MENU_COPY);
+  auto pasteStr = ::Microsoft::ReactNative::GetLocalizedString(IDS_CONTEXT_MENU_PASTE);
+  auto selectAllStr = ::Microsoft::ReactNative::GetLocalizedString(IDS_CONTEXT_MENU_SELECT_ALL);
+
+  AppendMenuW(menu.get(), MF_STRING | (hasSelection && !isReadOnly ? 0 : MF_GRAYED), 1, cutStr.c_str());
+  AppendMenuW(menu.get(), MF_STRING | (hasSelection ? 0 : MF_GRAYED), 2, copyStr.c_str());
+  AppendMenuW(menu.get(), MF_STRING | (canPaste ? 0 : MF_GRAYED), 3, pasteStr.c_str());
+  AppendMenuW(menu.get(), MF_STRING | (!isEmpty && !isReadOnly ? 0 : MF_GRAYED), 4, selectAllStr.c_str());
 
   HWND hwnd = GetActiveWindow();
 
   int cmd = TrackPopupMenu(
-      menu,
+      menu.get(),
       TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD | TPM_NONOTIFY,
       static_cast<int>(position.X),
       static_cast<int>(position.Y),
@@ -1929,19 +1936,17 @@ void WindowsTextInputComponentView::ShowContextMenu(const winrt::Windows::Founda
       hwnd,
       NULL);
 
-  if (cmd == 1) { // Cut
+  if (cmd == 1) {
     m_textServices->TxSendMessage(WM_CUT, 0, 0, &res);
     OnTextUpdated();
-  } else if (cmd == 2) { // Copy
+  } else if (cmd == 2) {
     m_textServices->TxSendMessage(WM_COPY, 0, 0, &res);
-  } else if (cmd == 3) { // Paste
+  } else if (cmd == 3) {
     m_textServices->TxSendMessage(WM_PASTE, 0, 0, &res);
     OnTextUpdated();
-  } else if (cmd == 4) { // Select All
+  } else if (cmd == 4) {
     m_textServices->TxSendMessage(EM_SETSEL, 0, -1, &res);
   }
-
-  DestroyMenu(menu);
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

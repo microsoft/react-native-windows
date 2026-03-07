@@ -9,7 +9,9 @@
 
 #include <AutoDraw.h>
 #include <Fabric/ReactTaggedView.h>
+#include <Resources/StringResourceIds.h>
 #include <Utils/IcuUtils.h>
+#include <Utils/LocalizedStrings.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/ParagraphState.h>
@@ -829,7 +831,7 @@ void ParagraphComponentView::SetSelection(int32_t start, int32_t end) noexcept {
 }
 
 void ParagraphComponentView::ShowContextMenu() noexcept {
-  HMENU menu = CreatePopupMenu();
+  std::unique_ptr<std::remove_pointer_t<HMENU>, decltype(&DestroyMenu)> menu(CreatePopupMenu(), &DestroyMenu);
   if (!menu) {
     return;
   }
@@ -838,28 +840,26 @@ void ParagraphComponentView::ShowContextMenu() noexcept {
   const std::wstring utf16Text{facebook::react::WindowsTextLayoutManager::GetTransformedText(m_attributedStringBox)};
   const bool hasText = !utf16Text.empty();
 
-  // Add menu items (1 = Copy, 2 = Select All)
-  AppendMenuW(menu, MF_STRING | (hasSelection ? 0 : MF_GRAYED), 1, L"Copy");
-  AppendMenuW(menu, MF_STRING | (hasText ? 0 : MF_GRAYED), 2, L"Select All");
+  auto copyStr = ::Microsoft::ReactNative::GetLocalizedString(IDS_CONTEXT_MENU_COPY);
+  auto selectAllStr = ::Microsoft::ReactNative::GetLocalizedString(IDS_CONTEXT_MENU_SELECT_ALL);
 
-  // Get cursor position for menu placement
+  AppendMenuW(menu.get(), MF_STRING | (hasSelection ? 0 : MF_GRAYED), 1, copyStr.c_str());
+  AppendMenuW(menu.get(), MF_STRING | (hasText ? 0 : MF_GRAYED), 2, selectAllStr.c_str());
+
   POINT cursorPos;
   GetCursorPos(&cursorPos);
 
   const HWND hwnd = GetActiveWindow();
 
   const int cmd = TrackPopupMenu(
-      menu, TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD | TPM_NONOTIFY, cursorPos.x, cursorPos.y, 0, hwnd, NULL);
+      menu.get(), TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RETURNCMD | TPM_NONOTIFY, cursorPos.x, cursorPos.y, 0, hwnd, NULL);
 
   if (cmd == 1) {
-    // Copy
     CopySelectionToClipboard();
   } else if (cmd == 2) {
     SetSelection(0, static_cast<int32_t>(utf16Text.length()));
     DrawText();
   }
-
-  DestroyMenu(menu);
 }
 
 void ParagraphComponentView::OnKeyDown(

@@ -1,0 +1,12 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "StringResourceIds.h"
+
+STRINGTABLE
+BEGIN
+    IDS_CONTEXT_MENU_CUT        "Cut"
+    IDS_CONTEXT_MENU_COPY       "Copy"
+    IDS_CONTEXT_MENU_PASTE      "Paste"
+    IDS_CONTEXT_MENU_SELECT_ALL "Select All"
+END
