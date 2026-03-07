@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Implement overflow property support for Fabric architecture",
-  "packageName": "react-native-windows",
-  "email": "nitchaudhary@microsoft.com",
-  "dependentChangeType": "patch"
-}

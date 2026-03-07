@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Wed, 11 Feb 2026 16:10:54 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Mar 2026 04:08:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.3
+
+Sat, 07 Mar 2026 04:08:18 GMT
+
+### Patches
+
+- Generate fields to notify native if a JS event is being listened to (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.81.6 (30809111+acoates-ms@users.noreply.github.com)
+- Fix lifetime issue with codegen'd eventemitter args (30809111+acoates-ms@users.noreply.github.com)
+- Stop writing codegen files if it just changes new lines (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.2
 
