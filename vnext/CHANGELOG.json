@@ -2,6 +2,93 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2026 04:08:17 GMT",
+      "version": "0.81.5",
+      "tag": "react-native-windows_v0.81.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Fix issue when creating a ContentIslandComponentView when the root ReactNativeIsland is not connected"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "TextInputs are zero height if there is no value and no placeholder text"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Implement ReactNativeWindow"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Implement overflow property support for Fabric architecture"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Fix SHIFT+F10 keyboard shortcut for context menu in TextInput"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Integrate 0.81.6"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Fix TextInput selection crash and feedback loop"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Fix lifetime issue with codegen'd eventemitter args"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Generate fields to notify native if a JS event is being listened to"
+          },
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Fix XAML popup positioning and light dismiss in ScrollView (#15557)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.81.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.81.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.81.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Feb 2026 16:10:54 GMT",
       "version": "0.81.4",
       "tag": "react-native-windows_v0.81.4",

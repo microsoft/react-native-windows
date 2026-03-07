@@ -2,6 +2,47 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2026 04:08:18 GMT",
+      "version": "0.81.3",
+      "tag": "@react-native-windows/cli_v0.81.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Integrate 0.81.6"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Bump TS target"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.81.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.81.1",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "yicyao@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Scope various foo and bar test package to rnw-scripts.\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Feb 2026 16:10:55 GMT",
       "version": "0.81.2",
       "tag": "@react-native-windows/cli_v0.81.2",
