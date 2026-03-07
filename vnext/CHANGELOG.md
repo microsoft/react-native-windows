@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 04 Mar 2026 22:34:20 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Mar 2026 04:06:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1034
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- Integrate 0.83.0-nightly-20251104-502efe1cc (66076509+vineethkuttan@users.noreply.github.com)
+- Fix images not showing in test app (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.285
+- Bump @react-native-windows/codegen to v0.0.0-canary.131
+- Bump react-native-platform-override to v0.0.0-canary.1020
 
 ## 0.0.0-canary.1033
 

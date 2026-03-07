@@ -2,6 +2,33 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2026 04:06:59 GMT",
+      "version": "0.0.0-canary.307",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.307",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "a0e5dd17f852aca8dd005cb75b6cc2294d411bbd",
+            "comment": "Fix images not showing in test app"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "a0e5dd17f852aca8dd005cb75b6cc2294d411bbd",
+            "comment": "Integrate 0.83.0-nightly-20251104-502efe1cc"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1020",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Mar 2026 22:34:24 GMT",
       "version": "0.0.0-canary.306",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.306",
