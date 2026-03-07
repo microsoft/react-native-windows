@@ -1,7 +1,0 @@
-{
-  "comment": "adding fix for shadow in rounded box",
-  "type": "prerelease",
-  "packageName": "react-native-windows",
-  "email": "protikbiswas@microsoft.com",
-  "dependentChangeType": "patch"
-}

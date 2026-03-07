@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 16 Feb 2026 05:47:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Mar 2026 04:07:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.0-preview.13
+
+Sat, 07 Mar 2026 04:07:42 GMT
+
+### Changes
+
+- Fix TextInput selection crash and feedback loop (74712637+iamAbhi-916@users.noreply.github.com)
+- manually updates RNW to preview 12 (74712637+iamAbhi-916@users.noreply.github.com)
+- adding fix for shadow in rounded box (protikbiswas@microsoft.com)
 
 ## 0.82.0-preview.11
 
