@@ -63,7 +63,7 @@ jobs:
       - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile
         displayName: yarn install
 
-      - script: npx lage build --scope @rnw-scripts/prepare-release
+      - script: npx lage build --scope @rnw-scripts/prepare-release --scope @rnw-scripts/beachball-config
         displayName: Build prepare-release and dependencies
 
       - ${{ if ne(parameters.targetBranch, '(source branch)') }}:
