@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2026 04:07:42 GMT",
+      "version": "0.82.0-preview.13",
+      "tag": "@react-native-windows/automation_v0.82.0-preview.13",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@react-native-windows/automation",
+            "commit": "72dd76c1c4a8a931426c6a69dc92d87a7dc4737d",
+            "comment": "manually updates RNW to preview 12"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.82.0-preview.13",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Feb 2026 05:47:16 GMT",
       "version": "0.82.0-preview.11",
       "tag": "@react-native-windows/automation_v0.82.0-preview.11",

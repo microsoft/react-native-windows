@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2026 04:07:42 GMT",
+      "version": "0.82.0-preview.1",
+      "tag": "@react-native-windows/telemetry_v0.82.0-preview.1",
+      "comments": {
+        "none": [
+          {
+            "author": "yicyao@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "72dd76c1c4a8a931426c6a69dc92d87a7dc4737d",
+            "comment": "Fix telemetry test."
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Jan 2026 13:07:17 GMT",
       "version": "0.82.0-preview.1",
       "tag": "@react-native-windows/telemetry_v0.82.0-preview.1",
