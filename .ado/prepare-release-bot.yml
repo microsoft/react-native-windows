@@ -52,15 +52,25 @@ jobs:
           Write-Host "##vso[task.setvariable variable=GitHubOAuthToken;issecret=true]$token"
         displayName: Extract GitHub OAuth token
 
-      - template: templates/prepare-js-env.yml
-        parameters:
-          agentImage: HostedImage
+      - task: NodeTool@0
+        displayName: Set Node Version
+        inputs:
+          versionSpec: '24.x'
+
+      - script: if not exist %APPDATA%\npm (mkdir %APPDATA%\npm)
+        displayName: Ensure npm directory for npx commands
+
+      - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile
+        displayName: yarn install
+
+      - script: npx lage build --scope @rnw-scripts/prepare-release --scope @rnw-scripts/beachball-config
+        displayName: Build prepare-release and dependencies
 
       - ${{ if ne(parameters.targetBranch, '(source branch)') }}:
-        - script: echo ##vso[task.setvariable variable=TargetBranch]${{ parameters.targetBranch }}
+        - pwsh: Write-Host "##vso[task.setvariable variable=TargetBranch]${{ parameters.targetBranch }}"
           displayName: Set target branch from parameter
       - ${{ else }}:
-        - script: echo ##vso[task.setvariable variable=TargetBranch]$(Build.SourceBranchName)
+        - pwsh: Write-Host "##vso[task.setvariable variable=TargetBranch]$(Build.SourceBranchName)"
           displayName: Set target branch from source
 
       - script: npx prepare-release --branch $(TargetBranch) --no-color
