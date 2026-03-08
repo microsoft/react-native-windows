@@ -1,0 +1,699 @@
+{
+  "timestamp": "2026-04-01T09:52:43.764Z",
+  "branch": "unknown",
+  "commitSha": "unknown",
+  "suites": [
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\list\\SectionList.native-perf-test.ts",
+      "suiteName": "SectionList.native-perf-test.ts",
+      "snapshots": {
+        "List Components — Native Render Pipeline SectionList native mount 1": {
+          "metrics": {
+            "name": "SectionList native mount",
+            "meanDuration": 6.658689999580384,
+            "medianDuration": 6.504900008440018,
+            "stdDev": 0.5578793185297047,
+            "renderCount": 1,
+            "runs": 10,
+            "durations": [
+              6.384400010108948,
+              7.875100016593933,
+              6.401300013065338,
+              6.394400000572205,
+              7.334999978542328,
+              6.771200001239777,
+              6.608500003814697,
+              6.627799987792969,
+              6.103399991989136,
+              6.085799992084503
+            ],
+            "timestamp": "2026-03-25T09:11:17.694Z",
+            "nativeTimings": {
+              "fullPipeline": 6.504900008440018
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 20,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.6,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:11:17.697Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1494
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\list\\FlatList.native-perf-test.ts",
+      "suiteName": "FlatList.native-perf-test.ts",
+      "snapshots": {
+        "List Components — Native Render Pipeline FlatList native mount 1": {
+          "metrics": {
+            "name": "FlatList native mount",
+            "meanDuration": 9.108829998970032,
+            "medianDuration": 9.228249996900558,
+            "stdDev": 0.8543665552028276,
+            "renderCount": 1,
+            "runs": 10,
+            "durations": [
+              9.996599972248077,
+              7.9009000062942505,
+              8.30400002002716,
+              8.526000022888184,
+              9.10809999704361,
+              9.793299973011017,
+              9.348399996757507,
+              8.229200005531311,
+              9.370600044727325,
+              10.511199951171875
+            ],
+            "timestamp": "2026-03-25T09:11:26.174Z",
+            "nativeTimings": {
+              "fullPipeline": 9.228249996900558
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 20,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.6,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:11:26.176Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1288
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\interactive\\TouchableHighlight.native-perf-test.ts",
+      "suiteName": "TouchableHighlight.native-perf-test.ts",
+      "snapshots": {
+        "Interactive Components — Native Render Pipeline TouchableHighlight native mount 1": {
+          "metrics": {
+            "name": "TouchableHighlight native mount",
+            "meanDuration": 2.22730667591095,
+            "medianDuration": 2.0885000228881836,
+            "stdDev": 0.569642348560873,
+            "renderCount": 1,
+            "runs": 15,
+            "durations": [
+              2.189400017261505,
+              2.055299997329712,
+              2.143899977207184,
+              3.991699993610382,
+              2.5550000071525574,
+              2.0536999702453613,
+              2.0885000228881836,
+              2.524199962615967,
+              1.9000999927520752,
+              2.5004000067710876,
+              1.7630000114440918,
+              1.7075000405311584,
+              2.4169000387191772,
+              1.8182000517845154,
+              1.7018000483512878
+            ],
+            "timestamp": "2026-03-25T09:11:34.994Z",
+            "nativeTimings": {
+              "fullPipeline": 2.0885000228881836
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 15,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.5,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:11:34.996Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1922
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\interactive\\TouchableOpacity.native-perf-test.ts",
+      "suiteName": "TouchableOpacity.native-perf-test.ts",
+      "snapshots": {
+        "Interactive Components — Native Render Pipeline TouchableOpacity native mount 1": {
+          "metrics": {
+            "name": "TouchableOpacity native mount",
+            "meanDuration": 3.190453334649404,
+            "medianDuration": 3.1384999752044678,
+            "stdDev": 0.7568414883957973,
+            "renderCount": 1,
+            "runs": 15,
+            "durations": [
+              3.0042999982833862,
+              2.795300006866455,
+              3.2402999997138977,
+              2.530400037765503,
+              3.032800018787384,
+              3.4493000507354736,
+              2.2537999749183655,
+              2.4357999563217163,
+              3.2348999977111816,
+              3.694700002670288,
+              3.1384999752044678,
+              3.163599967956543,
+              2.9884999990463257,
+              5.5409000515937805,
+              3.3536999821662903
+            ],
+            "timestamp": "2026-03-25T09:11:43.172Z",
+            "nativeTimings": {
+              "fullPipeline": 3.1384999752044678
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 15,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.5,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:11:43.174Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1794
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\interactive\\Pressable.native-perf-test.ts",
+      "suiteName": "Pressable.native-perf-test.ts",
+      "snapshots": {
+        "Interactive Components — Native Render Pipeline Pressable native mount 1": {
+          "metrics": {
+            "name": "Pressable native mount",
+            "meanDuration": 2.492093336582184,
+            "medianDuration": 2.510699987411499,
+            "stdDev": 0.6735438561451192,
+            "renderCount": 1,
+            "runs": 15,
+            "durations": [
+              3.245199978351593,
+              1.9694000482559204,
+              2.761300027370453,
+              1.8480000495910645,
+              1.9053000211715698,
+              2.147000014781952,
+              1.6363999843597412,
+              4.235000014305115,
+              2.4139999747276306,
+              1.856499969959259,
+              3.0816999673843384,
+              2.5519999861717224,
+              2.587000012397766,
+              2.6319000124931335,
+              2.510699987411499
+            ],
+            "timestamp": "2026-03-25T09:11:51.045Z",
+            "nativeTimings": {
+              "fullPipeline": 2.510699987411499
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 15,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.5,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:11:51.046Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1380
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\core\\ScrollView.native-perf-test.ts",
+      "suiteName": "ScrollView.native-perf-test.ts",
+      "snapshots": {
+        "Native Render Pipeline ScrollView native mount 1": {
+          "metrics": {
+            "name": "ScrollView native mount",
+            "meanDuration": 4.355050003528595,
+            "medianDuration": 4.049349993467331,
+            "stdDev": 0.675293113217565,
+            "renderCount": 1,
+            "runs": 10,
+            "durations": [
+              4.063799977302551,
+              4.669399976730347,
+              4.014200031757355,
+              4.600199997425079,
+              3.747600018978119,
+              4.034900009632111,
+              4.375600039958954,
+              6.084399998188019,
+              3.9986000061035156,
+              3.9617999792099
+            ],
+            "timestamp": "2026-03-25T09:11:58.989Z",
+            "nativeTimings": {
+              "fullPipeline": 4.049349993467331
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 15,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.6,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:11:58.991Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1414
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\core\\ActivityIndicator.native-perf-test.ts",
+      "suiteName": "ActivityIndicator.native-perf-test.ts",
+      "snapshots": {
+        "Native Render Pipeline ActivityIndicator native mount 1": {
+          "metrics": {
+            "name": "ActivityIndicator native mount",
+            "meanDuration": 2.4800000031789144,
+            "medianDuration": 2.484100043773651,
+            "stdDev": 0.5289090397238356,
+            "renderCount": 1,
+            "runs": 15,
+            "durations": [
+              2.568000018596649,
+              2.912999987602234,
+              2.0101999640464783,
+              1.866599977016449,
+              1.9577000141143799,
+              1.8373000025749207,
+              2.2786999940872192,
+              2.484100043773651,
+              2.536500036716461,
+              2.217199981212616,
+              3.1218000054359436,
+              2.221000015735626,
+              2.5859000086784363,
+              2.8073999881744385,
+              3.794600009918213
+            ],
+            "timestamp": "2026-03-25T09:12:07.260Z",
+            "nativeTimings": {
+              "fullPipeline": 2.484100043773651
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 15,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.5,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:12:07.262Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1861
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\core\\TextInput.native-perf-test.ts",
+      "suiteName": "TextInput.native-perf-test.ts",
+      "snapshots": {
+        "Native Render Pipeline TextInput native mount 1": {
+          "metrics": {
+            "name": "TextInput native mount",
+            "meanDuration": 4.421840000152588,
+            "medianDuration": 4.0867999792099,
+            "stdDev": 0.9135329076138601,
+            "renderCount": 1,
+            "runs": 15,
+            "durations": [
+              3.6496999859809875,
+              4.015100002288818,
+              4.0867999792099,
+              4.2186999917030334,
+              4.2085999846458435,
+              3.800499975681305,
+              4.18560004234314,
+              5.862399995326996,
+              6.951799988746643,
+              3.925000011920929,
+              4.065899968147278,
+              3.9510000348091125,
+              5.296599984169006,
+              3.7587000131607056,
+              4.351200044155121
+            ],
+            "timestamp": "2026-03-25T09:12:15.920Z",
+            "nativeTimings": {
+              "fullPipeline": 4.0867999792099
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 15,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.5,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:12:15.922Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1352
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\core\\Switch.native-perf-test.ts",
+      "suiteName": "Switch.native-perf-test.ts",
+      "snapshots": {
+        "Native Render Pipeline Switch native mount 1": {
+          "metrics": {
+            "name": "Switch native mount",
+            "meanDuration": 1.7548199892044067,
+            "medianDuration": 1.7342000007629395,
+            "stdDev": 0.14067122956094338,
+            "renderCount": 1,
+            "runs": 15,
+            "durations": [
+              1.7342000007629395,
+              1.7372000217437744,
+              1.8542999625205994,
+              1.7226999998092651,
+              1.6146999597549438,
+              1.69159996509552,
+              1.8396000266075134,
+              1.8578999638557434,
+              1.54339998960495,
+              1.6279000043869019,
+              1.9399999976158142,
+              1.8633999824523926,
+              1.6168999671936035,
+              1.6345999836921692,
+              2.0439000129699707
+            ],
+            "timestamp": "2026-03-25T09:12:24.458Z",
+            "nativeTimings": {
+              "fullPipeline": 1.7342000007629395
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 15,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.5,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:12:24.460Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1190
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\core\\Button.native-perf-test.ts",
+      "suiteName": "Button.native-perf-test.ts",
+      "snapshots": {
+        "Native Render Pipeline Button native mount 1": {
+          "metrics": {
+            "name": "Button native mount",
+            "meanDuration": 2.9556866606076557,
+            "medianDuration": 2.601099967956543,
+            "stdDev": 0.9540605755854736,
+            "renderCount": 1,
+            "runs": 15,
+            "durations": [
+              2.457200050354004,
+              2.5554999709129333,
+              3.3740000128746033,
+              2.601099967956543,
+              2.444000005722046,
+              3.146499991416931,
+              2.1805999875068665,
+              6.153299987316132,
+              2.8115999698638916,
+              2.360199987888336,
+              2.432099997997284,
+              3.0877000093460083,
+              3.0518999695777893,
+              3.1615999937057495,
+              2.51800000667572
+            ],
+            "timestamp": "2026-03-25T09:12:32.621Z",
+            "nativeTimings": {
+              "fullPipeline": 2.601099967956543
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 15,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.5,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:12:32.623Z"
+        }
+      },
+      "passed": 0,
+      "failed": 1,
+      "totalDuration": 5188
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\core\\Modal.native-perf-test.ts",
+      "suiteName": "Modal.native-perf-test.ts",
+      "snapshots": {
+        "Native Render Pipeline Modal native mount 1": {
+          "metrics": {
+            "name": "Modal native mount",
+            "meanDuration": 1.3649799942970275,
+            "medianDuration": 1.217699944972992,
+            "stdDev": 0.23040005387861157,
+            "renderCount": 1,
+            "runs": 15,
+            "durations": [
+              1.7878000140190125,
+              1.6008999943733215,
+              1.3690999746322632,
+              1.6188000440597534,
+              1.5525999665260315,
+              1.2020000219345093,
+              1.1894000172615051,
+              1.2010000348091125,
+              1.136900007724762,
+              1.1675999760627747,
+              1.2005999684333801,
+              1.217699944972992,
+              1.3144999742507935,
+              1.1704000234603882,
+              1.7453999519348145
+            ],
+            "timestamp": "2026-03-25T09:12:40.886Z",
+            "nativeTimings": {
+              "fullPipeline": 1.217699944972992
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 15,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.5,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:12:40.888Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1145
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\core\\Image.native-perf-test.ts",
+      "suiteName": "Image.native-perf-test.ts",
+      "snapshots": {
+        "Native Render Pipeline Image native mount 1": {
+          "metrics": {
+            "name": "Image native mount",
+            "meanDuration": 2.384059993426005,
+            "medianDuration": 2.26010000705719,
+            "stdDev": 0.585439113749715,
+            "renderCount": 1,
+            "runs": 15,
+            "durations": [
+              2.26010000705719,
+              2.1991999745368958,
+              2.4451000094413757,
+              2.269699990749359,
+              2.214099943637848,
+              2.330900013446808,
+              2.5689000487327576,
+              1.9075999855995178,
+              2.264400005340576,
+              2.2530999779701233,
+              4.417899966239929,
+              2.332099974155426,
+              2.2284000515937805,
+              2.0417999625205994,
+              2.0275999903678894
+            ],
+            "timestamp": "2026-03-25T09:12:49.239Z",
+            "nativeTimings": {
+              "fullPipeline": 2.26010000705719
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 15,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.5,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:12:49.240Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1132
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\core\\View.native-perf-test.ts",
+      "suiteName": "View.native-perf-test.ts",
+      "snapshots": {
+        "Native Render Pipeline View native mount 1": {
+          "metrics": {
+            "name": "View native mount",
+            "meanDuration": 1.4776333411534628,
+            "medianDuration": 1.428600013256073,
+            "stdDev": 0.22794729910741268,
+            "renderCount": 1,
+            "runs": 15,
+            "durations": [
+              1.428600013256073,
+              1.3898000121116638,
+              1.5759000182151794,
+              1.572700023651123,
+              1.257099986076355,
+              1.438700020313263,
+              2.015500009059906,
+              1.3089999556541443,
+              1.47680002450943,
+              1.517300009727478,
+              1.3051999807357788,
+              1.9368000030517578,
+              1.365600049495697,
+              1.332099974155426,
+              1.2434000372886658
+            ],
+            "timestamp": "2026-03-25T09:13:05.775Z",
+            "nativeTimings": {
+              "fullPipeline": 1.428600013256073
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 15,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.5,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:13:05.794Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1087
+    },
+    {
+      "testFilePath": "C:\\Users\\abhijeetjha\\Documents\\RNW-FEATURES\\react-native-windows\\packages\\e2e-test-app-fabric\\test\\__native_perf__\\core\\Text.native-perf-test.ts",
+      "suiteName": "Text.native-perf-test.ts",
+      "snapshots": {
+        "Native Render Pipeline Text native mount 1": {
+          "metrics": {
+            "name": "Text native mount",
+            "meanDuration": 1.7626999974250794,
+            "medianDuration": 1.7395999431610107,
+            "stdDev": 0.17253066691776484,
+            "renderCount": 1,
+            "runs": 15,
+            "durations": [
+              1.9889000058174133,
+              1.7633000016212463,
+              1.8330000042915344,
+              2.02839994430542,
+              1.661899983882904,
+              1.6473000049591064,
+              1.496500015258789,
+              1.5873000025749207,
+              1.6305000185966492,
+              1.8646000027656555,
+              1.7395999431610107,
+              1.684000015258789,
+              1.6638000011444092,
+              2.1093000173568726,
+              1.7421000003814697
+            ],
+            "timestamp": "2026-03-25T09:12:57.555Z",
+            "nativeTimings": {
+              "fullPipeline": 1.7395999431610107
+            }
+          },
+          "threshold": {
+            "maxDurationIncrease": 15,
+            "maxDuration": null,
+            "minAbsoluteDelta": 5,
+            "maxRenderCount": 1,
+            "minRuns": 10,
+            "maxCV": 0.5,
+            "mode": "gate"
+          },
+          "capturedAt": "2026-03-25T09:12:57.556Z"
+        }
+      },
+      "passed": 1,
+      "failed": 0,
+      "totalDuration": 1071
+    }
+  ],
+  "summary": {
+    "totalSuites": 14,
+    "totalTests": 14,
+    "passed": 13,
+    "failed": 1,
+    "durationMs": 165220
+  }
+}
