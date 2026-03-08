@@ -1,0 +1,212 @@
+{
+  "ActivityIndicator Performance mount time 1": {
+    "metrics": {
+      "name": "ActivityIndicator mount",
+      "meanDuration": 0.1,
+      "medianDuration": 0,
+      "stdDev": 0.31622776601683794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:14.038Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:14.051Z"
+  },
+  "ActivityIndicator Performance unmount time 1": {
+    "metrics": {
+      "name": "ActivityIndicator unmount",
+      "meanDuration": 0,
+      "medianDuration": 0,
+      "stdDev": 0,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:14.056Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:14.067Z"
+  },
+  "ActivityIndicator Performance rerender time 1": {
+    "metrics": {
+      "name": "ActivityIndicator rerender",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 2,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:14.075Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:14.093Z"
+  },
+  "ActivityIndicator Performance ActivityIndicator-Specific Scenarios size-large 1": {
+    "metrics": {
+      "name": "ActivityIndicator size-large",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:14.102Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:14.112Z"
+  },
+  "ActivityIndicator Performance ActivityIndicator-Specific Scenarios size-small 1": {
+    "metrics": {
+      "name": "ActivityIndicator size-small",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:14.117Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:14.130Z"
+  },
+  "ActivityIndicator Performance ActivityIndicator-Specific Scenarios with-color 1": {
+    "metrics": {
+      "name": "ActivityIndicator with-color",
+      "meanDuration": 0,
+      "medianDuration": 0,
+      "stdDev": 0,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:14.134Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:14.147Z"
+  },
+  "ActivityIndicator Performance ActivityIndicator-Specific Scenarios not-animating 1": {
+    "metrics": {
+      "name": "ActivityIndicator not-animating",
+      "meanDuration": 0.1,
+      "medianDuration": 0,
+      "stdDev": 0.31622776601683794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:14.152Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:14.163Z"
+  },
+  "ActivityIndicator Performance ActivityIndicator-Specific Scenarios with-accessibility 1": {
+    "metrics": {
+      "name": "ActivityIndicator with-accessibility",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:14.168Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:14.180Z"
+  },
+  "ActivityIndicator Performance ActivityIndicator-Specific Scenarios multiple-indicators-10 1": {
+    "metrics": {
+      "name": "ActivityIndicator multiple-10",
+      "meanDuration": 0.8666666666666667,
+      "medianDuration": 1,
+      "stdDev": 0.35186577527449836,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-25T08:49:14.198Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:14.200Z"
+  },
+  "ActivityIndicator Performance ActivityIndicator-Specific Scenarios multiple-indicators-50 1": {
+    "metrics": {
+      "name": "ActivityIndicator multiple-50",
+      "meanDuration": 3.8666666666666667,
+      "medianDuration": 4,
+      "stdDev": 0.990430401872025,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-25T08:49:14.268Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:14.270Z"
+  },
+  "ActivityIndicator Performance ActivityIndicator-Specific Scenarios multiple-indicators-100 1": {
+    "metrics": {
+      "name": "ActivityIndicator multiple-100",
+      "meanDuration": 7.4,
+      "medianDuration": 7,
+      "stdDev": 1.1832159566199232,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-25T08:49:14.401Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 10,
+      "maxRenderCount": 5,
+      "minRuns": 10,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-02-25T08:49:14.403Z"
+  }
+}
