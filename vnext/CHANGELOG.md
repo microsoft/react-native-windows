@@ -1,8 +1,28 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 11 Feb 2026 16:10:54 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Mar 2026 04:08:17 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.5
+
+Sat, 07 Mar 2026 04:08:17 GMT
+
+### Patches
+
+- Fix issue when creating a ContentIslandComponentView when the root ReactNativeIsland is not connected (30809111+acoates-ms@users.noreply.github.com)
+- TextInputs are zero height if there is no value and no placeholder text (30809111+acoates-ms@users.noreply.github.com)
+- Implement ReactNativeWindow (30809111+acoates-ms@users.noreply.github.com)
+- Implement overflow property support for Fabric architecture (nitchaudhary@microsoft.com)
+- Fix SHIFT+F10 keyboard shortcut for context menu in TextInput (nitchaudhary@microsoft.com)
+- Integrate 0.81.6 (30809111+acoates-ms@users.noreply.github.com)
+- Fix TextInput selection crash and feedback loop (74712637+iamAbhi-916@users.noreply.github.com)
+- Fix lifetime issue with codegen'd eventemitter args (30809111+acoates-ms@users.noreply.github.com)
+- Generate fields to notify native if a JS event is being listened to (30809111+acoates-ms@users.noreply.github.com)
+- Fix XAML popup positioning and light dismiss in ScrollView (#15557) (nitchaudhary@microsoft.com)
+- Bump @react-native-windows/cli to v0.81.3
+- Bump @react-native-windows/codegen to v0.81.3
+- Bump react-native-platform-override to v0.81.1
 
 ## 0.81.4
 

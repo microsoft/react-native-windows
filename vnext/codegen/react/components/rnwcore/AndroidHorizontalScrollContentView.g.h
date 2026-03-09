@@ -25,7 +25,8 @@ struct AndroidHorizontalScrollContentViewProps : winrt::implements<AndroidHorizo
   {
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<AndroidHorizontalScrollContentViewProps>();
-       removeClippedSubviews = cloneFromProps->removeClippedSubviews;  
+       removeClippedSubviews = cloneFromProps->removeClippedSubviews;
+  
      }
   }
 

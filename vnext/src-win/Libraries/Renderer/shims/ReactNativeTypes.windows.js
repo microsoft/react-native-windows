@@ -7,11 +7,15 @@
  * @noformat
  * @nolint
  * @flow strict
- * @generated SignedSource<<deb7924d11c790f99448a1c2f0edddb9>>
+ * @generated SignedSource<<9564768e65343249f5e5ee5074826c7f>>
  */
 
 import type {
-  // $FlowFixMe[missing-export] TODO(@rubennorte) - Missing export from react-native
+  Component as ReactComponent,
+  ElementRef,
+  ElementType,
+} from 'react';
+import type {
   // $FlowFixMe[nonstrict-import] TODO(@rubennorte)
   HostInstance as PublicInstance,
   // $FlowFixMe[missing-export] TODO(@rubennorte) - Missing export from react-native
@@ -25,8 +29,6 @@ import type {
   PublicTextInstance,
 } from 'react-native';
 
-import * as React from 'react';
-
 export type AttributeType<T, V> =
   | true
   | $ReadOnly<{
@@ -39,7 +41,16 @@ export type AttributeType<T, V> =
 export type AnyAttributeType = AttributeType<$FlowFixMe, $FlowFixMe>;
 
 export type AttributeConfiguration = $ReadOnly<{
-  [propName: string]: AnyAttributeType | void,
+  [propName: string]: AnyAttributeType,
+  style?: $ReadOnly<{
+    [propName: string]: AnyAttributeType,
+    ...
+  }>,
+  ...
+}>;
+
+export type PartialAttributeConfiguration = $ReadOnly<{
+  [propName: string]: AnyAttributeType,
   style?: $ReadOnly<{
     [propName: string]: AnyAttributeType,
     ...
@@ -79,7 +90,7 @@ export type PartialViewConfig = $ReadOnly<{
   directEventTypes?: ViewConfig['directEventTypes'],
   supportsRawText?: boolean,
   uiViewClassName: string,
-  validAttributes?: AttributeConfiguration,
+  validAttributes?: PartialAttributeConfiguration,
 }>;
 
 type InspectorDataProps = $ReadOnly<{
@@ -88,7 +99,7 @@ type InspectorDataProps = $ReadOnly<{
 }>;
 
 type InspectorDataGetter = (
-  <TElementType: React.ElementType>(
+  <TElementType: ElementType>(
     componentOrHandle: React.ElementRef<TElementType> | number,
   ) => ?number,
 ) => $ReadOnly<{
@@ -132,7 +143,7 @@ export type RenderRootOptions = {
       +componentStack?: ?string,
       // $FlowFixMe[unclear-type] unknown props and state.
       // $FlowFixMe[value-as-type] Component in react repo is any-typed, but it will be well typed externally.
-      +errorBoundary?: ?React.Component<any, any>,
+      +errorBoundary?: ?ReactComponent<any, any>,
     },
   ) => void,
   onRecoverableError?: (
@@ -146,10 +157,10 @@ export type RenderRootOptions = {
  * Provide minimal Flow typing for the high-level RN API and call it a day.
  */
 export type ReactNativeType = {
-  findHostInstance_DEPRECATED<TElementType: React.ElementType>(
+  findHostInstance_DEPRECATED<TElementType: ElementType>(
     componentOrHandle: ?(React.ElementRef<TElementType> | number),
   ): ?PublicInstance,
-  findNodeHandle<TElementType: React.ElementType>(
+  findNodeHandle<TElementType: ElementType>(
     componentOrHandle: ?(React.ElementRef<TElementType> | number),
   ): ?number,
   isChildPublicInstance(parent: PublicInstance, child: PublicInstance): boolean,
@@ -175,10 +186,10 @@ export opaque type Node = mixed;
 export opaque type InternalInstanceHandle = mixed;
 
 export type ReactFabricType = {
-  findHostInstance_DEPRECATED<TElementType: React.ElementType>(
+  findHostInstance_DEPRECATED<TElementType: ElementType>(
     componentOrHandle: ?(React.ElementRef<TElementType> | number),
   ): ?PublicInstance,
-  findNodeHandle<TElementType: React.ElementType>(
+  findNodeHandle<TElementType: ElementType>(
     componentOrHandle: ?(React.ElementRef<TElementType> | number),
   ): ?number,
   dispatchCommand(

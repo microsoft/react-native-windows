@@ -29,7 +29,8 @@ struct PullToRefreshViewProps : winrt::implements<PullToRefreshViewProps, winrt:
        titleColor = cloneFromProps->titleColor;
        title = cloneFromProps->title;
        progressViewOffset = cloneFromProps->progressViewOffset;
-       refreshing = cloneFromProps->refreshing;  
+       refreshing = cloneFromProps->refreshing;
+       onRefresh = cloneFromProps->onRefresh;  
      }
   }
 
@@ -52,6 +53,10 @@ struct PullToRefreshViewProps : winrt::implements<PullToRefreshViewProps, winrt:
   REACT_FIELD(refreshing)
   bool refreshing{};
 
+   // These fields can be used to determine if JS has registered for this event
+  REACT_FIELD(onRefresh)
+  bool onRefresh{false};
+
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
@@ -65,8 +70,8 @@ struct PullToRefreshViewEventEmitter {
 
   using OnRefresh = PullToRefreshViewSpec_onRefresh;
 
-  void onRefresh(OnRefresh &value) const {
-    m_eventEmitter.DispatchEvent(L"refresh", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onRefresh(OnRefresh &&value) const {
+    m_eventEmitter.DispatchEvent(L"refresh", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

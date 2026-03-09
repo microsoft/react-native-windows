@@ -33,7 +33,8 @@ struct AndroidSwitchProps : winrt::implements<AndroidSwitchProps, winrt::Microso
        value = cloneFromProps->value;
        on = cloneFromProps->on;
        thumbTintColor = cloneFromProps->thumbTintColor;
-       trackTintColor = cloneFromProps->trackTintColor;  
+       trackTintColor = cloneFromProps->trackTintColor;
+       onChange = cloneFromProps->onChange;  
      }
   }
 
@@ -68,6 +69,10 @@ struct AndroidSwitchProps : winrt::implements<AndroidSwitchProps, winrt::Microso
   REACT_FIELD(trackTintColor)
   winrt::Microsoft::ReactNative::Color trackTintColor{nullptr};
 
+   // These fields can be used to determine if JS has registered for this event
+  REACT_FIELD(onChange)
+  bool onChange{false};
+
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
@@ -86,8 +91,8 @@ struct AndroidSwitchEventEmitter {
 
   using OnChange = AndroidSwitchSpec_onChange;
 
-  void onChange(OnChange &value) const {
-    m_eventEmitter.DispatchEvent(L"change", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onChange(OnChange &&value) const {
+    m_eventEmitter.DispatchEvent(L"change", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

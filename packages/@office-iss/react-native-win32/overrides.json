@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.81.5",
+  "baseVersion": "0.81.6",
   "overrides": [
     {
       "type": "derived",
@@ -20,6 +20,12 @@
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
       "baseHash": "c5d0dfd40d0fb7c197790b1f23f4f8b9ca835047"
+    },
+    {
+      "type": "copy",
+      "file": "src-win/index.win32.js.flow",
+      "baseFile": "packages/react-native/index.js.flow",
+      "baseHash": "bb6c7873aa350c235aad233dd75656237d16d79c"
     },
     {
       "type": "platform",
@@ -240,6 +246,12 @@
       "issue": 4320
     },
     {
+      "type": "copy",
+      "file": "src-win/Libraries/Image/Image.win32.js.flow",
+      "baseFile": "packages/react-native/Libraries/Image/Image.js.flow",
+      "baseHash": "eaa13a0cc7a34e33dadd9297029339779f489ae3"
+    },
+    {
       "type": "platform",
       "file": "src-win/Libraries/Image/ImageTypes.ts"
     },
@@ -394,7 +406,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Renderer/shims/ReactNativeTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Renderer/shims/ReactNativeTypes.js",
-      "baseHash": "9e91759d01c9a6d459c5781b357533f4ac8727a7",
+      "baseHash": "7d2d4e348d5e2c324cc6f8884039d1320c470eda",
       "issue": 0
     },
     {

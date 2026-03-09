@@ -323,6 +323,32 @@ void CompositionEventHandler::Initialize() noexcept {
             }
           }
         });
+
+    m_contextMenuKeyToken =
+        keyboardSource.ContextMenuKey([wkThis = weak_from_this()](
+                                          winrt::Microsoft::UI::Input::InputKeyboardSource const & /*source*/,
+                                          winrt::Microsoft::UI::Input::ContextMenuKeyEventArgs const &args) {
+          if (auto strongThis = wkThis.lock()) {
+            if (auto strongRootView = strongThis->m_wkRootView.get()) {
+              if (strongThis->SurfaceId() == -1)
+                return;
+
+              auto focusedComponent = strongThis->RootComponentView().GetFocusedComponent();
+              if (focusedComponent) {
+                auto tag =
+                    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
+                        ->Tag();
+                auto contextMenuArgs = winrt::make<
+                    winrt::Microsoft::ReactNative::Composition::Input::implementation::ContextMenuKeyEventArgs>(tag);
+                winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
+                    ->OnContextMenuKey(contextMenuArgs);
+                if (contextMenuArgs.Handled()) {
+                  args.Handled(true);
+                }
+              }
+            }
+          }
+        });
   }
 #endif
 }
@@ -341,6 +367,7 @@ CompositionEventHandler::~CompositionEventHandler() {
       keyboardSource.KeyDown(m_keyDownToken);
       keyboardSource.KeyUp(m_keyUpToken);
       keyboardSource.CharacterReceived(m_characterReceivedToken);
+      keyboardSource.ContextMenuKey(m_contextMenuKeyToken);
     }
   }
 #endif
@@ -442,6 +469,54 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
       return 0;
     }
     case WM_LBUTTONUP: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerReleased(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_RBUTTONDOWN: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerPressed(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_RBUTTONUP: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerReleased(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_MBUTTONDOWN: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerPressed(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_MBUTTONUP: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerReleased(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_XBUTTONDOWN: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerPressed(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_XBUTTONUP: {
       if (auto strongRootView = m_wkRootView.get()) {
         auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
             hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());

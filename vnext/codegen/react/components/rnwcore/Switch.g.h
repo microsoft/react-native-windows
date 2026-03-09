@@ -32,7 +32,8 @@ struct SwitchProps : winrt::implements<SwitchProps, winrt::Microsoft::ReactNativ
        thumbTintColor = cloneFromProps->thumbTintColor;
        thumbColor = cloneFromProps->thumbColor;
        trackColorForFalse = cloneFromProps->trackColorForFalse;
-       trackColorForTrue = cloneFromProps->trackColorForTrue;  
+       trackColorForTrue = cloneFromProps->trackColorForTrue;
+       onChange = cloneFromProps->onChange;  
      }
   }
 
@@ -64,6 +65,10 @@ struct SwitchProps : winrt::implements<SwitchProps, winrt::Microsoft::ReactNativ
   REACT_FIELD(trackColorForTrue)
   winrt::Microsoft::ReactNative::Color trackColorForTrue{nullptr};
 
+   // These fields can be used to determine if JS has registered for this event
+  REACT_FIELD(onChange)
+  bool onChange{false};
+
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
@@ -82,8 +87,8 @@ struct SwitchEventEmitter {
 
   using OnChange = SwitchSpec_onChange;
 
-  void onChange(OnChange &value) const {
-    m_eventEmitter.DispatchEvent(L"change", [&value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onChange(OnChange &&value) const {
+    m_eventEmitter.DispatchEvent(L"change", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }

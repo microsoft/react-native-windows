@@ -2,6 +2,29 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2026 04:08:18 GMT",
+      "version": "0.81.1",
+      "tag": "@react-native-windows/telemetry_v0.81.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Bump TS target"
+          }
+        ],
+        "none": [
+          {
+            "author": "yicyao@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "ff246e07a1fca3e9925f60981d8a9b9d75ceb87d",
+            "comment": "Fix telemetry test."
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 20 Dec 2025 12:02:34 GMT",
       "version": "0.81.0",
       "tag": "@react-native-windows/telemetry_v0.81.0",

@@ -45,7 +45,7 @@ struct CalendarViewComponentView : public winrt::implements<CalendarViewComponen
 
           args.startDate = ss.str();
         }
-        emitter->onSelectedDatesChanged(args);
+        emitter->onSelectedDatesChanged(std::move(args));
       }
     });
   }

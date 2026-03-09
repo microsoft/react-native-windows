@@ -31,7 +31,8 @@ struct AndroidProgressBarProps : winrt::implements<AndroidProgressBarProps, winr
        progress = cloneFromProps->progress;
        animating = cloneFromProps->animating;
        color = cloneFromProps->color;
-       testID = cloneFromProps->testID;  
+       testID = cloneFromProps->testID;
+  
      }
   }
 

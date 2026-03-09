@@ -48,7 +48,6 @@ struct FocusNavigationResult : FocusNavigationResultT<FocusNavigationResult> {
 
 struct ReactNativeIsland
     : ReactNativeIslandT<ReactNativeIsland, Composition::Experimental::IInternalCompositionRootView> {
-  ReactNativeIsland() noexcept;
   ~ReactNativeIsland() noexcept;
 
   ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
@@ -64,6 +63,8 @@ struct ReactNativeIsland
   // property ReactViewHost
   ReactNative::IReactViewHost ReactViewHost() noexcept;
   void ReactViewHost(ReactNative::IReactViewHost const &value);
+
+  winrt::Microsoft::UI::Composition::Compositor Compositor() noexcept;
 
   winrt::Microsoft::UI::Composition::Visual RootVisual() noexcept;
 
