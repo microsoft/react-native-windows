@@ -176,7 +176,7 @@ function compareSuite(suiteName, headSnaps, baseSnaps) {
 }
 
 function generateMarkdown(suiteComparisons, ciResults) {
-  let md = '## ⚡ Performance Test Results\n\n';
+  let md = '## Performance Test Results\n\n';
 
   md += `**Branch:** \`${ciResults.branch}\`  \n`;
   md += `**Commit:** \`${ciResults.commitSha.slice(0, 8)}\`  \n`;
