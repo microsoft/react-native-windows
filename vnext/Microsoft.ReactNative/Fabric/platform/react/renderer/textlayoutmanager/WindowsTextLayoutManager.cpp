@@ -96,7 +96,10 @@ void WindowsTextLayoutManager::GetTextLayout(
 
   winrt::com_ptr<IDWriteTextFormat> spTextFormat;
 
-  float fontSizeText = outerFragment.textAttributes.fontSize;
+  float fontSizeText =
+      (std::isnan(outerFragment.textAttributes.fontSize)
+           ? facebook::react::TextAttributes::defaultTextAttributes().fontSize
+           : outerFragment.textAttributes.fontSize);
   if (outerFragment.textAttributes.allowFontScaling.value_or(true) &&
       !std::isnan(outerFragment.textAttributes.fontSizeMultiplier)) {
     float maxFontSizeMultiplierText = cDefaultMaxFontSizeMultiplier;
@@ -287,7 +290,9 @@ void WindowsTextLayoutManager::GetTextLayout(
       maxFontSizeMultiplier =
           (!std::isnan(attributes.maxFontSizeMultiplier) ? attributes.maxFontSizeMultiplier
                                                          : cDefaultMaxFontSizeMultiplier);
-      float fontSize = attributes.fontSize;
+      float fontSize =
+          (std::isnan(attributes.fontSize) ? facebook::react::TextAttributes::defaultTextAttributes().fontSize
+                                           : attributes.fontSize);
       if (attributes.allowFontScaling.value_or(true) && (!std::isnan(attributes.fontSizeMultiplier))) {
         fontSize *= (maxFontSizeMultiplier >= 1.0f) ? std::min(maxFontSizeMultiplier, attributes.fontSizeMultiplier)
                                                     : attributes.fontSizeMultiplier;
