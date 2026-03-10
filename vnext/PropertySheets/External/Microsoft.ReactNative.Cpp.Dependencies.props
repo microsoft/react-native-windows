@@ -12,15 +12,6 @@
 
   <PropertyGroup Label="CppWinRT">
     <CppWinRTVersion Condition="'$(CppWinRTVersion)' == '' Or $([MSBuild]::VersionLessThan('$(CppWinRTVersion)', '2.0.230706.1'))">2.0.230706.1</CppWinRTVersion>
-    <!--
-      Explicitly set CppWinRTGenerateWindowsMetadata to prevent the CppWinRT
-      NuGet target CppWinRTComputeGetResolvedWinMD from running.
-      That target can cause MSB4006 circular dependency errors during parallel
-      builds (see https://github.com/microsoft/cppwinrt/issues/950).
-      Default to false; lib/module projects that produce WinMD should override
-      this to true in their own props.
-    -->
-    <CppWinRTGenerateWindowsMetadata Condition="'$(CppWinRTGenerateWindowsMetadata)' == ''">false</CppWinRTGenerateWindowsMetadata>
   </PropertyGroup>
 
   <PropertyGroup Label="MSVC">

@@ -18,6 +18,16 @@
     <Warning Text="Property `RnwSdkDefaultsSet` was not set. Please ensure your project imports 'Microsoft.ReactNative.WindowsSdk.Default.props' before importing this prop sheet." />
   </Target>
 
+  <!--
+    App projects do not generate Windows Metadata. Explicitly set this to
+    prevent the CppWinRT NuGet target CppWinRTComputeGetResolvedWinMD from
+    trying to compute it, which can cause MSB4006 circular dependency errors
+    during parallel builds (see https://github.com/microsoft/cppwinrt/issues/950).
+  -->
+  <PropertyGroup Label="CppWinRT">
+    <CppWinRTGenerateWindowsMetadata Condition="'$(CppWinRTGenerateWindowsMetadata)' == ''">false</CppWinRTGenerateWindowsMetadata>
+  </PropertyGroup>
+
   <!-- Import common props sheets common to all UWP projects. -->
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
 

@@ -15,10 +15,10 @@
   </Target>
 
   <!--
-    Lib/module projects generate Windows Metadata, so set this before importing
-    Common props (which defaults it to false). This also prevents MSB4006
-    circular dependency errors in CppWinRT during parallel builds.
-    See https://github.com/microsoft/cppwinrt/issues/950.
+    Lib/module projects generate Windows Metadata. Explicitly set this to
+    prevent the CppWinRT NuGet target CppWinRTComputeGetResolvedWinMD from
+    trying to compute it, which can cause MSB4006 circular dependency errors
+    during parallel builds (see https://github.com/microsoft/cppwinrt/issues/950).
   -->
   <PropertyGroup Label="CppWinRT">
     <CppWinRTGenerateWindowsMetadata Condition="'$(CppWinRTGenerateWindowsMetadata)' == ''">true</CppWinRTGenerateWindowsMetadata>
