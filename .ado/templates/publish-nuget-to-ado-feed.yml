@@ -1,0 +1,47 @@
+parameters:
+- name: azureSubscription
+  type: string
+  default: 'Office-React-Native-Windows-Bot'
+- name: endpointId
+  type: string
+- name: packageParentPath
+  type: string
+- name: packagesToPush
+  type: string
+- name: publishFeedCredentials
+  type: string
+- name: feedDisplayName
+  type: string
+
+steps:
+- script: dir /S "${{ parameters.packageParentPath }}"
+  displayName: Show directory contents
+
+- task: AzureCLI@2
+  displayName: Override NuGet credentials with Managed Identity
+  inputs:
+    azureSubscription: ${{ parameters.azureSubscription }}
+    visibleAzLogin: false
+    scriptType: 'pscore'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      $accessToken = az account get-access-token --query accessToken --resource 499b84ac-1321-427f-aa17-267ca6975798 -o tsv
+      # Set the access token as a secret, so it doesn't get leaked in the logs
+      Write-Host "##vso[task.setsecret]$accessToken"
+      # Override the apitoken of the nuget service connection, for the duration of this stage
+      Write-Host "##vso[task.setendpoint id=${{ parameters.endpointId }};field=authParameter;key=apitoken]$accessToken"
+
+  # continueOnError: Duplicate packages are expected when the pipeline is
+  # re-run for the same version. The packages already exist on the feed,
+  # so it is safe to continue.
+- task: 1ES.PublishNuGet@1
+  displayName: 'NuGet push to ${{ parameters.feedDisplayName }}'
+  continueOnError: true
+  inputs:
+    useDotNetTask: true
+    packageParentPath: '${{ parameters.packageParentPath }}'
+    packagesToPush: '${{ parameters.packagesToPush }}'
+    nuGetFeedType: external
+    publishFeedCredentials: '${{ parameters.publishFeedCredentials }}'
+    externalEndpoint: '${{ parameters.publishFeedCredentials }}'
+    publishPackageMetadata: true

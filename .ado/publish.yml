@@ -145,6 +145,9 @@ extends:
           - script: echo NpmDistTag is $(NpmDistTag)
             displayName: Show NPM dist tag
 
+          - script: copy ".ado\scripts\npmPack.js" "$(Build.StagingDirectory)\versionEnvVars\npmPack.js"
+            displayName: Include npmPack.js in VersionEnvVars artifact
+
           - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
             displayName: 📒 Generate Manifest Npm
             inputs:
@@ -351,9 +354,12 @@ extends:
                   configuration: Debug
 
           # Symbol Publishing for Work Item 59264834 - MSRC Compliance
+          # continueOnError: Duplicate symbols are expected when the pipeline
+          # is re-run for the same version. The symbols already exist on the
+          # server, so it is safe to continue.
           - task: PublishSymbols@2
             displayName: 'Publish Symbols to Microsoft Symbol Server'
-            enabled: true
+            continueOnError: true
             inputs:
               UseNetCoreClientTool: true
               ConnectedServiceName: Office-React-Native-Windows-Bot
