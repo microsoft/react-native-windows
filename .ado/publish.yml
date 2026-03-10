@@ -65,7 +65,7 @@ variables:
   - name: FailCGOnAlert
     value: false
   - name: EnableCodesign
-    value: false
+    value: true
 
 trigger: none
 pr: none
