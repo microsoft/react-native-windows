@@ -105,6 +105,7 @@ extends:
         - template: .ado/templates/publish-nuget-to-ado-feed.yml@self
           parameters:
             endpointId: 'a7e33797-4804-4a1d-911d-5bd325e50a85'
+            nugetFeedUrl: 'https://pkgs.dev.azure.com/ms/_packaging/react-native/nuget/v3/index.json'
             packageParentPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
             packagesToPush: '$(Pipeline.Workspace)/ReactWindows-final-nuget/*.nupkg'
             publishFeedCredentials: 'ms/react-native ADO Feed'
@@ -125,6 +126,7 @@ extends:
         - template: .ado/templates/publish-nuget-to-ado-feed.yml@self
           parameters:
             endpointId: '9a2456d0-c163-405b-be24-c03fd74b155a'
+            nugetFeedUrl: 'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json'
             packageParentPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
             packagesToPush: '$(Pipeline.Workspace)/ReactWindows-final-nuget/*.nupkg'
             publishFeedCredentials: 'ms/react-native-public ADO Feed'

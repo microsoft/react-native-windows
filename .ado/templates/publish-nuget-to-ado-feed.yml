@@ -4,6 +4,8 @@ parameters:
   default: 'Office-React-Native-Windows-Bot'
 - name: endpointId
   type: string
+- name: nugetFeedUrl
+  type: string
 - name: packageParentPath
   type: string
 - name: packagesToPush
@@ -15,7 +17,7 @@ parameters:
 
 steps:
 - script: dir /S "${{ parameters.packageParentPath }}"
-  displayName: Show directory contents
+  displayName: Show NuGet packages before cleanup
 
 - task: AzureCLI@2
   displayName: Override NuGet credentials with Managed Identity
@@ -30,13 +32,70 @@ steps:
       Write-Host "##vso[task.setsecret]$accessToken"
       # Override the apitoken of the nuget service connection, for the duration of this stage
       Write-Host "##vso[task.setendpoint id=${{ parameters.endpointId }};field=authParameter;key=apitoken]$accessToken"
+      # Also expose the token for the pre-push duplicate check
+      Write-Host "##vso[task.setvariable variable=NuGetAccessToken;issecret=true]$accessToken"
 
-  # continueOnError: Duplicate packages are expected when the pipeline is
-  # re-run for the same version. The packages already exist on the feed,
-  # so it is safe to continue.
+- powershell: |
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+
+    $feedUrl = "${{ parameters.nugetFeedUrl }}"
+    $token = "$(NuGetAccessToken)"
+    $headers = @{ Authorization = "Bearer $token" }
+
+    # Discover the flat container (PackageBaseAddress) URL from the V3 index
+    $index = Invoke-RestMethod -Uri $feedUrl -Headers $headers
+    $baseAddress = ($index.resources |
+      Where-Object { $_.'@type' -like 'PackageBaseAddress*' } |
+      Select-Object -First 1).'@id'
+    if (-not $baseAddress) { throw "Could not find PackageBaseAddress in NuGet V3 index at $feedUrl" }
+    if (-not $baseAddress.EndsWith('/')) { $baseAddress += '/' }
+    Write-Host "PackageBaseAddress: $baseAddress"
+
+    $nupkgs = Get-ChildItem -Path "${{ parameters.packageParentPath }}" -Filter "*.nupkg" -Recurse
+    $removedCount = 0
+
+    foreach ($file in $nupkgs) {
+      # Read the .nuspec from inside the nupkg (zip) to get the exact id and version
+      $zip = [System.IO.Compression.ZipFile]::OpenRead($file.FullName)
+      try {
+        $nuspecEntry = $zip.Entries | Where-Object { $_.FullName -like "*.nuspec" } | Select-Object -First 1
+        $reader = New-Object System.IO.StreamReader($nuspecEntry.Open())
+        [xml]$nuspec = $reader.ReadToEnd()
+        $reader.Close()
+      } finally { $zip.Dispose() }
+
+      $id = $nuspec.package.metadata.id
+      $version = $nuspec.package.metadata.version
+
+      # Query the flat container for all published versions of this package
+      $versionsUrl = "${baseAddress}$($id.ToLower())/index.json"
+      try {
+        $result = Invoke-RestMethod -Uri $versionsUrl -Headers $headers -ErrorAction Stop
+        if ($version.ToLower() -in $result.versions) {
+          Write-Host "  SKIP $id $version — already on feed"
+          Remove-Item $file.FullName
+          $removedCount++
+          continue
+        }
+      } catch {
+        if ($_.Exception.Response.StatusCode -eq [System.Net.HttpStatusCode]::NotFound) {
+          # Package has never been published — keep it
+        } else { throw }
+      }
+      Write-Host "  PUSH $id $version — new"
+    }
+
+    $remaining = (Get-ChildItem -Path "${{ parameters.packageParentPath }}" -Filter "*.nupkg" -Recurse).Count
+    Write-Host "Removed $removedCount already-published package(s). $remaining package(s) to push."
+    Write-Host "##vso[task.setvariable variable=HasNewPackages]$($remaining -gt 0)"
+  displayName: Remove already-published packages
+
+- script: dir /S "${{ parameters.packageParentPath }}"
+  displayName: Show NuGet packages after cleanup
+
 - task: 1ES.PublishNuGet@1
   displayName: 'NuGet push to ${{ parameters.feedDisplayName }}'
-  continueOnError: true
+  condition: and(succeeded(), eq(variables['HasNewPackages'], 'True'))
   inputs:
     useDotNetTask: true
     packageParentPath: '${{ parameters.packageParentPath }}'
