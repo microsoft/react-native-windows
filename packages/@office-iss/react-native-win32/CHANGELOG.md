@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Sat, 07 Mar 2026 04:08:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 11 Mar 2026 17:07:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.5
+
+Wed, 11 Mar 2026 17:07:06 GMT
+
+### Patches
+
+- Update require's from TouchableWin32 to be imports (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.4
 

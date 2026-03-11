@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 07 Mar 2026 04:08:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 11 Mar 2026 17:07:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.6
+
+Wed, 11 Mar 2026 17:07:06 GMT
+
+### Patches
+
+- Center single line textinputs (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.5
 

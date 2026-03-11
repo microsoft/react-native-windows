@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Mar 2026 17:07:06 GMT",
+      "version": "0.81.6",
+      "tag": "react-native-windows_v0.81.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "176577ae34cb8938133a533257b3027aea4a6291",
+            "comment": "Center single line textinputs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Mar 2026 04:08:17 GMT",
       "version": "0.81.5",
       "tag": "react-native-windows_v0.81.5",
