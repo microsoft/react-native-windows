@@ -12,6 +12,7 @@
 #pragma warning(disable : 4068)
 #pragma warning(disable : 4100)
 #pragma warning(disable : 4324) // structure was padded due to alignment specifier
+#pragma warning(disable : 4996) // deprecated APIs in cxxreact headers
 
 #pragma push_macro("ERROR")
 #pragma push_macro("Check")
