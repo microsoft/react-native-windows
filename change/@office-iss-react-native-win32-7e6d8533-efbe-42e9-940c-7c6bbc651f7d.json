@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update require's from TouchableWin32 to be imports",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

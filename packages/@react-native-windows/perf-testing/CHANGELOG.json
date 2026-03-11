@@ -1,0 +1,20 @@
+{
+  "name": "@react-native-windows/perf-testing",
+  "entries": [
+    {
+      "date": "Wed, 11 Mar 2026 03:08:37 GMT",
+      "version": "0.0.0-canary.1034",
+      "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1034",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "8fb1889b612c06cab43d39c9c05950524655750c",
+            "comment": "Performance tests for react native windows(Fabric)"
+          }
+        ]
+      }
+    }
+  ]
+}
