@@ -368,7 +368,7 @@ extends:
               SymbolServerType: 'TeamServices'
               SymbolsProduct: 'ReactNativeWindows'
               SymbolsVersion: '$(Build.BuildNumber)'
-              SymbolsArtifactName: 'ReactNativeWindows-Symbols'
+              SymbolsArtifactName: 'ReactNativeWindows-Symbols-$(Build.BuildId)'
               DetailedLog: true
               TreatNotIndexedAsWarning: false
 
