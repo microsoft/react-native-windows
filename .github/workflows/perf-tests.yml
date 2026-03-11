@@ -66,6 +66,8 @@ jobs:
       - name: Compare against baselines
         id: compare
         working-directory: packages/e2e-test-app-fabric
+        env:
+          CI: 'true'
         run: yarn perf:ci:compare
         continue-on-error: true
 
