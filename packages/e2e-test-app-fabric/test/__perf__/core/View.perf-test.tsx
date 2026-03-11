@@ -58,7 +58,9 @@ class ViewPerfTest extends ComponentPerfTestBase {
     const NestedViews = () => (
       <View testID={this.testId} style={styles.container}>
         {Array.from({length: count}, (_, i) => (
-          <View key={i} style={styles.nested} />
+          <View key={i} style={styles.nested} accessible accessibilityRole="none">
+            <View style={styles.nested} />
+          </View>
         ))}
       </View>
     );
