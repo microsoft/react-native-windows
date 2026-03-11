@@ -72,4 +72,50 @@ export class SnapshotManager {
   static buildKey(testName: string): string {
     return `${testName} 1`;
   }
+
+  /**
+   * Path to the temp file where the current run's measured values are stored.
+   * Written by toMatchPerfSnapshot (worker), read by PerfJsonReporter (main).
+   */
+  static getCurrentRunPath(testFilePath: string): string {
+    const testDir = path.dirname(testFilePath);
+    const snapshotDir = path.join(testDir, '__perf_snapshots__');
+    return path.join(
+      snapshotDir,
+      `${path.basename(testFilePath)}.perf-current.json`,
+    );
+  }
+
+  /**
+   * Record a single test's measured values to the current-run temp file.
+   * Called from the test worker process by toMatchPerfSnapshot.
+   */
+  static recordCurrentRun(
+    testFilePath: string,
+    key: string,
+    entry: SnapshotEntry,
+  ): void {
+    const currentPath = this.getCurrentRunPath(testFilePath);
+    const existing = this.load(currentPath);
+    existing[key] = entry;
+    this.save(currentPath, existing);
+  }
+
+  /**
+   * Load the current run's measured values from the temp file.
+   * Called from the main process by PerfJsonReporter.
+   */
+  static loadCurrentRun(testFilePath: string): SnapshotFile {
+    return this.load(this.getCurrentRunPath(testFilePath));
+  }
+
+  /**
+   * Remove the current-run temp file (cleanup after reporting).
+   */
+  static cleanCurrentRun(testFilePath: string): void {
+    const p = this.getCurrentRunPath(testFilePath);
+    if (fs.existsSync(p)) {
+      fs.unlinkSync(p);
+    }
+  }
 }

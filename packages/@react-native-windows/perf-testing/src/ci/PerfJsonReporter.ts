@@ -78,11 +78,11 @@ export class PerfJsonReporter {
     const suites: SuiteResult[] = [];
 
     for (const suite of results.testResults) {
-      // Load the snapshot file for this test suite (written by toMatchPerfSnapshot)
-      const {file: snapshotFilePath} = SnapshotManager.getSnapshotPath(
+      // Load the CURRENT measured values written by toMatchPerfSnapshot
+      // to a temp file (not the baselines — those are for comparison only)
+      const snapshots = SnapshotManager.loadCurrentRun(
         suite.testFilePath,
       );
-      const snapshots = SnapshotManager.load(snapshotFilePath);
 
       const passed = suite.testResults.filter(
         t => t.status === 'passed',
@@ -136,6 +136,11 @@ export class PerfJsonReporter {
     );
 
     console.log(`\n📊 Perf results written to: ${this.outputFile}`);
+
+    // Clean up temp files written by test workers
+    for (const suite of results.testResults) {
+      SnapshotManager.cleanCurrentRun(suite.testFilePath);
+    }
   }
 }
 
