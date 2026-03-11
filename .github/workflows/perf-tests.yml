@@ -32,6 +32,7 @@ jobs:
     permissions:
       contents: read
       actions: read
+      pull-requests: write
 
     steps:
       # ── Setup ──────────────────────────────────────────────
@@ -84,6 +85,14 @@ jobs:
             packages/e2e-test-app-fabric/.perf-results/
             packages/e2e-test-app-fabric/test/__perf__/**/__perf_snapshots__/
           retention-days: 30
+
+      # ── PR Comment ────────────────────────────────────────
+      - name: Post perf results to PR
+        if: github.event_name == 'pull_request' && always()
+        working-directory: packages/e2e-test-app-fabric
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn perf:ci:report
 
       # ── Status Gate ────────────────────────────────────────
       - name: Check for regressions

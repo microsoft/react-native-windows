@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 07 Mar 2026 04:06:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 11 Mar 2026 03:08:37 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1035
+
+Wed, 11 Mar 2026 03:08:37 GMT
+
+### Changes
+
+- Performance tests for react native windows(Fabric) (74712637+iamAbhi-916@users.noreply.github.com)
+- Update performance test results markdown header (74712637+iamAbhi-916@users.noreply.github.com)
+- Center single line textinputs (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1034
 
