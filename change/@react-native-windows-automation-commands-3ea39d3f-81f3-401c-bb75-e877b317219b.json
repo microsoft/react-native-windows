@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Promote 0.81 to legacy",
-  "packageName": "@react-native-windows/automation-commands",
-  "email": "74712637+iamAbhi-916@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

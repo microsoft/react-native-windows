@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 12 Mar 2026 08:48:51 GMT",
+      "version": "0.81.6",
+      "tag": "@office-iss/react-native-win32_v0.81.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "f881c2c85f504f54bcbeecd4214e4297fc4e3fb3",
+            "comment": "Promote 0.81 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v0.81.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Mar 2026 17:07:06 GMT",
       "version": "0.81.5",
       "tag": "@office-iss/react-native-win32_v0.81.5",
