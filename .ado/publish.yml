@@ -95,7 +95,7 @@ variables:
   - name: FailCGOnAlert
     value: false
   - name: EnableCodesign
-    value: false
+    value: true
 
 trigger: none
 pr: none
@@ -174,6 +174,9 @@ extends:
 
           - script: echo NpmDistTag is $(NpmDistTag)
             displayName: Show NPM dist tag
+
+          - script: copy ".ado\scripts\npmPack.js" "$(Build.StagingDirectory)\versionEnvVars\npmPack.js"
+            displayName: Include npmPack.js in VersionEnvVars artifact
 
           - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
             displayName: 📒 Generate Manifest Npm
@@ -397,9 +400,12 @@ extends:
                   configuration: Debug
 
           # Symbol Publishing for Work Item 59264834 - MSRC Compliance
+          # continueOnError: Duplicate symbols are expected when the pipeline
+          # is re-run for the same version. The symbols already exist on the
+          # server, so it is safe to continue.
           - task: PublishSymbols@2
             displayName: 'Publish Symbols to Microsoft Symbol Server'
-            enabled: true
+            continueOnError: true
             condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI'))
             inputs:
               UseNetCoreClientTool: true
@@ -409,7 +415,7 @@ extends:
               SymbolServerType: 'TeamServices'
               SymbolsProduct: 'ReactNativeWindows'
               SymbolsVersion: '$(Build.BuildNumber)'
-              SymbolsArtifactName: 'ReactNativeWindows-Symbols'
+              SymbolsArtifactName: 'ReactNativeWindows-Symbols-$(Build.BuildId)'
               DetailedLog: true
               TreatNotIndexedAsWarning: false
 
