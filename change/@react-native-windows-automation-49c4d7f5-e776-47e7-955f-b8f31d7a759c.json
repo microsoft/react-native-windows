@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Promote 0.82 to latest",
+  "packageName": "@react-native-windows/automation",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
