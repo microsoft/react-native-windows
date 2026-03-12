@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Promote 0.82 to latest",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
