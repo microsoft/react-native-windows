@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix: reporter writes current measured values via temp files instead of baselines",
+  "packageName": "@react-native-windows/perf-testing",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

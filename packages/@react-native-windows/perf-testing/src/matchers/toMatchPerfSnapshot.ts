@@ -192,6 +192,13 @@ expect.extend({
       };
     }
 
+    // Record current measured values for the CI reporter
+    SnapshotManager.recordCurrentRun(testPath, snapshotKey, {
+      metrics: received,
+      threshold,
+      capturedAt: new Date().toISOString(),
+    });
+
     // COMPARE MODE
     const {errors, warnings} = compareAgainstBaseline(
       received,
