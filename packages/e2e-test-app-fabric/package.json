@@ -19,7 +19,10 @@
     "perf:ci": "jest --config jest.perf.config.js --ci --forceExit",
     "perf:ci:compare": "node ../../vnext/Scripts/perf/compare-results.js",
     "perf:ci:report": "node ../../vnext/Scripts/perf/post-pr-comment.js",
-    "perf:create": "node ../../vnext/Scripts/perf/create-perf-test.js"
+    "perf:create": "node ../../vnext/Scripts/perf/create-perf-test.js",
+    "perf:native": "jest --config jest.native-perf.config.js",
+    "perf:native:update": "jest --config jest.native-perf.config.js -u",
+    "perf:native:ci": "jest --config jest.native-perf.config.js --ci --forceExit"
   },
   "dependencies": {
     "@react-native-windows/automation-channel": "0.0.0-canary.1035",
