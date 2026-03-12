@@ -75,4 +75,50 @@ describe('Core Components — Native Render Pipeline', () => {
       maxCV: 0.6,
     });
   });
+
+  test('SectionList native mount', async () => {
+    const perf = await measureNativePerf('SectionList', {
+      runs: 10,
+      warmupRuns: 2,
+    });
+    expect(perf).toMatchPerfSnapshot({
+      ...NATIVE,
+      maxDurationIncrease: 20,
+      maxCV: 0.6,
+    });
+  });
+
+  test('Button native mount', async () => {
+    const perf = await measureNativePerf('Button', {runs: 15, warmupRuns: 2});
+    expect(perf).toMatchPerfSnapshot(NATIVE);
+  });
+
+  test('Modal native mount', async () => {
+    const perf = await measureNativePerf('Modal', {runs: 15, warmupRuns: 2});
+    expect(perf).toMatchPerfSnapshot(NATIVE);
+  });
+
+  test('Pressable native mount', async () => {
+    const perf = await measureNativePerf('Pressable', {
+      runs: 15,
+      warmupRuns: 2,
+    });
+    expect(perf).toMatchPerfSnapshot(NATIVE);
+  });
+
+  test('TouchableHighlight native mount', async () => {
+    const perf = await measureNativePerf('TouchableHighlight', {
+      runs: 15,
+      warmupRuns: 2,
+    });
+    expect(perf).toMatchPerfSnapshot(NATIVE);
+  });
+
+  test('TouchableOpacity native mount', async () => {
+    const perf = await measureNativePerf('TouchableOpacity', {
+      runs: 15,
+      warmupRuns: 2,
+    });
+    expect(perf).toMatchPerfSnapshot(NATIVE);
+  });
 });

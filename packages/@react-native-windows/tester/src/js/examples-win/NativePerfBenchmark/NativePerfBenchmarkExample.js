@@ -14,9 +14,14 @@ const {
   Image,
   ScrollView,
   FlatList,
+  SectionList,
   Switch,
   ActivityIndicator,
+  Button,
+  Modal,
   Pressable,
+  TouchableHighlight,
+  TouchableOpacity,
   StyleSheet,
 } = require('react-native');
 
@@ -53,8 +58,40 @@ const COMPONENT_REGISTRY = {
       renderItem={({item}) => <Text>{item.key}</Text>}
     />
   ),
+  SectionList: () => (
+    <SectionList
+      style={styles.target}
+      sections={[
+        {title: 'A', data: ['A1', 'A2', 'A3']},
+        {title: 'B', data: ['B1', 'B2', 'B3']},
+      ]}
+      renderItem={({item}) => <Text>{item}</Text>}
+      renderSectionHeader={({section}) => <Text>{section.title}</Text>}
+    />
+  ),
   Switch: () => <Switch value={false} />,
   ActivityIndicator: () => <ActivityIndicator size="large" />,
+  Button: () => <Button title="Benchmark" onPress={() => {}} />,
+  Modal: () => (
+    <Modal visible={false} transparent>
+      <View style={styles.target} />
+    </Modal>
+  ),
+  Pressable: () => (
+    <Pressable style={styles.target}>
+      <Text>Press</Text>
+    </Pressable>
+  ),
+  TouchableHighlight: () => (
+    <TouchableHighlight style={styles.target} onPress={() => {}}>
+      <Text>Highlight</Text>
+    </TouchableHighlight>
+  ),
+  TouchableOpacity: () => (
+    <TouchableOpacity style={styles.target} onPress={() => {}}>
+      <Text>Opacity</Text>
+    </TouchableOpacity>
+  ),
 };
 
 function BenchmarkRunner() {
