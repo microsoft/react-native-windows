@@ -3,7 +3,10 @@
 # It releases npm packages to npmjs.com and NuGet packages to the public
 # ms/react-native and ms/react-native-public ADO feeds and to nuget.org.
 #
-# The triggers are overridden by the ADO pipeline UI definition.
+# The pipeline completion trigger is defined below in the pipeline resource.
+# Do NOT add a build completion trigger in the ADO UI — UI triggers override
+# YAML triggers and cause the pipeline to always run against the default branch
+# with incorrect metadata (wrong commit message and branch).
 #
 
 name: RNW NuGet Release $(Date:yyyyMMdd).$(Rev:r)
@@ -16,7 +19,13 @@ resources:
   - pipeline: 'Publish'
     project: 'ReactNative'
     source: 'Publish'
-    trigger: none
+    trigger:
+      branches:
+        include:
+        - main
+        - refs/heads/main
+        - '*.stable'
+        - 'refs/heads/*.stable'
   repositories:
   - repository: 1ESPipelineTemplates
     type: git
