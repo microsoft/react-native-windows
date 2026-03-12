@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 12 Mar 2026 03:10:14 GMT",
+      "version": "0.0.0-canary.1036",
+      "tag": "react-native-windows_v0.0.0-canary.1036",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c51a77152ae34387ff3b9e80debd5c759d5c4df8",
+            "comment": "Fix BinSkim issues"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Mar 2026 03:08:37 GMT",
       "version": "0.0.0-canary.1035",
       "tag": "react-native-windows_v0.0.0-canary.1035",
