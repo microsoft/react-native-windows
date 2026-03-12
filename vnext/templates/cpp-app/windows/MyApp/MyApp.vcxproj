@@ -4,6 +4,8 @@
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
+    <!-- Prevent MSB4006 circular dependency in CppWinRT during parallel builds (https://github.com/microsoft/cppwinrt/issues/950) -->
+    <CppWinRTGenerateWindowsMetadata>false</CppWinRTGenerateWindowsMetadata>
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{{ projectGuidUpper }}</ProjectGuid>
     <ProjectName>{{ name }}</ProjectName>
