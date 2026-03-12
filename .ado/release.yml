@@ -24,8 +24,8 @@ resources:
         include:
         - main
         - refs/heads/main
-        - '*.stable'
-        - 'refs/heads/*.stable'
+        - '*-stable'
+        - 'refs/heads/*-stable'
   repositories:
   - repository: 1ESPipelineTemplates
     type: git
