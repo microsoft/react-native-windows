@@ -2174,34 +2174,6 @@
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.4.tgz#7fb09506ee00a82989125cc03e8495204c8afc01"
   integrity sha512-Kf8h1AMnBo54b1fdiVylP2P/iFcZqzpMYcglC28EEFB1DEnOjsNr6Ucqc+3R9e91vHxEDnhZFbYDmAe79P2gjA==
 
-"@react-native-windows/find-repo-root@^0.0.0-canary.99":
-  version "0.0.0-canary.99"
-  resolved "https://registry.yarnpkg.com/@react-native-windows/find-repo-root/-/find-repo-root-0.0.0-canary.99.tgz#9aba0d034c7bbe0de7108b38bb5e352ec8c6cbf2"
-  integrity sha512-ks88JuTE/EmV9etG0QpxXo96lgnYe5q5RjbtW0aboLy93djKVb+P95xrr7psk15TzcQGTM063iJrKVabRjLhNg==
-  dependencies:
-    "@react-native-windows/fs" "^0.0.0-canary.70"
-    find-up "^4.1.0"
-    minimatch "^10.0.3"
-
-"@react-native-windows/fs@^0.0.0-canary.70":
-  version "0.0.0-canary.70"
-  resolved "https://registry.yarnpkg.com/@react-native-windows/fs/-/fs-0.0.0-canary.70.tgz#53165cc8f0310be7aebb1bda669ff54ae2298ada"
-  integrity sha512-o4DY6n31140d+8ylusqzFYM69ReJ3J56i5vAZw3Pq0CtoELyloOSCHBUNmNFTZKnOeU+3RDZ2hH/nv4Vf8lstA==
-  dependencies:
-    graceful-fs "^4.2.8"
-    minimatch "^10.0.3"
-
-"@react-native-windows/package-utils@^0.0.0-canary.96":
-  version "0.0.0-canary.96"
-  resolved "https://registry.yarnpkg.com/@react-native-windows/package-utils/-/package-utils-0.0.0-canary.96.tgz#545e53dabd788203d6daa2c050df6cea3836ed0b"
-  integrity sha512-FQ8c0vxVhIVOjmru+8CPliEwhRx+WPDFcskf4eu/cSiucW3n1LmBGsZaLkae02FHOl2yioT9hW1L7X5YDj5xIA==
-  dependencies:
-    "@react-native-windows/find-repo-root" "^0.0.0-canary.99"
-    "@react-native-windows/fs" "^0.0.0-canary.70"
-    get-monorepo-packages "^1.2.0"
-    lodash "^4.17.15"
-    minimatch "^10.0.3"
-
 "@react-native/assets-registry@0.81.6":
   version "0.81.6"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.81.6.tgz#4a9edfa209e4ef43adb372cbf481a7c4ff2e7342"
@@ -9417,7 +9389,7 @@ minimatch@9.0.3:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^10.0.3, minimatch@^10.2.2:
+minimatch@^10.2.2:
   version "10.2.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-10.2.4.tgz#465b3accbd0218b8281f5301e27cedc697f96fde"
   integrity sha512-oRjTw/97aTBN0RHbYCdtF1MQfvusSIBQM0IZEgzl6426+8jSC0nF1a/GmnVLpfB9yyr6g6FTqWqiZVbxrtaCIg==
