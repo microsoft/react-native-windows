@@ -209,16 +209,24 @@ export default class AutomationEnvironment extends NodeEnvironment {
       // Set up the "Desktop" or Root session
       const rootBrowser = await webdriverio.remote(this.rootWebDriverOptions);
 
-      // Get the list of windows
-      const allWindows = await rootBrowser.$$('//Window');
-
-      // Find our target window
+      // Poll for the app window with timeout (cold starts can be slow)
+      const windowTimeout = 300000; // 5 minutes
+      const pollInterval = 2000;
+      const deadline = Date.now() + windowTimeout;
       let appWindow: webdriverio.Element | undefined;
-      for (const window of allWindows) {
-        if ((await window.getAttribute('Name')) === appName) {
-          appWindow = window;
+
+      while (Date.now() < deadline) {
+        const allWindows = await rootBrowser.$$('//Window');
+        for (const window of allWindows) {
+          if ((await window.getAttribute('Name')) === appName) {
+            appWindow = window;
+            break;
+          }
+        }
+        if (appWindow) {
           break;
         }
+        await new Promise(resolve => setTimeout(resolve, pollInterval));
       }
 
       if (!appWindow) {

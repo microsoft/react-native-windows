@@ -1,0 +1,561 @@
+{
+  "Core Components — Native Render Pipeline View native mount 1": {
+    "metrics": {
+      "name": "View native mount",
+      "meanDuration": 1.1341399987538656,
+      "medianDuration": 1.136599987745285,
+      "stdDev": 0.01454877451026611,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        1.1405999958515167,
+        1.1495999991893768,
+        1.1335000097751617,
+        1.1393000185489655,
+        1.154699981212616,
+        1.1416999995708466,
+        1.1525000035762787,
+        1.115799993276596,
+        1.1319999992847443,
+        1.1171999871730804,
+        1.136599987745285,
+        1.1033999919891357,
+        1.127100020647049,
+        1.1238000094890594,
+        1.1442999839782715
+      ],
+      "timestamp": "2026-03-13T07:59:39.991Z",
+      "nativeTimings": {
+        "fullPipeline": 1.136599987745285
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T07:59:39.993Z"
+  },
+  "Core Components — Native Render Pipeline Text native mount 1": {
+    "metrics": {
+      "name": "Text native mount",
+      "meanDuration": 1.689740002155304,
+      "medianDuration": 1.458299994468689,
+      "stdDev": 0.4277726689556986,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        1.3926999866962433,
+        1.4160999953746796,
+        1.3273999989032745,
+        1.3693000078201294,
+        1.405900001525879,
+        1.458299994468689,
+        1.3754000067710876,
+        1.6455999910831451,
+        2.784299999475479,
+        1.3473000228404999,
+        1.5394999980926514,
+        2.000900000333786,
+        2.048000007867813,
+        2.1337000131607056,
+        2.101700007915497
+      ],
+      "timestamp": "2026-03-13T07:59:41.703Z",
+      "nativeTimings": {
+        "fullPipeline": 1.458299994468689
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T07:59:41.705Z"
+  },
+  "Core Components — Native Render Pipeline TextInput native mount 1": {
+    "metrics": {
+      "name": "TextInput native mount",
+      "meanDuration": 2.393700001637141,
+      "medianDuration": 2.2047000229358673,
+      "stdDev": 0.5300924879232565,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        2.297100007534027,
+        2.2278999984264374,
+        2.197400003671646,
+        2.2047000229358673,
+        4.00110000371933,
+        2.1110000014305115,
+        2.164200007915497,
+        2.0740000009536743,
+        2.140500009059906,
+        3.2802999913692474,
+        2.1211000084877014,
+        2.3244999945163727,
+        2.2699999809265137,
+        2.1561999917030334,
+        2.3355000019073486
+      ],
+      "timestamp": "2026-03-13T07:59:43.696Z",
+      "nativeTimings": {
+        "fullPipeline": 2.2047000229358673
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T07:59:43.698Z"
+  },
+  "Core Components — Native Render Pipeline Image native mount 1": {
+    "metrics": {
+      "name": "Image native mount",
+      "meanDuration": 1.5079866687456767,
+      "medianDuration": 1.4853000044822693,
+      "stdDev": 0.18629767619135063,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        1.584500014781952,
+        1.7063999772071838,
+        1.4334000051021576,
+        1.6315999925136566,
+        1.4853000044822693,
+        1.9119000136852264,
+        1.5936000049114227,
+        1.6886000037193298,
+        1.320600003004074,
+        1.6044000089168549,
+        1.2721000015735626,
+        1.4404999911785126,
+        1.3000999987125397,
+        1.3346000015735626,
+        1.3122000098228455
+      ],
+      "timestamp": "2026-03-13T07:59:45.492Z",
+      "nativeTimings": {
+        "fullPipeline": 1.4853000044822693
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T07:59:45.493Z"
+  },
+  "Core Components — Native Render Pipeline Switch native mount 1": {
+    "metrics": {
+      "name": "Switch native mount",
+      "meanDuration": 1.3046533266703289,
+      "medianDuration": 1.2982999980449677,
+      "stdDev": 0.05519220789026681,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        1.3310000002384186,
+        1.3017999827861786,
+        1.3616999983787537,
+        1.2355999946594238,
+        1.314300000667572,
+        1.2705000042915344,
+        1.2949000000953674,
+        1.2961999773979187,
+        1.2699999809265137,
+        1.4395000040531158,
+        1.2982999980449677,
+        1.369299978017807,
+        1.310399979352951,
+        1.2407000064849854,
+        1.2355999946594238
+      ],
+      "timestamp": "2026-03-13T07:59:47.412Z",
+      "nativeTimings": {
+        "fullPipeline": 1.2982999980449677
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T07:59:47.413Z"
+  },
+  "Core Components — Native Render Pipeline ActivityIndicator native mount 1": {
+    "metrics": {
+      "name": "ActivityIndicator native mount",
+      "meanDuration": 1.4870333313941955,
+      "medianDuration": 1.4731000065803528,
+      "stdDev": 0.09715297556847328,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        1.6552999913692474,
+        1.5321999788284302,
+        1.3989999890327454,
+        1.4327999949455261,
+        1.555899977684021,
+        1.4158999919891357,
+        1.436599999666214,
+        1.7210000157356262,
+        1.5047999918460846,
+        1.4090000092983246,
+        1.3631000220775604,
+        1.4731000065803528,
+        1.48539999127388,
+        1.4789000153541565,
+        1.4424999952316284
+      ],
+      "timestamp": "2026-03-13T07:59:49.923Z",
+      "nativeTimings": {
+        "fullPipeline": 1.4731000065803528
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T07:59:49.925Z"
+  },
+  "Core Components — Native Render Pipeline ScrollView native mount 1": {
+    "metrics": {
+      "name": "ScrollView native mount",
+      "meanDuration": 3.9724800020456312,
+      "medianDuration": 3.820150002837181,
+      "stdDev": 0.35028722750497204,
+      "renderCount": 1,
+      "runs": 10,
+      "durations": [
+        3.8176000118255615,
+        3.8073000013828278,
+        3.820800006389618,
+        4.0692999958992,
+        4.932500004768372,
+        3.943900018930435,
+        3.78930002450943,
+        3.8194999992847443,
+        3.7701999843120575,
+        3.954399973154068
+      ],
+      "timestamp": "2026-03-13T07:59:51.974Z",
+      "nativeTimings": {
+        "fullPipeline": 3.820150002837181
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.6,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T07:59:51.977Z"
+  },
+  "Core Components — Native Render Pipeline FlatList native mount 1": {
+    "metrics": {
+      "name": "FlatList native mount",
+      "meanDuration": 6.37914999127388,
+      "medianDuration": 6.300749987363815,
+      "stdDev": 0.9711125963885436,
+      "renderCount": 1,
+      "runs": 10,
+      "durations": [
+        8.1560999751091,
+        5.597400009632111,
+        6.1753000020980835,
+        5.60180002450943,
+        5.435599982738495,
+        7.431299984455109,
+        5.235899984836578,
+        7.248400002717972,
+        6.426199972629547,
+        6.483499974012375
+      ],
+      "timestamp": "2026-03-13T07:59:53.868Z",
+      "nativeTimings": {
+        "fullPipeline": 6.300749987363815
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 20,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.6,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T07:59:53.870Z"
+  },
+  "Core Components — Native Render Pipeline SectionList native mount 1": {
+    "metrics": {
+      "name": "SectionList native mount",
+      "meanDuration": 6.242739999294281,
+      "medianDuration": 5.816100001335144,
+      "stdDev": 0.9622117188351178,
+      "renderCount": 1,
+      "runs": 10,
+      "durations": [
+        8.351400017738342,
+        5.624099999666214,
+        5.604099988937378,
+        5.963099986314774,
+        5.697200000286102,
+        5.601300001144409,
+        5.802000015974045,
+        7.634899973869324,
+        6.319100022315979,
+        5.830199986696243
+      ],
+      "timestamp": "2026-03-13T07:59:55.927Z",
+      "nativeTimings": {
+        "fullPipeline": 5.816100001335144
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 20,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.6,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T07:59:55.929Z"
+  },
+  "Core Components — Native Render Pipeline Button native mount 1": {
+    "metrics": {
+      "name": "Button native mount",
+      "meanDuration": 2.130000001192093,
+      "medianDuration": 1.9711999893188477,
+      "stdDev": 0.4384542285139699,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        1.953799992799759,
+        2.021699994802475,
+        2.0412999987602234,
+        2.158500015735626,
+        3.587099999189377,
+        1.9708999991416931,
+        1.9496999979019165,
+        1.9699000120162964,
+        1.9219000041484833,
+        2.608700007200241,
+        1.9083999991416931,
+        1.9898000061511993,
+        1.9715000092983246,
+        1.925599992275238,
+        1.9711999893188477
+      ],
+      "timestamp": "2026-03-13T07:59:57.789Z",
+      "nativeTimings": {
+        "fullPipeline": 1.9711999893188477
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T07:59:57.791Z"
+  },
+  "Core Components — Native Render Pipeline Modal native mount 1": {
+    "metrics": {
+      "name": "Modal native mount",
+      "meanDuration": 1.0703466713428498,
+      "medianDuration": 1.0548000037670135,
+      "stdDev": 0.05884543816567732,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        1.0833999812602997,
+        1.078799992799759,
+        1.1037999987602234,
+        1.0778000056743622,
+        1.0548000037670135,
+        1.0038000047206879,
+        1.0209999978542328,
+        1.0202000141143799,
+        1.179500013589859,
+        1.013800024986267,
+        1.0486000180244446,
+        1.0458999872207642,
+        1.21220001578331,
+        1.0369000136852264,
+        1.0746999979019165
+      ],
+      "timestamp": "2026-03-13T07:59:59.605Z",
+      "nativeTimings": {
+        "fullPipeline": 1.0548000037670135
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T07:59:59.606Z"
+  },
+  "Core Components — Native Render Pipeline Pressable native mount 1": {
+    "metrics": {
+      "name": "Pressable native mount",
+      "meanDuration": 1.8881666739781697,
+      "medianDuration": 1.8802000284194946,
+      "stdDev": 0.1803950551840612,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        2.405000001192093,
+        1.7233000099658966,
+        1.671400010585785,
+        1.7535000145435333,
+        1.8100999891757965,
+        1.7788000106811523,
+        1.9415999948978424,
+        1.8664000034332275,
+        1.7490000128746033,
+        1.9493000209331512,
+        1.8802000284194946,
+        2.1148000061511993,
+        1.8831999897956848,
+        1.8934000134468079,
+        1.9025000035762787
+      ],
+      "timestamp": "2026-03-13T08:00:01.700Z",
+      "nativeTimings": {
+        "fullPipeline": 1.8802000284194946
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T08:00:01.702Z"
+  },
+  "Core Components — Native Render Pipeline TouchableHighlight native mount 1": {
+    "metrics": {
+      "name": "TouchableHighlight native mount",
+      "meanDuration": 1.8361800054709116,
+      "medianDuration": 1.6354999840259552,
+      "stdDev": 0.674756116517525,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        2.223600000143051,
+        1.7350000143051147,
+        1.6358000040054321,
+        4.204100012779236,
+        1.5815999805927277,
+        1.6669000089168549,
+        1.5728000104427338,
+        1.5842000246047974,
+        1.5896999835968018,
+        1.6473000049591064,
+        1.5633000135421753,
+        1.6354999840259552,
+        1.6960999965667725,
+        1.5797000229358673,
+        1.627100020647049
+      ],
+      "timestamp": "2026-03-13T08:00:04.224Z",
+      "nativeTimings": {
+        "fullPipeline": 1.6354999840259552
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T08:00:04.226Z"
+  },
+  "Core Components — Native Render Pipeline TouchableOpacity native mount 1": {
+    "metrics": {
+      "name": "TouchableOpacity native mount",
+      "meanDuration": 1.971973337729772,
+      "medianDuration": 1.9443999826908112,
+      "stdDev": 0.07173168687128191,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        1.9558999836444855,
+        1.9426000118255615,
+        1.9608000218868256,
+        1.9443999826908112,
+        2.0235000252723694,
+        1.92739999294281,
+        1.9442000091075897,
+        1.9501999914646149,
+        1.9424000084400177,
+        1.9335000216960907,
+        1.907700002193451,
+        2.190400004386902,
+        1.906900018453598,
+        2.032599985599518,
+        2.017100006341934
+      ],
+      "timestamp": "2026-03-13T08:00:06.667Z",
+      "nativeTimings": {
+        "fullPipeline": 1.9443999826908112
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-13T08:00:06.669Z"
+  }
+}
