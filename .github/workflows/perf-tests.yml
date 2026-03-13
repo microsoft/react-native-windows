@@ -49,6 +49,16 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Install Windows SDK 10.0.22621
+        shell: pwsh
+        run: |
+          # Install Windows 11 SDK (10.0.22621) required by RNW NewArch/Fabric builds
+          & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe" modify `
+            --installPath "${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise" `
+            --add Microsoft.VisualStudio.Component.Windows11SDK.22621 `
+            --quiet --norestart --wait
+          echo "Windows SDK 10.0.22621 installed"
+
       - name: Build perf-testing package
         run: yarn workspace @react-native-windows/perf-testing build
 
@@ -56,6 +66,10 @@ jobs:
       - name: Build and deploy RNTesterApp-Fabric
         working-directory: packages/e2e-test-app-fabric
         run: yarn windows --release --no-launch --logging
+
+      - name: Enable Developer Mode
+        shell: pwsh
+        run: reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v AllowDevelopmentWithoutDevLicense /d 1
 
       # ── Run Tests ──────────────────────────────────────────
       - name: Run perf tests
