@@ -78,13 +78,15 @@ extends:
     pool: ${{ parameters.AgentPool.Medium }}
     customBuildTags:
     - ES365AIMigrationTooling
+    featureFlags:
+      autoEnablePREfastWithNewRuleset: false # PREfast produces 0 actionable findings; auto-enable injects /analyze into every C++ TU, generating ~2656 SARIF files that Guardian uploads for ~19 min per native build
     sdl:
       credscan:
           suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
       spotBugs:
           enabled: false # We don't have any java, but random packages in node_modules do
       prefast:
-          enabled: false # 0 actionable findings across all jobs; Guardian import adds ~19 min per native build
+          enabled: false
     stages:
     - stage: RNWPublish
       jobs:
@@ -166,10 +168,11 @@ extends:
             - template: .ado/templates/msbuild-sln.yml@self
               parameters:
                 solutionDir: vnext
-                solutionName: ReactWindows-Desktop.sln
+                solutionName: ReactWindows-Desktop.Publish.slnf
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 oneESMode: true ## Files are only copied to staging, not published
+                msbuildArguments: /p:MultiProcessorCompilation=true
 
             - template: .ado/templates/publish-build-artifacts.yml@self
               parameters:
@@ -180,7 +183,6 @@ extends:
                 contents: |
                   React.Windows.Desktop\**
                   React.Windows.Desktop.DLL\**
-                  React.Windows.Desktop.Test.DLL\**
 
             - template: .ado/templates/component-governance.yml@self
 
@@ -226,10 +228,11 @@ extends:
             - template: .ado/templates/msbuild-sln.yml@self
               parameters:
                 solutionDir: vnext
-                solutionName: Microsoft.ReactNative.NewArch.sln
+                solutionName: Microsoft.ReactNative.NewArch.Publish.slnf
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 oneESMode: true ## Files are only copied to staging, not published
+                msbuildArguments: /p:MultiProcessorCompilation=true
 
             - task: PowerShell@2
               displayName: Make AnyCPU Reference Assemblies
