@@ -60,7 +60,7 @@ Maintainers can trigger the workflow manually from the **Actions** tab:
 ## FAQ
 
 **Q: What happens if my branch is deleted by mistake?**
-A: Git branch deletions on GitHub are reversible for a short period. You can also restore from a local clone. See [GitHub docs on restoring deleted branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository/restoring-a-deleted-branch).
+A: Git branch deletions on GitHub are reversible for a short period. You can also restore from a local clone. See [GitHub docs on managing branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-branches-in-your-repository).
 
 **Q: Will this delete branches with open pull requests?**
 A: No. The workflow checks for open PRs (including drafts) and skips those branches.
