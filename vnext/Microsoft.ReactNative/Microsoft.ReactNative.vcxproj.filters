@@ -143,6 +143,9 @@
     <ClCompile Include="Utils\LocalBundleReader.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="Utils\LocalizedStrings.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -368,6 +371,12 @@
     <ClInclude Include="Utils\LocalBundleReader.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\LocalizedStrings.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources\StringResourceIds.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
     <ClInclude Include="Utils\PropertyHandlerUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -520,6 +529,7 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc" />
+    <ResourceCompile Include="Resources\Strings.rc" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="DevMenuControl.xaml" />

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add localization infrastructure for context menu strings in TextInput and Text components",
+  "packageName": "react-native-windows",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
