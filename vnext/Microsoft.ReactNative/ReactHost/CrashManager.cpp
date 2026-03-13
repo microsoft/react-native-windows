@@ -9,6 +9,9 @@
 
 #include <WerApi.h>
 
+#pragma warning(push)
+#pragma warning(disable : 4996) // signal, _wfopen_s, _fileno, tmpfile_s, fread — CRT deprecated warnings
+
 namespace Mso::React {
 
 // When calling SetUnhandledExceptionFilter the previous filter is returned.
@@ -123,3 +126,5 @@ void InternalUnregisterCustomHandler() noexcept {
 #endif
 
 } // namespace Mso::React
+
+#pragma warning(pop)

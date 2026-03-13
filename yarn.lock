@@ -4726,9 +4726,9 @@ basic-ftp@^5.0.2:
   integrity sha512-VoMINM2rqJwJgfdHq6RiUudKt2BV+FY5ZFezP/ypmwayk68+NzzAQy4XXLlqsGD4MCzq3DrmNFD/uUmBJuGoXw==
 
 beachball@^2.20.0:
-  version "2.63.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.63.0.tgz#1fd0d5597c46b19745b9fef89804445260292ad2"
-  integrity sha512-SGVmPVHUtnflMS3/J3p6Bk9wWijSHOaE2rdqxqcf5zmsWT4rUx3pQ4yYIlUM2acaYLIfJ436PmAQc/9uxTCLAQ==
+  version "2.63.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.63.1.tgz#6cf4d812fe456c7d1016ddb06579adefdb5c5af0"
+  integrity sha512-/tTHod4yKZA8jC193na7HhhW1zs4j6SzTnFppYq2Q1jqufLvUEaaHPPzee7QMxvzRDju9BH0urFzghvOdyPI6w==
   dependencies:
     cosmiconfig "^9.0.0"
     execa "^5.0.0"
@@ -4738,7 +4738,7 @@ beachball@^2.20.0:
     prompts "^2.4.2"
     semver "^7.0.0"
     toposort "^2.0.2"
-    workspace-tools "^0.40.2"
+    workspace-tools "^0.41.0"
     yargs-parser "^21.0.0"
 
 before-after-hook@^2.2.0:
@@ -11848,9 +11848,9 @@ signedsource@^2.0.0:
   integrity sha512-MscTxXbMij5JVgrW1xDiMIc+vFa0+H0+HP+rRrFjwa7ef2VAxIP/4L/E75I5H4xvyb4l1X+a9ch+6Zy5uFu7Fg==
 
 simple-git@^3.3.0:
-  version "3.32.3"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.32.3.tgz#1dd6030fd03df4533a9e5a941314335e6265055d"
-  integrity sha512-56a5oxFdWlsGygOXHWrG+xjj5w9ZIt2uQbzqiIGdR/6i5iococ7WQ/bNPzWxCJdEUGUCmyMH0t9zMpRJTaKxmw==
+  version "3.33.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.33.0.tgz#b903dc70f5b93535a4f64ff39172da43058cfb88"
+  integrity sha512-D4V/tGC2sjsoNhoMybKyGoE+v8A60hRawKQ1iFRA1zwuDgGZCBJ4ByOzZ5J8joBbi4Oam0qiPH+GhzmSBwbJng==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
@@ -13111,10 +13111,10 @@ wordwrapjs@^4.0.0:
     reduce-flatten "^2.0.0"
     typical "^5.2.0"
 
-workspace-tools@^0.40.2:
-  version "0.40.2"
-  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.40.2.tgz#a141fa69f62ebf330c168871d1124b5a4de77280"
-  integrity sha512-k7bNIMxE38dRZc3kSLQvEEejZ1tnozPzHeCI4aQ0PrcyJoSOJ2yR6FCIdHpcs57UGZkB2HllVFFjnEB9R0G2Rw==
+workspace-tools@^0.41.0:
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.41.0.tgz#b9389f7af1ca79bf102ff613ce21bf2d02c4010a"
+  integrity sha512-iBB6LNqtJpfjTWnyjlgOwdJmf1wBTUsIr1V5phOBCJMywubpYAijDUqhgz7RfrTYdscA4vEFyhjiy4OSAGULcA==
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
     fast-glob "^3.3.1"
