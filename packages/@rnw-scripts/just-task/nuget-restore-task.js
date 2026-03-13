@@ -26,6 +26,11 @@ function executeNuGetRestore(config) {
     return;
   }
 
+  if (process.env.TF_BUILD) {
+    console.log('Skipping NuGet restore in CI (MSBuild handles restore)');
+    return;
+  }
+
   if (!fs.existsSync(config.scriptPath)) {
     console.warn(`NuGet restore script not found: ${config.scriptPath}`);
     return;

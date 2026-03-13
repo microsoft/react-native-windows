@@ -186,6 +186,8 @@ extends:
 
             templateContext:
               sdl:
+                prefast:
+                  enabled: false
                 binskim:
                   analyzeTargetGlob: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\React.Windows.Desktop.DLL\react-native-win32.dll'
               outputs:
@@ -249,6 +251,8 @@ extends:
 
             templateContext:
               sdl:
+                prefast:
+                  enabled: false
                 binskim:
                   analyzeTargetGlob: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.dll'
               outputs:
