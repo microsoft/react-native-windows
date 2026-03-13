@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "add native perf benchmarking infrastructure for Fabric components",
+  "packageName": "@react-native-windows/perf-testing",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
