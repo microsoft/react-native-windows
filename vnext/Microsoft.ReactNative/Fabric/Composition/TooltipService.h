@@ -35,6 +35,7 @@ struct TooltipTracker {
       const winrt::Microsoft::ReactNative::ComponentView &) noexcept;
 
   facebook::react::Tag Tag() const noexcept;
+  void DismissActiveTooltip() noexcept;
 
  private:
   void ShowTooltip(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept;
@@ -53,6 +54,7 @@ struct TooltipService {
   TooltipService(const winrt::Microsoft::ReactNative::ReactPropertyBag &properties);
   void StartTracking(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept;
   void StopTracking(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept;
+  void DismissAllTooltips() noexcept;
 
   static std::shared_ptr<TooltipService> GetCurrent(
       const winrt::Microsoft::ReactNative::ReactPropertyBag &properties) noexcept;
