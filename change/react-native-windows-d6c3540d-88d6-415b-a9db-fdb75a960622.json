@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "Fix watson bug",
+  "comment": "Revert \"[0.80]Fix crash in ABIViewManager::RemoveAllChildren during shutdown …\"",
   "packageName": "react-native-windows",
   "email": "hmalothu@microsoft.com",
   "dependentChangeType": "none"
