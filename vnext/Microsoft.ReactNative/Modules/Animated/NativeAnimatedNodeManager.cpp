@@ -109,6 +109,10 @@ void NativeAnimatedNodeManager::CreateAnimatedNode(
       m_trackingNodes.emplace(tag, std::make_unique<TrackingAnimatedNode>(tag, config, manager));
       break;
     }
+    case AnimatedNodeType::Color: {
+      m_colorNodes.emplace(tag, std::make_unique<ColorAnimatedNode>(tag, config, manager));
+      break;
+    }
     default: {
       assert(false);
       break;
@@ -474,6 +478,9 @@ AnimatedNode *NativeAnimatedNodeManager::GetAnimatedNode(int64_t tag) {
   if (m_trackingNodes.count(tag)) {
     return m_trackingNodes.at(tag).get();
   }
+  if (m_colorNodes.count(tag)) {
+    return m_colorNodes.at(tag).get();
+  }
   return static_cast<AnimatedNode *>(nullptr);
 }
 
@@ -508,6 +515,13 @@ TransformAnimatedNode *NativeAnimatedNodeManager::GetTransformAnimatedNode(int64
 TrackingAnimatedNode *NativeAnimatedNodeManager::GetTrackingAnimatedNode(int64_t tag) {
   if (m_trackingNodes.count(tag)) {
     return m_trackingNodes.at(tag).get();
+  }
+  return nullptr;
+}
+
+ColorAnimatedNode *NativeAnimatedNodeManager::GetColorAnimatedNode(int64_t tag) {
+  if (m_colorNodes.count(tag)) {
+    return m_colorNodes.at(tag).get();
   }
   return nullptr;
 }
