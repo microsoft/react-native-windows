@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Bump hermes",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "hmalothu@microsoft.com",
+  "dependentChangeType": "none"
+}
