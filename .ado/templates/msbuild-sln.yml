@@ -6,10 +6,10 @@ parameters:
   # NuGet & MSBuild
   solutionDir:
   solutionName:
-  msbuildVersion: 17.0
+  msbuildVersion: 18.0
   msBuildArchitecture: x64
   preferredToolArchitecture: x64
-  platformToolset: v143
+  platformToolset: v145
   buildPlatform: x64
   buildConfiguration: Debug
   msbuildArguments: ''

@@ -1,0 +1,66 @@
+{
+    "imageType": "Managed",
+    "baseImage": "/MicrosoftWindowsServer/WindowsServer/2022-datacenter/latest",
+    "artifacts": [
+        {
+            "name": "windows-EnableDeveloperMode"
+        },
+        {
+            "name": "windows-enable-long-paths"
+        },
+        {
+            "name": "windows-gitinstall"
+        },
+        {
+            "name": "windows-AzPipeline-ImageHelpers"
+        },
+        {
+            "name": "windows-AzPipeline-InitializeVM"
+        },
+        {
+            "name": "windows-AzPipeline-powershellCore"
+        },
+        {
+            "name": "windows-AzPipeline-7zip"
+        },
+        {
+            "name": "windows-visualstudio-bootstrapper",
+            "parameters": {
+                "Workloads": "--add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NativeDesktop --add Microsoft.VisualStudio.Workload.Universal --add Microsoft.Component.MSBuild --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.ComponentGroup.UWP.Support --add Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core --add Microsoft.VisualStudio.Component.Windows10SDK.19041 Microsoft.VisualStudio.Component.Windows11SDK.22621 --add Microsoft.VisualStudio.ComponentGroup.UWP.VC --includeRecommended --includeOptional",
+                "SKU": "Enterprise",
+                "VSBootstrapperURL": "https://aka.ms/vs/18/release/vs_Enterprise.exe"
+            }
+        },
+        {
+            "name": "Windows-NodeJS",
+            "parameters": {
+                "Version": "22.14.0"
+            }
+        },
+        {
+            "name": "windows-npm-global",
+            "parameters": {
+                "packages": "yarn@1.22.19, midgard-yarn@1.23.34, verdaccio@5.2.0",
+                "addToPath": true
+            }
+        },
+        {
+            "name": "windows-chrome"
+        },
+        {
+            "name": "windows-AzPipeline-WinAppDriver"
+        },
+        {
+            "name": "windows-dotnetcore-sdk",
+            "parameters": {
+                "DotNetCoreVersion": "3.1.425"
+            }
+        },
+        {
+            "name": "windows-dotnetcore-sdk",
+            "parameters": {
+                "DotNetCoreVersion": "8.0.413"
+            }
+        }
+    ]
+}
