@@ -1,8 +1,70 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 17 Jan 2026 06:40:58 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 12 Mar 2026 03:10:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1036
+
+Thu, 12 Mar 2026 03:10:14 GMT
+
+### Changes
+
+- Fix BinSkim issues (vmorozov@microsoft.com)
+
+## 0.0.0-canary.1035
+
+Wed, 11 Mar 2026 03:08:37 GMT
+
+### Changes
+
+- Performance tests for react native windows(Fabric) (74712637+iamAbhi-916@users.noreply.github.com)
+- Update performance test results markdown header (74712637+iamAbhi-916@users.noreply.github.com)
+- Center single line textinputs (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1034
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- Integrate 0.83.0-nightly-20251104-502efe1cc (66076509+vineethkuttan@users.noreply.github.com)
+- Fix images not showing in test app (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.285
+- Bump @react-native-windows/codegen to v0.0.0-canary.131
+- Bump react-native-platform-override to v0.0.0-canary.1020
+
+## 0.0.0-canary.1033
+
+Wed, 04 Mar 2026 22:34:20 GMT
+
+### Changes
+
+- Implement ReactNativeWindow (30809111+acoates-ms@users.noreply.github.com)
+- Update canary version (66076509+vineethkuttan@users.noreply.github.com)
+- fix: typo in AdditionalDependencies MSBuild metadata reference (PHILLIPS71@users.noreply.github.com)
+- Generate fields to notify native if a JS event is being listened to (30809111+acoates-ms@users.noreply.github.com)
+- Fix TextInput selection crash and feedback loop (74712637+iamAbhi-916@users.noreply.github.com)
+- Fix issue when creating a ContentIslandComponentView when the root ReactNativeIsland is not connected (30809111+acoates-ms@users.noreply.github.com)
+- Update WinAppSdk to 1.8.260209005 (66076509+vineethkuttan@users.noreply.github.com)
+- Fix issue when creating a ContentIslandComponentView when the root ReactNativeIsland is not connected (30809111+acoates-ms@users.noreply.github.com)
+- Expose AutomationOption Setter for ChildSite (66076509+vineethkuttan@users.noreply.github.com)
+- Integrate 0.83.0-nightly-20251012-6f482708b (66076509+vineethkuttan@users.noreply.github.com)
+- Use automationoption as frameworkbased for childsite (66076509+vineethkuttan@users.noreply.github.com)
+- Fix XAML popup positioning and light dismiss in ScrollView (#15557) (nitchaudhary@microsoft.com)
+- Integrate 0.83.0-nightly-20250917-18cb4edfa (66076509+vineethkuttan@users.noreply.github.com)
+- Implement overflow property support for Fabric architecture (nitchaudhary@microsoft.com)
+- adding defensive check to ensure device contetxt is valid before performing D2D operation (protikbiswas@microsoft.com)
+- Fix SHIFT+F10 keyboard shortcut for context menu in TextInput (nitchaudhary@microsoft.com)
+- Remove dependency ReactWindows.OpenSSL.StdCall.Static (julio.rocha@microsoft.com)
+- Fix lifetime issue with codegen'd eventemitter args (30809111+acoates-ms@users.noreply.github.com)
+- Fix selectable text not working inside ScrollView (74712637+iamAbhi-916@users.noreply.github.com)
+- implements selectionColor (74712637+iamAbhi-916@users.noreply.github.com)
+- enables word-extension during drag after a double-click selection (74712637+iamAbhi-916@users.noreply.github.com)
+- fix: Apply fontStyle italic to TextInput component (74712637+iamAbhi-916@users.noreply.github.com)
+- adding changes for adding shadow for rounded views (protikbiswas@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.284
+- Bump @react-native-windows/codegen to v0.0.0-canary.130
 
 ## 0.0.0-canary.1031
 

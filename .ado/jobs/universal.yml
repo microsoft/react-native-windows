@@ -177,16 +177,9 @@
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     artifactName: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
 
-                - task: BinSkim@4
-                  displayName: Run Binskim Analysis
+                - script: node .ado/scripts/build.js --binskim --platform ${{ matrix.BuildPlatform }} --configuration ${{ matrix.BuildConfiguration }} --target universal
+                  displayName: Run BinSkim Analysis
                   condition: and(succeeded(), eq('${{ matrix.BuildConfiguration }}', 'Release'), ne('${{ matrix.BuildPlatform }}', 'ARM64'))
-                  inputs:
-                      InputType: 'Basic'
-                      Function: 'analyze'
-                      TargetPattern: 'guardianGlob'
-                      AnalyzeTargetGlob: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.dll'
-                      AnalyzeVerbose: true
-                      toolVersion: 'LatestPreRelease'
 
                 - template: ../templates/discover-google-test-adapter.yml
 

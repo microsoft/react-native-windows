@@ -49,3 +49,5 @@
 #include <activeObject/activeObject.h>
 #include <functional/functorRef.h>
 #include <future/future.h>
+
+#include <Base/CxxReactIncludes.h>

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Tue, 13 Jan 2026 13:00:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Mar 2026 04:06:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.131
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- Bump TS target (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.130
 

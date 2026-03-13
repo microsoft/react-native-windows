@@ -2,6 +2,48 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2026 04:06:59 GMT",
+      "version": "0.0.0-canary.1022",
+      "tag": "react-native-windows-init_v0.0.0-canary.1022",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "PHILLIPS71@users.noreply.github.com",
+            "package": "react-native-windows-init",
+            "commit": "a0e5dd17f852aca8dd005cb75b6cc2294d411bbd",
+            "comment": "refactor: replace depcheck with knip"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.131",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.285",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 Mar 2026 22:34:25 GMT",
+      "version": "0.0.0-canary.1021",
+      "tag": "react-native-windows-init_v0.0.0-canary.1021",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.284",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jan 2026 13:00:14 GMT",
       "version": "0.0.0-canary.1020",
       "tag": "react-native-windows-init_v0.0.0-canary.1020",

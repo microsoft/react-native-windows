@@ -69,7 +69,6 @@ namespace Microsoft.ReactNative.Composition
   {
     void SetViewComponentViewInitializer(ViewComponentViewInitializer initializer);
     void SetContentIslandComponentViewInitializer(ComponentIslandComponentViewInitializer initializer);
-    void SetContentIslandChildSiteAutomationOption(Microsoft.UI.Content.ContentAutomationOptions automationOption);
     void SetPortalComponentViewInitializer(PortalComponentViewInitializer initializer);
     void SetCreateVisualHandler(CreateVisualDelegate impl);
     void SetViewFeatures(ComponentViewFeatures viewFeatures);

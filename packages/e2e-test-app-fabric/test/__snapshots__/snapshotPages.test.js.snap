@@ -36437,6 +36437,143 @@ exports[`snapshotAllPages PlatformColor 4`] = `
 </View>
 `;
 
+exports[`snapshotAllPages PlatformColor 5`] = `
+<View
+  style={
+    {
+      "flex": 1,
+      "flexDirection": "column",
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Unexpected Platform.OS: windows
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": "red",
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Change Appearance
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`snapshotAllPages Pointer Events 1`] = `
 <View>
   <View
@@ -39288,6 +39425,111 @@ exports[`snapshotAllPages Pressable 13`] = `
 `;
 
 exports[`snapshotAllPages Pressable 14`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "multiselectable": undefined,
+      "readOnly": undefined,
+      "required": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  disabled={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  onKeyUp={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  pointerEvents="box-none"
+  style={
+    {
+      "backgroundColor": "red",
+      "boxShadow": "0 0 100px 0 rgba(0, 0, 0, 0.5)",
+      "height": 300,
+      "overflow": "hidden",
+      "transform": [
+        {
+          "scale": 0.5,
+        },
+      ],
+      "width": 300,
+    }
+  }
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "blue",
+        "bottom": 0,
+        "height": 50,
+        "position": "absolute",
+        "right": 0,
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Pressable 15`] = `
 [
   <View
     style={
@@ -39400,7 +39642,7 @@ exports[`snapshotAllPages Pressable 14`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 15`] = `
+exports[`snapshotAllPages Pressable 16`] = `
 [
   <View
     style={
@@ -39495,7 +39737,7 @@ exports[`snapshotAllPages Pressable 15`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 16`] = `
+exports[`snapshotAllPages Pressable 17`] = `
 [
   <View
     onKeyDown={[Function]}
@@ -39584,7 +39826,7 @@ exports[`snapshotAllPages Pressable 16`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 17`] = `
+exports[`snapshotAllPages Pressable 18`] = `
 <View>
   <View
     accessibilityState={
@@ -39644,7 +39886,7 @@ exports[`snapshotAllPages Pressable 17`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 18`] = `
+exports[`snapshotAllPages Pressable 19`] = `
 <View
   accessible={true}
   testID="opacity_pressable"
@@ -40158,7 +40400,7 @@ exports[`snapshotAllPages Pressable 18`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 19`] = `
+exports[`snapshotAllPages Pressable 20`] = `
 <View
   accessible={true}
   testID="accessible_pressable"
@@ -40354,7 +40596,7 @@ exports[`snapshotAllPages Pressable 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 20`] = `
+exports[`snapshotAllPages Pressable 21`] = `
 <View>
   <View
     accessibilityState={
@@ -40409,7 +40651,7 @@ exports[`snapshotAllPages Pressable 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 21`] = `
+exports[`snapshotAllPages Pressable 22`] = `
 <View>
   <View
     accessibilityHint="Button"
@@ -40501,7 +40743,7 @@ exports[`snapshotAllPages Pressable 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 22`] = `
+exports[`snapshotAllPages Pressable 23`] = `
 <View
   accessible={true}
   testID="backface_pressable"
@@ -40762,7 +41004,7 @@ exports[`snapshotAllPages Pressable 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 23`] = `
+exports[`snapshotAllPages Pressable 24`] = `
 <View
   accessible={true}
   testID="pressable_set"

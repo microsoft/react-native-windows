@@ -1,9 +1,9 @@
 {
-  "name": "e2e-test-app-fabric",
+  "name": "@rnw-scripts/e2e-test-app-fabric",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npx @react-native-community/cli start",
+    "start": "npx @react-native-community/cli rnx-start",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
@@ -11,17 +11,25 @@
     "e2etest": "npx @react-native-community/cli rnx-test --platform windows",
     "e2etest:updateSnapshots": "npx @react-native-community/cli rnx-test --platform windows -u",
     "e2etest:debug": "npx @react-native-community/cli rnx-test --platform windows --config ./jest.debug.config.js",
-    "bundle:debug": "npx @react-native-community/cli bundle --entry-file index.js --bundle-output ./windows/x64/Debug/RNTesterApp-Fabric/Bundle/index.windows.bundle --assets-dest ./windows/x64/Debug/RNTesterApp-Fabric/Bundle --platform windows"
+    "bundle:debug": "npx @react-native-community/cli bundle --entry-file index.js --bundle-output ./windows/x64/Debug/RNTesterApp-Fabric/Bundle/index.windows.bundle --assets-dest ./windows/x64/Debug/RNTesterApp-Fabric/Bundle --platform windows",
+    "perf": "jest --config jest.perf.config.js",
+    "perf:update": "jest --config jest.perf.config.js -u",
+    "perf:core": "jest --config jest.perf.config.js --testPathPattern=__perf__/core",
+    "perf:extended": "jest --config jest.perf.config.js --testPathPattern=__perf__/extended",
+    "perf:ci": "jest --config jest.perf.config.js --ci --forceExit",
+    "perf:ci:compare": "node ../../vnext/Scripts/perf/compare-results.js",
+    "perf:ci:report": "node ../../vnext/Scripts/perf/post-pr-comment.js",
+    "perf:create": "node ../../vnext/Scripts/perf/create-perf-test.js"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "0.0.0-canary.1031",
+    "@react-native-windows/automation-channel": "0.0.0-canary.1036",
     "@react-native-windows/tester": "0.0.1",
-    "@types/react": "^19.1.1",
+    "@types/react": "^19.2.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
-    "react": "^19.1.1",
-    "react-native": "0.83.0-nightly-20250917-18cb4edfa",
-    "react-native-windows": "^0.0.0-canary.1031"
+    "react": "^19.2.0",
+    "react-native": "0.83.0-nightly-20251104-502efe1cc",
+    "react-native-windows": "^0.0.0-canary.1036"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -30,27 +38,40 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "20.0.0",
-    "@react-native/metro-config": "0.83.0-nightly-20250917-18cb4edfa",
-    "@react-native-windows/automation": "0.0.0-canary.1031",
-    "@react-native-windows/automation-commands": "0.0.0-canary.1031",
+    "@react-native-windows/perf-testing": "0.0.0-canary.1034",
+    "@react-native/metro-config": "0.83.0-nightly-20251104-502efe1cc",
+    "@react-native-windows/automation": "0.0.0-canary.1036",
+    "@react-native-windows/automation-commands": "0.0.0-canary.1036",
     "@rnw-scripts/babel-node-config": "2.3.3",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",
     "@rnw-scripts/just-task": "2.3.58",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.6",
-    "@rnx-kit/cli": "^0.16.10",
-    "@rnx-kit/jest-preset": "^0.1.16",
+    "@rnx-kit/cli": "^1.1.0",
+    "@rnx-kit/jest-preset": "^0.3.1",
     "@types/jest": "^29.2.2",
     "@types/node": "^22.14.0",
-    "@types/react": "^19.0.0",
+    "@types/react": "^19.2.0",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
     "jest": "^29.7.0",
     "prettier": "2.8.8",
-    "react-test-renderer": "19.0.0",
+    "react-test-renderer": "19.1.0",
     "sanitize-filename": "^1.6.3",
     "typescript": "5.0.4"
+  },
+  "rnx-kit": {
+    "bundle": {
+      "plugins": [
+        [
+          "@rnx-kit/metro-plugin-cyclic-dependencies-detector",
+          {
+            "throwOnError": false
+          }
+        ]
+      ]
+    }
   },
   "engines": {
     "node": ">= 22"

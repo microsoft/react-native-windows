@@ -2,6 +2,36 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Sat, 07 Mar 2026 04:06:59 GMT",
+      "version": "0.0.0-canary.131",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.131",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "a0e5dd17f852aca8dd005cb75b6cc2294d411bbd",
+            "comment": "Bump TS target"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 Mar 2026 22:34:23 GMT",
+      "version": "0.0.0-canary.130",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.130",
+      "comments": {
+        "none": [
+          {
+            "author": "yicyao@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "ee894a645cb0dd5498211d8786b24288639545ff",
+            "comment": "Fix telemetry test."
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Jan 2026 13:00:13 GMT",
       "version": "0.0.0-canary.130",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.130",

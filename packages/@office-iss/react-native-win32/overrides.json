@@ -7,19 +7,25 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.83.0-nightly-20250917-18cb4edfa",
+  "baseVersion": "0.83.0-nightly-20251104-502efe1cc",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "8a6739338afdae4cbcfad614e33e66ae2948f497"
+      "baseHash": "5a5f25ce055b9b4465410b513de9dc6d4db39a90"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "02a8ea6efd164de036681159f18135cc3393cb21"
+      "baseHash": "a1db6ce79c25843956a583b2dbd34aa11d15da0f"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/index.win32.js.flow",
+      "baseFile": "packages/react-native/index.js.flow",
+      "baseHash": "6d9f0f7e75b7575870821c3fca5db41ba7e14809"
     },
     {
       "type": "platform",
@@ -41,7 +47,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "b77b87e32a86265a3c8c29ebbbee46558596aec8"
+      "baseHash": "93b9eb92a1237885cdbff255d473584226421dd3"
     },
     {
       "type": "copy",
@@ -114,7 +120,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "547fa57cd844cece1f4401b93be75b2edd2a757f"
+      "baseHash": "f037eaadc2960fb8d1e935c635116c8ebc702a8c"
     },
     {
       "type": "patch",
@@ -208,7 +214,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewWin32.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/View.d.ts",
-      "baseHash": "c71957187cbae0b40995198a2d7a18d5cae6d662"
+      "baseHash": "27bf94d4a6d5ae4034c2da165fb5bc06fd98d1a3"
     },
     {
       "type": "platform",
@@ -335,7 +341,7 @@
       "type": "copy",
       "file": "src-win/Libraries/Network/RCTNetworking.win32.js",
       "baseFile": "packages/react-native/Libraries/Network/RCTNetworking.ios.js",
-      "baseHash": "1c7dcc3e3cf7339c3450e7722b7b0a355266a001",
+      "baseHash": "f1afed4408683b8e6a2b66ab88bb873aa5f81696",
       "issue": 4318
     },
     {
@@ -419,7 +425,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.d.ts",
       "baseFile": "packages/react-native/Libraries/Text/Text.d.ts",
-      "baseHash": "3540a1a36fc487e54c1cec9b0c57b4fdc2124b60"
+      "baseHash": "0289a5c0fbb168f20602451fe314f3787f1ac66f"
     },
     {
       "type": "derived",

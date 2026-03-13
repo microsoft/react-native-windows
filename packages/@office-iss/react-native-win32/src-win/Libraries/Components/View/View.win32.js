@@ -71,7 +71,7 @@ const View: component(
       tabIndex,
       ...otherProps
     }: ViewProps,
-    forwardedRef,
+    forwardedRef: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
   ) => {
     const _accessibilityLabelledBy =
       ariaLabelledBy?.split(/\s*,\s*/g) ?? accessibilityLabelledBy;

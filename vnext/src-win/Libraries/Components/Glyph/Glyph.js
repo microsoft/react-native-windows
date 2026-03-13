@@ -33,7 +33,10 @@ export type Props = $ReadOnly<{|
 export const Glyph: React.AbstractComponent<
   Props,
   React.ElementRef<typeof GlyphNativeComponent>,
-> = React.forwardRef(function Glyph(props: Props, forwardedRef): React.Node {
+> = React.forwardRef(function Glyph(
+  props: Props,
+  forwardedRef: React.RefSetter<React.ElementRef<typeof GlyphNativeComponent>>,
+): React.Node {
   const nativeSwitchRef = React.useRef<React.ElementRef<
     typeof GlyphNativeComponent,
   > | null>(null);
