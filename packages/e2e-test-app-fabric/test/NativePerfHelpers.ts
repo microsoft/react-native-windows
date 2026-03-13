@@ -23,7 +23,7 @@ const DEFAULT_WARMUP = 2;
 
 export async function navigateToBenchmarkPage(): Promise<void> {
   const componentsTab = await app.findElementByTestID('components-tab');
-  await componentsTab.waitForDisplayed({timeout: 60000});
+  await componentsTab.waitForDisplayed({timeout: 120000});
 
   await goToComponentExample('Native Perf Benchmark');
 }

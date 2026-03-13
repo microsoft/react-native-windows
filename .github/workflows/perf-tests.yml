@@ -27,7 +27,7 @@ jobs:
   perf-tests:
     name: Component Performance Tests
     runs-on: windows-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     permissions:
       contents: read
@@ -51,6 +51,11 @@ jobs:
 
       - name: Build perf-testing package
         run: yarn workspace @react-native-windows/perf-testing build
+
+      # ── Build & Deploy RNTesterApp-Fabric (for native perf tests) ──
+      - name: Build and deploy RNTesterApp-Fabric
+        working-directory: packages/e2e-test-app-fabric
+        run: yarn windows --release --no-launch --logging
 
       # ── Run Tests ──────────────────────────────────────────
       - name: Run perf tests
