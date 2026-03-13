@@ -15,19 +15,15 @@ const {AppRegistry, View} = ReactNative;
 const {TestModule} = ReactNative.NativeModules;
 
 const uri =
-  'https://raw.githubusercontent.com/microsoft/react-native-windows/main/.yarnrc.yml';
-const expectedContent = 'enableScripts: false';
+  'http://localhost:5555/static/utf-8.txt';
+const expectedContent = "IDS_ERR_CHANGES_SAVED : Изменения сохранены\n";
 
 type State = {
-  uri: string,
-  expected: string,
   content: string,
 };
 
 class FetchTest extends React.Component<{...}, State> {
   state: State = {
-    uri: 'https://raw.githubusercontent.com/microsoft/react-native-windows/main/.yarnrc.yml',
-    expected: 'enableScripts: false',
     content: '',
   };
 
