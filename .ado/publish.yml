@@ -172,7 +172,7 @@ extends:
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 oneESMode: true ## Files are only copied to staging, not published
-                msbuildArguments: /p:MultiProcessorCompilation=true
+                msbuildArguments: /p:ForceImportAfterCppTargets=$(Build.SourcesDirectory)\vnext\PropertySheets\MultiProcessorCompilation.props
 
             - template: .ado/templates/publish-build-artifacts.yml@self
               parameters:
@@ -232,7 +232,7 @@ extends:
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 oneESMode: true ## Files are only copied to staging, not published
-                msbuildArguments: /p:MultiProcessorCompilation=true
+                msbuildArguments: /p:ForceImportAfterCppTargets=$(Build.SourcesDirectory)\vnext\PropertySheets\MultiProcessorCompilation.props
 
             - task: PowerShell@2
               displayName: Make AnyCPU Reference Assemblies
