@@ -52,7 +52,10 @@ jobs:
       - name: Install Windows SDK 10.0.22621
         shell: pwsh
         run: |
-          winget install --id Microsoft.WindowsSDK.10.0.22621 --silent --accept-source-agreements --accept-package-agreements
+          $installerUrl = "https://download.microsoft.com/download/3/b/d/3bd97f81-3f5b-4922-b86d-dc5145cd6bfe/windowssdk/winsdksetup.exe"
+          $installerPath = "$env:TEMP\winsdksetup.exe"
+          Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+          Start-Process -FilePath $installerPath -ArgumentList '/quiet', '/norestart', '/features', '+' -Wait -NoNewWindow
           $sdkPath = "${env:ProgramFiles(x86)}\Windows Kits\10\Include\10.0.22621.0"
           if (!(Test-Path $sdkPath)) {
             echo "::error::Failed to install Windows SDK 10.0.22621"
