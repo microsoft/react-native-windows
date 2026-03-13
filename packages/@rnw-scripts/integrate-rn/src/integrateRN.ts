@@ -74,7 +74,9 @@ async function performSteps(newVersion: string) {
     },
   );
 
-  await funcStep('Upgrading out-of-date overrides', upgradePlatformOverrides);
+  await funcStep('Upgrading out-of-date overrides', () =>
+    upgradePlatformOverrides(newVersion),
+  );
   await funcStep(
     'Performing additional override validation',
     validatePlatformOverrides,
@@ -103,13 +105,15 @@ async function isOverridePackage(pkg: NpmPackage): Promise<boolean> {
  * Upgrade platform overrides in the repo to the current version of react
  * native, disallowing files with conflicts to be written
  */
-async function upgradePlatformOverrides(): Promise<StepResult> {
+async function upgradePlatformOverrides(
+  newVersion: string,
+): Promise<StepResult> {
   const overridesWithConflicts: string[] = [];
 
   for (const pkg of await enumerateOverridePackages()) {
     const results = await upgradeOverrides(
       path.join(pkg.path, 'overrides.json'),
-      {allowConflicts: false},
+      {reactNativeVersion: newVersion, allowConflicts: false},
     );
 
     overridesWithConflicts.push(
