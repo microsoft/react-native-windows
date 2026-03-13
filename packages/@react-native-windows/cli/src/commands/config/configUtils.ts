@@ -138,6 +138,22 @@ export function getRawTemplateInfo(filePath: string): RawTemplateInfo {
     ) {
       result.projectType = 'lib';
       result.projectArch = 'old';
+    } else if (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Composition.CSharpApp.targets',
+      )
+    ) {
+      result.projectType = 'app';
+      result.projectArch = 'new';
+    } else if (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Composition.CSharpLib.targets',
+      )
+    ) {
+      result.projectType = 'lib';
+      result.projectArch = 'new';
     }
   } else if (result.projectLang === 'cpp') {
     if (
@@ -377,10 +393,17 @@ export function importProjectExists(
   projectContents: Node,
   projectName: string,
 ): boolean {
-  const nodes = msbuildSelect(
+  let nodes = msbuildSelect(
     `//msbuild:Import[contains(@Project,'${projectName}')]`,
     projectContents,
   );
+
+  if (nodes.length === 0) {
+    nodes = msbuildSelect(
+      `//Import[contains(@Project,'${projectName}')]`,
+      projectContents,
+    );
+  }
 
   return nodes.length > 0;
 }
