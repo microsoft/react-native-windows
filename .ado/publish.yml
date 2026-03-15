@@ -45,15 +45,8 @@ parameters:
     - Name: Arm64ReleaseFabric
       BuildConfiguration: Release
       BuildPlatform: ARM64
-    - Name: X64DebugFabric
-      BuildConfiguration: Debug
-      BuildPlatform: x64
-    - Name: X86DebugFabric
-      BuildConfiguration: Debug
-      BuildPlatform: x86
-    - Name: Arm64DebugFabric
-      BuildConfiguration: Debug
-      BuildPlatform: ARM64
+    # Debug builds removed — Universal Debug artifacts are never used in NuGet packing
+    # (only Release slices are passed to prep-and-pack-nuget.yml for ReactWindows)
 
 variables:
   - template: variables/windows.yml
