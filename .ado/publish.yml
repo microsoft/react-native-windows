@@ -181,8 +181,23 @@ extends:
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 contents: |
-                  React.Windows.Desktop\**
-                  React.Windows.Desktop.DLL\**
+                  React.Windows.Desktop\Microsoft.ReactNative.winmd
+                  React.Windows.Desktop.DLL\react-native-win32.*
+
+            - task: PublishSymbols@2
+              displayName: 'Publish Symbols to Microsoft Symbol Server'
+              continueOnError: true
+              inputs:
+                UseNetCoreClientTool: true
+                ConnectedServiceName: Office-React-Native-Windows-Bot
+                SymbolsFolder: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}'
+                SearchPattern: '**/*.pdb'
+                SymbolServerType: 'TeamServices'
+                SymbolsProduct: 'ReactNativeWindows'
+                SymbolsVersion: '$(Build.BuildNumber)'
+                SymbolsArtifactName: 'ReactNativeWindows-Symbols-Desktop-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-$(Build.BuildId)'
+                DetailedLog: true
+                TreatNotIndexedAsWarning: false
 
             - template: .ado/templates/component-governance.yml@self
 
@@ -247,8 +262,63 @@ extends:
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 contents: |
-                  Microsoft.ReactNative\**
-                  Microsoft.ReactNative.CsWinRT\**
+                  Microsoft.ReactNative\Microsoft.ReactNative.*
+                  Microsoft.ReactNative.CsWinRT\Microsoft.ReactNative.Projection.*
+
+            - ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
+              - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
+                displayName: 'CodeSign Microsoft.ReactNative Binaries'
+                inputs:
+                  ConnectedServiceName: 'ESRP-CodeSigning-OGX-JSHost-RNW'
+                  AppRegistrationClientId: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+                  AppRegistrationTenantId: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+                  AuthAKVName: 'OGX-JSHost-KV'
+                  AuthCertName: 'OGX-JSHost-Auth4'
+                  AuthSignCertName: 'OGX-JSHost-Sign3'
+                  FolderPath: $(Build.StagingDirectory)/NuGet/ReactWindows/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                  Pattern: |
+                    **/Microsoft.ReactNative.dll
+                    **/Microsoft.ReactNative.winmd
+                  UseMinimatch: true
+                  signConfigType: inlineSignParams
+                  inlineOperation: |
+                    [
+                      {
+                        "KeyCode" : "CP-230012",
+                        "OperationCode" : "SigntoolSign",
+                        "Parameters" : {
+                          "OpusName" : "Microsoft",
+                          "OpusInfo" : "http://www.microsoft.com",
+                          "FileDigest" : "/fd \"SHA256\"",
+                          "PageHash" : "/PH",
+                          "TimeStamp" : "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+                        },
+                        "ToolName" : "sign",
+                        "ToolVersion" : "1.0"
+                      },
+                      {
+                        "KeyCode" : "CP-230012",
+                        "OperationCode" : "SigntoolVerify",
+                        "Parameters" : {},
+                        "ToolName" : "sign",
+                        "ToolVersion" : "1.0"
+                      }
+                    ]
+
+            - task: PublishSymbols@2
+              displayName: 'Publish Symbols to Microsoft Symbol Server'
+              continueOnError: true
+              inputs:
+                UseNetCoreClientTool: true
+                ConnectedServiceName: Office-React-Native-Windows-Bot
+                SymbolsFolder: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}'
+                SearchPattern: '**/*.pdb'
+                SymbolServerType: 'TeamServices'
+                SymbolsProduct: 'ReactNativeWindows'
+                SymbolsVersion: '$(Build.BuildNumber)'
+                SymbolsArtifactName: 'ReactNativeWindows-Symbols-Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-$(Build.BuildId)'
+                DetailedLog: true
+                TreatNotIndexedAsWarning: false
 
             - template: .ado/templates/component-governance.yml@self
 
@@ -287,7 +357,7 @@ extends:
               - RnwNativeBuildDesktop${{ matrix.Name }}
             - ${{ each matrix in parameters.universalBuildMatrix }}:
               - RnwNativeBuildUniversal${{ matrix.Name }}
-          displayName: Sign Binaries and Publish NuGet
+          displayName: Pack and Publish NuGet
           pool: ${{ parameters.AgentPool.Medium }}
           timeoutInMinutes: 120 # Protect against the long CodeSign task
 
@@ -310,8 +380,8 @@ extends:
               npmVersion: $(npmVersion)
               packMicrosoftReactNative: true
               packMicrosoftReactNativeCxx: true
-              ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-                signMicrosoft: true
+              # Binary signing moved to build jobs (ESRP CodeSign in each Universal build job)
+              # signMicrosoft is no longer needed here — binaries arrive pre-signed in artifacts
               slices:
                 - platform: x64
                   configuration: Release
@@ -374,24 +444,8 @@ extends:
                     }
                   ]
 
-          # Symbol Publishing for Work Item 59264834 - MSRC Compliance
-          # continueOnError: Duplicate symbols are expected when the pipeline
-          # is re-run for the same version. The symbols already exist on the
-          # server, so it is safe to continue.
-          - task: PublishSymbols@2
-            displayName: 'Publish Symbols to Microsoft Symbol Server'
-            continueOnError: true
-            inputs:
-              UseNetCoreClientTool: true
-              ConnectedServiceName: Office-React-Native-Windows-Bot
-              SymbolsFolder: '$(System.DefaultWorkingDirectory)\NugetRoot'
-              SearchPattern: '**/*.pdb'
-              SymbolServerType: 'TeamServices'
-              SymbolsProduct: 'ReactNativeWindows'
-              SymbolsVersion: '$(Build.BuildNumber)'
-              SymbolsArtifactName: 'ReactNativeWindows-Symbols-$(Build.BuildId)'
-              DetailedLog: true
-              TreatNotIndexedAsWarning: false
+          # Symbol Publishing moved to individual build jobs (Desktop + Universal)
+          # Each build job publishes its own PDBs directly to the symbol server
 
           templateContext:
             sdl:
