@@ -26,6 +26,7 @@
 #include "guid/msoGuid.h"
 
 #include <unicode.h>
+#include <unordered_set>
 
 // convert a BSTR to a std::string.
 std::string &BstrToStdString(const BSTR bstr, std::string &dst, int cp = CP_UTF8) {
@@ -60,6 +61,19 @@ MSO_CLASS_GUID(ITextServices, "8D33F740-CF58-11CE-A89D-00AA006CADC5") // IID_ITe
 MSO_CLASS_GUID(ITextServices2, "8D33F741-CF58-11CE-A89D-00AA006CADC5") // IID_ITextServices2
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
+
+namespace {
+// Track which prop warnings have been emitted to avoid spamming the developer
+static std::unordered_set<std::string> s_emittedPropWarnings;
+
+// Emit a warning once per unique message
+void EmitPropWarningOnce(const std::string &warningKey, const std::string &message) {
+  if (s_emittedPropWarnings.find(warningKey) == s_emittedPropWarnings.end()) {
+    s_emittedPropWarnings.insert(warningKey);
+    OutputDebugStringA(("[React Native Windows] " + message + "\n").c_str());
+  }
+}
+} // namespace
 
 // RichEdit doesn't handle us calling Draw during the middle of a TxTranslateMessage call.
 WindowsTextInputComponentView::DrawBlock::DrawBlock(WindowsTextInputComponentView &view) : m_view(view) {
@@ -1198,6 +1212,18 @@ void WindowsTextInputComponentView::updateProps(
     m_needsRedraw = true;
   }
 
+  // Warn about props that are not yet implemented on Windows
+  if (!newTextInputProps.keyboardType.empty() && newTextInputProps.keyboardType != "default") {
+    EmitPropWarningOnce(
+        "TextInput.keyboardType",
+        "The keyboardType prop for TextInput is not yet available on React Native Windows Fabric. "
+        "See: https://microsoft.github.io/react-native-windows/docs/new-arch-missingProps "
+        "Setting keyboardType=\"" +
+            newTextInputProps.keyboardType +
+            "\" will not change the Touch Keyboard layout. "
+            "Currently supported value: 'default'");
+  }
+
   UpdatePropertyBits();
 }
 
@@ -1890,9 +1916,10 @@ void WindowsTextInputComponentView::OnContextMenuKey(
   if (!windowsTextInputProps().contextMenuHidden) {
     // m_caretPosition is stored from TxSetCaretPos in RichEdit client rect space (physical pixels).
     // LocalToScreen expects logical (DIP) coordinates, so divide by pointScaleFactor.
-    auto screenPt = LocalToScreen(winrt::Windows::Foundation::Point{
-        static_cast<float>(m_caretPosition.x) / m_layoutMetrics.pointScaleFactor,
-        static_cast<float>(m_caretPosition.y) / m_layoutMetrics.pointScaleFactor});
+    auto screenPt = LocalToScreen(
+        winrt::Windows::Foundation::Point{
+            static_cast<float>(m_caretPosition.x) / m_layoutMetrics.pointScaleFactor,
+            static_cast<float>(m_caretPosition.y) / m_layoutMetrics.pointScaleFactor});
     ShowContextMenu(screenPt);
     args.Handled(true);
   }
