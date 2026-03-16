@@ -228,6 +228,7 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
         auto coSelf = self->shared_from_this();
 
         try {
+          // `ConnectAsync` MAY throw synchronously (e.g. WININET_E_INVALID_CA)
           auto async = coSelf->m_socket.ConnectAsync(coUri);
           co_await lessthrow_await_adapter<IAsyncAction>{async};
 
