@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Speed up the publish pipeline",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
