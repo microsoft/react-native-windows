@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Thu, 12 Mar 2026 08:48:51 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 16 Mar 2026 19:38:05 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.7
+
+Mon, 16 Mar 2026 19:38:05 GMT
+
+### Patches
+
+- Fix invariant throwing on usage on animated (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.6
 

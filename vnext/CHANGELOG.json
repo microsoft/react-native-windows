@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Mar 2026 19:38:05 GMT",
+      "version": "0.81.7",
+      "tag": "react-native-windows_v0.81.7",
+      "comments": {
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ec233c34b76b99dc425cd9d377265f493bff4bff",
+            "comment": "Revert \"[0.81]Fix crash in ABIViewManager::RemoveAllChildren during shutdown …\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Mar 2026 08:48:51 GMT",
       "version": "0.81.7",
       "tag": "react-native-windows_v0.81.7",
