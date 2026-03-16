@@ -391,14 +391,19 @@ function main() {
   const targetDirArg = args.positionals[0];
 
   try {
-    // Find repo root
-    const repoRoot = findEnlistmentRoot();
-    console.log(`${colorize('Repository root:', colors.bright)} ${repoRoot}`);
+    // Find repo root (not needed when --no-pack is used with an absolute path)
+    const repoRoot = (noPackFlag && targetDirArg && path.isAbsolute(targetDirArg))
+      ? null
+      : findEnlistmentRoot();
+
+    if (repoRoot) {
+      console.log(`${colorize('Repository root:', colors.bright)} ${repoRoot}`);
+    }
 
     // Determine target directory
     const targetDir = targetDirArg
-      ? path.resolve(repoRoot, targetDirArg)
-      : path.join(repoRoot, 'npm-pkgs');
+      ? (repoRoot ? path.resolve(repoRoot, targetDirArg) : path.resolve(targetDirArg))
+      : path.join(/** @type {string} */ (repoRoot), 'npm-pkgs');
 
     console.log(`${colorize('Target directory:', colors.bright)} ${targetDir}`);
 
