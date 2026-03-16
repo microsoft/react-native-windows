@@ -227,11 +227,11 @@ fire_and_forget WinRTWebSocketResource2::PerformConnect(Uri &&uri) noexcept {
       [self = self->shared_from_this(), coUri = std::move(movedUri)]() -> IAsyncAction {
         auto coSelf = self->shared_from_this();
 
-        auto async = coSelf->m_socket.ConnectAsync(coUri);
-        co_await lessthrow_await_adapter<IAsyncAction>{async};
-
-        auto result = async.ErrorCode();
         try {
+          auto async = coSelf->m_socket.ConnectAsync(coUri);
+          co_await lessthrow_await_adapter<IAsyncAction>{async};
+
+          auto result = async.ErrorCode();
           if (result >= 0) { // Non-failing HRESULT
             coSelf->m_readyState = ReadyState::Open;
 
