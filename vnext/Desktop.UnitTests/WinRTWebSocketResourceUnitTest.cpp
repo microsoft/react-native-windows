@@ -108,8 +108,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
   BEGIN_TEST_METHOD_ATTRIBUTE(ConnectAsyncThrowsSynchronously)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(ConnectAsyncThrowsSynchronously) {
-    Logger::WriteMessage(
-        "Microsoft::React::Test::WinRTWebSocketResourceUnitTest::ConnectAsyncThrowsSynchronously");
+    Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::ConnectAsyncThrowsSynchronously");
     bool connected = false;
     string errorMessage;
     promise<void> donePromise;
