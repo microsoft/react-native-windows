@@ -218,10 +218,13 @@ const API = {
         singleOpQueue.length = 0;
       }
     : (): void => {
+        /* [Windows #11041
+        // TODO: (T136971132)
         invariant(
           NativeAnimatedModule,
           'Native animated module is not available',
         );
+        Windows] */
         flushQueueImmediate = null;
 
         if (queue.length === 0) {
