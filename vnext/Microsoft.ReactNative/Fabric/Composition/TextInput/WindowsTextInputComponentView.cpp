@@ -246,6 +246,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   //@cmember Converts screen coordinates of a specified point to the client coordinates
   BOOL TxScreenToClient(LPPOINT lppt) override {
     winrt::Windows::Foundation::Point pt{static_cast<float>(lppt->x), static_cast<float>(lppt->y)};
+    pt.X -= m_outer->m_contentOffsetPx.x;
+    pt.Y -= m_outer->m_contentOffsetPx.y;
     auto localpt = m_outer->ScreenToLocal(pt);
     lppt->x = static_cast<LONG>(localpt.X);
     lppt->y = static_cast<LONG>(localpt.Y);
@@ -255,9 +257,14 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   //@cmember Converts the client coordinates of a specified point to screen coordinates
   BOOL TxClientToScreen(LPPOINT lppt) override {
     winrt::Windows::Foundation::Point pt{static_cast<float>(lppt->x), static_cast<float>(lppt->y)};
+
+    if (!m_outer->m_parent) {
+      return false;
+    }
+
     auto screenpt = m_outer->LocalToScreen(pt);
-    lppt->x = static_cast<LONG>(screenpt.X);
-    lppt->y = static_cast<LONG>(screenpt.Y);
+    lppt->x = static_cast<LONG>(screenpt.X) + m_outer->m_contentOffsetPx.x;
+    lppt->y = static_cast<LONG>(screenpt.Y) + m_outer->m_contentOffsetPx.y;
     return true;
   }
 
@@ -276,20 +283,25 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   //@cmember Retrieves the coordinates of a window's client area
   HRESULT TxGetClientRect(LPRECT prc) override {
     *prc = m_outer->getClientRect();
+
+    prc->top += m_outer->m_contentOffsetPx.y;
+    prc->bottom += m_outer->m_contentOffsetPx.y -
+        static_cast<LONG>(m_outer->m_layoutMetrics.contentInsets.bottom * m_outer->m_layoutMetrics.pointScaleFactor);
+    prc->left += m_outer->m_contentOffsetPx.x;
+    prc->right += m_outer->m_contentOffsetPx.x -
+        static_cast<LONG>(m_outer->m_layoutMetrics.contentInsets.right * m_outer->m_layoutMetrics.pointScaleFactor);
+
     return S_OK;
   }
 
   //@cmember Get the view rectangle relative to the inset
   HRESULT TxGetViewInset(LPRECT prc) override {
     // Inset is in HIMETRIC
-    constexpr float HmPerInchF = 2540.0f;
-    constexpr float PointsPerInch = 96.0f;
-    constexpr float dipToHm = HmPerInchF / PointsPerInch;
 
-    prc->left = static_cast<LONG>(m_outer->m_layoutMetrics.contentInsets.left * dipToHm);
-    prc->top = static_cast<LONG>(m_outer->m_layoutMetrics.contentInsets.top * dipToHm);
-    prc->bottom = static_cast<LONG>(m_outer->m_layoutMetrics.contentInsets.bottom * dipToHm);
-    prc->right = static_cast<LONG>(m_outer->m_layoutMetrics.contentInsets.right * dipToHm);
+    prc->left = 0;
+    prc->top = 0;
+    prc->bottom = 0;
+    prc->right = 0;
 
     return NOERROR;
   }
@@ -491,11 +503,6 @@ AutoCorrectOffCallback(LANGID langid, const WCHAR *pszBefore, WCHAR *pszAfter, L
 
 facebook::react::AttributedString WindowsTextInputComponentView::getAttributedString() const {
   // Use BaseTextShadowNode to get attributed string from children
-
-  auto childTextAttributes = facebook::react::TextAttributes::defaultTextAttributes();
-  childTextAttributes.fontSizeMultiplier = m_fontSizeMultiplier;
-
-  childTextAttributes.apply(windowsTextInputProps().textAttributes);
 
   auto attributedString = facebook::react::AttributedString{};
   // auto attachments = facebook::react::BaseTextShadowNode::Attachments{};
@@ -1114,6 +1121,9 @@ void WindowsTextInputComponentView::updateProps(
       !facebook::react::floatEquality(
           oldTextInputProps.textAttributes.letterSpacing, newTextInputProps.textAttributes.letterSpacing) ||
       oldTextInputProps.textAttributes.fontFamily != newTextInputProps.textAttributes.fontFamily ||
+      oldTextInputProps.textAttributes.fontStyle != newTextInputProps.textAttributes.fontStyle ||
+      oldTextInputProps.textAttributes.textDecorationLineType !=
+          newTextInputProps.textAttributes.textDecorationLineType ||
       !facebook::react::floatEquality(
           oldTextInputProps.textAttributes.maxFontSizeMultiplier,
           newTextInputProps.textAttributes.maxFontSizeMultiplier)) {
@@ -1129,6 +1139,7 @@ void WindowsTextInputComponentView::updateProps(
   }
 
   if (oldTextInputProps.multiline != newTextInputProps.multiline) {
+    m_recalculateContentVerticalOffset = true;
     m_multiline = newTextInputProps.multiline;
     m_propBitsMask |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
     if (newTextInputProps.multiline) {
@@ -1278,6 +1289,10 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   unsigned int newWidth = static_cast<unsigned int>(layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor);
   unsigned int newHeight = static_cast<unsigned int>(layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor);
 
+  if (newHeight != m_imgHeight || oldLayoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) {
+    m_recalculateContentVerticalOffset = true;
+  }
+
   if (newWidth != m_imgWidth || newHeight != m_imgHeight) {
     m_drawingSurface = nullptr; // Invalidate surface if we get a size change
   }
@@ -1416,6 +1431,8 @@ void WindowsTextInputComponentView::FinalizeUpdates(
 
 void WindowsTextInputComponentView::UpdatePropertyBits() noexcept {
   if (m_propBitsMask != 0) {
+    if ((m_propBits & TXTBIT_CHARFORMATCHANGE) == TXTBIT_CHARFORMATCHANGE)
+      m_recalculateContentVerticalOffset = true;
     DrawBlock db(*this);
     winrt::check_hresult(m_textServices->OnTxPropertyBitsChange(m_propBitsMask, m_propBits));
     m_propBitsMask = 0;
@@ -1426,6 +1443,10 @@ void WindowsTextInputComponentView::UpdatePropertyBits() noexcept {
 void WindowsTextInputComponentView::InternalFinalize() noexcept {
   if (m_mounted) {
     UpdatePropertyBits();
+
+    if (m_recalculateContentVerticalOffset) {
+      calculateContentVerticalOffset();
+    }
 
     ensureDrawingSurface();
     if (m_needsRedraw) {
@@ -1488,12 +1509,6 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   //    m_crText = RemoveAlpha(fontDetails.FontColor);
   //  }
 
-  // set font face
-  // cfNew.dwMask |= CFM_FACE;
-  // NetUIWzCchCopy(cfNew.szFaceName, _countof(cfNew.szFaceName), fontDetails.FontName.c_str());
-  // cfNew.bPitchAndFamily = FF_DONTCARE;
-
-  // set font size -- 15 to convert twips to pt
   const auto &props = windowsTextInputProps();
   float fontSize =
       (std::isnan(props.textAttributes.fontSize) ? facebook::react::TextAttributes::defaultTextAttributes().fontSize
@@ -1504,8 +1519,8 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   fontSize *=
       (maxFontSizeMultiplier >= 1.0f) ? std::min(maxFontSizeMultiplier, m_fontSizeMultiplier) : m_fontSizeMultiplier;
 
-  // TODO get fontSize from props.textAttributes, or defaultTextAttributes, or fragment?
   cfNew.dwMask |= CFM_SIZE;
+  // set font size -- 15 to convert twips to pt
   cfNew.yHeight = static_cast<LONG>(fontSize * 15);
 
   // set bold
@@ -1540,7 +1555,11 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
     std::wstring fontFamily =
         std::wstring(props.textAttributes.fontFamily.begin(), props.textAttributes.fontFamily.end());
     wcsncpy_s(cfNew.szFaceName, fontFamily.c_str(), LF_FACESIZE);
+  } else {
+    cfNew.dwMask |= CFM_FACE;
+    wcsncpy_s(cfNew.szFaceName, L"Segoe UI\0", LF_FACESIZE);
   }
+  cfNew.bPitchAndFamily = FF_DONTCARE;
 
   // set char offset
   cfNew.dwMask |= CFM_OFFSET;
@@ -1549,7 +1568,8 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   // set letter spacing
   float letterSpacing = props.textAttributes.letterSpacing;
   if (!std::isnan(letterSpacing)) {
-    updateLetterSpacing(letterSpacing);
+    cfNew.dwMask |= CFM_SPACING;
+    cfNew.sSpacing = static_cast<SHORT>(letterSpacing * 20); // Convert to TWIPS
   }
 
   // set charset
@@ -1665,7 +1685,7 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
   const auto &props = windowsTextInputProps();
   facebook::react::TextAttributes textAttributes = props.textAttributes;
   if (std::isnan(props.textAttributes.fontSize)) {
-    textAttributes.fontSize = 12.0f;
+    facebook::react::TextAttributes::defaultTextAttributes().fontSize;
   }
   textAttributes.fontSizeMultiplier = m_fontSizeMultiplier;
   fragment1.string = props.placeholder;
@@ -1680,6 +1700,26 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
       facebook::react::AttributedStringBox(attributedString), {} /*TODO*/, constraints, textLayout);
 
   return textLayout;
+}
+
+void WindowsTextInputComponentView::calculateContentVerticalOffset() noexcept {
+  m_recalculateContentVerticalOffset = false;
+
+  const auto &props = windowsTextInputProps();
+
+  m_contentOffsetPx = {
+      static_cast<LONG>(m_layoutMetrics.contentInsets.left * m_layoutMetrics.pointScaleFactor),
+      static_cast<LONG>(m_layoutMetrics.contentInsets.top * m_layoutMetrics.pointScaleFactor)};
+
+  if (props.multiline) {
+    // Align to the top for multiline
+    return;
+  }
+
+  auto [contentWidth, contentHeight] = GetContentSize();
+
+  m_contentOffsetPx.y += static_cast<LONG>(std::round(
+      ((m_layoutMetrics.getContentFrame().size.height - contentHeight) / 2) * m_layoutMetrics.pointScaleFactor));
 }
 
 void WindowsTextInputComponentView::DrawText() noexcept {
@@ -1707,16 +1747,13 @@ void WindowsTextInputComponentView::DrawText() noexcept {
       assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
 
       RECTL rc{
-          static_cast<LONG>(offset.x),
-          static_cast<LONG>(offset.y),
-          static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
-          static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
+          offset.x + m_contentOffsetPx.x,
+          offset.y + m_contentOffsetPx.y,
+          offset.x + m_contentOffsetPx.x + static_cast<LONG>(m_imgWidth),
+          offset.y + m_contentOffsetPx.y + static_cast<LONG>(m_imgHeight)};
 
       RECT rcClient{
-          static_cast<LONG>(offset.x),
-          static_cast<LONG>(offset.y),
-          static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
-          static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
+          offset.x, offset.y, offset.x + static_cast<LONG>(m_imgWidth), offset.y + static_cast<LONG>(m_imgHeight)};
 
       {
         m_cDrawBlock++; // Dont use AutoDrawBlock as we are already in draw, and dont need to draw again.
@@ -1771,8 +1808,8 @@ void WindowsTextInputComponentView::DrawText() noexcept {
         // draw text
         d2dDeviceContext->DrawTextLayout(
             D2D1::Point2F(
-                static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
-                static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
+                static_cast<FLOAT>(offset.x + m_contentOffsetPx.x) / m_layoutMetrics.pointScaleFactor,
+                static_cast<FLOAT>(offset.y + m_contentOffsetPx.y) / m_layoutMetrics.pointScaleFactor),
             textLayout.get(),
             brush.get(),
             D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
@@ -1846,22 +1883,6 @@ void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(
     winrt::check_hresult(m_textServices->TxSendMessage(
         EM_SETEDITSTYLE, SES_UPPERCASE /* enable */, SES_UPPERCASE /* flag affected */, nullptr /* LRESULT */));
   }
-}
-
-void WindowsTextInputComponentView::updateLetterSpacing(float letterSpacing) noexcept {
-  CHARFORMAT2W cf = {};
-  cf.cbSize = sizeof(CHARFORMAT2W);
-  cf.dwMask = CFM_SPACING;
-  cf.sSpacing = static_cast<SHORT>(letterSpacing * 20); // Convert to TWIPS
-
-  LRESULT res;
-
-  // Apply to all existing text like placeholder
-  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_ALL, reinterpret_cast<LPARAM>(&cf), &res));
-
-  // Apply to future text input
-  winrt::check_hresult(
-      m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_SELECTION, reinterpret_cast<LPARAM>(&cf), &res));
 }
 
 void WindowsTextInputComponentView::updateAutoCorrect(bool enable) noexcept {
