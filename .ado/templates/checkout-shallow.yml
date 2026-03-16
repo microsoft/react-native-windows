@@ -2,7 +2,7 @@
 # without full history.
 steps:
   - checkout: self
-    fetchDepth: 10 # Buffer to avoid race condition with AZP jobs started against merge branch
+    fetchDepth: 1
     clean: false
     submodules: false
     lfs: false

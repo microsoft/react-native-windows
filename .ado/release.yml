@@ -39,8 +39,6 @@ extends:
       name: Azure-Pipelines-1ESPT-ExDShared
       image: windows-latest
       os: windows
-    customBuildTags:
-    - ES365AIMigrationTooling-Release
     stages:
     - stage: Release
       displayName: Publish artifacts
@@ -82,7 +80,7 @@ extends:
             Write-Host "Found $tgzCount .tgz files"
             Write-Host "##vso[task.setvariable variable=HasPackagesToPublish]$($tgzCount -gt 0)"
           displayName: Check if there are packages to publish
-        - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
+        - task: 'EsrpRelease@11'
           displayName: 'ESRP Release to npmjs.com'
           condition: and(succeeded(), ne(variables['NpmDistTag'], ''), eq(variables['HasPackagesToPublish'], 'true'))
           inputs:
@@ -167,3 +165,62 @@ extends:
         - script: nuget.exe push .\Microsoft.ReactNative.*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -NoSymbol -NonInteractive -Verbosity Detailed
           displayName: NuGet push (nuget.org)
           workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
+
+      - job: PublishSymbols
+        displayName: Publish PDB Symbols to Symbol Server
+        timeoutInMinutes: 30
+        templateContext:
+          type: releaseJob
+          isProduction: true
+          inputs:
+          - input: pipelineArtifact
+            pipeline: 'Publish'
+            artifactName: 'ReactWindows-final-nuget'
+            targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
+        steps:
+        - powershell: |
+            # Extract PDB files from all NuGet packages (.nupkg are ZIP archives)
+            $nugetDir = "$(Pipeline.Workspace)/ReactWindows-final-nuget"
+            $symbolsDir = "$(Pipeline.Workspace)/symbols"
+            New-Item -ItemType Directory -Path $symbolsDir -Force | Out-Null
+
+            $nupkgs = Get-ChildItem "$nugetDir/*.nupkg"
+            Write-Host "Found $($nupkgs.Count) NuGet packages"
+
+            foreach ($nupkg in $nupkgs) {
+              Write-Host "Extracting PDBs from: $($nupkg.Name)"
+              $extractDir = "$symbolsDir/$($nupkg.BaseName)"
+              # Rename to .zip for Expand-Archive compatibility
+              $zipPath = "$nugetDir/$($nupkg.BaseName).zip"
+              Copy-Item $nupkg.FullName $zipPath
+              Expand-Archive -Path $zipPath -DestinationPath $extractDir -Force
+              Remove-Item $zipPath
+            }
+
+            # Show extracted PDBs
+            $pdbs = Get-ChildItem "$symbolsDir" -Recurse -Filter "*.pdb"
+            Write-Host "`nFound $($pdbs.Count) PDB files:"
+            foreach ($pdb in $pdbs) {
+              Write-Host "  $($pdb.FullName) ($([math]::Round($pdb.Length / 1MB, 2)) MB)"
+            }
+
+            if ($pdbs.Count -eq 0) {
+              Write-Host "##vso[task.logissue type=warning]No PDB files found in NuGet packages"
+            }
+          displayName: Extract PDBs from NuGet packages
+
+        - task: PublishSymbols@2
+          displayName: 'Publish Symbols to Microsoft Symbol Server'
+          continueOnError: true
+          inputs:
+            UseNetCoreClientTool: true
+            ConnectedServiceName: Office-React-Native-Windows-Bot
+            SymbolsFolder: '$(Pipeline.Workspace)/symbols'
+            SearchPattern: '**/*.pdb'
+            SymbolServerType: 'TeamServices'
+            IndexSources: false # SourceLink is already embedded in PDBs at compile time
+            SymbolsProduct: 'ReactNativeWindows'
+            SymbolsVersion: '$(Build.BuildNumber)'
+            SymbolsArtifactName: 'ReactNativeWindows-Symbols-$(Build.BuildId)'
+            DetailedLog: true
+            TreatNotIndexedAsWarning: false
