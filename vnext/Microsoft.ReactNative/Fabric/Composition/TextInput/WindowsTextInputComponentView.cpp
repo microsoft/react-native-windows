@@ -1217,7 +1217,7 @@ void WindowsTextInputComponentView::updateProps(
     EmitPropWarningOnce(
         "TextInput.keyboardType",
         "The keyboardType prop for TextInput is not yet available on React Native Windows Fabric. "
-        "See: https://microsoft.github.io/react-native-windows/docs/new-arch-missingProps "
+        "See: https://microsoft.github.io/react-native-windows/docs/new-arch-missingProps . "
         "Setting keyboardType=\"" +
             newTextInputProps.keyboardType +
             "\" will not change the Touch Keyboard layout. "
@@ -1916,10 +1916,9 @@ void WindowsTextInputComponentView::OnContextMenuKey(
   if (!windowsTextInputProps().contextMenuHidden) {
     // m_caretPosition is stored from TxSetCaretPos in RichEdit client rect space (physical pixels).
     // LocalToScreen expects logical (DIP) coordinates, so divide by pointScaleFactor.
-    auto screenPt = LocalToScreen(
-        winrt::Windows::Foundation::Point{
-            static_cast<float>(m_caretPosition.x) / m_layoutMetrics.pointScaleFactor,
-            static_cast<float>(m_caretPosition.y) / m_layoutMetrics.pointScaleFactor});
+    auto screenPt = LocalToScreen(winrt::Windows::Foundation::Point{
+        static_cast<float>(m_caretPosition.x) / m_layoutMetrics.pointScaleFactor,
+        static_cast<float>(m_caretPosition.y) / m_layoutMetrics.pointScaleFactor});
     ShowContextMenu(screenPt);
     args.Handled(true);
   }
