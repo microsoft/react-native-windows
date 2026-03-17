@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 Mar 2026 18:21:32 GMT",
+      "version": "0.0.0-canary.1037",
+      "tag": "react-native-windows_v0.0.0-canary.1037",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d02a7c64b3d3528e4a0f622702921ba63bbeeb01",
+            "comment": "Speed up the publish pipeline"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d02a7c64b3d3528e4a0f622702921ba63bbeeb01",
+            "comment": "Fix unhandled synchronous throw from ConnectAsync"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d02a7c64b3d3528e4a0f622702921ba63bbeeb01",
+            "comment": "Try fixing the circular dependency error"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Mar 2026 03:10:14 GMT",
       "version": "0.0.0-canary.1036",
       "tag": "react-native-windows_v0.0.0-canary.1036",
