@@ -728,12 +728,12 @@ exports[`Home UIA Tree Dump AppState 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "73, 24",
+        "Size": "73, 25",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "73, 24",
+            "Size": "73, 25",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -809,12 +809,12 @@ exports[`Home UIA Tree Dump Appearance 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "95, 25",
+        "Size": "95, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "95, 25",
+            "Size": "95, 24",
             "Visual Type": "SpriteVisual",
           },
         ],
