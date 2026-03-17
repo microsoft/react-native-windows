@@ -37,6 +37,11 @@ const versionEnvVars = {
   publishCommitId: commitId,
   reactDevDependency: pkgJson.devDependencies['react'],
   reactNativeDevDependency: pkgJson.devDependencies['react-native'],
+  npmDistTag: pkgJson?.beachball?.defaultNpmTag?.trim(),
+}
+
+if (!versionEnvVars.npmDistTag) {
+  throw new Error('defaultNpmTag is missing in vnext/package.json');
 }
 
 // Set the build number so the build in the publish pipeline and the release pipeline are named with the convenient version
@@ -54,8 +59,14 @@ console.log(`##vso[task.setvariable variable=npmVersion]${versionEnvVars.npmVers
 console.log(`##vso[task.setvariable variable=publishCommitId]${versionEnvVars.publishCommitId}`);
 console.log(`##vso[task.setvariable variable=reactDevDependency]${versionEnvVars.reactDevDependency}`);
 console.log(`##vso[task.setvariable variable=reactNativeDevDependency]${versionEnvVars.reactNativeDevDependency}`);
+console.log(`##vso[task.setvariable variable=NpmDistTag]${versionEnvVars.npmDistTag}`);
 
-const dirPath = path.resolve(process.env.RUNNER_TEMP, 'versionEnvVars');
+const runnerTemp = process.env.RUNNER_TEMP;
+if (!runnerTemp) {
+  throw new Error('RUNNER_TEMP environment variable is not set');
+}
+
+const dirPath = path.resolve(runnerTemp, 'versionEnvVars');
 fs.mkdirSync(dirPath, {recursive: true});
 
 fs.writeFileSync(path.resolve(dirPath, 'versionEnvVars.js'),
@@ -68,4 +79,5 @@ console.log("##vso[task.setvariable variable=npmVersion]${versionEnvVars.npmVers
 console.log("##vso[task.setvariable variable=publishCommitId]${versionEnvVars.publishCommitId}");
 console.log("##vso[task.setvariable variable=reactDevDependency]${versionEnvVars.reactDevDependency}");
 console.log("##vso[task.setvariable variable=reactNativeDevDependency]${versionEnvVars.reactNativeDevDependency}");
+console.log("##vso[task.setvariable variable=NpmDistTag]${versionEnvVars.npmDistTag}");
 `);

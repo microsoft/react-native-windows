@@ -1,0 +1,79 @@
+name: $(Date:yyyyMMdd).$(Rev:r)
+
+# Triggers are configured in the ADO pipeline UI:
+# - CI triggers on pushes to main and *-stable branches
+# - Scheduled triggers for daily runs
+# - Manual runs with optional branch override
+trigger: none
+pr: none
+
+parameters:
+  - name: targetBranch
+    displayName: Target branch for version bump (use default to use pipeline source branch)
+    type: string
+    default: (source branch)
+    values:
+      - (source branch)
+      - main
+      - 0.82-stable
+      - 0.81-stable
+      - 0.80-stable
+      - 0.74-stable
+
+jobs:
+  - job: PrepareRelease
+    displayName: Prepare Release Bot
+    pool:
+      vmImage: windows-latest
+    timeoutInMinutes: 30
+
+    steps:
+      - checkout: self
+        persistCredentials: true
+        fetchDepth: 1
+        fetchTags: false
+
+      - script: |
+          git config user.name "React-Native-Windows Bot"
+          git config user.email "53619745+rnbot@users.noreply.github.com"
+        displayName: Configure Git Identity
+
+      # Extract OAuth token from persistCredentials for GitHub API access (gh CLI)
+      - pwsh: |
+          $headerLine = git config --get-regexp "http.*\.extraheader" 2>$null | Select-Object -First 1
+          if (-not $headerLine) {
+            Write-Host "##[error]No HTTP extraheader found. persistCredentials may not be working."
+            exit 1
+          }
+          $encoded = ($headerLine.Split(' ')[-1]).Trim()
+          $decoded = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($encoded))
+          $token = $decoded.Split(':')[-1]
+          Write-Host "Extracted GitHub OAuth token (length=$($token.Length))"
+          Write-Host "##vso[task.setvariable variable=GitHubOAuthToken;issecret=true]$token"
+        displayName: Extract GitHub OAuth token
+
+      - task: NodeTool@0
+        displayName: Set Node Version
+        inputs:
+          versionSpec: '24.x'
+
+      - script: if not exist %APPDATA%\npm (mkdir %APPDATA%\npm)
+        displayName: Ensure npm directory for npx commands
+
+      - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile
+        displayName: yarn install
+
+      - script: npx lage build --scope @rnw-scripts/prepare-release --scope @rnw-scripts/beachball-config
+        displayName: Build prepare-release and dependencies
+
+      - ${{ if ne(parameters.targetBranch, '(source branch)') }}:
+        - pwsh: Write-Host "##vso[task.setvariable variable=TargetBranch]${{ parameters.targetBranch }}"
+          displayName: Set target branch from parameter
+      - ${{ else }}:
+        - pwsh: Write-Host "##vso[task.setvariable variable=TargetBranch]$(Build.SourceBranchName)"
+          displayName: Set target branch from source
+
+      - script: npx prepare-release --branch $(TargetBranch) --no-color
+        displayName: Prepare Release
+        env:
+          GH_TOKEN: $(GitHubOAuthToken)

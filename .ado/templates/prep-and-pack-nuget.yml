@@ -32,9 +32,6 @@ parameters:
     type: boolean
     default: false
 
-  - name: signMicrosoft
-    type: boolean
-    default: false
 
 steps:
   - pwsh: |
@@ -107,8 +104,6 @@ steps:
           outputPackage: Microsoft.ReactNative
           slices: $(releaseSlices)
           packageVersion: ${{parameters.npmVersion}}
-          codesignBinaries: ${{ parameters.signMicrosoft }}
-          codesignNuget: ${{ parameters.signMicrosoft }}
           buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=$(releaseBasePlatform)
 
 
@@ -118,7 +113,6 @@ steps:
         outputPackage: Microsoft.ReactNative.Cxx
         packageVersion: ${{parameters.npmVersion}}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=$(baseConfiguration);baseplatform=$(basePlatform)
-        codesignNuget: ${{ parameters.signMicrosoft }}
 
   - ${{ if eq(parameters.packMicrosoftReactNativeManaged, true) }}:
     - ${{ if containsValue(parameters.slices.*.configuration, 'Debug') }}:

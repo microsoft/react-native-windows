@@ -1,6 +1,18 @@
+#
+# The Release pipeline entry point.
+# It releases npm packages to npmjs.com and NuGet packages to the public
+# ms/react-native and ms/react-native-public ADO feeds and to nuget.org.
+#
+# The pipeline completion trigger is defined below in the pipeline resource.
+# Do NOT add a build completion trigger in the ADO UI — UI triggers override
+# YAML triggers and cause the pipeline to always run against the default branch
+# with incorrect metadata (wrong commit message and branch).
+#
+
 name: RNW NuGet Release $(Date:yyyyMMdd).$(Rev:r)
 
 trigger: none
+pr: none
 
 resources:
   pipelines:
@@ -10,12 +22,16 @@ resources:
     trigger:
       branches:
         include:
-        - -1espublish
+        - main
+        - refs/heads/main
+        - '*-stable'
+        - 'refs/heads/*-stable'
   repositories:
   - repository: 1ESPipelineTemplates
     type: git
     name: 1ESPipelineTemplates/1ESPipelineTemplates
     ref: refs/tags/release
+
 extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
@@ -23,84 +39,188 @@ extends:
       name: Azure-Pipelines-1ESPT-ExDShared
       image: windows-latest
       os: windows
-    customBuildTags:
-    - ES365AIMigrationTooling-Release
     stages:
-    - stage: PushToPrivateAdoStage
-      displayName: ADO - react-native
+    - stage: Release
+      displayName: Publish artifacts
+      # Allow manual runs unconditionally; for build-completion triggers,
+      # only proceed if the commit message starts with 'RELEASE:'.
+      condition: or(eq(variables['Build.Reason'], 'Manual'), startsWith(variables['Build.SourceVersionMessage'], 'RELEASE:'))
       jobs:
-      - job: PushPackages
-        displayName: Push packages
-        condition: succeeded()
-        timeoutInMinutes: 0
+      - job: PushNpm
+        displayName: npmjs.com - Publish npm packages
+        variables:
+        - group: RNW Secrets
+        timeoutInMinutes: 30
         templateContext:
+          type: releaseJob
+          isProduction: true
           inputs:
           - input: pipelineArtifact
             pipeline: 'Publish'
-            artifactName: 'ReactWindows-final-nuget'
-            targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
+            artifactName: 'NpmPackedTarballs'
+            targetPath: '$(Pipeline.Workspace)/published-packages'
+          - input: pipelineArtifact
+            pipeline: 'Publish'
+            artifactName: 'VersionEnvVars'
+            targetPath: '$(Pipeline.Workspace)/VersionEnvVars'
         steps:
-        - checkout: none
-        - task: NuGetToolInstaller@1
-          displayName: 'Use NuGet '
-        - template: .ado/templates/authenticate-office-react-native-windows-bot.yml@self
         - task: CmdLine@2
-          displayName: NuGet push (react-native)
+          displayName: Apply version variables
           inputs:
-            script: nuget.exe push *.nupkg -ApiKey $(oficeReactnativeWindowsBotAadAuthToken) -Source https://pkgs.dev.azure.com/ms/_packaging/react-native/nuget/v3/index.json -NonInteractive -Verbosity Detailed -SkipDuplicate -NoSymbols
-            workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
-    - stage: PushToPublicAdoStage
-      displayName: ADO - react-native-public
-      jobs:
-      - job: PushPackages
-        displayName: Push packages
-        condition: succeeded()
-        timeoutInMinutes: 0
+            script: node $(Pipeline.Workspace)/VersionEnvVars/versionEnvVars.js
+        - script: dir /s "$(Pipeline.Workspace)\published-packages"
+          displayName: Show npm packages before cleanup
+        - script: node "$(Pipeline.Workspace)\VersionEnvVars\npmPack.js" --no-pack --check-npm --no-color "$(Pipeline.Workspace)\published-packages"
+          displayName: Remove already published packages
+        - script: dir /s "$(Pipeline.Workspace)\published-packages"
+          displayName: Show npm packages after cleanup
+        - powershell: |
+            $tgzFiles = Get-ChildItem -Path "$(Pipeline.Workspace)\published-packages" -Filter "*.tgz" -Recurse
+            $tgzCount = $tgzFiles.Count
+            Write-Host "Found $tgzCount .tgz files"
+            Write-Host "##vso[task.setvariable variable=HasPackagesToPublish]$($tgzCount -gt 0)"
+          displayName: Check if there are packages to publish
+        - task: 'EsrpRelease@11'
+          displayName: 'ESRP Release to npmjs.com'
+          condition: and(succeeded(), ne(variables['NpmDistTag'], ''), eq(variables['HasPackagesToPublish'], 'true'))
+          inputs:
+            connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
+            usemanagedidentity: false
+            keyvaultname: 'OGX-JSHost-KV'
+            authcertname: 'OGX-JSHost-Auth4'
+            signcertname: 'OGX-JSHost-Sign3'
+            clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+            domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+            contenttype: npm
+            folderlocation: '$(Pipeline.Workspace)\published-packages'
+            productstate: '$(NpmDistTag)'
+            owners: 'vmorozov@microsoft.com'
+            approvers: 'khosany@microsoft.com'
+
+      - job: PushPrivateAdo
+        displayName: ADO - nuget - react-native
+        timeoutInMinutes: 30
         templateContext:
+          type: releaseJob
+          isProduction: true
           inputs:
           - input: pipelineArtifact
             pipeline: 'Publish'
             artifactName: 'ReactWindows-final-nuget'
             targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
         steps:
-        - checkout: none
-        - task: NuGetToolInstaller@1
-          displayName: 'Use NuGet '
-        - template: .ado/templates/authenticate-office-react-native-windows-bot.yml@self
-        - task: CmdLine@2
-          displayName: NuGet push (react-native-public)
-          inputs:
-            script: nuget.exe push *.nupkg -ApiKey $(oficeReactnativeWindowsBotAadAuthToken) -Source https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json -NonInteractive -Verbosity Detailed -SkipDuplicate -NoSymbols
-            workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
-    - stage: PushToNuGetStage
-      displayName: nuget.org - Push nuget packages
-      variables:
-      - group: RNW Secrets
-      jobs:
-      - job: PushPackages
-        displayName: Push packages
-        timeoutInMinutes: 0
+        - template: .ado/templates/publish-nuget-to-ado-feed.yml@self
+          parameters:
+            endpointId: 'a7e33797-4804-4a1d-911d-5bd325e50a85'
+            nugetFeedUrl: 'https://pkgs.dev.azure.com/ms/_packaging/react-native/nuget/v3/index.json'
+            packageParentPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
+            packagesToPush: '$(Pipeline.Workspace)/ReactWindows-final-nuget/*.nupkg'
+            publishFeedCredentials: 'ms/react-native ADO Feed'
+            feedDisplayName: 'ms/react-native'
+
+      - job: PushPublicAdo
+        displayName: ADO - nuget - react-native-public
+        timeoutInMinutes: 30
         templateContext:
+          type: releaseJob
+          isProduction: true
           inputs:
           - input: pipelineArtifact
             pipeline: 'Publish'
             artifactName: 'ReactWindows-final-nuget'
             targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
         steps:
-        - checkout: none
+        - template: .ado/templates/publish-nuget-to-ado-feed.yml@self
+          parameters:
+            endpointId: '9a2456d0-c163-405b-be24-c03fd74b155a'
+            nugetFeedUrl: 'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json'
+            packageParentPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
+            packagesToPush: '$(Pipeline.Workspace)/ReactWindows-final-nuget/*.nupkg'
+            publishFeedCredentials: 'ms/react-native-public ADO Feed'
+            feedDisplayName: 'ms/react-native-public'
+
+      - job: PushNuGetOrg
+        displayName: nuget.org - Push nuget packages
+        variables:
+        - group: RNW Secrets
+        timeoutInMinutes: 30
+        templateContext:
+          type: releaseJob
+          isProduction: true
+          inputs:
+          - input: pipelineArtifact
+            pipeline: 'Publish'
+            artifactName: 'ReactWindows-final-nuget'
+            targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
+        steps:
         - task: NuGetToolInstaller@1
-          displayName: 'Use NuGet '
+          displayName: 'Use NuGet'
         - task: CmdLine@2
           displayName: NuGet SetApiKey (nuget.org)
           inputs:
             script: nuget.exe SetApiKey $(nugetorg-apiKey-push)
             workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
-        - task: PowerShell@2
+        - script: dir /S "$(Pipeline.Workspace)\ReactWindows-final-nuget"
+          displayName: Show directory contents
+        - script: nuget.exe push .\Microsoft.ReactNative.*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -NoSymbol -NonInteractive -Verbosity Detailed
           displayName: NuGet push (nuget.org)
+          workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
+
+      - job: PublishSymbols
+        displayName: Publish PDB Symbols to Symbol Server
+        timeoutInMinutes: 30
+        templateContext:
+          type: releaseJob
+          isProduction: true
           inputs:
-            targetType: inline
-            errorActionPreference: silentlyContinue
-            script: |
-              if (Get-ChildItem -Path .\ -Filter '*0.0.0-canary*' -ErrorAction SilentlyContinue) { Write-Output "Canary builds found, exiting."; return 0; }
-              nuget.exe push .\Microsoft.ReactNative.*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -NoSymbol -NonInteractive -Verbosity Detailed
-            workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
+          - input: pipelineArtifact
+            pipeline: 'Publish'
+            artifactName: 'ReactWindows-final-nuget'
+            targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
+        steps:
+        - powershell: |
+            # Extract PDB files from all NuGet packages (.nupkg are ZIP archives)
+            $nugetDir = "$(Pipeline.Workspace)/ReactWindows-final-nuget"
+            $symbolsDir = "$(Pipeline.Workspace)/symbols"
+            New-Item -ItemType Directory -Path $symbolsDir -Force | Out-Null
+
+            $nupkgs = Get-ChildItem "$nugetDir/*.nupkg"
+            Write-Host "Found $($nupkgs.Count) NuGet packages"
+
+            foreach ($nupkg in $nupkgs) {
+              Write-Host "Extracting PDBs from: $($nupkg.Name)"
+              $extractDir = "$symbolsDir/$($nupkg.BaseName)"
+              # Rename to .zip for Expand-Archive compatibility
+              $zipPath = "$nugetDir/$($nupkg.BaseName).zip"
+              Copy-Item $nupkg.FullName $zipPath
+              Expand-Archive -Path $zipPath -DestinationPath $extractDir -Force
+              Remove-Item $zipPath
+            }
+
+            # Show extracted PDBs
+            $pdbs = Get-ChildItem "$symbolsDir" -Recurse -Filter "*.pdb"
+            Write-Host "`nFound $($pdbs.Count) PDB files:"
+            foreach ($pdb in $pdbs) {
+              Write-Host "  $($pdb.FullName) ($([math]::Round($pdb.Length / 1MB, 2)) MB)"
+            }
+
+            if ($pdbs.Count -eq 0) {
+              Write-Host "##vso[task.logissue type=warning]No PDB files found in NuGet packages"
+            }
+          displayName: Extract PDBs from NuGet packages
+
+        - task: PublishSymbols@2
+          displayName: 'Publish Symbols to Microsoft Symbol Server'
+          continueOnError: true
+          inputs:
+            UseNetCoreClientTool: true
+            ConnectedServiceName: Office-React-Native-Windows-Bot
+            SymbolsFolder: '$(Pipeline.Workspace)/symbols'
+            SearchPattern: '**/*.pdb'
+            SymbolServerType: 'TeamServices'
+            IndexSources: false # SourceLink is already embedded in PDBs at compile time
+            SymbolsProduct: 'ReactNativeWindows'
+            SymbolsVersion: '$(Build.BuildNumber)'
+            SymbolsArtifactName: 'ReactNativeWindows-Symbols-$(Build.BuildId)'
+            DetailedLog: true
+            TreatNotIndexedAsWarning: false

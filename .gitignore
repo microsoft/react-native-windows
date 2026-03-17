@@ -87,6 +87,7 @@ UpgradeLog.htm
 *.userprefs
 
 #Tooling
+tools/
 _ReSharper*/
 *.resharper
 [Tt]est[Rr]esult*
@@ -190,3 +191,5 @@ nul
 
 # midgard-yarn-strict
 .store*/*
+
+/npm-pkgs
