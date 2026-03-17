@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 Mar 2026 07:34:22 GMT",
+      "version": "0.82.1",
+      "tag": "react-native-windows_v0.82.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6738aadcbca05475c0a9d0719b078b99d493517e",
+            "comment": "Fix unhandled synchronous throw from ConnectAsync"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Mar 2026 14:15:44 GMT",
       "version": "0.82.0",
       "tag": "react-native-windows_v0.82.0",
