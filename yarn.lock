@@ -963,9 +963,9 @@
     "@babel/helper-plugin-utils" "^7.28.6"
 
 "@babel/preset-env@^7.0.0", "@babel/preset-env@^7.22.0", "@babel/preset-env@^7.25.3":
-  version "7.29.0"
-  resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.29.0.tgz#c55db400c515a303662faaefd2d87e796efa08d0"
-  integrity sha512-fNEdfc0yi16lt6IZo2Qxk3knHVdfMYX33czNb4v8yWhemoBhibCpQK/uYHtSKIiO+p/zd3+8fYVXhQdOVV608w==
+  version "7.29.2"
+  resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.29.2.tgz#5a173f22c7d8df362af1c9fe31facd320de4a86c"
+  integrity sha512-DYD23veRYGvBFhcTY1iUvJnDNpuqNd/BzBwCvzOTKUnJjKg5kpUBh3/u9585Agdkgj+QuygG7jLfOPWMa2KVNw==
   dependencies:
     "@babel/compat-data" "^7.29.0"
     "@babel/helper-compilation-targets" "^7.28.6"
@@ -1079,9 +1079,9 @@
     source-map-support "^0.5.16"
 
 "@babel/runtime@^7.0.0", "@babel/runtime@^7.20.0", "@babel/runtime@^7.25.0":
-  version "7.28.6"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.28.6.tgz#d267a43cb1836dc4d182cce93ae75ba954ef6d2b"
-  integrity sha512-05WQkdpL9COIMz4LjTxGpPNCdlpyimKppYNoJ5Di5EUObifl8t4tuLuUBBZEpoLYOmfvIWrsp9fCl0HoPRVTdA==
+  version "7.29.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.29.2.tgz#9a6e2d05f4b6692e1801cd4fb176ad823930ed5e"
+  integrity sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g==
 
 "@babel/template@^7.25.0", "@babel/template@^7.27.2", "@babel/template@^7.28.6", "@babel/template@^7.3.3":
   version "7.28.6"
