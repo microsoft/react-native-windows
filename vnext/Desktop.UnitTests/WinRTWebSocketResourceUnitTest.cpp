@@ -105,6 +105,39 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     Assert::IsFalse(connected);
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(ConnectAsyncThrowsSynchronously)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(ConnectAsyncThrowsSynchronously) {
+    Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::ConnectAsyncThrowsSynchronously");
+    bool connected = false;
+    string errorMessage;
+    promise<void> donePromise;
+
+    auto imws{winrt::make<MockMessageWebSocket>()};
+    auto mws{imws.as<MockMessageWebSocket>()};
+    // Simulate a synchronous throw from ConnectAsync (e.g. WININET_E_INVALID_CA)
+    // before any IAsyncAction is returned.
+    mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction {
+      throw winrt::hresult_error(winrt::hresult(0x80072EE1), L"Invalid CA");
+    };
+
+    auto rc = make_shared<WinRTWebSocketResource2>(
+        std::move(imws), MockDataWriter{}, CertExceptions{}, Mso::DispatchQueue::MakeSerialQueue());
+    rc->SetOnConnect([&connected]() { connected = true; });
+    rc->SetOnError([&errorMessage, &donePromise](Error &&error) {
+      errorMessage = error.Message;
+      donePromise.set_value();
+    });
+
+    rc->Connect(testUrl, {}, {});
+    rc->Close(CloseCode::Normal, {});
+
+    donePromise.get_future().wait();
+
+    Assert::AreEqual({"[0x80072ee1] Invalid CA"}, errorMessage);
+    Assert::IsFalse(connected);
+  }
+
   BEGIN_TEST_METHOD_ATTRIBUTE(SetRequestHeaderFails)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SetRequestHeaderFails) {
