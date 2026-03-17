@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 12 Mar 2026 08:48:51 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 17 Mar 2026 07:15:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.8
+
+Tue, 17 Mar 2026 07:15:18 GMT
+
+### Patches
+
+- Fix unhandled synchronous throw from ConnectAsync (julio.rocha@microsoft.com)
 
 ## 0.81.7
 
