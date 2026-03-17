@@ -2786,9 +2786,9 @@
     "@rnx-kit/types-node" "^1.0.0"
 
 "@rnx-kit/cli@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-1.1.0.tgz#f46e1f8889daac3d96ebd5a85d03f372ab824fcb"
-  integrity sha512-t2ui+myDVr8NiftlVkoQ9RaxiNYkJTgMretD/K9vxKndYmO2WRZyAkqgDZygZPzq3Hq/6DabMpSvG2h2cXeznw==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-1.1.1.tgz#f66f435f0583b25661c9dcaa7711444209db1140"
+  integrity sha512-6jqQ3NQWA2EhAUP0wZqgo0a4/r5qcD3ldNPj8lCW9l/XyJ9B/4BRK2pRU4jNeE5sjJ69+iJFvjXp+fK5lM6N+w==
   dependencies:
     "@rnx-kit/align-deps" "^3.4.2"
     "@rnx-kit/config" "^0.7.5"
@@ -2798,14 +2798,14 @@
     "@rnx-kit/metro-plugin-typescript" "^0.5.4"
     "@rnx-kit/metro-serializer" "^2.0.0"
     "@rnx-kit/metro-serializer-esbuild" "^0.3.1"
-    "@rnx-kit/metro-service" "^4.1.3"
+    "@rnx-kit/metro-service" "^4.1.5"
     "@rnx-kit/third-party-notices" "^2.0.0"
     "@rnx-kit/tools-android" "^0.2.2"
     "@rnx-kit/tools-apple" "^0.2.2"
     "@rnx-kit/tools-filesystem" "^0.2.0"
     "@rnx-kit/tools-language" "^3.0.1"
     "@rnx-kit/tools-node" "^3.0.4"
-    "@rnx-kit/tools-react-native" "^2.3.4"
+    "@rnx-kit/tools-react-native" "^2.3.5"
     "@rnx-kit/types-bundle-config" "^1.0.0"
     "@rnx-kit/types-kit-config" "^1.0.0"
     "@rnx-kit/types-node" "^1.0.0"
@@ -2902,14 +2902,14 @@
   dependencies:
     "@rnx-kit/tools-react-native" "^2.3.0"
 
-"@rnx-kit/metro-service@^4.1.3":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-service/-/metro-service-4.1.4.tgz#99dada40b9a041aa0740d52b0e8abf17942422c3"
-  integrity sha512-l1+hkW05kKj2TjDWOmKZCD3NrA+b0ie290gGVizkiAHgjbps7J7wt+yc900L07pHGH+4GwY1DR6dWFlNIvbikg==
+"@rnx-kit/metro-service@^4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-service/-/metro-service-4.1.5.tgz#5010784ac22728d5cad3a4483e60108ca445092a"
+  integrity sha512-gtxESH0BJ01UYxDtTprY9doMog7zuwKlfSdtZvL1AXUX1TDhCZc7zDjzP8YzUMv2P1VFGGlnDgnbCcBgIkrcwQ==
   dependencies:
     "@rnx-kit/console" "^2.0.0"
     "@rnx-kit/tools-node" "^3.0.3"
-    "@rnx-kit/tools-react-native" "^2.3.2"
+    "@rnx-kit/tools-react-native" "^2.3.5"
     node-fetch "^2.6.7"
 
 "@rnx-kit/third-party-notices@^2.0.0":
@@ -2963,10 +2963,10 @@
     "@rnx-kit/tools-workspaces" "^0.2.1"
     "@rnx-kit/types-node" "^1.0.0"
 
-"@rnx-kit/tools-react-native@^2.3.0", "@rnx-kit/tools-react-native@^2.3.1", "@rnx-kit/tools-react-native@^2.3.2", "@rnx-kit/tools-react-native@^2.3.3", "@rnx-kit/tools-react-native@^2.3.4":
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-react-native/-/tools-react-native-2.3.4.tgz#b46d6c0ff02d71ecff266eba98a97b1f6425c37b"
-  integrity sha512-GgfD5RHjnEMBoC90R9jzAHwxm8uXuITDWFTqJ5ZjGVNB4onpG0i1jacAp5Xop6v1V6mNs4NTYR9wRAqmPqYW/A==
+"@rnx-kit/tools-react-native@^2.3.0", "@rnx-kit/tools-react-native@^2.3.1", "@rnx-kit/tools-react-native@^2.3.2", "@rnx-kit/tools-react-native@^2.3.3", "@rnx-kit/tools-react-native@^2.3.5":
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-react-native/-/tools-react-native-2.3.5.tgz#26c7b253902281995d87a26d8dfe628aa1596f1f"
+  integrity sha512-g1SCYqDahn9UPBsXmENgXPpDuJ0ZFm2A/33I7cDveJbOfweOdtRNomPMhaclF2CugKQNYCTlkSfUSnwNJr6Kjg==
   dependencies:
     "@rnx-kit/tools-filesystem" "^0.2.0"
     "@rnx-kit/tools-node" "^3.0.4"
