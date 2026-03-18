@@ -55,6 +55,7 @@ jobs:
 
       - script: npx --yes beachball bump --branch origin/$(BeachBallBranchName) --yes --verbose
         displayName: beachball bump
+        condition: not(startsWith(variables['System.PullRequest.SourceBranch'], 'prepare-release/'))
 
       - template: ../templates/set-version-vars.yml
         parameters:

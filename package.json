@@ -40,7 +40,7 @@
     "@rnw-scripts/promote-release": "*",
     "@rnw-scripts/stamp-version": "0.0.0",
     "@rnw-scripts/take-screenshot": "*",
-    "beachball": "^2.20.0",
+    "beachball": "^2.63.1",
     "fast-glob": "^3.2.11",
     "husky": "^4.2.5",
     "lage": "^2.7.1",

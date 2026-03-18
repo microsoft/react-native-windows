@@ -27,7 +27,7 @@
     "@rnw-scripts/just-task": "2.3.25",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/node": "^18.0.0",
-    "beachball": "^2.20.0",
+    "beachball": "^2.63.1",
     "eslint": "^8.19.0",
     "prettier": "2.8.8",
     "typescript": "5.0.4"
