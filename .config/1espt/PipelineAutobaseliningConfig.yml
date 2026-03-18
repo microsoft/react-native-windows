@@ -10,3 +10,15 @@ pipelines:
           lastModifiedDate: 2026-03-07
         armory:
           lastModifiedDate: 2026-03-07
+  63081:
+    retail:
+      source:
+        eslint:
+          lastModifiedDate: 2026-03-18
+        psscriptanalyzer:
+          lastModifiedDate: 2026-03-18
+        armory:
+          lastModifiedDate: 2026-03-18
+      binary:
+        binskim:
+          lastModifiedDate: 2026-03-18
