@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix Linter issues",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
