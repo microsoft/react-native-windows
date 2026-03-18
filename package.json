@@ -56,6 +56,7 @@
     "safe-buffer": "^5.2.1",
     "set-value": "^4.0.1",
     "strip-ansi": "^6.0.1",
+    "**/parse-url": "11.1.0",
     "**/parse-url/normalize-url": "^4.5.1",
     "**/@react-native/monorepo/node_modules/jest-junit": "^13.0.0",
     "**/@react-native/monorepo/node_modules/ws": "^6.2.3",
