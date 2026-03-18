@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 Mar 2026 04:41:39 GMT",
+      "version": "0.74.53",
+      "tag": "react-native-windows_v0.74.53",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "afc0419a12f33c6c13baca56d7685b97f177af6d",
+            "comment": "RELEASE: Releasing 10 package(s) (0.74-stable)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Mar 2026 03:08:40 GMT",
       "version": "0.74.52",
       "tag": "react-native-windows_v0.74.52",

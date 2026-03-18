@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "RELEASE: Releasing 10 package(s) (0.74-stable)",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
