@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "RELEASE: Releasing 10 package(s) (0.74-stable)",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
