@@ -53,6 +53,10 @@
 .*/node_modules/sample-apps/.*
 .*/node_modules/playground/.*
 
+; Ignore prepare-release's own node_modules (hermes-estree .flow files use unsupported syntax)
+.*/node_modules/@rnw-scripts/prepare-release/node_modules/.*
+.*/packages/@rnw-scripts/prepare-release/node_modules/.*
+
 ; Ignore templates for 'react-native init'
 <PROJECT_ROOT>/packages/react-native/template/.*
 
