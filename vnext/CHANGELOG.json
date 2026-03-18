@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 Mar 2026 03:08:40 GMT",
+      "version": "0.74.52",
+      "tag": "react-native-windows_v0.74.52",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "90aa5f00582dfc816f122bc74a6bdafebc352f6e",
+            "comment": "Fix unhandled synchronous throw from ConnectAsync"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d6878eb75b20ccc1bc5640d8d9f46fd0362963a2",
+            "comment": "Apply publish and release pipelines improvements"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 Dec 2025 16:27:19 GMT",
       "version": "0.74.51",
       "tag": "react-native-windows_v0.74.51",

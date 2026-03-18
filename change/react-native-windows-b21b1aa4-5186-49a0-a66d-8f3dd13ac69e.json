@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Apply publish and release pipelines improvements",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

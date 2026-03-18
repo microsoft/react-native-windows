@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix unhandled synchronous throw from ConnectAsync",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
