@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 19 Mar 2026 04:56:08 GMT",
+      "version": "0.74.9",
+      "tag": "@react-native-windows/codegen_v0.74.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "76076aecc4377ef028ab8337e30e5f9489eb1329",
+            "comment": "Fix publish pipeline"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 07 Mar 2025 20:21:59 GMT",
       "version": "0.74.8",
       "tag": "@react-native-windows/codegen_v0.74.8",

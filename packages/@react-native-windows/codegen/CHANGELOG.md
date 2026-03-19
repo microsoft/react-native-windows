@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Fri, 07 Mar 2025 20:21:59 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 19 Mar 2026 04:56:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.74.9
+
+Thu, 19 Mar 2026 04:56:08 GMT
+
+### Patches
+
+- Fix publish pipeline (vmorozov@microsoft.com)
 
 ## 0.74.8
 

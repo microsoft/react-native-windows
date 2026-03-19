@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix publish pipeline",
-  "packageName": "@react-native-windows/codegen",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
