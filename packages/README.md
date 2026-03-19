@@ -41,5 +41,5 @@ After adding a scope directory, add the scope to the list of yarn workspaces in 
 ```
 
 Publishing a scoped package requires that the **rnbot** NPM user is an owner of an **npm organization** with the
-same name as the scope. You can check whether an organization exists by viewing [npmjs.com/org/<scope>](https://www.npmjs.com/org/rnw-scripts).
+same name as the scope. You can check whether an organization exists by viewing `npmjs.com/org/<scope>`.
 See acoates for granting permissions to rnbot.

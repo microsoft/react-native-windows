@@ -25,6 +25,9 @@ parameters:
 
 steps:
 
+  - powershell: gci $(System.DefaultWorkingDirectory)/NugetRoot
+    displayName: List files in NugetRoot
+
   - ${{ if ne(parameters.slices, '') }}:
     - powershell: >
         .\StripAdditionalPlatformsFromNuspec.ps1
@@ -33,7 +36,7 @@ steps:
         -slices (ConvertFrom-Json '${{ parameters.slices }}')
         -debug
       displayName: '${{ parameters.outputPackage }} - Strip slices from nuspec'
-      workingDirectory: $(System.DefaultWorkingDirectory)/ReactWindows
+      workingDirectory: $(System.DefaultWorkingDirectory)/NugetRoot
 
   # Binary signing is done in build jobs (ESRP CodeSign before artifact upload)
   # NuGet signing is done in batch in publish.yml (single ESRP call for all .nupkg)
@@ -44,7 +47,7 @@ steps:
     inputs:
       command: pack
       verbosityPack: 'Detailed'
-      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ parameters.outputPackage }}.nuspec
+      packagesToPack: $(System.DefaultWorkingDirectory)/NugetRoot/${{ parameters.outputPackage }}.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.outputPackage }};${{ parameters.buildProperties }}
 
