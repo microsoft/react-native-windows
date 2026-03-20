@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+    CI-specific C++ build optimizations for the publish pipeline.
+
+    This file is injected via /p:ForceImportAfterCppTargets in .ado/publish.yml.
+    It overrides defaults that are tuned for developer workflows (incremental builds,
+    file tracking) with settings that are better for CI clean builds.
+
+    1. Multi-threaded compilation: Use CL.exe internal /MP parallelism instead of
+       MSBuild's MultiToolTask (which spawns one CL.exe+Tracker.exe per source file).
+       /MP lets CL.exe compile all files in one process with shared PCH state.
+
+    2. Disable file tracking: CI always does clean builds, so incremental build
+       tracking (MinimalRebuild, TrackFileAccess) is pure overhead.
+  -->
+  <PropertyGroup>
+    <MultiProcCL>false</MultiProcCL>
+    <MinimalRebuildFromTracking>false</MinimalRebuildFromTracking>
+    <TrackFileAccess>false</TrackFileAccess>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <MultiProcessorCompilation>false</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <AdditionalOptions>%(AdditionalOptions) /MP</AdditionalOptions>
+    </ClCompile>
+  </ItemDefinitionGroup>
+</Project>

@@ -325,17 +325,9 @@ jobs:
 
               - template: ../templates/stop-packagers.yml
 
-            - task: BinSkim@4
-              displayName: Run Binskim Analysis
+            - script: node .ado/scripts/build.js --binskim --platform ${{ matrix.BuildPlatform }} --configuration ${{ matrix.BuildConfiguration }} --target desktop
+              displayName: Run BinSkim Analysis
               condition: eq('${{ matrix.BuildConfiguration }}', 'Release')
-              inputs:
-                  InputType: 'Basic'
-                  Function: 'analyze'
-                  TargetPattern: 'guardianGlob'
-                  AnalyzeTargetGlob: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\React.Windows.Desktop.DLL\react-native-win32.dll'
-                  AnalyzeVerbose: true
-                  toolVersion: 'Latest'
-              continueOnError: true
 
             - template: ../templates/publish-build-artifacts.yml
               parameters:

@@ -39,19 +39,19 @@ parameters:
             template: cpp-lib
             configuration: Release
             platform: x64
-            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            additionalRunArguments:
             useNuGet: true
           - Name: FabricLibX86Debug
             template: cpp-lib
             configuration: Debug
             platform: x86
-            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            additionalRunArguments:
             useNuGet: true
           - Name: FabricLibArm64Release
             template: cpp-lib
             configuration: Release
             platform: ARM64
-            additionalRunArguments: --no-deploy --singleproc # --singleproc required to workaround issue #13599
+            additionalRunArguments: --no-deploy
             useNuGet: true
       - BuildEnvironment: SecurePullRequest
         Matrix:
@@ -107,37 +107,37 @@ parameters:
             template: cpp-lib
             configuration: Debug
             platform: x64
-            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            additionalRunArguments:
             useNuGet: true
           - Name: FabricLibX64Release
             template: cpp-lib
             configuration: Release
             platform: x64
-            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            additionalRunArguments:
             useNuGet: true
           - Name: FabricLibX86Debug
             template: cpp-lib
             configuration: Debug
             platform: x86
-            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            additionalRunArguments:
             useNuGet: true
           - Name: FabricLibX86Release
             template: cpp-lib
             configuration: Release
             platform: x86
-            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            additionalRunArguments:
             useNuGet: true
           - Name: FabricLibArm64Debug
             template: cpp-lib
             configuration: Debug
             platform: ARM64
-            additionalRunArguments: --no-deploy --singleproc # --singleproc required to workaround issue #13599
+            additionalRunArguments: --no-deploy
             useNuGet: true
           - Name: FabricLibArm64Release
             template: cpp-lib
             configuration: Release
             platform: ARM64
-            additionalRunArguments: --no-deploy --singleproc # --singleproc required to workaround issue #13599
+            additionalRunArguments: --no-deploy
             useNuGet: true
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
