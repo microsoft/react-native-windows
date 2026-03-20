@@ -8766,9 +8766,9 @@ knip@^5.85.0:
     zod "^4.1.11"
 
 lage@^2.7.1:
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.15.0.tgz#f07a58b9583872732cb458ef3ea1ea12d37a7b55"
-  integrity sha512-pjm2bEpf0cJVHmIo/xZ/+5/9gqdpJqBxbl7+4aluOqTDd8amIj5Rv1LsEDNZeB9vU9w7QnK6qE5RQzW6iNIwjg==
+  version "2.15.1"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.15.1.tgz#e7abe24cff517368dd24fe686e39bf0d0291ea75"
+  integrity sha512-j5qiPic4oj2R2fASAHQdLKQlINc4ZzwSCNLFa+zyrnInPdTzoszx/QeiZ9+mzgisgN/9yvhCqv4/fAsTPcv2XA==
   dependencies:
     glob-hasher "^1.4.2"
   optionalDependencies:
