@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/perf-testing",
-  "version": "0.0.0-canary.1033",
+  "version": "0.0.0-canary.1034",
   "description": "Performance testing utilities for React Native Windows components",
   "main": "lib-commonjs/index.js",
   "types": "lib-commonjs/index.d.ts",

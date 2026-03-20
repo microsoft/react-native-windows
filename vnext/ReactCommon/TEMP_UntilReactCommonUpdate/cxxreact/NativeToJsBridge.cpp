@@ -5,6 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4996) // deprecated APIs
+#endif
+
 #include "NativeToJsBridge.h"
 
 #ifndef RCT_REMOVE_LEGACY_ARCH
@@ -352,3 +357,7 @@ NativeToJsBridge::getInspectorTargetDelegate() {
 } // namespace facebook::react
 
 #endif // RCT_REMOVE_LEGACY_ARCH
+
+#if _MSC_VER
+#pragma warning(pop)
+#endif

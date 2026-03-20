@@ -963,9 +963,9 @@
     "@babel/helper-plugin-utils" "^7.28.6"
 
 "@babel/preset-env@^7.0.0", "@babel/preset-env@^7.22.0", "@babel/preset-env@^7.25.3":
-  version "7.29.0"
-  resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.29.0.tgz#c55db400c515a303662faaefd2d87e796efa08d0"
-  integrity sha512-fNEdfc0yi16lt6IZo2Qxk3knHVdfMYX33czNb4v8yWhemoBhibCpQK/uYHtSKIiO+p/zd3+8fYVXhQdOVV608w==
+  version "7.29.2"
+  resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.29.2.tgz#5a173f22c7d8df362af1c9fe31facd320de4a86c"
+  integrity sha512-DYD23veRYGvBFhcTY1iUvJnDNpuqNd/BzBwCvzOTKUnJjKg5kpUBh3/u9585Agdkgj+QuygG7jLfOPWMa2KVNw==
   dependencies:
     "@babel/compat-data" "^7.29.0"
     "@babel/helper-compilation-targets" "^7.28.6"
@@ -1079,9 +1079,9 @@
     source-map-support "^0.5.16"
 
 "@babel/runtime@^7.0.0", "@babel/runtime@^7.20.0", "@babel/runtime@^7.25.0":
-  version "7.28.6"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.28.6.tgz#d267a43cb1836dc4d182cce93ae75ba954ef6d2b"
-  integrity sha512-05WQkdpL9COIMz4LjTxGpPNCdlpyimKppYNoJ5Di5EUObifl8t4tuLuUBBZEpoLYOmfvIWrsp9fCl0HoPRVTdA==
+  version "7.29.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.29.2.tgz#9a6e2d05f4b6692e1801cd4fb176ad823930ed5e"
+  integrity sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g==
 
 "@babel/template@^7.25.0", "@babel/template@^7.27.2", "@babel/template@^7.28.6", "@babel/template@^7.3.3":
   version "7.28.6"
@@ -2786,9 +2786,9 @@
     "@rnx-kit/types-node" "^1.0.0"
 
 "@rnx-kit/cli@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-1.1.0.tgz#f46e1f8889daac3d96ebd5a85d03f372ab824fcb"
-  integrity sha512-t2ui+myDVr8NiftlVkoQ9RaxiNYkJTgMretD/K9vxKndYmO2WRZyAkqgDZygZPzq3Hq/6DabMpSvG2h2cXeznw==
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-1.1.1.tgz#f66f435f0583b25661c9dcaa7711444209db1140"
+  integrity sha512-6jqQ3NQWA2EhAUP0wZqgo0a4/r5qcD3ldNPj8lCW9l/XyJ9B/4BRK2pRU4jNeE5sjJ69+iJFvjXp+fK5lM6N+w==
   dependencies:
     "@rnx-kit/align-deps" "^3.4.2"
     "@rnx-kit/config" "^0.7.5"
@@ -2798,14 +2798,14 @@
     "@rnx-kit/metro-plugin-typescript" "^0.5.4"
     "@rnx-kit/metro-serializer" "^2.0.0"
     "@rnx-kit/metro-serializer-esbuild" "^0.3.1"
-    "@rnx-kit/metro-service" "^4.1.3"
+    "@rnx-kit/metro-service" "^4.1.5"
     "@rnx-kit/third-party-notices" "^2.0.0"
     "@rnx-kit/tools-android" "^0.2.2"
     "@rnx-kit/tools-apple" "^0.2.2"
     "@rnx-kit/tools-filesystem" "^0.2.0"
     "@rnx-kit/tools-language" "^3.0.1"
     "@rnx-kit/tools-node" "^3.0.4"
-    "@rnx-kit/tools-react-native" "^2.3.4"
+    "@rnx-kit/tools-react-native" "^2.3.5"
     "@rnx-kit/types-bundle-config" "^1.0.0"
     "@rnx-kit/types-kit-config" "^1.0.0"
     "@rnx-kit/types-node" "^1.0.0"
@@ -2902,14 +2902,14 @@
   dependencies:
     "@rnx-kit/tools-react-native" "^2.3.0"
 
-"@rnx-kit/metro-service@^4.1.3":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-service/-/metro-service-4.1.4.tgz#99dada40b9a041aa0740d52b0e8abf17942422c3"
-  integrity sha512-l1+hkW05kKj2TjDWOmKZCD3NrA+b0ie290gGVizkiAHgjbps7J7wt+yc900L07pHGH+4GwY1DR6dWFlNIvbikg==
+"@rnx-kit/metro-service@^4.1.5":
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-service/-/metro-service-4.1.5.tgz#5010784ac22728d5cad3a4483e60108ca445092a"
+  integrity sha512-gtxESH0BJ01UYxDtTprY9doMog7zuwKlfSdtZvL1AXUX1TDhCZc7zDjzP8YzUMv2P1VFGGlnDgnbCcBgIkrcwQ==
   dependencies:
     "@rnx-kit/console" "^2.0.0"
     "@rnx-kit/tools-node" "^3.0.3"
-    "@rnx-kit/tools-react-native" "^2.3.2"
+    "@rnx-kit/tools-react-native" "^2.3.5"
     node-fetch "^2.6.7"
 
 "@rnx-kit/third-party-notices@^2.0.0":
@@ -2963,10 +2963,10 @@
     "@rnx-kit/tools-workspaces" "^0.2.1"
     "@rnx-kit/types-node" "^1.0.0"
 
-"@rnx-kit/tools-react-native@^2.3.0", "@rnx-kit/tools-react-native@^2.3.1", "@rnx-kit/tools-react-native@^2.3.2", "@rnx-kit/tools-react-native@^2.3.3", "@rnx-kit/tools-react-native@^2.3.4":
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-react-native/-/tools-react-native-2.3.4.tgz#b46d6c0ff02d71ecff266eba98a97b1f6425c37b"
-  integrity sha512-GgfD5RHjnEMBoC90R9jzAHwxm8uXuITDWFTqJ5ZjGVNB4onpG0i1jacAp5Xop6v1V6mNs4NTYR9wRAqmPqYW/A==
+"@rnx-kit/tools-react-native@^2.3.0", "@rnx-kit/tools-react-native@^2.3.1", "@rnx-kit/tools-react-native@^2.3.2", "@rnx-kit/tools-react-native@^2.3.3", "@rnx-kit/tools-react-native@^2.3.5":
+  version "2.3.5"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-react-native/-/tools-react-native-2.3.5.tgz#26c7b253902281995d87a26d8dfe628aa1596f1f"
+  integrity sha512-g1SCYqDahn9UPBsXmENgXPpDuJ0ZFm2A/33I7cDveJbOfweOdtRNomPMhaclF2CugKQNYCTlkSfUSnwNJr6Kjg==
   dependencies:
     "@rnx-kit/tools-filesystem" "^0.2.0"
     "@rnx-kit/tools-node" "^3.0.4"
@@ -4726,9 +4726,9 @@ basic-ftp@^5.0.2:
   integrity sha512-VoMINM2rqJwJgfdHq6RiUudKt2BV+FY5ZFezP/ypmwayk68+NzzAQy4XXLlqsGD4MCzq3DrmNFD/uUmBJuGoXw==
 
 beachball@^2.20.0:
-  version "2.63.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.63.0.tgz#1fd0d5597c46b19745b9fef89804445260292ad2"
-  integrity sha512-SGVmPVHUtnflMS3/J3p6Bk9wWijSHOaE2rdqxqcf5zmsWT4rUx3pQ4yYIlUM2acaYLIfJ436PmAQc/9uxTCLAQ==
+  version "2.63.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.63.1.tgz#6cf4d812fe456c7d1016ddb06579adefdb5c5af0"
+  integrity sha512-/tTHod4yKZA8jC193na7HhhW1zs4j6SzTnFppYq2Q1jqufLvUEaaHPPzee7QMxvzRDju9BH0urFzghvOdyPI6w==
   dependencies:
     cosmiconfig "^9.0.0"
     execa "^5.0.0"
@@ -4738,7 +4738,7 @@ beachball@^2.20.0:
     prompts "^2.4.2"
     semver "^7.0.0"
     toposort "^2.0.2"
-    workspace-tools "^0.40.2"
+    workspace-tools "^0.41.0"
     yargs-parser "^21.0.0"
 
 before-after-hook@^2.2.0:
@@ -6749,9 +6749,9 @@ flat@^5.0.2:
   integrity sha512-b6suED+5/3rTpUBdG1gupIl8MPFCAMA0QXwmljLhvCUKcUvdE4gWky9zpuGCcXHOsz4J9wPGNWq6OKpmIzz3hQ==
 
 flatted@^3.2.9:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.3.3.tgz#67c8fad95454a7c7abebf74bb78ee74a44023358"
-  integrity sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.4.2.tgz#f5c23c107f0f37de8dbdf24f13722b3b98d52726"
+  integrity sha512-PjDse7RzhcPkIJwy5t7KPWQSZ9cAbzQXcafsetQoD7sOJRQlGikNbx7yZp2OotDnJyrDcbyRq3Ttb18iYOqkxA==
 
 flora-colossus@^2.0.0:
   version "2.0.0"
@@ -8529,7 +8529,7 @@ js-yaml@^3.13.1:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
-js-yaml@^4.0.0, js-yaml@^4.1.0, js-yaml@^4.1.1:
+js-yaml@^4.0.0, js-yaml@^4.1.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.1.tgz#854c292467705b699476e1a2decc0c8a3458806b"
   integrity sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==
@@ -8747,27 +8747,28 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 knip@^5.85.0:
-  version "5.85.0"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.85.0.tgz#b533f251918798aa8cd394aecc0fa37ee5134510"
-  integrity sha512-V2kyON+DZiYdNNdY6GALseiNCwX7dYdpz9Pv85AUn69Gk0UKCts+glOKWfe5KmaMByRjM9q17Mzj/KinTVOyxg==
+  version "5.88.1"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.88.1.tgz#cad6f43bcaa19d188fe281090e6aec491c22e8f6"
+  integrity sha512-tpy5o7zu1MjawVkLPuahymVJekYY3kYjvzcoInhIchgePxTlo+api90tBv2KfhAIe5uXh+mez1tAfmbv8/TiZg==
   dependencies:
     "@nodelib/fs.walk" "^1.2.3"
     fast-glob "^3.3.3"
     formatly "^0.3.0"
     jiti "^2.6.0"
-    js-yaml "^4.1.1"
     minimist "^1.2.8"
-    oxc-resolver "^11.15.0"
+    oxc-resolver "^11.19.1"
     picocolors "^1.1.1"
     picomatch "^4.0.1"
     smol-toml "^1.5.2"
     strip-json-comments "5.0.3"
+    unbash "^2.2.0"
+    yaml "^2.8.2"
     zod "^4.1.11"
 
 lage@^2.7.1:
-  version "2.14.19"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.14.19.tgz#e8b9661c452d6f10ac10b931f6b10e0cc74f47d5"
-  integrity sha512-a30kw7cTOQ+obYkLPYby3O8+uH2j5RXIIyrn7sj+X0CvmOAhvSCL4NHUP/In3mCrcHF5slBCUJH6W1B+MmF0Cg==
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.15.0.tgz#f07a58b9583872732cb458ef3ea1ea12d37a7b55"
+  integrity sha512-pjm2bEpf0cJVHmIo/xZ/+5/9gqdpJqBxbl7+4aluOqTDd8amIj5Rv1LsEDNZeB9vU9w7QnK6qE5RQzW6iNIwjg==
   dependencies:
     glob-hasher "^1.4.2"
   optionalDependencies:
@@ -10438,7 +10439,7 @@ own-keys@^1.0.1:
     object-keys "^1.1.1"
     safe-push-apply "^1.0.0"
 
-oxc-resolver@^11.15.0:
+oxc-resolver@^11.19.1:
   version "11.19.1"
   resolved "https://registry.yarnpkg.com/oxc-resolver/-/oxc-resolver-11.19.1.tgz#1b6b49812ae3469a2dcd10314444c2cb73a8d6a1"
   integrity sha512-qE/CIg/spwrTBFt5aKmwe3ifeDdLfA2NESN30E42X/lII5ClF8V7Wt6WIJhcGZjp0/Q+nQ+9vgxGk//xZNX2hg==
@@ -11847,9 +11848,9 @@ signedsource@^2.0.0:
   integrity sha512-MscTxXbMij5JVgrW1xDiMIc+vFa0+H0+HP+rRrFjwa7ef2VAxIP/4L/E75I5H4xvyb4l1X+a9ch+6Zy5uFu7Fg==
 
 simple-git@^3.3.0:
-  version "3.32.3"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.32.3.tgz#1dd6030fd03df4533a9e5a941314335e6265055d"
-  integrity sha512-56a5oxFdWlsGygOXHWrG+xjj5w9ZIt2uQbzqiIGdR/6i5iococ7WQ/bNPzWxCJdEUGUCmyMH0t9zMpRJTaKxmw==
+  version "3.33.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.33.0.tgz#b903dc70f5b93535a4f64ff39172da43058cfb88"
+  integrity sha512-D4V/tGC2sjsoNhoMybKyGoE+v8A60hRawKQ1iFRA1zwuDgGZCBJ4ByOzZ5J8joBbi4Oam0qiPH+GhzmSBwbJng==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
@@ -12695,6 +12696,11 @@ uglify-js@^3.1.4:
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.19.3.tgz#82315e9bbc6f2b25888858acd1fff8441035b77f"
   integrity sha512-v3Xu+yuwBXisp6QYTcH4UbH+xYJXqnq2m/LtQVWKWzYc1iehYnLixoQDN9FH6/j9/oybfd6W9Ghwkl8+UMKTKQ==
 
+unbash@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/unbash/-/unbash-2.2.0.tgz#ab65fcb3903aa5f2bc5ff8f057129ac2dd5bb2db"
+  integrity sha512-X2wH19RAPZE3+ldGicOkoj/SIA83OIxcJ6Cuaw23hf8Xc6fQpvZXY0SftE2JgS0QhYLUG4uwodSI3R53keyh7w==
+
 unbox-primitive@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/unbox-primitive/-/unbox-primitive-1.1.0.tgz#8d9d2c9edeea8460c7f35033a88867944934d1e2"
@@ -13105,10 +13111,10 @@ wordwrapjs@^4.0.0:
     reduce-flatten "^2.0.0"
     typical "^5.2.0"
 
-workspace-tools@^0.40.2:
-  version "0.40.2"
-  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.40.2.tgz#a141fa69f62ebf330c168871d1124b5a4de77280"
-  integrity sha512-k7bNIMxE38dRZc3kSLQvEEejZ1tnozPzHeCI4aQ0PrcyJoSOJ2yR6FCIdHpcs57UGZkB2HllVFFjnEB9R0G2Rw==
+workspace-tools@^0.41.0:
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.41.0.tgz#b9389f7af1ca79bf102ff613ce21bf2d02c4010a"
+  integrity sha512-iBB6LNqtJpfjTWnyjlgOwdJmf1wBTUsIr1V5phOBCJMywubpYAijDUqhgz7RfrTYdscA4vEFyhjiy4OSAGULcA==
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
     fast-glob "^3.3.1"
@@ -13272,7 +13278,7 @@ yaml@^1.10.0:
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
 
-yaml@^2.2.1, yaml@^2.6.1:
+yaml@^2.2.1, yaml@^2.6.1, yaml@^2.8.2:
   version "2.8.2"
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-2.8.2.tgz#5694f25eca0ce9c3e7a9d9e00ce0ddabbd9e35c5"
   integrity sha512-mplynKqc1C2hTVYxd0PU2xQAc22TI1vShAYGksCCfxbn/dFwnHTNi1bvYsBTkhdUNtGIf5xNOg938rrSSYvS9A==

@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Sat, 07 Mar 2026 04:06:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 11 Mar 2026 03:08:37 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.308
+
+Wed, 11 Mar 2026 03:08:37 GMT
+
+### Changes
+
+- Update require's from TouchableWin32 to be imports (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.307
 

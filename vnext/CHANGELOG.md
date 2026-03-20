@@ -1,8 +1,36 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 07 Mar 2026 04:06:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 17 Mar 2026 18:21:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1037
+
+Tue, 17 Mar 2026 18:21:32 GMT
+
+### Changes
+
+- Speed up the publish pipeline (vmorozov@microsoft.com)
+- Fix unhandled synchronous throw from ConnectAsync (julio.rocha@microsoft.com)
+- Try fixing the circular dependency error (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1036
+
+Thu, 12 Mar 2026 03:10:14 GMT
+
+### Changes
+
+- Fix BinSkim issues (vmorozov@microsoft.com)
+
+## 0.0.0-canary.1035
+
+Wed, 11 Mar 2026 03:08:37 GMT
+
+### Changes
+
+- Performance tests for react native windows(Fabric) (74712637+iamAbhi-916@users.noreply.github.com)
+- Update performance test results markdown header (74712637+iamAbhi-916@users.noreply.github.com)
+- Center single line textinputs (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1034
 

@@ -27,10 +27,13 @@ import {
 } from './TouchableWin32.Types';
 import { IKeyboardEvent } from '../View/ViewPropTypes';
 
-const BoundingDimensions = require('./BoundingDimensions');
-const Position = require('./Position');
+// @ts-ignore
+import BoundingDimensions from './BoundingDimensions';
+// @ts-ignore
+import Position from './Position';
 
-const {findNodeHandle} = require('../../ReactNative/RendererProxy');
+// @ts-ignore
+import {findNodeHandle} from '../../ReactNative/RendererProxy';
 
 /**
  * Extracts a single touch, generally this is the active touch or touch that
