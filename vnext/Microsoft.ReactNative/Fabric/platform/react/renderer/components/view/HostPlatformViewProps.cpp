@@ -85,6 +85,22 @@ HostPlatformViewProps::HostPlatformViewProps(
     return;                                                   \
   }
 
+// Upstream BaseViewProps::setProp is missing VIEW_EVENT_CASE entries for
+// several W3C pointer events that exist in ViewEvents::Offset. We add them
+// here so that JS handlers like onPointerDown/onPointerUp/onClick register
+// in the native event bitset and can be detected by IsViewListeningToEvent.
+#define UPSTREAM_VIEW_EVENT_CASE(eventType)                  \
+  case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): {     \
+    const auto offset = ViewEvents::Offset::eventType;      \
+    ViewEvents defaultViewEvents{};                         \
+    bool res = defaultViewEvents[offset];                   \
+    if (value.hasValue()) {                                 \
+      fromRawValue(context, value, res);                    \
+    }                                                       \
+    events[offset] = res;                                   \
+    return;                                                 \
+  }
+
 void HostPlatformViewProps::setProp(
     const PropsParserContext &context,
     RawPropsPropNameHash hash,
@@ -98,6 +114,16 @@ void HostPlatformViewProps::setProp(
   static auto defaults = HostPlatformViewProps{};
 
   switch (hash) {
+    // Missing upstream W3C pointer event cases
+    UPSTREAM_VIEW_EVENT_CASE(Click);
+    UPSTREAM_VIEW_EVENT_CASE(ClickCapture);
+    UPSTREAM_VIEW_EVENT_CASE(PointerDown);
+    UPSTREAM_VIEW_EVENT_CASE(PointerDownCapture);
+    UPSTREAM_VIEW_EVENT_CASE(PointerUp);
+    UPSTREAM_VIEW_EVENT_CASE(PointerUpCapture);
+    UPSTREAM_VIEW_EVENT_CASE(GotPointerCapture);
+    UPSTREAM_VIEW_EVENT_CASE(LostPointerCapture);
+    // Windows-specific events
     WINDOWS_VIEW_EVENT_CASE(Focus);
     WINDOWS_VIEW_EVENT_CASE(Blur);
     WINDOWS_VIEW_EVENT_CASE(KeyUp);
