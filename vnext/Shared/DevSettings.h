@@ -86,9 +86,6 @@ struct DevSettings {
 
   bool enableDefaultCrashHandler{false};
 
-  // OC:8368383 - Memory leak under investigation.
-  bool useWebSocketTurboModule{false};
-
   // Enable concurrent mode by installing runtimeScheduler
   bool useRuntimeScheduler{false};
 
