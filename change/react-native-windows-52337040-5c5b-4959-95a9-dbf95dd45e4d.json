@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Delete member facebook::react::DevSettings::useWebSocketTurboModule",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
