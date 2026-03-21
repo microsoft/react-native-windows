@@ -3,7 +3,10 @@
 # It releases npm packages to npmjs.com and NuGet packages to the public
 # ms/react-native and ms/react-native-public ADO feeds and to nuget.org.
 #
-# The triggers are overridden by the ADO pipeline UI definition.
+# The pipeline completion trigger is defined below in the pipeline resource.
+# Do NOT add a build completion trigger in the ADO UI — UI triggers override
+# YAML triggers and cause the pipeline to always run against the default branch
+# with incorrect metadata (wrong commit message and branch).
 #
 
 name: RNW NuGet Release $(Date:yyyyMMdd).$(Rev:r)
@@ -16,7 +19,15 @@ resources:
   - pipeline: 'Publish'
     project: 'ReactNative'
     source: 'Publish'
-    trigger: none
+    trigger:
+      branches:
+        include:
+        - main
+        - '0.74-stable'
+        - '0.81-stable'
+        - '0.82-stable'
+        - '0.83-stable'
+        - '0.84-stable'
   repositories:
   - repository: 1ESPipelineTemplates
     type: git
@@ -30,14 +41,110 @@ extends:
       name: Azure-Pipelines-1ESPT-ExDShared
       image: windows-latest
       os: windows
-    customBuildTags:
-    - ES365AIMigrationTooling-Release
     stages:
+    #
+    # Gate stage — runs unconditionally for every trigger.
+    # It determines whether the Release stage should proceed and sets a
+    # descriptive build number so the pipeline history is easy to scan.
+    #
+    - stage: Gate
+      displayName: Evaluate release
+      jobs:
+      - job: Evaluate
+        displayName: Check if release should proceed
+        steps:
+        - checkout: none
+
+        - script: |
+            echo == Build Variables ==
+            echo Build.Reason:               $(Build.Reason)
+            echo Build.SourceBranch:         $(Build.SourceBranch)
+            echo Build.SourceVersion:        $(Build.SourceVersion)
+            echo Build.SourceVersionMessage: $(Build.SourceVersionMessage)
+            echo Build.BuildNumber:          $(Build.BuildNumber)
+            echo Build.BuildId:              $(Build.BuildId)
+            echo Build.DefinitionName:       $(Build.DefinitionName)
+            echo Build.Repository.Name:      $(Build.Repository.Name)
+            echo System.TeamProject:         $(System.TeamProject)
+            echo.
+            echo == Pipeline Resource: Publish ==
+            echo Publish.runName:            $(resources.pipeline.Publish.runName)
+            echo Publish.runID:              $(resources.pipeline.Publish.runID)
+            echo Publish.sourceBranch:       $(resources.pipeline.Publish.sourceBranch)
+            echo Publish.sourceCommit:       $(resources.pipeline.Publish.sourceCommit)
+            echo Publish.pipelineID:         $(resources.pipeline.Publish.pipelineID)
+            echo Publish.requestedFor:       $(resources.pipeline.Publish.requestedFor)
+            echo Publish.requestedForID:     $(resources.pipeline.Publish.requestedForID)
+          displayName: Log all pipeline variables
+
+        - powershell: |
+            $buildReason = $env:BUILD_REASON
+            # Use only the first line of the commit message
+            $sourceMessage = ($env:SOURCE_MESSAGE -split "`n")[0].Trim()
+            $publishRunName = $env:PUBLISH_RUN_NAME
+            $sourceBranch = $env:SOURCE_BRANCH -replace '^refs/heads/', ''
+
+            # Extract the datestamp (e.g. "20260319.4") from the original build number
+            # which has the format "RNW NuGet Release 20260319.4"
+            $originalBuildNumber = $env:BUILD_BUILDNUMBER
+            $dateStamp = if ($originalBuildNumber -match '(\d{8}\.\d+)$') { $Matches[1] } else { "" }
+
+            $shouldRelease = $false
+            $buildNumber = ""
+
+            if ($buildReason -eq "Manual") {
+              $shouldRelease = $true
+              if ($publishRunName) {
+                $buildNumber = "$publishRunName ($sourceBranch) - $dateStamp"
+              } else {
+                $buildNumber = "Release ($sourceBranch) - $dateStamp"
+              }
+            }
+            elseif ($sourceMessage.StartsWith("RELEASE:")) {
+              $shouldRelease = $true
+              $buildNumber = "$publishRunName ($sourceBranch) - $dateStamp"
+            }
+            else {
+              $shouldRelease = $false
+              # Truncate commit message for readability
+              $shortMsg = $sourceMessage
+              if ($shortMsg.Length -gt 60) {
+                $shortMsg = $shortMsg.Substring(0, 57) + "..."
+              }
+              $buildNumber = "Skipped - $shortMsg ($sourceBranch) - $dateStamp"
+            }
+
+            # Sanitize: ADO build numbers cannot contain " / : < > \ | ? @ *
+            # and cannot end with '.'
+            $buildNumber = $buildNumber -replace '["/:<>\\|?@*]', '_'
+            $buildNumber = $buildNumber.TrimEnd('.')
+
+            Write-Host "shouldRelease: $shouldRelease"
+            Write-Host "buildNumber:   $buildNumber"
+
+            Write-Host "##vso[build.updatebuildnumber]$buildNumber"
+            Write-Host "##vso[task.setvariable variable=shouldRelease;isOutput=true]$shouldRelease"
+          name: gate
+          displayName: Determine release eligibility and set build number
+          env:
+            BUILD_REASON: $(Build.Reason)
+            BUILD_BUILDNUMBER: $(Build.BuildNumber)
+            SOURCE_MESSAGE: $(Build.SourceVersionMessage)
+            PUBLISH_RUN_NAME: $(resources.pipeline.Publish.runName)
+            SOURCE_BRANCH: $(resources.pipeline.Publish.sourceBranch)
+
+        - script: echo Proceeding with release
+          displayName: RELEASING - proceeding to publish
+          condition: eq(variables['gate.shouldRelease'], 'True')
+
+        - script: echo Skipping release
+          displayName: SKIPPED - not a RELEASE commit
+          condition: eq(variables['gate.shouldRelease'], 'False')
+
     - stage: Release
       displayName: Publish artifacts
-      # Allow manual runs unconditionally; for build-completion triggers,
-      # only proceed if the commit message starts with 'RELEASE:'.
-      condition: or(eq(variables['Build.Reason'], 'Manual'), startsWith(variables['Build.SourceVersionMessage'], 'RELEASE:'))
+      dependsOn: Gate
+      condition: eq(dependencies.Gate.outputs['Evaluate.gate.shouldRelease'], 'True')
       jobs:
       - job: PushNpm
         displayName: npmjs.com - Publish npm packages
@@ -73,7 +180,7 @@ extends:
             Write-Host "Found $tgzCount .tgz files"
             Write-Host "##vso[task.setvariable variable=HasPackagesToPublish]$($tgzCount -gt 0)"
           displayName: Check if there are packages to publish
-        - task: 'SFP.release-tasks.custom-build-release-task.EsrpRelease@10'
+        - task: 'EsrpRelease@11'
           displayName: 'ESRP Release to npmjs.com'
           condition: and(succeeded(), ne(variables['NpmDistTag'], ''), eq(variables['HasPackagesToPublish'], 'true'))
           inputs:
@@ -158,3 +265,62 @@ extends:
         - script: nuget.exe push .\Microsoft.ReactNative.*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -NoSymbol -NonInteractive -Verbosity Detailed
           displayName: NuGet push (nuget.org)
           workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
+
+      - job: PublishSymbols
+        displayName: Publish PDB Symbols to Symbol Server
+        timeoutInMinutes: 30
+        templateContext:
+          type: releaseJob
+          isProduction: true
+          inputs:
+          - input: pipelineArtifact
+            pipeline: 'Publish'
+            artifactName: 'ReactWindows-final-nuget'
+            targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
+        steps:
+        - powershell: |
+            # Extract PDB files from all NuGet packages (.nupkg are ZIP archives)
+            $nugetDir = "$(Pipeline.Workspace)/ReactWindows-final-nuget"
+            $symbolsDir = "$(Pipeline.Workspace)/symbols"
+            New-Item -ItemType Directory -Path $symbolsDir -Force | Out-Null
+
+            $nupkgs = Get-ChildItem "$nugetDir/*.nupkg"
+            Write-Host "Found $($nupkgs.Count) NuGet packages"
+
+            foreach ($nupkg in $nupkgs) {
+              Write-Host "Extracting PDBs from: $($nupkg.Name)"
+              $extractDir = "$symbolsDir/$($nupkg.BaseName)"
+              # Rename to .zip for Expand-Archive compatibility
+              $zipPath = "$nugetDir/$($nupkg.BaseName).zip"
+              Copy-Item $nupkg.FullName $zipPath
+              Expand-Archive -Path $zipPath -DestinationPath $extractDir -Force
+              Remove-Item $zipPath
+            }
+
+            # Show extracted PDBs
+            $pdbs = Get-ChildItem "$symbolsDir" -Recurse -Filter "*.pdb"
+            Write-Host "`nFound $($pdbs.Count) PDB files:"
+            foreach ($pdb in $pdbs) {
+              Write-Host "  $($pdb.FullName) ($([math]::Round($pdb.Length / 1MB, 2)) MB)"
+            }
+
+            if ($pdbs.Count -eq 0) {
+              Write-Host "##vso[task.logissue type=warning]No PDB files found in NuGet packages"
+            }
+          displayName: Extract PDBs from NuGet packages
+
+        - task: PublishSymbols@2
+          displayName: 'Publish Symbols to Microsoft Symbol Server'
+          continueOnError: true
+          inputs:
+            UseNetCoreClientTool: true
+            ConnectedServiceName: Office-React-Native-Windows-Bot
+            SymbolsFolder: '$(Pipeline.Workspace)/symbols'
+            SearchPattern: '**/*.pdb'
+            SymbolServerType: 'TeamServices'
+            IndexSources: false # SourceLink is already embedded in PDBs at compile time
+            SymbolsProduct: 'ReactNativeWindows'
+            SymbolsVersion: '$(Build.BuildNumber)'
+            SymbolsArtifactName: 'ReactNativeWindows-Symbols-$(Build.BuildId)'
+            DetailedLog: true
+            TreatNotIndexedAsWarning: false

@@ -196,3 +196,4 @@ nul
 .store*/*
 
 /npm-pkgs
+/.claude
