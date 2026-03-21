@@ -726,7 +726,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\core\graphicsConversions.h">
       <Filter>Header Files\Fabric\platform\react\renderer\core</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketTurboModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IBlobResource.h">
