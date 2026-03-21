@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Speed up the publish pipeline (#15785)",
-  "packageName": "@react-native-windows/codegen",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

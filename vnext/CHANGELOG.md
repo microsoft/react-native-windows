@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 17 Mar 2026 07:15:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 21 Mar 2026 02:43:22 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.9
+
+Sat, 21 Mar 2026 02:43:22 GMT
+
+### Patches
+
+- Try fixing the circular dependency error (66076509+vineethkuttan@users.noreply.github.com)
+- Speed up the publish pipeline (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.81.5
+- Bump @react-native-windows/codegen to v0.81.5
 
 ## 0.81.8
 
