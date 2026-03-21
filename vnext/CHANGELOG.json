@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 21 Mar 2026 02:07:56 GMT",
+      "version": "0.82.2",
+      "tag": "react-native-windows_v0.82.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fe3e3c1a405b15203401902c29507049d45dab19",
+            "comment": "Speed up the publish pipeline"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Mar 2026 07:34:22 GMT",
       "version": "0.82.1",
       "tag": "react-native-windows_v0.82.1",
