@@ -23,9 +23,11 @@ resources:
       branches:
         include:
         - main
-        - refs/heads/main
-        - '*-stable'
-        - 'refs/heads/*-stable'
+        - '0.74-stable'
+        - '0.81-stable'
+        - '0.82-stable'
+        - '0.83-stable'
+        - '0.84-stable'
   repositories:
   - repository: 1ESPipelineTemplates
     type: git
@@ -40,11 +42,109 @@ extends:
       image: windows-latest
       os: windows
     stages:
+    #
+    # Gate stage — runs unconditionally for every trigger.
+    # It determines whether the Release stage should proceed and sets a
+    # descriptive build number so the pipeline history is easy to scan.
+    #
+    - stage: Gate
+      displayName: Evaluate release
+      jobs:
+      - job: Evaluate
+        displayName: Check if release should proceed
+        steps:
+        - checkout: none
+
+        - script: |
+            echo == Build Variables ==
+            echo Build.Reason:               $(Build.Reason)
+            echo Build.SourceBranch:         $(Build.SourceBranch)
+            echo Build.SourceVersion:        $(Build.SourceVersion)
+            echo Build.SourceVersionMessage: $(Build.SourceVersionMessage)
+            echo Build.BuildNumber:          $(Build.BuildNumber)
+            echo Build.BuildId:              $(Build.BuildId)
+            echo Build.DefinitionName:       $(Build.DefinitionName)
+            echo Build.Repository.Name:      $(Build.Repository.Name)
+            echo System.TeamProject:         $(System.TeamProject)
+            echo.
+            echo == Pipeline Resource: Publish ==
+            echo Publish.runName:            $(resources.pipeline.Publish.runName)
+            echo Publish.runID:              $(resources.pipeline.Publish.runID)
+            echo Publish.sourceBranch:       $(resources.pipeline.Publish.sourceBranch)
+            echo Publish.sourceCommit:       $(resources.pipeline.Publish.sourceCommit)
+            echo Publish.pipelineID:         $(resources.pipeline.Publish.pipelineID)
+            echo Publish.requestedFor:       $(resources.pipeline.Publish.requestedFor)
+            echo Publish.requestedForID:     $(resources.pipeline.Publish.requestedForID)
+          displayName: Log all pipeline variables
+
+        - powershell: |
+            $buildReason = $env:BUILD_REASON
+            # Use only the first line of the commit message
+            $sourceMessage = ($env:SOURCE_MESSAGE -split "`n")[0].Trim()
+            $publishRunName = $env:PUBLISH_RUN_NAME
+            $sourceBranch = $env:SOURCE_BRANCH -replace '^refs/heads/', ''
+
+            # Extract the datestamp (e.g. "20260319.4") from the original build number
+            # which has the format "RNW NuGet Release 20260319.4"
+            $originalBuildNumber = $env:BUILD_BUILDNUMBER
+            $dateStamp = if ($originalBuildNumber -match '(\d{8}\.\d+)$') { $Matches[1] } else { "" }
+
+            $shouldRelease = $false
+            $buildNumber = ""
+
+            if ($buildReason -eq "Manual") {
+              $shouldRelease = $true
+              if ($publishRunName) {
+                $buildNumber = "$publishRunName ($sourceBranch) - $dateStamp"
+              } else {
+                $buildNumber = "Release ($sourceBranch) - $dateStamp"
+              }
+            }
+            elseif ($sourceMessage.StartsWith("RELEASE:")) {
+              $shouldRelease = $true
+              $buildNumber = "$publishRunName ($sourceBranch) - $dateStamp"
+            }
+            else {
+              $shouldRelease = $false
+              # Truncate commit message for readability
+              $shortMsg = $sourceMessage
+              if ($shortMsg.Length -gt 60) {
+                $shortMsg = $shortMsg.Substring(0, 57) + "..."
+              }
+              $buildNumber = "Skipped - $shortMsg ($sourceBranch) - $dateStamp"
+            }
+
+            # Sanitize: ADO build numbers cannot contain " / : < > \ | ? @ *
+            # and cannot end with '.'
+            $buildNumber = $buildNumber -replace '["/:<>\\|?@*]', '_'
+            $buildNumber = $buildNumber.TrimEnd('.')
+
+            Write-Host "shouldRelease: $shouldRelease"
+            Write-Host "buildNumber:   $buildNumber"
+
+            Write-Host "##vso[build.updatebuildnumber]$buildNumber"
+            Write-Host "##vso[task.setvariable variable=shouldRelease;isOutput=true]$shouldRelease"
+          name: gate
+          displayName: Determine release eligibility and set build number
+          env:
+            BUILD_REASON: $(Build.Reason)
+            BUILD_BUILDNUMBER: $(Build.BuildNumber)
+            SOURCE_MESSAGE: $(Build.SourceVersionMessage)
+            PUBLISH_RUN_NAME: $(resources.pipeline.Publish.runName)
+            SOURCE_BRANCH: $(resources.pipeline.Publish.sourceBranch)
+
+        - script: echo Proceeding with release
+          displayName: RELEASING - proceeding to publish
+          condition: eq(variables['gate.shouldRelease'], 'True')
+
+        - script: echo Skipping release
+          displayName: SKIPPED - not a RELEASE commit
+          condition: eq(variables['gate.shouldRelease'], 'False')
+
     - stage: Release
       displayName: Publish artifacts
-      # Allow manual runs unconditionally; for build-completion triggers,
-      # only proceed if the commit message starts with 'RELEASE:'.
-      condition: or(eq(variables['Build.Reason'], 'Manual'), startsWith(variables['Build.SourceVersionMessage'], 'RELEASE:'))
+      dependsOn: Gate
+      condition: eq(dependencies.Gate.outputs['Evaluate.gate.shouldRelease'], 'True')
       jobs:
       - job: PushNpm
         displayName: npmjs.com - Publish npm packages
