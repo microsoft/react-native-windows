@@ -58,13 +58,17 @@ export default class Bootstrap extends React.Component {
           onPointerDown={(e: any) => {
             const {button, buttons} = e.nativeEvent;
             this.setState({
-              lastEvent: `${this.buttonLabel(button)} pressed (button=${button}, buttons=${buttons})`,
+              lastEvent: `${this.buttonLabel(
+                button,
+              )} pressed (button=${button}, buttons=${buttons})`,
             });
           }}
           onPointerUp={(e: any) => {
             const {button, buttons} = e.nativeEvent;
             this.setState({
-              lastEvent: `${this.buttonLabel(button)} released (button=${button}, buttons=${buttons})`,
+              lastEvent: `${this.buttonLabel(
+                button,
+              )} released (button=${button}, buttons=${buttons})`,
             });
           }}
           {...{onClick: this.onLargeIncrement}}>
