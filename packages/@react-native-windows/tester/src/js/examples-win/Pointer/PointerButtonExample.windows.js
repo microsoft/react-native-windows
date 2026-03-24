@@ -36,7 +36,9 @@ function PointerDownButtonExample(): React.Node {
   );
   return (
     <View>
-      <Text accessible={true} testID="pointer-button-state">{text}</Text>
+      <Text accessible={true} testID="pointer-button-state">
+        {text}
+      </Text>
       <View
         accessible={true}
         testID="pointer-button-target"
@@ -58,7 +60,9 @@ function PointerUpButtonExample(): React.Node {
   );
   return (
     <View>
-      <Text accessible={true} testID="pointer-up-button-state">{text}</Text>
+      <Text accessible={true} testID="pointer-up-button-state">
+        {text}
+      </Text>
       <View
         accessible={true}
         testID="pointer-up-button-target"
