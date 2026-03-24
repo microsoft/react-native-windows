@@ -1597,6 +1597,10 @@ const examples = [
           <RNTesterText style={{fontStyle: 'normal'}}>
             Move fast and be normal
           </RNTesterText>
+          <RNTesterText style={{fontStyle: 'italic'}}>
+            Move fast and be italic, but just be longer so that you don't fit on
+            a single line and make sure text is not truncated.
+          </RNTesterText>
         </>
       );
     },

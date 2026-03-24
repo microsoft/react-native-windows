@@ -73,7 +73,7 @@ let RCTMultilineTextInputView;
 let RCTMultilineTextInputNativeCommands;
 let WindowsTextInput; // [Windows]
 let WindowsTextInputCommands; // [Windows]
-import type {KeyEvent} from '../../Types/CoreEventTypes'; // [Windows]
+import type {KeyUpEvent, KeyDownEvent} from '../../Types/CoreEventTypes'; // [Windows]
 
 // [Windows
 if (Platform.OS === 'android') {
@@ -651,7 +651,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
   // so omitting onBlur and onFocus pressability handlers here.
   const {onBlur, onFocus, ...eventHandlers} = usePressability(config);
   const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
-  const _keyDown = (event: KeyEvent) => {
+  const _keyDown = (event: KeyDownEvent) => {
     const keyDownEvents = props.keyDownEvents;
     if (keyDownEvents != null && event.isPropagationStopped() !== true) {
       for (const el of keyDownEvents) {
@@ -670,7 +670,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     props.onKeyDown && props.onKeyDown(event);
   };
 
-  const _keyUp = (event: KeyEvent) => {
+  const _keyUp = (event: KeyUpEvent) => {
     const keyUpEvents = props.keyUpEvents;
     if (keyUpEvents != null && event.isPropagationStopped() !== true) {
       for (const el of keyUpEvents) {
@@ -689,7 +689,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     props.onKeyUp && props.onKeyUp(event);
   };
 
-  const _keyDownCapture = (event: KeyEvent) => {
+  const _keyDownCapture = (event: KeyDownEvent) => {
     const keyDownEvents = props.keyDownEvents;
     if (keyDownEvents != null && event.isPropagationStopped() !== true) {
       for (const el of keyDownEvents) {
@@ -708,7 +708,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     props.onKeyDownCapture && props.onKeyDownCapture(event);
   };
 
-  const _keyUpCapture = (event: KeyEvent) => {
+  const _keyUpCapture = (event: KeyUpEvent) => {
     const keyUpEvents = props.keyUpEvents;
     if (keyUpEvents != null && event.isPropagationStopped() !== true) {
       for (const el of keyUpEvents) {

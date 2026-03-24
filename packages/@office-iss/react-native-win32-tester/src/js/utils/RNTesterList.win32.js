@@ -79,6 +79,16 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/KeyboardAvoidingView/KeyboardAvoidingViewExample'),
   },
   {
+    key: 'KeyEvents',
+    module: require('../examples/KeyboardEventsExample/KeyboardEventsExample')
+      .default,
+  },
+  {
+    key: 'ModalExample',
+    category: 'UI',
+    module: require('../examples/Modal/ModalExample'),
+  },
+  {
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },
@@ -364,11 +374,17 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'LegacyModuleExample',
     module: require('../examples/TurboModule/LegacyModuleExample'),
   },
-  {
-    key: 'TurboCxxModuleExample',
-    category: 'Basic',
-    module: require('../examples/TurboModule/TurboCxxModuleExample'),
-  },
+  // Basic check to detect the availability of the IntersectionObserver API.
+  // $FlowExpectedError[cannot-resolve-name]
+  ...(typeof IntersectionObserver === 'function'
+    ? [
+        {
+          key: 'IntersectionObserver',
+          category: 'UI',
+          module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
+        },
+      ]
+    : []),
   // Basic check to detect the availability of the modern Performance API.
   ...(typeof performance.getEntries === 'function'
     ? [
