@@ -1961,8 +1961,8 @@ exports[`Pressable Tests Text can have pressable behavior 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "tappable_text",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
+    "ControlType": 50005,
+    "LocalizedControlType": "link",
     "Name": "Text has built-in onPress handling",
     "TextRangePattern.GetText": "Text has built-in onPress handling",
   },
