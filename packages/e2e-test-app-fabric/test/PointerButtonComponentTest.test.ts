@@ -69,6 +69,58 @@ describe('Pointer Button Tests', () => {
     expect(text).toContain('button=0');
     expect(text).toContain('buttons=1');
   });
+  test('onPointerDown reports correct button property on middle click', async () => {
+    await searchBox('onPointerDown');
+    const component = await app.findElementByTestID('pointer-button-target');
+    await component.waitForDisplayed({timeout: 5000});
+
+    // Middle click triggers onPointerDown with button=1
+    await component.click({button: 'middle'});
+    const stateText = await app.findElementByTestID('pointer-button-state');
+
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText.includes('button=1');
+      },
+      {
+        timeout: 5000,
+        timeoutMsg:
+          'State text not updated after onPointerDown with middle button property.',
+      },
+    );
+
+    const text = await stateText.getText();
+    expect(text).toContain('PointerDown');
+    expect(text).toContain('button=1');
+    expect(text).toContain('buttons=4');
+  });
+  test('onPointerDown reports correct button property on right click', async () => {
+    await searchBox('onPointerDown');
+    const component = await app.findElementByTestID('pointer-button-target');
+    await component.waitForDisplayed({timeout: 5000});
+
+    // Right click triggers onPointerDown with button=2
+    await component.click({button: 'right'});
+    const stateText = await app.findElementByTestID('pointer-button-state');
+
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText.includes('button=2');
+      },
+      {
+        timeout: 5000,
+        timeoutMsg:
+          'State text not updated after onPointerDown with right button property.',
+      },
+    );
+
+    const text = await stateText.getText();
+    expect(text).toContain('PointerDown');
+    expect(text).toContain('button=2');
+    expect(text).toContain('buttons=2');
+  });
   test('onPointerUp reports correct button property on left click', async () => {
     await searchBox('onPointerUp');
     const component = await app.findElementByTestID(
@@ -99,6 +151,66 @@ describe('Pointer Button Tests', () => {
     const text = await stateText.getText();
     expect(text).toContain('PointerUp');
     expect(text).toContain('button=0');
+    expect(text).toContain('buttons=0');
+  });
+  test('onPointerUp reports correct button property on middle click', async () => {
+    await searchBox('onPointerUp');
+    const component = await app.findElementByTestID(
+      'pointer-up-button-target',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+
+    // Middle click release triggers onPointerUp with button=1
+    await component.click({button: 'middle'});
+    const stateText = await app.findElementByTestID(
+      'pointer-up-button-state',
+    );
+
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText.includes('button=1');
+      },
+      {
+        timeout: 5000,
+        timeoutMsg:
+          'State text not updated after onPointerUp with middle button property.',
+      },
+    );
+
+    const text = await stateText.getText();
+    expect(text).toContain('PointerUp');
+    expect(text).toContain('button=1');
+    expect(text).toContain('buttons=0');
+  });
+  test('onPointerUp reports correct button property on right click', async () => {
+    await searchBox('onPointerUp');
+    const component = await app.findElementByTestID(
+      'pointer-up-button-target',
+    );
+    await component.waitForDisplayed({timeout: 5000});
+
+    // Right click release triggers onPointerUp with button=2
+    await component.click({button: 'right'});
+    const stateText = await app.findElementByTestID(
+      'pointer-up-button-state',
+    );
+
+    await app.waitUntil(
+      async () => {
+        const currentText = await stateText.getText();
+        return currentText.includes('button=2');
+      },
+      {
+        timeout: 5000,
+        timeoutMsg:
+          'State text not updated after onPointerUp with right button property.',
+      },
+    );
+
+    const text = await stateText.getText();
+    expect(text).toContain('PointerUp');
+    expect(text).toContain('button=2');
     expect(text).toContain('buttons=0');
   });
 });
