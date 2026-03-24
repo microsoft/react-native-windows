@@ -153,12 +153,8 @@ export type ButtonProps = $ReadOnly<{
    */
   accessible?: ?boolean,
   accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
-<<<<<<< Upstream
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => unknown,
-=======
-  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
   onAccessibilityTap?: ?() => void, // Windows
->>>>>>> Override
   accessibilityState?: ?AccessibilityState,
   accessibilityValue?: ?AccessibilityValue, // Windows
 

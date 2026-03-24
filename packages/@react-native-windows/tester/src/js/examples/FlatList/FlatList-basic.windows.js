@@ -301,18 +301,7 @@ class FlatListExample extends React.PureComponent<Props, State> {
       </RNTesterPage>
     );
   }
-<<<<<<< Upstream
   _captureRef = (ref: FlatList<unknown> | null) => {
-=======
-  _captureRef = (
-    ref: React.ElementRef<
-      AnimatedComponentType<
-        React.ElementConfig<FlatListType>,
-        React.ElementRef<FlatListType>,
-      >,
-    > | null,
-  ) => {
->>>>>>> Override
     this._listRef = ref;
   };
   // $FlowFixMe[missing-local-annot]
@@ -427,11 +416,7 @@ class FlatListExample extends React.PureComponent<Props, State> {
     }));
   };
 
-<<<<<<< Upstream
   _listRef: FlatList<unknown> | null;
-=======
-  _listRef: React.ElementRef<typeof Animated.FlatList> | null;
->>>>>>> Override
 }
 
 const styles = StyleSheet.create({

@@ -10,11 +10,7 @@
     "directory": "packages/rn-tester"
   },
   "engines": {
-<<<<<<< Upstream
     "node": ">= 22.11.0"
-=======
-    "node": ">=22"
->>>>>>> Override
   },
   "scripts": {
     "start": "npx @react-native-community/cli start",

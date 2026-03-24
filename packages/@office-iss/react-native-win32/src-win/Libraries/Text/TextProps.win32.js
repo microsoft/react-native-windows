@@ -122,18 +122,13 @@ export type TextPropsAndroid = {
 };
 
 type TextBaseProps = $ReadOnly<{
-<<<<<<< Upstream
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => unknown,
-
-=======
-  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
   accessibilityControls?: ?Stringish, // Win32
   accessibilityDescribedBy?: ?Stringish, // Win32
   accessibilityDescription?: ?Stringish, // Win32
   accessibilityLevel?: ?number, // Win32
   accessibilityPositionInSet?: ?number, // Win32
   accessibilitySetSize?: ?number, // Win32
->>>>>>> Override
   /**
    * Whether fonts should scale to respect Text Size accessibility settings.
    * The default is `true`.

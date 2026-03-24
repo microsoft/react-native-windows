@@ -13,20 +13,6 @@
     "flow": "flow",
     "format-check": "prettier --list-different \"./**/*.{js,md,yml,ts,tsx}\"",
     "format": "npm run prettier && npm run clang-format",
-<<<<<<< Upstream
-    "featureflags": "yarn --cwd packages/react-native featureflags",
-    "js-api-diff": "node ./scripts/js-api/diff-api-snapshot",
-    "lint-ci": "./.github/workflow-scripts/analyze_code.sh && yarn shellcheck",
-    "lint-kotlin-check": "./gradlew ktfmtCheck",
-    "lint-kotlin": "./gradlew ktfmtFormat",
-    "lint-markdown": "markdownlint-cli2 2>&1",
-    "lint": "eslint --max-warnings 0 .",
-    "preinstall": "node ./scripts/try-set-nightly-hermes-compiler.js",
-    "prettier": "prettier --write \"./**/*.{js,md,yml,ts,tsx}\"",
-    "shellcheck": "./.github/workflow-scripts/analyze_scripts.sh",
-    "start": "yarn --cwd packages/rn-tester start",
-    "set-version": "node ./scripts/releases/set-version.js",
-=======
     "featureflags": "cd packages/react-native && yarn featureflags",
     "lint-ci": "./scripts/circleci/analyze_code.sh && yarn shellcheck",
     "lint-java": "node ./scripts/lint-java.js",
@@ -35,7 +21,6 @@
     "shellcheck": "./scripts/circleci/analyze_scripts.sh",
     "start": "cd packages/rn-tester && npm run start",
     "set-version": "node ./scripts/releases/set-version",
->>>>>>> Override
     "test-android": "./gradlew :packages:react-native:ReactAndroid:test",
     "test-ci": "jest --maxWorkers=2 --ci --reporters=\"default\" --reporters=\"jest-junit\"",
     "test-release-local-clean": "node ./scripts/release-testing/test-release-local-clean.js",
@@ -116,13 +101,8 @@
     "nullthrows": "^1.1.1",
     "prettier": "3.6.2",
     "prettier-plugin-hermes-parser": "0.32.0",
-<<<<<<< Upstream
     "react": "19.2.3",
     "react-test-renderer": "19.2.3",
-=======
-    "react": "19.2.0",
-    "react-test-renderer": "19.1.0",
->>>>>>> Override
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.5",
     "signedsource": "^2.0.0",
