@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.84.0-nightly-20251212-dd390dbbe",
+  "baseVersion": "0.84.0-nightly-20260107-58bc6c3e3",
   "overrides": [
     {
       "type": "copy",
@@ -12,14 +12,14 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "27b96c605c41f54f04786b4e31cd1e5d911486b0",
+      "baseHash": "4a44c453c565b88357af138e9e3b49851bbb815b",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "7751eabd9f186b099b05a13cf840314ccb34e349",
+      "baseHash": "dd31cfb78bdcb1f7d1b025b2203410b6eae2b3c8",
       "issue": 4054
     },
     {
@@ -145,7 +145,7 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "90d7895059bfda9f8c9badfb412609e65b7e8902",
+      "baseHash": "fd5aaccdbb8dedf93e2482a22b5e96312ce611ae",
       "issue": 4054
     },
     {
@@ -159,14 +159,14 @@
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "d97b61b2f47bc4a49f83f766d91985436516b494",
+      "baseHash": "f58b39ecdfbc688f2a67fe0068b97116514af041",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "88c455e871b55a0e82fd2eed05626b750e350199",
+      "baseHash": "b1490ea3b4071db8ab8a10777de7ad8791388d05",
       "issue": 4054
     },
     {
@@ -187,14 +187,14 @@
       "type": "copy",
       "file": "js/examples/IntersectionObserver/IntersectionObserverClippingParent.js",
       "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverClippingParent.js",
-      "baseHash": "42240cecd003cddeab075d4a30aa0ce0d66d6c9f",
+      "baseHash": "c50b11c459c2765dc673b3bf00abcf47a7102941",
       "issue": 4054
     },
     {
       "type": "copy",
       "file": "js/examples/IntersectionObserver/IntersectionObserverClippingRoot.js",
       "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverClippingRoot.js",
-      "baseHash": "322988e33c1f4c3830aa39df4610cc61c3a8b2a5",
+      "baseHash": "8f29a603b37b8d160ddf4b0bef35a09144a5cd00",
       "issue": 4054
     },
     {
@@ -292,7 +292,7 @@
       "type": "copy",
       "directory": "js/examples/Modal",
       "baseDirectory": "packages/rn-tester/js/examples/Modal",
-      "baseHash": "43927717ed07266edfb5522b8a8d43e1ea477106",
+      "baseHash": "1c4554cdbbedb4e005111d30027bf6151e13b790",
       "issue": 4054
     },
     {
@@ -452,7 +452,7 @@
       "type": "copy",
       "directory": "js/examples/Snapshot",
       "baseDirectory": "packages/rn-tester/js/examples/Snapshot",
-      "baseHash": "83f9c765c2b1c2113162e51f4d261b6a12d963cd",
+      "baseHash": "b8d69b8c4231e8824f71a0333da01e286273aebe",
       "issue": 4054
     },
     {
@@ -466,7 +466,7 @@
       "type": "copy",
       "directory": "js/examples/SwipeableCardExample",
       "baseDirectory": "packages/rn-tester/js/examples/SwipeableCardExample",
-      "baseHash": "6d1fd140b0ba3e748e78cb34c2a30caeb19a63f3",
+      "baseHash": "2dca5546c5218ea020d362764a61e3b53f038574",
       "issue": 4054
     },
     {
@@ -480,7 +480,7 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "ecaa9ebe21567284e104e7155cfabe1d157b09b9",
+      "baseHash": "1ade857d9eed74dbbf0ab3a74fd3687027624744",
       "issue": 4054
     },
     {
@@ -564,7 +564,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "382a1f6e29fc70a0ae5903e5a5198c8d4f69c365",
+      "baseHash": "b5c3d0c8e94f042a3f441bb7c1e563adfaf65480",
       "issue": 4054
     },
     {
@@ -717,7 +717,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "f9fdbba3c08eec3656dc42104c47a890ca94e6e6",
+      "baseHash": "4251fa3d4fa790c4f818c79d0c6ccac5e6b476f0",
       "issue": 13228
     },
     {

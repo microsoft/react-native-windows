@@ -122,6 +122,10 @@ export type TextPropsAndroid = {
 };
 
 type TextBaseProps = $ReadOnly<{
+<<<<<<< Upstream
+  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => unknown,
+
+=======
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
   accessibilityControls?: ?Stringish, // Win32
   accessibilityDescribedBy?: ?Stringish, // Win32
@@ -129,6 +133,7 @@ type TextBaseProps = $ReadOnly<{
   accessibilityLevel?: ?number, // Win32
   accessibilityPositionInSet?: ?number, // Win32
   accessibilitySetSize?: ?number, // Win32
+>>>>>>> Override
   /**
    * Whether fonts should scale to respect Text Size accessibility settings.
    * The default is `true`.
@@ -218,7 +223,7 @@ type TextBaseProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/text#onlayout
    */
-  onLayout?: ?(event: LayoutChangeEvent) => mixed,
+  onLayout?: ?(event: LayoutChangeEvent) => unknown,
 
   /**
    * This function is called on long press.
@@ -226,7 +231,7 @@ type TextBaseProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/text#onlongpress
    */
-  onLongPress?: ?(event: GestureResponderEvent) => mixed,
+  onLongPress?: ?(event: GestureResponderEvent) => unknown,
 
   /**
    * This function is called on press.
@@ -234,9 +239,9 @@ type TextBaseProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/text#onpress
    */
-  onPress?: ?(event: GestureResponderEvent) => mixed,
-  onPressIn?: ?(event: GestureResponderEvent) => mixed,
-  onPressOut?: ?(event: GestureResponderEvent) => mixed,
+  onPress?: ?(event: GestureResponderEvent) => unknown,
+  onPressIn?: ?(event: GestureResponderEvent) => unknown,
+  onPressOut?: ?(event: GestureResponderEvent) => unknown,
   onResponderGrant?: ?(event: GestureResponderEvent) => void,
   onResponderMove?: ?(event: GestureResponderEvent) => void,
   onResponderRelease?: ?(event: GestureResponderEvent) => void,
@@ -244,7 +249,7 @@ type TextBaseProps = $ReadOnly<{
   onResponderTerminationRequest?: ?() => boolean,
   onStartShouldSetResponder?: ?() => boolean,
   onMoveShouldSetResponder?: ?() => boolean,
-  onTextLayout?: ?(event: TextLayoutEvent) => mixed,
+  onTextLayout?: ?(event: TextLayoutEvent) => unknown,
 
   /**
    * Defines how far your touch may move off of the button, before

@@ -40,7 +40,7 @@ type DirectEventProps = $ReadOnly<{
    * when the user performs an accessibility custom action.
    *
    */
-  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
+  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => unknown,
 
   /**
    * When `accessible` is true, the system will try to invoke this function
@@ -48,7 +48,7 @@ type DirectEventProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/view#onaccessibilitytap
    */
-  onAccessibilityTap?: ?() => mixed,
+  onAccessibilityTap?: ?() => unknown,
 
   /**
    * Invoked on mount and layout changes with:
@@ -61,7 +61,7 @@ type DirectEventProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/view#onlayout
    */
-  onLayout?: ?(event: LayoutChangeEvent) => mixed,
+  onLayout?: ?(event: LayoutChangeEvent) => unknown,
 
   /**
    * When `accessible` is `true`, the system will invoke this function when the
@@ -69,7 +69,7 @@ type DirectEventProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/view#onmagictap
    */
-  onMagicTap?: ?() => mixed,
+  onMagicTap?: ?() => unknown,
 
   /**
    * When `accessible` is `true`, the system will invoke this function when the
@@ -77,7 +77,7 @@ type DirectEventProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/view#onaccessibilityescape
    */
-  onAccessibilityEscape?: ?() => mixed,
+  onAccessibilityEscape?: ?() => unknown,
 }>;
 
 type MouseEventProps = $ReadOnly<{
@@ -354,7 +354,7 @@ export type ViewPropsAndroid = $ReadOnly<{
    *
    * @platform android
    */
-  onClick?: ?(event: GestureResponderEvent) => mixed,
+  onClick?: ?(event: GestureResponderEvent) => unknown,
 }>;
 
 export type TVViewPropsIOS = $ReadOnly<{

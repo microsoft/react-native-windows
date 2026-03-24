@@ -35,6 +35,19 @@ import * as React from 'react';
 function getSize(
   uri: string,
   success?: (width: number, height: number) => void,
+<<<<<<< Upstream
+  failure?: (error: unknown) => void,
+): void | Promise<ImageSize> {
+  const promise = NativeImageLoaderIOS.getSize(uri).then(([width, height]) => ({
+    width,
+    height,
+  }));
+  if (typeof success !== 'function') {
+    return promise;
+  }
+  promise
+    .then(sizes => success(sizes.width, sizes.height))
+=======
   // $FlowFixMe[unclear-type]
   failure?: (error: any) => void,
 ) {
@@ -42,6 +55,7 @@ function getSize(
   /*
   NativeNativeImageLoaderWin32IOS.getSize(uri)
     .then(([width, height]) => success(width, height))
+>>>>>>> Override
     .catch(
       failure ||
         function () {
@@ -73,6 +87,16 @@ function getSizeWithHeaders(
   uri: string,
   headers: {[string]: string, ...},
   success?: (width: number, height: number) => void,
+<<<<<<< Upstream
+  failure?: (error: unknown) => void,
+): void | Promise<ImageSize> {
+  const promise = NativeImageLoaderIOS.getSizeWithHeaders(uri, headers);
+  if (typeof success !== 'function') {
+    return promise;
+  }
+  promise
+    .then(sizes => success(sizes.width, sizes.height))
+=======
   failure?: (error: mixed) => void,
   // $FlowFixMe[unclear-type]
 ): any {
@@ -81,6 +105,7 @@ function getSizeWithHeaders(
       // $FlowFixMe[not-a-function]
       success(sizes.width, sizes.height);
     })
+>>>>>>> Override
     .catch(
       failure ||
         function () {

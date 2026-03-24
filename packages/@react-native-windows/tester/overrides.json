@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.84.0-nightly-20251212-dd390dbbe",
+  "baseVersion": "0.84.0-nightly-20260107-58bc6c3e3",
   "overrides": [
     {
       "type": "copy",
@@ -50,14 +50,14 @@
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-basic.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-basic.js",
-      "baseHash": "41496b69da9128cd74a3efa43e41d08f967b37ed",
+      "baseHash": "2e712b5b0e2230bbf0abcf967c497e207c472809",
       "issue": 12869
     },
     {
       "type": "copy",
       "file": "src/js/examples/FlatList/FlatList-multiColumn.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-multiColumn.js",
-      "baseHash": "d65899720b46246b721e583b9a9920d7601b5221",
+      "baseHash": "9d960f7a85d0b5b40e2b5a511c05364f7d952c53",
       "issue": 12869
     },
     {
@@ -85,7 +85,7 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "9381aa0a0b1d084fda30e13c3b35eac653b28625",
+      "baseHash": "2ee70a725f5a944d99331a951e5389590847731f",
       "issue": 12869
     },
     {
@@ -98,7 +98,7 @@
       "type": "patch",
       "file": "src/js/examples/Modal/ModalPresentation.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalPresentation.js",
-      "baseHash": "e33fdbe5b91b49ba913117e5f816d7034db308b0"
+      "baseHash": "1c53d7015caa0706d0197423c1f51fcb0c69d872"
     },
     {
       "type": "patch",
@@ -137,7 +137,7 @@
       "type": "patch",
       "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "6699f509cf17c113d98fd87bfab9127037d9ca08"
+      "baseHash": "1af95dd18378165130c31b08bf17949ba281f193"
     },
     {
       "type": "patch",
