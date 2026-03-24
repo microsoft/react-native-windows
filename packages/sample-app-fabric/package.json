@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.82.0-nightly-20250821-0ef21bf8a",
-    "@types/react": "^19.2.0",
+    "@types/react": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
-    "react": "^19.2.0",
+    "react": "^19.2.3",
     "react-native": "0.84.0-nightly-20260107-58bc6c3e3",
     "react-native-windows": "^0.0.0-canary.1038"
   },
@@ -36,7 +36,7 @@
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.6",
     "@rnx-kit/jest-preset": "^0.3.1",
-    "@types/react": "^19.2.0",
+    "@types/react": "^19.2.3",
     "@types/react-test-renderer": "^19.1.0",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
