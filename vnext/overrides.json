@@ -189,7 +189,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewProps.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewProps.cpp",
-      "baseHash": "24baef3c27668197629949d63f1170f2a43e2c15",
+      "baseHash": "dc9d79534e798659918bdef1eed4b684b8f0a6e7",
       "issue": 15827
     },
     {
