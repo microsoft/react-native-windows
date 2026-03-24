@@ -15,7 +15,8 @@ import type {
   GestureResponderEvent,
   NativeSyntheticEvent,
   ScrollEvent,
-  KeyEvent, // Windows
+  KeyUpEvent, // Windows
+  KeyDownEvent, // Windows
   MouseEvent, // Windows
 } from '../../Types/CoreEventTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
@@ -564,10 +565,10 @@ export type TextInputWindowsProps = $ReadOnly<{|
    */
   onMouseEnter?: (args: MouseEvent) => void,
 
-  onKeyDown?: (args: KeyEvent) => void,
-  onKeyDownCapture?: (args: KeyEvent) => void,
-  onKeyUp?: (args: KeyEvent) => void,
-  onKeyUpCapture?: (args: KeyEvent) => void,
+  onKeyDown?: (args: KeyDownEvent) => void,
+  onKeyDownCapture?: (args: KeyDownEvent) => void,
+  onKeyUp?: (args: KeyUpEvent) => void,
+  onKeyUpCapture?: (args: KeyDownEvent) => void,
 
   keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
   keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,

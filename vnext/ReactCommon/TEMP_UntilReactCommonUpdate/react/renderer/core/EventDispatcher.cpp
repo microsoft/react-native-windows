@@ -11,7 +11,6 @@
 #pragma warning(disable : 4996) // deprecated APIs
 #endif
 #include "EventDispatcher.h"
-#include <cxxreact/JSExecutor.h>
 #include <react/renderer/core/StateUpdate.h>
 
 #include "EventQueue.h"

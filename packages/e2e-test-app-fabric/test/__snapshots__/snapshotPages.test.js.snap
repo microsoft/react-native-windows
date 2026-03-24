@@ -71458,6 +71458,20 @@ exports[`snapshotAllPages Text 14`] = `
   >
     Move fast and be normal
   </Text>,
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontStyle": "italic",
+        },
+      ]
+    }
+  >
+    Move fast and be italic, but just be longer so that you don't fit on a single line and make sure text is not truncated.
+  </Text>,
 ]
 `;
 
@@ -75303,6 +75317,81 @@ exports[`snapshotAllPages Text 46`] = `
 `;
 
 exports[`snapshotAllPages Text 47`] = `
+<View>
+  <Text
+    onPress={[Function]}
+    role="link"
+    style={
+      {
+        "color": "teal",
+        "textDecorationLine": "underline",
+      }
+    }
+  >
+    Link Text
+  </Text>
+  <Text>
+    <Text
+      onPress={[Function]}
+      role="link"
+      style={
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Nested Link
+    </Text>
+  </Text>
+  <Text>
+    Before
+     
+    <Text
+      onPress={[Function]}
+      role="link"
+      style={
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Nested Link
+    </Text>
+     After
+  </Text>
+  <Text>
+    <Text
+      onPress={[Function]}
+      role="link"
+      style={
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Nested Link 1
+    </Text>
+     - 
+    <Text
+      onPress={[Function]}
+      role="link"
+      style={
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Nested Link 2
+    </Text>
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages Text 48`] = `
 <View
   accessible={true}
   testID="text-accessibility"
@@ -75320,7 +75409,7 @@ exports[`snapshotAllPages Text 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 48`] = `
+exports[`snapshotAllPages Text 49`] = `
 <View
   accessibilityLabel="Border Example"
   accessible={true}
@@ -75397,7 +75486,7 @@ exports[`snapshotAllPages Text 48`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 49`] = `
+exports[`snapshotAllPages Text 50`] = `
 <View
   accessibilityLabel="Advanced Border Example"
   accessible={true}
@@ -75453,7 +75542,7 @@ exports[`snapshotAllPages Text 49`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 50`] = `
+exports[`snapshotAllPages Text 51`] = `
 <View
   testID="text-opacity"
 >
@@ -75560,7 +75649,7 @@ exports[`snapshotAllPages Text 50`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 51`] = `
+exports[`snapshotAllPages Text 52`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -75578,7 +75667,7 @@ exports[`snapshotAllPages Text 51`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 52`] = `
+exports[`snapshotAllPages Text 53`] = `
 <View>
   <Text
     style={

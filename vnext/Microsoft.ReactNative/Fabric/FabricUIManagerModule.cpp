@@ -148,9 +148,8 @@ void FabricUIManager::startSurface(
 
   {
     std::unique_lock lock(m_handlerMutex);
-    auto surfaceHandler = facebook::react::SurfaceHandler{moduleName, surfaceId};
-    surfaceHandler.setContextContainer(m_scheduler->getContextContainer());
-    m_handlerRegistry.emplace(surfaceId, std::move(surfaceHandler));
+    auto [it, _] = m_handlerRegistry.try_emplace(surfaceId, moduleName, surfaceId);
+    it->second.setContextContainer(m_scheduler->getContextContainer());
   }
 
   visit(surfaceId, [&](const facebook::react::SurfaceHandler &surfaceHandler) {

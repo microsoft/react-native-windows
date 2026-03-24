@@ -45,6 +45,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     ref: forwardedRef,
     accessible,
     accessibilityLabel,
+    accessibilityRole,
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
@@ -87,6 +88,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     onResponderTerminationRequest,
     onStartShouldSetResponder,
     pressRetentionOffset,
+    role,
     selectable,
     selectionColor,
     suppressHighlighting,
@@ -186,6 +188,17 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
         onStartShouldSetResponder != null) &&
       _disabled !== true;
 
+    const shouldUseLinkRole =
+      ReactNativeFeatureFlags.shouldUseLinkRoleForPressableText() &&
+      isPressable &&
+      accessibilityRole == null &&
+      role == null;
+
+    const _accessibilityRole =
+      accessibilityRole ?? (shouldUseLinkRole ? 'link' : undefined);
+
+    const _role = shouldUseLinkRole ? undefined : role;
+
     // TODO: Move this processing to the view configuration.
     const _selectionColor =
       selectionColor != null ? processColor(selectionColor) : undefined;
@@ -243,6 +256,9 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     if (_accessibilityLabel !== undefined) {
       processedProps.accessibilityLabel = _accessibilityLabel;
     }
+    if (_accessibilityRole !== undefined) {
+      processedProps.accessibilityRole = _accessibilityRole;
+    }
     if (_accessibilityState !== undefined) {
       processedProps.accessibilityState = _accessibilityState;
     }
@@ -260,6 +276,9 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     }
     if (_selectionColor !== undefined) {
       processedProps.selectionColor = _selectionColor;
+    }
+    if (_role !== undefined) {
+      processedProps.role = _role;
     }
 
     // [Windows accessibility properties
@@ -378,6 +397,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     accessibilityElementsHidden,
     importantForAccessibility,
     accessibilityLabel,
+    accessibilityRole,
     accessibilityState,
     allowFontScaling,
     'aria-busy': ariaBusy,
@@ -420,6 +440,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     onResponderTerminationRequest,
     onStartShouldSetResponder,
     pressRetentionOffset,
+    role,
     selectable,
     selectionColor,
     suppressHighlighting,
@@ -495,6 +516,17 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
         onStartShouldSetResponder != null) &&
       _disabled !== true;
 
+    const shouldUseLinkRole =
+      ReactNativeFeatureFlags.shouldUseLinkRoleForPressableText() &&
+      isPressable &&
+      accessibilityRole == null &&
+      role == null;
+
+    const _accessibilityRole =
+      accessibilityRole ?? (shouldUseLinkRole ? 'link' : undefined);
+
+    const _role = shouldUseLinkRole ? undefined : role;
+
     // TODO: Move this processing to the view configuration.
     const _selectionColor =
       selectionColor != null ? processColor(selectionColor) : undefined;
@@ -559,6 +591,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
               ...restProps,
               accessibilityElementsHidden: _accessibilityElementsHidden,
               accessibilityLabel: _accessibilityLabel,
+              accessibilityRole: _accessibilityRole,
               accessibilityState: _accessibilityState,
               importantForAccessibility: _importantForAccessibility,
               // #[ Win32
@@ -575,6 +608,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
               selectionColor: _selectionColor,
               style: _style,
               disabled: disabled,
+              role: _role,
               children,
             }}
             textPressabilityProps={{
@@ -600,6 +634,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           {...restProps}
           accessibilityElementsHidden={_accessibilityElementsHidden}
           accessibilityLabel={_accessibilityLabel}
+          accessibilityRole={_accessibilityRole}
           accessibilityState={_accessibilityState}
           importantForAccessibility={_importantForAccessibility}
           // #[ Win32
@@ -616,7 +651,8 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           selectable={_selectable}
           selectionColor={_selectionColor}
           style={_style}
-          disabled={disabled}>
+          disabled={disabled}
+          role={_role}>
           {children}
         </NativeVirtualText>
       );
@@ -651,6 +687,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
             ...restProps,
             accessibilityElementsHidden: _accessibilityElementsHidden,
             accessibilityLabel: _accessibilityLabel,
+            accessibilityRole: _accessibilityRole,
             accessibilityState: _accessibilityState,
             accessible: _accessible,
             allowFontScaling: allowFontScaling !== false,
@@ -662,6 +699,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
             selectable: _selectable,
             selectionColor: _selectionColor,
             style: _style,
+            role: _role,
             children,
           }}
           textPressabilityProps={{
@@ -686,6 +724,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           {...restProps}
           accessibilityElementsHidden={_accessibilityElementsHidden}
           accessibilityLabel={_accessibilityLabel}
+          accessibilityRole={_accessibilityRole}
           accessibilityState={_accessibilityState}
           accessible={_accessible}
           allowFontScaling={allowFontScaling !== false}
@@ -697,7 +736,8 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           ref={forwardedRef}
           selectable={_selectable}
           selectionColor={_selectionColor}
-          style={_style}>
+          style={_style}
+          role={_role}>
           {children}
         </NativeText>
       );

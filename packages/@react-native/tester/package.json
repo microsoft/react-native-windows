@@ -1,6 +1,6 @@
 {
   "name": "@react-native/tester",
-  "version": "0.83.0-nightly-20251104-502efe1cc",
+  "version": "0.84.0-nightly-20251212-dd390dbbe",
   "private": true,
   "description": "React Native tester app.",
   "license": "MIT",
@@ -15,8 +15,7 @@
   "scripts": {
     "start": "npx @react-native-community/cli start",
     "android": "npx @react-native-community/cli run-android --mode HermesDebug",
-    "install-android-jsc": "../../gradlew :packages:rn-tester:android:app:installJscDebug",
-    "install-android-hermes": "../../gradlew :packages:rn-tester:android:app:installHermesDebug",
+    "install-android": "../../gradlew :packages:rn-tester:android:app:installDebug",
     "clean-android": "rm -rf android/app/build",
     "prepare-ios": "node ./cli.js bootstrap ios",
     "clean-ios": "rm -rf build/generated/ios Pods Podfile.lock",
@@ -26,8 +25,8 @@
     "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
-    "@react-native/new-app-screen": "0.83.0-nightly-20251104-502efe1cc",
-    "@react-native/popup-menu-android": "0.83.0-nightly-20251104-502efe1cc",
+    "@react-native/new-app-screen": "0.84.0-nightly-20251212-dd390dbbe",
+    "@react-native/popup-menu-android": "0.84.0-nightly-20251212-dd390dbbe",
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"

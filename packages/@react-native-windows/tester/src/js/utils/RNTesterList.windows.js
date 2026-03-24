@@ -66,6 +66,11 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples-win/Glyph/GlyphExample'),
   },
+  /*{
+    key: 'KeyEvents',
+    module: require('../examples/KeyboardEventsExample/KeyboardEventsExample')
+      .default,
+  },*/
   {
     key: 'ModalExample',
     category: 'UI',
@@ -461,11 +466,17 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'LegacyModuleExample',
     module: require('../examples/TurboModule/LegacyModuleExample'),
   },
-  {
-    key: 'TurboCxxModuleExample',
-    category: 'Basic',
-    module: require('../examples/TurboModule/TurboCxxModuleExample'),
-  },
+  // Basic check to detect the availability of the IntersectionObserver API.
+  // $FlowExpectedError[cannot-resolve-name]
+  ...(typeof IntersectionObserver === 'function'
+    ? [
+        {
+          key: 'IntersectionObserver',
+          category: 'UI',
+          module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
+        },
+      ]
+    : []),
   // Basic check to detect the availability of the modern Performance API.
   ...(typeof performance.getEntries === 'function'
     ? [

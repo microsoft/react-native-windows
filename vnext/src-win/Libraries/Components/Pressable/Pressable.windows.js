@@ -16,7 +16,8 @@ import type {
   // [Windows
   BlurEvent,
   FocusEvent,
-  KeyEvent, // Windows]
+  KeyUpEvent, // Windows]
+  KeyDownEvent, // Windows]
 } from '../../Types/CoreEventTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
 
@@ -148,12 +149,12 @@ type PressableBaseProps = $ReadOnly<{
   /*
    * Called after a key down event is detected.
    */
-  onKeyDown?: ?(event: KeyEvent) => mixed,
+  onKeyDown?: ?(event: KeyDownEvent) => mixed,
 
   /*
    * Called after a key up event is detected.
    */
-  onKeyUp?: ?(event: KeyEvent) => mixed,
+  onKeyUp?: ?(event: KeyUpEvent) => mixed,
 
   /*
    * List of keys handled only by JS.
@@ -168,12 +169,12 @@ type PressableBaseProps = $ReadOnly<{
   /*
    * Called in the tunneling phase after a key up event is detected.
    */
-  onKeyDownCapture?: ?(event: KeyEvent) => void,
+  onKeyDownCapture?: ?(event: KeyDownEvent) => void,
 
   /*
    * Called in the tunneling phase after a key up event is detected.
    */
-  onKeyUpCapture?: ?(event: KeyEvent) => void,
+  onKeyUpCapture?: ?(event: KeyUpEvent) => void,
 
   /**
    * Either view styles or a function that receives a boolean reflecting whether

@@ -19,7 +19,7 @@
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
     "jest": "^29.7.0",
-    "prettier": "2.8.8"
+    "prettier": "^3.6.2"
   },
   "peerDependencies": {
     "babel-jest": "^29.3.0",

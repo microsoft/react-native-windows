@@ -13,7 +13,8 @@ import type {____TextStyle_Internal as TextStyleInternal} from '../../StyleSheet
 import type {
   BlurEvent,
   FocusEvent,
-  KeyEvent, // Windows
+  KeyUpEvent, // Windows
+  KeyDownEvent, // Windows
   MouseEvent, // Windows
   GestureResponderEvent,
   ScrollEvent,
@@ -661,7 +662,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
   // so omitting onBlur and onFocus pressability handlers here.
   const {onBlur, onFocus, ...eventHandlers} = usePressability(config);
   const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
-  const _keyDown = (event: KeyEvent) => {
+  const _keyDown = (event: KeyDownEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
@@ -680,7 +681,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     props.onKeyDown && props.onKeyDown(event);
   };
 
-  const _keyUp = (event: KeyEvent) => {
+  const _keyUp = (event: KeyUpEvent) => {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
@@ -699,7 +700,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     props.onKeyUp && props.onKeyUp(event);
   };
 
-  const _keyDownCapture = (event: KeyEvent) => {
+  const _keyDownCapture = (event: KeyDownEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
@@ -718,7 +719,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     props.onKeyDownCapture && props.onKeyDownCapture(event);
   };
 
-  const _keyUpCapture = (event: KeyEvent) => {
+  const _keyUpCapture = (event: KeyUpEvent) => {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
