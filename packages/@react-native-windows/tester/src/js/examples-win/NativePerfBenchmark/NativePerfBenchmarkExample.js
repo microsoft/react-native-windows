@@ -41,7 +41,7 @@ const COMPONENT_REGISTRY = {
   Image: () => (
     <Image
       style={styles.targetImage}
-      source={{uri: 'https://reactnative.dev/img/tiny_logo.png'}}
+      source={require('../../assets/uie_thumb_normal.png')}
     />
   ),
   ScrollView: () => (

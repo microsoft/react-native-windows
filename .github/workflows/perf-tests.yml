@@ -49,30 +49,28 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Install Windows SDK 10.0.22621
+      - name: Detect preinstalled Windows SDK
+        id: winsdk
         shell: pwsh
         run: |
-          $installerUrl = "https://download.microsoft.com/download/3/b/d/3bd97f81-3f5b-4922-b86d-dc5145cd6bfe/windowssdk/winsdksetup.exe"
-          $installerPath = "$env:TEMP\winsdksetup.exe"
-          Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
-          Start-Process -FilePath $installerPath -ArgumentList '/quiet', '/norestart', '/features', '+' -Wait -NoNewWindow
-          $sdkPath = "${env:ProgramFiles(x86)}\Windows Kits\10\Include\10.0.22621.0"
-          if (!(Test-Path $sdkPath)) {
-            echo "::error::Failed to install Windows SDK 10.0.22621"
+          # Find the latest SDK version already installed on the runner
+          $sdkRoot = "${env:ProgramFiles(x86)}\Windows Kits\10\Include"
+          $versions = Get-ChildItem $sdkRoot -Directory | Where-Object { $_.Name -match '^\d+\.\d+\.\d+\.\d+$' } | Sort-Object { [version]$_.Name } -Descending
+          if ($versions.Count -eq 0) {
+            echo "::error::No Windows SDK found on runner"
             exit 1
           }
+          $sdk = $versions[0].Name
+          echo "version=$sdk" >> $env:GITHUB_OUTPUT
+          echo "::notice::Using preinstalled Windows SDK $sdk"
 
       - name: Build perf-testing package
         run: yarn workspace @react-native-windows/perf-testing build
 
-      - name: Enable Developer Mode
-        shell: pwsh
-        run: reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" /t REG_DWORD /f /v AllowDevelopmentWithoutDevLicense /d 1
-
       # ── Build & Deploy RNTesterApp-Fabric (for native perf tests) ──
       - name: Build and deploy RNTesterApp-Fabric
         working-directory: packages/e2e-test-app-fabric
-        run: yarn windows --release --no-launch --logging
+        run: yarn windows --release --no-launch --logging -- /p:WindowsTargetPlatformVersion=${{ steps.winsdk.outputs.version }}
 
       # ── Run Tests ──────────────────────────────────────────
       - name: Run perf tests

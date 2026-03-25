@@ -19,9 +19,12 @@ beforeAll(async () => {
 
 const NATIVE = ThresholdPresets.native;
 
-describe('Native Render Pipeline', () => {
-  test('View native mount', async () => {
-    const perf = await measureNativePerf('View', {runs: 15, warmupRuns: 2});
+describe('Interactive Components — Native Render Pipeline', () => {
+  test('TouchableOpacity native mount', async () => {
+    const perf = await measureNativePerf('TouchableOpacity', {
+      runs: 15,
+      warmupRuns: 2,
+    });
     expect(perf).toMatchPerfSnapshot(NATIVE);
   });
 });

@@ -19,9 +19,16 @@ beforeAll(async () => {
 
 const NATIVE = ThresholdPresets.native;
 
-describe('Native Render Pipeline', () => {
-  test('View native mount', async () => {
-    const perf = await measureNativePerf('View', {runs: 15, warmupRuns: 2});
-    expect(perf).toMatchPerfSnapshot(NATIVE);
+describe('List Components — Native Render Pipeline', () => {
+  test('FlatList native mount', async () => {
+    const perf = await measureNativePerf('FlatList', {
+      runs: 10,
+      warmupRuns: 2,
+    });
+    expect(perf).toMatchPerfSnapshot({
+      ...NATIVE,
+      maxDurationIncrease: 20,
+      maxCV: 0.6,
+    });
   });
 });
