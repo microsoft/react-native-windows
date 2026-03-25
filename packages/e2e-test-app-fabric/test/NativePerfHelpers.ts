@@ -79,25 +79,20 @@ export async function measureNativePerf(
   );
 
   const resultsEl = await app.findElementByTestID('perf-results');
-  let parsed: {componentName: string; runs: number; durations: number[]};
-  await app.waitUntil(
-    async () => {
-      const raw = await resultsEl.getText();
-      try {
-        parsed = JSON.parse(raw);
-        return true;
-      } catch {
-        return false;
-      }
-    },
-    {
-      interval: 500,
-      timeout: 10000,
-      timeoutMsg: `No valid perf JSON for "${componentName}" after 10s`,
-    },
-  );
+  const rawJson = await resultsEl.getText();
 
-  const durations = parsed!.durations.slice(warmupRuns);
+  let parsed: {componentName: string; runs: number; durations: number[]};
+  try {
+    parsed = JSON.parse(rawJson);
+  } catch {
+    const snippet = rawJson ? rawJson.slice(0, 200) : '(empty)';
+    throw new Error(
+      `Failed to parse perf results for "${componentName}". ` +
+        `Raw text length=${rawJson?.length ?? 0}, snippet: ${snippet}`,
+    );
+  }
+
+  const durations = parsed.durations.slice(warmupRuns);
 
   if (durations.length < runs) {
     throw new Error(
