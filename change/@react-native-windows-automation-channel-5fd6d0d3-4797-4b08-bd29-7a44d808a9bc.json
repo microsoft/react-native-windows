@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate 0.84.0-nightly-20260107-58bc6c3e3",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
