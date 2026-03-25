@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add Visual Studio 2026 detection support alongside VS2022",
+  "packageName": "@react-native-windows/cli",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
