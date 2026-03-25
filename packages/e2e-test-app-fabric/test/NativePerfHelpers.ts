@@ -88,7 +88,7 @@ export async function measureNativePerf(
     const snippet = rawJson ? rawJson.slice(0, 200) : '(empty)';
     throw new Error(
       `Failed to parse perf results for "${componentName}". ` +
-        `Raw text length=${rawJson?.length ?? 0}, snippet: ${snippet}`,
+        `Raw text length=${rawJson.length}, snippet: ${snippet}`,
     );
   }
 
