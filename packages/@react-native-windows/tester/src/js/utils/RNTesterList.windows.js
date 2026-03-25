@@ -213,6 +213,11 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples-win/LegacyTests/TextHitTestPage'),
   },
   {
+    key: 'HitTestExample',
+    category: 'UI',
+    module: require('../examples-win/HitTest/HitTestExample'),
+  },
+  {
     key: 'PerformanceComparisonExample',
     category: 'Basic',
     module: require('../examples/Performance/PerformanceComparisonExample'),
