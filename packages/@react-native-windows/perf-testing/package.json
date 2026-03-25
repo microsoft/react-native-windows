@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/perf-testing",
-  "version": "0.0.0-canary.1034",
+  "version": "0.0.0-canary.1035",
   "description": "Performance testing utilities for React Native Windows components",
   "main": "lib-commonjs/index.js",
   "types": "lib-commonjs/index.d.ts",
@@ -19,7 +19,7 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/fs": "0.82.0-preview.1"
+    "@react-native-windows/fs": "0.0.0-canary.71"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.38",

@@ -2,6 +2,27 @@
   "name": "@react-native-windows/perf-testing",
   "entries": [
     {
+      "date": "Wed, 25 Mar 2026 02:08:12 GMT",
+      "version": "0.0.0-canary.1035",
+      "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1035",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "70ed4bc8ac65bb551143b97576dd24ccb6bba702",
+            "comment": "Integrate 0.84.0-nightly-20251212-dd390dbbe"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/perf-testing",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.71",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Mar 2026 03:08:37 GMT",
       "version": "0.0.0-canary.1034",
       "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1034",

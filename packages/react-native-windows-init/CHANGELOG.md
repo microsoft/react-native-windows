@@ -1,8 +1,19 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Sat, 07 Mar 2026 04:06:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 25 Mar 2026 02:08:13 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1023
+
+Wed, 25 Mar 2026 02:08:13 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.71
+- Bump @react-native-windows/telemetry to v0.0.0-canary.132
+- Bump @react-native-windows/cli to v0.0.0-canary.286
 
 ## 0.0.0-canary.1022
 
