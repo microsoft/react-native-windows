@@ -1174,15 +1174,17 @@ facebook::react::Tag ViewComponentView::hitTest(
 
   facebook::react::Tag targetTag = -1;
 
+  bool isPointInside = ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+      ptLocal.y <= m_layoutMetrics.frame.size.height;
+
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
-      anyHitTestHelper(targetTag, ptLocal, localPt))
+      (isPointInside || !viewProps()->getClipsContentToBounds()) && anyHitTestHelper(targetTag, ptLocal, localPt))
     return targetTag;
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
-      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
-      ptLocal.y <= m_layoutMetrics.frame.size.height) {
+      isPointInside) {
     localPt = ptLocal;
     return Tag();
   }
