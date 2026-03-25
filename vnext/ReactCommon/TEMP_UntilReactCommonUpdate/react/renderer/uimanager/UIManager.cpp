@@ -210,6 +210,12 @@ void UIManager::completeSurface(
       // after we commit a specific one.
       lazyShadowTreeRevisionConsistencyManager_->updateCurrentRevision(
           surfaceId, shadowTree.getCurrentRevision().rootShadowNode);
+        
+      if (ReactNativeFeatureFlags::useSharedAnimatedBackend()) {
+        if (auto animationBackend = animationBackend_.lock()) {
+          animationBackend->clearRegistry(surfaceId);
+        }
+      }
     }
   });
 }

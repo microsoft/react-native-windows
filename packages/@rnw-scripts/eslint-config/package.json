@@ -13,14 +13,14 @@
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
     "@microsoft/eslint-plugin-sdl": "^0.2.0",
-    "@react-native/eslint-config": "0.83.0-nightly-20251104-502efe1cc",
+    "@react-native/eslint-config": "0.84.0-nightly-20251212-dd390dbbe",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-ft-flow": "^2.0.1",
     "hermes-eslint": "0.23.1"
   },
   "devDependencies": {
     "eslint": "^8.19.0",
-    "prettier": "2.8.8"
+    "prettier": "^3.6.2"
   },
   "peerDependencies": {
     "eslint": "*",

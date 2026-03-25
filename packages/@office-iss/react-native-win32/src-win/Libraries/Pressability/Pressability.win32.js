@@ -12,7 +12,8 @@ import type {HostInstance} from '../../src/private/types/HostInstance';
 import type {
   BlurEvent,
   FocusEvent,
-  KeyEvent, // [Windows]
+  KeyUpEvent, // [Windows]
+  KeyDownEvent, // [Windows]
   GestureResponderEvent,
   MouseEvent,
 } from '../Types/CoreEventTypes';
@@ -99,12 +100,12 @@ export type PressabilityConfig = $ReadOnly<{
   /*
    * Called after a key down event is detected.
    */
-  onKeyDown?: ?(event: KeyEvent) => mixed,
+  onKeyDown?: ?(event: KeyDownEvent) => mixed,
 
   /*
    * Called after a key up event is detected.
    */
-  onKeyUp?: ?(event: KeyEvent) => mixed,
+  onKeyUp?: ?(event: KeyUpEvent) => mixed,
 
   /**
    * Called when the hover is activated to provide visual feedback.
@@ -179,8 +180,8 @@ export type EventHandlers = $ReadOnly<{
   onResponderTerminationRequest: () => boolean,
   onStartShouldSetResponder: () => boolean,
   // [Windows
-  onKeyUp: (event: KeyEvent) => void,
-  onKeyDown: (event: KeyEvent) => void,
+  onKeyUp: (event: KeyUpEvent) => void,
+  onKeyDown: (event: KeyDownEvent) => void,
   // Windows]
 }>;
 
@@ -591,7 +592,7 @@ export default class Pressability {
 
     // [Windows
     const keyboardEventHandlers = {
-      onKeyUp: (event: KeyEvent): void => {
+      onKeyUp: (event: KeyUpEvent): void => {
         const {onKeyUp} = this._config;
         onKeyUp && onKeyUp(event);
 
@@ -611,7 +612,7 @@ export default class Pressability {
         // Native windows app clears the key pressed state when another key press interrupts the current
         this._isKeyDown = false;
       },
-      onKeyDown: (event: KeyEvent): void => {
+      onKeyDown: (event: KeyDownEvent): void => {
         const {onKeyDown} = this._config;
         onKeyDown && onKeyDown(event);
 

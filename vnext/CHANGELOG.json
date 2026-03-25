@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 21 Mar 2026 09:44:24 GMT",
+      "version": "0.0.0-canary.1038",
+      "tag": "react-native-windows_v0.0.0-canary.1038",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "487f89e2099faf18507e6641dbad04f0968936b7",
+            "comment": "Delete member facebook::react::DevSettings::useWebSocketTurboModule"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Mar 2026 18:21:32 GMT",
       "version": "0.0.0-canary.1037",
       "tag": "react-native-windows_v0.0.0-canary.1037",
