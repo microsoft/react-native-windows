@@ -261,6 +261,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewProps.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewProps.cpp",
+      "baseHash": "24baef3c27668197629949d63f1170f2a43e2c15",
+      "issue": 15287
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/EventDispatcher.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/EventDispatcher.cpp",
       "baseHash": "8585eaca4fa573b0264937db0c6c0b3facc933c8"

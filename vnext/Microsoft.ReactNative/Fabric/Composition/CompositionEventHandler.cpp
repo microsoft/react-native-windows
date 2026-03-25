@@ -1210,6 +1210,30 @@ void CompositionEventHandler::onPointerPressed(
     ActiveTouch activeTouch{0};
     activeTouch.touchType = UITouchType::Mouse;
 
+    // Map PointerUpdateKind to W3C button value
+    // https://developer.mozilla.org/docs/Web/API/MouseEvent/button
+    auto updateKind = pointerPoint.Properties().PointerUpdateKind();
+    switch (updateKind) {
+      case Composition::Input::PointerUpdateKind::LeftButtonPressed:
+        activeTouch.button = 0;
+        break;
+      case Composition::Input::PointerUpdateKind::MiddleButtonPressed:
+        activeTouch.button = 1;
+        break;
+      case Composition::Input::PointerUpdateKind::RightButtonPressed:
+        activeTouch.button = 2;
+        break;
+      case Composition::Input::PointerUpdateKind::XButton1Pressed:
+        activeTouch.button = 3;
+        break;
+      case Composition::Input::PointerUpdateKind::XButton2Pressed:
+        activeTouch.button = 4;
+        break;
+      default:
+        activeTouch.button = -1;
+        break;
+    }
+
     while (targetComponentView) {
       if (auto eventEmitter =
               winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
@@ -1394,8 +1418,34 @@ facebook::react::PointerEvent CompositionEventHandler::CreatePointerEventFromAct
 
   event.detail = 0;
 
-  // event.button = activeTouch.button;
-  // event.buttons = ButtonMaskToButtons(activeTouch.buttonMask);
+  event.button = activeTouch.button;
+
+  // Build W3C buttons bitmask from the active button
+  // https://developer.mozilla.org/docs/Web/API/MouseEvent/buttons
+  if (IsEndishEventType(eventType)) {
+    event.buttons = 0;
+  } else {
+    switch (activeTouch.button) {
+      case 0:
+        event.buttons = 1;
+        break; // primary
+      case 1:
+        event.buttons = 4;
+        break; // auxiliary (middle)
+      case 2:
+        event.buttons = 2;
+        break; // secondary (right)
+      case 3:
+        event.buttons = 8;
+        break; // X1
+      case 4:
+        event.buttons = 16;
+        break; // X2
+      default:
+        event.buttons = 0;
+        break;
+    }
+  }
 
   // UpdatePointerEventModifierFlags(event, activeTouch.modifierFlags);
 

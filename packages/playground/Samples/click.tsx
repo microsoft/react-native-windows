@@ -10,6 +10,7 @@ import {AppRegistry, Text, TouchableHighlight, View} from 'react-native';
 export default class Bootstrap extends React.Component {
   state = {
     ticker: 0,
+    lastEvent: 'Click the box to test pointer events',
   };
 
   onSmallIncrement = () => {
@@ -27,32 +28,82 @@ export default class Bootstrap extends React.Component {
     console.log(' onLargeIncrement !');
   };
 
+  buttonLabel = (button: number) => {
+    switch (button) {
+      case 0:
+        return 'Left';
+      case 1:
+        return 'Middle';
+      case 2:
+        return 'Right';
+      default:
+        return `Unknown(${button})`;
+    }
+  };
+
   render() {
     return (
-      <View
-        style={{backgroundColor: 'blue', margin: 10, width: 120}}
-        focusable
-        {...{
-          // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-          onClick: this.onLargeIncrement,
-        }}>
-        <TouchableHighlight
-          style={{backgroundColor: 'orange', margin: 15}}
-          onPress={this.onMediumIncrement}
+      <View style={{padding: 10}}>
+        {/* Pointer event test */}
+        <View
+          style={{
+            backgroundColor: 'magenta',
+            width: 200,
+            height: 200,
+            margin: 10,
+            borderRadius: 30,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onPointerDown={(e: any) => {
+            const {button, buttons} = e.nativeEvent;
+            this.setState({
+              lastEvent: `${this.buttonLabel(
+                button,
+              )} pressed (button=${button}, buttons=${buttons})`,
+            });
+          }}
+          onPointerUp={(e: any) => {
+            const {button, buttons} = e.nativeEvent;
+            this.setState({
+              lastEvent: `${this.buttonLabel(
+                button,
+              )} released (button=${button}, buttons=${buttons})`,
+            });
+          }}
+          {...{onClick: this.onLargeIncrement}}>
+          <Text style={{color: 'white', fontWeight: 'bold'}}>Click Me</Text>
+        </View>
+        <Text style={{marginLeft: 10, fontSize: 14}}>
+          {this.state.lastEvent}
+        </Text>
+
+        {/* Original click test */}
+        <View
+          style={{backgroundColor: 'blue', margin: 10, width: 120}}
+          focusable
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-            focusable: true,
+            onClick: this.onLargeIncrement,
           }}>
           <TouchableHighlight
-            style={{backgroundColor: 'azure', margin: 15}}
-            onPress={this.onSmallIncrement}>
-            <View style={{margin: 5}}>
-              <Text style={{color: 'black'}}>
-                {this.state.ticker.toString()}
-              </Text>
-            </View>
+            style={{backgroundColor: 'orange', margin: 15}}
+            onPress={this.onMediumIncrement}
+            {...{
+              // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
+              focusable: true,
+            }}>
+            <TouchableHighlight
+              style={{backgroundColor: 'azure', margin: 15}}
+              onPress={this.onSmallIncrement}>
+              <View style={{margin: 5}}>
+                <Text style={{color: 'black'}}>
+                  {this.state.ticker.toString()}
+                </Text>
+              </View>
+            </TouchableHighlight>
           </TouchableHighlight>
-        </TouchableHighlight>
+        </View>
       </View>
     );
   }
