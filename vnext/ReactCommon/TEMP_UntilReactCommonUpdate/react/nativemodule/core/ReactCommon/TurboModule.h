@@ -16,6 +16,11 @@
 #include <ReactCommon/CallInvoker.h>
 #include <react/bridging/EventEmitter.h>
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4996) // deprecated APIs
+#endif
+
 namespace facebook::react {
 
 /**
