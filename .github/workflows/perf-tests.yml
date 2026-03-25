@@ -70,7 +70,7 @@ jobs:
       # ── Build & Deploy RNTesterApp-Fabric (for native perf tests) ──
       - name: Build and deploy RNTesterApp-Fabric
         working-directory: packages/e2e-test-app-fabric
-        run: yarn windows --release --no-launch --logging -- /p:WindowsTargetPlatformVersion=${{ steps.winsdk.outputs.version }}
+        run: yarn windows --release --no-launch --logging --msbuildprops WindowsTargetPlatformVersion=${{ steps.winsdk.outputs.version }}
 
       # ── Run Tests ──────────────────────────────────────────
       - name: Run perf tests
