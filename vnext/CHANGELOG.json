@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 Mar 2026 03:47:47 GMT",
+      "version": "0.82.3",
+      "tag": "react-native-windows_v0.82.3",
+      "comments": {
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "44975125c841b61bdf863328c0076bbf5bb3e7af",
+            "comment": "Implement button property"
+          }
+        ],
+        "patch": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "44975125c841b61bdf863328c0076bbf5bb3e7af",
+            "comment": "Try fixing the circular dependency error"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "44975125c841b61bdf863328c0076bbf5bb3e7af",
+            "comment": "Fix BinSkim issues"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "44975125c841b61bdf863328c0076bbf5bb3e7af",
+            "comment": "Center single line textinputs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Mar 2026 02:07:56 GMT",
       "version": "0.82.2",
       "tag": "react-native-windows_v0.82.2",
