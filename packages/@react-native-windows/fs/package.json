@@ -1,7 +1,7 @@
 {
   "name": "@react-native-windows/fs",
   "description": "A minimal-dependency drop-in replacement to `fs` with changes for resiliency, promises, and convenience.",
-  "version": "0.0.0-canary.70",
+  "version": "0.0.0-canary.71",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -29,7 +29,7 @@
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "eslint": "^8.19.0",
-    "prettier": "2.8.8",
+    "prettier": "^3.6.2",
     "typescript": "5.0.4"
   },
   "files": [

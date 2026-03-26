@@ -1,8 +1,37 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 12 Mar 2026 03:10:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 25 Mar 2026 02:08:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1039
+
+Wed, 25 Mar 2026 02:08:12 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.286
+- Bump @react-native-windows/codegen to v0.0.0-canary.132
+- Bump react-native-platform-override to v0.0.0-canary.1021
+
+## 0.0.0-canary.1038
+
+Sat, 21 Mar 2026 09:44:24 GMT
+
+### Changes
+
+- Delete member facebook::react::DevSettings::useWebSocketTurboModule (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.1037
+
+Tue, 17 Mar 2026 18:21:32 GMT
+
+### Changes
+
+- Speed up the publish pipeline (vmorozov@microsoft.com)
+- Fix unhandled synchronous throw from ConnectAsync (julio.rocha@microsoft.com)
+- Try fixing the circular dependency error (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.0.0-canary.1036
 

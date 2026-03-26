@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 25 Mar 2026 02:08:13 GMT",
+      "version": "0.0.0-canary.309",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.309",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "70ed4bc8ac65bb551143b97576dd24ccb6bba702",
+            "comment": "Integrate 0.84.0-nightly-20251212-dd390dbbe"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1021",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Mar 2026 03:08:37 GMT",
       "version": "0.0.0-canary.308",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.308",

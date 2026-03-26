@@ -36,27 +36,27 @@ steps:
       configuration: ${{ parameters.configuration }}
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
-  - powershell: |
+  - pwsh: |
         & reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /s
         & reg query "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\Windows Error Reporting" /s
         & reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug" /s
         Enable-WindowsErrorReporting
     displayName: Check and enable Windows Error Reporting
 
-  - powershell: |
+  - pwsh: |
         Write-Host "##vso[task.setvariable variable=CrashDumpRootPath]$(Build.StagingDirectory)\CrashDumps"
         New-Item -Path '$(Build.StagingDirectory)\CrashDumps' -ItemType Directory
     displayName: Set CrashDumpRootPath
 
-  - powershell: |
+  - pwsh: |
         Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(CrashDumpRootPath)"
     displayName: Set MSBUILDDEBUGPATH
 
-  - powershell: |
+  - pwsh: |
         Write-Host "##vso[task.setvariable variable=ProcDumpPath]$(Build.StagingDirectory)\Procdump"
     displayName: Set ProcDumpPath
 
-  - powershell: |
+  - pwsh: |
       & $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1 -ProcDumpArgs @("-mm", "-i", "$(CrashDumpRootPath)") -ProcDumpInstallPath "$(ProcDumpPath)" -Verbose
     displayName: Setup ProcDump as AeDebug
   

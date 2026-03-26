@@ -1,0 +1,29 @@
+#
+# The CI pipeline entry point.
+# Extends build-template.yml with buildEnvironment: Continuous for signed Official builds.
+#
+
+name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
+
+trigger: none
+pr: none
+
+parameters:
+  - name: isReleaseBuild
+    displayName: 'Treat as Release build (skip beachball, use committed versions)'
+    type: string
+    default: auto
+    values:
+      - auto
+      - 'true'
+      - 'false'
+
+variables:
+  - template: variables/windows.yml
+  - group: RNW Secrets
+
+extends:
+  template: build-template.yml@self
+  parameters:
+    buildEnvironment: Continuous
+    isReleaseBuild: ${{ parameters.isReleaseBuild }}

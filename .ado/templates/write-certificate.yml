@@ -4,7 +4,7 @@ parameters:
     default: 'pwd'
 
 steps:
-  - powershell: |
+  - pwsh: |
       $certStoreRoot="cert:\CurrentUser\My"
       $rootFolder="$(Build.SourcesDirectory)"
 

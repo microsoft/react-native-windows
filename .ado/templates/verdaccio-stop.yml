@@ -10,15 +10,7 @@ steps:
     displayName: Kill Verdaccio
     condition: succeededOrFailed()
 
-  - ${{ if eq(parameters.uploadLogs, true) }}:
-    # We are experiencing random package restore failures.
-    # We want to uploading the vedaccio logs to aid in diagnosing if it is verdaccio or npmjs.org
-    - task: PublishPipelineArtifact@1
-      displayName: Upload Verdaccio.log (on failure)
-      inputs:
-        targetPath: 'verdaccio.log'
-        artifact: '$(Agent.JobName).Verdaccio.log-$(System.JobAttempt)'
-      condition: failed()
+  # Verdaccio log artifact publishing moved to templateContext.outputs in cli-init-windows.yml (1ES compliance)
 
   - script: | 
       call npm config delete registry

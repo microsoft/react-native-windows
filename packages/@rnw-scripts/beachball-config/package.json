@@ -17,7 +17,7 @@
     "directory": "packages/@rnw-scripts/beachball-config"
   },
   "dependencies": {
-    "@react-native-windows/package-utils": "0.0.0-canary.96",
+    "@react-native-windows/package-utils": "0.0.0-canary.97",
     "@rnw-scripts/stamp-version": "0.0.0",
     "find-up": "^4.1.0"
   },
@@ -30,7 +30,7 @@
     "@types/shell-quote": "^1.7.5",
     "beachball": "^2.20.0",
     "eslint": "^8.19.0",
-    "prettier": "2.8.8",
+    "prettier": "^3.6.2",
     "shell-quote": "^1.8.1",
     "typescript": "5.0.4"
   },

@@ -218,7 +218,7 @@ class TouchableBounce extends React.Component<
     this.state.pressability.configure(this._createPressabilityConfig());
   }
 
-  componentDidMount(): mixed {
+  componentDidMount(): unknown {
     this.state.pressability.configure(this._createPressabilityConfig());
   }
 
@@ -232,11 +232,11 @@ export default (function TouchableBounceWrapper({
   ref: hostRef,
   ...props
 }: {
-  ref: React.RefSetter<mixed>,
+  ref: React.RefSetter<unknown>,
   ...$ReadOnly<Omit<TouchableBounceProps, 'hostRef'>>,
 }) {
   return <TouchableBounce {...props} hostRef={hostRef} />;
 } as component(
-  ref?: React.RefSetter<mixed>,
+  ref?: React.RefSetter<unknown>,
   ...props: $ReadOnly<Omit<TouchableBounceProps, 'hostRef'>>
 ));

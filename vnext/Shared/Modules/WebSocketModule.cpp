@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #include <Modules/WebSocketModule.h>
-#include <Modules/WebSocketTurboModule.h>
 
 #include <CreateModules.h>
 #include <Modules/CxxModuleUtilities.h>

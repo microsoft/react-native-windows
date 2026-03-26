@@ -77,6 +77,8 @@
     <ClCompile Include="$(FollyDir)\folly\ScopeGuard.cpp" />
     <ClCompile Include="$(FollyDir)\folly\Unicode.cpp" />
     <ClCompile Include="$(FollyDir)\folly\memory\detail\MallocImpl.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\memory\SanitizeLeak.cpp" />
+    <ClCompile Include="$(FollyDir)\folly\lang\Exception.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

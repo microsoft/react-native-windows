@@ -397,7 +397,7 @@ class TouchableNativeFeedback extends React.Component<
     this.state.pressability.configure(this._createPressabilityConfig());
   }
 
-  componentDidMount(): mixed {
+  componentDidMount(): unknown {
     this.state.pressability.configure(this._createPressabilityConfig());
   }
 

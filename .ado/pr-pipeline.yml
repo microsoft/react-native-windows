@@ -1,0 +1,28 @@
+#
+# The PR pipeline entry point.
+# Extends build-template.yml with buildEnvironment: PullRequest for Unofficial validation builds.
+#
+
+name: $(Date:yyyyMMdd).$(Rev:r)
+
+trigger: none
+
+pr:
+  - main
+  - master
+  - "*-stable"
+
+variables:
+  - group: platform-override-zero-permission-token
+
+extends:
+  template: build-template.yml@self
+  parameters:
+    buildEnvironment: PullRequest
+    AgentPool:
+      Medium:
+        name: rnw-pool-4
+        demands: ImageOverride -equals rnw-img-vs2022-node22
+      Large:
+        name: rnw-pool-8
+        demands: ImageOverride -equals rnw-img-vs2022-node22
