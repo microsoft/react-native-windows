@@ -36305,6 +36305,60 @@ exports[`snapshotAllPages PlatformColor 4`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Pointer Button 1`] = `
+<View>
+  <Text
+    accessible={true}
+    testID="pointer-button-state"
+  >
+    Click the box to test pointer events
+  </Text>
+  <View
+    accessible={true}
+    onPointerDown={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "magenta",
+        "borderRadius": 10,
+        "height": 200,
+        "justifyContent": "center",
+        "margin": 10,
+        "width": 200,
+      }
+    }
+    testID="pointer-button-target"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Pointer Button 2`] = `
+<View>
+  <Text
+    accessible={true}
+    testID="pointer-up-button-state"
+  >
+    Click the box to test pointer up events
+  </Text>
+  <View
+    accessible={true}
+    onPointerUp={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "magenta",
+        "borderRadius": 10,
+        "height": 200,
+        "justifyContent": "center",
+        "margin": 10,
+        "width": 200,
+      }
+    }
+    testID="pointer-up-button-target"
+  />
+</View>
+`;
+
 exports[`snapshotAllPages Pointer Events 1`] = `
 <View>
   <View

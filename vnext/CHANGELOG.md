@@ -1,8 +1,34 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 12 Mar 2026 14:15:44 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 26 Mar 2026 03:47:47 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.3
+
+Thu, 26 Mar 2026 03:47:47 GMT
+
+### Patches
+
+- Try fixing the circular dependency error (66076509+vineethkuttan@users.noreply.github.com)
+- Fix BinSkim issues (vmorozov@microsoft.com)
+- Center single line textinputs (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.82.2
+
+Sat, 21 Mar 2026 02:07:56 GMT
+
+### Patches
+
+- Speed up the publish pipeline (vmorozov@microsoft.com)
+
+## 0.82.1
+
+Tue, 17 Mar 2026 07:34:22 GMT
+
+### Patches
+
+- Fix unhandled synchronous throw from ConnectAsync (julio.rocha@microsoft.com)
 
 ## 0.82.0
 

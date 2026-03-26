@@ -385,6 +385,11 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/PointerEvents/PointerEventsExample'),
   },
   {
+    key: 'PointerButtonExample',
+    category: 'Basic',
+    module: require('../examples-win/Pointer/PointerButtonExample'),
+  },
+  {
     key: 'RTLExample',
     category: 'Basic',
     module: require('../examples/RTL/RTLExample'),

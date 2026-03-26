@@ -89,6 +89,7 @@ Directory.Build.local.targets
 *.userprefs
 
 #Tooling
+tools/
 _ReSharper*/
 *.resharper
 [Tt]est[Rr]esult*
@@ -196,3 +197,4 @@ nul
 .store*/*
 
 /npm-pkgs
+/.claude

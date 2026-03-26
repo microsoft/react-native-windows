@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pointer Button Tests onPointerDown reports correct button property on left click 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pointer-button-target",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pointer-button-target",
+    },
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 0, 255, 255)",
+    },
+    "Comment": "pointer-button-target",
+    "Offset": "0, 0, 0",
+    "Size": "200, 200",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Pointer Button Tests onPointerUp reports correct button property on left click 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pointer-up-button-target",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pointer-up-button-target",
+    },
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 0, 255, 255)",
+    },
+    "Comment": "pointer-up-button-target",
+    "Offset": "0, 0, 0",
+    "Size": "200, 200",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
