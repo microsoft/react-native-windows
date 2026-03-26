@@ -178,6 +178,62 @@
     },
     {
       "type": "copy",
+      "file": "js/examples/IntersectionObserver/IntersectionObserverBenchmark.js",
+      "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverBenchmark.js",
+      "baseHash": "4f8616fdd362d180c7ef049c1dcb1ed57cbeef1d",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/IntersectionObserver/IntersectionObserverClippingParent.js",
+      "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverClippingParent.js",
+      "baseHash": "42240cecd003cddeab075d4a30aa0ce0d66d6c9f",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/IntersectionObserver/IntersectionObserverClippingRoot.js",
+      "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverClippingRoot.js",
+      "baseHash": "322988e33c1f4c3830aa39df4610cc61c3a8b2a5",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/IntersectionObserver/IntersectionObserverExplicitRoot.js",
+      "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverExplicitRoot.js",
+      "baseHash": "f37841cbd7012643cb85970976e8b57a8ee48b68",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/IntersectionObserver/IntersectionObserverExplicitRootScroll.js",
+      "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverExplicitRootScroll.js",
+      "baseHash": "000c27cad081d7fbaa4c7a6dc407611bd123ca23",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/IntersectionObserver/IntersectionObserverIndex.js",
+      "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverIndex.js",
+      "baseHash": "2e233373a9e65403050e7066a3df016b4d9b479c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/IntersectionObserver/IntersectionObserverMDNExample.js",
+      "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverMDNExample.js",
+      "baseHash": "04302cafcde285acdb8a2dfe141d3cc84d1d3044",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/IntersectionObserver/IntersectionObserverRootThreshold.js",
+      "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverRootThreshold.js",
+      "baseHash": "3e96b84a2f6350f47370adb699960f0ae2a55f3f",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "directory": "js/examples/InvalidProps",
       "baseDirectory": "packages/rn-tester/js/examples/InvalidProps",
       "baseHash": "848cebed1d4f9f51217033fea4297ea9d0775f17",
