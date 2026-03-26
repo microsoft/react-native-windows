@@ -1,13 +1,10 @@
-name: $(Date:yyyyMMdd).$(Rev:r)
+name: RNW CI $(Date:yyyyMMdd).$(Rev:r)
 
 trigger: none # will disable CI builds entirely
-
-pr:
-  - main
-  - master
-  - "*-stable"
+pr: none
 
 variables:
+  - group: RNW Secrets
   - group: platform-override-zero-permission-token
 
 parameters:
@@ -27,5 +24,5 @@ parameters:
 stages:
   - template: stages.yml
     parameters:
-      buildEnvironment: PullRequest
+      buildEnvironment: Continuous
       AgentPool: ${{ parameters.AgentPool }}

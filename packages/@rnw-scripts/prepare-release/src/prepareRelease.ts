@@ -7,7 +7,7 @@
  * "Version Packages" pull request.
  *
  * Usage:
- *   npx prepare-release --branch <target> [--bump-only] [--dry-run] [--no-color] [--help]
+ *   npx prepare-release --branch <target> [--dry-run] [--no-color] [--help]
  *
  * @format
  */
@@ -64,15 +64,13 @@ Usage:
   npx prepare-release --branch <target> [options]
 
 Options:
-  --branch <name>   Target branch for version baseline (required)
-  --bump-only       Only run beachball bump in current working tree, skip git/PR operations
+  --branch <name>   Target branch to prepare release for (required)
   --dry-run         Do everything except push and PR create/update
   --no-color        Disable colored output
   --help, -h        Show this help message
 
 Examples:
   npx prepare-release --branch main
-  npx prepare-release --branch main --bump-only
   npx prepare-release --branch 0.76-stable --dry-run
 `);
 }
@@ -163,7 +161,6 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
   const {values} = parseArgs({
     options: {
       branch: {type: 'string'},
-      'bump-only': {type: 'boolean', default: false},
       'dry-run': {type: 'boolean', default: false},
       help: {type: 'boolean', short: 'h', default: false},
       'no-color': {type: 'boolean', default: false},
@@ -184,12 +181,9 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
     process.exit(1);
   }
 
-  const bumpOnly = values['bump-only'];
   const dryRun = values['dry-run'];
 
-  if (bumpOnly) {
-    console.log(colorize('[BUMP-ONLY MODE]', ansi.yellow));
-  } else if (dryRun) {
+  if (dryRun) {
     console.log(colorize('[DRY RUN MODE]', ansi.yellow));
   }
 
@@ -230,20 +224,6 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
       process.exit(0);
     }
     console.log(colorize('Found pending change files.', ansi.green));
-
-    // 6b. Bump-only mode: run beachball bump in-place and exit
-    if (bumpOnly) {
-      console.log(colorize('Running beachball bump...', ansi.bright));
-      await bumpVersions({
-        targetBranch,
-        remote: remoteName,
-        cwd: repoRoot,
-      });
-      console.log(
-        colorize('Bump complete (--bump-only mode).', ansi.green + ansi.bright),
-      );
-      process.exit(0);
-    }
 
     // 7. Check for existing PR
     const prBranch = `prepare-release/${targetBranch}`;

@@ -27,5 +27,5 @@ parameters:
 stages:
   - template: stages.yml
     parameters:
-      buildEnvironment: PullRequest
+      buildEnvironment: SecurePullRequest
       AgentPool: ${{ parameters.AgentPool }}

@@ -123,6 +123,16 @@ Build and see if your solution works. Consult [Building React-Native-Windows](ht
 
 Testing is a key component in the development workflow. If your changes affect existing test cases, or you're working on brand new features and also the accompanying test cases, see [End-to-End Testing](https://github.com/microsoft/react-native-windows/blob/main/docs/e2e-testing.md) for more information about how to validate your work locally.
 
+### 🛡️ Security & Compliance
+
+React Native Windows follows Microsoft's Secure Development Lifecycle (SDL) requirements. As part of this commitment:
+
+- **Attack Surface Analyzer (ASA)** runs automatically on every PR to detect security regressions during the build process. This ensures that builds don't inadvertently weaken the OS security configuration.
+- If ASA detects changes in your PR, review the artifacts in the PR build to understand the security implications.
+- For more information about ASA, see [Attack Surface Analyzer documentation](https://github.com/microsoft/react-native-windows/blob/main/docs/attack-surface-analyzer.md).
+
+Most changes won't trigger ASA findings, but if yours does, the documentation explains how to review and address the findings.
+
 ### ✅ Code Review
 
 When you'd like the team to review your PR, (even if the work is not yet fully-complete), open a PR so that the team can review your work and provide comments, suggestions, and request changes. It may take several cycles, but the end result will be solid, testable, conformant code that is safe for us to merge.

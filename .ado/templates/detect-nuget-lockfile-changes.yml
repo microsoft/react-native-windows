@@ -4,7 +4,7 @@ parameters:
     default: true
 
 steps:
-  - pwsh: |
+  - powershell: |
         & git add */packages*.lock.json
         $changed = git status --porcelain=v1 */packages*.lock.json
         if ($changed -ne $null) {

@@ -3,7 +3,6 @@ steps:
     displayName: Cleanup any packagers left over from other builds
     inputs:
       targetType: inline # filePath | inline
-      pwsh: true
       script: |
         echo "ports:{"
         echo ${env:RNTester.PackagerPort}
