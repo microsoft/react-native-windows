@@ -1,6 +1,6 @@
 steps:
 
-  - powershell: |
+  - pwsh: |
       $vsExtensionPath="${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\Extensions\";
       $GoogleTestAdapterPath=(Get-ChildItem $vsExtensionPath -Directory | Where-Object -FilterScript {Test-Path  (Join-Path -Path $_.FullName -ChildPath "GoogleTestAdapter.Core.dll")}).FullName
 

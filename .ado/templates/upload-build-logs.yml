@@ -19,6 +19,7 @@ steps:
     condition: succeededOrFailed()
     inputs:
       targetType: inline # filePath | inline
+      pwsh: true
       script: |
         Write-Host "Looking for procdump64 processes...";
         Get-Process | ForEach-Object {
@@ -39,6 +40,7 @@ steps:
     condition: and(succeededOrFailed(), ${{ parameters.uploadCrashDumps }})
     inputs:
       targetType: inline # filePath | inline
+      pwsh: true
       script: |
         Write-Host "Looking for crash dumps in $(CrashDumpRootPath)...";
         Get-ChildItem -Path $(CrashDumpRootPath) -File -Recurse;
