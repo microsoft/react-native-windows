@@ -25,6 +25,7 @@ struct DrawingIslandProps : winrt::implements<DrawingIslandProps, winrt::Microso
   {
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<DrawingIslandProps>();
+
   
      }
   }

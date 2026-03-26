@@ -15,6 +15,9 @@ const {
 } = require('@rnx-kit/metro-plugin-duplicates-checker');
 
 function makeMetroConfig(customConfig = {}) {
+  if (customConfig.unstable_allowAssetsOutsideProjectRoot === undefined)
+    customConfig.unstable_allowAssetsOutsideProjectRoot = true;
+
   return mergeConfig(MetroConfig.makeMetroConfig(customConfig), {
     resolver: {
       enableGlobalPackages: true,

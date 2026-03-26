@@ -29,6 +29,25 @@ struct MovingLight : public winrt::implements<MovingLight, winrt::IInspectable>,
       m_eventParam = newProps->eventParam;
     }
 
+    if (!oldProps || oldProps->onSomething != newProps->onSomething) {
+      if (newProps->onSomething) {
+        m_pointerPressedRevoker = view.PointerPressed(
+            winrt::auto_revoke,
+            [wkThis = get_weak()](
+                const winrt::IInspectable & /*sender*/,
+                const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs & /*args*/) {
+              if (auto strongThis = wkThis.get()) {
+                if (auto eventEmitter = strongThis->EventEmitter()) {
+                  eventEmitter->onSomething(
+                      {.value = strongThis->m_eventParam ? *strongThis->m_eventParam : "No eventParam set"});
+                }
+              }
+            });
+      } else {
+        m_pointerPressedRevoker.revoke();
+      }
+    }
+
     Codegen::BaseMovingLight<MovingLight>::UpdateProps(sender, newProps, oldProps);
   }
 
@@ -40,18 +59,6 @@ struct MovingLight : public winrt::implements<MovingLight, winrt::IInspectable>,
 
   void Initialize(const winrt::Microsoft::ReactNative::ComponentView &sender) noexcept override {
     auto view = sender.as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
-    view.PointerPressed(
-        [wkThis = get_weak()](
-            const winrt::IInspectable & /*sender*/,
-            const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs & /*args*/) {
-          if (auto strongThis = wkThis.get()) {
-            if (auto eventEmitter = strongThis->EventEmitter()) {
-              Codegen::MovingLightEventEmitter::OnSomething eventArgs;
-              eventArgs.value = strongThis->m_eventParam ? *strongThis->m_eventParam : "No eventParam set";
-              eventEmitter->onSomething(eventArgs);
-            }
-          }
-        });
   }
 
   winrt::Microsoft::UI::Composition::Visual CreateVisual(
@@ -93,6 +100,7 @@ struct MovingLight : public winrt::implements<MovingLight, winrt::IInspectable>,
   std::optional<std::string> m_eventParam;
   winrt::Microsoft::UI::Composition::SpriteVisual m_visual{nullptr};
   winrt::Microsoft::UI::Composition::SpotLight m_spotlight{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ViewComponentView::PointerPressed_revoker m_pointerPressedRevoker;
 };
 
 void RegisterMovingLightNativeComponent(

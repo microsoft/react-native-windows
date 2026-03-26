@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/find-repo-root",
-  "version": "0.0.0-canary.99",
+  "version": "0.0.0-canary.100",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -16,7 +16,7 @@
     "directory": "packages/@react-native-windows/find-repo-root"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.70",
+    "@react-native-windows/fs": "^0.0.0-canary.71",
     "find-up": "^4.1.0",
     "minimatch": "^10.0.3"
   },
@@ -29,7 +29,7 @@
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "eslint": "^8.19.0",
-    "prettier": "2.8.8",
+    "prettier": "^3.6.2",
     "typescript": "5.0.4"
   },
   "beachball": {

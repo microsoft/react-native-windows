@@ -14,6 +14,7 @@
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionContextHelper.h"
 #include "RootComponentView.h"
+#include "ScrollViewComponentView.h"
 
 #include "Composition.ContentIslandComponentView.g.cpp"
 
@@ -42,12 +43,38 @@ ContentIslandComponentView::ContentIslandComponentView(
       });
 }
 
-void ContentIslandComponentView::OnMounted() noexcept {
-  m_childSiteLink = winrt::Microsoft::UI::Content::ChildSiteLink::Create(
-      rootComponentView()->parentContentIsland(),
-      winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
-          .as<winrt::Microsoft::UI::Composition::ContainerVisual>());
-  m_childSiteLink.ActualSize({m_layoutMetrics.frame.size.width, m_layoutMetrics.frame.size.height});
+winrt::Microsoft::UI::Content::ContentIsland ContentIslandComponentView::ParentContentIsland() noexcept {
+  auto root = rootComponentView();
+  if (!root)
+    return nullptr;
+  return root->parentContentIsland();
+}
+
+winrt::Microsoft::UI::Content::ChildSiteLink ContentIslandComponentView::ChildSiteLink() noexcept {
+  if (!isMounted())
+    return nullptr;
+  if (!m_childSiteLink) {
+    m_childSiteLink = winrt::Microsoft::UI::Content::ChildSiteLink::Create(
+        m_parentContentIsland,
+        winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
+            .as<winrt::Microsoft::UI::Composition::ContainerVisual>());
+  }
+  return m_childSiteLink;
+}
+
+void ContentIslandComponentView::ConnectInternal() noexcept {
+  if (!m_islandToConnect)
+    return;
+
+  ChildSiteLink().ActualSize({m_layoutMetrics.frame.size.width, m_layoutMetrics.frame.size.height});
+
+  // Issue #15557: Set initial LocalToParentTransformMatrix synchronously before Connect.
+  // This fixes popup position being wrong even without scrolling.
+  // Note: getClientRect() returns physical pixels, but LocalToParentTransformMatrix expects DIPs.
+  auto clientRect = getClientRect();
+  float scaleFactor = m_layoutMetrics.pointScaleFactor;
+  m_childSiteLink.LocalToParentTransformMatrix(winrt::Windows::Foundation::Numerics::make_float4x4_translation(
+      static_cast<float>(clientRect.left) / scaleFactor, static_cast<float>(clientRect.top) / scaleFactor, 0.0f));
 
   m_navigationHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteLink(m_childSiteLink);
 
@@ -65,8 +92,17 @@ void ContentIslandComponentView::OnMounted() noexcept {
   ConfigureChildSiteLinkAutomation();
 
   if (m_islandToConnect) {
+    Assert(m_childSiteLink.SiteView().IsConnected());
+    Assert(!m_islandToConnect.IsConnected());
+
     m_childSiteLink.Connect(m_islandToConnect);
     m_islandToConnect = nullptr;
+  }
+
+  if (m_pendingNavigateFocus) {
+    m_navigationHost.NavigateFocus(
+        winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(*m_pendingNavigateFocus));
+    m_pendingNavigateFocus.reset();
   }
 
   ParentLayoutChanged();
@@ -80,12 +116,39 @@ void ContentIslandComponentView::OnMounted() noexcept {
             strongThis->ParentLayoutChanged();
           }
         }));
+
+    // Issue #15557: Register for ViewChanged on parent ScrollViews to update transform
+    // when scroll position changes, ensuring correct XAML popup positioning.
+    if (auto scrollView = view.try_as<winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView>()) {
+      auto token =
+          scrollView.ViewChanged([wkThis = get_weak()](const winrt::IInspectable &, const winrt::IInspectable &) {
+            if (auto strongThis = wkThis.get()) {
+              strongThis->ParentLayoutChanged();
+            }
+          });
+      m_viewChangedSubscriptions.push_back({scrollView, token});
+    }
+
     view = view.Parent();
   }
 }
 
+void ContentIslandComponentView::OnMounted() noexcept {
+  m_parentContentIsland = ParentContentIsland();
+  ConnectInternal();
+}
+
 void ContentIslandComponentView::OnUnmounted() noexcept {
   m_layoutMetricChangedRevokers.clear();
+
+  // Issue #15557: Unsubscribe from parent ScrollView events
+  for (auto &subscription : m_viewChangedSubscriptions) {
+    if (auto scrollView = subscription.scrollView.get()) {
+      scrollView.ViewChanged(subscription.token);
+    }
+  }
+  m_viewChangedSubscriptions.clear();
+
   if (m_navigationHostDepartFocusRequestedToken && m_navigationHost) {
     m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
     m_navigationHostDepartFocusRequestedToken = {};
@@ -93,21 +156,25 @@ void ContentIslandComponentView::OnUnmounted() noexcept {
 }
 
 void ContentIslandComponentView::ParentLayoutChanged() noexcept {
-  if (m_layoutChangePosted)
-    return;
+  // Issue #15557: Update transform synchronously to ensure correct popup position
+  // when user clicks. Async updates via UIDispatcher().Post() were causing the
+  // popup to open with stale transform values.
+  //
+  // Note: The original async approach was for batching notifications during layout passes.
+  // However, LocalToParentTransformMatrix is a cheap call (just sets a matrix), and
+  // synchronous updates are required to ensure correct popup position when clicked.
+  //
+  // getClientRect() returns values in physical pixels (scaled by pointScaleFactor),
+  // but LocalToParentTransformMatrix expects logical pixels (DIPs). We need to divide
+  // by the scale factor to convert.
+  auto clientRect = getClientRect();
+  float scaleFactor = m_layoutMetrics.pointScaleFactor;
 
-  m_layoutChangePosted = true;
-  ReactContext().UIDispatcher().Post([wkThis = get_weak()]() {
-    if (auto strongThis = wkThis.get()) {
-      auto clientRect = strongThis->getClientRect();
+  float x = static_cast<float>(clientRect.left) / scaleFactor;
+  float y = static_cast<float>(clientRect.top) / scaleFactor;
 
-      strongThis->m_childSiteLink.LocalToParentTransformMatrix(
-          winrt::Windows::Foundation::Numerics::make_float4x4_translation(
-              static_cast<float>(clientRect.left), static_cast<float>(clientRect.top), 0.0f));
-
-      strongThis->m_layoutChangePosted = false;
-    }
-  });
+  m_childSiteLink.LocalToParentTransformMatrix(
+      winrt::Windows::Foundation::Numerics::make_float4x4_translation(x, y, 0.0f));
 }
 
 winrt::Windows::Foundation::IInspectable ContentIslandComponentView::CreateAutomationProvider() noexcept {
@@ -163,31 +230,16 @@ void ContentIslandComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   auto gotFocusEventArgs = args.as<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>();
   const auto navigationReason = GetFocusNavigationReason(gotFocusEventArgs->Direction());
-  m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(navigationReason));
+  if (m_navigationHost)
+    m_navigationHost.NavigateFocus(winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(navigationReason));
+  else
+    m_pendingNavigateFocus = navigationReason;
 }
 
 ContentIslandComponentView::~ContentIslandComponentView() noexcept {
   if (m_navigationHostDepartFocusRequestedToken && m_navigationHost) {
     m_navigationHost.DepartFocusRequested(m_navigationHostDepartFocusRequestedToken);
     m_navigationHostDepartFocusRequestedToken = {};
-  }
-  if (m_childSiteLink) {
-    if (m_fragmentRootAutomationProviderRequestedToken) {
-      m_childSiteLink.FragmentRootAutomationProviderRequested(m_fragmentRootAutomationProviderRequestedToken);
-      m_fragmentRootAutomationProviderRequestedToken = {};
-    }
-    if (m_parentAutomationProviderRequestedToken) {
-      m_childSiteLink.ParentAutomationProviderRequested(m_parentAutomationProviderRequestedToken);
-      m_parentAutomationProviderRequestedToken = {};
-    }
-    if (m_nextSiblingAutomationProviderRequestedToken) {
-      m_childSiteLink.NextSiblingAutomationProviderRequested(m_nextSiblingAutomationProviderRequestedToken);
-      m_nextSiblingAutomationProviderRequestedToken = {};
-    }
-    if (m_previousSiblingAutomationProviderRequestedToken) {
-      m_childSiteLink.PreviousSiblingAutomationProviderRequested(m_previousSiblingAutomationProviderRequestedToken);
-      m_previousSiblingAutomationProviderRequestedToken = {};
-    }
   }
   if (m_islandToConnect) {
     m_islandToConnect.Close();
@@ -222,6 +274,9 @@ void ContentIslandComponentView::Connect(const winrt::Microsoft::UI::Content::Co
     m_childSiteLink.Connect(contentIsland);
   } else {
     m_islandToConnect = contentIsland;
+    if (isMounted()) {
+      ConnectInternal();
+    }
   }
 }
 
@@ -230,55 +285,7 @@ void ContentIslandComponentView::prepareForRecycle() noexcept {
 }
 
 void ContentIslandComponentView::ConfigureChildSiteLinkAutomation() noexcept {
-  // This automation mode must be set before connecting the child ContentIsland.
-  // It puts the child content into a mode where it won't own its own framework root.  Instead, the child island's
-  // automation peers will use the same framework root as the automation peer of this ContentIslandComponentView.
-  m_childSiteLink.AutomationOption(winrt::Microsoft::UI::Content::ContentAutomationOptions::FragmentBased);
-
-  // These events are raised in response to the child ContentIsland asking for providers.
-  // For example, the ContentIsland.FragmentRootAutomationProvider property will return
-  // the provider we provide here in FragmentRootAutomationProviderRequested.
-
-  // We capture "this" as a raw pointer because ContentIslandComponentView doesn't currently support weak ptrs.
-  // It's safe because we disconnect these events in the destructor.
-
-  m_fragmentRootAutomationProviderRequestedToken = m_childSiteLink.FragmentRootAutomationProviderRequested(
-      [this](
-          const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-          const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-        // The child island's fragment tree doesn't have its own fragment root.
-        // Here's how we can provide the correct fragment root to the child's UIA logic.
-        winrt::com_ptr<IRawElementProviderFragmentRoot> fragmentRoot{nullptr};
-        auto uiaProvider = this->EnsureUiaProvider();
-        uiaProvider.as<IRawElementProviderFragment>()->get_FragmentRoot(fragmentRoot.put());
-        args.AutomationProvider(fragmentRoot.as<IInspectable>());
-        args.Handled(true);
-      });
-
-  m_parentAutomationProviderRequestedToken = m_childSiteLink.ParentAutomationProviderRequested(
-      [this](
-          const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-          const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-        auto uiaProvider = this->EnsureUiaProvider();
-        args.AutomationProvider(uiaProvider);
-        args.Handled(true);
-      });
-
-  m_nextSiblingAutomationProviderRequestedToken = m_childSiteLink.NextSiblingAutomationProviderRequested(
-      [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-         const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-        // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
-        args.AutomationProvider(nullptr);
-        args.Handled(true);
-      });
-
-  m_previousSiblingAutomationProviderRequestedToken = m_childSiteLink.PreviousSiblingAutomationProviderRequested(
-      [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
-         const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
-        // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
-        args.AutomationProvider(nullptr);
-        args.Handled(true);
-      });
+  m_childSiteLink.AutomationOption(winrt::Microsoft::UI::Content::ContentAutomationOptions::FrameworkBased);
 
   if (m_innerAutomationProvider) {
     m_innerAutomationProvider->SetChildSiteLink(m_childSiteLink);

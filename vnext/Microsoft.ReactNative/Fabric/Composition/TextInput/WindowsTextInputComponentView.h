@@ -67,6 +67,8 @@ struct WindowsTextInputComponentView
   void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void OnCharacterReceived(const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs
                                &args) noexcept override;
+  void OnContextMenuKey(
+      const winrt::Microsoft::ReactNative::Composition::Input::ContextMenuKeyEventArgs &args) noexcept override;
   void onMounted() noexcept override;
 
   std::optional<std::string> getAccessiblityValue() noexcept override;
@@ -115,10 +117,10 @@ struct WindowsTextInputComponentView
       const std::string &previousCapitalizationType,
       const std::string &newcapitalizationType) noexcept;
 
-  void updateLetterSpacing(float letterSpacing) noexcept;
   void updateAutoCorrect(bool value) noexcept;
   void updateSpellCheck(bool value) noexcept;
   void ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept;
+  void calculateContentVerticalOffset() noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
@@ -143,9 +145,13 @@ struct WindowsTextInputComponentView
   bool m_hasFocus{false};
   bool m_clearTextOnSubmit{false};
   bool m_multiline{false};
+  LONG m_contentVerticalOffsetPx{0}; // Used to center single line text within the client rect
+  bool m_recalculateContentVerticalOffset{true};
+  POINT m_contentOffsetPx{0, 0};
   DWORD m_propBitsMask{0};
   DWORD m_propBits{0};
   HCURSOR m_hcursor{nullptr};
+  POINT m_caretPosition{0, 0};
   std::chrono::steady_clock::time_point m_lastClickTime{};
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
 };

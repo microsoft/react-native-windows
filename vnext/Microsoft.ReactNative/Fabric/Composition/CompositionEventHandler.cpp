@@ -320,6 +320,32 @@ void CompositionEventHandler::Initialize() noexcept {
             }
           }
         });
+
+    m_contextMenuKeyToken =
+        keyboardSource.ContextMenuKey([wkThis = weak_from_this()](
+                                          winrt::Microsoft::UI::Input::InputKeyboardSource const & /*source*/,
+                                          winrt::Microsoft::UI::Input::ContextMenuKeyEventArgs const &args) {
+          if (auto strongThis = wkThis.lock()) {
+            if (auto strongRootView = strongThis->m_wkRootView.get()) {
+              if (strongThis->SurfaceId() == -1)
+                return;
+
+              auto focusedComponent = strongThis->RootComponentView().GetFocusedComponent();
+              if (focusedComponent) {
+                auto tag =
+                    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
+                        ->Tag();
+                auto contextMenuArgs = winrt::make<
+                    winrt::Microsoft::ReactNative::Composition::Input::implementation::ContextMenuKeyEventArgs>(tag);
+                winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
+                    ->OnContextMenuKey(contextMenuArgs);
+                if (contextMenuArgs.Handled()) {
+                  args.Handled(true);
+                }
+              }
+            }
+          }
+        });
   }
 }
 
@@ -336,6 +362,7 @@ CompositionEventHandler::~CompositionEventHandler() {
       keyboardSource.KeyDown(m_keyDownToken);
       keyboardSource.KeyUp(m_keyUpToken);
       keyboardSource.CharacterReceived(m_characterReceivedToken);
+      keyboardSource.ContextMenuKey(m_contextMenuKeyToken);
     }
   }
 
@@ -436,6 +463,54 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
       return 0;
     }
     case WM_LBUTTONUP: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerReleased(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_RBUTTONDOWN: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerPressed(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_RBUTTONUP: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerReleased(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_MBUTTONDOWN: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerPressed(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_MBUTTONUP: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerReleased(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_XBUTTONDOWN: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerPressed(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_XBUTTONUP: {
       if (auto strongRootView = m_wkRootView.get()) {
         auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
             hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
@@ -1135,6 +1210,30 @@ void CompositionEventHandler::onPointerPressed(
     ActiveTouch activeTouch{0};
     activeTouch.touchType = UITouchType::Mouse;
 
+    // Map PointerUpdateKind to W3C button value
+    // https://developer.mozilla.org/docs/Web/API/MouseEvent/button
+    auto updateKind = pointerPoint.Properties().PointerUpdateKind();
+    switch (updateKind) {
+      case Composition::Input::PointerUpdateKind::LeftButtonPressed:
+        activeTouch.button = 0;
+        break;
+      case Composition::Input::PointerUpdateKind::MiddleButtonPressed:
+        activeTouch.button = 1;
+        break;
+      case Composition::Input::PointerUpdateKind::RightButtonPressed:
+        activeTouch.button = 2;
+        break;
+      case Composition::Input::PointerUpdateKind::XButton1Pressed:
+        activeTouch.button = 3;
+        break;
+      case Composition::Input::PointerUpdateKind::XButton2Pressed:
+        activeTouch.button = 4;
+        break;
+      default:
+        activeTouch.button = -1;
+        break;
+    }
+
     while (targetComponentView) {
       if (auto eventEmitter =
               winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
@@ -1319,8 +1418,34 @@ facebook::react::PointerEvent CompositionEventHandler::CreatePointerEventFromAct
 
   event.detail = 0;
 
-  // event.button = activeTouch.button;
-  // event.buttons = ButtonMaskToButtons(activeTouch.buttonMask);
+  event.button = activeTouch.button;
+
+  // Build W3C buttons bitmask from the active button
+  // https://developer.mozilla.org/docs/Web/API/MouseEvent/buttons
+  if (IsEndishEventType(eventType)) {
+    event.buttons = 0;
+  } else {
+    switch (activeTouch.button) {
+      case 0:
+        event.buttons = 1;
+        break; // primary
+      case 1:
+        event.buttons = 4;
+        break; // auxiliary (middle)
+      case 2:
+        event.buttons = 2;
+        break; // secondary (right)
+      case 3:
+        event.buttons = 8;
+        break; // X1
+      case 4:
+        event.buttons = 16;
+        break; // X2
+      default:
+        event.buttons = 0;
+        break;
+    }
+  }
 
   // UpdatePointerEventModifierFlags(event, activeTouch.modifierFlags);
 

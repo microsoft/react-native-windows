@@ -66,6 +66,11 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples-win/Glyph/GlyphExample'),
   },
+  /*{
+    key: 'KeyEvents',
+    module: require('../examples/KeyboardEventsExample/KeyboardEventsExample')
+      .default,
+  },*/
   {
     key: 'ModalExample',
     category: 'UI',
@@ -385,6 +390,11 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/PointerEvents/PointerEventsExample'),
   },
   {
+    key: 'PointerButtonExample',
+    category: 'Basic',
+    module: require('../examples-win/Pointer/PointerButtonExample'),
+  },
+  {
     key: 'RTLExample',
     category: 'Basic',
     module: require('../examples/RTL/RTLExample'),
@@ -421,6 +431,11 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/RadialGradient/RadialGradientExample'),
   },
   {
+    key: 'BackgroundImageExample',
+    category: 'UI',
+    module: require('../examples/BackgroundImage/BackgroundImageExample'),
+  },
+  {
     key: 'MixBlendModeExample',
     category: 'UI',
     module: require('../examples/MixBlendMode/MixBlendModeExample'),
@@ -451,11 +466,27 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'LegacyModuleExample',
     module: require('../examples/TurboModule/LegacyModuleExample'),
   },
-  {
-    key: 'TurboCxxModuleExample',
-    category: 'Basic',
-    module: require('../examples/TurboModule/TurboCxxModuleExample'),
-  },
+  // Basic check to detect the availability of the IntersectionObserver API.
+  // $FlowExpectedError[cannot-resolve-name]
+  ...(typeof IntersectionObserver === 'function'
+    ? [
+        {
+          key: 'IntersectionObserver',
+          category: 'UI',
+          module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
+        },
+      ]
+    : []),
+  // Basic check to detect the availability of the modern Performance API.
+  ...(typeof performance.getEntries === 'function'
+    ? [
+        {
+          key: 'PerformanceApiExample',
+          category: 'Basic',
+          module: require('../examples/Performance/PerformanceApiExample'),
+        },
+      ]
+    : []),
   ...RNTesterListFbInternal.APIs,
 ]: Array<?RNTesterModuleInfo>).filter(Boolean);
 

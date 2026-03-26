@@ -1,0 +1,6 @@
+{
+  "ignoreDependencies": [
+    "react-native",
+    "react-native-windows"
+  ]
+}

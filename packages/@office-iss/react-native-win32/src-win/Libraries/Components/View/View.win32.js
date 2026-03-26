@@ -15,7 +15,7 @@ import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
 import invariant from 'invariant'; // [Windows]
 // [Windows
-import type {KeyEvent} from '../../Types/CoreEventTypes';
+import type {KeyUpEvent, KeyDownEvent} from '../../Types/CoreEventTypes';
 // Windows]
 
 /**
@@ -71,7 +71,7 @@ const View: component(
       tabIndex,
       ...otherProps
     }: ViewProps,
-    forwardedRef,
+    forwardedRef: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
   ) => {
     const _accessibilityLabelledBy =
       ariaLabelledBy?.split(/\s*,\s*/g) ?? accessibilityLabelledBy;
@@ -111,10 +111,10 @@ const View: component(
           }
         : undefined;
 
-    const _keyDown = (event: KeyEvent) => {
-      if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
-        for (const el of otherProps.keyDownEvents) {
+    const _keyDown = (event: KeyDownEvent) => {
+      const keyDownEvents = otherProps.keyDownEvents;
+      if (keyDownEvents != null && event.isPropagationStopped() !== true) {
+        for (const el of keyDownEvents) {
           if (
             event.nativeEvent.code === el.code &&
             event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
@@ -130,10 +130,10 @@ const View: component(
       otherProps.onKeyDown && otherProps.onKeyDown(event);
     };
 
-    const _keyUp = (event: KeyEvent) => {
-      if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
-        for (const el of otherProps.keyUpEvents) {
+    const _keyUp = (event: KeyUpEvent) => {
+      const keyUpEvents = otherProps.keyUpEvents;
+      if (keyUpEvents != null && event.isPropagationStopped() !== true) {
+        for (const el of keyUpEvents) {
           if (
             event.nativeEvent.code === el.code &&
             event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
@@ -149,10 +149,10 @@ const View: component(
       otherProps.onKeyUp && otherProps.onKeyUp(event);
     };
 
-    const _keyDownCapture = (event: KeyEvent) => {
-      if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
-        for (const el of otherProps.keyDownEvents) {
+    const _keyDownCapture = (event: KeyDownEvent) => {
+      const keyDownEvents = otherProps.keyDownEvents;
+      if (keyDownEvents != null && event.isPropagationStopped() !== true) {
+        for (const el of keyDownEvents) {
           if (
             event.nativeEvent.code === el.code &&
             event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
@@ -168,10 +168,10 @@ const View: component(
       otherProps.onKeyDownCapture && otherProps.onKeyDownCapture(event);
     };
 
-    const _keyUpCapture = (event: KeyEvent) => {
-      if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
-        for (const el of otherProps.keyUpEvents) {
+    const _keyUpCapture = (event: KeyUpEvent) => {
+      const keyUpEvents = otherProps.keyUpEvents;
+      if (keyUpEvents != null && event.isPropagationStopped() !== true) {
+        for (const el of keyUpEvents) {
           if (
             event.nativeEvent.code === el.code &&
             event.nativeEvent.ctrlKey === Boolean(el.ctrlKey) &&
@@ -188,11 +188,13 @@ const View: component(
     };
 
     // [Windows
-    // $FlowFixMe - children typing
-    const childrenWithImportantForAccessibility = children => {
+    const childrenWithImportantForAccessibility = (
+      children: React.Node,
+    ): React.Node => {
       return React.Children.map(children, child => {
         if (React.isValidElement(child)) {
           // $FlowFixMe[incompatible-use]
+          // $FlowFixMe[prop-missing]
           if (child.props.children) {
             // $FlowFixMe[incompatible-call] - React.Children.map types child as mixed
             // $FlowFixMe[incompatible-type]

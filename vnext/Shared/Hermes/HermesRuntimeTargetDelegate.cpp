@@ -275,4 +275,12 @@ tracing::RuntimeSamplingProfile HermesRuntimeTargetDelegate::collectSamplingProf
       std::make_unique<HermesRawRuntimeProfile>(std::move(profile)));
 }
 
+std::optional<folly::dynamic> HermesRuntimeTargetDelegate::serializeStackTrace(
+    const facebook::react::jsinspector_modern::StackTrace &stackTrace) {
+  // #TODO :
+  // react native implementation:
+  // https://github.com/facebook/react-native/commit/b31a2fb4b8d3a5e1f12efc8ec3951a0e02004757
+  return std::nullopt;
+}
+
 } // namespace Microsoft::ReactNative

@@ -33,6 +33,31 @@ namespace Microsoft.React.Test
       }
     }
 
+    public static async Task EchoBinary(HttpContext context)
+    {
+      var ws = await context.WebSockets.AcceptWebSocketAsync();
+      wsConnections.Add(ws);
+
+      while (true)
+      {
+        if (ws.State == WebSocketState.Closed ||
+          ws.State == WebSocketState.CloseSent ||
+          ws.State == WebSocketState.CloseReceived ||
+          ws.State == WebSocketState.Aborted)
+          break;
+
+        if (ws.State != WebSocketState.Open)
+          continue;
+
+        var incomingMessage = await WebSocketUtils.ReceiveStringAsync(ws);
+        await Console.Out.WriteLineAsync($"Message received: [{incomingMessage}]");
+
+        var outgoingBytes = Encoding.UTF8.GetBytes(incomingMessage);
+
+        await ws.SendAsync(outgoingBytes, WebSocketMessageType.Binary, true, CancellationToken.None);
+      }
+    }
+
     public static async Task EchoSuffix(HttpContext context)
     {
       var announcement = @"This will send each incoming message back, with the string '_response' appended.";

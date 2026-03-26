@@ -34,7 +34,7 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
                 {
                   "Size": "111, 72",
                   "Type": "Local",
-                  "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/bottom-nav-apis-icon-light.png",
+                  "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/bottom-nav-apis-icon-light.png",
                 },
               ],
             },
@@ -76,6 +76,13 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
                     "Offset": "0, 0, 0",
                     "Size": "30, 20",
                     "Visual Type": "SpriteVisual",
+                    "__Children": [
+                      {
+                        "Offset": "0, 0, 0",
+                        "Size": "0, 0",
+                        "Visual Type": "SpriteVisual",
+                      },
+                    ],
                   },
                 ],
               },
@@ -1025,7 +1032,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                 {
                   "Size": "66, 72",
                   "Type": "Local",
-                  "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/bottom-nav-components-icon-dark.png",
+                  "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/bottom-nav-components-icon-dark.png",
                 },
               ],
             },
@@ -1107,6 +1114,13 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                     "Offset": "0, 0, 0",
                     "Size": "20, 20",
                     "Visual Type": "SpriteVisual",
+                    "__Children": [
+                      {
+                        "Offset": "0, 0, 0",
+                        "Size": "0, 0",
+                        "Visual Type": "SpriteVisual",
+                      },
+                    ],
                   },
                 ],
               },
@@ -1434,87 +1448,6 @@ exports[`Home UIA Tree Dump Custom Native Accessibility Example 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "290, 25",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "16, 45, 0",
-        "Size": "934, 17",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "934, 17",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-    ],
-  },
-}
-`;
-
-exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
-{
-  "Automation Tree": {
-    "AutomationId": "Cxx TurboModule",
-    "ControlType": 50026,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "Cxx TurboModule Usage of Cxx TurboModule",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Cxx TurboModule",
-        "TextRangePattern.GetText": "Cxx TurboModule",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Usage of Cxx TurboModule",
-        "TextRangePattern.GetText": "Usage of Cxx TurboModule",
-      },
-    ],
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
-    "_Props": {
-      "AccessibilityLabel": "Cxx TurboModule Usage of Cxx TurboModule",
-      "TestId": "Cxx TurboModule",
-    },
-    "__Children": [
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-    ],
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Comment": "Cxx TurboModule",
-    "Offset": "0, 0, 0",
-    "Size": "966, 78",
-    "Visual Type": "SpriteVisual",
-    "__Children": [
-      {
-        "Offset": "16, 16, 0",
-        "Size": "141, 25",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "141, 25",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2250,12 +2183,12 @@ exports[`Home UIA Tree Dump Filter 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 16",
+        "Size": "934, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 16",
+            "Size": "934, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2655,12 +2588,12 @@ exports[`Home UIA Tree Dump Keyboard 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "934, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "934, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2736,12 +2669,12 @@ exports[`Home UIA Tree Dump Keyboard 2`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "934, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "934, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3043,7 +2976,7 @@ exports[`Home UIA Tree Dump Layout Events 1`] = `
     },
     "Comment": "Layout Events",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "966, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3124,7 +3057,7 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
     },
     "Comment": "Legacy Native Module",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "966, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4113,12 +4046,12 @@ exports[`Home UIA Tree Dump Native Animated Example 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 16",
+        "Size": "934, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 16",
+            "Size": "934, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4275,12 +4208,12 @@ exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "934, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "934, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4512,6 +4445,87 @@ exports[`Home UIA Tree Dump PlatformColor 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "111, 25",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "16, 45, 0",
+        "Size": "934, 17",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "934, 17",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Home UIA Tree Dump Pointer Button 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Pointer Button",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Pointer Button Tests that PointerEvent.button and PointerEvent.buttons are correctly populated.",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Pointer Button",
+        "TextRangePattern.GetText": "Pointer Button",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Tests that PointerEvent.button and PointerEvent.buttons are correctly populated.",
+        "TextRangePattern.GetText": "Tests that PointerEvent.button and PointerEvent.buttons are correctly populated.",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Pointer Button Tests that PointerEvent.button and PointerEvent.buttons are correctly populated.",
+      "TestId": "Pointer Button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "Pointer Button",
+    "Offset": "0, 0, 0",
+    "Size": "966, 78",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "16, 16, 0",
+        "Size": "115, 25",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "115, 25",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4825,7 +4839,7 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
     },
     "Comment": "RTLExample",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "966, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5340,7 +5354,7 @@ exports[`Home UIA Tree Dump Share 1`] = `
     },
     "Comment": "Share",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "966, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6317,12 +6331,12 @@ exports[`Home UIA Tree Dump URL 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "32, 25",
+        "Size": "32, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "32, 25",
+            "Size": "32, 24",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -6479,12 +6493,12 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "89, 24",
+        "Size": "89, 25",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "89, 24",
+            "Size": "89, 25",
             "Visual Type": "SpriteVisual",
           },
         ],

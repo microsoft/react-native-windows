@@ -3633,13 +3633,20 @@ exports[`View Tests Views can have overflow 1`] = `
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "200, 20",
+                "Size": "0, 0",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
                     "Size": "200, 20",
                     "Visual Type": "SpriteVisual",
+                    "__Children": [
+                      {
+                        "Offset": "0, 0, 0",
+                        "Size": "200, 20",
+                        "Visual Type": "SpriteVisual",
+                      },
+                    ],
                   },
                 ],
               },

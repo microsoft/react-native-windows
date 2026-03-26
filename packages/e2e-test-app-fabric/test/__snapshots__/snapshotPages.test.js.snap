@@ -13771,6 +13771,138 @@ exports[`snapshotAllPages Filter 10`] = `
 <View
   style={
     {
+      "backgroundColor": "pink",
+      "boxShadow": "0 0 10px 10px black",
+      "filter": [
+        {
+          "blur": 10,
+        },
+      ],
+      "height": 100,
+      "overflow": "hidden",
+      "width": 100,
+    }
+  }
+  testID="filter-test-blur-overflow-hidden"
+/>
+`;
+
+exports[`snapshotAllPages Filter 11`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "flexDirection": "column",
+    }
+  }
+>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Animate Blur
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View
+    collapsable={false}
+    style={
+      {
+        "backgroundColor": "pink",
+        "filter": [
+          {
+            "blur": 0,
+          },
+        ],
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Filter 12`] = `
+<View
+  style={
+    {
       "flexDirection": "row",
       "justifyContent": "space-around",
     }
@@ -13912,7 +14044,7 @@ exports[`snapshotAllPages Filter 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Filter 11`] = `
+exports[`snapshotAllPages Filter 13`] = `
 <View
   style={
     {
@@ -14063,7 +14195,7 @@ exports[`snapshotAllPages Filter 11`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Filter 12`] = `
+exports[`snapshotAllPages Filter 14`] = `
 <View
   style={
     {
@@ -14211,7 +14343,7 @@ exports[`snapshotAllPages Filter 12`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Filter 13`] = `
+exports[`snapshotAllPages Filter 15`] = `
 <View
   style={
     {
@@ -34248,6 +34380,480 @@ exports[`snapshotAllPages PanResponder Sample 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Performance API Examples 1`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Click to update memory info
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      jsHeapSizeLimit: undefined bytes
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      totalJSHeapSize: undefined bytes
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      usedJSHeapSize: undefined bytes
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance API Examples 2`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Click to update React startup timing
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      startTime: undefined ms
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      initializeRuntimeStart: undefined ms
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      executeJavaScriptBundleEntryPointStart: undefined ms
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      endTime: undefined ms
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance API Examples 3`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Click to log some marks and measures
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View />
+</View>
+`;
+
+exports[`snapshotAllPages Performance API Examples 4`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Click to force a slow event (clicked 0 times)
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View />
+</View>
+`;
+
 exports[`snapshotAllPages Performance Comparison Examples 1`] = `
 <View
   style={
@@ -35828,6 +36434,197 @@ exports[`snapshotAllPages PlatformColor 4`] = `
       }
     />
   </View>
+</View>
+`;
+
+exports[`snapshotAllPages PlatformColor 5`] = `
+<View
+  style={
+    {
+      "flex": 1,
+      "flexDirection": "column",
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Unexpected Platform.OS: windows
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": "red",
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "height": 8,
+      }
+    }
+  />
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Change Appearance
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Pointer Button 1`] = `
+<View>
+  <Text
+    accessible={true}
+    testID="pointer-button-state"
+  >
+    Click the box to test pointer events
+  </Text>
+  <View
+    accessible={true}
+    onPointerDown={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "magenta",
+        "borderRadius": 10,
+        "height": 200,
+        "justifyContent": "center",
+        "margin": 10,
+        "width": 200,
+      }
+    }
+    testID="pointer-button-target"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Pointer Button 2`] = `
+<View>
+  <Text
+    accessible={true}
+    testID="pointer-up-button-state"
+  >
+    Click the box to test pointer up events
+  </Text>
+  <View
+    accessible={true}
+    onPointerUp={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "magenta",
+        "borderRadius": 10,
+        "height": 200,
+        "justifyContent": "center",
+        "margin": 10,
+        "width": 200,
+      }
+    }
+    testID="pointer-up-button-target"
+  />
 </View>
 `;
 
@@ -38682,6 +39479,111 @@ exports[`snapshotAllPages Pressable 13`] = `
 `;
 
 exports[`snapshotAllPages Pressable 14`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "multiselectable": undefined,
+      "readOnly": undefined,
+      "required": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  disabled={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  onKeyUp={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  pointerEvents="box-none"
+  style={
+    {
+      "backgroundColor": "red",
+      "boxShadow": "0 0 100px 0 rgba(0, 0, 0, 0.5)",
+      "height": 300,
+      "overflow": "hidden",
+      "transform": [
+        {
+          "scale": 0.5,
+        },
+      ],
+      "width": 300,
+    }
+  }
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "blue",
+        "bottom": 0,
+        "height": 50,
+        "position": "absolute",
+        "right": 0,
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Pressable 15`] = `
 [
   <View
     style={
@@ -38794,7 +39696,7 @@ exports[`snapshotAllPages Pressable 14`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 15`] = `
+exports[`snapshotAllPages Pressable 16`] = `
 [
   <View
     style={
@@ -38889,7 +39791,7 @@ exports[`snapshotAllPages Pressable 15`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 16`] = `
+exports[`snapshotAllPages Pressable 17`] = `
 [
   <View
     onKeyDown={[Function]}
@@ -38978,7 +39880,7 @@ exports[`snapshotAllPages Pressable 16`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 17`] = `
+exports[`snapshotAllPages Pressable 18`] = `
 <View>
   <View
     accessibilityState={
@@ -39038,7 +39940,7 @@ exports[`snapshotAllPages Pressable 17`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 18`] = `
+exports[`snapshotAllPages Pressable 19`] = `
 <View
   accessible={true}
   testID="opacity_pressable"
@@ -39552,7 +40454,7 @@ exports[`snapshotAllPages Pressable 18`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 19`] = `
+exports[`snapshotAllPages Pressable 20`] = `
 <View
   accessible={true}
   testID="accessible_pressable"
@@ -39748,7 +40650,7 @@ exports[`snapshotAllPages Pressable 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 20`] = `
+exports[`snapshotAllPages Pressable 21`] = `
 <View>
   <View
     accessibilityState={
@@ -39803,7 +40705,7 @@ exports[`snapshotAllPages Pressable 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 21`] = `
+exports[`snapshotAllPages Pressable 22`] = `
 <View>
   <View
     accessibilityHint="Button"
@@ -39895,7 +40797,7 @@ exports[`snapshotAllPages Pressable 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 22`] = `
+exports[`snapshotAllPages Pressable 23`] = `
 <View
   accessible={true}
   testID="backface_pressable"
@@ -40156,7 +41058,7 @@ exports[`snapshotAllPages Pressable 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 23`] = `
+exports[`snapshotAllPages Pressable 24`] = `
 <View
   accessible={true}
   testID="pressable_set"
@@ -70610,6 +71512,20 @@ exports[`snapshotAllPages Text 14`] = `
   >
     Move fast and be normal
   </Text>,
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontStyle": "italic",
+        },
+      ]
+    }
+  >
+    Move fast and be italic, but just be longer so that you don't fit on a single line and make sure text is not truncated.
+  </Text>,
 ]
 `;
 
@@ -74455,6 +75371,81 @@ exports[`snapshotAllPages Text 46`] = `
 `;
 
 exports[`snapshotAllPages Text 47`] = `
+<View>
+  <Text
+    onPress={[Function]}
+    role="link"
+    style={
+      {
+        "color": "teal",
+        "textDecorationLine": "underline",
+      }
+    }
+  >
+    Link Text
+  </Text>
+  <Text>
+    <Text
+      onPress={[Function]}
+      role="link"
+      style={
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Nested Link
+    </Text>
+  </Text>
+  <Text>
+    Before
+     
+    <Text
+      onPress={[Function]}
+      role="link"
+      style={
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Nested Link
+    </Text>
+     After
+  </Text>
+  <Text>
+    <Text
+      onPress={[Function]}
+      role="link"
+      style={
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Nested Link 1
+    </Text>
+     - 
+    <Text
+      onPress={[Function]}
+      role="link"
+      style={
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Nested Link 2
+    </Text>
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages Text 48`] = `
 <View
   accessible={true}
   testID="text-accessibility"
@@ -74472,7 +75463,7 @@ exports[`snapshotAllPages Text 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 48`] = `
+exports[`snapshotAllPages Text 49`] = `
 <View
   accessibilityLabel="Border Example"
   accessible={true}
@@ -74549,7 +75540,7 @@ exports[`snapshotAllPages Text 48`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 49`] = `
+exports[`snapshotAllPages Text 50`] = `
 <View
   accessibilityLabel="Advanced Border Example"
   accessible={true}
@@ -74605,7 +75596,7 @@ exports[`snapshotAllPages Text 49`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 50`] = `
+exports[`snapshotAllPages Text 51`] = `
 <View
   testID="text-opacity"
 >
@@ -74712,7 +75703,7 @@ exports[`snapshotAllPages Text 50`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 51`] = `
+exports[`snapshotAllPages Text 52`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -74730,7 +75721,7 @@ exports[`snapshotAllPages Text 51`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 52`] = `
+exports[`snapshotAllPages Text 53`] = `
 <View>
   <Text
     style={

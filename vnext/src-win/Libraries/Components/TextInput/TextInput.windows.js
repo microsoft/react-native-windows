@@ -13,7 +13,8 @@ import type {____TextStyle_Internal as TextStyleInternal} from '../../StyleSheet
 import type {
   BlurEvent,
   FocusEvent,
-  KeyEvent, // Windows
+  KeyUpEvent, // Windows
+  KeyDownEvent, // Windows
   MouseEvent, // Windows
   GestureResponderEvent,
   ScrollEvent,
@@ -164,7 +165,7 @@ type TextInputStateType = $ReadOnly<{
   blurTextInput: (textField: ?HostInstance) => void,
 }>;
 
-type ViewCommands = $NonMaybeType<
+type ViewCommands = NonNullable<
   | typeof AndroidTextInputCommands
   | typeof RCTMultilineTextInputNativeCommands
   | typeof RCTSinglelineTextInputNativeCommands,
@@ -203,8 +204,8 @@ function useTextInputStateSynchronization({
   const [lastNativeText, setLastNativeText] = useState<?Stringish>(props.value);
   const [lastNativeSelectionState, setLastNativeSelection] =
     useState<LastNativeSelection>({
-      selection: {start: -1, end: -1},
-      mostRecentEventCount: mostRecentEventCount,
+      mostRecentEventCount,
+      selection: {end: -1, start: -1},
     });
 
   const lastNativeSelection = lastNativeSelectionState.selection;
@@ -227,7 +228,7 @@ function useTextInputStateSynchronization({
         lastNativeSelection.end !== selection.end)
     ) {
       nativeUpdate.selection = selection;
-      setLastNativeSelection({selection, mostRecentEventCount});
+      setLastNativeSelection({mostRecentEventCount, selection});
     }
 
     if (Object.keys(nativeUpdate).length === 0) {
@@ -255,7 +256,7 @@ function useTextInputStateSynchronization({
     viewCommands,
   ]);
 
-  return {setLastNativeText, setLastNativeSelection};
+  return {setLastNativeSelection, setLastNativeText};
 }
 
 /**
@@ -401,8 +402,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
     propsSelection == null
       ? null
       : {
-          start: propsSelection.start,
           end: propsSelection.end ?? propsSelection.start,
+          start: propsSelection.start,
         };
 
   const text =
@@ -422,9 +423,9 @@ function InternalTextInput(props: TextInputProps): React.Node {
   const [mostRecentEventCount, setMostRecentEventCount] = useState<number>(0);
   const {setLastNativeText, setLastNativeSelection} =
     useTextInputStateSynchronization({
-      props,
       inputRef,
       mostRecentEventCount,
+      props,
       selection,
       text,
       // $FlowFixMe[incompatible-call]
@@ -476,6 +477,12 @@ function InternalTextInput(props: TextInputProps): React.Node {
         before we can get to the long term breaking change.
       */
       if (instance != null) {
+        // Register the input immediately when the ref is set so that focus()
+        // can be called from ref callbacks
+        // Double registering during useLayoutEffect is fine, because the underlying
+        // state is a Set.
+        TextInputState.registerInput(instance);
+
         // $FlowFixMe[prop-missing] - See the explanation above.
         // $FlowFixMe[unsafe-object-assign] - Intentional mutation of ref instance
         Object.assign(instance, {
@@ -490,6 +497,10 @@ function InternalTextInput(props: TextInputProps): React.Node {
               );
             }
           },
+          getNativeRef(): ?TextInputInstance {
+            return inputRef.current;
+          },
+          // TODO: Fix this returning true on null === null, when no input is focused
           isFocused(): boolean {
             const currentlyFocusedInput =
               TextInputState.currentlyFocusedInput();
@@ -497,9 +508,6 @@ function InternalTextInput(props: TextInputProps): React.Node {
               currentlyFocusedInput !== null &&
               currentlyFocusedInput === inputRef.current
             );
-          },
-          getNativeRef(): ?TextInputInstance {
-            return inputRef.current;
           },
           setSelection(start: number, end: number): void {
             if (inputRef.current != null) {
@@ -550,8 +558,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
     }
 
     setLastNativeSelection({
-      selection: event.nativeEvent.selection,
       mostRecentEventCount,
+      selection: event.nativeEvent.selection,
     });
   };
 
@@ -621,6 +629,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
 
   const config = useMemo(
     () => ({
+      cancelable: Platform.OS === 'ios' ? !rejectResponderTermination : null,
       hitSlop,
       onPress: (event: GestureResponderEvent) => {
         onPress?.(event);
@@ -630,9 +639,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
           }
         }
       },
-      onPressIn: onPressIn,
-      onPressOut: onPressOut,
-      cancelable: Platform.OS === 'ios' ? !rejectResponderTermination : null,
+      onPressIn,
+      onPressOut,
     }),
     [
       editable,
@@ -655,7 +663,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
   // so omitting onBlur and onFocus pressability handlers here.
   const {onBlur, onFocus, ...eventHandlers} = usePressability(config);
   const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
-  const _keyDown = (event: KeyEvent) => {
+  const _keyDown = (event: KeyDownEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
@@ -674,7 +682,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     props.onKeyDown && props.onKeyDown(event);
   };
 
-  const _keyUp = (event: KeyEvent) => {
+  const _keyUp = (event: KeyUpEvent) => {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
@@ -693,7 +701,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     props.onKeyUp && props.onKeyUp(event);
   };
 
-  const _keyDownCapture = (event: KeyEvent) => {
+  const _keyDownCapture = (event: KeyDownEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
       for (const el of props.keyDownEvents) {
@@ -712,7 +720,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
     props.onKeyDownCapture && props.onKeyDownCapture(event);
   };
 
-  const _keyUpCapture = (event: KeyEvent) => {
+  const _keyUpCapture = (event: KeyUpEvent) => {
     if (props.keyUpEvents && event.isPropagationStopped() !== true) {
       // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
       for (const el of props.keyUpEvents) {
@@ -858,12 +866,12 @@ function InternalTextInput(props: TextInputProps): React.Node {
     }
     // For consistency with iOS set cursor/selectionHandle color as selectionColor
     const colorProps = {
+      cursorColor: cursorColor === undefined ? selectionColor : cursorColor,
       selectionColor,
       selectionHandleColor:
         selectionHandleColor === undefined
           ? selectionColor
           : selectionHandleColor,
-      cursorColor: cursorColor === undefined ? selectionColor : cursorColor,
     };
     textInput = (
       /* $FlowFixMe[prop-missing] the types for AndroidTextInput don't match up
@@ -968,8 +976,8 @@ function InternalTextInput(props: TextInputProps): React.Node {
 }
 
 const enterKeyHintToReturnTypeMap = {
-  enter: 'default',
   done: 'done',
+  enter: 'default',
   go: 'go',
   next: 'next',
   previous: 'previous',
@@ -978,19 +986,20 @@ const enterKeyHintToReturnTypeMap = {
 } as const;
 
 const inputModeToKeyboardTypeMap = {
-  none: 'default',
-  text: 'default',
   decimal: 'decimal-pad',
+  email: 'email-address',
+  none: 'default',
   numeric: 'number-pad',
-  tel: 'phone-pad',
   search:
     Platform.OS === 'ios' ? ('web-search' as const) : ('default' as const),
-  email: 'email-address',
+  tel: 'phone-pad',
+  text: 'default',
   url: 'url',
 } as const;
 
 // Map HTML autocomplete values to Android autoComplete values
 const autoCompleteWebToAutoCompleteAndroidMap = {
+  'additional-name': 'name-middle',
   'address-line1': 'postal-address-region',
   'address-line2': 'postal-address-locality',
   bday: 'birthdate-full',
@@ -1005,12 +1014,11 @@ const autoCompleteWebToAutoCompleteAndroidMap = {
   country: 'postal-address-country',
   'current-password': 'password',
   email: 'email',
+  'family-name': 'name-family',
+  'given-name': 'name-given',
   'honorific-prefix': 'name-prefix',
   'honorific-suffix': 'name-suffix',
   name: 'name',
-  'additional-name': 'name-middle',
-  'family-name': 'name-family',
-  'given-name': 'name-given',
   'new-password': 'password-new',
   off: 'off',
   'one-time-code': 'sms-otp',
@@ -1025,33 +1033,33 @@ const autoCompleteWebToAutoCompleteAndroidMap = {
 
 // Map HTML autocomplete values to iOS textContentType values
 const autoCompleteWebToTextContentTypeMap = {
+  'additional-name': 'middleName',
   'address-line1': 'streetAddressLine1',
   'address-line2': 'streetAddressLine2',
   bday: 'birthdate',
   'bday-day': 'birthdateDay',
   'bday-month': 'birthdateMonth',
   'bday-year': 'birthdateYear',
+  'cc-additional-name': 'creditCardMiddleName',
   'cc-csc': 'creditCardSecurityCode',
+  'cc-exp': 'creditCardExpiration',
   'cc-exp-month': 'creditCardExpirationMonth',
   'cc-exp-year': 'creditCardExpirationYear',
-  'cc-exp': 'creditCardExpiration',
-  'cc-given-name': 'creditCardGivenName',
-  'cc-additional-name': 'creditCardMiddleName',
   'cc-family-name': 'creditCardFamilyName',
+  'cc-given-name': 'creditCardGivenName',
   'cc-name': 'creditCardName',
   'cc-number': 'creditCardNumber',
   'cc-type': 'creditCardType',
-  'current-password': 'password',
   country: 'countryName',
+  'current-password': 'password',
   email: 'emailAddress',
-  name: 'name',
-  'additional-name': 'middleName',
   'family-name': 'familyName',
   'given-name': 'givenName',
-  nickname: 'nickname',
   'honorific-prefix': 'namePrefix',
   'honorific-suffix': 'nameSuffix',
+  name: 'name',
   'new-password': 'newPassword',
+  nickname: 'nickname',
   off: 'none',
   'one-time-code': 'oneTimeCode',
   organization: 'organizationName',
@@ -1128,11 +1136,10 @@ TextInput.displayName = 'TextInput';
 
 // $FlowFixMe[prop-missing]
 TextInput.State = {
-  currentlyFocusedInput: TextInputState.currentlyFocusedInput,
-
-  currentlyFocusedField: TextInputState.currentlyFocusedField,
-  focusTextInput: TextInputState.focusTextInput,
   blurTextInput: TextInputState.blurTextInput,
+  currentlyFocusedField: TextInputState.currentlyFocusedField,
+  currentlyFocusedInput: TextInputState.currentlyFocusedInput,
+  focusTextInput: TextInputState.focusTextInput,
 };
 
 export type TextInputComponentStatics = $ReadOnly<{
@@ -1150,9 +1157,9 @@ const styles = StyleSheet.create({
 
 const verticalAlignToTextAlignVerticalMap = {
   auto: 'auto',
-  top: 'top',
   bottom: 'bottom',
   middle: 'center',
+  top: 'top',
 } as const;
 
 // $FlowFixMe[unclear-type] Unclear type. Using `any` type is not safe.

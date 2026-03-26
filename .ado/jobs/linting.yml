@@ -4,7 +4,6 @@ parameters:
     default : PullRequest
     values:
       - PullRequest
-      - SecurePullRequest
       - Continuous
 
   - name: AgentPool
@@ -20,8 +19,6 @@ jobs:
       - template: ../templates/checkout-shallow.yml
 
       - template: ../templates/prepare-js-env.yml
-
-      - template: ../templates/run-compliance-prebuild.yml
 
       - script: yarn format:verify
         displayName: yarn format:verify

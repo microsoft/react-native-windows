@@ -1,0 +1,18 @@
+name: Trigger AZP on Dependabot PRs
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  trigger-azp:
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment /azp run PR
+        env:
+          GH_TOKEN: ${{ secrets.RNBOT_GITHUB_PAT }}
+        run: |
+          gh pr comment "${{ github.event.pull_request.number }}" \
+            --repo "${{ github.repository }}" \
+            --body "/azp run PR"

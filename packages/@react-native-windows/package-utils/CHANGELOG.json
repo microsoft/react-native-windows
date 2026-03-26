@@ -2,6 +2,33 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Wed, 25 Mar 2026 02:08:12 GMT",
+      "version": "0.0.0-canary.97",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.97",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "70ed4bc8ac65bb551143b97576dd24ccb6bba702",
+            "comment": "Integrate 0.84.0-nightly-20251212-dd390dbbe"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.100",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.71",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Nov 2025 06:42:06 GMT",
       "version": "0.0.0-canary.96",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.96",

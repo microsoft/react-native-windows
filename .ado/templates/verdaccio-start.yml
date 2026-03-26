@@ -5,7 +5,7 @@ parameters:
     default: true
 
 steps:
-  - powershell: start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.yaml')
+  - pwsh: start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.yaml')
     displayName: Launch test npm server (verdaccio)
 
   - script: node .ado/scripts/waitForVerdaccio.js

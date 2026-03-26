@@ -469,7 +469,7 @@ $requirements = @(
         Name = 'Node.js (LTS, >= 22.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
-        Install = { WinGetInstall OpenJS.NodeJS.LTS "22.14.0" };
+        Install = { WinGetInstall OpenJS.NodeJS.22  "22.22.0"};
         HasVerboseOutput = $true;
     },
     @{
@@ -600,6 +600,9 @@ function WinGetInstall {
         Write-Verbose "Executing `winget install `"$wingetPackage`"";
         & winget install "$wingetPackage" --accept-source-agreements --accept-package-agreements
     }
+    
+    # Refresh PATH environment variable to pick up newly installed tools
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
  }
 
 function IsElevated {
@@ -685,6 +688,17 @@ foreach ($req in $filteredRequirements)
                     $LASTEXITCODE = 0;
                     $outputFromInstall = Invoke-Command $req.Install -ErrorAction Stop;
 
+                    # Re-validate after install attempt - winget may return non-zero for "already installed"
+                    $validAfterInstall = $false;
+                    try {
+                        $validAfterInstall = Invoke-Command $req.Valid;
+                    } catch { }
+                    
+                    if ($validAfterInstall) {
+                        $Installed++;
+                        continue; # go to the next item
+                    }
+                    
                     if ($LASTEXITCODE -ne 0) {
                         throw "Last exit code was non-zero: $LASTEXITCODE - $outputFromInstall";
                     }

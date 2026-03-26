@@ -73,7 +73,7 @@ function getSizeWithHeaders(
   uri: string,
   headers: {[string]: string, ...},
   success?: (width: number, height: number) => void,
-  failure?: (error: mixed) => void,
+  failure?: (error: unknown) => void,
   // $FlowFixMe[unclear-type]
 ): any {
   return NativeImageLoaderWin32.getSizeWithHeaders(uri, headers)

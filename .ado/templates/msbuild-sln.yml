@@ -18,12 +18,12 @@ parameters:
   parallelBuild: true
 
 steps:
-  - powershell: |
+  - pwsh: |
       Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.buildPlatform }}\${{ parameters.buildConfiguration }}\BuildLogs"
       Write-Host "##vso[task.setvariable variable=MsBuildWarnAsErrorArgument]/warnaserror"
     displayName: Set Log directory and warn as error
 
-  - powershell: |
+  - pwsh: |
       Write-Host "##vso[task.setvariable variable=MsBuildWarnAsErrorArgument]"
     condition: not(eq('${{parameters.warnAsError}}', 'true'))
     displayName: Disable WarnAsError

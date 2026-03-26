@@ -113,10 +113,11 @@
   <ItemGroup>
     <ClCompile Include="HttpOriginPolicyIntegrationTest.cpp" />
     <ClCompile Include="HttpResourceIntegrationTests.cpp" />
+    <ClCompile Include="HttpServer.cpp" />
     <ClCompile Include="Modules\TestDevSettingsModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="Modules\TestImageLoaderModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="WebSocketIntegrationTest.cpp" />
-    <ClCompile Include="WebSocketResourcePerformanceTests.cpp" />
+    <ClCompile Include="WebSocketServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Desktop.DLL\React.Windows.Desktop.DLL.vcxproj">
@@ -124,9 +125,6 @@
     </ProjectReference>
     <ProjectReference Include="..\IntegrationTests\React.Windows.IntegrationTests.vcxproj">
       <Project>{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Test\React.Windows.Test.vcxproj">
-      <Project>{cd0415c6-d908-4212-9481-49be41f58d27}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -137,12 +135,13 @@
     <ReferenceCopyLocalPaths Include="$(OutDir)\..\React.Windows.Desktop.DLL\react-native-win32.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HttpServer.h" />
     <ClInclude Include="Modules\TestDevSettingsModule.h" />
     <ClInclude Include="Modules\TestImageLoaderModule.h" />
+    <ClInclude Include="WebSocketServer.h" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.83.0.0" />
-    <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
     <!-- TODO: Remove!!! -->
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />

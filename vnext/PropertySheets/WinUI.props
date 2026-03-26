@@ -10,7 +10,7 @@
     <WinUI3ExperimentalVersion Condition="'$(WinUI3ExperimentalVersion)'==''">2.0.0-experimental3</WinUI3ExperimentalVersion>
     <!-- This value is also used by the CLI, see /packages/@react-native-windows/cli/.../autolinkWindows.ts -->
     <WinUI3Version Condition="'$(WinUI3Version)'=='' AND '$(UseExperimentalWinUI3)'=='true'">$(WinUI3ExperimentalVersion)</WinUI3Version>
-    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.8.251106002</WinUI3Version>
+    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.8.260209005</WinUI3Version>
     <!-- This is needed to prevent build errors with WinAppSDK >= 1.7 trying to double build WindowsAppRuntimeAutoInitializer.cpp -->
     <WindowsAppSdkAutoInitialize Condition="'$(WindowsAppSdkAutoInitialize)'=='' And $([MSBuild]::VersionGreaterThan('$(WinUI3Version)', '1.7.0'))">false</WindowsAppSdkAutoInitialize>
   </PropertyGroup>
