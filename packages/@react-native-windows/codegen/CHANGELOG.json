@@ -2,6 +2,27 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 26 Mar 2026 12:02:27 GMT",
+      "version": "0.83.0-preview.1",
+      "tag": "@react-native-windows/codegen_v0.83.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "protikbiswas@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "b3b48d21776b189c66ab6ef77f0a48a9a3781b75",
+            "comment": "Promote 0.83 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.83.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Mar 2026 04:06:59 GMT",
       "version": "0.0.0-canary.131",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.131",

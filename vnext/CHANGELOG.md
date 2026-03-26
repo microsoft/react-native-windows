@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 17 Mar 2026 18:21:32 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 26 Mar 2026 12:02:27 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.83.0-preview.1
+
+Thu, 26 Mar 2026 12:02:27 GMT
+
+### Changes
+
+- Promote 0.83 to preview (protikbiswas@microsoft.com)
+- adding IntersectionObserver from upstream (protikbiswas@microsoft.com)
+- Bump @react-native-windows/cli to v0.83.0-preview.1
+- Bump @react-native-windows/codegen to v0.83.0-preview.1
+- Bump react-native-platform-override to v0.83.0-preview.1
 
 ## 0.0.0-canary.1037
 

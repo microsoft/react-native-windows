@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "adding IntersectionObserver from upstream",
-  "packageName": "react-native-windows",
-  "email": "protikbiswas@microsoft.com",
-  "dependentChangeType": "patch"
-}

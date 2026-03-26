@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 26 Mar 2026 12:02:26 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.83.0-preview.1
+
+Thu, 26 Mar 2026 12:02:26 GMT
+
+### Changes
+
+- Promote 0.83 to preview (protikbiswas@microsoft.com)
 
 ## 0.0.0-canary.70
 
