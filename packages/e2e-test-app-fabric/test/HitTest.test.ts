@@ -5,10 +5,10 @@
  * @format
  */
 
-import { app } from '@react-native-windows/automation';
-import { dumpVisualTree } from '@react-native-windows/automation-commands';
-import { goToComponentExample } from './RNTesterNavigation';
-import { verifyNoErrorLogs } from './Helpers';
+import {app} from '@react-native-windows/automation';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
+import {goToComponentExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
 
 beforeAll(async () => {
   // If window is partially offscreen, tests will fail to click on certain elements
@@ -23,11 +23,10 @@ afterEach(async () => {
 
 async function verifyElementAccessibiltyValue(element: string, value: string) {
   const dump = await dumpVisualTree(element);
-  expect(dump!["Automation Tree"]["ValuePattern.Value"]).toBe(value);
+  expect(dump!['Automation Tree']['ValuePattern.Value']).toBe(value);
 }
 
 describe('Hit Testing', () => {
-
   test('Hit testing child outside the bounds of parents', async () => {
     const target = await app.findElementByTestID('visible-overflow-element');
 
@@ -36,13 +35,13 @@ describe('Hit Testing', () => {
 
     // The webdriverio package computes the offsets from the center point of the target.
     // This is within the bounds of the child and the parent, so should hitTest even with overflow:visible
-    await target.click({ x: -50, y: -50, });
+    await target.click({x: -50, y: -50});
 
     await verifyElementAccessibiltyValue('visible-overflow-element', 'green');
 
     // The webdriverio package computes the offsets from the center point of the target.
     // This is within the bounds of the child, but outside the parents bounds
-    await target.click({ x: 0, y: 0, });
+    await target.click({x: 0, y: 0});
 
     // View should still be red, since the click should hit the pressable
     await verifyElementAccessibiltyValue('visible-overflow-element', 'red');
@@ -55,15 +54,14 @@ describe('Hit Testing', () => {
     await verifyElementAccessibiltyValue('hidden-overflow-element', 'red');
 
     // This is within the bounds of the child and the parent, so should hitTest even with overflow:hidden
-    await target.click({ x: -50, y: -50, });
+    await target.click({x: -50, y: -50});
 
     await verifyElementAccessibiltyValue('hidden-overflow-element', 'green');
 
     // This is within the bounds of the child, but shouldn't hit test, since the parent is overflow:hidden
-    await target.click({ x: 0, y: 0, });
+    await target.click({x: 0, y: 0});
 
     // View should still be green, since the click shouldn't hit the pressable
     await verifyElementAccessibiltyValue('hidden-overflow-element', 'green');
   });
-
 });
