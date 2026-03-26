@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate 0.84.0-nightly-20251212-dd390dbbe",
-  "packageName": "react-native-windows-init",
-  "email": "66076509+vineethkuttan@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,6 @@
 #
-# The Publish pipeline entry point.
-# This file is a copy of ci-pipeline.yml kept for backward compatibility
-# with *-stable branches that haven't been updated yet.
-# Once all branches use ci-pipeline.yml, this file can be deleted.
+# The CI pipeline entry point.
+# Extends build-template.yml with buildEnvironment: Continuous for signed Official builds.
 #
 
 name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
