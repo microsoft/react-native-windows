@@ -1,6 +1,6 @@
 # Build Pipelines
 
-React Native Windows uses three Azure DevOps pipelines, all built on the [1ES Pipeline Templates](https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/1es-pipeline-templates/onboarding/overview).
+React Native Windows uses three Azure DevOps pipelines, all built on the 1ES Pipeline Templates.
 
 ## Pipeline Overview
 
