@@ -2,6 +2,21 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Fri, 27 Mar 2026 03:00:07 GMT",
+      "version": "0.0.0-canary.1040",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1040",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1040",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 25 Mar 2026 02:08:12 GMT",
       "version": "0.0.0-canary.1039",
       "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1039",
