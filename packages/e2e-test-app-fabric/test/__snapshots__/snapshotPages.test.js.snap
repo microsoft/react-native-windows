@@ -25908,6 +25908,174 @@ exports[`snapshotAllPages Glyph UWP 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Hit Testing 1`] = `
+<View>
+  <Text>
+    Clicking the pressable should work even if it is outside the bounds of its parent.
+  </Text>
+  <View
+    accessibilityValue={
+      {
+        "text": "red",
+      }
+    }
+    accessible={true}
+    style={
+      {
+        "height": 150,
+        "width": 150,
+      }
+    }
+    testID="visible-overflow-element"
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "yellow",
+          "height": 50,
+          "overflow": "visible",
+          "width": 50,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "backgroundColor": "red",
+            "height": 100,
+            "width": 100,
+          }
+        }
+      >
+        <Text>
+          Press me
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Hit Testing 2`] = `
+<View>
+  <Text>
+    Clicking within the visible view will trigger the pressable. Clicking outside the bounds, where the pressable extends but is clipped by its parent overflow:hidden, should not trigger the pressable.
+  </Text>
+  <View
+    accessibilityValue={
+      {
+        "text": "red",
+      }
+    }
+    accessible={true}
+    style={
+      {
+        "height": 150,
+        "width": 150,
+      }
+    }
+    testID="hidden-overflow-element"
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "yellow",
+          "height": 50,
+          "overflow": "hidden",
+          "width": 50,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "backgroundColor": "red",
+            "height": 100,
+            "width": 100,
+          }
+        }
+      >
+        <Text>
+          Press me
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`snapshotAllPages Keyboard 1`] = `
 <View>
   <Text
