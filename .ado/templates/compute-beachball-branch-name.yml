@@ -1,12 +1,16 @@
 steps:
   - pwsh: |
-      Write-Host "Setting BeachBallBranchName to $(System.PullRequest.TargetBranch)"
-      Write-Host "##vso[task.setvariable variable=BeachBallBranchName]$(System.PullRequest.TargetBranch)"
+      Write-Host "Setting BeachBallBranchName to $env:PR_TARGET_BRANCH"
+      Write-Host "##vso[task.setvariable variable=BeachBallBranchName]$env:PR_TARGET_BRANCH"
     displayName: Set BeachBallBranchName for Pull Request
     condition: ${{ eq(variables['Build.Reason'], 'PullRequest') }}
+    env:
+      PR_TARGET_BRANCH: $(System.PullRequest.TargetBranch)
 
   - pwsh: |
-      Write-Host "Setting BeachBallBranchName to $(Build.SourceBranchName)"
-      Write-Host "##vso[task.setvariable variable=BeachBallBranchName]$(Build.SourceBranchName)"
+      Write-Host "Setting BeachBallBranchName to $env:SOURCE_BRANCH_NAME"
+      Write-Host "##vso[task.setvariable variable=BeachBallBranchName]$env:SOURCE_BRANCH_NAME"
     displayName: Set BeachBallBranchName for CI
     condition: ${{ ne(variables['Build.Reason'], 'PullRequest') }}
+    env:
+      SOURCE_BRANCH_NAME: $(Build.SourceBranchName)
