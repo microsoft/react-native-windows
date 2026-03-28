@@ -25,11 +25,11 @@ parameters:
 
 steps:
 
-  - powershell: gci $(System.DefaultWorkingDirectory)/NugetRoot
+  - pwsh: gci $(System.DefaultWorkingDirectory)/NugetRoot
     displayName: List files in NugetRoot
 
   - ${{ if ne(parameters.slices, '') }}:
-    - powershell: >
+    - pwsh: >
         .\StripAdditionalPlatformsFromNuspec.ps1
         -nuspec ${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.nuspec
         -outfile ${{ parameters.outputPackage }}.nuspec
@@ -51,7 +51,7 @@ steps:
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.outputPackage }};${{ parameters.buildProperties }}
 
-  - powershell: gci $(System.DefaultWorkingDirectory)/NugetRootFinal
+  - pwsh: gci $(System.DefaultWorkingDirectory)/NugetRootFinal
     displayName: List files in NugetRootFinal
 
   - script: |
