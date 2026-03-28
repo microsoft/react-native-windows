@@ -272,7 +272,7 @@ extends:
         steps:
         - task: NuGetToolInstaller@1
           displayName: 'Use NuGet'
-        - pwsh: nuget.exe SetApiKey $env:NUGET_API_KEY
+        - pwsh: nuget.exe SetApiKey "$env:NUGET_API_KEY"
           displayName: NuGet SetApiKey (nuget.org)
           workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
           env:
