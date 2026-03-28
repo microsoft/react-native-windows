@@ -77,7 +77,7 @@ extends:
             echo Publish.requestedForID:     $(resources.pipeline.Publish.requestedForID)
           displayName: Log all pipeline variables
 
-        - powershell: |
+        - pwsh: |
             $buildReason = $env:BUILD_REASON
             # Use only the first line of the commit message
             $sourceMessage = ($env:SOURCE_MESSAGE -split "`n")[0].Trim()
@@ -174,7 +174,7 @@ extends:
           displayName: Remove already published packages
         - script: dir /s "$(Pipeline.Workspace)\published-packages"
           displayName: Show npm packages after cleanup
-        - powershell: |
+        - pwsh: |
             $tgzFiles = Get-ChildItem -Path "$(Pipeline.Workspace)\published-packages" -Filter "*.tgz" -Recurse
             $tgzCount = $tgzFiles.Count
             Write-Host "Found $tgzCount .tgz files"
@@ -278,7 +278,7 @@ extends:
             artifactName: 'ReactWindows-final-nuget'
             targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
         steps:
-        - powershell: |
+        - pwsh: |
             # Extract PDB files from all NuGet packages (.nupkg are ZIP archives)
             $nugetDir = "$(Pipeline.Workspace)/ReactWindows-final-nuget"
             $symbolsDir = "$(Pipeline.Workspace)/symbols"

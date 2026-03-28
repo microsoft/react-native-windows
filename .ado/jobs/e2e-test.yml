@@ -5,7 +5,6 @@ parameters:
     default : PullRequest
     values:
       - PullRequest
-      - SecurePullRequest
       - Continuous
   - name: AgentPool
     type: object
@@ -48,7 +47,7 @@ jobs:
                 configuration: Release
                 buildEnvironment: ${{ config.buildEnvironment }}
 
-            - powershell: |
+            - pwsh: |
                 Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\BuildLogs"
               displayName: Set BuildLogDirectory
 
@@ -57,6 +56,7 @@ jobs:
               inputs:
                 targetType: filePath # filePath | inline
                 filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
+                pwsh: true
 
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
@@ -93,15 +93,10 @@ jobs:
                 targetType: filePath # filePath | inline
                 filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
                 arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
+                pwsh: true
               condition: true
 
-            - task: PublishBuildArtifacts@1
-              displayName: Upload traces
-              inputs:
-                pathtoPublish: '$(Build.StagingDirectory)/Tracing'
-                artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
-              condition: true
-
+            # Publish tasks moved to templateContext.outputs (1ES compliance)
             - task: CopyFiles@2
               displayName: Copy Fabric snapshots
               inputs:
@@ -118,20 +113,35 @@ jobs:
                 contents: "**"
               condition: failed()
 
-            - task: PublishPipelineArtifact@1
-              displayName: "Publish Artifact: RNTesterApp Fabric"
-              inputs:
-                artifactName: RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
-                targetPath: $(Build.StagingDirectory)/RNTesterApp-Fabric
-              condition: failed()
-
-            - task: PublishPipelineArtifact@1
-              displayName: "Publish Artifact: Fabric Snapshots"
-              inputs:
-                artifactName: Snapshots - RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
-                targetPath: $(Build.StagingDirectory)/snapshots-fabric
-              condition: failed()
-
             - template: ../templates/upload-build-logs.yml
               parameters:
+                oneESMode: true
                 buildLogDirectory: '$(BuildLogDirectory)'
+
+          templateContext:
+            outputs:
+            - output: pipelineArtifact
+              displayName: 'Upload traces'
+              condition: true
+              targetPath: $(Build.StagingDirectory)/Tracing
+              artifactName: Traces - $(Agent.JobName)-$(System.JobAttempt)
+            - output: pipelineArtifact
+              displayName: 'Publish Artifact: RNTesterApp Fabric'
+              condition: failed()
+              targetPath: $(Build.StagingDirectory)/RNTesterApp-Fabric
+              artifactName: RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
+            - output: pipelineArtifact
+              displayName: 'Publish Artifact: Fabric Snapshots'
+              condition: failed()
+              targetPath: $(Build.StagingDirectory)/snapshots-fabric
+              artifactName: Snapshots - RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
+            - output: pipelineArtifact
+              displayName: 'Upload build logs'
+              condition: succeededOrFailed()
+              targetPath: $(BuildLogDirectory)
+              artifactName: Build logs - $(Agent.JobName)-$(System.JobAttempt)
+            - output: pipelineArtifact
+              displayName: 'Upload crash dumps'
+              condition: and(succeededOrFailed(), eq(variables.HasCrashDumps, 'True'))
+              targetPath: '$(CrashDumpRootPath)'
+              artifactName: Crash dumps - $(Agent.JobName)-$(System.JobAttempt)

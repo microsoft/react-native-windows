@@ -26,5 +26,5 @@ parameters:
 # un-overriden path in official tests.
 steps:
   - ${{ if and(endsWith(parameters.buildEnvironment, 'PullRequest'), eq(parameters.configuration, 'Release')) }}:
-    - powershell: $env:AppxBundlePlatforms = "${{ parameters.platform }}"
+    - pwsh: $env:AppxBundlePlatforms = "${{ parameters.platform }}"
       displayName: Set AppxBundlePlatforms to "${{ parameters.platform }}"
