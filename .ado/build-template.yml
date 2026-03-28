@@ -189,7 +189,7 @@ extends:
               BEACHBALL_BRANCH: $(BeachBallBranchName)
 
           # 6. Bump versions via prepare-release (Developer builds only)
-          - pwsh: npx prepare-release --bump-only --branch $env:BEACHBALL_BRANCH --no-color
+          - pwsh: npx prepare-release --bump-only --branch "$env:BEACHBALL_BRANCH" --no-color
             displayName: Bump versions (prepare-release --bump-only)
             condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
             env:

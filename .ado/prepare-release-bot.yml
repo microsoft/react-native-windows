@@ -75,7 +75,7 @@ jobs:
           env:
             SOURCE_BRANCH_NAME: $(Build.SourceBranchName)
 
-      - pwsh: npx prepare-release --branch $env:TARGET_BRANCH --no-color
+      - pwsh: npx prepare-release --branch "$env:TARGET_BRANCH" --no-color
         displayName: Prepare Release
         env:
           GH_TOKEN: $(GitHubOAuthToken)
