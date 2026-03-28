@@ -112,9 +112,9 @@ extends:
           # 1. Detect whether this is a release build or a developer build
           - pwsh: |
               $param = '${{ parameters.isReleaseBuild }}'
-              $buildReason = '$(Build.Reason)'
-              $sourceMessage = '$(Build.SourceVersionMessage)'
-              $prSourceBranch = '$(System.PullRequest.SourceBranch)'
+              $buildReason = $env:BUILD_REASON
+              $sourceMessage = $env:SOURCE_MESSAGE
+              $prSourceBranch = $env:PR_SOURCE_BRANCH
 
               if ($param -eq 'true') {
                 $isRelease = $true
@@ -144,6 +144,10 @@ extends:
               Write-Host "##vso[task.setvariable variable=isReleaseBuild]$isRelease"
             name: detectScenario
             displayName: Detect build scenario
+            env:
+              BUILD_REASON: $(Build.Reason)
+              SOURCE_MESSAGE: $(Build.SourceVersionMessage)
+              PR_SOURCE_BRANCH: $(System.PullRequest.SourceBranch)
 
           # 2. Full checkout (needed for beachball bump on developer builds;
           #    harmless ~1 min overhead on release builds where bump is skipped)
@@ -178,14 +182,18 @@ extends:
             condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
 
           # 5. Beachball check (Developer PR only)
-          - script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "##vso[task.logissue type=error]Run 'yarn change' from root of repo to generate a change file."
+          - pwsh: npx beachball check --branch "origin/$env:BEACHBALL_BRANCH" --verbose --changehint "##vso[task.logissue type=error]Run 'yarn change' from root of repo to generate a change file."
             displayName: Check for change files
             condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'), eq(variables['Build.Reason'], 'PullRequest'))
+            env:
+              BEACHBALL_BRANCH: $(BeachBallBranchName)
 
           # 6. Bump versions via prepare-release (Developer builds only)
-          - script: npx prepare-release --bump-only --branch $(BeachBallBranchName) --no-color
+          - pwsh: npx prepare-release --bump-only --branch "$env:BEACHBALL_BRANCH" --no-color
             displayName: Bump versions (prepare-release --bump-only)
             condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
+            env:
+              BEACHBALL_BRANCH: $(BeachBallBranchName)
 
           # 7. Read version and set pipeline variables (always)
           - template: .ado/templates/set-version-vars.yml@self
@@ -470,13 +478,17 @@ extends:
 
           # Tag the source commit when a RELEASE build succeeds (CI only)
           - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-            - script: |
-                TAG_NAME="react-native-windows_v$(npmVersion)"
-                echo "Creating tag $TAG_NAME on $(Build.SourceVersion)"
-                git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" tag "$TAG_NAME" "$(Build.SourceVersion)"
-                git -c http.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" push origin "$TAG_NAME"
+            - pwsh: |
+                $tag = "react-native-windows_v$(npmVersion)"
+                Write-Host "Creating tag $tag on $(Build.SourceVersion)"
+                $authHeader = "AUTHORIZATION: bearer $env:SYSTEM_ACCESSTOKEN"
+                Write-Host "##vso[task.setsecret]$authHeader"
+                git -c http.extraheader="$authHeader" tag $tag "$(Build.SourceVersion)"
+                git -c http.extraheader="$authHeader" push origin $tag
               displayName: Tag release sources
               condition: and(succeeded(), startsWith(variables['Build.SourceVersionMessage'], 'RELEASE:'))
+              env:
+                SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
           templateContext:
             sdl:
