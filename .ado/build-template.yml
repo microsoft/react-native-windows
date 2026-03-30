@@ -107,7 +107,7 @@ extends:
           displayName: Setup
           variables: [template: .ado/variables/shared.yml@self]
           pool: ${{ parameters.AgentPool.Medium }}
-          timeoutInMinutes: 15
+          timeoutInMinutes: 60 # CodeQL requires 3x usual build timeout
           steps:
           # 1. Detect whether this is a release build or a developer build
           - pwsh: |
@@ -224,7 +224,7 @@ extends:
         - job: RnwNpmPack
           displayName: Create NPM packages
           pool: ${{ parameters.AgentPool.Medium }}
-          timeoutInMinutes: 60
+          timeoutInMinutes: 120 # CodeQL requires 3x usual build timeout
           cancelTimeoutInMinutes: 5
           steps:
           - template: .ado/templates/checkout-shallow.yml@self
