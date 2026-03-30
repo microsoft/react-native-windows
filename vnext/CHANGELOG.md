@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 26 Mar 2026 12:02:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 30 Mar 2026 23:06:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.83.0-preview.2
+
+Mon, 30 Mar 2026 23:06:11 GMT
+
+### Changes
+
+- Fix view.focus function (30809111+acoates-ms@users.noreply.github.com)
+- Only show focus visuals when using keyboard to move focus (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.83.0-preview.1
 

@@ -22,14 +22,14 @@
     "perf:create": "node ../../vnext/Scripts/perf/create-perf-test.js"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "0.83.0-preview.1",
+    "@react-native-windows/automation-channel": "0.83.0-preview.2",
     "@react-native-windows/tester": "0.0.1",
     "@types/react": "^19.2.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^19.2.0",
     "react-native": "0.83.0-rc.5",
-    "react-native-windows": "0.83.0-preview.1"
+    "react-native-windows": "0.83.0-preview.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -38,8 +38,8 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "20.0.0",
-    "@react-native-windows/automation": "0.83.0-preview.1",
-    "@react-native-windows/automation-commands": "0.83.0-preview.1",
+    "@react-native-windows/automation": "0.83.0-preview.2",
+    "@react-native-windows/automation-commands": "0.83.0-preview.2",
     "@react-native-windows/perf-testing": "0.83.0-preview.1",
     "@react-native/metro-config": "0.83.0-rc.5",
     "@rnw-scripts/babel-node-config": "2.3.3",

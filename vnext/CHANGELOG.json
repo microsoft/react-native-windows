@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 Mar 2026 23:06:11 GMT",
+      "version": "0.83.0-preview.2",
+      "tag": "react-native-windows_v0.83.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d89154d68c6b2f5f1a2355042d166f9dac8f1ba3",
+            "comment": "Fix view.focus function"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d89154d68c6b2f5f1a2355042d166f9dac8f1ba3",
+            "comment": "Only show focus visuals when using keyboard to move focus"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Mar 2026 12:02:27 GMT",
       "version": "0.83.0-preview.1",
       "tag": "react-native-windows_v0.83.0-preview.1",
