@@ -34331,6 +34331,150 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Native Perf Benchmark 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+      "padding": 8,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "gap": 8,
+        "marginBottom": 8,
+      }
+    }
+  >
+    <TextInput
+      onChangeText={[Function]}
+      placeholder="Component name"
+      style={
+        {
+          "borderColor": "#ccc",
+          "borderWidth": 1,
+          "fontSize": 14,
+          "minWidth": 100,
+          "padding": 6,
+        }
+      }
+      testID="perf-component-input"
+      value="View"
+    />
+    <TextInput
+      keyboardType="numeric"
+      onChangeText={[Function]}
+      placeholder="Runs"
+      style={
+        {
+          "borderColor": "#ccc",
+          "borderWidth": 1,
+          "fontSize": 14,
+          "minWidth": 100,
+          "padding": 6,
+        }
+      }
+      testID="perf-runs-input"
+      value="15"
+    />
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      disabled={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "backgroundColor": "#0078D4",
+          "borderRadius": 4,
+          "justifyContent": "center",
+          "paddingHorizontal": 16,
+          "paddingVertical": 8,
+        }
+      }
+      testID="perf-run-btn"
+    >
+      <Text
+        style={
+          {
+            "color": "white",
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Run Benchmark
+      </Text>
+    </View>
+  </View>
+  <Text
+    style={
+      {
+        "color": "#666",
+        "fontSize": 12,
+        "marginBottom": 4,
+      }
+    }
+    testID="perf-status"
+  >
+    idle
+  </Text>
+  <View
+    style={
+      {
+        "borderColor": "#eee",
+        "borderWidth": 1,
+        "marginBottom": 8,
+        "minHeight": 100,
+      }
+    }
+  />
+  <Text
+    style={
+      {
+        "color": "#333",
+        "fontFamily": "monospace",
+        "fontSize": 10,
+      }
+    }
+    testID="perf-results"
+  />
+</View>
+`;
+
 exports[`snapshotAllPages PanResponder Sample 1`] = `
 <View
   style={

@@ -4142,6 +4142,87 @@ exports[`Home UIA Tree Dump Native Animated Example 1`] = `
 }
 `;
 
+exports[`Home UIA Tree Dump Native Perf Benchmark 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Native Perf Benchmark",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Native Perf Benchmark Measures native rendering pipeline via performance.mark/measure.",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Native Perf Benchmark",
+        "TextRangePattern.GetText": "Native Perf Benchmark",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Measures native rendering pipeline via performance.mark/measure.",
+        "TextRangePattern.GetText": "Measures native rendering pipeline via performance.mark/measure.",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Native Perf Benchmark Measures native rendering pipeline via performance.mark/measure.",
+      "TestId": "Native Perf Benchmark",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "Native Perf Benchmark",
+    "Offset": "0, 0, 0",
+    "Size": "966, 77",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "16, 16, 0",
+        "Size": "180, 25",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "180, 25",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "16, 45, 0",
+        "Size": "934, 17",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "934, 17",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
 exports[`Home UIA Tree Dump New App Screen 1`] = `
 {
   "Automation Tree": {

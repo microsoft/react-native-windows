@@ -1,0 +1,43 @@
+{
+  "Interactive Components — Native Render Pipeline Pressable native mount 1": {
+    "metrics": {
+      "name": "Pressable native mount",
+      "meanDuration": 2.492093336582184,
+      "medianDuration": 2.510699987411499,
+      "stdDev": 0.6735438561451192,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        3.245199978351593,
+        1.9694000482559204,
+        2.761300027370453,
+        1.8480000495910645,
+        1.9053000211715698,
+        2.147000014781952,
+        1.6363999843597412,
+        4.235000014305115,
+        2.4139999747276306,
+        1.856499969959259,
+        3.0816999673843384,
+        2.5519999861717224,
+        2.587000012397766,
+        2.6319000124931335,
+        2.510699987411499
+      ],
+      "timestamp": "2026-03-25T09:11:51.045Z",
+      "nativeTimings": {
+        "fullPipeline": 2.510699987411499
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-25T09:11:51.046Z"
+  }
+}
