@@ -373,7 +373,8 @@ void ComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   if (args.OriginalSource() == Tag()) {
     m_eventEmitter->onFocus();
-    if (viewProps()->enableFocusRing) {
+    if (viewProps()->enableFocusRing &&
+        rootComponentView()->focusState() == winrt::Microsoft::ReactNative::FocusState::Keyboard) {
       facebook::react::Rect focusRect = m_layoutMetrics.frame;
       focusRect.origin.x -= (FOCUS_VISUAL_WIDTH * 2);
       focusRect.origin.y -= (FOCUS_VISUAL_WIDTH * 2);
@@ -426,15 +427,20 @@ void ComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCom
   auto commandName = args.CommandName();
   if (commandName == L"focus") {
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+      root->TrySetFocusedComponent(
+          *get_strong(),
+          winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+          winrt::Microsoft::ReactNative::FocusState::Programmatic);
     }
     return;
   }
   if (commandName == L"blur") {
     if (auto root = rootComponentView()) {
       root->TrySetFocusedComponent(
-          nullptr, winrt::Microsoft::ReactNative::FocusNavigationDirection::None); // Todo store this component as
-                                                                                   // previously focused element
+          nullptr,
+          winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+          winrt::Microsoft::ReactNative::FocusState::Programmatic); // Todo store this component as
+                                                                    // previously focused element
     }
     return;
   }

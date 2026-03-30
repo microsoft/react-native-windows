@@ -233,7 +233,9 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
     winrt::check_hresult(
         m_outer->QueryInterface(winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
     m_outer->rootComponentView()->TrySetFocusedComponent(
-        view, winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+        view,
+        winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+        winrt::Microsoft::ReactNative::FocusState::Programmatic);
     // assert(false);
     // TODO focus
   }
@@ -1469,7 +1471,10 @@ void WindowsTextInputComponentView::onMounted() noexcept {
   // Handle autoFocus property - focus the component when mounted if autoFocus is true
   if (windowsTextInputProps().autoFocus) {
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+      root->TrySetFocusedComponent(
+          *get_strong(),
+          winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+          winrt::Microsoft::ReactNative::FocusState::Programmatic);
     }
   }
 }
