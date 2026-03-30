@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "comment": "Only show focus visuals when using keyboard to move focus",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
