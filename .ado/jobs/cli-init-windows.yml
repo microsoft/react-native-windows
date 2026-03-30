@@ -133,7 +133,7 @@ parameters:
             configuration: Release
             platform: x64
             lowResource: true
-          - Name: PaperX64ReleaseCpp
+          - Name: PaperX64ReleaseCppWinUI3
             template: old/uwp-cpp-app
             configuration: Release
             platform: x64
