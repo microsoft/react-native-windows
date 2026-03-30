@@ -70,10 +70,13 @@ jobs:
         - pwsh: Write-Host "##vso[task.setvariable variable=TargetBranch]${{ parameters.targetBranch }}"
           displayName: Set target branch from parameter
       - ${{ else }}:
-        - pwsh: Write-Host "##vso[task.setvariable variable=TargetBranch]$(Build.SourceBranchName)"
+        - pwsh: Write-Host "##vso[task.setvariable variable=TargetBranch]$env:SOURCE_BRANCH_NAME"
           displayName: Set target branch from source
+          env:
+            SOURCE_BRANCH_NAME: $(Build.SourceBranchName)
 
-      - script: npx prepare-release --branch $(TargetBranch) --no-color
+      - pwsh: npx prepare-release --branch "$env:TARGET_BRANCH" --no-color
         displayName: Prepare Release
         env:
           GH_TOKEN: $(GitHubOAuthToken)
+          TARGET_BRANCH: $(TargetBranch)
