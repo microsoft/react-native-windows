@@ -3,22 +3,13 @@ parameters:
   buildLogDirectory: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
   uploadBuildLogs: true
   uploadCrashDumps: true
-  oneESMode: false
-
 steps:
-  - ${{ if not(parameters.oneESMode) }}:
-    - task: PublishBuildArtifacts@1
-      displayName: Upload build logs
-      condition: and(succeededOrFailed(), ${{ parameters.uploadBuildLogs }},  not(parameters.oneESMode))
-      inputs:
-        pathtoPublish: '${{ parameters.buildLogDirectory }}'
-        artifactName: 'Build logs - ${{ parameters.artifactName }}'
-
   - task: PowerShell@2
     displayName: Cleanup ProcDump
     condition: succeededOrFailed()
     inputs:
       targetType: inline # filePath | inline
+      pwsh: true
       script: |
         Write-Host "Looking for procdump64 processes...";
         Get-Process | ForEach-Object {
@@ -39,16 +30,9 @@ steps:
     condition: and(succeededOrFailed(), ${{ parameters.uploadCrashDumps }})
     inputs:
       targetType: inline # filePath | inline
+      pwsh: true
       script: |
         Write-Host "Looking for crash dumps in $(CrashDumpRootPath)...";
         Get-ChildItem -Path $(CrashDumpRootPath) -File -Recurse;
         $HasCrashDumps = (Get-ChildItem -Path $(CrashDumpRootPath) -File -Recurse | Measure-Object).Count -gt 0;
         Write-Host "##vso[task.setvariable variable=HasCrashDumps]$HasCrashDumps";
-
-  - ${{ if not(parameters.oneESMode) }}:
-    - task: PublishBuildArtifacts@1
-      displayName: Upload crash dumps
-      condition: and(succeededOrFailed(), ${{ parameters.uploadCrashDumps }}, eq(variables.HasCrashDumps, 'True'),  not(parameters.oneESMode))
-      inputs:
-        pathtoPublish: '$(CrashDumpRootPath)'
-        artifactName: 'Crash dumps - ${{ parameters.artifactName }}'

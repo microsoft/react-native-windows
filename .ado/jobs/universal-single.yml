@@ -1,0 +1,135 @@
+#
+# Step template: Build and test one Universal platform/config combination.
+# Called from build-template.yml which owns the job definition, artifact
+# publishing, ESRP signing, and templateContext.
+#
+
+parameters:
+  - name: buildPlatform
+    type: string
+  - name: buildConfiguration
+    type: string
+  - name: buildEnvironment
+    type: string
+    default: PullRequest
+    values:
+      - PullRequest
+      - Continuous
+  - name: useFabric
+    type: boolean
+    default: true
+steps:
+  - template: ../templates/checkout-shallow.yml
+
+  - template: ../templates/prepare-js-env.yml
+
+  - template: ../templates/prepare-build-env.yml
+    parameters:
+      platform: ${{ parameters.buildPlatform }}
+      configuration: ${{ parameters.buildConfiguration }}
+      buildEnvironment: ${{ parameters.buildEnvironment }}
+
+  - template: ../templates/apply-published-version-vars.yml
+
+  - template: ../templates/msbuild-sln.yml
+    parameters:
+      solutionDir: vnext
+      ${{ if eq(parameters.useFabric, true) }}:
+        solutionName: Microsoft.ReactNative.NewArch.sln
+      ${{ else }}:
+        solutionName: Microsoft.ReactNative.sln
+      buildPlatform: ${{ parameters.buildPlatform }}
+      buildConfiguration: ${{ parameters.buildConfiguration }}
+      msbuildArguments: /p:ForceImportAfterCppTargets=$(Build.SourcesDirectory)\vnext\PropertySheets\CIBuildOptimizations.props
+
+  - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+    - template: ../templates/component-governance.yml
+
+  - task: PowerShell@2
+    displayName: Make AnyCPU Reference Assemblies
+    inputs:
+      filePath: vnext/Scripts/Tfs/Make-AnyCPU-RefAssemblies.ps1
+      arguments: -TargetRoot $(Build.SourcesDirectory)\vnext\target -BuildRoot $(Build.SourcesDirectory)\vnext\target
+      pwsh: true
+
+  # --- Tests (run against the just-built binaries, no download/restore needed) ---
+  - template: ../templates/discover-google-test-adapter.yml
+
+  - task: VSTest@2
+    displayName: Run Universal Unit Tests (Native)
+    timeoutInMinutes: 5 # Set smaller timeout, due to hangs
+    inputs:
+      testSelector: testAssemblies
+      testAssemblyVer2: |
+        Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
+        Microsoft.ReactNative.IntegrationTests/Microsoft.ReactNative.IntegrationTests.exe
+        Mso.UnitTests/Mso.UnitTests.exe
+      pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+      searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+      runTestsInIsolation: true
+      platform: ${{ parameters.buildPlatform }}
+      configuration: ${{ parameters.buildConfiguration }}
+      publishRunAttachments: true
+      collectDumpOn: onAbortOnly
+      vsTestVersion: latest
+      failOnMinTestsNotRun: true
+    condition: and(succeeded(), not(eq('${{ parameters.buildPlatform }}', 'ARM64')))
+
+  # Component tests — Debug/x64 only
+  - task: VSTest@2
+    displayName: Run Universal Unit Tests (Native - ComponentTests)
+    timeoutInMinutes: 5
+    inputs:
+      testSelector: testAssemblies
+      testAssemblyVer2: |
+        Microsoft.ReactNative.ComponentTests/Microsoft.ReactNative.ComponentTests.exe
+      pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+      searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+      runTestsInIsolation: true
+      platform: ${{ parameters.buildPlatform }}
+      configuration: ${{ parameters.buildConfiguration }}
+      publishRunAttachments: true
+      collectDumpOn: onAbortOnly
+      vsTestVersion: latest
+      failOnMinTestsNotRun: true
+    condition: and(succeeded(), eq('${{ parameters.buildConfiguration }}', 'Debug'), eq('${{ parameters.buildPlatform }}', 'x64'))
+
+  # Managed UWP unit tests — non-Fabric only, skip ARM64
+  - ${{ if ne(parameters.useFabric, true) }}:
+    - task: VSTest@2
+      displayName: Run Universal Unit Tests (UWP)
+      timeoutInMinutes: 5
+      inputs:
+        testSelector: testAssemblies
+        testAssemblyVer2: |
+          Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
+        searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+        runTestsInIsolation: true
+        platform: ${{ parameters.buildPlatform }}
+        configuration: ${{ parameters.buildConfiguration }}
+        publishRunAttachments: true
+        codeCoverageEnabled: true
+        collectDumpOn: onAbortOnly
+        vsTestVersion: latest
+        failOnMinTestsNotRun: true
+      condition: and(succeeded(), not(eq('${{ parameters.buildPlatform }}', 'ARM64')))
+
+  # Managed CodeGen unit tests — non-Fabric only, x64 only
+  - ${{ if ne(parameters.useFabric, true) }}:
+    - task: VSTest@2
+      displayName: Run Universal Unit Tests (NetCore)
+      timeoutInMinutes: 5
+      inputs:
+        testSelector: testAssemblies
+        testAssemblyVer2: |
+          Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
+        searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+        runTestsInIsolation: true
+        platform: ${{ parameters.buildPlatform }}
+        configuration: ${{ parameters.buildConfiguration }}
+        publishRunAttachments: true
+        codeCoverageEnabled: true
+        collectDumpOn: onAbortOnly
+        vsTestVersion: latest
+        failOnMinTestsNotRun: true
+      condition: and(succeeded(), eq('${{ parameters.buildPlatform }}', 'x64'))

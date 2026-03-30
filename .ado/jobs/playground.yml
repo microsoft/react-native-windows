@@ -4,7 +4,6 @@ parameters:
     default : PullRequest
     values:
       - PullRequest
-      - SecurePullRequest
       - Continuous
   - name: AgentPool
     type: object
@@ -41,23 +40,6 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Composition.sln
-      - BuildEnvironment: SecurePullRequest
-        Matrix:
-          - Name: X86DebugCompositionExperimentalWinUI3
-            BuildConfiguration: Debug
-            BuildPlatform: x86
-            SolutionFile: Playground-Composition.sln
-            UseExperimentalWinUI3: true
-          - Name: X64DebugCompositionExperimentalWinUI3
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            SolutionFile: Playground-Composition.sln
-            UseExperimentalWinUI3: true
-          - Name: X64ReleaseCompositionExperimentalWinUI3
-            BuildConfiguration: Release
-            BuildPlatform: x64
-            SolutionFile: Playground-Composition.sln
-            UseExperimentalWinUI3: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X86DebugUniversal
@@ -147,19 +129,19 @@ jobs:
               # Execute debug feature tests (skip this step for the Win32 Playground app and for release builds)
               
               # Need to re-setup ProcDump a 2nd time for this to work correctly
-              - powershell: |
+              - pwsh: |
                     Write-Host "##vso[task.setvariable variable=CrashDumpRootPath]$(Build.StagingDirectory)\DebugTestCrashDumps"
                     New-Item -Path '$(Build.StagingDirectory)\DebugTestCrashDumps' -ItemType Directory
                 displayName: Set CrashDumpRootPath
 
-              - powershell: |
+              - pwsh: |
                   & $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1 -ProcDumpArgs @("-mm", "-i", "$(CrashDumpRootPath)") -ProcDumpInstallPath "$(ProcDumpPath)" -Verbose
                 displayName: Setup ProcDump as AeDebug
 
               # This step loose-file-deploys the UWP Playground app and uses it as an RNW host for a series
               # of debug feature tests. In the future, these tests should be performed against a host app
               # better suited for automated tests (probably the E2E test app).
-              - powershell: |
+              - pwsh: |
                   $appRecipeToolPath = Join-Path (& "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath) "Common7\IDE\DeployAppRecipe.exe"
                   if (!(Test-Path $appRecipeToolPath)) { throw "can't find '$appRecipeToolPath'" }
                   $platDirs = @{ "x64" = "x64\"; "x86" = ""} # map from ADO BuildPlatform arg to VS build output dir part 
@@ -173,7 +155,7 @@ jobs:
                 displayName: Run Debug Feature Tests
                 timeoutInMinutes: 5
 
-              - powershell: |
+              - pwsh: |
                   foreach ($logFile in (ls "$(Build.StagingDirectory)\DebugTestLogs\*.log")) {
                     Write-Host "logFile: '$logFile'"
                     Get-Content $logFile | ForEach-Object {Write-Host "##[debug]$_"}
@@ -189,10 +171,23 @@ jobs:
             - ${{if eq(config.BuildEnvironment, 'Continuous')}}:
               - template: ../templates/cleanup-certificate.yml
 
+            # App Package publish moved to templateContext.outputs (1ES compliance)
+
+          templateContext:
+            outputs:
             - ${{ if eq(matrix.UploadAppx, true) }}:
-              - task: PublishBuildArtifacts@1
-                displayName: Upload App Package
-                inputs:
-                  pathtoPublish: 'packages/playground/windows/AppPackages/playground'
-                  artifactName: 'Playground-${{ matrix.Name }}-$(System.JobAttempt)'
+              - output: pipelineArtifact
+                displayName: 'Upload App Package'
                 condition: succeededOrFailed()
+                targetPath: packages/playground/windows/AppPackages/playground
+                artifactName: Playground-${{ matrix.Name }}-$(System.JobAttempt)
+            - output: pipelineArtifact
+              displayName: 'Upload build logs'
+              condition: succeededOrFailed()
+              targetPath: $(BuildLogDirectory)
+              artifactName: Build logs - $(Agent.JobName)-$(System.JobAttempt)
+            - output: pipelineArtifact
+              displayName: 'Upload crash dumps'
+              condition: and(succeededOrFailed(), eq(variables.HasCrashDumps, 'True'))
+              targetPath: '$(CrashDumpRootPath)'
+              artifactName: Crash dumps - $(Agent.JobName)-$(System.JobAttempt)

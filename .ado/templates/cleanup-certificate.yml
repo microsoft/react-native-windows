@@ -1,5 +1,5 @@
 steps:
-  - powershell: |
+  - pwsh: |
       $PfxPath = Join-Path -Path $(Build.SourcesDirectory) -ChildPath EncodedKey.pfx
       Write-Host $PfxPath
       Remove-Item -path $PfxPath

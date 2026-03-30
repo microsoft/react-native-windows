@@ -1,8 +1,6 @@
 #
 # The PR pipeline entry point.
-# This file is a copy of pr-pipeline.yml kept for backward compatibility
-# with *-stable branches that haven't been updated yet.
-# Once all branches use pr-pipeline.yml, this file can be deleted.
+# Extends build-template.yml with buildEnvironment: PullRequest for Unofficial validation builds.
 #
 
 name: $(Date:yyyyMMdd).$(Rev:r)

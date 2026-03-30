@@ -55,29 +55,46 @@ extends:
         steps:
         - checkout: none
 
-        - script: |
-            echo == Build Variables ==
-            echo Build.Reason:               $(Build.Reason)
-            echo Build.SourceBranch:         $(Build.SourceBranch)
-            echo Build.SourceVersion:        $(Build.SourceVersion)
-            echo Build.SourceVersionMessage: $(Build.SourceVersionMessage)
-            echo Build.BuildNumber:          $(Build.BuildNumber)
-            echo Build.BuildId:              $(Build.BuildId)
-            echo Build.DefinitionName:       $(Build.DefinitionName)
-            echo Build.Repository.Name:      $(Build.Repository.Name)
-            echo System.TeamProject:         $(System.TeamProject)
-            echo.
-            echo == Pipeline Resource: Publish ==
-            echo Publish.runName:            $(resources.pipeline.Publish.runName)
-            echo Publish.runID:              $(resources.pipeline.Publish.runID)
-            echo Publish.sourceBranch:       $(resources.pipeline.Publish.sourceBranch)
-            echo Publish.sourceCommit:       $(resources.pipeline.Publish.sourceCommit)
-            echo Publish.pipelineID:         $(resources.pipeline.Publish.pipelineID)
-            echo Publish.requestedFor:       $(resources.pipeline.Publish.requestedFor)
-            echo Publish.requestedForID:     $(resources.pipeline.Publish.requestedForID)
+        - pwsh: |
+            Write-Host "== Build Variables =="
+            Write-Host "Build.Reason:               $env:BUILD_REASON"
+            Write-Host "Build.SourceBranch:         $env:BUILD_SOURCEBRANCH"
+            Write-Host "Build.SourceVersion:        $env:BUILD_SOURCEVERSION"
+            Write-Host "Build.SourceVersionMessage: $env:BUILD_SOURCEVERSIONMESSAGE"
+            Write-Host "Build.BuildNumber:          $env:BUILD_BUILDNUMBER"
+            Write-Host "Build.BuildId:              $env:BUILD_BUILDID"
+            Write-Host "Build.DefinitionName:       $env:BUILD_DEFINITIONNAME"
+            Write-Host "Build.Repository.Name:      $env:BUILD_REPOSITORY_NAME"
+            Write-Host "System.TeamProject:         $env:SYSTEM_TEAMPROJECT"
+            Write-Host ""
+            Write-Host "== Pipeline Resource: Publish =="
+            Write-Host "Publish.runName:            $env:PUBLISH_RUNNAME"
+            Write-Host "Publish.runID:              $env:PUBLISH_RUNID"
+            Write-Host "Publish.sourceBranch:       $env:PUBLISH_SOURCEBRANCH"
+            Write-Host "Publish.sourceCommit:       $env:PUBLISH_SOURCECOMMIT"
+            Write-Host "Publish.pipelineID:         $env:PUBLISH_PIPELINEID"
+            Write-Host "Publish.requestedFor:       $env:PUBLISH_REQUESTEDFOR"
+            Write-Host "Publish.requestedForID:     $env:PUBLISH_REQUESTEDFORID"
           displayName: Log all pipeline variables
+          env:
+            BUILD_REASON: $(Build.Reason)
+            BUILD_SOURCEBRANCH: $(Build.SourceBranch)
+            BUILD_SOURCEVERSION: $(Build.SourceVersion)
+            BUILD_SOURCEVERSIONMESSAGE: $(Build.SourceVersionMessage)
+            BUILD_BUILDNUMBER: $(Build.BuildNumber)
+            BUILD_BUILDID: $(Build.BuildId)
+            BUILD_DEFINITIONNAME: $(Build.DefinitionName)
+            BUILD_REPOSITORY_NAME: $(Build.Repository.Name)
+            SYSTEM_TEAMPROJECT: $(System.TeamProject)
+            PUBLISH_RUNNAME: $(resources.pipeline.Publish.runName)
+            PUBLISH_RUNID: $(resources.pipeline.Publish.runID)
+            PUBLISH_SOURCEBRANCH: $(resources.pipeline.Publish.sourceBranch)
+            PUBLISH_SOURCECOMMIT: $(resources.pipeline.Publish.sourceCommit)
+            PUBLISH_PIPELINEID: $(resources.pipeline.Publish.pipelineID)
+            PUBLISH_REQUESTEDFOR: $(resources.pipeline.Publish.requestedFor)
+            PUBLISH_REQUESTEDFORID: $(resources.pipeline.Publish.requestedForID)
 
-        - powershell: |
+        - pwsh: |
             $buildReason = $env:BUILD_REASON
             # Use only the first line of the commit message
             $sourceMessage = ($env:SOURCE_MESSAGE -split "`n")[0].Trim()
@@ -174,7 +191,7 @@ extends:
           displayName: Remove already published packages
         - script: dir /s "$(Pipeline.Workspace)\published-packages"
           displayName: Show npm packages after cleanup
-        - powershell: |
+        - pwsh: |
             $tgzFiles = Get-ChildItem -Path "$(Pipeline.Workspace)\published-packages" -Filter "*.tgz" -Recurse
             $tgzCount = $tgzFiles.Count
             Write-Host "Found $tgzCount .tgz files"
@@ -255,11 +272,11 @@ extends:
         steps:
         - task: NuGetToolInstaller@1
           displayName: 'Use NuGet'
-        - task: CmdLine@2
+        - pwsh: nuget.exe SetApiKey "$env:NUGET_API_KEY"
           displayName: NuGet SetApiKey (nuget.org)
-          inputs:
-            script: nuget.exe SetApiKey $(nugetorg-apiKey-push)
-            workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
+          workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
+          env:
+            NUGET_API_KEY: $(nugetorg-apiKey-push)
         - script: dir /S "$(Pipeline.Workspace)\ReactWindows-final-nuget"
           displayName: Show directory contents
         - script: nuget.exe push .\Microsoft.ReactNative.*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -NoSymbol -NonInteractive -Verbosity Detailed
@@ -278,7 +295,7 @@ extends:
             artifactName: 'ReactWindows-final-nuget'
             targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
         steps:
-        - powershell: |
+        - pwsh: |
             # Extract PDB files from all NuGet packages (.nupkg are ZIP archives)
             $nugetDir = "$(Pipeline.Workspace)/ReactWindows-final-nuget"
             $symbolsDir = "$(Pipeline.Workspace)/symbols"

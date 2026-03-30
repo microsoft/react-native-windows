@@ -59,6 +59,7 @@ steps:
       inputs:
         artifact: ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }}
         path: ${{parameters.nugetroot}}/${{ parameters.artifactName }}/${{ slice.platform }}/${{ slice.configuration }}
+
     - ${{ if ne(parameters.artifactName2, '') }}:
       - task: DownloadPipelineArtifact@2
         displayName: 'Download ${{ parameters.artifactName2 }}.${{ slice.platform }}.${{ slice.configuration }}'
@@ -66,11 +67,15 @@ steps:
           artifact: ${{ parameters.artifactName2 }}.${{ slice.platform }}.${{ slice.configuration }}
           path: ${{parameters.nugetroot}}/${{ parameters.artifactName2 }}/${{ slice.platform }}/${{ slice.configuration }}
 
+  - pwsh: yarn build
+    displayName: Run yarn build
+
   - task: PowerShell@2
     displayName: Copy MSRN Resources to NuGet layout
     inputs:
       filePath: vnext/Scripts/Tfs/Layout-MSRN-Headers.ps1
       arguments: -TargetRoot ${{parameters.nugetroot}}
+      pwsh: true
 
   - ${{ if eq(parameters.packDesktop, true) }}:
     - task: PowerShell@2
@@ -78,9 +83,10 @@ steps:
       inputs:
         filePath: vnext/Scripts/Tfs/Layout-Desktop-Headers.ps1
         arguments: -TargetRoot ${{parameters.nugetroot}}
+        pwsh: true
 
   - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true)) }}:
-    - powershell: |
+    - pwsh: |
         (Get-Content -Path ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets
       displayName: Patch version check file with version ${{parameters.npmVersion}}
 

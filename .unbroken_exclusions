@@ -4,6 +4,7 @@ URL not found https://docs.github.com/get-started/quickstart while parsing CONTR
 File not found edge:/inspect while parsing packages/playground/README_composition.md
 URL not found https://www.npmjs.com/org/rnw-scripts while parsing packages/README.md (HTTP 403)
 URL not found https://aka.ms/watson while parsing docs/sdl-gs-crash-monitoring.md (HTTP 401)
+URL not found https://github.com/microsoft/react-native-windows-samples while parsing README.md (HTTP 502)
 URL not found https://www.npmjs.com/package/mustache while parsing docs/react-native-windows-init.md (HTTP 403)
 !**/node_modules
 !vnext/packages

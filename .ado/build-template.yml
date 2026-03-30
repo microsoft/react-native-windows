@@ -1,0 +1,598 @@
+#
+# Shared build and pack template used by CI and PR pipelines.
+# CI sets buildEnvironment: Continuous for signed Official builds.
+# PR sets buildEnvironment: PullRequest for Unofficial validation builds.
+#
+
+parameters:
+- name: buildEnvironment
+  type: string
+  default: PullRequest
+  values: [PullRequest, Continuous]
+
+- name: isReleaseBuild
+  type: string
+  default: auto
+  values: [auto, 'true', 'false']
+
+- name: AgentPool
+  type: object
+  default:
+    Medium:
+      name: rnw-pool-4-microsoft
+      demands: ImageOverride -equals rnw-img-vs2022-node22
+    Large:
+      name: rnw-pool-8-microsoft
+      demands: ImageOverride -equals rnw-img-vs2022-node22
+
+- name: desktopBuildMatrix
+  type: object
+  default:
+    - Name: X64Debug
+      BuildConfiguration: Debug
+      BuildPlatform: x64
+    - Name: X64Release
+      BuildConfiguration: Release
+      BuildPlatform: x64
+    - Name: X86Debug
+      BuildConfiguration: Debug
+      BuildPlatform: x86
+    - Name: X86Release
+      BuildConfiguration: Release
+      BuildPlatform: x86
+    - Name: ARM64ECDebug
+      BuildConfiguration: Debug
+      BuildPlatform: ARM64EC
+    - Name: ARM64ECRelease
+      BuildConfiguration: Release
+      BuildPlatform: ARM64EC
+
+- name: universalBuildMatrix
+  type: object
+  default:
+    # Non-Fabric (Paper) builds
+    - Name: X64Debug
+      BuildConfiguration: Debug
+      BuildPlatform: x64
+      UseFabric: false
+    - Name: X64Release
+      BuildConfiguration: Release
+      BuildPlatform: x64
+      UseFabric: false
+    - Name: X86Debug
+      BuildConfiguration: Debug
+      BuildPlatform: x86
+      UseFabric: false
+    - Name: X86Release
+      BuildConfiguration: Release
+      BuildPlatform: x86
+      UseFabric: false
+    - Name: Arm64Debug
+      BuildConfiguration: Debug
+      BuildPlatform: ARM64
+      UseFabric: false
+    - Name: Arm64Release
+      BuildConfiguration: Release
+      BuildPlatform: ARM64
+      UseFabric: false
+    # Fabric (New Architecture) builds
+    - Name: X64DebugFabric
+      BuildConfiguration: Debug
+      BuildPlatform: x64
+      UseFabric: true
+    - Name: X64ReleaseFabric
+      BuildConfiguration: Release
+      BuildPlatform: x64
+      UseFabric: true
+    - Name: X86DebugFabric
+      BuildConfiguration: Debug
+      BuildPlatform: x86
+      UseFabric: true
+    - Name: X86ReleaseFabric
+      BuildConfiguration: Release
+      BuildPlatform: x86
+      UseFabric: true
+    - Name: Arm64DebugFabric
+      BuildConfiguration: Debug
+      BuildPlatform: ARM64
+      UseFabric: true
+    - Name: Arm64ReleaseFabric
+      BuildConfiguration: Release
+      BuildPlatform: ARM64
+      UseFabric: true
+
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+
+extends:
+  ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+    template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  ${{ else }}:
+    template: v1/1ES.Unofficial.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    pool: ${{ parameters.AgentPool.Medium }}
+    ${{ if ne(parameters.buildEnvironment, 'Continuous') }}:
+      settings:
+        skipBuildTagsForGitHubPullRequests: true
+    featureFlags:
+      autoEnablePREfastWithNewRuleset: false # PREfast produces 0 actionable findings; auto-enable injects /analyze into every C++ TU, generating ~2656 SARIF files that Guardian uploads for ~19 min per native build
+    sdl:
+      credscan:
+          suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
+      spotBugs:
+          enabled: false # We don't have any java, but random packages in node_modules do
+      prefast:
+          enabled: false
+    stages:
+    #=================================================================
+    # Stage: Setup
+    # Detects build scenario, bumps versions (developer builds),
+    # and publishes version variables for downstream stages.
+    #=================================================================
+    - stage: Setup
+      jobs:
+        - job: Setup
+          displayName: Setup
+          variables: [template: .ado/variables/shared.yml@self]
+          pool: ${{ parameters.AgentPool.Medium }}
+          timeoutInMinutes: 60 # CodeQL requires 3x usual build timeout
+          steps:
+          # 1. Detect whether this is a release build or a developer build
+          - pwsh: |
+              $param = '${{ parameters.isReleaseBuild }}'
+              $buildReason = $env:BUILD_REASON
+              $sourceMessage = $env:SOURCE_MESSAGE
+              $prSourceBranch = $env:PR_SOURCE_BRANCH
+
+              if ($param -eq 'true') {
+                $isRelease = $true
+                Write-Host "Release build forced by parameter"
+              }
+              elseif ($param -eq 'false') {
+                $isRelease = $false
+                Write-Host "Developer build forced by parameter"
+              }
+              else {
+                # Auto-detect
+                if ($buildReason -eq 'PullRequest') {
+                  # PR: check source branch
+                  $isRelease = $prSourceBranch.StartsWith('prepare-release/')
+                  Write-Host "PR source branch: $prSourceBranch -> isRelease=$isRelease"
+                }
+                else {
+                  # CI/Manual: check commit message
+                  $firstLine = ($sourceMessage -split "`n")[0].Trim()
+                  $isRelease = $firstLine.StartsWith("RELEASE:")
+                  Write-Host "Commit message first line: $firstLine -> isRelease=$isRelease"
+                }
+              }
+
+              Write-Host "RESULT: isReleaseBuild=$isRelease"
+              Write-Host "##vso[task.setvariable variable=isReleaseBuild;isOutput=true]$isRelease"
+              Write-Host "##vso[task.setvariable variable=isReleaseBuild]$isRelease"
+            name: detectScenario
+            displayName: Detect build scenario
+            env:
+              BUILD_REASON: $(Build.Reason)
+              SOURCE_MESSAGE: $(Build.SourceVersionMessage)
+              PR_SOURCE_BRANCH: $(System.PullRequest.SourceBranch)
+
+          # 2. Full checkout (needed for beachball bump on developer builds;
+          #    harmless ~1 min overhead on release builds where bump is skipped)
+          - template: .ado/templates/checkout-full.yml@self
+            parameters:
+              persistCredentials: true
+
+          # 3. Node.js (always needed — setVersionEnvVars.js requires it)
+          - task: UseNode@1
+            inputs:
+              version: '24.x'
+            displayName: Use Node.js 24.x
+
+          - template: .ado/templates/compute-beachball-branch-name.yml@self
+
+          # 4. Beachball tooling (developer builds only)
+          #    Inlined from strict-yarn-install.yml because template references
+          #    do not support the condition: keyword.
+          - pwsh: |
+              $packageJson = Get-Content ./package.json | ConvertFrom-Json
+              $packageJson.scripts = $packageJson.scripts | Select-Object * -ExcludeProperty postinstall
+              $packageJson | ConvertTo-Json | Out-File ./package.json
+            displayName: Remove postinstall
+            condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
+
+          - script: npx --yes midgard-yarn-strict@1.2.4 @rnw-scripts/beachball-config
+            displayName: Strict yarn install @rnw-scripts/beachball-config
+            condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
+
+          - script: npx lage build --scope @rnw-scripts/prepare-release --scope @rnw-scripts/beachball-config
+            displayName: Build prepare-release and beachball-config
+            condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
+
+          # 5. Beachball check (Developer PR only)
+          - pwsh: npx beachball check --branch "origin/$env:BEACHBALL_BRANCH" --verbose --changehint "##vso[task.logissue type=error]Run 'yarn change' from root of repo to generate a change file."
+            displayName: Check for change files
+            condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'), eq(variables['Build.Reason'], 'PullRequest'))
+            env:
+              BEACHBALL_BRANCH: $(BeachBallBranchName)
+
+          # 6. Bump versions via prepare-release (Developer builds only)
+          - pwsh: npx prepare-release --bump-only --branch "$env:BEACHBALL_BRANCH" --no-color
+            displayName: Bump versions (prepare-release --bump-only)
+            condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
+            env:
+              BEACHBALL_BRANCH: $(BeachBallBranchName)
+
+          # 7. Read version and set pipeline variables (always)
+          - template: .ado/templates/set-version-vars.yml@self
+            parameters:
+              buildEnvironment: Continuous
+
+          # 8. Include npmPack.js for Release pipeline (CI only)
+          - script: copy ".ado\scripts\npmPack.js" "$(Build.StagingDirectory)\versionEnvVars\npmPack.js"
+            displayName: Include npmPack.js in VersionEnvVars artifact
+            condition: and(succeeded(), eq('${{ parameters.buildEnvironment }}', 'Continuous'))
+
+          templateContext:
+            outputs:
+              - output: pipelineArtifact
+                displayName: 'Publish version variables'
+                targetPath: $(Build.StagingDirectory)/versionEnvVars
+                artifactName: VersionEnvVars
+
+    #=================================================================
+    # Stage: Build
+    # Shipping builds (Desktop + Universal), ESRP signing, NPM pack,
+    # linting, and NuGet packing.
+    #=================================================================
+    - stage: Build
+      dependsOn: Setup
+      jobs:
+        # Create NPM packages
+        - job: RnwNpmPack
+          displayName: Create NPM packages
+          pool: ${{ parameters.AgentPool.Medium }}
+          timeoutInMinutes: 120 # CodeQL requires 3x usual build timeout
+          cancelTimeoutInMinutes: 5
+          steps:
+          - template: .ado/templates/checkout-shallow.yml@self
+
+          - template: .ado/templates/prepare-js-env.yml@self
+            parameters:
+              agentImage: HostedImage
+
+          - script: node .ado/scripts/npmPack.js --clean --no-color "$(Pipeline.Workspace)\published-packages"
+            displayName: Pack npm packages
+
+          - script: dir /s "$(Pipeline.Workspace)\published-packages"
+            displayName: Show created npm packages
+
+          templateContext:
+            outputs:
+              - output: pipelineArtifact
+                displayName: 'Publish npm pack artifacts'
+                condition: succeededOrFailed()
+                targetPath: $(Pipeline.Workspace)/published-packages
+                artifactName: NpmPackedTarballs
+
+        # Run linting
+        - template: .ado/jobs/linting.yml@self
+          parameters:
+            buildEnvironment: ${{ parameters.buildEnvironment }}
+            AgentPool: ${{ parameters.AgentPool }}
+
+        # Build, test, and sign Desktop DLLs
+        - ${{ each matrix in parameters.desktopBuildMatrix }}:
+          - job: Desktop${{ matrix.Name }}
+            displayName: Desktop ${{ matrix.Name }}
+            pool: ${{ parameters.AgentPool.Large }}
+            timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
+            variables:
+              - template: .ado/variables/windows.yml@self
+              # Enable if any issues RNTesterIntegrationTests::* become unstable.
+              - name: Desktop.IntegrationTests.SkipRNTester
+                value: false
+              #5059 - Disable failing or intermittent tests (IntegrationTestHarness,WebSocket,Logging).
+              #10732 - WebSocketIntegrationTest::SendReceiveSsl fails on Windows Server 2022.
+              #12714 - Disable for first deployment of test website.
+              #14217 - Reneable RNTesterIntegrationTests
+              - name: Desktop.IntegrationTests.Filter
+                value: >
+                  (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
+                  (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
+                  (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketBlob)&
+                  (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketMultipleSend)&
+                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectClose)&
+                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectNoClose)&
+                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveClose)&
+                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendConsecutive)&
+                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveLargeMessage)&
+                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveSsl)&
+                  (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)&
+                  (FullyQualifiedName!=RNTesterIntegrationTests::Dummy)&
+                  (FullyQualifiedName!=RNTesterIntegrationTests::Fetch)&
+                  (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
+                  (FullyQualifiedName!=RNTesterIntegrationTests::Blob)&
+                  (FullyQualifiedName!=RNTesterIntegrationTests::Logging)
+              #6799 - HostFunctionTest, HostObjectProtoTest crash under JSI/V8;
+              #        PreparedJavaScriptSourceTest asserts/fails under JSI/ChakraCore
+              - name: Desktop.UnitTests.Filter
+                value: >
+                  (FullyQualifiedName!~HostFunctionTest)&
+                  (FullyQualifiedName!~HostObjectProtoTest)&
+                  (FullyQualifiedName!~PreparedJavaScriptSourceTest)
+            steps:
+            # Build and test
+            - template: .ado/jobs/desktop-single.yml@self
+              parameters:
+                buildPlatform: ${{ matrix.BuildPlatform }}
+                buildConfiguration: ${{ matrix.BuildConfiguration }}
+                buildEnvironment: ${{ parameters.buildEnvironment }}
+
+            # Stage shipping artifacts (copies to staging dir, does not publish)
+            - template: .ado/templates/publish-build-artifacts.yml@self
+              parameters:
+                artifactName: Desktop
+                buildPlatform: ${{ matrix.BuildPlatform }}
+                buildConfiguration: ${{ matrix.BuildConfiguration }}
+                contents: |
+                  React.Windows.Desktop\**
+                  React.Windows.Desktop.DLL\**
+                  React.Windows.Desktop.Test.DLL\**
+
+            # ESRP sign (CI only — service connection unavailable in PR/Unofficial mode)
+            - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+              - template: .ado/templates/esrp-codesign-binaries.yml@self
+                parameters:
+                  displayName: 'CodeSign Desktop Binaries'
+                  folderPath: $(Build.StagingDirectory)/NuGet/Desktop/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                  pattern: |
+                    **/react-native-win32.dll
+
+            templateContext:
+              sdl:
+                prefast:
+                  enabled: false
+                binskim:
+                  analyzeTargetGlob: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\React.Windows.Desktop.DLL\react-native-win32.dll'
+              outputs:
+              - output: pipelineArtifact
+                displayName: 'Upload build logs'
+                condition: succeededOrFailed()
+                targetPath: $(BuildLogDirectory)
+                artifactName: Build logs - $(Agent.JobName)-$(System.JobAttempt)
+              - output: pipelineArtifact
+                displayName: 'Upload crash dumps'
+                condition: and(succeededOrFailed(), eq(variables.HasCrashDumps, 'True'))
+                targetPath: '$(CrashDumpRootPath)'
+                artifactName: Crash dumps - $(Agent.JobName)-$(System.JobAttempt)
+              - output: pipelineArtifact
+                displayName: 'Publish Artifact: Desktop.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}'
+                artifactName: Desktop.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
+                targetPath: $(Build.StagingDirectory)/NuGet/Desktop/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+
+        # Build, test, and sign Universal DLLs
+        - ${{ each matrix in parameters.universalBuildMatrix }}:
+          - job: Universal${{ matrix.Name }}
+            displayName: Universal ${{ matrix.Name }}
+            pool: ${{ parameters.AgentPool.Large }}
+            timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
+            variables:
+              - template: .ado/variables/windows.yml@self
+              # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
+              # Keep NuGet cache independent from the user directory.
+              - name: NUGET_PACKAGES
+                value: $(Agent.TempDirectory)/NuGetPackages
+            steps:
+            # Build and test
+            - template: .ado/jobs/universal-single.yml@self
+              parameters:
+                buildPlatform: ${{ matrix.BuildPlatform }}
+                buildConfiguration: ${{ matrix.BuildConfiguration }}
+                buildEnvironment: ${{ parameters.buildEnvironment }}
+                useFabric: ${{ matrix.UseFabric }}
+
+            # Stage shipping artifacts (copies to staging dir, does not publish)
+            # Fabric builds — artifact name: ReactWindowsFabric
+            - ${{ if eq(matrix.UseFabric, true) }}:
+              - template: .ado/templates/publish-build-artifacts.yml@self
+                parameters:
+                  artifactName: ReactWindowsFabric
+                  buildPlatform: ${{ matrix.BuildPlatform }}
+                  buildConfiguration: ${{ matrix.BuildConfiguration }}
+                  contents: |
+                    Microsoft.ReactNative\Microsoft.ReactNative.*
+                    Microsoft.ReactNative.CsWinRT\Microsoft.ReactNative.Projection.*
+
+            # Non-Fabric builds — artifact name: ReactWindows (include managed code for NuGet)
+            - ${{ else }}:
+              - template: .ado/templates/publish-build-artifacts.yml@self
+                parameters:
+                  artifactName: ReactWindows
+                  buildPlatform: ${{ matrix.BuildPlatform }}
+                  buildConfiguration: ${{ matrix.BuildConfiguration }}
+                  contents: |
+                    Microsoft.ReactNative\Microsoft.ReactNative.*
+                    Microsoft.ReactNative.CsWinRT\Microsoft.ReactNative.Projection.*
+                    Microsoft.ReactNative.Managed\**
+                    Microsoft.ReactNative.Managed.CodeGen\**
+
+            # ESRP sign (CI only — service connection unavailable in PR/Unofficial mode)
+            - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+              - template: .ado/templates/esrp-codesign-binaries.yml@self
+                parameters:
+                  displayName: 'CodeSign Microsoft.ReactNative Binaries'
+                  ${{ if eq(matrix.UseFabric, true) }}:
+                    folderPath: $(Build.StagingDirectory)/NuGet/ReactWindowsFabric/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                  ${{ else }}:
+                    folderPath: $(Build.StagingDirectory)/NuGet/ReactWindows/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                  pattern: |
+                    **/Microsoft.ReactNative.dll
+                    **/Microsoft.ReactNative.winmd
+                    **/Microsoft.ReactNative.Projection.dll
+
+            templateContext:
+              sdl:
+                prefast:
+                  enabled: false
+                binskim:
+                  analyzeTargetGlob: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.dll'
+              outputs:
+              - output: pipelineArtifact
+                displayName: 'Upload build logs'
+                condition: succeededOrFailed()
+                targetPath: $(BuildLogDirectory)
+                artifactName: Build logs - $(Agent.JobName)-$(System.JobAttempt)
+              - output: pipelineArtifact
+                displayName: 'Upload crash dumps'
+                condition: and(succeededOrFailed(), eq(variables.HasCrashDumps, 'True'))
+                targetPath: '$(CrashDumpRootPath)'
+                artifactName: Crash dumps - $(Agent.JobName)-$(System.JobAttempt)
+              - ${{ if eq(matrix.UseFabric, true) }}:
+                - output: pipelineArtifact
+                  displayName: 'Publish Artifact: ReactWindowsFabric.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}'
+                  artifactName: ReactWindowsFabric.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
+                  targetPath: $(Build.StagingDirectory)/NuGet/ReactWindowsFabric/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+              - ${{ else }}:
+                - output: pipelineArtifact
+                  displayName: 'Publish Artifact: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}'
+                  artifactName: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
+                  targetPath: $(Build.StagingDirectory)/NuGet/ReactWindows/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+
+        # Create NuGet packages
+        - job: RNWNuget
+          displayName: Pack NuGet
+          dependsOn:
+            - RnwNpmPack
+            - Linting
+            - ${{ each matrix in parameters.desktopBuildMatrix }}:
+              - Desktop${{ matrix.Name }}
+            - ${{ each matrix in parameters.universalBuildMatrix }}:
+              - Universal${{ matrix.Name }}
+          pool: ${{ parameters.AgentPool.Medium }}
+          timeoutInMinutes: 60 # Protect against the long CodeSign task
+
+          steps:
+          - template: .ado/templates/checkout-shallow.yml@self
+
+          - template: .ado/templates/prepare-js-env.yml@self
+
+          - template: .ado/templates/apply-published-version-vars.yml@self
+
+          # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and VS 16.8 or later)
+          - task: NuGetToolInstaller@1
+            inputs:
+              versionSpec: ">=5.8.0"
+
+          - template: .ado/templates/prep-and-pack-nuget.yml@self
+            parameters:
+              artifactName: ReactWindows
+              artifactName2: ReactWindowsFabric
+              publishCommitId: $(publishCommitId)
+              npmVersion: $(npmVersion)
+              packMicrosoftReactNative: true
+              packMicrosoftReactNativeCxx: true
+              packMicrosoftReactNativeManaged: true
+              packMicrosoftReactNativeManagedCodeGen: true
+              slices:
+                - platform: x64
+                  configuration: Release
+                - platform: x86
+                  configuration: Release
+                - platform: ARM64
+                  configuration: Release
+
+          - template: .ado/templates/prep-and-pack-nuget.yml@self
+            parameters:
+              artifactName: Desktop
+              publishCommitId: $(publishCommitId)
+              npmVersion: $(npmVersion)
+              packDesktop: true
+              slices:
+                - platform: x64
+                  configuration: Release
+                - platform: x86
+                  configuration: Release
+                - platform: ARM64EC
+                  configuration: Release
+                - platform: x64
+                  configuration: Debug
+                - platform: x86
+                  configuration: Debug
+                - platform: ARM64EC
+                  configuration: Debug
+
+          # ESRP sign (CI only — service connection unavailable in PR/Unofficial mode)
+          - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+            - template: .ado/templates/esrp-codesign-nuget.yml@self
+              parameters:
+                displayName: 'CodeSign all NuGet packages'
+                folderPath: $(System.DefaultWorkingDirectory)/NugetRootFinal
+                pattern: '**/*.nupkg'
+
+          # Tag the source commit when a RELEASE build succeeds (CI only)
+          - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+            - pwsh: |
+                $tag = "react-native-windows_v$(npmVersion)"
+                Write-Host "Creating tag $tag on $(Build.SourceVersion)"
+                $authHeader = "AUTHORIZATION: bearer $env:SYSTEM_ACCESSTOKEN"
+                Write-Host "##vso[task.setsecret]$authHeader"
+                git -c http.extraheader="$authHeader" tag $tag "$(Build.SourceVersion)"
+                git -c http.extraheader="$authHeader" push origin $tag
+              displayName: Tag release sources
+              condition: and(succeeded(), startsWith(variables['Build.SourceVersionMessage'], 'RELEASE:'))
+              env:
+                SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+          templateContext:
+            sdl:
+              binskim:
+                analyzeTargetGlob: '$(System.DefaultWorkingDirectory)\NugetRoot\**\Microsoft.ReactNative\Microsoft.ReactNative.dll;$(System.DefaultWorkingDirectory)\NugetRoot\**\React.Windows.Desktop.DLL\react-native-win32.dll'
+            outputs:
+            - output: pipelineArtifact
+              displayName: 'Publish final nuget artifacts'
+              targetPath: $(System.DefaultWorkingDirectory)\NugetRootFinal
+              artifactName: "ReactWindows-final-nuget"
+
+    #=================================================================
+    # Stage: Tests
+    # Independent test jobs that don't require native build artifacts.
+    # Runs in parallel with Build stage (both depend only on Setup).
+    #=================================================================
+    - stage: Tests
+      displayName: Tests
+      dependsOn: Setup
+      jobs:
+        - template: .ado/jobs/node-tests.yml@self
+          parameters:
+            buildEnvironment: ${{ parameters.buildEnvironment }}
+            AgentPool: ${{ parameters.AgentPool }}
+
+        - template: .ado/jobs/playground.yml@self
+          parameters:
+            buildEnvironment: ${{ parameters.buildEnvironment }}
+            AgentPool: ${{ parameters.AgentPool }}
+
+        - template: .ado/jobs/e2e-test.yml@self
+          parameters:
+            buildEnvironment: ${{ parameters.buildEnvironment }}
+            AgentPool: ${{ parameters.AgentPool }}
+
+    #=================================================================
+    # Stage: CLI
+    # CLI init verification — tests the final NuGet + npm packages.
+    # Runs after Build stage completes (needs RNWNuget artifacts).
+    #=================================================================
+    - stage: CLI
+      displayName: CLI
+      dependsOn: Build
+      jobs:
+        - template: .ado/jobs/cli-init-windows.yml@self
+          parameters:
+            buildEnvironment: ${{ parameters.buildEnvironment }}
+            AgentPool: ${{ parameters.AgentPool }}
+

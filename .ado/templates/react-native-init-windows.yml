@@ -22,24 +22,17 @@ parameters:
   - name: useChakra
     type: boolean
     default: false
-  - name: useNuGet
-    type: boolean
-    default: false
   - name: useExperimentalWinUI3
     type: boolean
     default: false
-  - name: publishNuGet
-    type: boolean
-    default: false    
   - name: runWack
     type: boolean
     default: false
   - name: buildEnvironment
     type: string
     default: PullRequest
-    values: 
+    values:
      - PullRequest
-     - SecurePullRequest
      - Continuous
 
 steps:
@@ -50,26 +43,12 @@ steps:
     parameters:
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
-  - ${{ if eq(parameters.useNuGet, true) }}:
-    - template: prep-and-pack-nuget.yml
-      parameters:
-        artifactName: ReactWindows
-        artifactName2: ReactWindowsFabric
-        npmVersion: $(npmVersion)
-        packMicrosoftReactNative: true
-        packMicrosoftReactNativeCxx: true
-        slices:
-          - platform: ${{ parameters.platform }}
-            configuration: Release
-
-    - ${{ if eq(parameters.publishNuGet, true) }}:
-      - task: PublishPipelineArtifact@1
-        displayName: "Publish Artifact: CliInitNuGet.${{parameters.platform}}.${{parameters.configuration}}"
-        # Do nothing if the artifact was already published. E.g. after rerunning a past successful job attempt
-        continueOnError: true
-        inputs:
-          artifactName: CliInitNuGet.${{parameters.platform}}.${{parameters.configuration}}
-          targetPath: $(System.DefaultWorkingDirectory)/NugetRootFinal
+  # Download the final NuGet packages produced by the RNWNuget job
+  - task: DownloadPipelineArtifact@2
+    displayName: 'Download final NuGet packages'
+    inputs:
+      artifact: ReactWindows-final-nuget
+      path: $(System.DefaultWorkingDirectory)\NugetTestFeed
 
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: |
@@ -105,7 +84,7 @@ steps:
         ${{ else }}:
           workingDir: $(Agent.BuildDirectory)\testcli\windows
 
-  - powershell: |
+  - pwsh: |
       $path = (Get-ChildItem -Filter "Package.appxmanifest" -File -Recurse).FullName;
       [xml] $manifest = Get-Content $path
       $manifest.Package.Identity.Name = 'ReactNative.InitTest'
@@ -124,6 +103,7 @@ steps:
     inputs:
       targetType: filePath # filePath | inline
       filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
+      pwsh: true
 
   - template: react-native-debug-info.yml
     parameters:
@@ -132,14 +112,13 @@ steps:
       ${{ else }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli
 
-  - ${{ if eq(parameters.useNuGet, true) }}:
-    - powershell: |
-        nuget.exe sources add -name TestFeed -source $(System.DefaultWorkingDirectory)\NugetTestFeed
-        nuget.exe sources remove -name react-native
-        nuget.exe sources remove -name Nuget.org
-        nuget.exe sources add -name Nuget.org -source https://api.nuget.org/v3/index.json
-      displayName: Add local NuGet test feed
-      workingDirectory: $(Agent.BuildDirectory)\testcli
+  - pwsh: |
+      nuget.exe sources add -name TestFeed -source $(System.DefaultWorkingDirectory)\NugetTestFeed
+      nuget.exe sources remove -name react-native
+      nuget.exe sources remove -name Nuget.org
+      nuget.exe sources add -name Nuget.org -source https://api.nuget.org/v3/index.json
+    displayName: Add local NuGet test feed
+    workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - template: ../templates/run-windows-with-certificates.yml
     parameters:
@@ -184,11 +163,7 @@ steps:
       targetType: filePath # filePath | inline
       filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
       arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
+      pwsh: true
     condition: succeededOrFailed()
 
-  - task: PublishBuildArtifacts@1
-    displayName: Upload traces
-    inputs:
-      pathtoPublish: '$(Build.StagingDirectory)/Tracing'
-      artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
-    condition: succeededOrFailed()
+  # Traces artifact publishing moved to templateContext.outputs in cli-init-windows.yml (1ES compliance)
