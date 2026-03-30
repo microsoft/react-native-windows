@@ -227,7 +227,7 @@ winrt::hstring ViewProps::AccessibilityLabel() noexcept {
 }
 
 winrt::Microsoft::ReactNative::Overflow ViewProps::Overflow() noexcept {
-  return m_viewProps ? static_cast<winrt::Microsoft::ReactNative::Overflow>(m_viewProps.yogaStyle.overflow())
+  return m_viewProps ? static_cast<winrt::Microsoft::ReactNative::Overflow>(m_viewProps->yogaStyle.overflow())
                      : winrt::Microsoft::ReactNative::Overflow::Visible;
 }
 
