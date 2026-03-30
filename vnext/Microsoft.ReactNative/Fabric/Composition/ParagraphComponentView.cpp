@@ -613,7 +613,10 @@ void ParagraphComponentView::OnPointerPressed(
 
     // Focuses so we receive onLostFocus when clicking elsewhere
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+      root->TrySetFocusedComponent(
+          *get_strong(),
+          winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+          winrt::Microsoft::ReactNative::FocusState::Pointer);
     }
 
     args.Handled(true);

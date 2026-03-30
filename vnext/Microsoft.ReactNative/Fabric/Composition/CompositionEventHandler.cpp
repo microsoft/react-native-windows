@@ -614,6 +614,8 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
 
 void CompositionEventHandler::onKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  RootComponentView().UseKeyboardForProgrammaticFocus(true);
+
   if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)->OnKeyDown(args);
 
@@ -637,7 +639,7 @@ void CompositionEventHandler::onKeyDown(
   }
 
   if (!fCtrl && args.Key() == winrt::Windows::System::VirtualKey::Tab) {
-    if (RootComponentView().TryMoveFocus(!fShift)) {
+    if (RootComponentView().TryMoveFocus(!fShift, winrt::Microsoft::ReactNative::FocusState::Keyboard)) {
       args.Handled(true);
     }
 
@@ -647,6 +649,8 @@ void CompositionEventHandler::onKeyDown(
 
 void CompositionEventHandler::onKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  RootComponentView().UseKeyboardForProgrammaticFocus(true);
+
   if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)->OnKeyUp(args);
 
@@ -1179,6 +1183,8 @@ void CompositionEventHandler::onPointerPressed(
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
   namespace Composition = winrt::Microsoft::ReactNative::Composition;
 
+  RootComponentView().UseKeyboardForProgrammaticFocus(false);
+
   // Clears any active text selection when left pointer is pressed
   if (pointerPoint.Properties().PointerUpdateKind() != Composition::Input::PointerUpdateKind::RightButtonPressed) {
     RootComponentView().ClearCurrentTextSelection();
@@ -1274,6 +1280,8 @@ void CompositionEventHandler::onPointerReleased(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
   int pointerId = pointerPoint.PointerId();
+
+  RootComponentView().UseKeyboardForProgrammaticFocus(false);
 
   auto activeTouch = std::find_if(m_activeTouches.begin(), m_activeTouches.end(), [pointerId](const auto &pair) {
     return pair.second.touch.identifier == pointerId;
