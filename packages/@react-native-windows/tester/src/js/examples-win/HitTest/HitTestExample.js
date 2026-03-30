@@ -7,7 +7,7 @@
 'use strict';
 
 import React from 'react';
-import { View, Text, Pressable } from 'react-native';
+import {View, Text, Pressable} from 'react-native';
 
 function HitTestWithOverflowVisibile() {
   const [bgColor, setBgColor] = React.useState('red');
@@ -15,13 +15,13 @@ function HitTestWithOverflowVisibile() {
   return (
     <View>
       <Text>
-        Clicking the pressable should work even if it is outside the bounds
-        of its parent.
+        Clicking the pressable should work even if it is outside the bounds of
+        its parent.
       </Text>
       <View
         accessible={true}
-        accessibilityValue={{ text: bgColor }}
-        style={{ width: 150, height: 150 }}
+        accessibilityValue={{text: bgColor}}
+        style={{width: 150, height: 150}}
         testID="visible-overflow-element">
         <View
           style={{
@@ -52,15 +52,14 @@ function HitTestWithOverflowHidden() {
   return (
     <View>
       <Text>
-        Clicking within the visible view will trigger the pressable.
-        Clicking outside the bounds, where the pressable extends but is
-        clipped by its parent overflow:hidden, should not trigger the
-        pressable.
+        Clicking within the visible view will trigger the pressable. Clicking
+        outside the bounds, where the pressable extends but is clipped by its
+        parent overflow:hidden, should not trigger the pressable.
       </Text>
       <View
         accessible={true}
-        accessibilityValue={{ text: bgColor }}
-        style={{ width: 150, height: 150 }}
+        accessibilityValue={{text: bgColor}}
+        style={{width: 150, height: 150}}
         testID="hidden-overflow-element">
         <View
           style={{
