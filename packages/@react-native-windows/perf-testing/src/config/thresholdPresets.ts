@@ -56,4 +56,14 @@ export const ThresholdPresets: Readonly<
     maxCV: 0.6,
     mode: 'track',
   },
+
+  native: {
+    maxDurationIncrease: 15,
+    maxDuration: Infinity,
+    minAbsoluteDelta: 5,
+    maxRenderCount: 1,
+    minRuns: 10,
+    maxCV: 0.5,
+    mode: 'gate',
+  },
 };

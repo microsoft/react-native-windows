@@ -27,7 +27,7 @@ jobs:
   perf-tests:
     name: Component Performance Tests
     runs-on: windows-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
 
     permissions:
       contents: read
@@ -49,8 +49,28 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
+      - name: Detect preinstalled Windows SDK
+        id: winsdk
+        shell: pwsh
+        run: |
+          # Find the latest SDK version already installed on the runner
+          $sdkRoot = "${env:ProgramFiles(x86)}\Windows Kits\10\Include"
+          $versions = Get-ChildItem $sdkRoot -Directory | Where-Object { $_.Name -match '^\d+\.\d+\.\d+\.\d+$' } | Sort-Object { [version]$_.Name } -Descending
+          if ($versions.Count -eq 0) {
+            echo "::error::No Windows SDK found on runner"
+            exit 1
+          }
+          $sdk = $versions[0].Name
+          echo "version=$sdk" >> $env:GITHUB_OUTPUT
+          echo "::notice::Using preinstalled Windows SDK $sdk"
+
       - name: Build perf-testing package
         run: yarn workspace @react-native-windows/perf-testing build
+
+      # ── Build & Deploy RNTesterApp-Fabric (for native perf tests) ──
+      - name: Build and deploy RNTesterApp-Fabric
+        working-directory: packages/e2e-test-app-fabric
+        run: yarn windows --release --no-launch --logging --msbuildprops WindowsTargetPlatformVersion=${{ steps.winsdk.outputs.version }}
 
       # ── Run Tests ──────────────────────────────────────────
       - name: Run perf tests
@@ -61,7 +81,14 @@ jobs:
           RN_TARGET_PLATFORM: windows
         run: yarn perf:ci
         continue-on-error: true   # Don't fail here — let comparison decide
-
+      - name: Run native perf tests
+        id: native-perf-run
+        working-directory: packages/e2e-test-app-fabric
+        env:
+          CI: 'true'
+          RN_TARGET_PLATFORM: windows
+        run: yarn perf:native:ci
+        continue-on-error: true
       # ── Compare & Report ───────────────────────────────────
       - name: Compare against baselines
         id: compare
@@ -80,7 +107,9 @@ jobs:
           name: perf-results
           path: |
             packages/e2e-test-app-fabric/.perf-results/
+            packages/e2e-test-app-fabric/.native-perf-results/
             packages/e2e-test-app-fabric/test/__perf__/**/__perf_snapshots__/
+            packages/e2e-test-app-fabric/test/__native_perf__/**/__perf_snapshots__/
           retention-days: 30
 
       # ── Status Gate ────────────────────────────────────────

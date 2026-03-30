@@ -1,0 +1,38 @@
+{
+  "Native Render Pipeline ScrollView native mount 1": {
+    "metrics": {
+      "name": "ScrollView native mount",
+      "meanDuration": 4.355050003528595,
+      "medianDuration": 4.049349993467331,
+      "stdDev": 0.675293113217565,
+      "renderCount": 1,
+      "runs": 10,
+      "durations": [
+        4.063799977302551,
+        4.669399976730347,
+        4.014200031757355,
+        4.600199997425079,
+        3.747600018978119,
+        4.034900009632111,
+        4.375600039958954,
+        6.084399998188019,
+        3.9986000061035156,
+        3.9617999792099
+      ],
+      "timestamp": "2026-03-25T09:11:58.989Z",
+      "nativeTimings": {
+        "fullPipeline": 4.049349993467331
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.6,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-25T09:11:58.991Z"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "Native Render Pipeline TextInput native mount 1": {
+    "metrics": {
+      "name": "TextInput native mount",
+      "meanDuration": 4.421840000152588,
+      "medianDuration": 4.0867999792099,
+      "stdDev": 0.9135329076138601,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        3.6496999859809875,
+        4.015100002288818,
+        4.0867999792099,
+        4.2186999917030334,
+        4.2085999846458435,
+        3.800499975681305,
+        4.18560004234314,
+        5.862399995326996,
+        6.951799988746643,
+        3.925000011920929,
+        4.065899968147278,
+        3.9510000348091125,
+        5.296599984169006,
+        3.7587000131607056,
+        4.351200044155121
+      ],
+      "timestamp": "2026-03-25T09:12:15.920Z",
+      "nativeTimings": {
+        "fullPipeline": 4.0867999792099
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-25T09:12:15.922Z"
+  }
+}
