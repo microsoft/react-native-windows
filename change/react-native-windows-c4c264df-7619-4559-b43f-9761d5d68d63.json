@@ -1,5 +1,5 @@
 {
-  "type": "none",
+  "type": "patch",
   "comment": "Implement button property",
   "packageName": "react-native-windows",
   "email": "hmalothu@microsoft.com",
