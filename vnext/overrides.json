@@ -207,6 +207,12 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/attributedstring/TextAttributes.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/attributedstring/TextAttributes.cpp",
+      "baseHash": "1fc7b68dff2d3a875737659af4a90efe3aa6dcfa"
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/componentregistry/ComponentDescriptorRegistry.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/componentregistry/ComponentDescriptorRegistry.cpp",
       "baseHash": "b13e8a4b2521f13b0365b8cbc8cac947d959668f",
@@ -260,7 +266,6 @@
       "issue": 15827
     },
     {
-      "type": "patch",
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/EventDispatcher.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/EventDispatcher.cpp",
