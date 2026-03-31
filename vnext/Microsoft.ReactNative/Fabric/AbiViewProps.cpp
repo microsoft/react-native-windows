@@ -226,6 +226,11 @@ winrt::hstring ViewProps::AccessibilityLabel() noexcept {
   return m_viewProps ? winrt::to_hstring(m_viewProps->accessibilityLabel) : winrt::hstring{};
 }
 
+winrt::Microsoft::ReactNative::Overflow ViewProps::Overflow() noexcept {
+  return m_viewProps ? static_cast<winrt::Microsoft::ReactNative::Overflow>(m_viewProps->yogaStyle.overflow())
+                     : winrt::Microsoft::ReactNative::Overflow::Visible;
+}
+
 ImageProps::ImageProps(facebook::react::SharedViewProps props) noexcept : Super(props) {}
 
 winrt::Windows::Foundation::Collections::IVectorView<winrt::Microsoft::ReactNative::ImageSource>

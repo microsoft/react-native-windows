@@ -101,6 +101,7 @@ struct ViewProps : ViewPropsT<ViewProps> {
   winrt::Microsoft::ReactNative::Color BackgroundColor() noexcept;
   winrt::hstring TestId() noexcept;
   winrt::hstring AccessibilityLabel() noexcept;
+  winrt::Microsoft::ReactNative::Overflow Overflow() noexcept;
 
  protected:
   facebook::react::SharedViewProps m_props;
