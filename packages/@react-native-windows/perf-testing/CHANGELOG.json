@@ -2,6 +2,21 @@
   "name": "@react-native-windows/perf-testing",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2026 03:37:03 GMT",
+      "version": "0.0.0-canary.1037",
+      "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1037",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "18a08e4ab998741fa93c2fe9f1c25695c99c11b3",
+            "comment": "add native perf benchmarking infrastructure for Fabric components"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 27 Mar 2026 03:00:07 GMT",
       "version": "0.0.0-canary.1036",
       "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1036",

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2026 03:37:03 GMT",
+      "version": "0.0.0-canary.1043",
+      "tag": "react-native-windows_v0.0.0-canary.1043",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "18a08e4ab998741fa93c2fe9f1c25695c99c11b3",
+            "comment": "Default text color should be theme aware"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "18a08e4ab998741fa93c2fe9f1c25695c99c11b3",
+            "comment": "Only show focus visuals when using keyboard to move focus"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Mar 2026 03:55:34 GMT",
       "version": "0.0.0-canary.1042",
       "tag": "react-native-windows_v0.0.0-canary.1042",

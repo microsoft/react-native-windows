@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Mon, 30 Mar 2026 03:55:34 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 31 Mar 2026 03:37:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1043
+
+Tue, 31 Mar 2026 03:37:03 GMT
+
+### Changes
+
+- add native perf benchmarking infrastructure for Fabric components (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1043
 
 ## 0.0.0-canary.1042
 
