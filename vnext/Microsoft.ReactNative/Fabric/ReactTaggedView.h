@@ -18,7 +18,7 @@ struct ReactTaggedView {
   ReactTaggedView(const winrt::Microsoft::ReactNative::ComponentView &componentView)
       : m_view(componentView), m_tag(componentView ? componentView.Tag() : -1) {}
 
-  winrt::Microsoft::ReactNative::ComponentView view() noexcept {
+  winrt::Microsoft::ReactNative::ComponentView view() const noexcept {
     if (!m_view) {
       return nullptr;
     }
@@ -37,7 +37,7 @@ struct ReactTaggedView {
 
  private:
   facebook::react::Tag m_tag;
-  winrt::weak_ref<winrt::Microsoft::ReactNative::ComponentView> m_view;
+  mutable winrt::weak_ref<winrt::Microsoft::ReactNative::ComponentView> m_view;
 };
 
 } // namespace Microsoft::ReactNative
