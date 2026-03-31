@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2026 19:40:14 GMT",
+      "version": "0.81.11",
+      "tag": "react-native-windows_v0.81.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a964ab588ab12db0b975f848c88d7a0b750d6cba",
+            "comment": "Do not create m_childrenContainer when using a custom visual to mount children into"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2026 00:10:15 GMT",
       "version": "0.81.10",
       "tag": "react-native-windows_v0.81.10",
