@@ -138,9 +138,10 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
     /*
      * A component view on which the touch was begun.
      */
-    //__strong UIView<RCTComponentViewProtocol> *componentView = nil;
+    ReactTaggedView initialComponentView{nullptr};
   };
 
+  static bool IsPointerWithinInitialTree(const ActiveTouch &activeTouch) noexcept;
   static bool IsEndishEventType(TouchEventType eventType) noexcept;
   static const char *PointerTypeCStringFromUITouchType(UITouchType type) noexcept;
   static facebook::react::PointerEvent CreatePointerEventFromActiveTouch(
