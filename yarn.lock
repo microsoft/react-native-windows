@@ -3944,6 +3944,11 @@
   resolved "https://registry.yarnpkg.com/@ungap/structured-clone/-/structured-clone-1.3.0.tgz#d06bbb384ebcf6c505fde1c3d0ed4ddffe0aaff8"
   integrity sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==
 
+"@vercel/detect-agent@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@vercel/detect-agent/-/detect-agent-1.2.1.tgz#10e91be8abffabde7fa7ae56947659acec3cdba3"
+  integrity sha512-U/BJCltQSTFTHwaiCQQTQG3GonTbRoEewjV+OU2mMjcHLAoPOh6CP1SXA2XNmqiqI3c82nkRNJ7piZ14RqmTXw==
+
 "@vscode/sudo-prompt@^9.0.0":
   version "9.3.1"
   resolved "https://registry.yarnpkg.com/@vscode/sudo-prompt/-/sudo-prompt-9.3.1.tgz#c562334bc6647733649fd42afc96c0eea8de3b65"
@@ -4706,10 +4711,11 @@ basic-ftp@^5.0.2:
   integrity sha512-VoMINM2rqJwJgfdHq6RiUudKt2BV+FY5ZFezP/ypmwayk68+NzzAQy4XXLlqsGD4MCzq3DrmNFD/uUmBJuGoXw==
 
 beachball@^2.20.0:
-  version "2.63.1"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.63.1.tgz#6cf4d812fe456c7d1016ddb06579adefdb5c5af0"
-  integrity sha512-/tTHod4yKZA8jC193na7HhhW1zs4j6SzTnFppYq2Q1jqufLvUEaaHPPzee7QMxvzRDju9BH0urFzghvOdyPI6w==
+  version "2.64.0"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.64.0.tgz#86fe4389fc60fb44422b9236ae70d85cbc1e8a11"
+  integrity sha512-PQkpOGTTCTC5yQbxpTgoPX5p/uExCFxLZp+HSgwyKsqS3T1iCKvpO1J8uwFqW+oIfTVCZ/sFLQKsQkcxoM+SPQ==
   dependencies:
+    "@vercel/detect-agent" "^1.2.1"
     cosmiconfig "^9.0.0"
     execa "^5.0.0"
     minimatch "^3.0.4"
@@ -4717,7 +4723,6 @@ beachball@^2.20.0:
     p-limit "^3.0.2"
     prompts "^2.4.2"
     semver "^7.0.0"
-    toposort "^2.0.2"
     workspace-tools "^0.41.0"
     yargs-parser "^21.0.0"
 
@@ -8751,9 +8756,9 @@ knip@^5.85.0:
     zod "^4.1.11"
 
 lage@^2.7.1:
-  version "2.15.2"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.15.2.tgz#e7a938e954f3090d24cc75167040bb1d97e1e24b"
-  integrity sha512-jwClGtHr5XwKqEP2zw1egPehlzRdrnQgL5sZRMkrC+THA6782S3FC/oxXLKrxLk7FENvqFpmhUr8ra4E16X4xQ==
+  version "2.15.4"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.15.4.tgz#13a989de4f9b60d8e9921a1b9c58fe14dc323b56"
+  integrity sha512-N6CDAs61/sAI350ZF49lDWYzxVHVXzy77cuP+7Lr2JZcjlt4P5V3q9FF1H5k8ycJDVOTDzRyrR545SCKDWBjQQ==
   dependencies:
     glob-hasher "^1.4.2"
   optionalDependencies:
@@ -12457,11 +12462,6 @@ toidentifier@1.0.1, toidentifier@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.1.tgz#3be34321a88a820ed1bd80dfaa33e479fbb8dd35"
   integrity sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==
-
-toposort@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/toposort/-/toposort-2.0.2.tgz#ae21768175d1559d48bef35420b2f4962f09c330"
-  integrity sha512-0a5EOkAUp8D4moMi2W8ZF8jcga7BgZd91O/yabJCFY8az+XSzeGyTKs0Aoo897iV1Nj6guFq8orWDS96z91oGg==
 
 tr46@~0.0.3:
   version "0.0.3"
