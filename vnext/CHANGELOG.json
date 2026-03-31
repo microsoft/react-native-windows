@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2026 00:10:15 GMT",
+      "version": "0.81.10",
+      "tag": "react-native-windows_v0.81.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d6ceca3bc8465442c06193a6958953718d69ff7c",
+            "comment": "overflow: hidden should prevent hittesting"
+          },
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d6ceca3bc8465442c06193a6958953718d69ff7c",
+            "comment": "Implement button property"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d6ceca3bc8465442c06193a6958953718d69ff7c",
+            "comment": "Only show focus visuals when using keyboard to move focus"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Mar 2026 02:43:22 GMT",
       "version": "0.81.9",
       "tag": "react-native-windows_v0.81.9",

@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 21 Mar 2026 02:43:22 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 31 Mar 2026 00:10:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.10
+
+Tue, 31 Mar 2026 00:10:15 GMT
+
+### Patches
+
+- overflow: hidden should prevent hittesting (30809111+acoates-ms@users.noreply.github.com)
+- Implement button property (hmalothu@microsoft.com)
+- Only show focus visuals when using keyboard to move focus (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.9
 
