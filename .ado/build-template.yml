@@ -206,6 +206,9 @@ extends:
             condition: and(succeeded(), eq('${{ parameters.buildEnvironment }}', 'Continuous'))
 
           templateContext:
+            sdl:
+              codeql:
+                enabled: false
             outputs:
               - output: pipelineArtifact
                 displayName: 'Publish version variables'
