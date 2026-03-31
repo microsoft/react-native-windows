@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2026 16:27:46 GMT",
+      "version": "0.0.0-canary.1044",
+      "tag": "react-native-windows_v0.0.0-canary.1044",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0c3f2fbb62961a6a7958f1877105ae982e35d324",
+            "comment": "Do not create m_childrenContainer when using a custom visual to mount children into"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2026 03:37:03 GMT",
       "version": "0.0.0-canary.1043",
       "tag": "react-native-windows_v0.0.0-canary.1043",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Do not create m_childrenContainer when using a custom visual to mount children into",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
