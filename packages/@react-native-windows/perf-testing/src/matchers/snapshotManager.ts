@@ -26,8 +26,27 @@ export type SnapshotFile = Record<string, SnapshotEntry>;
 
 /**
  * Manages reading and writing of perf snapshot files.
+ * Also maintains an in-memory registry of current-run metrics
+ * so the CI reporter can access live results
  */
 export class SnapshotManager {
+  /** In-memory store of metrics captured during the current test run. */
+  private static readonly _runMetrics: Map<string, SnapshotFile> = new Map();
+  static recordRunMetric(
+    snapshotFilePath: string,
+    key: string,
+    entry: SnapshotEntry,
+  ): void {
+    if (!SnapshotManager._runMetrics.has(snapshotFilePath)) {
+      SnapshotManager._runMetrics.set(snapshotFilePath, {});
+    }
+    SnapshotManager._runMetrics.get(snapshotFilePath)![key] = entry;
+  }
+
+  static getRunMetrics(snapshotFilePath: string): SnapshotFile | null {
+    return SnapshotManager._runMetrics.get(snapshotFilePath) ?? null;
+  }
+
   static getSnapshotPath(testFilePath: string): {
     dir: string;
     file: string;
