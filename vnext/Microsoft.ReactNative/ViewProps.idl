@@ -30,6 +30,14 @@ namespace Microsoft.ReactNative {
     static void WriteValue(IJSValueWriter writer, Color color);
   };
 
+  [experimental]
+  enum Overflow
+  {
+    Visible,
+    Hidden,
+    Scroll,
+  };
+
   [webhosthidden]
   [experimental]
   DOC_STRING("Interface to implement custom view component properties.")
@@ -51,6 +59,7 @@ namespace Microsoft.ReactNative {
     Color BackgroundColor { get; };
     String TestId { get; };
     String AccessibilityLabel { get; };
+    Overflow Overflow { get; };
     
     // TODO add accessors to all the properties on ViewProps
   };

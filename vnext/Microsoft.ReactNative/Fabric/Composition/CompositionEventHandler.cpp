@@ -986,8 +986,6 @@ void CompositionEventHandler::UpdateActiveTouch(
   // activeTouch.touch.shiftKey = false;
   // activeTouch.touch.ctrlKey = false;
   // activeTouch.touch.altKey = false;
-
-  // activeTouch.touch.isPrimary = true;
 }
 
 facebook::react::PointerEvent CreatePointerEventFromIncompleteHoverData(
@@ -1246,7 +1244,7 @@ void CompositionEventHandler::onPointerPressed(
                   ->eventEmitterAtPoint(ptLocal)) {
         activeTouch.eventEmitter = eventEmitter;
         activeTouch.touch.target = targetComponentView.Tag();
-        // activeTouch.componentView = componentView;
+        activeTouch.initialComponentView = targetComponentView;
         break;
       }
       targetComponentView = targetComponentView.Parent();
@@ -1254,7 +1252,7 @@ void CompositionEventHandler::onPointerPressed(
 
     UpdateActiveTouch(activeTouch, ptScaled, ptLocal);
 
-    // activeTouch.touch.isPrimary = true;
+    activeTouch.isPrimary = pointerId == 1;
     activeTouch.touch.identifier = pointerId;
 
     // If the pointer has not been marked as hovering over views before the touch started, we register
@@ -1459,9 +1457,24 @@ facebook::react::PointerEvent CompositionEventHandler::CreatePointerEventFromAct
 
   // event.tangentialPressure = 0.0;
   // event.twist = 0;
-  // event.isPrimary = activeTouch.isPrimary;
+  event.isPrimary = activeTouch.isPrimary;
 
   return event;
+}
+
+bool CompositionEventHandler::IsPointerWithinInitialTree(const ActiveTouch &activeTouch) noexcept {
+  auto initialComponentView = activeTouch.initialComponentView.view();
+  if (!initialComponentView)
+    return false;
+
+  auto initialViewSet = GetTouchableViewsInPathToRoot(initialComponentView);
+
+  for (const auto &view : initialViewSet) {
+    if (view.Tag() == activeTouch.touch.target)
+      return true;
+  }
+
+  return false;
 }
 
 // If we have events that include multiple pointer updates, we should change arg from pointerId to vector<pointerId>
@@ -1520,6 +1533,13 @@ void CompositionEventHandler::DispatchTouchEvent(
         }
         case TouchEventType::End:
           activeTouch.eventEmitter->onPointerUp(pointerEvent);
+          if (pointerEvent.isPrimary && pointerEvent.button == 0) {
+            if (IsPointerWithinInitialTree(activeTouch)) {
+              activeTouch.eventEmitter->onClick(pointerEvent);
+            }
+          } /* else if (IsPointerWithinInitialTree(activeTouch)) {
+            activeTouch.eventEmitter->onAuxClick(pointerEvent);
+          } */
           break;
         case TouchEventType::Cancel:
         case TouchEventType::CaptureLost:

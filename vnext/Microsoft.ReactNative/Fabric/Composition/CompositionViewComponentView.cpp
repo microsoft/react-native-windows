@@ -1348,6 +1348,10 @@ void ViewComponentView::updateLayoutMetrics(
 void ViewComponentView::updateChildrenClippingPath(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
+  // Views with a custom visual to mount children into should to do their own handling of children clipping path
+  if (m_builder && m_builder->VisualToMountChildrenIntoHandler())
+    return;
+
   const float scale = layoutMetrics.pointScaleFactor;
   const float viewWidth = layoutMetrics.frame.size.width * scale;
   const float viewHeight = layoutMetrics.frame.size.height * scale;
