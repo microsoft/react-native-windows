@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 31 Mar 2026 21:09:16 GMT",
+      "version": "0.0.0-canary.1045",
+      "tag": "react-native-windows_v0.0.0-canary.1045",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8eec9cd0b18ab0b5ae7c81bdaab46c2fb02fba26",
+            "comment": "Implement onClick"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2026 16:27:46 GMT",
       "version": "0.0.0-canary.1044",
       "tag": "react-native-windows_v0.0.0-canary.1044",
