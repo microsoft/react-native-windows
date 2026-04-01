@@ -60,12 +60,11 @@ export class Checker {
       this.options.exclusions ||
       path.join(this.options.dir, '.unbroken_exclusions');
     try {
-      const contents =
-        fs
-          .readFileSync(exclusionsFileName)
-          .toString()
-          .split(/\r?\n/)
-          .filter(x => x.trim() !== '');
+      const contents = fs
+        .readFileSync(exclusionsFileName)
+        .toString()
+        .split(/\r?\n/)
+        .filter(x => x.trim() !== '');
       this.suppressions = contents
         .filter(x => !x.startsWith('!'))
         .map(x => Checker.normalizeSlashes(x));
@@ -83,7 +82,6 @@ export class Checker {
   suppressions: string[];
   exclusions: string[];
   urlCache: Record<string, number>;
-
 
   private async recurseFindMarkdownFiles(
     dirPath: string,
@@ -136,9 +134,7 @@ export class Checker {
     }
 
     if (this.options['parse-ids']) {
-      await this.recurseFindMarkdownFiles(dirPath, x =>
-        this.getAndStoreId(x),
-      );
+      await this.recurseFindMarkdownFiles(dirPath, x => this.getAndStoreId(x));
     }
     await this.recurseFindMarkdownFiles(dirPath, x =>
       this.verifyMarkDownFile(x),
@@ -249,9 +245,7 @@ export class Checker {
 
     const anchors = this.getAnchors(contents.toLowerCase());
     if (!anchors.includes(sectionAnchor.toLowerCase())) {
-      if (
-        !anchors.includes(sectionAnchor.replace(/\./g, '').toLowerCase())
-      ) {
+      if (!anchors.includes(sectionAnchor.replace(/\./g, '').toLowerCase())) {
         if (
           !(
             this.options['allow-local-line-sections'] &&
@@ -387,7 +381,7 @@ export class Checker {
   }
 
   private static isWebLink(url: string) {
-    return url.startsWith("https://") || url.startsWith('https://');
+    return url.startsWith('https://') || url.startsWith('https://');
   }
 
   async verifyMarkDownFile(filePath: string) {
