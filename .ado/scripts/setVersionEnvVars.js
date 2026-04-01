@@ -21,6 +21,15 @@ if (buildId == undefined) {
   throw new Error("Missing argument for the buildid")
 }
 
+// Optional: isReleaseBuild flag from CI setup detection step.
+// When present, it is included in the VersionEnvVars artifact so the Release
+// pipeline can read the authoritative release/developer classification without
+// re-deriving it from commit messages.
+const isReleaseBuild = process.argv[4] === 'True' ? 'True' : 'False';
+if (process.argv[4] == null) {
+  console.log("##[warning]isReleaseBuild argument not provided, defaulting to False");
+}
+
 let adoBuildVersion=pkgJson.version;
 if (isPr) {
   adoBuildVersion += `.pr${buildId}`;
@@ -38,6 +47,7 @@ const versionEnvVars = {
   reactDevDependency: pkgJson.devDependencies['react'],
   reactNativeDevDependency: pkgJson.devDependencies['react-native'],
   npmDistTag: pkgJson?.beachball?.defaultNpmTag?.trim(),
+  IsReleaseBuild: isReleaseBuild,
 }
 
 if (!versionEnvVars.npmDistTag) {
@@ -46,7 +56,12 @@ if (!versionEnvVars.npmDistTag) {
 
 // Set the build number so the build in the publish pipeline and the release pipeline are named with the convenient version
 // See: https://docs.microsoft.com/en-us/azure/devops/pipelines/scripts/logging-commands?view=azure-devops&tabs=bash#updatebuildnumber-override-the-automatically-generated-build-number
-console.log(`##vso[build.updatebuildnumber]RNW_${adoBuildVersion}`)
+// CI builds include [Release] or [Dev] tag for at-a-glance identification in pipeline history.
+let buildNumber = `RNW_${adoBuildVersion}`;
+if (!isPr) {
+  buildNumber += isReleaseBuild === 'True' ? ' [Release]' : ' [Dev]';
+}
+console.log(`##vso[build.updatebuildnumber]${buildNumber}`)
 
 // Set env variable to allow VS to build dll with correct version information
 console.log(`##vso[task.setvariable variable=RNW_PKG_VERSION_STR]${versionEnvVars.RNW_PKG_VERSION_STR}`);
@@ -60,6 +75,7 @@ console.log(`##vso[task.setvariable variable=publishCommitId]${versionEnvVars.pu
 console.log(`##vso[task.setvariable variable=reactDevDependency]${versionEnvVars.reactDevDependency}`);
 console.log(`##vso[task.setvariable variable=reactNativeDevDependency]${versionEnvVars.reactNativeDevDependency}`);
 console.log(`##vso[task.setvariable variable=NpmDistTag]${versionEnvVars.npmDistTag}`);
+console.log(`##vso[task.setvariable variable=IsReleaseBuild]${versionEnvVars.IsReleaseBuild}`);
 
 const runnerTemp = process.env.RUNNER_TEMP;
 if (!runnerTemp) {
@@ -80,4 +96,5 @@ console.log("##vso[task.setvariable variable=publishCommitId]${versionEnvVars.pu
 console.log("##vso[task.setvariable variable=reactDevDependency]${versionEnvVars.reactDevDependency}");
 console.log("##vso[task.setvariable variable=reactNativeDevDependency]${versionEnvVars.reactNativeDevDependency}");
 console.log("##vso[task.setvariable variable=NpmDistTag]${versionEnvVars.npmDistTag}");
+console.log("##vso[task.setvariable variable=IsReleaseBuild]${versionEnvVars.IsReleaseBuild}");
 `);
