@@ -1,33 +1,101 @@
 version: 2
 updates:
+# main branch
 - package-ecosystem: npm
   directory: "/"
+  target-branch: "main"
   groups:
-    babel:
-      patterns:
-        - '@babel*'
-      update-types:
-        - 'minor'
-        - 'patch'
-    jest:
-      patterns:
-        - '@jest*'
-      update-types:
-        - 'minor'
-        - 'patch'
-    rnx-kit:
-      patterns:
-        - '@rnx-kit*'
-      update-types:
-        - 'minor'
-        - 'patch'
-    other-dependencies:
+    all-dependencies:
       patterns:
         - '*'
-      exclude-patterns:
-        - '@babel*'
-        - '@jest*'
-        - '@rnx-kit*'
+      update-types:
+        - 'minor'
+        - 'patch'
+  schedule:
+    interval: daily
+    time: "05:00"
+    timezone: "America/Los_Angeles"
+  labels:
+  - dependencies
+  versioning-strategy: lockfile-only
+  commit-message:
+    prefix: 📦
+  open-pull-requests-limit: 5
+
+# 0.74 branch
+- package-ecosystem: npm
+  directory: "/"
+  target-branch: "0.74-stable"
+  groups:
+    all-dependencies:
+      patterns:
+        - '*'
+      update-types:
+        - 'minor'
+        - 'patch'
+  schedule:
+    interval: daily
+    time: "05:00"
+    timezone: "America/Los_Angeles"
+  labels:
+  - dependencies
+  versioning-strategy: lockfile-only
+  commit-message:
+    prefix: 📦
+  open-pull-requests-limit: 5
+
+# 0.81 branch
+- package-ecosystem: npm
+  directory: "/"
+  target-branch: "0.81-stable"
+  groups:
+    all-dependencies:
+      patterns:
+        - '*'
+      update-types:
+        - 'minor'
+        - 'patch'
+  schedule:
+    interval: daily
+    time: "05:00"
+    timezone: "America/Los_Angeles"
+  labels:
+  - dependencies
+  versioning-strategy: lockfile-only
+  commit-message:
+    prefix: 📦
+  open-pull-requests-limit: 5
+
+# 0.82 branch
+- package-ecosystem: npm
+  directory: "/"
+  target-branch: "0.82-stable"
+  groups:
+    all-dependencies:
+      patterns:
+        - '*'
+      update-types:
+        - 'minor'
+        - 'patch'
+  schedule:
+    interval: daily
+    time: "05:00"
+    timezone: "America/Los_Angeles"
+  labels:
+  - dependencies
+  versioning-strategy: lockfile-only
+  commit-message:
+    prefix: 📦
+  open-pull-requests-limit: 5
+
+# 0.83 branch
+- package-ecosystem: npm
+  directory: "/"
+  target-branch: "0.83-stable"
+  groups:
+    all-dependencies:
+      patterns:
+        - '*'
       update-types:
         - 'minor'
         - 'patch'
