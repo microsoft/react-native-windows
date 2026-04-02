@@ -5,9 +5,9 @@
  * @format
  */
 
-import { goToApiExample } from './RNTesterNavigation';
-import { verifyNoErrorLogs } from './Helpers';
-import { app } from '@react-native-windows/automation';
+import {goToApiExample} from './RNTesterNavigation';
+import {verifyNoErrorLogs} from './Helpers';
+import {app} from '@react-native-windows/automation';
 
 beforeAll(async () => {
   // If window is partially offscreen, tests will fail to click on certain elements
@@ -20,11 +20,10 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
-
 describe('Pointer onClick Test', () => {
   test('onClick reports correct native event properties on left click', async () => {
     const component = await app.findElementByTestID('pointer-click-target');
-    await component.waitForDisplayed({ timeout: 5000 });
+    await component.waitForDisplayed({timeout: 5000});
 
     // Left click triggers onPointerDown with button=0
     await component.click();
@@ -33,7 +32,9 @@ describe('Pointer onClick Test', () => {
     await app.waitUntil(
       async () => {
         const currentText = await stateText.getText();
-        return currentText.includes('"button": 0') && currentText.includes('onClick');
+        return (
+          currentText.includes('"button": 0') && currentText.includes('onClick')
+        );
       },
       {
         timeout: 5000,
@@ -47,16 +48,19 @@ describe('Pointer onClick Test', () => {
   });
   test('onAuxClick reports correct native event properties on middle click', async () => {
     const component = await app.findElementByTestID('pointer-click-target');
-    await component.waitForDisplayed({ timeout: 5000 });
+    await component.waitForDisplayed({timeout: 5000});
 
     // Middle click triggers onPointerDown with button=1
-    await component.click({ button: 'middle' });
+    await component.click({button: 'middle'});
     const stateText = await app.findElementByTestID('pointer-click-text');
 
     await app.waitUntil(
       async () => {
         const currentText = await stateText.getText();
-        return currentText.includes('"button": 1') && currentText.includes('onAuxClick');
+        return (
+          currentText.includes('"button": 1') &&
+          currentText.includes('onAuxClick')
+        );
       },
       {
         timeout: 5000,
@@ -70,16 +74,19 @@ describe('Pointer onClick Test', () => {
   });
   test('onAuxClick reports correct native event properties on right click', async () => {
     const component = await app.findElementByTestID('pointer-click-target');
-    await component.waitForDisplayed({ timeout: 5000 });
+    await component.waitForDisplayed({timeout: 5000});
 
     // Middle click triggers onPointerDown with button=2
-    await component.click({ button: 'right' });
+    await component.click({button: 'right'});
     const stateText = await app.findElementByTestID('pointer-click-text');
 
     await app.waitUntil(
       async () => {
         const currentText = await stateText.getText();
-        return currentText.includes('"button": 2') && currentText.includes('onAuxClick');
+        return (
+          currentText.includes('"button": 2') &&
+          currentText.includes('onAuxClick')
+        );
       },
       {
         timeout: 5000,
@@ -91,5 +98,4 @@ describe('Pointer onClick Test', () => {
     const text = await stateText.getText();
     expect(text).toMatchSnapshot();
   });
-
 });
