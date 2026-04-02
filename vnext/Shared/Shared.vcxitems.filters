@@ -1,208 +1,105 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)tracing\tracing.cpp">
-      <Filter>Source Files\tracing</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSBigAbiString.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)LayoutAnimation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.cpp">
-      <Filter>Source Files\Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.cpp">
-      <Filter>Source Files\Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.cpp">
-      <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.cpp">
-      <Filter>Source Files\Networking</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\WinRTHttpResource.cpp">
-      <Filter>Source Files\Networking</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\WinRTWebSocketResource.cpp">
-      <Filter>Source Files\Networking</Filter>
-    </ClCompile>
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\RedirectHttpFilter.cpp">
-      <Filter>Source Files\Networking</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ImageUtils.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\IcuUtils.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\Helpers.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\DevMenu.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\EventEmitters.cpp">
-      <Filter>Source Files\Fabric\codegen\react\components\rnwcore</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\Props.cpp">
-      <Filter>Source Files\Fabric\codegen\react\components\rnwcore</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\ShadowNodes.cpp">
-      <Filter>Source Files\Fabric\codegen\react\components\rnwcore</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ComponentView.cpp">
-      <Filter>Source Files\Fabric</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\DWriteHelpers.cpp">
-      <Filter>Source Files\Fabric</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\FabricUIManagerModule.cpp">
-      <Filter>Source Files\Fabric</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ImageManager.cpp">
-      <Filter>Source Files\Fabric</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ImageRequest.cpp">
-      <Filter>Source Files\Fabric</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\WindowsImageManager.cpp">
-      <Filter>Source Files\Fabric</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SchedulerSettings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ActivityIndicatorComponentView.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ComponentViewRegistry.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionEventHandler.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionHelpers.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ImageComponentView.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewComponentView.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ParagraphComponentView.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ScrollViewComponentView.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\SwitchComponentView.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputComponentView.cpp">
-      <Filter>Source Files\Fabric\Composition\TextInput</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputEventEmitter.cpp">
-      <Filter>Source Files\Fabric\Composition\TextInput</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputProps.cpp">
-      <Filter>Source Files\Fabric\Composition\TextInput</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputShadowNode.cpp">
-      <Filter>Source Files\Fabric\Composition\TextInput</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionContextHelper.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionHwndHost.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootAutomationProvider.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionDynamicAutomationProvider.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextProvider.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextRangeProvider.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionAnnotationProvider.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\DebuggerUIIsland.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ReactNativeIsland.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ReactNativeWindow.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService.cpp">
-      <Filter>Source Files\Fabric\Composition</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionContextHelper.cpp">
-      <Filter>Source Files\Fabric</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionHwndHost.cpp">
-      <Filter>Source Files\Fabric</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService.cpp">
-      <Filter>Source Files\Fabric</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\EventEmitters.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\Props.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\ShadowNodes.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ComponentViewRegistry.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionAnnotationProvider.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionEventHandler.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootAutomationProvider.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionDynamicAutomationProvider.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextProvider.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextRangeProvider.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\DebuggerUIIsland.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\BorderPrimitive.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionViewComponentView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\DebuggingOverlayComponentView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ImageComponentView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewComponentView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ParagraphComponentView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\PortalComponentView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\RootComponentView.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UnimplementedNativeViewComponentView.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewProps.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\WindowsComponentDescriptorRegistry.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ScrollViewComponentView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\SwitchComponentView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ActivityIndicatorComponentView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputComponentView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputEventEmitter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputProps.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputShadowNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputState.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextDrawing.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TooltipService.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UiaHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiComponentDescriptor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiEventEmitter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewProps.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiShadowNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiPortalShadowNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewShadowNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiState.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ComponentView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\WindowsComponentDescriptorRegistry.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UnimplementedNativeViewComponentView.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\DWriteHelpers.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\FabricUIManagerModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ImageManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ImageRequest.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformViewProps.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformViewEventEmitter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\PlatformColorUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\WindowsTextLayoutManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\WindowsImageManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ImageRequestParams.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SchedulerSettings.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\AsynchronousEventBeat.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hasher.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeAgentDelegate.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeTargetDelegate.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorPackagerConnectionDelegate.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSBigAbiString.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)LayoutAnimation.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Logging.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobCollector.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\NetworkPropertyIds.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\RedirectHttpFilter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\WinRTHttpResource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\WinRTWebSocketResource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)tracing\tracing.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\CallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\PlatformConstantsWinModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ExceptionsManager.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\Timing.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\SampleTurboModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\SourceCode.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\CrashManager.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
@@ -217,30 +114,16 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\RedBoxErrorFrameInfo.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\RedBoxErrorInfo.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\TurboModulesProvider.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp">
-      <Filter>Hermes</Filter>
-    </ClCompile>
-    <ClCompile Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Hasher.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.cpp">
-      <Filter>Source Files\Networking</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformViewProps.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformViewEventEmitter.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Theme.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobCollector.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\AsynchronousEventBeat.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\Helpers.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\IcuUtils.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ImageUtils.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ThemeUtils.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\DevMenu.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\ColorComponents.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Legacy.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Modern.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Legacy.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\runtimeexecutor\platform\cxx\ReactCommon\RuntimeExecutorSyncUIThreadUtils.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerCallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp" />
@@ -248,529 +131,152 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\cdpmetrics\CdpInteractionTypes.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollEvent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\BackgroundImagePropsConversions.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\PlatformColorUtils.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiPortalShadowNode.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewShadowNode.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiState.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ThemeUtils.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\DebuggingOverlayComponentView.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionViewComponentView.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiComponentDescriptor.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiShadowNode.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\PlatformConstantsWinModule.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ExceptionsManager.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\SampleTurboModule.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\SourceCode.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\Timing.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\featureflags\ReactNativeFeatureFlags.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\featureflags\ReactNativeFeatureFlagsAccessor.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InstanceTarget.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InstanceAgent.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\cdp\CdpJson.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ExecutionContext.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ExecutionContextManager.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\FallbackRuntimeAgentDelegate.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\FallbackRuntimeTargetDelegate.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\HostAgent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\HostTarget.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorUtilities.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InstanceAgent.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InstanceTarget.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeAgent.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\FallbackRuntimeAgentDelegate.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\FallbackRuntimeTargetDelegate.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeTarget.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeTargetNetwork.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeTargetDebuggerSessionObserver.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ExecutionContextManager.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ExecutionContext.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\cdp\CdpJson.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeTargetConsole.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ConsoleMessage.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\NetworkIOAgent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\PerfMonitorV2.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\jsi-utils.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextDrawing.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\ColorComponents.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeTargetConsole.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\ReactPerfettoLogger.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\NetworkPropertyIds.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiEventEmitter.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TooltipService.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\BorderPrimitive.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\TracingAgent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\PerformanceTracer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\TraceEventSerializer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\ConsoleTimeStamp.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\HostTargetTraceRecording.cpp " />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\HostTargetTracing.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\TraceRecordingStateSerializer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextProvider.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionTextRangeProvider.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionAnnotationProvider.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\ImageRequestParams.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\CallInvoker.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\jsi-utils.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\ReactPerfettoLogger.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\oscompat\OSCompatPosix.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\oscompat\OSCompatWindows.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\WindowsTextLayoutManager.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\NetworkHandler.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputState.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\runtimeexecutor\platform\cxx\ReactCommon\RuntimeExecutorSyncUIThreadUtils.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeAgentDelegate.cpp">
-      <Filter>Hermes</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeTargetDelegate.cpp">
-      <Filter>Hermes</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorPackagerConnectionDelegate.cpp">
-      <Filter>Inspector</Filter>
-    </ClCompile>
+    <ClCompile Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{87359046-466f-4c83-856e-1755bcb1c066}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{d297c8b2-b89e-46e9-8d7c-ee4766384cb5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Modules">
-      <UniqueIdentifier>{37d57028-146d-45f3-a56d-2ce7625a3449}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Pch">
-      <UniqueIdentifier>{da7f5a49-e3fb-46c3-906d-be42b8b651f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\tracing">
-      <UniqueIdentifier>{87b365df-267b-4c00-860a-53d129a65a4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\tracing">
-      <UniqueIdentifier>{6d6b7412-d407-4ee3-be2a-addd9dba140a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Modules">
-      <UniqueIdentifier>{5e38b06d-5bcb-437b-9a9b-e787e37ef3ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Executors">
-      <UniqueIdentifier>{a3399e44-cc5c-45bf-8e6e-ea5f3fcdc8f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Executors">
-      <UniqueIdentifier>{d2b54f2c-7e3c-48a6-8df6-dea9fb7ab4e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Threading">
-      <UniqueIdentifier>{0ffdd86e-d4b2-4517-a8e3-8cb8ee8d8bca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Threading">
-      <UniqueIdentifier>{32ac535b-b680-447d-9849-9fdffb26f218}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Utils">
-      <UniqueIdentifier>{2ad4b85f-faa4-4e14-905c-6c48c8ae1a20}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\JSI">
-      <UniqueIdentifier>{07874914-e3b0-4d02-ad53-3518c2cb8cd8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\JSI">
-      <UniqueIdentifier>{1a3ad55f-1297-41b3-ba2a-0f819e69270c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Utils">
-      <UniqueIdentifier>{e78de2f1-a7e5-4a81-b69b-4a1f7fa91cde}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Networking">
-      <UniqueIdentifier>{deefba53-d1ca-457d-9293-1993510e6d5a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Networking">
-      <UniqueIdentifier>{71196e04-aca0-48d6-99e4-f418c957b50f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Hermes">
-      <UniqueIdentifier>{b32590e6-ae3d-4388-ab98-767345ce38c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric">
-      <UniqueIdentifier>{e045612e-bca3-4844-bce8-e75f83e89e05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric\codegen">
-      <UniqueIdentifier>{c6241404-615b-4338-8955-e9282c440712}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric\codegen\react">
-      <UniqueIdentifier>{00b927dc-e868-4e01-80a7-03adbd7ef5af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric\codegen\react\components">
-      <UniqueIdentifier>{81771765-0676-4cf8-baab-3656dd4d761f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric\codegen\react\components\rnwcore">
-      <UniqueIdentifier>{b84ea036-35e5-4c33-b029-14b35dcbb5ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric\platform">
-      <UniqueIdentifier>{0198c3a8-dcd1-4f17-aa80-769fa8df762f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric\platform\react">
-      <UniqueIdentifier>{9bbd1367-8911-4f05-8c3a-b1b82899413d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric\platform\react\renderer">
-      <UniqueIdentifier>{f34dccd6-7da9-46e6-b5e2-67f02690ff1d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric\platform\react\renderer\graphics">
-      <UniqueIdentifier>{1bc720d3-e07d-4a92-a569-11139f183736}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric\platform\react\renderer\textlayoutmanager">
-      <UniqueIdentifier>{5e9ae667-7a86-4d99-8996-0255534ef606}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric\Composition">
-      <UniqueIdentifier>{74e10d51-8301-4dfa-9e88-522d810f308f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric\Composition\TextInput">
-      <UniqueIdentifier>{5e32924b-0ec4-4876-a84b-0ecd8cecbade}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Fabric">
-      <UniqueIdentifier>{322257be-ef83-46b0-b01e-10a776cf3948}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Fabric\Composition">
-      <UniqueIdentifier>{157c380f-1c7c-436c-847e-e4a365d28991}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Fabric\Composition\TextInput">
-      <UniqueIdentifier>{4a029ab4-6068-4c47-afbe-d7f8d938457f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Fabric\codegen">
-      <UniqueIdentifier>{8131175d-d3f4-4abe-82f5-5d09fbd46ae9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Fabric\codegen\react">
-      <UniqueIdentifier>{46ba086f-8a77-434d-9a7f-58b35d1a5f45}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Fabric\codegen\react\components">
-      <UniqueIdentifier>{9f8dd12b-12a1-42c6-bc1c-d4fb457e257d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Fabric\codegen\react\components\rnwcore">
-      <UniqueIdentifier>{ff174bb3-ecbd-4995-9f09-f5831c075db3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Fabric\platform">
-      <UniqueIdentifier>{f7096aa5-32db-48ef-ad96-7350d860cd20}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Fabric\platform\react">
-      <UniqueIdentifier>{c42e0178-be33-40d1-bc97-cae01ad0c40a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Fabric\platform\react\renderer">
-      <UniqueIdentifier>{1566d980-2e96-406e-80ff-3b23f9b1351c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Fabric\platform\react\renderer\graphics">
-      <UniqueIdentifier>{20bed205-f5ef-4ecb-aa4b-c6d52ecae6c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Fabric\platform\react\renderer\textlayoutmanager">
-      <UniqueIdentifier>{d63d0a43-1f13-4674-aaa5-de02447a46b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Fabric\platform\react\renderer\core">
-      <UniqueIdentifier>{0bd2cd2a-875b-4f98-851d-b90adac57415}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Hermes">
-      <UniqueIdentifier>{b32590e6-ae3d-4388-ab98-767345ce38c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Inspector">
-      <UniqueIdentifier>{680511e1-15e0-48c9-a2a3-64addaeacce5}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)tracing\fbsystrace.h">
-      <Filter>Header Files\tracing</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Pch\pch.h">
-      <Filter>Header Files\Pch</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)AbiSafe.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CreateModules.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CxxMessageQueue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DevServerHelper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DevSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)IDevSupportManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)InstanceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)IReactRootView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)IRedBoxHandler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSBigAbiString.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)LayoutAnimation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Logging.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)OInstance.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Tracing.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleRegistry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.h">
-      <Filter>Header Files\Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.h">
-      <Filter>Header Files\Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\EventEmitters.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\Props.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\ShadowNodes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\Shared\cdebug.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)tracing\tracing.h">
-      <Filter>Header Files\tracing</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\OriginPolicy.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IHttpResource.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IWebSocketResource.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTHttpResource.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTWebSocketResource.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTTypes.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CppRuntimeOptions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IHttpModuleProxy.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IUriHandler.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IRequestBodyHandler.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IResponseHandler.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\RedirectHttpFilter.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IWinRTHttpRequestFactory.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IRedirectEventSource.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleProxy.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleContentHandler.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\EventEmitters.h">
-      <Filter>Header Files\Fabric\codegen\react\components\rnwcore</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\Props.h">
-      <Filter>Header Files\Fabric\codegen\react\components\rnwcore</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\ShadowNodes.h">
-      <Filter>Header Files\Fabric\codegen\react\components\rnwcore</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\DWriteHelpers.h">
-      <Filter>Header Files\Fabric</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\FabricUIManagerModule.h">
-      <Filter>Header Files\Fabric</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\WindowsImageManager.h">
-      <Filter>Header Files\Fabric</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SchedulerSettings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ComponentViewRegistry.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionEventHandler.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionHelpers.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ImageComponentView.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewComponentView.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewShadowNode.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ParagraphComponentView.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ScrollViewComponentView.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\SwitchComponentView.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputComponentView.h">
-      <Filter>Header Files\Fabric\Composition\TextInput</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputEventEmitter.h">
-      <Filter>Header Files\Fabric\Composition\TextInput</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputProps.h">
-      <Filter>Header Files\Fabric\Composition\TextInput</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputShadowNode.h">
-      <Filter>Header Files\Fabric\Composition\TextInput</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputState.h">
-      <Filter>Header Files\Fabric\Composition\TextInput</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionContextHelper.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionHwndHost.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootAutomationProvider.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionDynamicAutomationProvider.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ReactNativeIsland.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ReactNativeWindow.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService.h">
-      <Filter>Header Files\Fabric\Composition</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\Color.h">
-      <Filter>Header Files\Fabric\platform\react\renderer\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.h">
-      <Filter>Header Files\Fabric\platform\react\renderer\textlayoutmanager</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ComponentViewRegistry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionContextHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionEventHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionHwndHost.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootAutomationProvider.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionDynamicAutomationProvider.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ReactNativeIsland.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ReactNativeWindow.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionViewComponentView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ImageComponentView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewShadowNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewComponentView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewSate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ParagraphComponentView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\PortalComponentView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\RootComponentView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ScrollViewComponentView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\SwitchComponentView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputComponentView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputEventEmitter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputProps.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputShadowNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputState.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UiaHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewProps.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewComponentDescriptor.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UiaHelpers.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)IFileReaderResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\core\graphicsConversions.h">
-      <Filter>Header Files\Fabric\platform\react\renderer\core</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketTurboModule.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IBlobResource.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.h">
-      <Filter>Header Files\Networking</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)IBlobPersistor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\DWriteHelpers.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\FabricUIManagerModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\Color.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformTouch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformViewEventEmitter.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobCollector.h">
-      <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h">
-      <Filter>Hermes</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\core\graphicsConversions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\WindowsImageManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SchedulerSettings.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AbiSafe.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CppRuntimeOptions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeAgentDelegate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeTargetDelegate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IBlobPersistor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IFileReaderResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorPackagerConnectionDelegate.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorThread.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobCollector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IHttpModuleProxy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IRequestBodyHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IResponseHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IUriHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleContentHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleProxy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IBlobResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IHttpResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IRedirectEventSource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IWebSocketResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IWinRTHttpRequestFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\OriginPolicy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\RedirectHttpFilter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTHttpResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTTypes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTWebSocketResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CreateModules.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CxxMessageQueue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DevServerHelper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DevSettings.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IDevSupportManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)InstanceManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IReactRootView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IRedBoxHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSBigAbiString.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)LayoutAnimation.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Logging.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MemoryMappedBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)OInstance.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Pch\pch.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNode.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ShadowNodeRegistry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)targetver.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageDispatchQueue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Threading\MessageQueueThreadFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Tracing.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)tracing\fbsystrace.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)tracing\tracing.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleRegistry.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.h" />
     <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.inc" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewSate.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionViewComponentView.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeAgentDelegate.h">
-      <Filter>Hermes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Hermes\HermesRuntimeTargetDelegate.h">
-      <Filter>Hermes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorThread.h">
-      <Filter>Inspector</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Inspector\ReactInspectorPackagerConnectionDelegate.h">
-      <Filter>Inspector</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
-      <Filter>Source Files\tracing</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\HttpSettings.idl" />
@@ -791,5 +297,8 @@
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeHost.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\RedBoxHandler.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Timer.idl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp" />
   </ItemGroup>
 </Project>

@@ -4,8 +4,8 @@ exports[`Touchable Tests Text components can be tappable 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "tappable_text",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
+    "ControlType": 50005,
+    "LocalizedControlType": "link",
     "Name": "Text has built-in onPress handling",
     "TextRangePattern.GetText": "Text has built-in onPress handling",
   },
@@ -120,10 +120,10 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
       },
       {
         "AutomationId": "",
-        "ControlType": 50020,
+        "ControlType": 50005,
         "IsKeyboardFocusable": true,
         "LiveSetting": "Assertive",
-        "LocalizedControlType": "text",
+        "LocalizedControlType": "link",
         "Name": "TouchableWithoutFeedback (Control 3 in Set of 3)",
         "TextRangePattern.GetText": "TouchableWithoutFeedback (Control 3 in Set of 3)",
       },

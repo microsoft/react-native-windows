@@ -5,7 +5,7 @@ parameters:
     type: string
 
 steps:
-  - powershell: .ado/scripts/TestWACK.ps1 -PackageName ${{ parameters.packageName }} -OutputDir $(Build.StagingDirectory)\WACK
+  - pwsh: .ado/scripts/TestWACK.ps1 -PackageName ${{ parameters.packageName }} -OutputDir $(Build.StagingDirectory)\WACK
     displayName: Run WACK
 
   - task: PublishBuildArtifacts@1

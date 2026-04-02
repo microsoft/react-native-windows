@@ -1,8 +1,76 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 17 Mar 2026 18:21:32 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 31 Mar 2026 21:09:16 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1045
+
+Tue, 31 Mar 2026 21:09:16 GMT
+
+### Changes
+
+- Implement onClick (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1044
+
+Tue, 31 Mar 2026 16:27:46 GMT
+
+### Changes
+
+- Do not create m_childrenContainer when using a custom visual to mount children into (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1043
+
+Tue, 31 Mar 2026 03:37:03 GMT
+
+### Changes
+
+- Default text color should be theme aware (30809111+acoates-ms@users.noreply.github.com)
+- Only show focus visuals when using keyboard to move focus (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1042
+
+Mon, 30 Mar 2026 03:55:34 GMT
+
+### Changes
+
+- Fix view.focus function (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1041
+
+Sat, 28 Mar 2026 02:02:45 GMT
+
+### Changes
+
+- overflow: hidden should prevent hittesting (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1040
+
+Fri, 27 Mar 2026 03:00:07 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20260107-58bc6c3e3 (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1039
+
+Wed, 25 Mar 2026 02:08:12 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.286
+- Bump @react-native-windows/codegen to v0.0.0-canary.132
+- Bump react-native-platform-override to v0.0.0-canary.1021
+
+## 0.0.0-canary.1038
+
+Sat, 21 Mar 2026 09:44:24 GMT
+
+### Changes
+
+- Delete member facebook::react::DevSettings::useWebSocketTurboModule (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.1037
 

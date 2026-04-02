@@ -35,7 +35,7 @@ steps:
       # Also expose the token for the pre-push duplicate check
       Write-Host "##vso[task.setvariable variable=NuGetAccessToken;issecret=true]$accessToken"
 
-- powershell: |
+- pwsh: |
     Add-Type -AssemblyName System.IO.Compression.FileSystem
 
     $feedUrl = "${{ parameters.nugetFeedUrl }}"

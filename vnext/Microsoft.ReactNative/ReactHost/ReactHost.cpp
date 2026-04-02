@@ -266,6 +266,10 @@ class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatur
     return true;
   }
 
+  bool enableImperativeFocus() override {
+    return true;
+  }
+
   bool fuseboxEnabledRelease() override {
     return true; // Enable Fusebox (modern CDP backend) by default for React Native Windows
   }

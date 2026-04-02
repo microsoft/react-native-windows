@@ -18,6 +18,7 @@ steps:
       inputs:
         targetType: filePath # filePath | inline
         filePath: $(Build.SourcesDirectory)\vnext\Scripts\EnableInternalWinAppSDKFeed.ps1
+        pwsh: true
 
     - task: NuGetAuthenticate@1
       displayName: 'NuGet Authenticate Internal WinAppSDK Feed'

@@ -43,7 +43,11 @@ type AccessibilityEventDefinitions = {
   screenReaderChanged: [boolean],
 };
 
-type AccessibilityEventTypes = 'click' | 'focus' | 'viewHoverEnter';
+type AccessibilityEventTypes =
+  | 'click'
+  | 'focus'
+  | 'viewHoverEnter'
+  | 'windowStateChange';
 
 // Mapping of public event names to platform-specific event names.
 const EventNames: Map<
@@ -449,6 +453,8 @@ const AccessibilityInfo = {
    * Set accessibility focus to a React component.
    *
    * See https://reactnative.dev/docs/accessibilityinfo#setaccessibilityfocus
+   *
+   * @deprecated Use `sendAccessibilityEvent` with eventType `focus` instead.
    */
   setAccessibilityFocus(reactTag: number): void {
     legacySendAccessibilityEvent(reactTag, 'focus');
@@ -487,10 +493,15 @@ const AccessibilityInfo = {
    * - `announcement`: The string announced by the screen reader.
    * - `options`: An object that configures the reading options.
    *   - `queue`: The announcement will be queued behind existing announcements. iOS only.
+   *   - `priority`: The priority of the announcement. Possible values: 'low' | 'default' | 'high'.
+   *     High priority announcements will interrupt any ongoing speech and cannot be interrupted.
+   *     Default priority announcements will interrupt any ongoing speech but can be interrupted.
+   *     Low priority announcements will not interrupt ongoing speech and can be interrupted.
+   *     (iOS only).
    */
   announceForAccessibilityWithOptions(
     announcement: string,
-    options: {queue?: boolean},
+    options: {queue?: boolean, priority?: 'low' | 'default' | 'high'},
   ): void {
     if (Platform.OS === 'android' || Platform.OS === 'windows') {
       NativeAccessibilityInfo?.announceForAccessibility(announcement);

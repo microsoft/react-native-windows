@@ -1,8 +1,73 @@
 # Change Log - @react-native-windows/automation-commands
 
-<!-- This log was last generated on Tue, 17 Mar 2026 18:21:32 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 31 Mar 2026 21:09:16 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1045
+
+Tue, 31 Mar 2026 21:09:16 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1045
+
+## 0.0.0-canary.1044
+
+Tue, 31 Mar 2026 16:27:46 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1044
+
+## 0.0.0-canary.1043
+
+Tue, 31 Mar 2026 03:37:03 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1043
+
+## 0.0.0-canary.1042
+
+Mon, 30 Mar 2026 03:55:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1042
+
+## 0.0.0-canary.1041
+
+Sat, 28 Mar 2026 02:02:45 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1041
+
+## 0.0.0-canary.1040
+
+Fri, 27 Mar 2026 03:00:07 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1040
+
+## 0.0.0-canary.1039
+
+Wed, 25 Mar 2026 02:08:12 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1039
+
+## 0.0.0-canary.1038
+
+Sat, 21 Mar 2026 09:44:24 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1038
 
 ## 0.0.0-canary.1037
 

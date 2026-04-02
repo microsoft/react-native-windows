@@ -11,7 +11,6 @@
 #pragma warning(disable : 4996) // deprecated APIs
 #endif
 #include "ReactMarker.h"
-#include <cxxreact/JSExecutor.h>
 
 namespace facebook::react::ReactMarker {
 

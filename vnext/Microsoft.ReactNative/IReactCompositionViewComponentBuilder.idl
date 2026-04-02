@@ -73,6 +73,8 @@ namespace Microsoft.ReactNative.Composition
     void SetCreateVisualHandler(CreateVisualDelegate impl);
     void SetViewFeatures(ComponentViewFeatures viewFeatures);
     void SetUpdateLayoutMetricsHandler(UpdateLayoutMetricsDelegate impl);
+
+    DOC_STRING("Provides a customized ContainerVisual that this components children will be mounted into.  When overriding this, a clip is no longer automatically applied for overflow:\"hidden\"")
     void SetVisualToMountChildrenIntoHandler(VisualToMountChildrenIntoDelegate impl);
   };
 

@@ -15,7 +15,7 @@ import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
 import invariant from 'invariant'; // [Windows]
 // [Windows
-import type {KeyEvent} from '../../Types/CoreEventTypes';
+import type {KeyUpEvent, KeyDownEvent} from '../../Types/CoreEventTypes';
 // Windows]
 
 /**
@@ -111,7 +111,7 @@ const View: component(
           }
         : undefined;
 
-    const _keyDown = (event: KeyEvent) => {
+    const _keyDown = (event: KeyDownEvent) => {
       const keyDownEvents = otherProps.keyDownEvents;
       if (keyDownEvents != null && event.isPropagationStopped() !== true) {
         for (const el of keyDownEvents) {
@@ -130,7 +130,7 @@ const View: component(
       otherProps.onKeyDown && otherProps.onKeyDown(event);
     };
 
-    const _keyUp = (event: KeyEvent) => {
+    const _keyUp = (event: KeyUpEvent) => {
       const keyUpEvents = otherProps.keyUpEvents;
       if (keyUpEvents != null && event.isPropagationStopped() !== true) {
         for (const el of keyUpEvents) {
@@ -149,7 +149,7 @@ const View: component(
       otherProps.onKeyUp && otherProps.onKeyUp(event);
     };
 
-    const _keyDownCapture = (event: KeyEvent) => {
+    const _keyDownCapture = (event: KeyDownEvent) => {
       const keyDownEvents = otherProps.keyDownEvents;
       if (keyDownEvents != null && event.isPropagationStopped() !== true) {
         for (const el of keyDownEvents) {
@@ -168,7 +168,7 @@ const View: component(
       otherProps.onKeyDownCapture && otherProps.onKeyDownCapture(event);
     };
 
-    const _keyUpCapture = (event: KeyEvent) => {
+    const _keyUpCapture = (event: KeyUpEvent) => {
       const keyUpEvents = otherProps.keyUpEvents;
       if (keyUpEvents != null && event.isPropagationStopped() !== true) {
         for (const el of keyUpEvents) {

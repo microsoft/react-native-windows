@@ -1,0 +1,38 @@
+{
+  "List Components — Native Render Pipeline SectionList native mount 1": {
+    "metrics": {
+      "name": "SectionList native mount",
+      "meanDuration": 6.658689999580384,
+      "medianDuration": 6.504900008440018,
+      "stdDev": 0.5578793185297047,
+      "renderCount": 1,
+      "runs": 10,
+      "durations": [
+        6.384400010108948,
+        7.875100016593933,
+        6.401300013065338,
+        6.394400000572205,
+        7.334999978542328,
+        6.771200001239777,
+        6.608500003814697,
+        6.627799987792969,
+        6.103399991989136,
+        6.085799992084503
+      ],
+      "timestamp": "2026-03-25T09:11:17.694Z",
+      "nativeTimings": {
+        "fullPipeline": 6.504900008440018
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 20,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.6,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-25T09:11:17.697Z"
+  }
+}

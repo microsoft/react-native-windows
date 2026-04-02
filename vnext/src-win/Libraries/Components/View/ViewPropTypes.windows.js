@@ -15,11 +15,13 @@ import type {ViewStyleProp} from '../../StyleSheet/StyleSheet';
 import type {
   BlurEvent,
   FocusEvent,
+  GestureResponderEvent,
+  KeyDownEvent,
+  KeyUpEvent,
   LayoutChangeEvent,
   LayoutRectangle,
   MouseEvent,
   PointerEvent,
-  GestureResponderEvent,
   KeyEvent, // [Windows]
 } from '../../Types/CoreEventTypes';
 import type {
@@ -38,7 +40,7 @@ type DirectEventProps = $ReadOnly<{
    * when the user performs an accessibility custom action.
    *
    */
-  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
+  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => unknown,
 
   /**
    * When `accessible` is true, the system will try to invoke this function
@@ -46,7 +48,7 @@ type DirectEventProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/view#onaccessibilitytap
    */
-  onAccessibilityTap?: ?() => mixed,
+  onAccessibilityTap?: ?() => unknown,
 
   /**
    * Invoked on mount and layout changes with:
@@ -59,7 +61,7 @@ type DirectEventProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/view#onlayout
    */
-  onLayout?: ?(event: LayoutChangeEvent) => mixed,
+  onLayout?: ?(event: LayoutChangeEvent) => unknown,
 
   /**
    * When `accessible` is `true`, the system will invoke this function when the
@@ -67,7 +69,7 @@ type DirectEventProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/view#onmagictap
    */
-  onMagicTap?: ?() => mixed,
+  onMagicTap?: ?() => unknown,
 
   /**
    * When `accessible` is `true`, the system will invoke this function when the
@@ -75,7 +77,7 @@ type DirectEventProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/view#onaccessibilityescape
    */
-  onAccessibilityEscape?: ?() => mixed,
+  onAccessibilityEscape?: ?() => unknown,
 }>;
 
 type MouseEventProps = $ReadOnly<{
@@ -114,6 +116,13 @@ type FocusEventProps = $ReadOnly<{
   onBlurCapture?: ?(event: BlurEvent) => void,
   onFocus?: ?(event: FocusEvent) => void,
   onFocusCapture?: ?(event: FocusEvent) => void,
+}>;
+
+type KeyEventProps = $ReadOnly<{
+  onKeyDown?: ?(event: KeyDownEvent) => void,
+  onKeyDownCapture?: ?(event: KeyDownEvent) => void,
+  onKeyUp?: ?(event: KeyUpEvent) => void,
+  onKeyUpCapture?: ?(event: KeyUpEvent) => void,
 }>;
 
 type TouchEventProps = $ReadOnly<{
@@ -345,7 +354,7 @@ export type ViewPropsAndroid = $ReadOnly<{
    *
    * @platform android
    */
-  onClick?: ?(event: GestureResponderEvent) => mixed,
+  onClick?: ?(event: GestureResponderEvent) => unknown,
 }>;
 
 export type TVViewPropsIOS = $ReadOnly<{
@@ -432,12 +441,12 @@ type ViewPropsWindows = $ReadOnly<{|
    *
    * @platform windows
    */
-  onKeyUp?: ?(e: KeyEvent) => void,
-  onKeyUpCapture?: ?(e: KeyEvent) => void,
+  onKeyUp?: ?(e: KeyUpEvent) => void,
+  onKeyUpCapture?: ?(e: KeyUpEvent) => void,
   keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
 
-  onKeyDown?: ?(e: KeyEvent) => void,
-  onKeyDownCapture?: ?(e: KeyEvent) => void,
+  onKeyDown?: ?(e: KeyDownEvent) => void,
+  onKeyDownCapture?: ?(e: KeyDownEvent) => void,
   keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
   /**
    * Specifies the Tooltip for the view
@@ -577,6 +586,7 @@ export type ViewProps = $ReadOnly<{
   ...MouseEventProps,
   ...PointerEventProps,
   ...FocusEventProps,
+  ...KeyEventProps,
   ...TouchEventProps,
   ...ViewPropsAndroid,
   ...ViewPropsIOS,

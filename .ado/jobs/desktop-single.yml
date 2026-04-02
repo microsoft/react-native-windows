@@ -1,0 +1,216 @@
+#
+# Step template: Build and test one Desktop platform/config combination.
+# Called from build-template.yml which owns the job definition, artifact
+# publishing, ESRP signing, and templateContext.
+#
+# Note: Desktop test filter variables (Desktop.IntegrationTests.Filter,
+# Desktop.UnitTests.Filter, Desktop.IntegrationTests.SkipRNTester) must
+# be defined at the job level in build-template.yml.
+#
+
+parameters:
+  - name: buildPlatform
+    type: string
+  - name: buildConfiguration
+    type: string
+  - name: buildEnvironment
+    type: string
+    default: PullRequest
+    values:
+      - PullRequest
+      - Continuous
+
+steps:
+  # Set up IIS for integration tests
+  - pwsh: |
+      Install-WindowsFeature -Name Web-Server, Web-Scripting-Tools
+    displayName: Install IIS
+
+  - pwsh: |
+      Invoke-WebRequest `
+        -Uri 'https://download.visualstudio.microsoft.com/download/pr/20598243-c38f-4538-b2aa-af33bc232f80/ea9b2ca232f59a6fdc84b7a31da88464/dotnet-hosting-8.0.3-win.exe' `
+        -OutFile dotnet-hosting-8.0.3-win.exe
+
+      Write-Host 'Installing .NET hosting bundle'
+      Start-Process -Wait -FilePath .\dotnet-hosting-8.0.3-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
+      Write-Host 'Installed .NET hosting bundle'
+
+      Invoke-WebRequest `
+        -Uri 'https://download.visualstudio.microsoft.com/download/pr/f2ec926e-0d98-4a8b-8c70-722ccc2ca0e5/b59941b0c60f16421679baafdb7e9338/dotnet-sdk-7.0.407-win-x64.exe' `
+        -OutFile dotnet-sdk-7.0.407-win-x64.exe
+
+      Write-Host 'Installing .NET 7 SDK'
+      Start-Process -Wait -FilePath .\dotnet-sdk-7.0.407-win-x64.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
+      Write-Host 'Installed .NET 7 SDK'
+    displayName: Install the .NET Core Hosting Bundle
+
+  - template: ../templates/checkout-shallow.yml
+
+  - template: ../templates/prepare-js-env.yml
+
+  - template: ../templates/prepare-build-env.yml
+    parameters:
+      platform: ${{ parameters.buildPlatform }}
+      configuration: ${{ parameters.buildConfiguration }}
+      buildEnvironment: ${{ parameters.buildEnvironment }}
+
+  - template: ../templates/apply-published-version-vars.yml
+
+  - ${{ if eq(variables['Desktop.IntegrationTests.SkipRNTester'], true) }}:
+    - pwsh: |
+        $newValue = '(FullyQualifiedName!~RNTesterIntegrationTests::)&' + "$(Desktop.IntegrationTests.Filter)"
+        Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
+      displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
+
+  - template: ../templates/msbuild-sln.yml
+    parameters:
+      solutionDir: vnext
+      solutionName: ReactWindows-Desktop.sln
+      buildPlatform: ${{ parameters.buildPlatform }}
+      buildConfiguration: ${{ parameters.buildConfiguration }}
+      oneESMode: true
+      msbuildArguments: /p:ForceImportAfterCppTargets=$(Build.SourcesDirectory)\vnext\PropertySheets\CIBuildOptimizations.props
+
+  - ${{ if and(eq(parameters.buildConfiguration, 'Debug'), eq(parameters.buildPlatform, 'x64')) }}:
+    - script: yarn bundle
+      displayName: Build react-native-win32 RNTester bundle
+      workingDirectory: packages/@office-iss/react-native-win32
+
+  - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+    - template: ../templates/component-governance.yml
+
+  # --- Tests ---
+  - template: ../templates/discover-google-test-adapter.yml
+
+  - ${{ if ne(parameters.buildPlatform, 'ARM64EC') }}:
+    - task: VSTest@2
+      displayName: Run Desktop Unit Tests
+      timeoutInMinutes: 5 # Set smaller timeout, due to hangs
+      inputs:
+        testSelector: testAssemblies
+        testAssemblyVer2: |
+          React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
+        # Bug #8000: Tracks fixing the tests
+        # ReactCommon.UnitTests/ReactCommon.UnitTests.exe
+        pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+        searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+        testFiltercriteria: $(Desktop.UnitTests.Filter)
+        runTestsInIsolation: true
+        platform: ${{ parameters.buildPlatform }}
+        configuration: ${{ parameters.buildConfiguration }}
+        publishRunAttachments: true
+        collectDumpOn: onAbortOnly
+        vsTestVersion: latest
+        failOnMinTestsNotRun: true
+
+    # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
+  - ${{ if and(eq(parameters.buildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true), ne(parameters.buildPlatform, 'ARM64EC')) }}:
+    - task: PowerShell@2
+      displayName: Set up test servers
+      inputs:
+        targetType: filePath
+        filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
+        arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
+        pwsh: true
+
+    - task: DotNetCoreCLI@2
+      displayName: Publish Test Website
+      inputs:
+        command: publish
+        publishWebProjects: false
+        zipAfterPublish: false
+        projects: $(Build.SourcesDirectory)\vnext\TestWebsite\Microsoft.ReactNative.Test.Website.csproj
+        arguments: --configuration ${{ parameters.buildConfiguration }}
+
+    - pwsh: |
+        # Create and make available to IIS
+        $cert = New-SelfSignedCertificate `
+          -Type SSLServerAuthentication `
+          -KeyExportPolicy Exportable `
+          -Subject 'CN=localhost' `
+          -NotAfter ([DateTime]::Now).AddHours(2) `
+          -CertStoreLocation Cert:\LocalMachine\My\
+
+        $certPath = "${env:TEMP}\localhost.pfx"
+        $certPass = -join ('a'..'z' | Get-Random -Count 32) | ConvertTo-SecureString -AsPlainText -Force
+        $certHash = $cert.Thumbprint
+        Write-Host "##vso[task.setvariable variable=TestWebsiteCertificateThumbprint]$certHash"
+
+        # Export PFX
+        $cert | Export-PfxCertificate -FilePath $certPath -Password $certPass
+
+        # Trust globally
+        Import-PfxCertificate `
+          -Exportable `
+          -FilePath $certPath `
+          -Password $certPass `
+          -CertStoreLocation Cert:\LocalMachine\Root\
+      displayName: Install SSL Certificate
+
+    - task: IISWebAppManagementOnMachineGroup@0
+      displayName: Create Test Website
+      inputs:
+        EnableIIS: false
+        IISDeploymentType: IISWebsite
+        ActionIISWebsite: CreateOrUpdateWebsite
+        SSLCertThumbPrint: $(TestWebsiteCertificateThumbprint)
+        WebsiteName: RNW Test Website
+        # Hard-coding x64 for publish path.
+        # Our MSBuild customizations cause dotnet commands to assume the default PlatformTarget
+        WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\x64\${{ parameters.buildConfiguration }}\Microsoft.ReactNative.Test.Website\Publish
+        WebsitePhysicalPathAuth: WebsiteUserPassThrough
+        CreateOrUpdateAppPoolForWebsite: false
+        ConfigureAuthenticationForWebsite: false
+        AppPoolNameForWebsite: DefaultAppPool
+        AddBinding: true
+        Bindings: |
+          {
+            bindings: [
+              {
+                "protocol": "http",
+                "ipAddress": "*",
+                "port": "5555",
+                "sslThumbprint": "",
+                "sniFlag": false
+              },
+              {
+                "protocol": "https",
+                "ipAddress": "*",
+                "port": "5543",
+                "sslThumbprint": "$(TestWebsiteCertificateThumbprint)",
+                "sniFlag": false
+              }
+            ]
+          }
+
+    - task: PowerShell@2
+      displayName: Ensure servers readiness
+      inputs:
+        targetType: 'inline'
+        pwsh: true
+        script: |
+          # Test website
+          Invoke-WebRequest -UseBasicParsing -Uri 'http://localhost:5555'
+          Invoke-WebRequest -UseBasicParsing -Uri 'https://localhost:5543'
+
+          # Bundler
+          Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true"
+      continueOnError: true
+
+    - task: VSTest@2
+      displayName: Run Desktop Integration Tests
+      inputs:
+        testSelector: testAssemblies
+        testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
+        searchFolder: $(Build.SourcesDirectory)\vnext\target\${{ parameters.buildPlatform }}\${{ parameters.buildConfiguration }}
+        testFiltercriteria: $(Desktop.IntegrationTests.Filter)
+        runTestsInIsolation: true
+        platform: ${{ parameters.buildPlatform }}
+        configuration: ${{ parameters.buildConfiguration }}
+        publishRunAttachments: true
+        collectDumpOn: onAbortOnly
+        vsTestVersion: latest
+        failOnMinTestsNotRun: true
+        otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
+
+    - template: ../templates/stop-packagers.yml

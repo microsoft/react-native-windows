@@ -325,7 +325,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleContentHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleProxy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketTurboModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IBlobResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IHttpResource.h" />
@@ -434,7 +433,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\TraceEventSerializer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\ConsoleTimeStamp.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\HostTargetTraceRecording.cpp " />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\tracing\TraceRecordingStateSerializer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\HostTargetTracing.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\jsi-utils.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\ReactPerfettoLogger.cpp" />
@@ -447,11 +445,15 @@
   </ItemGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true'">
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\defaults\DefaultTurboModules.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\intersectionobserver\NativeIntersectionObserver.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\observers\intersection\IntersectionObserver.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\observers\intersection\IntersectionObserverManager.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\observers\intersection\IntersectionObserverState.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\microtasks\NativeMicrotasks.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\featureflags\NativeReactNativeFeatureFlags.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\dom\NativeDOM.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\idlecallbacks\NativeIdleCallbacks.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\webperformance\NativePerformance.cpp" />    
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\webperformance\NativePerformance.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\AttributedString.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\AttributedStringBox.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\BaseViewProps.cpp" DisableSpecificWarnings="4459;4715;%(DisableSpecificWarnings)" />

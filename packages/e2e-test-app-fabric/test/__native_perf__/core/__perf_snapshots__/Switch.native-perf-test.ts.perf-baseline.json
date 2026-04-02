@@ -1,0 +1,43 @@
+{
+  "Native Render Pipeline Switch native mount 1": {
+    "metrics": {
+      "name": "Switch native mount",
+      "meanDuration": 1.7548199892044067,
+      "medianDuration": 1.7342000007629395,
+      "stdDev": 0.14067122956094338,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        1.7342000007629395,
+        1.7372000217437744,
+        1.8542999625205994,
+        1.7226999998092651,
+        1.6146999597549438,
+        1.69159996509552,
+        1.8396000266075134,
+        1.8578999638557434,
+        1.54339998960495,
+        1.6279000043869019,
+        1.9399999976158142,
+        1.8633999824523926,
+        1.6168999671936035,
+        1.6345999836921692,
+        2.0439000129699707
+      ],
+      "timestamp": "2026-03-25T09:12:24.458Z",
+      "nativeTimings": {
+        "fullPipeline": 1.7342000007629395
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-25T09:12:24.460Z"
+  }
+}
