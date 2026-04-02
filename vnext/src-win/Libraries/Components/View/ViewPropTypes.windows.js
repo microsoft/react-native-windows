@@ -85,6 +85,8 @@ type MouseEventProps = $ReadOnly<{
 
 // Experimental/Work in Progress Pointer Event Callbacks (not yet ready for use)
 type PointerEventProps = $ReadOnly<{
+  onAuxClick?: ?(event: PointerEvent) => void, // [Windows]
+  onAuxClickCapture?: ?(event: PointerEvent) => void, // [Windows]
   onClick?: ?(event: PointerEvent) => void,
   onClickCapture?: ?(event: PointerEvent) => void,
   onPointerEnter?: ?(event: PointerEvent) => void,

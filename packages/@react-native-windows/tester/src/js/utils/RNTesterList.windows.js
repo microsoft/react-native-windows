@@ -402,6 +402,11 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/PointerEvents/PointerEventsExample'),
   },
   {
+    key: 'PointerClickEventsExample',
+    category: 'Basic',
+    module: require('../examples-win/Pointer/PointerClickEventsExample'),
+  },
+  {
     key: 'PointerButtonExample',
     category: 'Basic',
     module: require('../examples-win/Pointer/PointerButtonExample'),
