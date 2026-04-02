@@ -2069,12 +2069,12 @@
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.4.tgz#7fb09506ee00a82989125cc03e8495204c8afc01"
   integrity sha512-Kf8h1AMnBo54b1fdiVylP2P/iFcZqzpMYcglC28EEFB1DEnOjsNr6Ucqc+3R9e91vHxEDnhZFbYDmAe79P2gjA==
 
-"@react-native-windows/find-repo-root@^0.0.0-canary.99":
-  version "0.0.0-canary.99"
-  resolved "https://registry.yarnpkg.com/@react-native-windows/find-repo-root/-/find-repo-root-0.0.0-canary.99.tgz#9aba0d034c7bbe0de7108b38bb5e352ec8c6cbf2"
-  integrity sha512-ks88JuTE/EmV9etG0QpxXo96lgnYe5q5RjbtW0aboLy93djKVb+P95xrr7psk15TzcQGTM063iJrKVabRjLhNg==
+"@react-native-windows/find-repo-root@^0.0.0-canary.100":
+  version "0.0.0-canary.100"
+  resolved "https://registry.yarnpkg.com/@react-native-windows/find-repo-root/-/find-repo-root-0.0.0-canary.100.tgz#28638f6bda2ba2a34242d453316b314ca8a04afd"
+  integrity sha512-zqmiKS02I+082dm/CwFQTVwG0RuhwW4j4q61aPLzHvlxGOd0P/FqwMC0zhc7McQB9M7HUczP0GYZ65D/X+7ung==
   dependencies:
-    "@react-native-windows/fs" "^0.0.0-canary.70"
+    "@react-native-windows/fs" "^0.0.0-canary.71"
     find-up "^4.1.0"
     minimatch "^10.0.3"
 
@@ -2086,13 +2086,21 @@
     graceful-fs "^4.2.8"
     minimatch "^10.0.3"
 
-"@react-native-windows/package-utils@^0.0.0-canary.96":
-  version "0.0.0-canary.96"
-  resolved "https://registry.yarnpkg.com/@react-native-windows/package-utils/-/package-utils-0.0.0-canary.96.tgz#545e53dabd788203d6daa2c050df6cea3836ed0b"
-  integrity sha512-FQ8c0vxVhIVOjmru+8CPliEwhRx+WPDFcskf4eu/cSiucW3n1LmBGsZaLkae02FHOl2yioT9hW1L7X5YDj5xIA==
+"@react-native-windows/fs@^0.0.0-canary.71":
+  version "0.0.0-canary.71"
+  resolved "https://registry.yarnpkg.com/@react-native-windows/fs/-/fs-0.0.0-canary.71.tgz#20299b596f90f511f9ebddf62b56d2275430d57a"
+  integrity sha512-a+MdjKRl3X9JlTQv+CO7pIdPW/8geqG37Urc4qXPgGFegDndb05XOMvR4z1qmQgKvMPDfgCbhqUFLbYXmZxoAw==
   dependencies:
-    "@react-native-windows/find-repo-root" "^0.0.0-canary.99"
-    "@react-native-windows/fs" "^0.0.0-canary.70"
+    graceful-fs "^4.2.8"
+    minimatch "^10.0.3"
+
+"@react-native-windows/package-utils@^0.0.0-canary.96":
+  version "0.0.0-canary.97"
+  resolved "https://registry.yarnpkg.com/@react-native-windows/package-utils/-/package-utils-0.0.0-canary.97.tgz#ca3421f3356def7bb0894e4a02f3cf1647e72f44"
+  integrity sha512-DT+hAT6dTzwkF6lQbbxMg37V4ms5ntAyTl/RjqtgPM+boM7yMCAZ/ZTkhk310y2ML2EjNJD2fip6CWBPJjJj7Q==
+  dependencies:
+    "@react-native-windows/find-repo-root" "^0.0.0-canary.100"
+    "@react-native-windows/fs" "^0.0.0-canary.71"
     get-monorepo-packages "^1.2.0"
     lodash "^4.17.15"
     minimatch "^10.0.3"
@@ -2851,9 +2859,9 @@
   integrity sha512-F0KIgDJfy2nA3zMLmWGKxcH2ZVEtCZXHHdOQs2gSaQ27+lNeEfGxzkIw90aXswATX7AZ33tahPbzy6KAfUreVw==
 
 "@types/node@^22.0.0", "@types/node@^22.14.0":
-  version "22.19.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.19.5.tgz#82e8c3da99667246efc63a634114ab34fb34e08e"
-  integrity sha512-HfF8+mYcHPcPypui3w3mvzuIErlNOh2OAG+BCeBZCEwyiD5ls2SiCwEyT47OELtf7M3nHxBdu0FsmzdKxkN52Q==
+  version "22.19.15"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-22.19.15.tgz#6091d99fdf7c08cb57dc8b1345d407ba9a1df576"
+  integrity sha512-F0R/h2+dsy5wJAUe3tAU6oqa2qbWY5TpNfL/RGmo1y38hiyO1w3x2jPtt76wmuaJI4DQnOBu21cNXQ2STIUUWg==
   dependencies:
     undici-types "~6.21.0"
 
@@ -12420,9 +12428,9 @@ ws@^7, ws@^7.5.10:
   integrity sha512-+dbF1tHwZpXcbOJdVOkzLDxZP1ailvSxM6ZweXTegylPny803bFhA+vqBYw4s31NSAk4S2Qz+AKXK9a4wkdjcQ==
 
 ws@^7.2.3, ws@^8.17.1, ws@^8.18.3:
-  version "8.19.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.19.0.tgz#ddc2bdfa5b9ad860204f5a72a4863a8895fd8c8b"
-  integrity sha512-blAT2mjOEIi0ZzruJfIhb3nps74PRWTCz1IjglWEEpQl5XS/UNama6u2/rjFkDDouqr4L67ry+1aGIALViWjDg==
+  version "8.20.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.20.0.tgz#4cd9532358eba60bc863aad1623dfb045a4d4af8"
+  integrity sha512-sAt8BhgNbzCtgGbt2OxmpuryO63ZoDk/sqaB/znQm94T4fCEsy/yV+7CdC1kJhOU9lboAEU7R3kquuycDoibVA==
 
 xml-formatter@^2.4.0:
   version "2.6.1"
