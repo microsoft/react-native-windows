@@ -55,7 +55,11 @@ async function run() {
       exclusions: {type: 'string', short: 'e'},
       'local-only': {type: 'boolean', short: 'l', default: false},
       init: {type: 'boolean', short: 'i', default: false},
-      'allow-local-line-sections': {type: 'boolean', short: 'a', default: false},
+      'allow-local-line-sections': {
+        type: 'boolean',
+        short: 'a',
+        default: false,
+      },
       quiet: {type: 'boolean', short: 'q', default: false},
       superquiet: {type: 'boolean', short: 's', default: false},
       'parse-ids': {type: 'boolean', default: false},

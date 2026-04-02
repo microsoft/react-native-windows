@@ -270,7 +270,19 @@ function main() {
   const opts = parseArgs();
 
   // 1. Load CI results JSON (supports multiple --results paths)
-  const ciResults = {suites: [], branch: '', commitSha: '', timestamp: '', summary: {totalSuites: 0, totalTests: 0, passed: 0, failed: 0, durationMs: 0}};
+  const ciResults = {
+    suites: [],
+    branch: '',
+    commitSha: '',
+    timestamp: '',
+    summary: {
+      totalSuites: 0,
+      totalTests: 0,
+      passed: 0,
+      failed: 0,
+      durationMs: 0,
+    },
+  };
   const resultsPaths = opts.results.filter(p => fs.existsSync(p));
   if (resultsPaths.length === 0) {
     console.error(`❌ No results files found: ${opts.results.join(', ')}`);
@@ -288,7 +300,9 @@ function main() {
     ciResults.summary.passed += partial.summary?.passed || 0;
     ciResults.summary.failed += partial.summary?.failed || 0;
     ciResults.summary.durationMs += partial.summary?.durationMs || 0;
-    console.log(`📊 Loaded ${partial.suites.length} suite(s) from ${resultsPath}`);
+    console.log(
+      `📊 Loaded ${partial.suites.length} suite(s) from ${resultsPath}`,
+    );
   }
 
   // 2. Compare each suite against its committed baseline

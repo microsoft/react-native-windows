@@ -6,7 +6,6 @@
  */
 
 import fs from '@react-native-windows/fs';
-import {readdirSync} from 'fs';
 import * as path from 'path';
 import * as os from 'os';
 import type {PerfMetrics} from '../interfaces/PerfMetrics';
@@ -71,9 +70,7 @@ export class SnapshotManager {
       Buffer.from(snapshotFilePath).toString('base64url') + '.json',
     );
     if (fs.existsSync(metricsFile)) {
-      return JSON.parse(
-        fs.readFileSync(metricsFile, 'utf-8'),
-      ) as SnapshotFile;
+      return JSON.parse(fs.readFileSync(metricsFile, 'utf-8')) as SnapshotFile;
     }
     return null;
   }
@@ -81,7 +78,7 @@ export class SnapshotManager {
   /** Clean up temp run metrics directory. */
   static clearRunMetrics(): void {
     if (fs.existsSync(SnapshotManager._runMetricsDir)) {
-      for (const f of readdirSync(SnapshotManager._runMetricsDir)) {
+      for (const f of fs.readdirSync(SnapshotManager._runMetricsDir)) {
         fs.unlinkSync(path.join(SnapshotManager._runMetricsDir, f));
       }
     }
