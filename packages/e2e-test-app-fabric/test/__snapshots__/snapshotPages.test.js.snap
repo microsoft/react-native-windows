@@ -36053,6 +36053,46 @@ exports[`snapshotAllPages Pointer Button 2`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Pointer Clicks 1`] = `
+<View>
+  <View
+    accessible={true}
+    onAuxClick={[Function]}
+    onClick={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderRadius": 10,
+          "height": 200,
+          "justifyContent": "center",
+          "margin": 10,
+          "width": 200,
+        },
+        {
+          "backgroundColor": "gray",
+        },
+      ]
+    }
+    testID="pointer-click-target"
+  />
+  <Text
+    accessible={true}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="pointer-click-text"
+  >
+    onClick should cause the box to go red, onAuxClick will cause it go green
+  </Text>
+</View>
+`;
+
 exports[`snapshotAllPages Pointer Events 1`] = `
 <View>
   <View

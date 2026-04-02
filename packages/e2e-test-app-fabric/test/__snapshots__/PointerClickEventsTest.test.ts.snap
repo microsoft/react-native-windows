@@ -6,15 +6,15 @@ exports[`Pointer onClick Test onAuxClick reports correct native event properties
   "pressure": 0,
   "pointerType": "mouse",
   "clientX": 110,
-  "clientY": 166,
+  "clientY": 165,
   "x": 110,
-  "y": 166,
+  "y": 165,
   "pageX": 110,
-  "pageY": 166,
+  "pageY": 165,
   "screenX": 100,
-  "screenY": 100,
+  "screenY": 99,
   "offsetX": 100,
-  "offsetY": 100,
+  "offsetY": 99,
   "width": 0,
   "height": 0,
   "tiltX": 0,
@@ -29,7 +29,7 @@ exports[`Pointer onClick Test onAuxClick reports correct native event properties
   "metaKey": false,
   "isPrimary": true,
   "button": 1,
-  "target": 1276
+  "target": 1272
 }"
 `;
 
@@ -39,15 +39,15 @@ exports[`Pointer onClick Test onAuxClick reports correct native event properties
   "pressure": 0,
   "pointerType": "mouse",
   "clientX": 110,
-  "clientY": 166,
+  "clientY": 165,
   "x": 110,
-  "y": 166,
+  "y": 165,
   "pageX": 110,
-  "pageY": 166,
+  "pageY": 165,
   "screenX": 100,
-  "screenY": 100,
+  "screenY": 99,
   "offsetX": 100,
-  "offsetY": 100,
+  "offsetY": 99,
   "width": 0,
   "height": 0,
   "tiltX": 0,
@@ -62,7 +62,7 @@ exports[`Pointer onClick Test onAuxClick reports correct native event properties
   "metaKey": false,
   "isPrimary": true,
   "button": 2,
-  "target": 1276
+  "target": 1272
 }"
 `;
 
@@ -72,15 +72,15 @@ exports[`Pointer onClick Test onClick reports correct native event properties on
   "pressure": 0,
   "pointerType": "mouse",
   "clientX": 110,
-  "clientY": 166,
+  "clientY": 165,
   "x": 110,
-  "y": 166,
+  "y": 165,
   "pageX": 110,
-  "pageY": 166,
+  "pageY": 165,
   "screenX": 100,
-  "screenY": 100,
+  "screenY": 99,
   "offsetX": 100,
-  "offsetY": 100,
+  "offsetY": 99,
   "width": 0,
   "height": 0,
   "tiltX": 0,
@@ -95,6 +95,6 @@ exports[`Pointer onClick Test onClick reports correct native event properties on
   "metaKey": false,
   "isPrimary": true,
   "button": 0,
-  "target": 1276
+  "target": 1272
 }"
 `;
