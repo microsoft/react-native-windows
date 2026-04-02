@@ -17,19 +17,23 @@
 // The macros below are internal implementation details for macro defined in nativeModules.h
 //
 
+// ADL-based fallback: returns false for any type not tagged by the macros below.
+// Using ADL instead of explicit template specialization allows the macros to be
+// used inside a namespace (explicit specializations of a global template must
+// occur at global scope, which the macros cannot guarantee).
 template <typename T>
-struct IsReactTurboModule;
+constexpr bool ReactIsReactTurboModuleImpl(T *) noexcept {
+  return false;
+}
 
-// Default to false if no specific override
 template <typename T>
-struct IsReactTurboModule : std::false_type {};
+struct IsReactTurboModule : std::bool_constant<ReactIsReactTurboModuleImpl(static_cast<T *>(nullptr))> {};
 
 #define INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(                                                            \
     moduleStruct, moduleName, eventEmitterName, isReactTurboModule)                                                 \
   struct moduleStruct;                                                                                              \
                                                                                                                     \
-  template <>                                                                                                       \
-  struct IsReactTurboModule<moduleStruct> : std::isReactTurboModule##_type {};                                      \
+  constexpr bool ReactIsReactTurboModuleImpl(moduleStruct *) noexcept { return isReactTurboModule; }                \
                                                                                                                     \
   template <class TDummy>                                                                                           \
   struct moduleStruct##_ModuleRegistration final : winrt::Microsoft::ReactNative::ModuleRegistration {              \
@@ -70,8 +74,7 @@ struct IsReactTurboModule : std::false_type {};
     moduleStruct, moduleName, eventEmitterName, isReactTurboModule)                                    \
   struct moduleStruct;                                                                                 \
                                                                                                        \
-  template <>                                                                                          \
-  struct IsReactTurboModule<moduleStruct> : std::isReactTurboModule##_type {};                         \
+  constexpr bool ReactIsReactTurboModuleImpl(moduleStruct *) noexcept { return isReactTurboModule; }   \
                                                                                                        \
   template <class TRegistry>                                                                           \
   constexpr void GetReactModuleInfo(moduleStruct *, TRegistry &registry) noexcept {                    \
