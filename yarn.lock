@@ -2885,13 +2885,12 @@
     find-up "^5.0.0"
 
 "@rnx-kit/metro-config@^1.3.5":
-  version "1.3.15"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.3.15.tgz#357243579d7c96f9931a037864f5c58c0ce3a1cb"
-  integrity sha512-6papm4cc6uho39M7E4spxGec4jI0wLUSbvAEho0zITYgGc/U2xNnMHT37hDO4HyZoz72P8BwxsPgGfxa74+epw==
+  version "1.3.17"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.3.17.tgz#8efc69151161e0ce76b6966d3fc9de284a189391"
+  integrity sha512-OAQhevPAYkRcFtGHv8Fxl9P0rQhc3slcclmHHIsV6IYanqeIl8uW/djmLY27MBLu+uvjNCirc7XJ9sH9mUYuRQ==
   dependencies:
-    "@rnx-kit/console" "^1.0.0"
     "@rnx-kit/tools-node" "^2.0.0"
-    "@rnx-kit/tools-react-native" "^1.3.4"
+    "@rnx-kit/tools-react-native" "^1.4.1"
     "@rnx-kit/tools-workspaces" "^0.1.3"
 
 "@rnx-kit/metro-plugin-cyclic-dependencies-detector@^1.1.1":
@@ -2974,10 +2973,10 @@
   resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-2.1.1.tgz#550016458ec8b67d21949efeafdb4ba2870d5e69"
   integrity sha512-jZC/pmeM3fv4LwpkVWlLyv5dOh6haUw/dBaDC0e5zkfehkIdLtRhVwz4l7iH9MW/i4I9OySoc+2DtDpX7KZyZA==
 
-"@rnx-kit/tools-react-native@^1.3.2", "@rnx-kit/tools-react-native@^1.3.4", "@rnx-kit/tools-react-native@^1.3.5":
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-react-native/-/tools-react-native-1.3.5.tgz#57a0dd7056c55a23d311515def44b292bc6aa4fd"
-  integrity sha512-fc+3hxdlicW3GEhI0Umjj+rnVLSLuxVJoGvUBwWvcaCnlNaaTssBjhd7xSvlfLDrgtuXxhBruA76wdDdZI8tiQ==
+"@rnx-kit/tools-react-native@^1.3.2", "@rnx-kit/tools-react-native@^1.3.4", "@rnx-kit/tools-react-native@^1.3.5", "@rnx-kit/tools-react-native@^1.4.1":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-react-native/-/tools-react-native-1.4.2.tgz#099972ecb705276d17fea72da5531f24271fe3a7"
+  integrity sha512-dzXMvJdOXWl6hyAem8TceinWIH5zEjCSj0lvtHx09fIPbFu9IjiFT6X8xBBmAOXixzu4FLJw1c41N78a2Q/yCg==
   dependencies:
     "@rnx-kit/tools-node" "^2.0.1"
 
@@ -12715,9 +12714,9 @@ write-file-atomic@^4.0.2:
     signal-exit "^3.0.7"
 
 ws@8.16.0, ws@^7.2.3, ws@^8.17.1:
-  version "8.17.1"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.17.1.tgz#9293da530bb548febc95371d90f9c878727d919b"
-  integrity sha512-6XQFvXTkbfUOZOKKILFG1PDK2NDQs4azKQl26T0YS5CxqWLgXajbPZ+h4gZekJyRqFU8pvnbAbbs/3TgRPy+GQ==
+  version "8.20.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.20.0.tgz#4cd9532358eba60bc863aad1623dfb045a4d4af8"
+  integrity sha512-sAt8BhgNbzCtgGbt2OxmpuryO63ZoDk/sqaB/znQm94T4fCEsy/yV+7CdC1kJhOU9lboAEU7R3kquuycDoibVA==
 
 ws@^5.2.4:
   version "5.2.4"
