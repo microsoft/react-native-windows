@@ -202,7 +202,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.h",
-      "baseHash": "990884e6164dec969cb56b5c318cd11e13d2b8ee"
+      "baseHash": "822e09ad6a60a4a45c990920086d6ddd70967c47"
     },
     {
       "type": "derived",
