@@ -4,5 +4,5 @@ parameters:
   default: .
 
 steps:
-  - script: yarn install --immutable --cwd ${{ parameters.workingDirectory }}
+  - script: yarn --cwd ${{ parameters.workingDirectory }} install --immutable
     displayName: yarn install (immutable)
