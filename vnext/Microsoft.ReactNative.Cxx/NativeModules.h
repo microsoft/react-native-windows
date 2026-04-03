@@ -918,7 +918,7 @@ struct ModuleEventFieldInfo<TFunc<void(TArgs...)> TModule::*> {
       return [module = static_cast<ModuleType *>(module), field](IReactContext const &) noexcept {
         // Default emitter will do nothing
         // This will be replaced with a method that will call the jsi EventEmitter when JS requests the emitter
-        module->*field = [](TArgs... args) noexcept {};
+        module->*field = [](TArgs... /*args*/) noexcept {};
       };
     } else {
       return [module = static_cast<ModuleType *>(module), field, eventName, eventEmitterName](

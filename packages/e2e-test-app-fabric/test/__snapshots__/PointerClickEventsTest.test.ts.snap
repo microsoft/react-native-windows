@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pointer onClick Test onAuxClick reports correct native event properties on middle click 1`] = `
+"onAuxClick.nativeEvent: {
+  "pointerId": 1,
+  "pressure": 0,
+  "pointerType": "mouse",
+  "clientX": 110,
+  "clientY": 165,
+  "x": 110,
+  "y": 165,
+  "pageX": 110,
+  "pageY": 165,
+  "screenX": 100,
+  "screenY": 99,
+  "offsetX": 100,
+  "offsetY": 99,
+  "width": 0,
+  "height": 0,
+  "tiltX": 0,
+  "tiltY": 0,
+  "detail": 0,
+  "buttons": 0,
+  "tangentialPressure": 0,
+  "twist": 0,
+  "ctrlKey": false,
+  "shiftKey": false,
+  "altKey": false,
+  "metaKey": false,
+  "isPrimary": true,
+  "button": 1,
+  "target": 1272
+}"
+`;
+
+exports[`Pointer onClick Test onAuxClick reports correct native event properties on right click 1`] = `
+"onAuxClick.nativeEvent: {
+  "pointerId": 1,
+  "pressure": 0,
+  "pointerType": "mouse",
+  "clientX": 110,
+  "clientY": 165,
+  "x": 110,
+  "y": 165,
+  "pageX": 110,
+  "pageY": 165,
+  "screenX": 100,
+  "screenY": 99,
+  "offsetX": 100,
+  "offsetY": 99,
+  "width": 0,
+  "height": 0,
+  "tiltX": 0,
+  "tiltY": 0,
+  "detail": 0,
+  "buttons": 0,
+  "tangentialPressure": 0,
+  "twist": 0,
+  "ctrlKey": false,
+  "shiftKey": false,
+  "altKey": false,
+  "metaKey": false,
+  "isPrimary": true,
+  "button": 2,
+  "target": 1272
+}"
+`;
+
+exports[`Pointer onClick Test onClick reports correct native event properties on left click 1`] = `
+"onClick.nativeEvent: {
+  "pointerId": 1,
+  "pressure": 0,
+  "pointerType": "mouse",
+  "clientX": 110,
+  "clientY": 165,
+  "x": 110,
+  "y": 165,
+  "pageX": 110,
+  "pageY": 165,
+  "screenX": 100,
+  "screenY": 99,
+  "offsetX": 100,
+  "offsetY": 99,
+  "width": 0,
+  "height": 0,
+  "tiltX": 0,
+  "tiltY": 0,
+  "detail": 0,
+  "buttons": 0,
+  "tangentialPressure": 0,
+  "twist": 0,
+  "ctrlKey": false,
+  "shiftKey": false,
+  "altKey": false,
+  "metaKey": false,
+  "isPrimary": true,
+  "button": 0,
+  "target": 1272
+}"
+`;
