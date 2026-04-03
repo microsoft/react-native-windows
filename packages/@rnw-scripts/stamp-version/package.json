@@ -11,9 +11,7 @@
     "test": "rnw-scripts test",
     "watch": "rnw-scripts watch"
   },
-  "bin": {
-    "stamp-version": "./bin.js"
-  },
+  "bin": "./bin.js",
   "dependencies": {
     "@react-native-windows/fs": "^0.0.0-canary.71",
     "@react-native-windows/package-utils": "^0.0.0-canary.97",

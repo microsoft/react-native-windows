@@ -10,7 +10,6 @@
     "directory": "packages/@react-native-windows/perf-testing"
   },
   "license": "MIT",
-  "private": false,
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",

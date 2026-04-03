@@ -9,7 +9,6 @@
     "directory": "packages/react-native-windows-init"
   },
   "license": "MIT",
-  "private": false,
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",
@@ -18,9 +17,7 @@
     "test": "rnw-scripts test",
     "watch": "rnw-scripts watch"
   },
-  "bin": {
-    "react-native-windows-init": "./bin.js"
-  },
+  "bin": "./bin.js",
   "dependencies": {
     "@react-native-windows/fs": "0.0.0-canary.71",
     "@react-native-windows/telemetry": "0.0.0-canary.132",

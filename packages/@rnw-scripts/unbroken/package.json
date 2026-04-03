@@ -17,9 +17,7 @@
     "watch": "rnw-scripts watch"
   },
   "main": "lib-commonjs/unbroken.js",
-  "bin": {
-    "unbroken": "./bin.js"
-  },
+  "bin": "./bin.js",
   "dependencies": {
     "@react-native-windows/fs": "^0.0.0-canary.70"
   },

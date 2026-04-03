@@ -16,9 +16,7 @@
     "test": "rnw-scripts test",
     "watch": "rnw-scripts watch"
   },
-  "bin": {
-    "integrate-rn": "./bin.js"
-  },
+  "bin": "./bin.js",
   "dependencies": {
     "@react-native-community/template": "0.84.1",
     "@react-native-windows/find-repo-root": "^0.0.0-canary.100",
