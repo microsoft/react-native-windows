@@ -168,7 +168,7 @@
       "common": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.83.0, )"
+          "boost": "[1.84.0, )"
         }
       },
       "fmt": {
@@ -177,7 +177,7 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.83.0, )",
+          "boost": "[1.84.0, )",
           "fmt": "[1.0.0, )"
         }
       },
@@ -190,14 +190,14 @@
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.WindowsAppSDK": "[1.8.260209005, )",
           "ReactCommon": "[1.0.0, )",
-          "boost": "[1.83.0, )"
+          "boost": "[1.84.0, )"
         }
       },
       "reactcommon": {
         "type": "Project",
         "dependencies": {
           "Folly": "[1.0.0, )",
-          "boost": "[1.83.0, )"
+          "boost": "[1.84.0, )"
         }
       },
       "samplecustomcomponent": {
