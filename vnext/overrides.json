@@ -266,6 +266,18 @@
       "issue": 15827
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.cpp",
+      "baseHash": "76b208ec90cd8223a6cb917727ee0633001b6d00"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.h",
+      "baseHash": "990884e6164dec969cb56b5c318cd11e13d2b8ee"
+    },
+    {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/EventDispatcher.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/EventDispatcher.cpp",

@@ -1537,9 +1537,9 @@ void CompositionEventHandler::DispatchTouchEvent(
             if (IsPointerWithinInitialTree(activeTouch)) {
               activeTouch.eventEmitter->onClick(pointerEvent);
             }
-          } /* else if (IsPointerWithinInitialTree(activeTouch)) {
+          } else if (IsPointerWithinInitialTree(activeTouch)) {
             activeTouch.eventEmitter->onAuxClick(pointerEvent);
-          } */
+          }
           break;
         case TouchEventType::Cancel:
         case TouchEventType::CaptureLost:
