@@ -142,7 +142,7 @@ export function translateComponentEventType(type: EventTypeAnnotation,
           case 'ObjectTypeAnnotation':
             arrayTemplateArg = translateComponentEventType(type.elementType, aliases, baseAliasName, options).type;
             break;
-          case 'UnionTypeAnnotation':
+          case 'StringLiteralUnionTypeAnnotation':
             arrayTemplateArg = options.cppStringType; // TODO - better enum type handling than just passing a string
             break;
           default:
@@ -157,7 +157,7 @@ export function translateComponentEventType(type: EventTypeAnnotation,
     case 'MixedTypeAnnotation': {
       return { type: 'winrt::Microsoft::ReactNative::JSValue', initializer: '{nullptr}', alreadySupportsOptionalOrHasDefault: true };
     }
-    case 'UnionTypeAnnotation':
+    case 'StringLiteralUnionTypeAnnotation':
       return { type: options.cppStringType, initializer: '' };  // TODO - better enum type handling than just passing a string
     default:
       throw new Error(`Unhandled type: ${(type as any).type}`);

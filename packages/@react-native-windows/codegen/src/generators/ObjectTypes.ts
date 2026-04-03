@@ -12,7 +12,6 @@ import type {
   NativeModuleUnionTypeAnnotation,
   NativeModuleStringTypeAnnotation,
   NativeModuleFunctionTypeAnnotation,
-  StringLiteralTypeAnnotation,
   StringLiteralUnionTypeAnnotation,
   UnsafeAnyTypeAnnotation,
   Nullable,
@@ -33,44 +32,14 @@ function translateUnionReturnType(
   type: NativeModuleEnumDeclaration | NativeModuleUnionTypeAnnotation,
   options: CppCodegenOptions,
 ): string {
-  if (type.type === 'EnumDeclaration') {
-    switch (type.memberType) {
-      case 'StringTypeAnnotation':
-        return options.cppStringType;
-      case 'NumberTypeAnnotation':
-        return 'double';
-      default:
-        throw new Error(
-          `Unknown enum member type in translateReturnType: ${type.memberType}`,
-        );
-    }
+  switch ((type as NativeModuleEnumDeclaration).memberType) {
+    case 'StringTypeAnnotation':
+      return options.cppStringType;
+    case 'NumberTypeAnnotation':
+      return 'double';
+    default:
+      return '::React::JSValue';
   }
-
-  // UnionTypeAnnotation: determine C++ type from the types array
-  const types = type.types;
-  if (types.length === 0) {
-    return '::React::JSValue';
-  }
-
-  const allString = types.every(
-    t =>
-      t.type === 'StringTypeAnnotation' ||
-      t.type === 'StringLiteralTypeAnnotation',
-  );
-  if (allString) {
-    return options.cppStringType;
-  }
-
-  const allNumber = types.every(
-    t =>
-      t.type === 'NumberTypeAnnotation' ||
-      t.type === 'NumberLiteralTypeAnnotation',
-  );
-  if (allNumber) {
-    return 'double';
-  }
-
-  return '::React::JSValue';
 }
 
 // eslint-disable-next-line complexity
@@ -80,7 +49,6 @@ export function translateFieldOrReturnType(
         | NativeModuleBaseTypeAnnotation
         | NativeModuleStringTypeAnnotation
         | NativeModuleFunctionTypeAnnotation
-        | StringLiteralTypeAnnotation
         | StringLiteralUnionTypeAnnotation
       >
     | UnsafeAnyTypeAnnotation,
@@ -93,7 +61,7 @@ export function translateFieldOrReturnType(
   const returnType = type.type;
   switch (type.type) {
     case 'StringTypeAnnotation':
-    case 'StringLiteralTypeAnnotation':
+    case 'StringLiteralUnionTypeAnnotation':
       return options.cppStringType;
     case 'NumberTypeAnnotation':
     case 'FloatTypeAnnotation':
@@ -120,12 +88,7 @@ export function translateFieldOrReturnType(
     case 'ObjectTypeAnnotation':
       return getAnonymousAliasCppName(aliases, baseAliasName, type);
     case 'ReservedTypeAnnotation': {
-      // avoid: Property 'name' does not exist on type 'never'
-      const name = type.name;
-      // (#6597)
-       
-      if (name !== 'RootTag')
-        throw new Error(`Unknown reserved function: ${name} in ${callerName}`);
+      // ReservedTypeAnnotation.name is always 'RootTag' (#6597)
       return 'double';
     }
     case 'TypeAliasTypeAnnotation':

@@ -48,44 +48,14 @@ function translateUnionReturnType(
   target: ParamTarget,
   options: CppCodegenOptions,
 ): string {
-  if (type.type === 'EnumDeclaration') {
-    switch (type.memberType) {
-      case 'StringTypeAnnotation':
-        return options.cppStringType;
-      case 'NumberTypeAnnotation':
-        return 'double';
-      default:
-        throw new Error(
-          `Unknown enum member type in translateReturnType: ${type.memberType}`,
-        );
-    }
+  switch ((type as NativeModuleEnumDeclaration).memberType) {
+    case 'StringTypeAnnotation':
+      return options.cppStringType;
+    case 'NumberTypeAnnotation':
+      return 'double';
+    default:
+      return decorateType('::React::JSValue', target);
   }
-
-  // UnionTypeAnnotation: determine C++ type from the types array
-  const types = type.types;
-  if (types.length === 0) {
-    return decorateType('::React::JSValue', target);
-  }
-
-  const allString = types.every(
-    t =>
-      t.type === 'StringTypeAnnotation' ||
-      t.type === 'StringLiteralTypeAnnotation',
-  );
-  if (allString) {
-    return options.cppStringType;
-  }
-
-  const allNumber = types.every(
-    t =>
-      t.type === 'NumberTypeAnnotation' ||
-      t.type === 'NumberLiteralTypeAnnotation',
-  );
-  if (allNumber) {
-    return 'double';
-  }
-
-  return decorateType('::React::JSValue', target);
 }
 
 function translateFunction(
