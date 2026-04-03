@@ -11,32 +11,37 @@
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 
 const React = require('react');
-import {Pressable, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import RNTesterText from '../../components/RNTesterText';
 
 function PointerClickEventsExample(): React.Node {
   const [text, setText] = React.useState(
     'onClick should cause the box to go red, onAuxClick will cause it go green',
   );
-  const [bgColor, setBgColor]= React.useState('gray');
+  const [bgColor, setBgColor] = React.useState('gray');
   return (
     <View>
       <View
         accessible
         testID="pointer-click-target"
         style={[styles.targetBox, {backgroundColor: bgColor}]}
-        onClick={(e) => {
+        onClick={e => {
           setBgColor('red');
-          setText('onClick.nativeEvent: ' + JSON.stringify(e.nativeEvent, null, 2));
+          setText(
+            'onClick.nativeEvent: ' + JSON.stringify(e.nativeEvent, null, 2),
+          );
         }}
-        onAuxClick={(e) => {
+        onAuxClick={e => {
           setBgColor('green');
-          setText('onAuxClick.nativeEvent: ' + JSON.stringify(e.nativeEvent, null, 2));
+          setText(
+            'onAuxClick.nativeEvent: ' + JSON.stringify(e.nativeEvent, null, 2),
+          );
         }}
       />
-     <RNTesterText accessible testID='pointer-click-text'>{text}</RNTesterText>
+      <RNTesterText accessible testID="pointer-click-text">
+        {text}
+      </RNTesterText>
     </View>
-
   );
 }
 
@@ -46,8 +51,7 @@ exports.category = 'Basic';
 exports.title = 'Pointer Clicks';
 exports.documentationURL =
   'https://developer.mozilla.org/en-US/docs/Web/API/Element/auxclick_event';
-exports.description =
-  'Tests that onClick and onAuxClick work.';
+exports.description = 'Tests that onClick and onAuxClick work.';
 
 exports.examples = [
   {
