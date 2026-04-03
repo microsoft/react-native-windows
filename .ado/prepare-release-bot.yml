@@ -60,7 +60,7 @@ jobs:
       - script: if not exist %APPDATA%\npm (mkdir %APPDATA%\npm)
         displayName: Ensure npm directory for npx commands
 
-      - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile
+      - script: yarn install --immutable
         displayName: yarn install
 
       - script: npx lage build --scope @rnw-scripts/prepare-release --scope @rnw-scripts/beachball-config
