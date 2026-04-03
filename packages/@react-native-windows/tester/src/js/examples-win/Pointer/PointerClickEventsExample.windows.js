@@ -11,7 +11,7 @@
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 
 const React = require('react');
-import {Pressable, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import RNTesterText from '../../components/RNTesterText';
 
 function PointerClickEventsExample(): React.Node {
