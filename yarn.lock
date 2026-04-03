@@ -8718,9 +8718,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 knip@^5.85.0:
-  version "5.87.0"
-  resolved "https://registry.yarnpkg.com/knip/-/knip-5.87.0.tgz#ae3e9879ff82da050e1ea70818fb68e7ddb978da"
-  integrity sha512-oJBrwd4/Mt5E6817vcdQLaPpejxZTxpASauYLkp6HaT0HN1seHnpF96KEjza9O8yARvHEQ9+So9AFUjkPci7dQ==
+  version "5.88.1"
+  resolved "https://registry.yarnpkg.com/knip/-/knip-5.88.1.tgz#cad6f43bcaa19d188fe281090e6aec491c22e8f6"
+  integrity sha512-tpy5o7zu1MjawVkLPuahymVJekYY3kYjvzcoInhIchgePxTlo+api90tBv2KfhAIe5uXh+mez1tAfmbv8/TiZg==
   dependencies:
     "@nodelib/fs.walk" "^1.2.3"
     fast-glob "^3.3.3"
