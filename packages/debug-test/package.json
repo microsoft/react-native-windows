@@ -15,7 +15,7 @@
     "@types/jest": "^29.2.2",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.18.1",
     "ts-jest": "^29.0.3",
     "ws": "^6.2.2"
   }

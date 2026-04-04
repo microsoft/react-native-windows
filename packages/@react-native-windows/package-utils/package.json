@@ -19,7 +19,7 @@
     "@react-native-windows/find-repo-root": "^0.0.0-canary.100",
     "@react-native-windows/fs": "^0.0.0-canary.71",
     "get-monorepo-packages": "^1.2.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.18.1",
     "minimatch": "^10.0.3"
   },
   "devDependencies": {

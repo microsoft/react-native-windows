@@ -48,7 +48,7 @@
     "react-native-platform-override": "0.0.0-canary.1017",
     "@rnw-scripts/unbroken": "*",
     "lage": "^2.7.1",
-    "lodash": "^4.17.15"
+    "lodash": "^4.18.1"
   },
   "resolutions": {
     "react": "19.2.3",
