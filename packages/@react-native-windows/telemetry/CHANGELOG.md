@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Mon, 02 Sep 2024 15:14:36 GMT and should not be manually modified.
+<!-- This log was last generated on Sat, 04 Apr 2026 08:10:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.74.3
+
+Sat, 04 Apr 2026 08:10:03 GMT
+
+### Patches
+
+- Changes to PR, CI, and Release pipelines (vmorozov@microsoft.com)
 
 ## 0.74.2
 

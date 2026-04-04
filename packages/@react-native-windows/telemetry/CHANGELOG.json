@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Sat, 04 Apr 2026 08:10:03 GMT",
+      "version": "0.74.3",
+      "tag": "@react-native-windows/telemetry_v0.74.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "b4d2eb3fe2548f870714a8cdd692ad533085b397",
+            "comment": "Changes to PR, CI, and Release pipelines"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Mar 2026 03:08:41 GMT",
       "version": "0.74.2",
       "tag": "@react-native-windows/telemetry_v0.74.2",

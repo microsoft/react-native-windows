@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 04 Apr 2026 08:10:03 GMT",
+      "version": "0.74.55",
+      "tag": "react-native-windows_v0.74.55",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b4d2eb3fe2548f870714a8cdd692ad533085b397",
+            "comment": "Changes to PR, CI, and Release pipelines"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.14",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Mar 2026 04:56:08 GMT",
       "version": "0.74.54",
       "tag": "react-native-windows_v0.74.54",

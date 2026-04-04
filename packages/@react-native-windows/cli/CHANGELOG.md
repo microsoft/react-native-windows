@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Thu, 19 Mar 2026 04:56:08 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 04 Apr 2026 08:10:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.74.14
+
+Sat, 04 Apr 2026 08:10:03 GMT
+
+### Patches
+
+- Changes to PR, CI, and Release pipelines (vmorozov@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.74.3
 
 ## 0.74.13
 
