@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 31 Mar 2026 21:09:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 04 Apr 2026 10:40:19 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1046
+
+Sat, 04 Apr 2026 10:40:19 GMT
+
+### Changes
+
+- Add onAuxClick event (30809111+acoates-ms@users.noreply.github.com)
+- Fix NativeModule templates to work with clang (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1045
 
