@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 04 Apr 2026 01:00:03 GMT",
+      "version": "0.81.12",
+      "tag": "react-native-windows_v0.81.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3cee5cf0696f319d4ce543e4267a96762b3a65a4",
+            "comment": "Fix NativeModule templates to work with clang"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3cee5cf0696f319d4ce543e4267a96762b3a65a4",
+            "comment": "Implement onClick"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2026 19:40:14 GMT",
       "version": "0.81.11",
       "tag": "react-native-windows_v0.81.11",

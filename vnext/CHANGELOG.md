@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 31 Mar 2026 19:40:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 04 Apr 2026 01:00:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.12
+
+Sat, 04 Apr 2026 01:00:03 GMT
+
+### Patches
+
+- Fix NativeModule templates to work with clang (30809111+acoates-ms@users.noreply.github.com)
+- Implement onClick (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.11
 
