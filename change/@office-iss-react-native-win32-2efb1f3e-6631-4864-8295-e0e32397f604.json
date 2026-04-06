@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Promote 0.84 to preview",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "protikbiswas@microsoft.com",
-  "dependentChangeType": "patch"
-}

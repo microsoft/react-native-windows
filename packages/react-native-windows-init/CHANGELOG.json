@@ -2,6 +2,39 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Mon, 06 Apr 2026 06:35:45 GMT",
+      "version": "0.84.0-preview.1",
+      "tag": "react-native-windows-init_v0.84.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "protikbiswas@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "4708eb68f37a790791e873c8d873da78315a6c7f",
+            "comment": "Promote 0.84 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/fs to v0.84.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.84.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.84.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 25 Mar 2026 02:08:13 GMT",
       "version": "0.0.0-canary.1023",
       "tag": "react-native-windows-init_v0.0.0-canary.1023",

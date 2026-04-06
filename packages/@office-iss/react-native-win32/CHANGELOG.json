@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 06 Apr 2026 06:35:45 GMT",
+      "version": "0.84.0-preview.1",
+      "tag": "@office-iss/react-native-win32_v0.84.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "protikbiswas@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "4708eb68f37a790791e873c8d873da78315a6c7f",
+            "comment": "Promote 0.84 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v0.84.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 27 Mar 2026 03:00:07 GMT",
       "version": "0.0.0-canary.310",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.310",

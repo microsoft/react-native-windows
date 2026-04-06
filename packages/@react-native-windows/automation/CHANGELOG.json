@@ -2,6 +2,33 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Mon, 06 Apr 2026 06:35:45 GMT",
+      "version": "0.84.0-preview.1",
+      "tag": "@react-native-windows/automation_v0.84.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "protikbiswas@microsoft.com",
+            "package": "@react-native-windows/automation",
+            "commit": "4708eb68f37a790791e873c8d873da78315a6c7f",
+            "comment": "Promote 0.84 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.84.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/fs to v0.84.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2026 21:09:16 GMT",
       "version": "0.0.0-canary.1045",
       "tag": "@react-native-windows/automation_v0.0.0-canary.1045",

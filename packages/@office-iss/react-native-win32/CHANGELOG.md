@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Fri, 27 Mar 2026 03:00:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 06 Apr 2026 06:35:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0-preview.1
+
+Mon, 06 Apr 2026 06:35:45 GMT
+
+### Changes
+
+- Promote 0.84 to preview (protikbiswas@microsoft.com)
+- Bump react-native-platform-override to v0.84.0-preview.1
 
 ## 0.0.0-canary.310
 

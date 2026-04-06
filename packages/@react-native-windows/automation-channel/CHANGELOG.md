@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Tue, 31 Mar 2026 21:09:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 06 Apr 2026 06:35:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0-preview.1
+
+Mon, 06 Apr 2026 06:35:45 GMT
+
+### Changes
+
+- Promote 0.84 to preview (protikbiswas@microsoft.com)
+- Bump react-native-windows to v0.84.0-preview.1
 
 ## 0.0.0-canary.1045
 
