@@ -3137,17 +3137,17 @@
   resolved "https://registry.yarnpkg.com/@sideway/pinpoint/-/pinpoint-2.0.0.tgz#cff8ffadc372ad29fd3f78277aeb29e632cc70df"
   integrity sha512-RNiOoTPkptFtSVzQevY/yWtZwf/RxyVnPy/OcA9HBM3MlGDnBEYL5B41H0MTn0Uec8Hi+2qUtTfG2WWZBmMejQ==
 
-"@simple-git/args-pathspec@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@simple-git/args-pathspec/-/args-pathspec-1.0.1.tgz#13604f6e5c5df6f695e99c3a9fa6911fa65f93a8"
-  integrity sha512-lpHyxg2BpMT17oj2kyTfQefuCi8S5SMF2QTIm9IlWCTyqAzDa5sfdL725a4QqP//ReZYyT+Ym7cE8DxFEIryOw==
-
-"@simple-git/argv-parser@^1.0.2":
+"@simple-git/args-pathspec@^1.0.2":
   version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@simple-git/argv-parser/-/argv-parser-1.0.2.tgz#32cbec732f7779d071f13b24a3e538d500fd5ab5"
-  integrity sha512-2ePPyzXESoRsPfw4IN6LEXBh3M8Y4gcz3NZ6IBsPb8hISW9rT9WgUeRjL6Xs+zK603DY/jTkQvWB9O71/9mWYg==
+  resolved "https://registry.yarnpkg.com/@simple-git/args-pathspec/-/args-pathspec-1.0.2.tgz#dac755c4c9e566ae820f648a1caaf1b72579362b"
+  integrity sha512-nEFVejViHUoL8wU8GTcwqrvqfUG40S5ts6S4fr1u1Ki5CklXlRDYThPVA/qurTmCYFGnaX3XpVUmICLHdvhLaA==
+
+"@simple-git/argv-parser@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@simple-git/argv-parser/-/argv-parser-1.0.3.tgz#ae7599ff613227b76fe2e013ff1916896996673d"
+  integrity sha512-NMKv9sJcSN2VvnPT9Ja7eKfGy8Q8mMFLwPTCcuZMtv3+mYcLIZflg31S/tp2XCCyiY7YAx6cgBHQ0fwA2fWHpQ==
   dependencies:
-    "@simple-git/args-pathspec" "^1.0.1"
+    "@simple-git/args-pathspec" "^1.0.2"
 
 "@sinclair/typebox@^0.27.8":
   version "0.27.8"
@@ -11826,14 +11826,14 @@ signedsource@^2.0.0:
   integrity sha512-MscTxXbMij5JVgrW1xDiMIc+vFa0+H0+HP+rRrFjwa7ef2VAxIP/4L/E75I5H4xvyb4l1X+a9ch+6Zy5uFu7Fg==
 
 simple-git@^3.3.0:
-  version "3.35.1"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.35.1.tgz#741ad011f359f02b1253a63970fdf694bf8e3377"
-  integrity sha512-pAG7pC3x5ATFGLN/dmV4eVazL9Lf03MWa01vyi6fsSXMn/j8ypoWUKvVAyv8Inh5X/zbDOcFA7FnQTQ8S1wErA==
+  version "3.35.2"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.35.2.tgz#958c42c050cbed49374f94682a3cd6f1fcfe3a61"
+  integrity sha512-ZMjl06lzTm1EScxEGuM6+mEX+NQd14h/B3x0vWU+YOXAMF8sicyi1K4cjTfj5is+35ChJEHDl1EjypzYFWH2FA==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
-    "@simple-git/args-pathspec" "^1.0.1"
-    "@simple-git/argv-parser" "^1.0.2"
+    "@simple-git/args-pathspec" "^1.0.2"
+    "@simple-git/argv-parser" "^1.0.3"
     debug "^4.4.0"
 
 sisteransi@^1.0.5:
