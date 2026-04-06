@@ -49,7 +49,7 @@
     "event-target-shim": "^5.0.1",
     "flow-enums-runtime": "^0.0.6",
     "glob": "^7.1.1",
-    "hermes-compiler": "250829098.0.7",
+    "hermes-compiler": "250829098.0.9",
     "invariant": "^2.2.4",
     "jest-environment-node": "^29.7.0",
     "memoize-one": "^5.0.0",
