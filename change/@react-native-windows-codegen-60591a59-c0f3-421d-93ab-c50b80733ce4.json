@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix: capture live run metrics in PerfJsonReporter instead of re-reading baselines",
+  "packageName": "@react-native-windows/codegen",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
