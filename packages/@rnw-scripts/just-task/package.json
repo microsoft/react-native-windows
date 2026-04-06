@@ -28,8 +28,8 @@
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.38",
     "@types/node": "^22.14.0",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1"
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0"
   },
   "peerDependencies": {
     "eslint": "*",

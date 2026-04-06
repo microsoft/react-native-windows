@@ -21,8 +21,8 @@
     "@rnx-kit/metro-config": "^2.2.3",
     "@rnx-kit/metro-plugin-duplicates-checker": "^3.0.2",
     "@rnx-kit/metro-serializer": "^2.0.3",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1"
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.38",

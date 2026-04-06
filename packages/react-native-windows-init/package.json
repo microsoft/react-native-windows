@@ -21,8 +21,8 @@
   "dependencies": {
     "@react-native-windows/fs": "0.0.0-canary.71",
     "@react-native-windows/telemetry": "0.0.0-canary.132",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
     "chalk": "^4.1.0",
     "find-up": "^4.1.0",
     "mustache": "^4.0.1",

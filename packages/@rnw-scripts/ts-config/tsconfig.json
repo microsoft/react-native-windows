@@ -9,6 +9,7 @@
     "preserveConstEnums": true,
     "moduleResolution": "node",
     "noUnusedLocals": true,
+    "strictNullChecks": true,
     "noImplicitReturns": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
