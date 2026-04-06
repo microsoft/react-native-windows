@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix: respect track mode in compare-results to avoid false regression failures",
+  "packageName": "react-native-windows",
+  "email": "74712637+iamAbhi-916@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 04 Apr 2026 10:40:19 GMT",
+      "version": "0.0.0-canary.1046",
+      "tag": "react-native-windows_v0.0.0-canary.1046",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b6c9c919ef5691b054b8537b1963641497c2da9d",
+            "comment": "Add onAuxClick event"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b6c9c919ef5691b054b8537b1963641497c2da9d",
+            "comment": "Fix NativeModule templates to work with clang"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2026 21:09:16 GMT",
       "version": "0.0.0-canary.1045",
       "tag": "react-native-windows_v0.0.0-canary.1045",
