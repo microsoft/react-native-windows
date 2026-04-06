@@ -168,6 +168,13 @@ expect.extend({
 
     const threshold: PerfThreshold = {...DEFAULT_THRESHOLD, ...customThreshold};
 
+    // Always record the live metrics for the CI reporter
+    SnapshotManager.recordRunMetric(snapshotFile, snapshotKey, {
+      metrics: received,
+      threshold,
+      capturedAt: new Date().toISOString(),
+    });
+
     // UPDATE MODE or FIRST RUN: write new baseline
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (isUpdateMode || !baseline) {

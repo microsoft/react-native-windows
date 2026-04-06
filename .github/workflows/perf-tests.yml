@@ -105,6 +105,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: perf-results
+          include-hidden-files: true
           path: |
             packages/e2e-test-app-fabric/.perf-results/
             packages/e2e-test-app-fabric/.native-perf-results/

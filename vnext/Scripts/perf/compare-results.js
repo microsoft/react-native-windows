@@ -10,7 +10,7 @@
  *   node vnext/Scripts/perf/compare-results.js [options]
  *
  * Options:
- *   --results <path>    Path to CI results JSON (default: .perf-results/results.json)
+ *   --results <path>    Path to CI results JSON (repeatable, default: .perf-results/results.json)
  *   --baselines <dir>   Path to base branch perf snapshots directory
  *   --output <path>     Path to write markdown report (default: .perf-results/report.md)
  *   --fail-on-regression  Exit 1 if regressions found (default: true in CI)
@@ -25,17 +25,29 @@ const path = require('path');
 
 function parseArgs() {
   const args = process.argv.slice(2);
+
+  // Auto-discover results files: JS perf + native perf
+  const defaultResults = [
+    '.perf-results/results.json',
+    '.native-perf-results/results.json',
+  ].filter(p => fs.existsSync(p));
+
   const opts = {
-    results: '.perf-results/results.json',
+    results: defaultResults,
     baselines: null, // auto-detect from test file paths
     output: '.perf-results/report.md',
     failOnRegression: !!process.env.CI,
   };
 
+  let explicitResults = false;
   for (let i = 0; i < args.length; i++) {
     switch (args[i]) {
       case '--results':
-        opts.results = args[++i];
+        if (!explicitResults) {
+          opts.results = [];
+          explicitResults = true;
+        }
+        opts.results.push(args[++i]);
         break;
       case '--baselines':
         opts.baselines = args[++i];
@@ -257,17 +269,41 @@ function generateMarkdown(suiteComparisons, ciResults) {
 function main() {
   const opts = parseArgs();
 
-  // 1. Load CI results JSON
-  if (!fs.existsSync(opts.results)) {
-    console.error(`❌ Results file not found: ${opts.results}`);
+  // 1. Load CI results JSON (supports multiple --results paths)
+  const ciResults = {
+    suites: [],
+    branch: '',
+    commitSha: '',
+    timestamp: '',
+    summary: {
+      totalSuites: 0,
+      totalTests: 0,
+      passed: 0,
+      failed: 0,
+      durationMs: 0,
+    },
+  };
+  const resultsPaths = opts.results.filter(p => fs.existsSync(p));
+  if (resultsPaths.length === 0) {
+    console.error(`❌ No results files found: ${opts.results.join(', ')}`);
     console.error('Run perf tests with CI=true first: CI=true yarn perf:ci');
     process.exit(1);
   }
-
-  const ciResults = JSON.parse(fs.readFileSync(opts.results, 'utf-8'));
-  console.log(
-    `📊 Loaded ${ciResults.suites.length} suite(s) from ${opts.results}`,
-  );
+  for (const resultsPath of resultsPaths) {
+    const partial = JSON.parse(fs.readFileSync(resultsPath, 'utf-8'));
+    ciResults.suites.push(...(partial.suites || []));
+    ciResults.branch = ciResults.branch || partial.branch;
+    ciResults.commitSha = ciResults.commitSha || partial.commitSha;
+    ciResults.timestamp = ciResults.timestamp || partial.timestamp;
+    ciResults.summary.totalSuites += partial.summary?.totalSuites || 0;
+    ciResults.summary.totalTests += partial.summary?.totalTests || 0;
+    ciResults.summary.passed += partial.summary?.passed || 0;
+    ciResults.summary.failed += partial.summary?.failed || 0;
+    ciResults.summary.durationMs += partial.summary?.durationMs || 0;
+    console.log(
+      `📊 Loaded ${partial.suites.length} suite(s) from ${resultsPath}`,
+    );
+  }
 
   // 2. Compare each suite against its committed baseline
   const suiteComparisons = [];
