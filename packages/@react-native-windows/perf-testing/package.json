@@ -37,7 +37,7 @@
   "peerDependencies": {
     "jest": ">=29.0.3",
     "react": ">=18.0.0",
-    "react-native": "0.84.0-rc.5",
+    "react-native": "0.84.1",
     "react-test-renderer": ">=18.0.0"
   },
   "peerDependenciesMeta": {
