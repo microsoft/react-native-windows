@@ -110,6 +110,7 @@ function compareEntry(head, base, threshold) {
         : 0;
 
   const errors = [];
+  const isTrackMode = threshold.mode === 'track';
 
   const absoluteDelta = head.medianDuration - base.medianDuration;
   const minAbsoluteDelta =
@@ -138,8 +139,9 @@ function compareEntry(head, base, threshold) {
     head,
     base,
     percentChange,
-    passed: errors.length === 0,
+    passed: isTrackMode || errors.length === 0,
     errors,
+    isTrackMode,
   };
 }
 
@@ -217,6 +219,24 @@ function generateMarkdown(suiteComparisons, ciResults) {
       }
       md += '\n';
     }
+  }
+
+  // Track-mode warnings (not blocking)
+  const trackedWarnings = suiteComparisons.flatMap(s =>
+    s.results.filter(r => r.isTrackMode && r.errors.length > 0),
+  );
+  if (trackedWarnings.length > 0) {
+    md += '### ⚠️ Tracked (not blocking)\n\n';
+    md += '| Scenario | Baseline | Current | Change |\n';
+    md += '|----------|----------|---------|--------|\n';
+    for (const r of trackedWarnings) {
+      const baseline = r.base ? `${r.base.meanDuration.toFixed(2)}ms` : 'N/A';
+      const current = r.head ? `${r.head.meanDuration.toFixed(2)}ms` : 'N/A';
+      const change =
+        r.percentChange != null ? `+${r.percentChange.toFixed(1)}%` : 'N/A';
+      md += `| ${r.name} | ${baseline} | ${current} | ${change} |\n`;
+    }
+    md += '\n';
   }
 
   // Passed suites
