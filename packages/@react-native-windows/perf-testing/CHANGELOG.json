@@ -2,6 +2,33 @@
   "name": "@react-native-windows/perf-testing",
   "entries": [
     {
+      "date": "Tue, 07 Apr 2026 05:29:55 GMT",
+      "version": "0.0.0-canary.1038",
+      "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1038",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "fix: capture live run metrics in PerfJsonReporter instead of re-reading baselines"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "Move to yarn 4"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/perf-testing",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.72",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 31 Mar 2026 03:37:03 GMT",
       "version": "0.0.0-canary.1037",
       "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1037",

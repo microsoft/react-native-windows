@@ -17,7 +17,7 @@
   },
   "bin": "./bin.js",
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.71",
+    "@react-native-windows/fs": "^0.0.0-canary.72",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
     "minimatch": "^10.0.3",

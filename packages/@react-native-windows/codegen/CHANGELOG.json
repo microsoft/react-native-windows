@@ -2,6 +2,33 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Tue, 07 Apr 2026 05:29:55 GMT",
+      "version": "0.0.0-canary.133",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.133",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "fix: capture live run metrics in PerfJsonReporter instead of re-reading baselines"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "Move to yarn 4"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.72",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 25 Mar 2026 02:08:12 GMT",
       "version": "0.0.0-canary.132",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.132",

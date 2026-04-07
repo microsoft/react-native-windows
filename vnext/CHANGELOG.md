@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 04 Apr 2026 10:40:19 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1047
+
+Tue, 07 Apr 2026 05:29:55 GMT
+
+### Changes
+
+- fix: respect track mode in compare-results to avoid false regression failures (74712637+iamAbhi-916@users.noreply.github.com)
+- Fork fmt lib locally (vmorozov@microsoft.com)
+- fix: auto-discover native perf results in compare report (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.287
+- Bump @react-native-windows/codegen to v0.0.0-canary.133
+- Bump react-native-platform-override to v0.0.0-canary.1022
 
 ## 0.0.0-canary.1046
 

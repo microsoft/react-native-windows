@@ -1,8 +1,21 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Wed, 25 Mar 2026 02:08:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.287
+
+Tue, 07 Apr 2026 05:29:55 GMT
+
+### Changes
+
+- Upgrade to yarn v4 (30809111+acoates-ms@users.noreply.github.com)
+- Fork fmt lib locally (vmorozov@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.133
+- Bump @react-native-windows/fs to v0.0.0-canary.72
+- Bump @react-native-windows/package-utils to v0.0.0-canary.98
+- Bump @react-native-windows/telemetry to v0.0.0-canary.133
 
 ## 0.0.0-canary.286
 

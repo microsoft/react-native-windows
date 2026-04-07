@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Sat, 04 Apr 2026 10:40:19 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Apr 2026 05:29:56 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1047
+
+Tue, 07 Apr 2026 05:29:56 GMT
+
+### Changes
+
+- fix: auto-discover native perf results in compare report (74712637+iamAbhi-916@users.noreply.github.com)
+- Upgrade to yarn v4 (30809111+acoates-ms@users.noreply.github.com)
+- Fork fmt lib locally (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.1047
 
 ## 0.0.0-canary.1046
 

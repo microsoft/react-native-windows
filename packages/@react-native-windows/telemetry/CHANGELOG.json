@@ -2,6 +2,27 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 07 Apr 2026 05:29:55 GMT",
+      "version": "0.0.0-canary.133",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.133",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "Upgrade to yarn v4"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.72",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 25 Mar 2026 02:08:12 GMT",
       "version": "0.0.0-canary.132",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.132",

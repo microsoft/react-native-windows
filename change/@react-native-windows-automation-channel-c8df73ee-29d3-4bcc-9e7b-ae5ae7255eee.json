@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fork fmt lib locally",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
