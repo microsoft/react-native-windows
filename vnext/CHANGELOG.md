@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Apr 2026 23:42:38 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1048
+
+Tue, 07 Apr 2026 23:42:38 GMT
+
+### Changes
+
+- Fix unused function warning (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1047
 

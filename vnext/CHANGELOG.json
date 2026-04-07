@@ -2,6 +2,29 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 07 Apr 2026 23:42:38 GMT",
+      "version": "0.0.0-canary.1048",
+      "tag": "react-native-windows_v0.0.0-canary.1048",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b75fa396ef7aa80383271d427cefc2a30e2b330d",
+            "comment": "Cleanup missing peerDependencies"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b75fa396ef7aa80383271d427cefc2a30e2b330d",
+            "comment": "Fix unused function warning"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2026 05:29:55 GMT",
       "version": "0.0.0-canary.1047",
       "tag": "react-native-windows_v0.0.0-canary.1047",

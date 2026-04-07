@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 07 Apr 2026 23:42:38 GMT",
+      "version": "0.0.0-canary.311",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.311",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "b75fa396ef7aa80383271d427cefc2a30e2b330d",
+            "comment": "Cleanup missing peerDependencies"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2026 05:29:56 GMT",
       "version": "0.0.0-canary.311",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.311",

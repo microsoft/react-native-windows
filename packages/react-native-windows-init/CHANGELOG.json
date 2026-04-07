@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 07 Apr 2026 23:42:38 GMT",
+      "version": "0.0.0-canary.1024",
+      "tag": "react-native-windows-init_v0.0.0-canary.1024",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows-init",
+            "commit": "b75fa396ef7aa80383271d427cefc2a30e2b330d",
+            "comment": "Cleanup missing peerDependencies"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2026 05:29:55 GMT",
       "version": "0.0.0-canary.1024",
       "tag": "react-native-windows-init_v0.0.0-canary.1024",
