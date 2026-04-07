@@ -3817,6 +3817,8 @@ __metadata:
     react-native-windows: ^0.0.0-canary.1047
     react-native-xaml: ^0.0.80
   peerDependenciesMeta:
+    "@react-native-picker/picker":
+      optional: true
     react-native-xaml:
       optional: true
   languageName: unknown
@@ -4365,7 +4367,6 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.8.3"
     "@babel/runtime": "npm:^7.20.0"
     "@react-native-community/cli": "npm:20.0.0"
-    "@react-native-picker/picker": "npm:2.11.0"
     "@react-native-windows/automation": "npm:0.0.0-canary.1047"
     "@react-native-windows/automation-channel": "npm:0.0.0-canary.1047"
     "@react-native-windows/automation-commands": "npm:0.0.0-canary.1047"
