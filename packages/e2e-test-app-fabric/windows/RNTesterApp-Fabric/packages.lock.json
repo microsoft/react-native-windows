@@ -171,14 +171,10 @@
           "boost": "[1.83.0, )"
         }
       },
-      "fmt": {
-        "type": "Project"
-      },
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.83.0, )",
-          "fmt": "[1.0.0, )"
+          "boost": "[1.83.0, )"
         }
       },
       "microsoft.reactnative": {

@@ -270,7 +270,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)stubs;$(FollyDir);$(FastFloatDir)\include;$(FmtDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)stubs;$(FollyDir);$(FastFloatDir)\include;$(ExternalDir)fmt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;NOMINMAX;_CRT_SECURE_NO_WARNINGS;WINAPI_PARTITION_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedUsingFiles />
       <DisableSpecificWarnings>4251;4293;4305;4800;4804;4310;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -372,7 +372,4 @@
     <Message Importance="High" Text="Applying temporary patches to folly." />
     <Copy DestinationFiles="@(TemporaryFollyPatchFiles->'$(FollyDir)folly\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFollyPatchFiles)" />
   </Target>
-  <ItemGroup>
-    <ProjectReference Include="..\fmt\fmt.vcxproj" Project="{14b93DC8-FD93-4A6D-81CB-8BC96644501C}" />
-  </ItemGroup>
 </Project>

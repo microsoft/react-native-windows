@@ -1,0 +1,42 @@
+{
+  "name": "@rnw-scripts/fork-sync",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows",
+    "directory": "packages/@rnw-scripts/fork-sync"
+  },
+  "scripts": {
+    "build": "rnw-scripts build",
+    "clean": "rnw-scripts clean",
+    "lint": "rnw-scripts lint",
+    "lint:fix": "rnw-scripts lint:fix",
+    "watch": "rnw-scripts watch"
+  },
+  "main": "lib-commonjs/sync.js",
+  "bin": "./bin.js",
+  "dependencies": {
+    "@rnx-kit/fork-sync": "^0.4.0",
+    "source-map-support": "^0.5.19"
+  },
+  "devDependencies": {
+    "@rnw-scripts/eslint-config": "1.2.38",
+    "@rnw-scripts/just-task": "2.3.58",
+    "@rnw-scripts/ts-config": "2.0.6",
+    "@types/node": "^22.14.0",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "eslint": "^8.19.0",
+    "prettier": "^3.6.2",
+    "typescript": "5.0.4"
+  },
+  "files": [
+    "bin.js",
+    "lib-commonjs"
+  ],
+  "engines": {
+    "node": ">= 22"
+  }
+}

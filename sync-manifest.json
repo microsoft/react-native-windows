@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "aiMerge": {
+    "provider": "claude",
+    "model": "haiku"
+  },
+  "dependencies": [
+    { "name": "fmt", "localPath": "vnext/external/fmt" }
+  ]
+}

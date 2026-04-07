@@ -4398,6 +4398,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@rnw-scripts/fork-sync@workspace:packages/@rnw-scripts/fork-sync":
+  version: 0.0.0-use.local
+  resolution: "@rnw-scripts/fork-sync@workspace:packages/@rnw-scripts/fork-sync"
+  dependencies:
+    "@rnw-scripts/eslint-config": "npm:1.2.38"
+    "@rnw-scripts/just-task": "npm:2.3.58"
+    "@rnw-scripts/ts-config": "npm:2.0.6"
+    "@rnx-kit/fork-sync": "npm:^0.4.0"
+    "@types/node": "npm:^22.14.0"
+    "@typescript-eslint/eslint-plugin": "npm:^7.1.1"
+    "@typescript-eslint/parser": "npm:^7.1.1"
+    eslint: "npm:^8.19.0"
+    prettier: "npm:^3.6.2"
+    source-map-support: "npm:^0.5.19"
+    typescript: "npm:5.0.4"
+  bin:
+    fork-sync: ./bin.js
+  languageName: unknown
+  linkType: soft
+
 "@rnw-scripts/format-files@npm:*, @rnw-scripts/format-files@workspace:packages/@rnw-scripts/format-files":
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/format-files@workspace:packages/@rnw-scripts/format-files"
@@ -4900,6 +4920,16 @@ __metadata:
   version: 2.0.0
   resolution: "@rnx-kit/console@npm:2.0.0"
   checksum: 10c0/325db427097afe731b55e5cb492ca7d6a03cb499e5d1c1fd6c16a2d992bcdf8a3d7a22eedb60a0555041a55e6a4dd2874648e9a231ea0e7dab509a32a1c5bdad
+  languageName: node
+  linkType: hard
+
+"@rnx-kit/fork-sync@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "@rnx-kit/fork-sync@npm:0.4.0"
+  bin:
+    ai-merge: lib/ai-merge.js
+    fork-sync: lib/sync.js
+  checksum: 10c0/6cd6461a84d86e32f1d2aeaa032393644f9b968c4dea7e84b16d4fe106af365e7ee5c5faae144c939c64b5313bf2da15d909ab15f22a8bfb82d2486f1982c076
   languageName: node
   linkType: hard
 

@@ -15,9 +15,7 @@ $FollyVersion = $FollyVersion.Trim() # The extracted FollyVersion contains a spa
 $FollyRoot = "$SourceRoot\node_modules\.folly";
 $FollyOverrideRoot = "$ReactWindowsRoot\Folly\TEMP_UntilFollyUpdate";
 
-[string] $FmtVersion = $props.Project.PropertyGroup.FmtVersion;
-$FmtVersion = $FmtVersion.Trim() # The extracted FmtVersion contains a space at the end that isn't actually present, issue #6216
-$FmtRoot = "$SourceRoot\node_modules\.fmt\fmt-${FmtVersion}";
+$FmtRoot = "$ReactWindowsRoot\external\fmt";
 
 # Download Folly if running on a machine which hasn't run native build logic to acquire it
 if (!(Test-Path $FollyRoot)) {
@@ -30,16 +28,7 @@ if (!(Test-Path $FollyRoot)) {
 	Expand-Archive -LiteralPath $FollyZip -DestinationPath $FollyRoot
 }
 
-# Download Fmt if running on a machine which hasn't run native build logic to acquire it
-if (!(Test-Path $FmtRoot)) {
-	Write-Host "Downloading Fmt $FmtVersion"
-	$FmtZip = "$SourceRoot\node_modules\.fmt\fmt-${FmtVersion}.zip"
-	$FmtDest = "$SourceRoot\node_modules\.fmt"
-
-	New-Item $FmtRoot -ItemType Directory
-	Invoke-RestMethod -Uri "https://github.com/fmtlib/fmt/archive/refs/tags/$FmtVersion.zip" -OutFile $FmtZip
-	Expand-Archive -LiteralPath $FmtZip -DestinationPath $FmtDest
-}
+# Fmt source is committed in vnext/external/fmt/ — no download needed
 
 Write-Host "Source root: [$SourceRoot]"
 Write-Host "Destination root: [$TargetRoot]"

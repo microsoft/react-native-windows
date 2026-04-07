@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Aggregates all vendored external (third-party) library sources.
+  Each dependency has its own .vcxitems next to its source tree.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="fmt\fmt.vcxitems" />
+</Project>

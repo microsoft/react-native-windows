@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fork fmt lib locally",
+  "packageName": "@react-native-windows/cli",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
