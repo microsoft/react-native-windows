@@ -2,6 +2,21 @@
   "name": "@react-native-windows/perf-testing",
   "entries": [
     {
+      "date": "Tue, 07 Apr 2026 06:17:42 GMT",
+      "version": "0.84.0-preview.2",
+      "tag": "@react-native-windows/perf-testing_v0.84.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "eec445b81f53fa5dbd9fa27b2f5f3aa26d452c50",
+            "comment": "Integrate 0.84.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Apr 2026 06:35:45 GMT",
       "version": "0.84.0-preview.1",
       "tag": "@react-native-windows/perf-testing_v0.84.0-preview.1",

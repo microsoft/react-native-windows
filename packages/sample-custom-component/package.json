@@ -24,7 +24,7 @@
     "minimatch": "^10.0.3",
     "react": "^19.2.3",
     "react-native": "0.84.1",
-    "react-native-windows": "0.84.0-preview.1"
+    "react-native-windows": "0.84.0-preview.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
