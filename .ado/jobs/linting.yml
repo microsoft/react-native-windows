@@ -16,7 +16,29 @@ jobs:
     variables: [template: ../variables/windows.yml]
     pool: ${{ parameters.AgentPool.Medium }}
     steps:
-      - template: ../templates/checkout-shallow.yml
+      - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+        - template: ../templates/checkout-shallow.yml
+          parameters:
+            persistCredentials: true
+
+        # Extract the GitHub OAuth token that ADO uses to clone the repo.
+        # Any authenticated token raises the GitHub API rate limit from 60 to
+        # 5,000 req/hr, which prevents validate-overrides from being throttled.
+        - pwsh: |
+            $headerLine = git config --get-regexp "http.*\.extraheader" 2>$null | Select-Object -First 1
+            if (-not $headerLine) {
+              Write-Host "##vso[task.logissue type=warning]No HTTP extraheader found — validate-overrides will run without GitHub auth"
+              exit 0
+            }
+            $encoded = ($headerLine.Split(' ')[-1]).Trim()
+            $decoded = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($encoded))
+            $token = $decoded.Split(':')[-1]
+            Write-Host "Extracted GitHub OAuth token (length=$($token.Length))"
+            Write-Host "##vso[task.setvariable variable=GitHubOAuthToken;issecret=true]$token"
+          displayName: Extract GitHub OAuth token
+
+      - ${{ else }}:
+        - template: ../templates/checkout-shallow.yml
 
       - template: ../templates/prepare-js-env.yml
 
@@ -28,6 +50,9 @@ jobs:
 
       - script: yarn validate-overrides
         displayName: yarn validate-overrides
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          env:
+            PLATFORM_OVERRIDE_GITHUB_TOKEN: $(GitHubOAuthToken)
 
       - script: npx unbroken -q --local-only --allow-local-line-sections
         displayName: check local links in .md files
