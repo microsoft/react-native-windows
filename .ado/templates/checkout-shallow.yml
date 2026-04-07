@@ -9,7 +9,6 @@ steps:
   - checkout: self
     fetchDepth: 1
     clean: false
-    persistCredentials: true
     submodules: false
     lfs: false
     persistCredentials: ${{ parameters.persistCredentials }}
