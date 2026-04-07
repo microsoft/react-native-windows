@@ -621,6 +621,8 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
+  <!-- External (vendored) third-party library sources -->
+  <Import Project="$(ExternalDir)External.vcxitems" />
   <ItemGroup Condition="'$(SupportWinUI3Islands)' == 'true'">
     <ApplicationDefinition Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\App.xaml" />
   </ItemGroup>

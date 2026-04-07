@@ -173,7 +173,7 @@ extends:
             displayName: Remove postinstall
             condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
 
-          - script: npx --yes midgard-yarn-strict@1.2.4 @rnw-scripts/beachball-config
+          - script: yarn install --immutable
             displayName: Strict yarn install @rnw-scripts/beachball-config
             condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
 

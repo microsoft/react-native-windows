@@ -9,7 +9,6 @@
     "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/@react-native-windows/automation-commands"
   },
-  "private": false,
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",
@@ -19,8 +18,8 @@
   },
   "dependencies": {
     "@react-native-windows/automation-channel": "0.0.0-canary.1046",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1"
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0"
   },
   "devDependencies": {
     "@jest/types": "^29.2.1",

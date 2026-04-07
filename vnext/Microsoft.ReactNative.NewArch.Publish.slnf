@@ -4,7 +4,6 @@
     "projects": [
       "Common\\Common.vcxproj",
       "Folly\\Folly.vcxproj",
-      "fmt\\fmt.vcxproj",
       "Microsoft.ReactNative\\Microsoft.ReactNative.vcxproj",
       "Microsoft.ReactNative.CsWinRT\\Microsoft.ReactNative.CsWinRT.csproj",
       "ReactCommon\\ReactCommon.vcxproj"

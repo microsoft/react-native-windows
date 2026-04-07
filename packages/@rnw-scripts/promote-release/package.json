@@ -15,15 +15,13 @@
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch"
   },
-  "bin": {
-    "promote-release": "./bin.js"
-  },
+  "bin": "./bin.js",
   "dependencies": {
     "@react-native-windows/find-repo-root": "^0.0.0-canary.100",
     "@react-native-windows/fs": "^0.0.0-canary.71",
     "@react-native-windows/package-utils": "^0.0.0-canary.97",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
     "chalk": "^4.1.0",
     "minimatch": "^10.0.3",
     "simple-git": "^3.3.0",

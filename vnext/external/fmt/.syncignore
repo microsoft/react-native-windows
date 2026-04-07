@@ -1,0 +1,13 @@
+/sync-config.json
+/.syncignore
+/cgmanifest.json
+/test/
+/doc/
+/support/
+/CMakeLists.txt
+/.github/
+/.clang-format
+/.clang-tidy
+/ChangeLog.md
+/README.md
+/LICENSE

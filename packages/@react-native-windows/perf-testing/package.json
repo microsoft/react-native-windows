@@ -10,7 +10,6 @@
     "directory": "packages/@react-native-windows/perf-testing"
   },
   "license": "MIT",
-  "private": false,
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",
@@ -28,8 +27,8 @@
     "@types/jest": "^29.2.2",
     "@types/node": "^22.14.0",
     "@types/react": "^19.0.0",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
     "eslint": "^8.19.0",
     "prettier": "^3.6.2",
     "typescript": "5.0.4"

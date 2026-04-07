@@ -2,22 +2,7 @@ parameters:
 - name: workingDirectory
   type: string
   default: .
-- name: agentImage
-  type: string
-  default: ManagedImage
-  values:
-      - ManagedImage
-      - HostedImage
 
 steps:
-  # When using our own images, prefer the machine-installed version of
-  # `midgard-yarn`.
-  - ${{ if eq(parameters.agentImage, 'ManagedImage') }}:
-    - script: midgard-yarn --ignore-scripts --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
-      displayName: midgard-yarn (faster yarn install)
-
-  # If using an image we don't control, acquire a fixed version of midgard-yarn
-  # before install
-  - ${{ else }}:
-    - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
-      displayName: midgard-yarn (faster yarn install)
+  - script: yarn --cwd ${{ parameters.workingDirectory }} install --immutable
+    displayName: yarn install (immutable)
