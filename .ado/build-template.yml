@@ -263,6 +263,7 @@ extends:
           - template: .ado/templates/set-version-vars.yml@self
             parameters:
               buildEnvironment: Continuous
+              isReleaseBuild: $(isReleaseBuild)
 
           # 8. Include npmPack.js for Release pipeline (CI only)
           - script: copy ".ado\scripts\npmPack.js" "$(Build.StagingDirectory)\versionEnvVars\npmPack.js"

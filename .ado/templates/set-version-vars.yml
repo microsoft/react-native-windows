@@ -6,12 +6,13 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: isReleaseBuild
+    type: string
+    default: 'False'
 
 steps:
-  - task: CmdLine@2
+  - script: node ./.ado/scripts/setVersionEnvVars.js ${{ parameters.buildEnvironment }} $(Build.BuildId) ${{ parameters.isReleaseBuild }}
     displayName: Set version variables
     name: setVersionEnvVars
-    inputs:
-      script: node ./.ado/scripts/setVersionEnvVars.js ${{ parameters.buildEnvironment }} $(Build.BuildId)
     env:
       RUNNER_TEMP: $(Build.StagingDirectory)
