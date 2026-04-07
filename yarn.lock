@@ -5334,19 +5334,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@simple-git/args-pathspec@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@simple-git/args-pathspec@npm:1.0.1"
-  checksum: 10c0/3ea2175e676c682255d4a10f275062d46dbb31a834eb53960a120681bde5c9f4ca7dbffdb2c6ec79e9969336604641df0f2595f36574068e7abefc2840614e2f
+"@simple-git/args-pathspec@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@simple-git/args-pathspec@npm:1.0.2"
+  checksum: 10c0/e74a827baa9ee3e5ad8d10205a3d8a74d4251e5dbf12b0f7d485e687c903042c7c74beec71336226f8dd310c7292a73ebc911b345cfa3116cf75c230f26f3074
   languageName: node
   linkType: hard
 
-"@simple-git/argv-parser@npm:^1.0.2":
-  version: 1.0.2
-  resolution: "@simple-git/argv-parser@npm:1.0.2"
+"@simple-git/argv-parser@npm:^1.0.3":
+  version: 1.0.3
+  resolution: "@simple-git/argv-parser@npm:1.0.3"
   dependencies:
-    "@simple-git/args-pathspec": "npm:^1.0.1"
-  checksum: 10c0/f3e91ff99b35e2f190d071d127a6e4fcb05ea489fb13b959c0369767e2a639c01ca3cf98cc397d84fcf437a890a67597c1c35bd659263026bf0ef505cd49ee1d
+    "@simple-git/args-pathspec": "npm:^1.0.2"
+  checksum: 10c0/687936b8e35a2f2e569ce7cef9a2c2b9be174d0da1c0e8de21f6bedb444dda34b3103741378c3356cc343a8b439a2342c38956c131579e94e2acf703064ee31f
   languageName: node
   linkType: hard
 
@@ -7336,22 +7336,22 @@ __metadata:
   linkType: hard
 
 "beachball@npm:^2.20.0":
-  version: 2.64.0
-  resolution: "beachball@npm:2.64.0"
+  version: 2.64.1
+  resolution: "beachball@npm:2.64.1"
   dependencies:
     "@vercel/detect-agent": "npm:^1.2.1"
-    cosmiconfig: "npm:^9.0.0"
-    execa: "npm:^5.0.0"
-    minimatch: "npm:^3.0.4"
-    p-graph: "npm:^1.1.2"
-    p-limit: "npm:^3.0.2"
+    cosmiconfig: "npm:^9.0.1"
+    execa: "npm:^5.1.1"
+    minimatch: "npm:^3.1.5"
+    p-graph: "npm:^1.3.0"
+    p-limit: "npm:^3.1.0"
     prompts: "npm:^2.4.2"
-    semver: "npm:^7.0.0"
-    workspace-tools: "npm:^0.41.0"
-    yargs-parser: "npm:^21.0.0"
+    semver: "npm:^7.7.4"
+    workspace-tools: "npm:^0.41.2"
+    yargs-parser: "npm:^21.1.1"
   bin:
     beachball: bin/beachball.js
-  checksum: 10c0/2678e23494803d24d7af72aaeb2b50133265fa26b80d2df8a675e759ed15897cdd9784af522534f55a2ed6eff6d03863d82cc3e78ffffa019897e5ace73efbfb
+  checksum: 10c0/f3ed7c05ec5bc9ccacbe116ee09a81c9259175368cd69368a034a9831311ee193efedfa9415cc22c93904e31489a5e4e126e2d059af41aa853ef3501f1171d1d
   languageName: node
   linkType: hard
 
@@ -8241,7 +8241,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cosmiconfig@npm:^9.0.0":
+"cosmiconfig@npm:^9.0.0, cosmiconfig@npm:^9.0.1":
   version: 9.0.1
   resolution: "cosmiconfig@npm:9.0.1"
   dependencies:
@@ -9582,7 +9582,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:^5.0.0":
+"execa@npm:^5.0.0, execa@npm:^5.1.1":
   version: 5.1.1
   resolution: "execa@npm:5.1.1"
   dependencies:
@@ -12621,8 +12621,8 @@ __metadata:
   linkType: hard
 
 "lage@npm:^2.7.1":
-  version: 2.15.5
-  resolution: "lage@npm:2.15.5"
+  version: 2.15.6
+  resolution: "lage@npm:2.15.6"
   dependencies:
     fsevents: "npm:~2.3.2"
     glob-hasher: "npm:^1.4.2"
@@ -12632,7 +12632,7 @@ __metadata:
   bin:
     lage: dist/lage.js
     lage-server: dist/lage-server.js
-  checksum: 10c0/90bd2be7993ab7d92b612692763479c53229565e0b25d165300414dd1429ee8b630fa26c4358ca3d13466c1340ac64df891334fb4b9a8a948b3ede606283a11b
+  checksum: 10c0/4dd43403d9058b73fcbbbb5b7a61da9bf1c75656413cb9d067f0176d2245fc79f64d73ad54b3ca59a8aeacb918435e4129ce679958a0b2e7f46bc60c3ca3d0c6
   languageName: node
   linkType: hard
 
@@ -14014,7 +14014,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^3.0.2, minimatch@npm:^3.0.4, minimatch@npm:^3.0.5, minimatch@npm:^3.1.1, minimatch@npm:^3.1.2":
+"minimatch@npm:^3.0.2, minimatch@npm:^3.0.4, minimatch@npm:^3.0.5, minimatch@npm:^3.1.1, minimatch@npm:^3.1.2, minimatch@npm:^3.1.5":
   version: 3.1.5
   resolution: "minimatch@npm:3.1.5"
   dependencies:
@@ -14859,7 +14859,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"p-graph@npm:^1.1.2":
+"p-graph@npm:^1.3.0":
   version: 1.3.0
   resolution: "p-graph@npm:1.3.0"
   checksum: 10c0/cb8cf29ae956fd697afc656e1c753991ff2c6e1fde170ee8a31399a89f883901ae34f5e564b7e99de523215a7d85c307fa92a7b9f90f895e78940ccadd31b1ad
@@ -16811,15 +16811,15 @@ __metadata:
   linkType: hard
 
 "simple-git@npm:^3.3.0":
-  version: 3.35.1
-  resolution: "simple-git@npm:3.35.1"
+  version: 3.35.2
+  resolution: "simple-git@npm:3.35.2"
   dependencies:
     "@kwsites/file-exists": "npm:^1.1.1"
     "@kwsites/promise-deferred": "npm:^1.1.1"
-    "@simple-git/args-pathspec": "npm:^1.0.1"
-    "@simple-git/argv-parser": "npm:^1.0.2"
+    "@simple-git/args-pathspec": "npm:^1.0.2"
+    "@simple-git/argv-parser": "npm:^1.0.3"
     debug: "npm:^4.4.0"
-  checksum: 10c0/9318c7b98f52d993cc48f966df407238e70b1398d73d0e6f83d8228e0621b47df7c59bf036cd5dd53c85c0c219ad5f0842249d3e4d1a16e9ab63b1cefdfc8381
+  checksum: 10c0/9cc675d4591713dc90856526f9a671ce614d2e75079988628df6eb6ce3e7ec629ae6ec77736c76960a85a9a1a6a9ee218c03eda016acb0c21bf6829f55422cb9
   languageName: node
   linkType: hard
 
@@ -18446,7 +18446,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workspace-tools@npm:^0.41.0":
+"workspace-tools@npm:^0.41.2":
   version: 0.41.2
   resolution: "workspace-tools@npm:0.41.2"
   dependencies:
@@ -18691,7 +18691,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs-parser@npm:^21.0.0, yargs-parser@npm:^21.1.1":
+"yargs-parser@npm:^21.1.1":
   version: 21.1.1
   resolution: "yargs-parser@npm:21.1.1"
   checksum: 10c0/f84b5e48169479d2f402239c59f084cfd1c3acc197a05c59b98bab067452e6b3ea46d4dd8ba2985ba7b3d32a343d77df0debd6b343e5dae3da2aab2cdf5886b2
