@@ -40,6 +40,7 @@
     "xpath": "^0.0.27"
   },
   "devDependencies": {
+    "@babel/core": "^7.25.2",
     "@react-native-community/cli-doctor": "20.0.0",
     "@react-native-community/cli-types": "20.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",
@@ -63,6 +64,8 @@
     "eslint": "^8.19.0",
     "jest": "^29.7.0",
     "prettier": "^3.6.2",
+    "react": "19.2.3",
+    "react-native": "0.84.0-nightly-20260107-58bc6c3e3",
     "typescript": "5.0.4"
   },
   "peerDependencies": {

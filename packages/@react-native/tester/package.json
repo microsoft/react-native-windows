@@ -61,6 +61,8 @@
     "@react-native-community/cli-platform-ios": "20.0.0",
     "commander": "^12.0.0",
     "listr2": "^6.4.1",
+    "react": "19.2.3",
+    "react-native": "0.84.0-nightly-20260107-58bc6c3e3",
     "rxjs": "npm:@react-native-community/rxjs@6.5.4-custom"
   }
 }

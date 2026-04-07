@@ -23,6 +23,11 @@
     "react-native-windows": "^0.0.0-canary.1047",
     "react-native-xaml": "^0.0.80"
   },
+  "peerDependenciesMeta": {
+    "react-native-xaml": {
+      "optional": true
+    }
+  },
   "devDependencies": {
     "@react-native/new-app-screen": "0.84.0-nightly-20260107-58bc6c3e3",
     "@react-native/tester": "0.84.0-nightly-20260107-58bc6c3e3",
@@ -33,6 +38,8 @@
     "@types/node": "^22.14.0",
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
+    "prettier": "^3.6.2",
+    "react": "19.2.3",
     "react-native": "0.84.0-nightly-20260107-58bc6c3e3",
     "react-native-platform-override": "0.0.0-canary.1022",
     "react-native-windows": "^0.0.0-canary.1047",

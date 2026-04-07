@@ -70,6 +70,8 @@
     "yargs": "^17.6.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
     "@react-native-windows/codegen": "0.0.0-canary.133",
     "@react-native/metro-config": "0.84.0-nightly-20260107-58bc6c3e3",
     "@rnw-scripts/babel-react-native-config": "0.0.0",

@@ -74,6 +74,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
+    "@babel/preset-env": "^7.25.3",
     "@react-native/metro-config": "0.84.0-nightly-20260107-58bc6c3e3",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",

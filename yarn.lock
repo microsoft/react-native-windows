@@ -3072,6 +3072,8 @@ __metadata:
     eslint: "npm:^8.19.0"
     flow-enums-runtime: "npm:^0.0.6"
     just-scripts: "npm:^1.3.3"
+    prettier: "npm:^3.6.2"
+    react: "npm:19.2.3"
     react-native: "npm:0.84.0-nightly-20260107-58bc6c3e3"
     react-native-platform-override: "npm:0.0.0-canary.1022"
     typescript: "npm:5.0.4"
@@ -3088,6 +3090,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/eslint-parser": "npm:^7.25.1"
+    "@babel/preset-env": "npm:^7.25.3"
     "@babel/runtime": "npm:^7.0.0"
     "@jest/create-cache-key-function": "npm:^29.7.0"
     "@react-native-community/cli": "npm:20.0.0"
@@ -3574,6 +3577,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-windows/cli@workspace:packages/@react-native-windows/cli"
   dependencies:
+    "@babel/core": "npm:^7.25.2"
     "@react-native-community/cli-doctor": "npm:20.0.0"
     "@react-native-community/cli-types": "npm:20.0.0"
     "@react-native-windows/codegen": "npm:0.0.0-canary.133"
@@ -3612,6 +3616,8 @@ __metadata:
     ora: "npm:^3.4.0"
     prettier: "npm:^3.6.2"
     prompts: "npm:^2.4.1"
+    react: "npm:19.2.3"
+    react-native: "npm:0.84.0-nightly-20260107-58bc6c3e3"
     semver: "npm:^7.3.2"
     shelljs: "npm:^0.8.4"
     typescript: "npm:5.0.4"
@@ -3628,6 +3634,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-windows/codegen@workspace:packages/@react-native-windows/codegen"
   dependencies:
+    "@babel/core": "npm:^7.25.2"
     "@react-native-windows/fs": "npm:^0.0.0-canary.72"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
@@ -3749,6 +3756,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-windows/telemetry@workspace:packages/@react-native-windows/telemetry"
   dependencies:
+    "@babel/core": "npm:^7.25.2"
     "@microsoft/1ds-core-js": "npm:^4.3.0"
     "@microsoft/1ds-post-js": "npm:^4.3.0"
     "@react-native-windows/fs": "npm:0.0.0-canary.72"
@@ -3796,6 +3804,8 @@ __metadata:
     eslint: "npm:^8.19.0"
     flow-enums-runtime: "npm:^0.0.6"
     just-scripts: "npm:^1.3.3"
+    prettier: "npm:^3.6.2"
+    react: "npm:19.2.3"
     react-native: "npm:0.84.0-nightly-20260107-58bc6c3e3"
     react-native-platform-override: "npm:0.0.0-canary.1022"
     react-native-windows: "npm:^0.0.0-canary.1047"
@@ -3806,6 +3816,9 @@ __metadata:
     react-native: 0.84.0-nightly-20260107-58bc6c3e3
     react-native-windows: ^0.0.0-canary.1047
     react-native-xaml: ^0.0.80
+  peerDependenciesMeta:
+    react-native-xaml:
+      optional: true
   languageName: unknown
   linkType: soft
 
@@ -4168,6 +4181,8 @@ __metadata:
     invariant: "npm:^2.2.4"
     listr2: "npm:^6.4.1"
     nullthrows: "npm:^1.1.1"
+    react: "npm:19.2.3"
+    react-native: "npm:0.84.0-nightly-20260107-58bc6c3e3"
     rxjs: "npm:@react-native-community/rxjs@6.5.4-custom"
   peerDependencies:
     react: 19.2.3
@@ -4291,8 +4306,13 @@ __metadata:
     "@types/jest": "npm:^29.2.2"
     "@typescript-eslint/eslint-plugin": "npm:^8.36.0"
     "@typescript-eslint/parser": "npm:^8.36.0"
+    eslint: "npm:^8.19.0"
+    jest: "npm:^29.7.0"
+    jest-environment-node: "npm:^29.7.0"
     lodash: "npm:^4.17.15"
+    prettier: "npm:^3.6.2"
     ts-jest: "npm:^29.0.3"
+    typescript: "npm:5.0.4"
     ws: "npm:^6.2.2"
   languageName: unknown
   linkType: soft
@@ -4345,6 +4365,7 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.8.3"
     "@babel/runtime": "npm:^7.20.0"
     "@react-native-community/cli": "npm:20.0.0"
+    "@react-native-picker/picker": "npm:2.11.0"
     "@react-native-windows/automation": "npm:0.0.0-canary.1047"
     "@react-native-windows/automation-channel": "npm:0.0.0-canary.1047"
     "@react-native-windows/automation-commands": "npm:0.0.0-canary.1047"
@@ -4367,6 +4388,7 @@ __metadata:
     babel-jest: "npm:^29.6.3"
     eslint: "npm:^8.19.0"
     jest: "npm:^29.7.0"
+    jest-environment-node: "npm:^29.7.0"
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.84.0-nightly-20260107-58bc6c3e3"
@@ -4392,6 +4414,7 @@ __metadata:
     eslint-plugin-jest: "npm:^29.0.1"
     hermes-eslint: "npm:0.23.1"
     prettier: "npm:^3.6.2"
+    typescript: "npm:5.0.4"
   peerDependencies:
     eslint: "*"
     prettier: "*"
@@ -4486,6 +4509,8 @@ __metadata:
     lodash: "npm:^4.17.15"
     ora: "npm:^3.4.0"
     prettier: "npm:^3.6.2"
+    react: "npm:19.2.3"
+    react-native: "npm:0.84.0-nightly-20260107-58bc6c3e3"
     react-native-platform-override: "npm:0.0.0-canary.1022"
     semver: "npm:^7.6.3"
     source-map-support: "npm:^0.5.19"
@@ -4582,10 +4607,13 @@ __metadata:
     "@types/node": "npm:^22.14.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.36.0"
     "@typescript-eslint/parser": "npm:^8.36.0"
+    eslint: "npm:^8.19.0"
     find-up: "npm:^4.1.0"
     glob: "npm:^7.1.6"
     just-scripts: "npm:^1.3.3"
     knip: "npm:^5.85.0"
+    prettier: "npm:^3.6.2"
+    typescript: "npm:5.0.4"
   peerDependencies:
     eslint: "*"
     jest: "*"
@@ -4613,6 +4641,12 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.36.0"
     eslint: "npm:^8.19.0"
     prettier: "npm:^3.6.2"
+    react: "npm:19.2.3"
+    react-native: "npm:0.84.0-nightly-20260107-58bc6c3e3"
+    typescript: "npm:5.0.4"
+  peerDependencies:
+    react: 19.2.3
+    react-native: "*"
   languageName: unknown
   linkType: soft
 
@@ -4644,6 +4678,7 @@ __metadata:
     react-native: "npm:0.84.0-nightly-20260107-58bc6c3e3"
     react-native-windows: "npm:^0.0.0-canary.1047"
     react-test-renderer: "npm:19.1.0"
+    typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
 
@@ -15690,6 +15725,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-native-windows-init@workspace:packages/react-native-windows-init"
   dependencies:
+    "@babel/core": "npm:^7.25.2"
     "@react-native-windows/cli": "npm:0.0.0-canary.287"
     "@react-native-windows/fs": "npm:0.0.0-canary.72"
     "@react-native-windows/telemetry": "npm:0.0.0-canary.133"
@@ -15716,6 +15752,8 @@ __metadata:
     npm-registry-fetch: "npm:^11.0.0"
     prettier: "npm:^3.6.2"
     prompts: "npm:^2.4.1"
+    react: "npm:19.2.3"
+    react-native: "npm:0.84.0-nightly-20260107-58bc6c3e3"
     semver: "npm:^7.3.2"
     source-map-support: "npm:^0.5.19"
     typescript: "npm:5.0.4"
@@ -15740,12 +15778,17 @@ __metadata:
     "@rnw-scripts/take-screenshot": "npm:*"
     "@rnw-scripts/unbroken": "npm:*"
     beachball: "npm:^2.20.0"
+    eslint: "npm:^8.19.0"
     fast-glob: "npm:^3.2.11"
     husky: "npm:^4.2.5"
     lage: "npm:^2.7.1"
     lodash: "npm:^4.17.15"
+    prettier: "npm:^3.6.2"
     prettier-plugin-hermes-parser: "npm:0.21.1"
+    react: "npm:19.2.3"
+    react-native: "npm:0.84.0-nightly-20260107-58bc6c3e3"
     react-native-platform-override: "npm:0.0.0-canary.1017"
+    typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
 
@@ -15753,6 +15796,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "react-native-windows@workspace:vnext"
   dependencies:
+    "@babel/core": "npm:^7.25.2"
+    "@babel/preset-env": "npm:^7.25.3"
     "@babel/runtime": "npm:^7.0.0"
     "@jest/create-cache-key-function": "npm:^29.7.0"
     "@react-native-community/cli": "npm:20.0.0"

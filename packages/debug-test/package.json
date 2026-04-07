@@ -15,8 +15,13 @@
     "@types/jest": "^29.2.2",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
+    "eslint": "^8.19.0",
+    "jest": "^29.7.0",
+    "jest-environment-node": "^29.7.0",
     "lodash": "^4.17.15",
+    "prettier": "^3.6.2",
     "ts-jest": "^29.0.3",
+    "typescript": "5.0.4",
     "ws": "^6.2.2"
   }
 }

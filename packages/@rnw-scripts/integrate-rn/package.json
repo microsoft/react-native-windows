@@ -51,6 +51,8 @@
     "eslint": "^8.19.0",
     "jest": "^29.7.0",
     "prettier": "^3.6.2",
+    "react": "19.2.3",
+    "react-native": "0.84.0-nightly-20260107-58bc6c3e3",
     "typescript": "5.0.4"
   },
   "files": [
