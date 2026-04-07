@@ -24,6 +24,9 @@
     "react-native-xaml": "^0.0.80"
   },
   "peerDependenciesMeta": {
+    "@react-native-picker/picker": {
+      "optional": true
+    },
     "react-native-xaml": {
       "optional": true
     }

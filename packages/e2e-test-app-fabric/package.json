@@ -25,7 +25,6 @@
     "perf:native:ci": "jest --config jest.native-perf.config.js --ci --forceExit"
   },
   "dependencies": {
-    "@react-native-picker/picker": "2.11.0",
     "@react-native-windows/automation-channel": "0.0.0-canary.1047",
     "@react-native-windows/tester": "0.0.1",
     "@types/react": "^19.2.3",
