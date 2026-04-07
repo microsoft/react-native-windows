@@ -74,7 +74,7 @@ struct IsReactTurboModule : std::bool_constant<ReactIsReactTurboModuleImpl(stati
     moduleStruct, moduleName, eventEmitterName, isReactTurboModule)                                    \
   struct moduleStruct;                                                                                 \
                                                                                                        \
-  constexpr bool ReactIsReactTurboModuleImpl(moduleStruct *) noexcept { return isReactTurboModule; }   \
+  [[maybe_unused]] constexpr bool ReactIsReactTurboModuleImpl(moduleStruct *) noexcept { return isReactTurboModule; }   \
                                                                                                        \
   template <class TRegistry>                                                                           \
   constexpr void GetReactModuleInfo(moduleStruct *, TRegistry &registry) noexcept {                    \
