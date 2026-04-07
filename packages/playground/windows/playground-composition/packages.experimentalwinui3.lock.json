@@ -4,8 +4,8 @@
     "native,Version=v0.0": {
       "boost": {
         "type": "Direct",
-        "requested": "[1.84.0, )",
-        "resolved": "1.84.0",
+        "requested": "[1.83.0, )",
+        "resolved": "1.83.0",
         "contentHash": "cy53VNMzysEMvhBixDe8ujPk67Fcj3v6FPHQnH91NYJNLHpc6jxa2xq9ruCaaJjE4M3YrGSHDi4uUSTGBWw6EQ=="
       },
       "Microsoft.JavaScript.Hermes": {
@@ -193,7 +193,7 @@
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
           "Microsoft.WindowsAppSDK": "[2.0.0-experimental3, )",
-          "boost": "[1.84.0, )"
+          "boost": "[1.83.0, )"
         }
       }
     }
