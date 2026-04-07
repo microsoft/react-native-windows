@@ -57,6 +57,10 @@
 .*/node_modules/@rnw-scripts/prepare-release/node_modules/.*
 .*/packages/@rnw-scripts/prepare-release/node_modules/.*
 
+; Ignore unbroken's own node_modules (same hermes-estree .flow syntax issue)
+.*/node_modules/@rnw-scripts/unbroken/node_modules/.*
+.*/packages/@rnw-scripts/unbroken/node_modules/.*
+
 ; Ignore templates for 'react-native init'
 <PROJECT_ROOT>/packages/react-native/template/.*
 
