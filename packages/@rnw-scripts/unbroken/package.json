@@ -1,0 +1,44 @@
+{
+  "name": "@rnw-scripts/unbroken",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Detect broken links in markdown files. Forked from https://github.com/asklar/unbroken",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows",
+    "directory": "packages/@rnw-scripts/unbroken"
+  },
+  "scripts": {
+    "build": "rnw-scripts build",
+    "clean": "rnw-scripts clean",
+    "lint": "rnw-scripts lint",
+    "lint:fix": "rnw-scripts lint:fix",
+    "watch": "rnw-scripts watch"
+  },
+  "main": "lib-commonjs/unbroken.js",
+  "bin": {
+    "unbroken": "./bin.js"
+  },
+  "dependencies": {
+    "@react-native-windows/fs": "^0.0.0-canary.70"
+  },
+  "devDependencies": {
+    "@rnw-scripts/eslint-config": "1.2.38",
+    "@rnw-scripts/just-task": "2.3.58",
+    "@rnw-scripts/ts-config": "2.0.6",
+    "@types/node": "^22.14.0",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
+    "eslint": "^8.19.0",
+    "prettier": "^3.0.0",
+    "typescript": "5.0.4"
+  },
+  "files": [
+    "bin.js",
+    "lib-commonjs"
+  ],
+  "engines": {
+    "node": ">= 22"
+  }
+}
