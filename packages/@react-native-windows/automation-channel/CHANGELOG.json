@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Wed, 08 Apr 2026 13:25:17 GMT",
+      "version": "0.0.0-canary.1049",
+      "tag": "@react-native-windows/automation-channel_v0.0.0-canary.1049",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "e03e2d6947ab45c314f5657f8096409381211c19",
+            "comment": "Upgrade to Boost 1.84"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.1049",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2026 23:42:38 GMT",
       "version": "0.0.0-canary.1048",
       "tag": "@react-native-windows/automation-channel_v0.0.0-canary.1048",
