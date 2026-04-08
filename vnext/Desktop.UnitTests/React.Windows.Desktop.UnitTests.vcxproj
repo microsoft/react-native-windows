@@ -124,7 +124,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.83.0.0" />
+    <PackageReference Include="boost" Version="1.84.0.0" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
   </ItemGroup>
   <!-- Remove the WinMD references we're picking up from Microsoft.WindowsAppSDK in the React.Windows.Desktop.vcxproj",
