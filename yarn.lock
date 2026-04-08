@@ -2562,29 +2562,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/1ds-core-js@npm:4.3.11, @microsoft/1ds-core-js@npm:^4.3.0":
-  version: 4.3.11
-  resolution: "@microsoft/1ds-core-js@npm:4.3.11"
+"@microsoft/1ds-core-js@npm:^4.3.0":
+  version: 4.4.1
+  resolution: "@microsoft/1ds-core-js@npm:4.4.1"
   dependencies:
-    "@microsoft/applicationinsights-core-js": "npm:3.3.11"
+    "@microsoft/applicationinsights-core-js": "npm:3.4.1"
     "@microsoft/applicationinsights-shims": "npm:3.0.1"
     "@microsoft/dynamicproto-js": "npm:^2.0.3"
-    "@nevware21/ts-async": "npm:>= 0.5.4 < 2.x"
-    "@nevware21/ts-utils": "npm:>= 0.11.8 < 2.x"
-  checksum: 10c0/a6ece343ab6813c8190bef199e9396c0548a6180e6e54884b871376ceac395cb9bbfbe8d03b132bd4e010cf900699803bf4d500a4a8e188363d6cec4396cf98e
+    "@nevware21/ts-async": "npm:>= 0.5.5 < 2.x"
+    "@nevware21/ts-utils": "npm:>= 0.12.6 < 2.x"
+  checksum: 10c0/4cac40f9e25a5d4ec9cc1f66c323012348d6b1ca90629c226980dd8d51b3c5fd642eb8390877c457a7cefa42f2269414340569f71dfb71ae04b7e12e813ad6a0
   languageName: node
   linkType: hard
 
 "@microsoft/1ds-post-js@npm:^4.3.0":
-  version: 4.3.11
-  resolution: "@microsoft/1ds-post-js@npm:4.3.11"
+  version: 4.4.1
+  resolution: "@microsoft/1ds-post-js@npm:4.4.1"
   dependencies:
-    "@microsoft/1ds-core-js": "npm:4.3.11"
+    "@microsoft/applicationinsights-core-js": "npm:3.4.1"
     "@microsoft/applicationinsights-shims": "npm:3.0.1"
     "@microsoft/dynamicproto-js": "npm:^2.0.3"
-    "@nevware21/ts-async": "npm:>= 0.5.4 < 2.x"
-    "@nevware21/ts-utils": "npm:>= 0.11.8 < 2.x"
-  checksum: 10c0/557d6240c27b9413ccd78ce9fa70863147c05fa4ffe8ac4fc316debe560804c41c3a6aed59eb042fdc4864558caaffaf29ed5dc79f543c3d4909b18a8d161aeb
+    "@nevware21/ts-async": "npm:>= 0.5.5 < 2.x"
+    "@nevware21/ts-utils": "npm:>= 0.12.6 < 2.x"
+  checksum: 10c0/523195dd8c83a10ca8630e14576af6c92300a52c1a0422d47d08cbad89edb8766d2a86643a3ebcfbb72f3b5f4bbe42a62194d0ccbab2ebc680202f1e7d75478a
   languageName: node
   linkType: hard
 
@@ -2623,17 +2623,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/applicationinsights-core-js@npm:3.3.11":
-  version: 3.3.11
-  resolution: "@microsoft/applicationinsights-core-js@npm:3.3.11"
+"@microsoft/applicationinsights-core-js@npm:3.4.1":
+  version: 3.4.1
+  resolution: "@microsoft/applicationinsights-core-js@npm:3.4.1"
   dependencies:
     "@microsoft/applicationinsights-shims": "npm:3.0.1"
     "@microsoft/dynamicproto-js": "npm:^2.0.3"
-    "@nevware21/ts-async": "npm:>= 0.5.4 < 2.x"
-    "@nevware21/ts-utils": "npm:>= 0.11.8 < 2.x"
+    "@nevware21/ts-async": "npm:>= 0.5.5 < 2.x"
+    "@nevware21/ts-utils": "npm:>= 0.12.6 < 2.x"
   peerDependencies:
     tslib: ">= 1.0.0"
-  checksum: 10c0/d7d878c5e55f9b0b1880a6e02f504f1117fc7e7a4153f7b2377c8fa4acf54c27bf041fc6c7ec3b77445cf44fd4aaa93ffa4c5febc96569f60708c2a5b9cafc02
+  checksum: 10c0/3eb5320f0791985fff2a90915eb8ff3d26c29cb9efa2dbb2d01ecbff3b2535414f6601b0156b84d071785a09abb80da46a1c6511af018cbb9e3ce6dc705ebd76
   languageName: node
   linkType: hard
 
@@ -2699,7 +2699,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nevware21/ts-async@npm:>= 0.5.4 < 2.x":
+"@nevware21/ts-async@npm:>= 0.5.5 < 2.x":
   version: 0.5.5
   resolution: "@nevware21/ts-async@npm:0.5.5"
   dependencies:
@@ -2708,7 +2708,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nevware21/ts-utils@npm:>= 0.10.4 < 2.x, @nevware21/ts-utils@npm:>= 0.11.8 < 2.x, @nevware21/ts-utils@npm:>= 0.12.2 < 2.x, @nevware21/ts-utils@npm:>= 0.9.4 < 2.x":
+"@nevware21/ts-utils@npm:>= 0.10.4 < 2.x, @nevware21/ts-utils@npm:>= 0.12.2 < 2.x, @nevware21/ts-utils@npm:>= 0.12.6 < 2.x, @nevware21/ts-utils@npm:>= 0.9.4 < 2.x":
   version: 0.13.0
   resolution: "@nevware21/ts-utils@npm:0.13.0"
   checksum: 10c0/d575e0d06388bbcb638e1c5ebb82e552584fa784cc05d4e5e6360d976b9a879c17998fb8e49c5bc7f9cec892d2a6763c4f405c48c5e06ecab7e24e901e34ee0c
@@ -12657,8 +12657,8 @@ __metadata:
   linkType: hard
 
 "lage@npm:^2.7.1":
-  version: 2.15.6
-  resolution: "lage@npm:2.15.6"
+  version: 2.15.7
+  resolution: "lage@npm:2.15.7"
   dependencies:
     fsevents: "npm:~2.3.2"
     glob-hasher: "npm:^1.4.2"
@@ -12668,7 +12668,7 @@ __metadata:
   bin:
     lage: dist/lage.js
     lage-server: dist/lage-server.js
-  checksum: 10c0/4dd43403d9058b73fcbbbb5b7a61da9bf1c75656413cb9d067f0176d2245fc79f64d73ad54b3ca59a8aeacb918435e4129ce679958a0b2e7f46bc60c3ca3d0c6
+  checksum: 10c0/4f9bfe87f1c461d31b5a83f86f54bc81b7d4a976a01e7fbc79cbe3d0b2c48aab75e2c831c720f9f486ced395e40056efc1580c10d0b5d94819dfc22dd00b5f41
   languageName: node
   linkType: hard
 
@@ -15236,7 +15236,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"picomatch@npm:^4.0.1, picomatch@npm:^4.0.3":
+"picomatch@npm:^4.0.1, picomatch@npm:^4.0.4":
   version: 4.0.4
   resolution: "picomatch@npm:4.0.4"
   checksum: 10c0/e2c6023372cc7b5764719a5ffb9da0f8e781212fa7ca4bd0562db929df8e117460f00dff3cb7509dacfc06b86de924b247f504d0ce1806a37fac4633081466b0
@@ -17559,12 +17559,12 @@ __metadata:
   linkType: hard
 
 "tinyglobby@npm:^0.2.12, tinyglobby@npm:^0.2.15":
-  version: 0.2.15
-  resolution: "tinyglobby@npm:0.2.15"
+  version: 0.2.16
+  resolution: "tinyglobby@npm:0.2.16"
   dependencies:
     fdir: "npm:^6.5.0"
-    picomatch: "npm:^4.0.3"
-  checksum: 10c0/869c31490d0d88eedb8305d178d4c75e7463e820df5a9b9d388291daf93e8b1eb5de1dad1c1e139767e4269fe75f3b10d5009b2cc14db96ff98986920a186844
+    picomatch: "npm:^4.0.4"
+  checksum: 10c0/f2e09fd93dd95c41e522113b686ff6f7c13020962f8698a864a257f3d7737599afc47722b7ab726e12f8a813f779906187911ff8ee6701ede65072671a7e934b
   languageName: node
   linkType: hard
 
