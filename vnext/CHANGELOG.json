@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Apr 2026 00:16:37 GMT",
+      "version": "0.81.13",
+      "tag": "react-native-windows_v0.81.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "57c33949c2f2863a51817500cec9bdd795d459dc",
+            "comment": "fix clang-diagnostic-unused-function warning"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 Apr 2026 01:00:03 GMT",
       "version": "0.81.12",
       "tag": "react-native-windows_v0.81.12",
