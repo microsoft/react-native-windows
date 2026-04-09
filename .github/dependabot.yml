@@ -21,6 +21,16 @@ updates:
       update-types:
         - 'minor'
         - 'patch'
+    other-dependencies:
+      patterns:
+        - '*'
+      exclude-patterns:
+        - '@babel*'
+        - '@jest*'
+        - '@rnx-kit*'
+      update-types:
+        - 'minor'
+        - 'patch'
   schedule:
     interval: daily
     time: "05:00"
