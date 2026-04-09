@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Thu, 26 Mar 2026 03:47:47 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 09 Apr 2026 06:12:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.4
+
+Thu, 09 Apr 2026 06:12:08 GMT
+
+### Patches
+
+- Upgrade to Boost 1.84 (julio.rocha@microsoft.com)
+- Bump react-native-windows to v0.82.4
 
 ## 0.82.3
 
