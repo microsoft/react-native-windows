@@ -5,6 +5,8 @@
     "model": "haiku"
   },
   "dependencies": [
-    { "name": "fmt", "localPath": "vnext/external/fmt" }
+    { "name": "fmt", "localPath": "vnext/external/fmt" },
+    { "name": "folly", "localPath": "vnext/external/folly" },
+    { "name": "fast-float", "localPath": "vnext/external/fast-float" }
   ]
 }

@@ -163,22 +163,9 @@
           "boost": "[1.84.0, )"
         }
       },
-      "folly": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "[1.84.0, )"
-        }
-      },
-      "follywin32": {
-        "type": "Project",
-        "dependencies": {
-          "Folly": "[1.0.0, )"
-        }
-      },
       "reactcommon": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
           "boost": "[1.84.0, )"
         }
       }

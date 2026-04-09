@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(ReactNativeWindowsDir)Folly\pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)folly.pch</PrecompiledHeaderOutputFile>
+      <ObjectFileName>$(IntDir)folly_pch.obj</ObjectFileName>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <PreprocessorDefinitions>FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;NOMINMAX;_CRT_SECURE_NO_WARNINGS;WINAPI_PARTITION_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4251;4293;4305;4800;4804;4310;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Folly;$(ReactNativeWindowsDir)stubs;$(ExternalDir)folly;$(ExternalDir)fast-float\include;$(ExternalDir)fmt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)Folly\ThreadNameStub.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\SharedMutex.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\concurrency\CacheLocality.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\detail\Futex.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\synchronization\ParkingLot.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\synchronization\SanitizeThread.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\portability\SysResource.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\portability\Unistd.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\system\AtFork.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\system\ThreadId.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\lang\SafeAssert.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\lang\ToAscii.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\json\json_pointer.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\Format.cpp">
+      <ObjectFileName>$(IntDir)folly_Format.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="$(ExternalDir)folly\folly\String.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\container\detail\F14Table.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\Conv.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\portability\string.cpp">
+      <ObjectFileName>$(IntDir)\portabilityString.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="$(ExternalDir)folly\folly\Demangle.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\json\dynamic.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\json\json.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\hash\SpookyHashV2.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\ScopeGuard.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\Unicode.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\memory\detail\MallocImpl.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\memory\SanitizeLeak.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\lang\CString.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\lang\Exception.cpp" />
+    <ClCompile Include="$(ExternalDir)folly\folly\detail\SplitStringSimd.cpp" />
+    <!-- Desktop-only: SysMman.cpp (was in FollyWin32 project) -->
+    <ClCompile Include="$(ExternalDir)folly\folly\portability\SysMman.cpp" Condition="'$(AppContainerApplication)' != 'true'">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC=1;FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;NOMINMAX;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ExternalDir)folly;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4293;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <ForcedIncludeFiles />
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(ReactNativeWindowsDir)Folly\pch.h" />
+    <!-- folly/ root headers -->
+    <ClInclude Include="$(ExternalDir)folly\folly\AtomicIntrusiveLinkedList.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Bits.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Conv.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\ConstexprMath.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\CPortability.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\CppAttributes.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\CpuId.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Demangle.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\dynamic.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Exception.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\ExceptionString.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Expected.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\FBString.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Format-inl.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Format.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\FormatArg.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\FormatTraits.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Function.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Hash.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Indestructible.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Likely.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\MapUtil.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Memory.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Optional.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Portability.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Preprocessor.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Range.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\ScopeGuard.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\SharedMutex.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\String-inl.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\String.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Unicode.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Unit.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\Utility.h" />
+    <!-- folly/chrono/ -->
+    <ClInclude Include="$(ExternalDir)folly\folly\chrono\Hardware.h" />
+    <!-- folly/concurrency/ -->
+    <ClInclude Include="$(ExternalDir)folly\folly\concurrency\CacheLocality.h" />
+    <!-- folly/container/ -->
+    <ClInclude Include="$(ExternalDir)folly\folly\container\Access.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\container\F14Map.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\container\F14Set.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\container\HeterogeneousAccess.h" />
+    <!-- folly/detail/ -->
+    <ClInclude Include="$(ExternalDir)folly\folly\detail\FileUtilDetail.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\detail\Futex.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\detail\RangeCommon.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\detail\RangeSse42.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\detail\StaticSingletonManager.h" />
+    <!-- folly/functional/ -->
+    <ClInclude Include="$(ExternalDir)folly\folly\functional\ApplyTuple.h" />
+    <!-- folly/hash/ -->
+    <ClInclude Include="$(ExternalDir)folly\folly\hash\MurmurHash.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\hash\SpookyHashV1.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\hash\SpookyHashV2.h" />
+    <!-- folly/json/ -->
+    <ClInclude Include="$(ExternalDir)folly\folly\json\dynamic-inl.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\json\dynamic.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\json\json.h" />
+    <!-- folly/lang/ -->
+    <ClInclude Include="$(ExternalDir)folly\folly\lang\ToAscii.h" />
+    <!-- folly/portability/ -->
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\Asm.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\Builtins.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\Config.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\Constexpr.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\Malloc.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\Math.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\PThread.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\String.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\SysMman.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\SysResource.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\SysSyscall.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\SysTime.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\SysTypes.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\Time.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\Unistd.h" />
+    <ClInclude Include="$(ExternalDir)folly\folly\portability\Windows.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="$(ExternalDir)folly\Folly.natvis" />
+  </ItemGroup>
+  <!-- Compiler settings for Folly sources -->
+  <ItemGroup>
+    <ClCompile Update="$(ExternalDir)folly\**">
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>$(IntDir)folly.pch</PrecompiledHeaderOutputFile>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <PreprocessorDefinitions>FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;NOMINMAX;_CRT_SECURE_NO_WARNINGS;WINAPI_PARTITION_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4251;4293;4305;4800;4804;4310;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Folly;$(ReactNativeWindowsDir)stubs;$(ExternalDir)folly;$(ExternalDir)fast-float\include;$(ExternalDir)fmt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -5,8 +5,6 @@
       "Common\\Common.vcxproj",
       "Desktop\\React.Windows.Desktop.vcxproj",
       "Desktop.DLL\\React.Windows.Desktop.DLL.vcxproj",
-      "Folly\\Folly.vcxproj",
-      "FollyWin32\\FollyWin32.vcxproj",
       "ReactCommon\\ReactCommon.vcxproj"
     ]
   }

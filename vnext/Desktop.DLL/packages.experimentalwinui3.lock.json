@@ -156,24 +156,10 @@
           "boost": "[1.84.0, )"
         }
       },
-      "folly": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "[1.84.0, )"
-        }
-      },
-      "follywin32": {
-        "type": "Project",
-        "dependencies": {
-          "Folly": "[1.0.0, )"
-        }
-      },
       "react.windows.desktop": {
         "type": "Project",
         "dependencies": {
           "Common": "[1.0.0, )",
-          "Folly": "[1.0.0, )",
-          "FollyWin32": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.0.0-2512.22001-bc3d0ed7, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.WindowsAppSDK": "[2.0.0-experimental3, )",
@@ -185,7 +171,6 @@
       "reactcommon": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
           "boost": "[1.84.0, )"
         }
       }
