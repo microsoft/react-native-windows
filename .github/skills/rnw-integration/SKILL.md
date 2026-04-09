@@ -125,6 +125,39 @@ This ensures all references to the previous nightly version are updated, includi
 - `peerDependencies`
 - `resolutions`
 
+### Step 8: Upgrade Platform Overrides
+
+Run the override upgrade tool to resolve conflicts in platform-specific override files:
+
+```powershell
+npx react-native-platform-override upgrade
+```
+
+This interactive tool helps resolve conflicts between upstream React Native changes and RNW platform overrides. It will:
+- Show files with merge conflicts
+- Allow you to accept upstream changes, keep local changes, or manually merge
+- Update the overrides.json manifest files
+
+After completing the upgrade, verify the overrides are valid:
+
+```powershell
+yarn validate-overrides
+```
+
+### Step 9: Commit All Changes
+
+After completing all integration steps, commit the changes:
+
+```powershell
+git add -A
+git commit -m "Integrate RN $targetVersion"
+```
+
+This creates a single commit with all the integration changes including:
+- Updated package.json dependencies
+- Override file upgrades
+- Any auto-fixed lint issues
+
 ## Key Files to Update
 
 When integrating a new nightly version, these files typically need updates:
