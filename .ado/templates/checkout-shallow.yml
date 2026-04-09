@@ -1,8 +1,14 @@
 # Checkout the state of the repo at the time of the commit being tested,
 # without full history.
+parameters:
+  - name: persistCredentials
+    type: boolean
+    default: false
+
 steps:
   - checkout: self
     fetchDepth: 1
     clean: false
     submodules: false
     lfs: false
+    persistCredentials: ${{ parameters.persistCredentials }}
