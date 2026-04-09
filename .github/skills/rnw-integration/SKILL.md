@@ -158,6 +158,80 @@ This creates a single commit with all the integration changes including:
 - Override file upgrades
 - Any auto-fixed lint issues
 
+### Step 10: Update Failing Overrides from Upstream
+
+Run `yarn validate-overrides` to identify which folders need to be replaced with upstream versions, then download and replace them:
+
+```powershell
+# Extract commit hash from target version (last 8 characters after final hyphen)
+# Example: 0.85.0-nightly-20260114-f15985f4f -> f15985f4f
+$commitHash = ($targetVersion -split '-')[-1]
+Write-Host "Commit hash: $commitHash"
+
+# Run validate-overrides and capture failing paths
+$validateOutput = yarn validate-overrides 2>&1
+$failingPaths = $validateOutput | Where-Object { $_ -match '^ - ' } | ForEach-Object { $_.Trim(' -') }
+
+if ($failingPaths.Count -eq 0) {
+    Write-Host "No failing overrides to update"
+    return
+}
+
+Write-Host "Found $($failingPaths.Count) failing override paths to update"
+
+# Create temp directory (outside git tracking)
+$tempDir = "$env:TEMP\rn-upstream-$commitHash"
+if (Test-Path $tempDir) { Remove-Item -Recurse -Force $tempDir }
+New-Item -ItemType Directory -Path $tempDir | Out-Null
+
+# Download react-native repo at the specific commit
+Write-Host "Downloading react-native at commit $commitHash..."
+git clone --depth 1 --filter=blob:none --sparse https://github.com/facebook/react-native.git $tempDir
+Push-Location $tempDir
+git sparse-checkout set packages/rn-tester
+git fetch --unshallow
+git checkout $commitHash
+Pop-Location
+
+# Replace each failing path with upstream version
+foreach ($path in $failingPaths) {
+    # Convert absolute path to relative
+    $relativePath = $path -replace [regex]::Escape((Get-Location).Path + '\'), ''
+    
+    # Map RNW paths to upstream rn-tester paths
+    $upstreamPath = $null
+    
+    if ($relativePath -like "packages\@react-native\tester\*") {
+        # packages\@react-native\tester\X -> packages\rn-tester\X
+        $subPath = $relativePath -replace '^packages\\@react-native\\tester\\', ''
+        $upstreamPath = "$tempDir\packages\rn-tester\$subPath"
+    }
+    elseif ($relativePath -like "vnext\ReactCopies\*") {
+        # vnext\ReactCopies\X -> packages\rn-tester\X
+        $subPath = $relativePath -replace '^vnext\\ReactCopies\\', ''
+        $upstreamPath = "$tempDir\packages\rn-tester\$subPath"
+    }
+    
+    if ($upstreamPath -and (Test-Path $upstreamPath)) {
+        Write-Host "Replacing $relativePath with upstream version..."
+        Remove-Item -Recurse -Force $relativePath
+        Copy-Item -Recurse -Force $upstreamPath $relativePath
+    } else {
+        Write-Host "WARNING: Could not find upstream path for $relativePath"
+    }
+}
+
+# Cleanup temp directory
+Remove-Item -Recurse -Force $tempDir
+Write-Host "Overrides updated from upstream commit $commitHash"
+```
+
+Verify the overrides are valid after the update:
+
+```powershell
+yarn validate-overrides
+```
+
 ## Key Files to Update
 
 When integrating a new nightly version, these files typically need updates:
