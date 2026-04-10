@@ -3,10 +3,10 @@
   "version": "0.0.54",
   "private": true,
   "scripts": {
-    "start": "npx @react-native-community/cli rnx-start",
+    "start": "react-native rnx-start",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
-    "windows": "npx @react-native-community/cli run-windows"
+    "windows": "react-native run-windows"
   },
   "dependencies": {
     "@react-native-picker/picker": "2.11.0",
