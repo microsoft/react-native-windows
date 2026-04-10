@@ -427,6 +427,143 @@ git add -A
 git commit -m "Resolve merge conflicts for RN $targetVersion integration"
 ```
 
+### Step 12: Post-Merge RNW Playground Validation (Mandatory)
+
+After resolving merge conflicts, perform an initial functional smoke check by building and running RNW Playground locally.
+
+#### Build and Run Playground
+
+```powershell
+# Find MSBuild path
+$msbuild = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe
+Write-Host "MSBuild: $msbuild"
+
+# Build the Playground composition via the solution (required for SolutionPath property)
+# Target only the playground-composition.Package project
+& $msbuild packages/playground/windows/playground-composition.sln /t:playground-composition_Package /p:Configuration=Debug /p:Platform=x64 /p:RestoreLockedMode=false /m
+
+# If build succeeds, launch the app to verify runtime behavior
+```
+
+The solution file is at: `packages/playground/windows/playground-composition.sln`
+The target project is: `playground-composition.Package` (built via `/t:playground-composition_Package`)
+
+#### If Playground Fails to Build or Run
+
+Some integration failures are caused by upstream changes that were previously fixed during earlier RNW integrations via patches applied in the RNW forked repository. The following commits contain known previous integration build/runtime fixes:
+
+```
+885aa5b51f1b4493a4bed16fce846270adb44d70
+01bfeefcb58a0688713c42b5c5b867319a25029e
+76a133e7ff81e148db6a9cd1d7d4c7a7aca86cb6
+477ea4915576235f82e2b6349917f345ce929180
+21285f1247cec3bb9667859c5698d10930eefd1b
+9a2e17697526ed219a33d96f7acf0903669f7585
+aabe43e85e3e201ab99e0ac71ef6ee7dcf442110
+5a6fdb82771e9cbc6ee019dab5766f03761df6d0
+48e7a08931a59be27cc8709a511b7c6aea3d6900
+61392d901dd036b3abe456de1f5ace8571954811
+9fb535e0285883ba95b39018d26ff2ba7b876d53
+cf1e9188c391c0411205657bbdcd8feb5d851fc4
+```
+
+#### Recovery Workflow
+
+For EACH commit listed above:
+
+1. **Inspect the commit** in the RNW forked repository:
+   - Identify which files were changed
+   - Determine what build/runtime issue the change addressed
+   - Check whether the affected code paths exist in the current merged state
+
+2. **Validate relevance** BEFORE applying any change:
+   - Confirm the same issue is occurring in the current Playground failure
+   - Check if the fix is still relevant in the current upstream context
+   - Validate the compare diff
+   - Ensure the fix does not conflict with:
+     - RNW Windows-specific adaptations
+     - Intentionally skipped upstream changes
+     - Entries documented in `references/conflict-patterns.md`
+
+3. **Prepare a FIX PROPOSAL and request approval:**
+
+   Present:
+   - Commit hash being considered
+   - Files impacted
+   - Short description of the original issue the fix addressed
+   - Why this fix is applicable to the current failure
+   - Exact proposed patch/diff to apply
+   - Confidence level (`Low` / `Medium` / `High`)
+
+   Ask explicitly: **"Approve applying this fix? (Yes/No)"**
+
+4. **Apply ONLY after explicit approval.**
+
+   If confidence is `Low`:
+   - Do NOT apply automatically
+   - Provide manual investigation guidance instead
+   - Request further direction
+
+#### Recovery Log
+
+Maintain a recovery log for each evaluated commit:
+
+| Commit | Issue Matched | Confidence | Approval | Applied/Skipped |
+|--------|--------------|------------|----------|-----------------|
+| `885aa5b...` | (description) | High/Med/Low | Yes/No | Applied/Skipped |
+| ... | ... | ... | ... | ... |
+
+After all fixes are applied and Playground builds successfully:
+
+```powershell
+git add -A
+git commit -m "Apply build fixes for RN $targetVersion integration"
+```
+
+### Step 13: Deploy and Launch Playground
+
+After the build succeeds, deploy and launch the Playground app to verify runtime behavior.
+
+**IMPORTANT: Debug builds are NOT signed.** Do NOT attempt to install via MSIX (`Add-AppxPackage -Path *.msix`) — it will fail with `0x800B0100: No signature was present`. Instead, use **loose layout registration** via `Add-AppxPackage -Register <AppxManifest.xml>`, which does not require signing or certificates.
+
+```powershell
+# Register the app from the loose layout (no signing needed for debug builds)
+$appxManifest = "packages\playground\windows\playground-composition.Package\bin\x64\Debug\AppX\AppxManifest.xml"
+
+if (Test-Path $appxManifest) {
+    Write-Host "Registering app from: $appxManifest"
+    Add-AppxPackage -Register $appxManifest -ForceApplicationShutdown
+} else {
+    # Fallback: search for AppxManifest.xml in build output
+    $appxManifest = Get-ChildItem -Path "packages\playground\windows" -Filter "AppxManifest.xml" -Recurse -ErrorAction SilentlyContinue |
+        Where-Object { $_.FullName -like "*bin*Debug*AppX*" } |
+        Select-Object -First 1 -ExpandProperty FullName
+    if ($appxManifest) {
+        Write-Host "Registering app from: $appxManifest"
+        Add-AppxPackage -Register $appxManifest -ForceApplicationShutdown
+    } else {
+        Write-Host "ERROR: No AppxManifest.xml found. Build may have failed."
+    }
+}
+
+# Launch the app
+$appPackage = Get-AppxPackage -Name "*playground*" | Select-Object -First 1
+if ($appPackage) {
+    $appId = (Get-AppxPackageManifest $appPackage).Package.Applications.Application.Id
+    $fullName = $appPackage.PackageFamilyName
+    Write-Host "Launching: $fullName!$appId"
+    Start-Process "shell:AppsFolder\$fullName!$appId"
+    Write-Host "Playground launched successfully. Verify the app renders correctly."
+} else {
+    Write-Host "WARNING: Could not find installed Playground package. Try deploying from Visual Studio."
+}
+```
+
+After verifying the app launches and renders correctly:
+- Check that the main screen loads without crashes
+- Verify basic component rendering (text, buttons, views)
+- Check the debug console for any runtime errors
+
 ## Key Files to Update
 
 When integrating a new nightly version, these files typically need updates:
