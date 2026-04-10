@@ -4960,12 +4960,12 @@ __metadata:
   linkType: hard
 
 "@rnx-kit/fork-sync@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "@rnx-kit/fork-sync@npm:0.4.0"
+  version: 0.4.1
+  resolution: "@rnx-kit/fork-sync@npm:0.4.1"
   bin:
     ai-merge: lib/ai-merge.js
     fork-sync: lib/sync.js
-  checksum: 10c0/6cd6461a84d86e32f1d2aeaa032393644f9b968c4dea7e84b16d4fe106af365e7ee5c5faae144c939c64b5313bf2da15d909ab15f22a8bfb82d2486f1982c076
+  checksum: 10c0/54572caa884f72e4d2f2af335ede5e1a7c6e451729c0cc66ede42c6dd4fc98ca61f04f3f7a3b0fca07c7573f84b21462af1ca5500c3a22aa8395094abfa94fcf
   languageName: node
   linkType: hard
 
@@ -7393,8 +7393,8 @@ __metadata:
   linkType: hard
 
 "beachball@npm:^2.20.0":
-  version: 2.64.2
-  resolution: "beachball@npm:2.64.2"
+  version: 2.64.3
+  resolution: "beachball@npm:2.64.3"
   dependencies:
     "@vercel/detect-agent": "npm:^1.2.1"
     cosmiconfig: "npm:^9.0.1"
@@ -7408,7 +7408,7 @@ __metadata:
     yargs-parser: "npm:^21.1.1"
   bin:
     beachball: bin/beachball.js
-  checksum: 10c0/c1f4c4d0e60d8d94fdc00730cf097184aef4301e2e99c07a7de549bbd1a0a80a93d7001d22b30420424cf0a95d8002e8ba74fd99d2ca9b5412721a29632f6cc0
+  checksum: 10c0/7c1bc757821f6b15399d22121f62a0feadde4c66195f1d2b1f6d1d861e34cea3a58973cc9f99326be3451f7b3eb1e68cd75531055f8cf4677ca798da4f9d2c1a
   languageName: node
   linkType: hard
 
@@ -9230,8 +9230,8 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-jest@npm:^29.0.1":
-  version: 29.15.1
-  resolution: "eslint-plugin-jest@npm:29.15.1"
+  version: 29.15.2
+  resolution: "eslint-plugin-jest@npm:29.15.2"
   dependencies:
     "@typescript-eslint/utils": "npm:^8.0.0"
   peerDependencies:
@@ -9246,7 +9246,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10c0/daa54dfa2246c4fc822ae565a77ee35c456a0b6d41de5af56279264c47ceadc72c88c70ebf72fcb4bc1e114ad52bc8196fb23574a06674946a7d560fb627d27c
+  checksum: 10c0/be8d59b0d4c1ff1afd5294b227cdd190a3a7741fb28f8092d359eda1010cb87ef61c3db6c0a794e9612f745ae008c4d53ee78754d8faf87a22a823b71c9b14e4
   languageName: node
   linkType: hard
 
@@ -12678,8 +12678,8 @@ __metadata:
   linkType: hard
 
 "lage@npm:^2.7.1":
-  version: 2.15.7
-  resolution: "lage@npm:2.15.7"
+  version: 2.15.8
+  resolution: "lage@npm:2.15.8"
   dependencies:
     fsevents: "npm:~2.3.2"
     glob-hasher: "npm:^1.4.2"
@@ -12689,7 +12689,7 @@ __metadata:
   bin:
     lage: dist/lage.js
     lage-server: dist/lage-server.js
-  checksum: 10c0/4f9bfe87f1c461d31b5a83f86f54bc81b7d4a976a01e7fbc79cbe3d0b2c48aab75e2c831c720f9f486ced395e40056efc1580c10d0b5d94819dfc22dd00b5f41
+  checksum: 10c0/0dd51cacc22b8d3aa318360e6dbb23b0f35f48ae81b21d6c19e61e8ac3fd06306c504092b573aaa6fd8c47d6088663557fee50ce91fa19957f9a42f4e68fc5b8
   languageName: node
   linkType: hard
 
