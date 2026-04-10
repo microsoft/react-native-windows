@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Make Fetch integration test handle UTF-8 content.",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
