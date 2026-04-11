@@ -29,6 +29,8 @@ Write-Host "Current version: $currentVersion"
 
 Expected format: `0.XX.0-nightly-YYYYMMDD-<commit-hash>`
 
+After completing this step, confirm: **Step 1 completed successfully.**
+
 ### Step 2: Parse the Current Version Date
 
 Extract the date from the nightly version string:
@@ -40,6 +42,8 @@ $currentDate = [DateTime]::ParseExact($matches[1], 'yyyyMMdd', $null)
 Write-Host "Current nightly date: $($currentDate.ToString('yyyy-MM-dd'))"
 ```
 
+After completing this step, confirm: **Step 2 completed successfully.**
+
 ### Step 3: Calculate Target Date (+7 days)
 
 ```powershell
@@ -47,6 +51,8 @@ $targetDate = $currentDate.AddDays(7)
 $targetDateStr = $targetDate.ToString('yyyyMMdd')
 Write-Host "Target date (+7 days): $($targetDate.ToString('yyyy-MM-dd'))"
 ```
+
+After completing this step, confirm: **Step 3 completed successfully.**
 
 ### Step 4: Find Nightly Version on npm
 
@@ -72,6 +78,8 @@ if (-not $targetVersion) {
 Write-Host "Target nightly version: $targetVersion"
 ```
 
+After completing this step, confirm: **Step 4 completed successfully.**
+
 ### Step 5: Output Summary
 
 ```powershell
@@ -83,6 +91,8 @@ Write-Host "Target Date:     $($targetDate.ToString('yyyy-MM-dd'))"
 Write-Host "Target Version:  $targetVersion"
 ```
 
+After completing this step, confirm: **Step 5 completed successfully.**
+
 ### Step 6: Run Integration Script
 
 Run the integration script with the target nightly version to update all dependencies:
@@ -92,6 +102,8 @@ yarn integrate-rn $targetVersion
 ```
 
 This command updates all `react-native` and `@react-native/*` package references across the monorepo to the target nightly version.
+
+After completing this step, confirm: **Step 6 completed successfully.**
 
 ### Step 7: Search and Update Remaining package.json Files
 
@@ -125,6 +137,8 @@ This ensures all references to the previous nightly version are updated, includi
 - `peerDependencies`
 - `resolutions`
 
+After completing this step, confirm: **Step 7 completed successfully.**
+
 ### Step 8: Upgrade Platform Overrides
 
 Run the override upgrade tool to resolve conflicts in platform-specific override files:
@@ -144,6 +158,8 @@ After completing the upgrade, verify the overrides are valid:
 yarn validate-overrides
 ```
 
+After completing this step, confirm: **Step 8 completed successfully.**
+
 ### Step 9: Commit All Changes
 
 After completing all integration steps, commit the changes:
@@ -157,6 +173,8 @@ This creates a single commit with all the integration changes including:
 - Updated package.json dependencies
 - Override file upgrades
 - Any auto-fixed lint issues
+
+After completing this step, confirm: **Step 9 completed successfully.**
 
 ### Step 10: Update Failing Overrides from Upstream
 
@@ -231,6 +249,8 @@ Verify the overrides are valid after the update:
 ```powershell
 yarn validate-overrides
 ```
+
+After completing this step, confirm: **Step 10 completed successfully.**
 
 ### Step 11: Resolve Merge Conflicts (Human-in-the-Loop)
 
@@ -427,6 +447,8 @@ git add -A
 git commit -m "Resolve merge conflicts for RN $targetVersion integration"
 ```
 
+After completing this step, confirm: **Step 11 completed successfully.**
+
 ### Step 12: Post-Merge RNW Playground Validation (Mandatory)
 
 After resolving merge conflicts, perform an initial functional smoke check by building and running RNW Playground locally.
@@ -520,6 +542,8 @@ git add -A
 git commit -m "Apply build fixes for RN $targetVersion integration"
 ```
 
+After completing this step, confirm: **Step 12 completed successfully.**
+
 ### Step 13: Deploy and Launch Playground
 
 After the build succeeds, deploy and launch the Playground app to verify runtime behavior.
@@ -563,6 +587,8 @@ After verifying the app launches and renders correctly:
 - Check that the main screen loads without crashes
 - Verify basic component rendering (text, buttons, views)
 - Check the debug console for any runtime errors
+
+After completing this step, confirm: **Step 13 completed successfully.**
 
 ## Key Files to Update
 
