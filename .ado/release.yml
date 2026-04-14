@@ -14,6 +14,12 @@ name: RNW NuGet Release $(Date:yyyyMMdd).$(Rev:r)
 trigger: none
 pr: none
 
+parameters:
+  - name: forceRelease
+    displayName: 'Force release (override CI flag — emergency use only)'
+    type: boolean
+    default: false
+
 resources:
   pipelines:
   - pipeline: 'Publish'
@@ -23,9 +29,11 @@ resources:
       branches:
         include:
         - main
-        - refs/heads/main
-        - '*-stable'
-        - 'refs/heads/*-stable'
+        - '0.74-stable'
+        - '0.81-stable'
+        - '0.82-stable'
+        - '0.83-stable'
+        - '0.84-stable'
   repositories:
   - repository: 1ESPipelineTemplates
     type: git
@@ -40,11 +48,154 @@ extends:
       image: windows-latest
       os: windows
     stages:
+    #
+    # Gate stage — runs unconditionally for every trigger.
+    # It determines whether the Release stage should proceed and sets a
+    # descriptive build number so the pipeline history is easy to scan.
+    #
+    - stage: Gate
+      displayName: Evaluate release
+      jobs:
+      - job: Evaluate
+        displayName: Check if release should proceed
+        templateContext:
+          inputs:
+          - input: pipelineArtifact
+            pipeline: 'Publish'
+            artifactName: 'VersionEnvVars'
+            targetPath: '$(Pipeline.Workspace)/VersionEnvVars'
+        steps:
+        - checkout: none
+
+        - pwsh: |
+            Write-Host "== Build Variables =="
+            Write-Host "Build.Reason:               $env:BUILD_REASON"
+            Write-Host "Build.SourceBranch:         $env:BUILD_SOURCEBRANCH"
+            Write-Host "Build.SourceVersion:        $env:BUILD_SOURCEVERSION"
+            Write-Host "Build.SourceVersionMessage: $env:BUILD_SOURCEVERSIONMESSAGE"
+            Write-Host "Build.BuildNumber:          $env:BUILD_BUILDNUMBER"
+            Write-Host "Build.BuildId:              $env:BUILD_BUILDID"
+            Write-Host "Build.DefinitionName:       $env:BUILD_DEFINITIONNAME"
+            Write-Host "Build.Repository.Name:      $env:BUILD_REPOSITORY_NAME"
+            Write-Host "System.TeamProject:         $env:SYSTEM_TEAMPROJECT"
+            Write-Host ""
+            Write-Host "== Pipeline Resource: Publish =="
+            Write-Host "Publish.runName:            $env:PUBLISH_RUNNAME"
+            Write-Host "Publish.runID:              $env:PUBLISH_RUNID"
+            Write-Host "Publish.sourceBranch:       $env:PUBLISH_SOURCEBRANCH"
+            Write-Host "Publish.sourceCommit:       $env:PUBLISH_SOURCECOMMIT"
+            Write-Host "Publish.pipelineID:         $env:PUBLISH_PIPELINEID"
+            Write-Host "Publish.requestedFor:       $env:PUBLISH_REQUESTEDFOR"
+            Write-Host "Publish.requestedForID:     $env:PUBLISH_REQUESTEDFORID"
+          displayName: Log all pipeline variables
+          env:
+            BUILD_REASON: $(Build.Reason)
+            BUILD_SOURCEBRANCH: $(Build.SourceBranch)
+            BUILD_SOURCEVERSION: $(Build.SourceVersion)
+            BUILD_SOURCEVERSIONMESSAGE: $(Build.SourceVersionMessage)
+            BUILD_BUILDNUMBER: $(Build.BuildNumber)
+            BUILD_BUILDID: $(Build.BuildId)
+            BUILD_DEFINITIONNAME: $(Build.DefinitionName)
+            BUILD_REPOSITORY_NAME: $(Build.Repository.Name)
+            SYSTEM_TEAMPROJECT: $(System.TeamProject)
+            PUBLISH_RUNNAME: $(resources.pipeline.Publish.runName)
+            PUBLISH_RUNID: $(resources.pipeline.Publish.runID)
+            PUBLISH_SOURCEBRANCH: $(resources.pipeline.Publish.sourceBranch)
+            PUBLISH_SOURCECOMMIT: $(resources.pipeline.Publish.sourceCommit)
+            PUBLISH_PIPELINEID: $(resources.pipeline.Publish.pipelineID)
+            PUBLISH_REQUESTEDFOR: $(resources.pipeline.Publish.requestedFor)
+            PUBLISH_REQUESTEDFORID: $(resources.pipeline.Publish.requestedForID)
+
+        # Apply version variables from the CI artifact (sets IsReleaseBuild, npmVersion, etc.)
+        - task: CmdLine@2
+          displayName: Apply CI version variables
+          inputs:
+            script: node $(Pipeline.Workspace)/VersionEnvVars/versionEnvVars.js
+
+        - pwsh: |
+            $forceRelease = '${{ parameters.forceRelease }}'
+            $isReleaseBuild = $env:IS_RELEASE_BUILD
+            $publishRunName = $env:PUBLISH_RUN_NAME
+            $sourceBranch = $env:SOURCE_BRANCH -replace '^refs/heads/', ''
+
+            # Extract the datestamp (e.g. "20260319.4") from the original build number
+            # which has the format "RNW NuGet Release 20260319.4"
+            $originalBuildNumber = $env:BUILD_BUILDNUMBER
+            $dateStamp = if ($originalBuildNumber -match '(\d{8}\.\d+)$') { $Matches[1] } else { "" }
+
+            # Fallback: if IsReleaseBuild is not in the CI artifact (old branches),
+            # fall back to commit message detection for backward compatibility.
+            if (-not $isReleaseBuild) {
+              $sourceMessage = ($env:SOURCE_MESSAGE -split "`n")[0].Trim()
+              $isReleaseBuild = if ($sourceMessage.StartsWith("RELEASE:")) { 'True' } else { 'False' }
+              Write-Host "##[warning]IsReleaseBuild not found in CI artifact, fell back to commit message detection: $isReleaseBuild"
+            }
+
+            Write-Host "isReleaseBuild (from CI): $isReleaseBuild"
+            Write-Host "forceRelease (param):     $forceRelease"
+
+            $shouldRelease = $false
+            $buildNumber = ""
+
+            if ($forceRelease -eq 'True') {
+              # Emergency override — allow publishing regardless of CI flag
+              $shouldRelease = $true
+              if ($publishRunName) {
+                $buildNumber = "$publishRunName [FORCED] ($sourceBranch) - $dateStamp"
+              } else {
+                $buildNumber = "Release [FORCED] ($sourceBranch) - $dateStamp"
+              }
+              Write-Host "##[warning]Release forced by parameter override"
+            }
+            elseif ($isReleaseBuild -eq 'True') {
+              $shouldRelease = $true
+              if ($publishRunName) {
+                $buildNumber = "$publishRunName ($sourceBranch) - $dateStamp"
+              } else {
+                $buildNumber = "Release ($sourceBranch) - $dateStamp"
+              }
+            }
+            else {
+              $shouldRelease = $false
+              # Truncate commit message for readability
+              $shortMsg = ($env:SOURCE_MESSAGE -split "`n")[0].Trim()
+              if ($shortMsg.Length -gt 60) {
+                $shortMsg = $shortMsg.Substring(0, 57) + "..."
+              }
+              $buildNumber = "Skipped - $shortMsg ($sourceBranch) - $dateStamp"
+            }
+
+            # Sanitize: ADO build numbers cannot contain " / : < > \ | ? @ *
+            # and cannot end with '.'
+            $buildNumber = $buildNumber -replace '["/:<>\\|?@*]', '_'
+            $buildNumber = $buildNumber.TrimEnd('.')
+
+            Write-Host "shouldRelease: $shouldRelease"
+            Write-Host "buildNumber:   $buildNumber"
+
+            Write-Host "##vso[build.updatebuildnumber]$buildNumber"
+            Write-Host "##vso[task.setvariable variable=shouldRelease;isOutput=true]$shouldRelease"
+          name: gate
+          displayName: Determine release eligibility from CI artifact
+          env:
+            BUILD_BUILDNUMBER: $(Build.BuildNumber)
+            IS_RELEASE_BUILD: $(IsReleaseBuild)
+            PUBLISH_RUN_NAME: $(resources.pipeline.Publish.runName)
+            SOURCE_BRANCH: $(resources.pipeline.Publish.sourceBranch)
+            SOURCE_MESSAGE: $(Build.SourceVersionMessage)
+
+        - script: echo Proceeding with release
+          displayName: RELEASING - proceeding to publish
+          condition: eq(variables['gate.shouldRelease'], 'True')
+
+        - script: echo Skipping release
+          displayName: SKIPPED - not a release build
+          condition: eq(variables['gate.shouldRelease'], 'False')
+
     - stage: Release
       displayName: Publish artifacts
-      # Allow manual runs unconditionally; for build-completion triggers,
-      # only proceed if the commit message starts with 'RELEASE:'.
-      condition: or(eq(variables['Build.Reason'], 'Manual'), startsWith(variables['Build.SourceVersionMessage'], 'RELEASE:'))
+      dependsOn: Gate
+      condition: eq(dependencies.Gate.outputs['Evaluate.gate.shouldRelease'], 'True')
       jobs:
       - job: PushNpm
         displayName: npmjs.com - Publish npm packages
@@ -74,7 +225,7 @@ extends:
           displayName: Remove already published packages
         - script: dir /s "$(Pipeline.Workspace)\published-packages"
           displayName: Show npm packages after cleanup
-        - powershell: |
+        - pwsh: |
             $tgzFiles = Get-ChildItem -Path "$(Pipeline.Workspace)\published-packages" -Filter "*.tgz" -Recurse
             $tgzCount = $tgzFiles.Count
             Write-Host "Found $tgzCount .tgz files"
@@ -155,11 +306,11 @@ extends:
         steps:
         - task: NuGetToolInstaller@1
           displayName: 'Use NuGet'
-        - task: CmdLine@2
+        - pwsh: nuget.exe SetApiKey "$env:NUGET_API_KEY"
           displayName: NuGet SetApiKey (nuget.org)
-          inputs:
-            script: nuget.exe SetApiKey $(nugetorg-apiKey-push)
-            workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
+          workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
+          env:
+            NUGET_API_KEY: $(nugetorg-apiKey-push)
         - script: dir /S "$(Pipeline.Workspace)\ReactWindows-final-nuget"
           displayName: Show directory contents
         - script: nuget.exe push .\Microsoft.ReactNative.*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -NoSymbol -NonInteractive -Verbosity Detailed
@@ -178,7 +329,7 @@ extends:
             artifactName: 'ReactWindows-final-nuget'
             targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
         steps:
-        - powershell: |
+        - pwsh: |
             # Extract PDB files from all NuGet packages (.nupkg are ZIP archives)
             $nugetDir = "$(Pipeline.Workspace)/ReactWindows-final-nuget"
             $symbolsDir = "$(Pipeline.Workspace)/symbols"

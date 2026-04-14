@@ -49,6 +49,270 @@
       }
     },
     {
+      "date": "Wed, 08 Apr 2026 13:25:17 GMT",
+      "version": "0.0.0-canary.1049",
+      "tag": "react-native-windows_v0.0.0-canary.1049",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e03e2d6947ab45c314f5657f8096409381211c19",
+            "comment": "Upgrade to Boost 1.84"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Apr 2026 23:42:38 GMT",
+      "version": "0.0.0-canary.1048",
+      "tag": "react-native-windows_v0.0.0-canary.1048",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b75fa396ef7aa80383271d427cefc2a30e2b330d",
+            "comment": "Cleanup missing peerDependencies"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b75fa396ef7aa80383271d427cefc2a30e2b330d",
+            "comment": "Fix unused function warning"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Apr 2026 05:29:55 GMT",
+      "version": "0.0.0-canary.1047",
+      "tag": "react-native-windows_v0.0.0-canary.1047",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "fix: respect track mode in compare-results to avoid false regression failures"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "Fork fmt lib locally"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "fix: auto-discover native perf results in compare report"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.287",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.133",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1022",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "Move to yarn4"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 04 Apr 2026 10:40:19 GMT",
+      "version": "0.0.0-canary.1046",
+      "tag": "react-native-windows_v0.0.0-canary.1046",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b6c9c919ef5691b054b8537b1963641497c2da9d",
+            "comment": "Add onAuxClick event"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b6c9c919ef5691b054b8537b1963641497c2da9d",
+            "comment": "Fix NativeModule templates to work with clang"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Mar 2026 21:09:16 GMT",
+      "version": "0.0.0-canary.1045",
+      "tag": "react-native-windows_v0.0.0-canary.1045",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8eec9cd0b18ab0b5ae7c81bdaab46c2fb02fba26",
+            "comment": "Implement onClick"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Mar 2026 16:27:46 GMT",
+      "version": "0.0.0-canary.1044",
+      "tag": "react-native-windows_v0.0.0-canary.1044",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0c3f2fbb62961a6a7958f1877105ae982e35d324",
+            "comment": "Do not create m_childrenContainer when using a custom visual to mount children into"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Mar 2026 03:37:03 GMT",
+      "version": "0.0.0-canary.1043",
+      "tag": "react-native-windows_v0.0.0-canary.1043",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "18a08e4ab998741fa93c2fe9f1c25695c99c11b3",
+            "comment": "Default text color should be theme aware"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "18a08e4ab998741fa93c2fe9f1c25695c99c11b3",
+            "comment": "Only show focus visuals when using keyboard to move focus"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 30 Mar 2026 03:55:34 GMT",
+      "version": "0.0.0-canary.1042",
+      "tag": "react-native-windows_v0.0.0-canary.1042",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "433a0f50c05e4a3968a80f01b4bcb3eef9957682",
+            "comment": "Fix view.focus function"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 28 Mar 2026 02:02:45 GMT",
+      "version": "0.0.0-canary.1041",
+      "tag": "react-native-windows_v0.0.0-canary.1041",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f256f216dedfc66588f80d942bbe619dd6e84a2d",
+            "comment": "overflow: hidden should prevent hittesting"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Mar 2026 03:00:07 GMT",
+      "version": "0.0.0-canary.1040",
+      "tag": "react-native-windows_v0.0.0-canary.1040",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e57c920b275ea89dfe7e372f7fed8b34f7ab81aa",
+            "comment": "Integrate 0.84.0-nightly-20260107-58bc6c3e3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 25 Mar 2026 02:08:12 GMT",
+      "version": "0.0.0-canary.1039",
+      "tag": "react-native-windows_v0.0.0-canary.1039",
+      "comments": {
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "70ed4bc8ac65bb551143b97576dd24ccb6bba702",
+            "comment": "Implement button property"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "70ed4bc8ac65bb551143b97576dd24ccb6bba702",
+            "comment": "Integrate 0.84.0-nightly-20251212-dd390dbbe"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.286",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.132",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1021",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 21 Mar 2026 09:44:24 GMT",
+      "version": "0.0.0-canary.1038",
+      "tag": "react-native-windows_v0.0.0-canary.1038",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "487f89e2099faf18507e6641dbad04f0968936b7",
+            "comment": "Delete member facebook::react::DevSettings::useWebSocketTurboModule"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Mar 2026 18:21:32 GMT",
       "version": "0.0.0-canary.1037",
       "tag": "react-native-windows_v0.0.0-canary.1037",
@@ -1622,7 +1886,7 @@
             "author": "54227869+anupriya13@users.noreply.github.com",
             "package": "react-native-windows",
             "commit": "270f785bd1e6b65671866b48a196a5cbc51f0ca7",
-            "comment": "Revert \"Change `init-windows` default new app template to New Architecture (#…\""
+            "comment": "Revert \"Change `init-windows` default new app template to New Architecture (#\u2026\""
           },
           {
             "author": "beachball",
@@ -21379,7 +21643,7 @@
             "package": "react-native-windows"
           },
           {
-            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "comment": "Integrate 11/18 RN Nightly Build \ud83c\udf89",
             "author": "ngerlem@microsoft.com",
             "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
             "package": "react-native-windows"

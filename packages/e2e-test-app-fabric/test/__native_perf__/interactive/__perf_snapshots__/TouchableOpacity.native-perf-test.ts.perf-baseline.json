@@ -1,0 +1,43 @@
+{
+  "Interactive Components — Native Render Pipeline TouchableOpacity native mount 1": {
+    "metrics": {
+      "name": "TouchableOpacity native mount",
+      "meanDuration": 3.190453334649404,
+      "medianDuration": 3.1384999752044678,
+      "stdDev": 0.7568414883957973,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        3.0042999982833862,
+        2.795300006866455,
+        3.2402999997138977,
+        2.530400037765503,
+        3.032800018787384,
+        3.4493000507354736,
+        2.2537999749183655,
+        2.4357999563217163,
+        3.2348999977111816,
+        3.694700002670288,
+        3.1384999752044678,
+        3.163599967956543,
+        2.9884999990463257,
+        5.5409000515937805,
+        3.3536999821662903
+      ],
+      "timestamp": "2026-03-25T09:11:43.172Z",
+      "nativeTimings": {
+        "fullPipeline": 3.1384999752044678
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-25T09:11:43.174Z"
+  }
+}

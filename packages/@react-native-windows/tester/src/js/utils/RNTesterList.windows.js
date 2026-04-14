@@ -66,6 +66,11 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples-win/Glyph/GlyphExample'),
   },
+  /*{
+    key: 'KeyEvents',
+    module: require('../examples/KeyboardEventsExample/KeyboardEventsExample')
+      .default,
+  },*/
   {
     key: 'ModalExample',
     category: 'UI',
@@ -208,9 +213,19 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples-win/LegacyTests/TextHitTestPage'),
   },
   {
+    key: 'HitTestExample',
+    category: 'UI',
+    module: require('../examples-win/HitTest/HitTestExample'),
+  },
+  {
     key: 'PerformanceComparisonExample',
     category: 'Basic',
     module: require('../examples/Performance/PerformanceComparisonExample'),
+  },
+  {
+    key: 'NativePerfBenchmark',
+    category: 'Basic',
+    module: require('../examples-win/NativePerfBenchmark/NativePerfBenchmarkExample'),
   },
   ...RNTesterListFbInternal.Components,
 ];
@@ -383,6 +398,11 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'PointerEventsExample',
     category: 'Basic',
     module: require('../examples/PointerEvents/PointerEventsExample'),
+  },
+  {
+    key: 'PointerClickEventsExample',
+    category: 'Basic',
+    module: require('../examples-win/Pointer/PointerClickEventsExample'),
   },
   {
     key: 'PointerButtonExample',

@@ -23,6 +23,78 @@
       }
     },
     {
+      "date": "Tue, 07 Apr 2026 23:42:38 GMT",
+      "version": "0.0.0-canary.311",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.311",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "b75fa396ef7aa80383271d427cefc2a30e2b330d",
+            "comment": "Cleanup missing peerDependencies"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Apr 2026 05:29:56 GMT",
+      "version": "0.0.0-canary.311",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.311",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "Upgrade to yarn v4"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1022",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Mar 2026 03:00:07 GMT",
+      "version": "0.0.0-canary.310",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.310",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e57c920b275ea89dfe7e372f7fed8b34f7ab81aa",
+            "comment": "Integrate 0.84.0-nightly-20260107-58bc6c3e3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 25 Mar 2026 02:08:13 GMT",
+      "version": "0.0.0-canary.309",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.309",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "70ed4bc8ac65bb551143b97576dd24ccb6bba702",
+            "comment": "Integrate 0.84.0-nightly-20251212-dd390dbbe"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1021",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Mar 2026 03:08:37 GMT",
       "version": "0.0.0-canary.308",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.308",
@@ -5846,7 +5918,7 @@
       "comments": {
         "prerelease": [
           {
-            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "comment": "Integrate 11/18 RN Nightly Build \ud83c\udf89",
             "author": "ngerlem@microsoft.com",
             "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
             "package": "@office-iss/react-native-win32"
@@ -8841,7 +8913,7 @@
         "patch": [
           {
             "comment": "fix duplicate call to requireNativeComponent('RCTTouchableNativeFeedback')",
-            "author": "Daniel Chattan 🤨 <Daniel.Chattan@microsoft.com>",
+            "author": "Daniel Chattan \ud83e\udd28 <Daniel.Chattan@microsoft.com>",
             "commit": "cb0c04f77b56ffc0bba81d000cbc94285e060741"
           }
         ]

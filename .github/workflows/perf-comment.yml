@@ -32,24 +32,27 @@ jobs:
       - name: Read PR number
         id: pr
         run: |
-          if [ ! -f perf-results/pr-number.txt ]; then
+          PR_FILE=$(find perf-results -name pr-number.txt -type f | head -1)
+          if [ -z "$PR_FILE" ]; then
             echo "No PR number file found — skipping."
             echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          PR_NUMBER=$(cat perf-results/pr-number.txt | tr -d '[:space:]')
+          PR_NUMBER=$(cat "$PR_FILE" | tr -d '[:space:]')
           echo "number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
           echo "skip=false" >> "$GITHUB_OUTPUT"
 
       - name: Read markdown report
-        if: steps.pr.outputs.skip != 'true'
         id: report
+        if: steps.pr.outputs.skip != 'true'
         run: |
-          if [ ! -f perf-results/report.md ]; then
+          REPORT_FILE=$(find perf-results -name report.md -type f | head -1)
+          if [ -z "$REPORT_FILE" ]; then
             echo "No report.md found — skipping."
             echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
+          echo "path=$REPORT_FILE" >> "$GITHUB_OUTPUT"
           echo "skip=false" >> "$GITHUB_OUTPUT"
 
       - name: Post or update PR comment
@@ -59,7 +62,7 @@ jobs:
           script: |
             const fs = require('fs');
             const marker = '<!-- rnw-perf-results -->';
-            const reportPath = 'perf-results/report.md';
+            const reportPath = '${{ steps.report.outputs.path }}';
             const prNumber = parseInt('${{ steps.pr.outputs.number }}', 10);
 
             const markdown = fs.readFileSync(reportPath, 'utf-8');

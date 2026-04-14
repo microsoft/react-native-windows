@@ -85,6 +85,14 @@ const bubblingEventTypes = {
     },
   },
   // Experimental/Work in Progress Pointer Events (not yet ready for use)
+  // [Windows
+  topAuxClick: {
+    phasedRegistrationNames: {
+      captured: 'onAuxClickCapture',
+      bubbled: 'onAuxClick',
+    },
+  },
+  // Windows]
   topClick: {
     phasedRegistrationNames: {
       captured: 'onClickCapture',
@@ -383,7 +391,6 @@ const validAttributesForNonEventProps = {
   keyUpEvents: true, // [Windows]
   tabIndex: true, // [Windows]
   tooltip: true, // [Windows]
-  onClick: true, // [Windows]
   enableFocusRing: true, // [Windows]
   importantForAccessibility: true, // [Windows]
 
@@ -424,6 +431,8 @@ const validAttributesForEventProps = {
   onTouchCancel: true,
 
   // Pointer events
+  onAuxClick: true, // [Windows]
+  onAuxClickCapture: true, // [Windows]
   onClick: true,
   onClickCapture: true,
   onPointerUp: true,

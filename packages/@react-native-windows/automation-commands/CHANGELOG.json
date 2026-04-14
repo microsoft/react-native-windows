@@ -23,6 +23,204 @@
       }
     },
     {
+      "date": "Wed, 08 Apr 2026 13:25:17 GMT",
+      "version": "0.0.0-canary.1049",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1049",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1049",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Apr 2026 23:42:38 GMT",
+      "version": "0.0.0-canary.1048",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1048",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1048",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Apr 2026 05:29:55 GMT",
+      "version": "0.0.0-canary.1047",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1047",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "Move to yarn 4"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "fix: auto-discover native perf results in compare report"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1047",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 04 Apr 2026 10:40:19 GMT",
+      "version": "0.0.0-canary.1046",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1046",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1046",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Mar 2026 21:09:16 GMT",
+      "version": "0.0.0-canary.1045",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1045",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1045",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Mar 2026 16:27:46 GMT",
+      "version": "0.0.0-canary.1044",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1044",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1044",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Mar 2026 03:37:03 GMT",
+      "version": "0.0.0-canary.1043",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1043",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1043",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 30 Mar 2026 03:55:34 GMT",
+      "version": "0.0.0-canary.1042",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1042",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1042",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 28 Mar 2026 02:02:45 GMT",
+      "version": "0.0.0-canary.1041",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1041",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1041",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Mar 2026 03:00:07 GMT",
+      "version": "0.0.0-canary.1040",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1040",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1040",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 25 Mar 2026 02:08:12 GMT",
+      "version": "0.0.0-canary.1039",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1039",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "70ed4bc8ac65bb551143b97576dd24ccb6bba702",
+            "comment": "Integrate 0.84.0-nightly-20251212-dd390dbbe"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1039",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 21 Mar 2026 09:44:24 GMT",
+      "version": "0.0.0-canary.1038",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1038",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1038",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Mar 2026 18:21:32 GMT",
       "version": "0.0.0-canary.1037",
       "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1037",

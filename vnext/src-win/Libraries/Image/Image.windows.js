@@ -35,7 +35,7 @@ import * as React from 'react';
 function getSize(
   uri: string,
   success?: (width: number, height: number) => void,
-  failure?: (error: mixed) => void,
+  failure?: (error: unknown) => void,
 ): void | Promise<ImageSize> {
   const promise = NativeImageLoaderIOS.getSize(uri).then(([width, height]) => ({
     width,
@@ -58,7 +58,7 @@ function getSizeWithHeaders(
   uri: string,
   headers: {[string]: string, ...},
   success?: (width: number, height: number) => void,
-  failure?: (error: mixed) => void,
+  failure?: (error: unknown) => void,
 ): void | Promise<ImageSize> {
   const promise = NativeImageLoaderIOS.getSizeWithHeaders(uri, headers);
   if (typeof success !== 'function') {

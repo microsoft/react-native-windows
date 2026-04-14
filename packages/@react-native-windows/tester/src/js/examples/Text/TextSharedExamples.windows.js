@@ -14,7 +14,7 @@ import type {TextLayoutLine} from 'react-native/Libraries/Types/CoreEventTypes';
 import RNTesterText from '../../components/RNTesterText';
 import {useTheme} from '../../components/RNTesterTheme';
 import {useState} from 'react';
-import {View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 function InlineView(props: {
   textAlign: 'auto' | 'left' | 'right' | 'center' | 'justify',
@@ -197,6 +197,49 @@ function RtlAndInlineViewsExample(): React.Node {
   );
 }
 
+function TextWithLinkRoleExample(): React.Node {
+  const handlePress = () => console.log('Link Press');
+
+  return (
+    <View>
+      <Text role="link" style={styles.link} onPress={handlePress}>
+        Link Text
+      </Text>
+
+      <Text>
+        <Text role="link" style={styles.link} onPress={handlePress}>
+          Nested Link
+        </Text>
+      </Text>
+
+      <Text>
+        Before{' '}
+        <Text role="link" style={styles.link} onPress={handlePress}>
+          Nested Link
+        </Text>
+        {' After'}
+      </Text>
+
+      <Text>
+        <Text role="link" style={styles.link} onPress={handlePress}>
+          Nested Link 1
+        </Text>
+        {' - '}
+        <Text role="link" style={styles.link} onPress={handlePress}>
+          Nested Link 2
+        </Text>
+      </Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  link: {
+    color: 'teal',
+    textDecorationLine: 'underline',
+  },
+});
+
 const examples = [
   {
     title: 'Empty Text',
@@ -225,6 +268,12 @@ const examples = [
       'Shows the behavior of numberOfLines and ellipsizeMode in conjunction with the onTextLayout event',
     scrollable: true,
     render: NumberOfLinesTextLayoutExample,
+  },
+  {
+    title: 'Text with link role',
+    name: 'textWithLinkRole',
+    description: 'Shows the a11y behavior of Text with role="link"',
+    render: TextWithLinkRoleExample,
   },
   // Windows: Only include TextInlineViewsExample in Fabric mode (bridgeless)
   // Paper mode doesn't support Views nested in Text

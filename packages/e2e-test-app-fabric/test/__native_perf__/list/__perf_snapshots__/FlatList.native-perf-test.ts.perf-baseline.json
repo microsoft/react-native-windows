@@ -1,0 +1,38 @@
+{
+  "List Components — Native Render Pipeline FlatList native mount 1": {
+    "metrics": {
+      "name": "FlatList native mount",
+      "meanDuration": 9.108829998970032,
+      "medianDuration": 9.228249996900558,
+      "stdDev": 0.8543665552028276,
+      "renderCount": 1,
+      "runs": 10,
+      "durations": [
+        9.996599972248077,
+        7.9009000062942505,
+        8.30400002002716,
+        8.526000022888184,
+        9.10809999704361,
+        9.793299973011017,
+        9.348399996757507,
+        8.229200005531311,
+        9.370600044727325,
+        10.511199951171875
+      ],
+      "timestamp": "2026-03-25T09:11:26.174Z",
+      "nativeTimings": {
+        "fullPipeline": 9.228249996900558
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 20,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.6,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-25T09:11:26.176Z"
+  }
+}

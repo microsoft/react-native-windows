@@ -1,0 +1,43 @@
+{
+  "Native Render Pipeline Image native mount 1": {
+    "metrics": {
+      "name": "Image native mount",
+      "meanDuration": 2.384059993426005,
+      "medianDuration": 2.26010000705719,
+      "stdDev": 0.585439113749715,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        2.26010000705719,
+        2.1991999745368958,
+        2.4451000094413757,
+        2.269699990749359,
+        2.214099943637848,
+        2.330900013446808,
+        2.5689000487327576,
+        1.9075999855995178,
+        2.264400005340576,
+        2.2530999779701233,
+        4.417899966239929,
+        2.332099974155426,
+        2.2284000515937805,
+        2.0417999625205994,
+        2.0275999903678894
+      ],
+      "timestamp": "2026-03-25T09:12:49.239Z",
+      "nativeTimings": {
+        "fullPipeline": 2.26010000705719
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-25T09:12:49.240Z"
+  }
+}

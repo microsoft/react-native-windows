@@ -4,12 +4,12 @@ parameters:
   default: react-native-windows-repo
 
 steps:
-  # midgard-yarn-strict does not respect --ignore-scripts
+  # Remove postinstall to avoid running build during install
   - pwsh: |
       $packageJson = Get-Content ./package.json | ConvertFrom-Json
       $packageJson.scripts = $packageJson.scripts | Select-Object * -ExcludeProperty postinstall
       $packageJson | ConvertTo-Json | Out-File ./package.json
     displayName: Remove postinstall
 
-  - script: npx --yes midgard-yarn-strict@1.2.4 ${{ parameters.workspace }}
+  - script: yarn install --immutable
     displayName: Strict yarn install ${{ parameters.workspace }}

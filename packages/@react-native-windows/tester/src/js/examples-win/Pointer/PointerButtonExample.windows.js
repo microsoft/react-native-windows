@@ -104,7 +104,7 @@ exports.examples = [
       return <PointerUpButtonExample />;
     },
   },
-];
+] as Array<RNTesterModuleExample>;
 
 const styles = StyleSheet.create({
   targetBox: {

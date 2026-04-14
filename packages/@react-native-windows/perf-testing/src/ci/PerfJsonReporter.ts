@@ -78,11 +78,11 @@ export class PerfJsonReporter {
     const suites: SuiteResult[] = [];
 
     for (const suite of results.testResults) {
-      // Load the snapshot file for this test suite (written by toMatchPerfSnapshot)
+      // Use live run metrics captured during the test run
       const {file: snapshotFilePath} = SnapshotManager.getSnapshotPath(
         suite.testFilePath,
       );
-      const snapshots = SnapshotManager.load(snapshotFilePath);
+      const snapshots = SnapshotManager.getRunMetrics(snapshotFilePath) ?? {};
 
       const passed = suite.testResults.filter(
         t => t.status === 'passed',

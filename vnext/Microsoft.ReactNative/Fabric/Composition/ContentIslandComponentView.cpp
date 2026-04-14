@@ -82,7 +82,7 @@ void ContentIslandComponentView::ConnectInternal() noexcept {
       m_navigationHost.DepartFocusRequested([wkThis = get_weak()](const auto &, const auto &args) {
         if (auto strongThis = wkThis.get()) {
           const bool next = (args.Request().Reason() != winrt::Microsoft::UI::Input::FocusNavigationReason::Last);
-          strongThis->rootComponentView()->TryMoveFocus(next);
+          strongThis->rootComponentView()->TryMoveFocus(next, winrt::Microsoft::ReactNative::FocusState::Programmatic);
           args.Result(winrt::Microsoft::UI::Input::FocusNavigationResult::Moved);
         }
       });

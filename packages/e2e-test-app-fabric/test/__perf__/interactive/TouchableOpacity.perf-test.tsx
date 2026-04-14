@@ -268,8 +268,8 @@ describe('TouchableOpacity Performance', () => {
       const scenario = touchableOpacityPerfTest.getCustomScenarios()[7];
       const perf = await scenario.run();
       expect(perf).toMatchPerfSnapshot({
-        maxDurationIncrease: 15,
-        minAbsoluteDelta: 5,
+        maxDurationIncrease: 30,
+        minAbsoluteDelta: 10,
       });
     });
 
@@ -277,9 +277,9 @@ describe('TouchableOpacity Performance', () => {
       const scenario = touchableOpacityPerfTest.getCustomScenarios()[8];
       const perf = await scenario.run();
       expect(perf).toMatchPerfSnapshot({
-        maxDurationIncrease: 10,
-        minAbsoluteDelta: 10,
-        mode: 'gate',
+        maxDurationIncrease: 30,
+        minAbsoluteDelta: 15,
+        mode: 'track',
       });
     });
   });

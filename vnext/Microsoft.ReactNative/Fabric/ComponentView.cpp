@@ -283,6 +283,7 @@ void ComponentView::parent(const winrt::Microsoft::ReactNative::ComponentView &p
         oldRootView->TrySetFocusedComponent(
             oldParent,
             winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+            winrt::Microsoft::ReactNative::FocusState::Programmatic,
             true /*forceNoSelectionIfCannotMove*/);
       }
     }
@@ -431,9 +432,10 @@ void ComponentView::GotFocus(winrt::event_token const &token) noexcept {
   m_gotFocusEvent.remove(token);
 }
 
-bool ComponentView::TryFocus() noexcept {
+bool ComponentView::TryFocus(winrt::Microsoft::ReactNative::FocusState focusState) noexcept {
   if (auto root = rootComponentView()) {
-    return root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+    return root->TrySetFocusedComponent(
+        *get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None, focusState);
   }
 
   return false;

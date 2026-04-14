@@ -23,6 +23,69 @@
       }
     },
     {
+      "date": "Tue, 07 Apr 2026 23:42:38 GMT",
+      "version": "0.0.0-canary.133",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.133",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "b75fa396ef7aa80383271d427cefc2a30e2b330d",
+            "comment": "Cleanup missing peerDependencies"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Apr 2026 05:29:55 GMT",
+      "version": "0.0.0-canary.133",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.133",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "fix: capture live run metrics in PerfJsonReporter instead of re-reading baselines"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "9685f87cc2871d937fd683980c1d32fe23143869",
+            "comment": "Move to yarn 4"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.72",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 25 Mar 2026 02:08:12 GMT",
+      "version": "0.0.0-canary.132",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.132",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "70ed4bc8ac65bb551143b97576dd24ccb6bba702",
+            "comment": "Integrate 0.84.0-nightly-20251212-dd390dbbe"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.71",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Mar 2026 04:06:59 GMT",
       "version": "0.0.0-canary.131",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.131",
@@ -3330,7 +3393,7 @@
       "comments": {
         "none": [
           {
-            "comment": "Integrate 11/18 RN Nightly Build 🎉",
+            "comment": "Integrate 11/18 RN Nightly Build \ud83c\udf89",
             "author": "ngerlem@microsoft.com",
             "commit": "aba9483ea47b6d992877b325cc858a7e6309ead4",
             "package": "react-native-windows-codegen"

@@ -10,13 +10,11 @@
 #pragma warning(push)
 #pragma warning(disable : 4996) // deprecated APIs
 #endif
-#include <cxxreact/JSExecutor.h>
+#include "EventQueueProcessor.h"
 #include <logger/react_native_log.h>
 #include <react/featureflags/ReactNativeFeatureFlags.h>
 #include "EventEmitter.h"
 #include "EventLogger.h"
-#include "EventQueue.h"
-#include "ShadowNodeFamily.h"
 
 namespace facebook::react {
 

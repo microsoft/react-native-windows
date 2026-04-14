@@ -43,6 +43,14 @@ namespace Microsoft.ReactNative
     Last,
   };
 
+  enum FocusState
+  {
+    Unfocused = 0,
+    Pointer,
+    Keyboard,
+    Programmatic,
+  };
+
   [webhosthidden]
   [experimental]
   interface IComponentState 
@@ -99,7 +107,7 @@ namespace Microsoft.ReactNative
     LayoutMetrics LayoutMetrics { get; };
     IInspectable UserData;
 
-    Boolean TryFocus();
+    Boolean TryFocus(FocusState focusState);
 
     DOC_STRING("Used to handle key down events when this component is focused, or if a child component did not handle the key down")
     event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.KeyRoutedEventArgs> KeyDown;

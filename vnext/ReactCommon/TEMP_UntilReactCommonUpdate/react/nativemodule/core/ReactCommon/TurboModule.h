@@ -16,6 +16,11 @@
 #include <ReactCommon/CallInvoker.h>
 #include <react/bridging/EventEmitter.h>
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4996) // deprecated APIs
+#endif
+
 namespace facebook::react {
 
 /**
@@ -38,7 +43,6 @@ enum TurboModuleMethodValueKind {
  */
 TurboModuleMethodValueKind getTurboModuleMethodValueKind(jsi::Runtime &rt, const jsi::Value *value);
 
-class TurboCxxModule;
 class TurboModuleBinding;
 
 /**
@@ -147,7 +151,13 @@ class JSI_EXPORT TurboModule : public jsi::HostObject {
 /**
  * An app/platform-specific provider function to get an instance of a module
  * given a name.
+ *
+ * @deprecated Use TurboModuleProviderFunctionTypeWithRuntime instead.
+ * Remove after React Native 0.84 is released.
  */
-using TurboModuleProviderFunctionType = std::function<std::shared_ptr<TurboModule>(const std::string &name)>;
+using TurboModuleProviderFunctionType [[deprecated("Use TurboModuleProviderFunctionTypeWithRuntime instead")]] =
+    std::function<std::shared_ptr<TurboModule>(const std::string &name)>;
+using TurboModuleProviderFunctionTypeWithRuntime =
+    std::function<std::shared_ptr<TurboModule>(jsi::Runtime &runtime, const std::string &name)>;
 
 } // namespace facebook::react
