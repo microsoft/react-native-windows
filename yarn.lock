@@ -4063,7 +4063,7 @@ __metadata:
     ansi-regex: "npm:^5.0.0"
     ansi-styles: "npm:^4.2.1"
     babel-plugin-minify-dead-code-elimination: "npm:^0.5.2"
-    babel-plugin-syntax-hermes-parser: "npm:0.32.0"
+    babel-plugin-syntax-hermes-parser: "npm:0.33.3"
     babel-plugin-transform-define: "npm:^2.1.4"
     babel-plugin-transform-flow-enums: "npm:^0.0.2"
     clang-format: "npm:^1.8.0"
@@ -4082,10 +4082,10 @@ __metadata:
     eslint-plugin-redundant-undefined: "npm:^0.4.0"
     eslint-plugin-relay: "npm:^1.8.3"
     fb-dotslash: "npm:0.5.8"
-    flow-api-translator: "npm:0.32.0"
-    flow-bin: "npm:^0.295.0"
-    hermes-eslint: "npm:0.32.0"
-    hermes-transform: "npm:0.32.0"
+    flow-api-translator: "npm:0.33.3"
+    flow-bin: "npm:^0.296.1"
+    hermes-eslint: "npm:0.33.3"
+    hermes-transform: "npm:0.33.3"
     ini: "npm:^5.0.0"
     inquirer: "npm:^7.1.0"
     jest: "npm:^29.7.0"
@@ -10047,22 +10047,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flow-api-translator@npm:0.32.0":
-  version: 0.32.0
-  resolution: "flow-api-translator@npm:0.32.0"
+"flow-api-translator@npm:0.33.3":
+  version: 0.33.3
+  resolution: "flow-api-translator@npm:0.33.3"
   dependencies:
     "@babel/code-frame": "npm:^7.16.0"
     "@typescript-eslint/parser": "npm:8.38.0"
     "@typescript-eslint/visitor-keys": "npm:8.38.0"
     flow-enums-runtime: "npm:^0.0.6"
-    hermes-eslint: "npm:0.32.0"
-    hermes-estree: "npm:0.32.0"
-    hermes-parser: "npm:0.32.0"
-    hermes-transform: "npm:0.32.0"
+    hermes-eslint: "npm:0.33.3"
+    hermes-estree: "npm:0.33.3"
+    hermes-parser: "npm:0.33.3"
+    hermes-transform: "npm:0.33.3"
     typescript: "npm:5.3.2"
   peerDependencies:
     prettier: ^3.0.0 || ^2.7.1
-  checksum: 10c0/1209181cf0d1f87786835da7ff2717a01c53c34995996bb56864c1ae90fb146e4a63ee30d0411f2f77c190cbb86e33c288b20adc6f38afda5d77e9df9aabe7cd
+  checksum: 10c0/5e21aef0f6b7209b387c9054abd57eb0a6ea6db915400e98413826bd9f0e4c8319c67e4cd5942f07fed308bbecb085187ee1f044d0f766c209cf83d81e2825c3
   languageName: node
   linkType: hard
 
@@ -10072,6 +10072,15 @@ __metadata:
   bin:
     flow: cli.js
   checksum: 10c0/99c85e4fdbd50dd361a8dd9974561747fd6cc3f20ca8c0d7a0af3615385e85a3efa5148aa43f9692d0a24f12a5d5ccb4598116b6cbb44fff0b2d0b6e202d302a
+  languageName: node
+  linkType: hard
+
+"flow-bin@npm:^0.296.1":
+  version: 0.296.1
+  resolution: "flow-bin@npm:0.296.1"
+  bin:
+    flow: cli.js
+  checksum: 10c0/34b7251c0e557bbf71f83f95a3de4a51b877880a935e1dba92a8f7959b5d372a95679cb7fea3dcb90d71d81b78a79490550e6e6078f92ae0dab3d2a0bcf13840
   languageName: node
   linkType: hard
 
@@ -10801,14 +10810,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hermes-eslint@npm:0.32.0":
-  version: 0.32.0
-  resolution: "hermes-eslint@npm:0.32.0"
+"hermes-eslint@npm:0.33.3":
+  version: 0.33.3
+  resolution: "hermes-eslint@npm:0.33.3"
   dependencies:
     esrecurse: "npm:^4.3.0"
-    hermes-estree: "npm:0.32.0"
-    hermes-parser: "npm:0.32.0"
-  checksum: 10c0/3ef4c1e0191b05f1a23aca04ad20b364b69ca7b751f8113eea0f3f6cbc3ef0e394ad93e8e88ddc4f1b098fc84e7d0c81dcad045e857c9fea79b2b2b1f5e67087
+    hermes-estree: "npm:0.33.3"
+    hermes-parser: "npm:0.33.3"
+  checksum: 10c0/5894dbe52f5de698934d7cba0fda512d685651763df0e436cbe7e354ca3dff19bf57d1738b7a86d29f7482cfaac9791ed77d96f81150a74518ff7370da257bd2
   languageName: node
   linkType: hard
 
@@ -10892,16 +10901,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hermes-transform@npm:0.32.0":
-  version: 0.32.0
-  resolution: "hermes-transform@npm:0.32.0"
+"hermes-transform@npm:0.33.3":
+  version: 0.33.3
+  resolution: "hermes-transform@npm:0.33.3"
   dependencies:
     "@babel/code-frame": "npm:^7.16.0"
     esquery: "npm:^1.4.0"
     flow-enums-runtime: "npm:^0.0.6"
-    hermes-eslint: "npm:0.32.0"
-    hermes-estree: "npm:0.32.0"
-    hermes-parser: "npm:0.32.0"
+    hermes-eslint: "npm:0.33.3"
+    hermes-estree: "npm:0.33.3"
+    hermes-parser: "npm:0.33.3"
     string-width: "npm:4.2.3"
   peerDependencies:
     prettier: ^3.0.0
@@ -10909,7 +10918,7 @@ __metadata:
   peerDependenciesMeta:
     prettier-plugin-hermes-parser:
       optional: true
-  checksum: 10c0/4b088c4fccbf0c24d1ab5a44744e25252265c0c295f02efe9352a0b44d2eaa2d3a0763d0ae1bc7c156eade2b6854134189779adbe2d8c5b2e1798a19fa99e1a4
+  checksum: 10c0/c744ee058a203c1dfc563736b36ab2a6f7cd2d3b2336d0e25dc2548d11aa2603b02edc101bd2a4d3a37f6e36ace4936a3e79b05a69e45428fa0c6feed4c8cd97
   languageName: node
   linkType: hard
 
