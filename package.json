@@ -53,7 +53,7 @@
     "prettier": "^3.6.2",
     "prettier-plugin-hermes-parser": "0.21.1",
     "react": "19.2.3",
-    "react-native": "0.84.0-nightly-20260107-58bc6c3e3",
+    "react-native": "0.85.0-nightly-20260114-f15985f4f",
     "react-native-platform-override": "0.0.0-canary.1017",
     "typescript": "5.0.4"
   },
