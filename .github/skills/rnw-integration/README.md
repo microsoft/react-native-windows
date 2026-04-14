@@ -51,12 +51,13 @@ Type in VS Code Copilot Chat:
 | 1-5 | Find current version, calculate target date, query npm | Yes |
 | 6 | Run `yarn integrate-rn <version>` | Yes |
 | 7 | Update remaining package.json files | Yes |
-| 8 | Run `npx react-native-platform-override upgrade` | Interactive |
-| 9 | Commit changes | Yes |
-| 10 | Replace failing overrides from upstream | Yes |
-| 11 | Resolve merge conflicts (human-in-the-loop) | Per-hunk approval |
-| 12 | Build Playground composition app | Yes (long build) |
-| 13 | Deploy and launch Playground | Yes |
+| 8 | Clean node_modules and reinstall dependencies | Yes |
+| 9 | Run `npx react-native-platform-override upgrade` | Interactive |
+| 10 | Commit changes | Yes |
+| 11 | Replace failing overrides from upstream | Yes |
+| 12 | Resolve merge conflicts (human-in-the-loop) | Per-hunk approval |
+| 13 | Update yarn.lock, build Playground composition app | Yes (long build) |
+| 14 | Deploy and launch Playground | Yes |
 
 ## Key Concepts
 

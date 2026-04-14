@@ -139,7 +139,36 @@ This ensures all references to the previous nightly version are updated, includi
 
 After completing this step, confirm: **Step 7 completed successfully.**
 
-### Step 8: Upgrade Platform Overrides
+### Step 8: Clean node_modules and Reinstall Dependencies
+
+After updating all package.json files, remove all `node_modules` directories across the repo and perform a fresh install to ensure the dependency tree is consistent with the new versions:
+
+```powershell
+# Delete all node_modules directories (excluding .git)
+Get-ChildItem -Path . -Directory -Filter "node_modules" -Recurse |
+    Where-Object { $_.FullName -notlike "*.git*" } |
+    ForEach-Object {
+        Write-Host "Removing: $($_.FullName)"
+        Remove-Item -Recurse -Force $_.FullName
+    }
+
+Write-Host "All node_modules directories removed."
+```
+
+Then run a fresh install at the root of the repo:
+
+```powershell
+yarn install
+```
+
+If `yarn install` fails (e.g., due to peer dependency mismatches or build script errors), diagnose and fix the issue:
+- **Peer dependency warnings**: These are typically non-blocking in Yarn 4. Check if the install actually completed.
+- **Build script failures**: Check the build log path shown in the error output. Common issues include missing type declarations or renamed modules — fix the source files causing the build error and re-run `yarn install`.
+- **Resolution conflicts**: If a resolution in the root `package.json` still points to an old version, update it to the target nightly version.
+
+After completing this step, confirm: **Step 8 completed successfully.**
+
+### Step 9: Upgrade Platform Overrides
 
 Run the override upgrade tool to resolve conflicts in platform-specific override files:
 
@@ -158,9 +187,9 @@ After completing the upgrade, verify the overrides are valid:
 yarn validate-overrides
 ```
 
-After completing this step, confirm: **Step 8 completed successfully.**
+After completing this step, confirm: **Step 9 completed successfully.**
 
-### Step 9: Commit All Changes
+### Step 10: Commit All Changes
 
 After completing all integration steps, commit the changes:
 
@@ -174,9 +203,9 @@ This creates a single commit with all the integration changes including:
 - Override file upgrades
 - Any auto-fixed lint issues
 
-After completing this step, confirm: **Step 9 completed successfully.**
+After completing this step, confirm: **Step 10 completed successfully.**
 
-### Step 10: Update Failing Overrides from Upstream
+### Step 11: Update Failing Overrides from Upstream
 
 Run `yarn validate-overrides` to identify which folders need to be replaced with upstream versions, then download and replace them:
 
@@ -250,11 +279,11 @@ Verify the overrides are valid after the update:
 yarn validate-overrides
 ```
 
-After completing this step, confirm: **Step 10 completed successfully.**
+After completing this step, confirm: **Step 11 completed successfully.**
 
-### Step 11: Resolve Merge Conflicts (Human-in-the-Loop)
+### Step 12: Resolve Merge Conflicts (Human-in-the-Loop)
 
-After Steps 8-10, some override files may still contain merge conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`). This step resolves them safely with human approval for each hunk.
+After Steps 9-11, some override files may still contain merge conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`). This step resolves them safely with human approval for each hunk.
 
 **NON-NEGOTIABLE CONSTRAINTS:**
 - Conflicts are handled hunk-by-hunk (each `<<<<<<<` ... `=======` ... `>>>>>>>` region is one hunk)
@@ -447,13 +476,28 @@ git add -A
 git commit -m "Resolve merge conflicts for RN $targetVersion integration"
 ```
 
-After completing this step, confirm: **Step 11 completed successfully.**
+After completing this step, confirm: **Step 12 completed successfully.**
 
-### Step 12: Post-Merge RNW Playground Validation (Mandatory)
+### Step 13: Post-Merge RNW Playground Validation (Mandatory)
 
 After resolving merge conflicts, perform an initial functional smoke check by building and running RNW Playground locally.
 
 #### Build and Run Playground
+
+First, ensure the yarn lockfile is up to date (upstream dependency changes during integration may have introduced new packages):
+
+```powershell
+yarn install
+```
+
+If the lockfile changed, commit it before building:
+
+```powershell
+git add yarn.lock
+git diff --cached --quiet yarn.lock || git commit -m "Update yarn.lock for RN $targetVersion integration"
+```
+
+Then build the Playground:
 
 ```powershell
 # Find MSBuild path
@@ -542,9 +586,9 @@ git add -A
 git commit -m "Apply build fixes for RN $targetVersion integration"
 ```
 
-After completing this step, confirm: **Step 12 completed successfully.**
+After completing this step, confirm: **Step 13 completed successfully.**
 
-### Step 13: Deploy and Launch Playground
+### Step 14: Deploy and Launch Playground
 
 After the build succeeds, deploy and launch the Playground app to verify runtime behavior.
 
@@ -588,7 +632,7 @@ After verifying the app launches and renders correctly:
 - Verify basic component rendering (text, buttons, views)
 - Check the debug console for any runtime errors
 
-After completing this step, confirm: **Step 13 completed successfully.**
+After completing this step, confirm: **Step 14 completed successfully.**
 
 ## Key Files to Update
 
