@@ -73,11 +73,11 @@
     "src/powershell"
   ],
   "beachball": {
-    "defaultNpmTag": "preview",
+    "defaultNpmTag": "v0.83-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch",
+      "prerelease",
       "premajor",
       "preminor",
       "prepatch"

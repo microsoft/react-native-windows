@@ -1,0 +1,39 @@
+Number,Title,State,Assignee,Labels,URL
+15641,"[React Native Gallery App : Switch]: While navigating to 'Switch' control elements using keyboard, keyboard focus is not visible clearly",closed,Unassigned,"bug",https://github.com/microsoft/react-native-windows/issues/15641
+15639,"Selection: Double click selection doesn't extend with drag",closed,iamAbhi-916,"bug",https://github.com/microsoft/react-native-windows/issues/15639
+15605,"[React Native] [AK1][60873901] Bug 2 - SHIFT F10 context menu keyboard shortcut does not work.",closed,Nitin-100,"bug",https://github.com/microsoft/react-native-windows/issues/15605
+15604,"[React Native] [AK1] [60873959] Bug 3 Box Shadow with Corner Radius",closed,protikbiswas100,"bug",https://github.com/microsoft/react-native-windows/issues/15604
+15589,"Publish symbols fails needs either PAT or UseAad needs to be present",closed,iamAbhi-916,"bug;Workstream: Releases and Integrations",https://github.com/microsoft/react-native-windows/issues/15589
+15578,"selectable text not receiving pointer events inside ScrollView",closed,iamAbhi-916,"bug",https://github.com/microsoft/react-native-windows/issues/15578
+15561,"[0.82] Beachball check failing due to missing --yes flag in npx",closed,iamAbhi-916,"Workstream: Releases and Integrations",https://github.com/microsoft/react-native-windows/issues/15561
+15558,"Sev1/Sev2 customer issues and accessibility reported on Fabric architecture platform",closed,Unassigned,"",https://github.com/microsoft/react-native-windows/issues/15558
+15545,"E2Ex86 Failing in CI",closed,vineethkuttan,"bug",https://github.com/microsoft/react-native-windows/issues/15545
+15530,"[0.82]: Regressions tests after legacy code cleanup",closed,iamAbhi-916,"bug;enhancement;Area: Tests",https://github.com/microsoft/react-native-windows/issues/15530
+15527,"0.82 Release Status",open,iamAbhi-916,"enhancement;Area: Release Process",https://github.com/microsoft/react-native-windows/issues/15527
+15510,"FlatList Component does not work with inverted prop",open,Nitin-100,"bug;Area: FlatList;Parity: Fabric vs. Paper",https://github.com/microsoft/react-native-windows/issues/15510
+15505,"Implementation of perfMonitor in 0.82 is breaking inspector",closed,vineethkuttan,"bug;Integration Follow-up",https://github.com/microsoft/react-native-windows/issues/15505
+15499,"Bump hermes-windows to 0.0.0-2512.22001-bc3d0ed7",closed,iamAbhi-916,"Maintain RNW Hermes on parity with RN",https://github.com/microsoft/react-native-windows/issues/15499
+15477,"Playground crashes when we switch from one bundle to another",closed,iamAbhi-916,"bug",https://github.com/microsoft/react-native-windows/issues/15477
+15468,"High Display Scaling (>100%) Causes DevTools to Report Incorrect App and Component Offsets",closed,iamAbhi-916,"bug;Fix Hermes Debugger for RNW",https://github.com/microsoft/react-native-windows/issues/15468
+15455,"Dead links in README.md",closed,vineethkuttan,"bug;good first issue;good first issue: easy",https://github.com/microsoft/react-native-windows/issues/15455
+15446,"Text Input not working on pressing Shift+enter the first time",closed,protikbiswas100,"Area: Fabric;New Architecture",https://github.com/microsoft/react-native-windows/issues/15446
+15441,"[Dev Tools] while hovering over the profiler window we see mumbling of controls in the window.",closed,iamAbhi-916,"bug",https://github.com/microsoft/react-native-windows/issues/15441
+15440,"RNW Debugger Script Issue",closed,iamAbhi-916,"bug;Fix Hermes Debugger for RNW",https://github.com/microsoft/react-native-windows/issues/15440
+15439,"react-native-windows@0.80.3 - No candidates found",closed,vineethkuttan,"bug",https://github.com/microsoft/react-native-windows/issues/15439
+15427,"Deterministic Crash image loading fails due to network error for instance shut down of metro while app is running",closed,iamAbhi-916,"bug",https://github.com/microsoft/react-native-windows/issues/15427
+15420,"Bump fmt to 11.02",closed,HariniMalothu17,"enhancement",https://github.com/microsoft/react-native-windows/issues/15420
+15396,"Call RegisterXamlHostComponentView on demand",closed,sundaramramaswamy,"bug;enhancement",https://github.com/microsoft/react-native-windows/issues/15396
+15380,"Modern debugger console shows error message with escape sequence which actually represents color",closed,iamAbhi-916,"bug",https://github.com/microsoft/react-native-windows/issues/15380
+15352,"Props Parity of Fabric as per Paper",open,iamAbhi-916,"enhancement;Area: Fabric;New Architecture;Parity: Windows;Parity: Fabric vs. Paper",https://github.com/microsoft/react-native-windows/issues/15352
+15335,"Avoid using CompositionDynamicAutomationProvider references in RootComponentView",closed,protikbiswas100,"enhancement",https://github.com/microsoft/react-native-windows/issues/15335
+15325,"Accessibility and UIA Support",closed,protikbiswas100,"enhancement",https://github.com/microsoft/react-native-windows/issues/15325
+15323,"Upgrade Picker 3P Module to support for fabric Application",closed,anupriya13,"enhancement",https://github.com/microsoft/react-native-windows/issues/15323
+15322,"Upgrade CheckBox 3P Module to support for fabric Application",closed,anupriya13,"enhancement",https://github.com/microsoft/react-native-windows/issues/15322
+15321,"Add sample 3P Module in RNW",closed,sundaramramaswamy,"enhancement",https://github.com/microsoft/react-native-windows/issues/15321
+15320,"Tabbing Not recognized in Narrator",closed,vineethkuttan,"enhancement",https://github.com/microsoft/react-native-windows/issues/15320
+15319,"Avoid Deep Import of XamlHost tag",closed,protikbiswas100,"enhancement",https://github.com/microsoft/react-native-windows/issues/15319
+15318,"RNW Core Support for XAML",closed,sundaramramaswamy,"enhancement",https://github.com/microsoft/react-native-windows/issues/15318
+15270,"Perform input validation and/or filtering on all user-provided and user-controlled data before it is used",closed,Nitin-100,"enhancement",https://github.com/microsoft/react-native-windows/issues/15270
+15050,"[Fabric] Raised UIA Update event with wrong datatype.",closed,ritoban23,"bug;good first issue;Area: Accessibility;Area: Fabric;New Architecture;good first issue: easy",https://github.com/microsoft/react-native-windows/issues/15050
+15045,"Implement ITextRangeProvider2 methods",closed,vineethkuttan,"enhancement",https://github.com/microsoft/react-native-windows/issues/15045
+14954,"Reliability: appcrash in fail_fast_fatal_app_exit_c0000409_microsoft.reactnative.dll!unknown.",closed,protikbiswas100,"bug",https://github.com/microsoft/react-native-windows/issues/14954
