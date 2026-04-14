@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Promote 0.83 to legacy",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "protikbiswas@microsoft.com",
+  "dependentChangeType": "patch"
+}
