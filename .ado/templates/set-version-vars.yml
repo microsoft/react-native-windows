@@ -6,9 +6,12 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: isReleaseBuild
+    type: string
+    default: 'False'
 
 steps:
-  - script: node ./.ado/scripts/setVersionEnvVars.js ${{ parameters.buildEnvironment }} $(Build.BuildId)
+  - script: node ./.ado/scripts/setVersionEnvVars.js ${{ parameters.buildEnvironment }} $(Build.BuildId) ${{ parameters.isReleaseBuild }}
     displayName: Set version variables
     name: setVersionEnvVars
     env:
