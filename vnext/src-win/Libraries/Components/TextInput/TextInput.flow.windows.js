@@ -517,12 +517,9 @@ export type TextInputAndroidProps = Readonly<{
   underlineColorAndroid?: ?ColorValue,
 }>;
 
-<<<<<<< Upstream
-type TextInputBaseProps = Readonly<{
-=======
 // [Windows
 
-type SubmitKeyEvent = $ReadOnly<{|
+type SubmitKeyEvent = Readonly<{|
   altKey?: ?boolean,
   ctrlKey?: ?boolean,
   metaKey?: ?boolean,
@@ -530,7 +527,7 @@ type SubmitKeyEvent = $ReadOnly<{|
   code: string,
 |}>;
 
-export type TextInputWindowsProps = $ReadOnly<{|
+export type TextInputWindowsProps = Readonly<{|
   /**
    * If `true`, clears the text field synchronously before `onSubmitEditing` is emitted.
    * @platform windows
@@ -579,8 +576,7 @@ export type TextInputWindowsProps = $ReadOnly<{|
 
 // Windows]
 
-type TextInputBaseProps = $ReadOnly<{
->>>>>>> Override
+type TextInputBaseProps = Readonly<{
   /**
    * When provided, the text input will only accept drag and drop events for the specified
    * types. If null or not provided, the text input will accept all types of drag and drop events.
@@ -1106,13 +1102,8 @@ type TextInputBaseProps = $ReadOnly<{
   textAlign?: ?('left' | 'center' | 'right'),
 }>;
 
-<<<<<<< Upstream
 export type TextInputProps = Readonly<{
-  ...Omit<ViewProps, 'style' | 'experimental_accessibilityOrder'>,
-=======
-export type TextInputProps = $ReadOnly<{
   ...Omit<ViewProps, 'style'>,
->>>>>>> Override
   ...TextInputIOSProps,
   ...TextInputAndroidProps,
   ...TextInputBaseProps,

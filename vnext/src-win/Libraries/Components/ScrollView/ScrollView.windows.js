@@ -673,13 +673,8 @@ type ScrollViewBaseProps = Readonly<{
   scrollViewRef?: React.RefSetter<PublicScrollViewInstance>,
 }>;
 
-<<<<<<< Upstream
 export type ScrollViewProps = Readonly<{
-  ...Omit<ViewProps, 'experimental_accessibilityOrder'>,
-=======
-export type ScrollViewProps = $ReadOnly<{
   ...ViewProps,
->>>>>>> Override
   ...ScrollViewPropsIOS,
   ...ScrollViewPropsAndroid,
   ...ScrollViewBaseProps,

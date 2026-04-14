@@ -230,14 +230,10 @@ export interface NativePointerEvent extends NativeMouseEvent {
 
 export type PointerEvent = NativeSyntheticEvent<NativePointerEvent>;
 
-<<<<<<< Upstream
 export type NativeTouchEvent = Readonly<{
-=======
-export type NativeTouchEvent = $ReadOnly<{
   altKey: ?boolean, // TODO(macOS)
 
   button: ?number, // TODO(macOS)
->>>>>>> Override
   /**
    * Array of all touch events that have changed since the last event
    */
@@ -342,13 +338,9 @@ export type FocusEvent = NativeSyntheticEvent<TargetedEvent>;
 // introduced for react-native-web. Replace typings with our values to catch
 // anything dependent on react-native-web specific values
 export type MouseEvent = NativeSyntheticEvent<
-<<<<<<< Upstream
   Readonly<{
-=======
-  $ReadOnly<{
     target: number,
     identifier: number,
->>>>>>> Override
     clientX: number,
     clientY: number,
     pageX: number,
@@ -369,13 +361,8 @@ export type MouseEvent = NativeSyntheticEvent<
     altKey: boolean,
   }>,
 >;
-<<<<<<< Upstream
-
-export type KeyEvent = Readonly<{
-=======
 // Windows]
-export type KeyEvent = $ReadOnly<{
->>>>>>> Override
+export type KeyEvent = Readonly<{
   /**
    * The actual key that was pressed. For example, F would be "f" or "F" depending on the shift key.
    * @see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key

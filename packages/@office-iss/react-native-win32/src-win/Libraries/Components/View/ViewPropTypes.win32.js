@@ -532,11 +532,8 @@ type ViewBaseProps = Readonly<{
   accessibilityControls?: ?string,
 }>;
 
-<<<<<<< Upstream
-export type ViewProps = Readonly<{
-=======
 // [Windows
-export type HandledKeyboardEvent = $ReadOnly<{|
+export type HandledKeyboardEvent = Readonly<{|
   altKey?: ?boolean,
   ctrlKey?: ?boolean,
   metaKey?: ?boolean,
@@ -545,7 +542,7 @@ export type HandledKeyboardEvent = $ReadOnly<{|
   handledEventPhase?: number,
 |}>;
 
-type ViewPropsWindows = $ReadOnly<{|
+type ViewPropsWindows = Readonly<{|
   /**
    * Key up event
    *
@@ -593,8 +590,7 @@ type ViewPropsWindows = $ReadOnly<{|
 |}>;
 // Windows]
 
-export type ViewProps = $ReadOnly<{
->>>>>>> Override
+export type ViewProps = Readonly<{
   ...DirectEventProps,
   ...GestureResponderHandlers,
   ...MouseEventProps,

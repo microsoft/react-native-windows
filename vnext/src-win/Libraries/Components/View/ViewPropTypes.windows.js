@@ -86,13 +86,9 @@ type MouseEventProps = Readonly<{
 }>;
 
 // Experimental/Work in Progress Pointer Event Callbacks (not yet ready for use)
-<<<<<<< Upstream
 type PointerEventProps = Readonly<{
-=======
-type PointerEventProps = $ReadOnly<{
   onAuxClick?: ?(event: PointerEvent) => void, // [Windows]
   onAuxClickCapture?: ?(event: PointerEvent) => void, // [Windows]
->>>>>>> Override
   onClick?: ?(event: PointerEvent) => void,
   onClickCapture?: ?(event: PointerEvent) => void,
   onPointerEnter?: ?(event: PointerEvent) => void,
@@ -419,9 +415,6 @@ export type ViewPropsIOS = Readonly<{
   shouldRasterizeIOS?: ?boolean,
 }>;
 
-<<<<<<< Upstream
-type ViewBaseProps = Readonly<{
-=======
 // [Windows
 export const EventPhase = {
   None: 0,
@@ -435,7 +428,7 @@ export const HandledEventPhase = {
   Bubbling: EventPhase.Bubbling,
 };
 
-export type HandledKeyboardEvent = $ReadOnly<{|
+export type HandledKeyboardEvent = Readonly<{|
   altKey?: ?boolean,
   ctrlKey?: ?boolean,
   metaKey?: ?boolean,
@@ -444,7 +437,7 @@ export type HandledKeyboardEvent = $ReadOnly<{|
   handledEventPhase?: number,
 |}>;
 
-type ViewPropsWindows = $ReadOnly<{|
+type ViewPropsWindows = Readonly<{|
   /**
    * Key up event
    *
@@ -488,8 +481,7 @@ type ViewPropsWindows = $ReadOnly<{|
 |}>;
 // Windows]
 
-type ViewBaseProps = $ReadOnly<{
->>>>>>> Override
+type ViewBaseProps = Readonly<{
   children?: React.Node,
   style?: ?ViewStyleProp,
 

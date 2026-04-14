@@ -64,14 +64,7 @@ class Dimensions {
    *
    * @param {DimensionsPayload} dims Simple string-keyed object of dimensions to set
    */
-<<<<<<< Upstream
   static set(dims: Readonly<DimensionsPayload>): void {
-    // We calculate the window dimensions in JS so that we don't encounter loss of
-    // precision in transferring the dimensions (which could be non-integers) over
-    // the bridge.
-=======
-  static set(dims: $ReadOnly<DimensionsPayload>): void {
->>>>>>> Override
     let {screen, window} = dims;
     const {windowPhysicalPixels} = dims;
     if (windowPhysicalPixels) {

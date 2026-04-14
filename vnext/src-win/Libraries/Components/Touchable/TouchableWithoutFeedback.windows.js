@@ -38,9 +38,6 @@ export type TouchableWithoutFeedbackPropsAndroid = {
   touchSoundDisabled?: ?boolean,
 };
 
-<<<<<<< Upstream
-export type TouchableWithoutFeedbackProps = Readonly<
-=======
 // [Windows
 export type TouchableWithoutFeedbackPropsWindows = {
   accessibilityPosInSet?: ?number,
@@ -54,8 +51,7 @@ export type TouchableWithoutFeedbackPropsWindows = {
 };
 // Windows]
 
-export type TouchableWithoutFeedbackProps = $ReadOnly<
->>>>>>> Override
+export type TouchableWithoutFeedbackProps = Readonly<
   {
     children?: ?React.Node,
     /**

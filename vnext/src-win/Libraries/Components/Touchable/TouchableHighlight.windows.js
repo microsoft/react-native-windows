@@ -37,11 +37,8 @@ type IOSProps = Readonly<{
   hasTVPreferredFocus?: ?boolean,
 }>;
 
-<<<<<<< Upstream
-type TouchableHighlightBaseProps = Readonly<{
-=======
 // [Windows
-type WindowProps = $ReadOnly<{
+type WindowProps = Readonly<{
   onAccessibilityTap?: ?() => void,
   //onMouseEnter: ?() => void,
   //onMouseLeave: ?() => void,
@@ -49,8 +46,7 @@ type WindowProps = $ReadOnly<{
 }>;
 // Windows]
 
-type TouchableHighlightBaseProps = $ReadOnly<{
->>>>>>> Override
+type TouchableHighlightBaseProps = Readonly<{
   /**
    * Determines what the opacity of the wrapped view should be when touch is active.
    */

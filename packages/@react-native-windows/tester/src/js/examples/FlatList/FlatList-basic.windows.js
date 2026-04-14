@@ -55,13 +55,8 @@ const VIEWABILITY_CONFIG = {
   waitForInteraction: true,
 };
 
-<<<<<<< Upstream
-type Props = Readonly<{}>;
-type State = {
-=======
-type Props = $ReadOnly<{||}>;
+type Props = Readonly<{||}>;  
 type State = {|
->>>>>>> Override
   data: Array<Item>,
   first: number,
   last: number,
