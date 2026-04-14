@@ -59,7 +59,11 @@ const Item = ({item, separators}: ListRenderItemInfo<string>) => {
   );
 };
 
+<<<<<<< Upstream
+type Props = Readonly<{
+=======
 type Props = {
+>>>>>>> Override
   exampleProps: Partial<React.ElementConfig<typeof FlatList>>,
   onTest?: ?() => void,
   testLabel?: ?string,
