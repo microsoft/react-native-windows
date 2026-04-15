@@ -1775,7 +1775,10 @@ void WindowsTextInputComponentView::DrawText() noexcept {
       }
 
       // TODO keep track of proper invalid rect
+      // Prevent reentrancy: TxDrawD2D may call TxViewChange -> DrawText
+      m_cDrawBlock++;
       auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext, &rc, nullptr, TXTVIEW_ACTIVE);
+      m_cDrawBlock--;
       winrt::check_hresult(hrDraw);
 
       // draw placeholder text if needed
