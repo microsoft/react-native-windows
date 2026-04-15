@@ -2078,6 +2078,14 @@
     find-up "^4.1.0"
     minimatch "^10.0.3"
 
+"@react-native-windows/fs@0.82.0-preview.1":
+  version "0.82.0-preview.1"
+  resolved "https://registry.yarnpkg.com/@react-native-windows/fs/-/fs-0.82.0-preview.1.tgz#78dc306c0877807b3c0a6f06bcb377ae7bfc7887"
+  integrity sha512-8nUWpFeLY7vGrsD4Xxroy7EvSkaeDC/YXcvqILBBsoTipiQX4kmtPYGPWJpWOvEGVCLicb3m1U7/0MEpmfZOHA==
+  dependencies:
+    graceful-fs "^4.2.8"
+    minimatch "^10.0.3"
+
 "@react-native-windows/fs@^0.0.0-canary.70":
   version "0.0.0-canary.70"
   resolved "https://registry.yarnpkg.com/@react-native-windows/fs/-/fs-0.0.0-canary.70.tgz#53165cc8f0310be7aebb1bda669ff54ae2298ada"
