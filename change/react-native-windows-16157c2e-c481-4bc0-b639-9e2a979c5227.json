@@ -1,7 +1,0 @@
-{
-  "comment": "adding changes for adding shadow for rounded views",
-  "type": "prerelease",
-  "packageName": "react-native-windows",
-  "email": "protikbiswas@microsoft.com",
-  "dependentChangeType": "patch"
-}

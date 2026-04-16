@@ -373,7 +373,8 @@ void ComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   if (args.OriginalSource() == Tag()) {
     m_eventEmitter->onFocus();
-    if (viewProps()->enableFocusRing) {
+    if (viewProps()->enableFocusRing &&
+        rootComponentView()->focusState() == winrt::Microsoft::ReactNative::FocusState::Keyboard) {
       facebook::react::Rect focusRect = m_layoutMetrics.frame;
       focusRect.origin.x -= (FOCUS_VISUAL_WIDTH * 2);
       focusRect.origin.y -= (FOCUS_VISUAL_WIDTH * 2);
@@ -426,15 +427,20 @@ void ComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCom
   auto commandName = args.CommandName();
   if (commandName == L"focus") {
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+      root->TrySetFocusedComponent(
+          *get_strong(),
+          winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+          winrt::Microsoft::ReactNative::FocusState::Programmatic);
     }
     return;
   }
   if (commandName == L"blur") {
     if (auto root = rootComponentView()) {
       root->TrySetFocusedComponent(
-          nullptr, winrt::Microsoft::ReactNative::FocusNavigationDirection::None); // Todo store this component as
-                                                                                   // previously focused element
+          nullptr,
+          winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+          winrt::Microsoft::ReactNative::FocusState::Programmatic); // Todo store this component as
+                                                                    // previously focused element
     }
     return;
   }
@@ -1174,15 +1180,17 @@ facebook::react::Tag ViewComponentView::hitTest(
 
   facebook::react::Tag targetTag = -1;
 
+  bool isPointInside = ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+      ptLocal.y <= m_layoutMetrics.frame.size.height;
+
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
-      anyHitTestHelper(targetTag, ptLocal, localPt))
+      (isPointInside || !viewProps()->getClipsContentToBounds()) && anyHitTestHelper(targetTag, ptLocal, localPt))
     return targetTag;
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
-      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
-      ptLocal.y <= m_layoutMetrics.frame.size.height) {
+      isPointInside) {
     localPt = ptLocal;
     return Tag();
   }
@@ -1340,6 +1348,10 @@ void ViewComponentView::updateLayoutMetrics(
 void ViewComponentView::updateChildrenClippingPath(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
+  // Views with a custom visual to mount children into should to do their own handling of children clipping path
+  if (m_builder && m_builder->VisualToMountChildrenIntoHandler())
+    return;
+
   const float scale = layoutMetrics.pointScaleFactor;
   const float viewWidth = layoutMetrics.frame.size.width * scale;
   const float viewHeight = layoutMetrics.frame.size.height * scale;

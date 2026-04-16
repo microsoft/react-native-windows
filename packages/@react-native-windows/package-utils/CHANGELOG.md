@@ -1,8 +1,28 @@
 # Change Log - @react-native-windows/package-utils
 
-<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.98
+
+Tue, 07 Apr 2026 05:29:55 GMT
+
+### Changes
+
+- Upgrade to yarn v4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.101
+- Bump @react-native-windows/fs to v0.0.0-canary.72
+
+## 0.0.0-canary.97
+
+Wed, 25 Mar 2026 02:08:12 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.100
+- Bump @react-native-windows/fs to v0.0.0-canary.71
 
 ## 0.0.0-canary.96
 

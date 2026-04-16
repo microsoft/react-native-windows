@@ -1,0 +1,11 @@
+{
+  "solution": {
+    "path": "ReactWindows-Desktop.sln",
+    "projects": [
+      "Common\\Common.vcxproj",
+      "Desktop\\React.Windows.Desktop.vcxproj",
+      "Desktop.DLL\\React.Windows.Desktop.DLL.vcxproj",
+      "ReactCommon\\ReactCommon.vcxproj"
+    ]
+  }
+}

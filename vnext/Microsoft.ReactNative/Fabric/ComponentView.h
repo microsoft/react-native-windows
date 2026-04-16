@@ -201,7 +201,7 @@ struct ComponentView
 
   LayoutMetrics LayoutMetrics() const noexcept;
 
-  bool TryFocus() noexcept;
+  bool TryFocus(winrt::Microsoft::ReactNative::FocusState focusState) noexcept;
 
   virtual bool focusable() const noexcept;
   virtual facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept;

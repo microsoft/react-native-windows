@@ -1,8 +1,34 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Tue, 13 Jan 2026 13:00:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.133
+
+Tue, 07 Apr 2026 05:29:55 GMT
+
+### Changes
+
+- Upgrade to yarn v4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.72
+
+## 0.0.0-canary.132
+
+Wed, 25 Mar 2026 02:08:12 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.71
+
+## 0.0.0-canary.131
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- Bump TS target (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.130
 

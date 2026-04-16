@@ -98,7 +98,7 @@
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>/await %(AdditionalOptions) /bigobj /ZH:SHA_256</AdditionalOptions>
       <AdditionalIncludeDirectories>
-        $(FmtDir)\include;
+        $(ExternalDir)fmt\include;
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\Pch;
         $(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost;
@@ -365,7 +365,7 @@
     <ClCompile Include="Modules\I18nManagerModule.cpp" />
     <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
-    <ClCompile Include="Modules\LogBoxModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
+    <ClCompile Include="Modules\LogBoxModule.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -412,21 +412,18 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
+    <Natvis Include="$(ExternalDir)folly\Folly.natvis" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Folly\Folly.vcxproj">
-      <Project>{a990658c-ce31-4bcc-976f-0fc6b1af693d}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.83.0.0" />
+    <PackageReference Include="boost" Version="1.84.0.0" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
     <PackageReference Include="$(HermesPackageName)" Version="$(HermesVersion)" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />

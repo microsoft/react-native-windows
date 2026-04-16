@@ -76,7 +76,7 @@ class EnterStringNative extends React.Component<IEnterStringNativeProps, {}> {
     disabled: false,
     value: '',
     label: '',
-    onChanged: null,
+    onChanged: undefined,
   };
 
   public render() {
@@ -91,7 +91,7 @@ export default class EnterString extends React.Component<IEnterStringProps, {}> 
     disabled: false,
     value: '',
     label: '',
-    onChanged: null,
+    onChanged: undefined,
   };
 
   public render() {

@@ -38,7 +38,11 @@ struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::
        color = cloneFromProps->color;
        testMixed = cloneFromProps->testMixed.Copy();
        eventParam = cloneFromProps->eventParam;
-       objectProp = cloneFromProps->objectProp;  
+       objectProp = cloneFromProps->objectProp;
+       onSomething = cloneFromProps->onSomething;
+       onTestObjectEvent = cloneFromProps->onTestObjectEvent;
+       onEventWithInlineTypes = cloneFromProps->onEventWithInlineTypes;
+       onEventWithMultipleAliasTypes = cloneFromProps->onEventWithMultipleAliasTypes;  
      }
   }
 
@@ -60,6 +64,19 @@ struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::
 
   REACT_FIELD(objectProp)
   std::optional<MovingLightSpec_MovingLightProps_objectProp> objectProp;
+
+   // These fields can be used to determine if JS has registered for this event
+  REACT_FIELD(onSomething)
+  bool onSomething{false};
+
+  REACT_FIELD(onTestObjectEvent)
+  bool onTestObjectEvent{false};
+
+  REACT_FIELD(onEventWithInlineTypes)
+  bool onEventWithInlineTypes{false};
+
+  REACT_FIELD(onEventWithMultipleAliasTypes)
+  bool onEventWithMultipleAliasTypes{false};
 
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };

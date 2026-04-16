@@ -63,8 +63,8 @@ function FocusMoverTestComponent() {
 }
 
 interface IKeyboardableComponentState {
-  lastKeyDown: string;
-  lastKeyUp: string;
+  lastKeyDown: string | null;
+  lastKeyUp: string | null;
 }
 
 const handledNativeKeyboardEvents: IHandledKeyboardEvent[] = [

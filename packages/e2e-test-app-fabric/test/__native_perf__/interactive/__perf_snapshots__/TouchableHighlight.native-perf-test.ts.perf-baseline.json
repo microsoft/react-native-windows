@@ -1,0 +1,43 @@
+{
+  "Interactive Components — Native Render Pipeline TouchableHighlight native mount 1": {
+    "metrics": {
+      "name": "TouchableHighlight native mount",
+      "meanDuration": 2.22730667591095,
+      "medianDuration": 2.0885000228881836,
+      "stdDev": 0.569642348560873,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        2.189400017261505,
+        2.055299997329712,
+        2.143899977207184,
+        3.991699993610382,
+        2.5550000071525574,
+        2.0536999702453613,
+        2.0885000228881836,
+        2.524199962615967,
+        1.9000999927520752,
+        2.5004000067710876,
+        1.7630000114440918,
+        1.7075000405311584,
+        2.4169000387191772,
+        1.8182000517845154,
+        1.7018000483512878
+      ],
+      "timestamp": "2026-03-25T09:11:34.994Z",
+      "nativeTimings": {
+        "fullPipeline": 2.0885000228881836
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-25T09:11:34.996Z"
+  }
+}

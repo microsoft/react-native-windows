@@ -26040,6 +26040,174 @@ exports[`snapshotAllPages Glyph UWP 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Hit Testing 1`] = `
+<View>
+  <Text>
+    Clicking the pressable should work even if it is outside the bounds of its parent.
+  </Text>
+  <View
+    accessibilityValue={
+      {
+        "text": "red",
+      }
+    }
+    accessible={true}
+    style={
+      {
+        "height": 150,
+        "width": 150,
+      }
+    }
+    testID="visible-overflow-element"
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "yellow",
+          "height": 50,
+          "overflow": "visible",
+          "width": 50,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "backgroundColor": "red",
+            "height": 100,
+            "width": 100,
+          }
+        }
+      >
+        <Text>
+          Press me
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Hit Testing 2`] = `
+<View>
+  <Text>
+    Clicking within the visible view will trigger the pressable. Clicking outside the bounds, where the pressable extends but is clipped by its parent overflow:hidden, should not trigger the pressable.
+  </Text>
+  <View
+    accessibilityValue={
+      {
+        "text": "red",
+      }
+    }
+    accessible={true}
+    style={
+      {
+        "height": 150,
+        "width": 150,
+      }
+    }
+    testID="hidden-overflow-element"
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "yellow",
+          "height": 50,
+          "overflow": "hidden",
+          "width": 50,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "backgroundColor": "red",
+            "height": 100,
+            "width": 100,
+          }
+        }
+      >
+        <Text>
+          Press me
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`snapshotAllPages Keyboard 1`] = `
 <View>
   <Text
@@ -34331,6 +34499,150 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Native Perf Benchmark 1`] = `
+<View
+  style={
+    {
+      "flex": 1,
+      "padding": 8,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "gap": 8,
+        "marginBottom": 8,
+      }
+    }
+  >
+    <TextInput
+      onChangeText={[Function]}
+      placeholder="Component name"
+      style={
+        {
+          "borderColor": "#ccc",
+          "borderWidth": 1,
+          "fontSize": 14,
+          "minWidth": 100,
+          "padding": 6,
+        }
+      }
+      testID="perf-component-input"
+      value="View"
+    />
+    <TextInput
+      keyboardType="numeric"
+      onChangeText={[Function]}
+      placeholder="Runs"
+      style={
+        {
+          "borderColor": "#ccc",
+          "borderWidth": 1,
+          "fontSize": 14,
+          "minWidth": 100,
+          "padding": 6,
+        }
+      }
+      testID="perf-runs-input"
+      value="15"
+    />
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": false,
+          "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      disabled={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "backgroundColor": "#0078D4",
+          "borderRadius": 4,
+          "justifyContent": "center",
+          "paddingHorizontal": 16,
+          "paddingVertical": 8,
+        }
+      }
+      testID="perf-run-btn"
+    >
+      <Text
+        style={
+          {
+            "color": "white",
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Run Benchmark
+      </Text>
+    </View>
+  </View>
+  <Text
+    style={
+      {
+        "color": "#666",
+        "fontSize": 12,
+        "marginBottom": 4,
+      }
+    }
+    testID="perf-status"
+  >
+    idle
+  </Text>
+  <View
+    style={
+      {
+        "borderColor": "#eee",
+        "borderWidth": 1,
+        "marginBottom": 8,
+        "minHeight": 100,
+      }
+    }
+  />
+  <Text
+    style={
+      {
+        "color": "#333",
+        "fontFamily": "monospace",
+        "fontSize": 10,
+      }
+    }
+    testID="perf-results"
+  />
+</View>
+`;
+
 exports[`snapshotAllPages PanResponder Sample 1`] = `
 <View
   style={
@@ -36571,6 +36883,100 @@ exports[`snapshotAllPages PlatformColor 5`] = `
       </View>
     </View>
   </View>
+</View>
+`;
+
+exports[`snapshotAllPages Pointer Button 1`] = `
+<View>
+  <Text
+    accessible={true}
+    testID="pointer-button-state"
+  >
+    Click the box to test pointer events
+  </Text>
+  <View
+    accessible={true}
+    onPointerDown={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "magenta",
+        "borderRadius": 10,
+        "height": 200,
+        "justifyContent": "center",
+        "margin": 10,
+        "width": 200,
+      }
+    }
+    testID="pointer-button-target"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Pointer Button 2`] = `
+<View>
+  <Text
+    accessible={true}
+    testID="pointer-up-button-state"
+  >
+    Click the box to test pointer up events
+  </Text>
+  <View
+    accessible={true}
+    onPointerUp={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "magenta",
+        "borderRadius": 10,
+        "height": 200,
+        "justifyContent": "center",
+        "margin": 10,
+        "width": 200,
+      }
+    }
+    testID="pointer-up-button-target"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Pointer Clicks 1`] = `
+<View>
+  <View
+    accessible={true}
+    onAuxClick={[Function]}
+    onClick={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "borderRadius": 10,
+          "height": 200,
+          "justifyContent": "center",
+          "margin": 10,
+          "width": 200,
+        },
+        {
+          "backgroundColor": "gray",
+        },
+      ]
+    }
+    testID="pointer-click-target"
+  />
+  <Text
+    accessible={true}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="pointer-click-text"
+  >
+    onClick should cause the box to go red, onAuxClick will cause it go green
+  </Text>
 </View>
 `;
 
@@ -71458,6 +71864,20 @@ exports[`snapshotAllPages Text 14`] = `
   >
     Move fast and be normal
   </Text>,
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontStyle": "italic",
+        },
+      ]
+    }
+  >
+    Move fast and be italic, but just be longer so that you don't fit on a single line and make sure text is not truncated.
+  </Text>,
 ]
 `;
 
@@ -75303,6 +75723,81 @@ exports[`snapshotAllPages Text 46`] = `
 `;
 
 exports[`snapshotAllPages Text 47`] = `
+<View>
+  <Text
+    onPress={[Function]}
+    role="link"
+    style={
+      {
+        "color": "teal",
+        "textDecorationLine": "underline",
+      }
+    }
+  >
+    Link Text
+  </Text>
+  <Text>
+    <Text
+      onPress={[Function]}
+      role="link"
+      style={
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Nested Link
+    </Text>
+  </Text>
+  <Text>
+    Before
+     
+    <Text
+      onPress={[Function]}
+      role="link"
+      style={
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Nested Link
+    </Text>
+     After
+  </Text>
+  <Text>
+    <Text
+      onPress={[Function]}
+      role="link"
+      style={
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Nested Link 1
+    </Text>
+     - 
+    <Text
+      onPress={[Function]}
+      role="link"
+      style={
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Nested Link 2
+    </Text>
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages Text 48`] = `
 <View
   accessible={true}
   testID="text-accessibility"
@@ -75320,7 +75815,7 @@ exports[`snapshotAllPages Text 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 48`] = `
+exports[`snapshotAllPages Text 49`] = `
 <View
   accessibilityLabel="Border Example"
   accessible={true}
@@ -75397,7 +75892,7 @@ exports[`snapshotAllPages Text 48`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 49`] = `
+exports[`snapshotAllPages Text 50`] = `
 <View
   accessibilityLabel="Advanced Border Example"
   accessible={true}
@@ -75453,7 +75948,7 @@ exports[`snapshotAllPages Text 49`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 50`] = `
+exports[`snapshotAllPages Text 51`] = `
 <View
   testID="text-opacity"
 >
@@ -75560,7 +76055,7 @@ exports[`snapshotAllPages Text 50`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 51`] = `
+exports[`snapshotAllPages Text 52`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -75578,7 +76073,7 @@ exports[`snapshotAllPages Text 51`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 52`] = `
+exports[`snapshotAllPages Text 53`] = `
 <View>
   <Text
     style={

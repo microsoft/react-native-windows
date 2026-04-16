@@ -28,9 +28,7 @@ struct LogBox : public std::enable_shared_from_this<LogBox> {
   void HideOnUIThread() noexcept;
 
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  HWND m_hwnd{nullptr};
-  xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
-  winrt::event_token m_tokenClosed;
+  winrt::Microsoft::ReactNative::ReactNativeWindow m_rnWindow{nullptr};
 };
 
 } // namespace Microsoft::ReactNative

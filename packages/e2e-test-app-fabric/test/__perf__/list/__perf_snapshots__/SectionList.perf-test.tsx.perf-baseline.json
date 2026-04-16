@@ -1,0 +1,269 @@
+{
+  "SectionList Performance mount time 1": {
+    "metrics": {
+      "name": "SectionList mount",
+      "meanDuration": 4.9,
+      "medianDuration": 5,
+      "stdDev": 0.5676462121975466,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.236Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.260Z"
+  },
+  "SectionList Performance unmount time 1": {
+    "metrics": {
+      "name": "SectionList unmount",
+      "meanDuration": 0.1,
+      "medianDuration": 0,
+      "stdDev": 0.31622776601683794,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.332Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.335Z"
+  },
+  "SectionList Performance rerender time 1": {
+    "metrics": {
+      "name": "SectionList rerender",
+      "meanDuration": 11.6,
+      "medianDuration": 10.5,
+      "stdDev": 2.8751811537130436,
+      "renderCount": 2,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.486Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.488Z"
+  },
+  "SectionList Performance SectionList-Specific Scenarios with-3-sections-5-items 1": {
+    "metrics": {
+      "name": "SectionList with-3-sections-15-items",
+      "meanDuration": 5.7,
+      "medianDuration": 5.5,
+      "stdDev": 1.3374935098492586,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.560Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.563Z"
+  },
+  "SectionList Performance SectionList-Specific Scenarios with-5-sections-10-items 1": {
+    "metrics": {
+      "name": "SectionList with-5-sections-50-items",
+      "meanDuration": 6.1,
+      "medianDuration": 6,
+      "stdDev": 1.1972189997378648,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.639Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.643Z"
+  },
+  "SectionList Performance SectionList-Specific Scenarios with-10-sections-20-items 1": {
+    "metrics": {
+      "name": "SectionList with-10-sections-200-items",
+      "meanDuration": 5.5,
+      "medianDuration": 5.5,
+      "stdDev": 0.5270462766947299,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.714Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 10,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.716Z"
+  },
+  "SectionList Performance SectionList-Specific Scenarios with-20-sections-10-items 1": {
+    "metrics": {
+      "name": "SectionList with-20-sections-200-items",
+      "meanDuration": 4.6,
+      "medianDuration": 5,
+      "stdDev": 1.6465452046971292,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.778Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 10,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.780Z"
+  },
+  "SectionList Performance SectionList-Specific Scenarios with-section-separator 1": {
+    "metrics": {
+      "name": "SectionList with-section-separator",
+      "meanDuration": 2,
+      "medianDuration": 2,
+      "stdDev": 0.4714045207910317,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.808Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.810Z"
+  },
+  "SectionList Performance SectionList-Specific Scenarios with-item-separator 1": {
+    "metrics": {
+      "name": "SectionList with-item-separator",
+      "meanDuration": 2.5,
+      "medianDuration": 2,
+      "stdDev": 0.97182531580755,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.845Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.848Z"
+  },
+  "SectionList Performance SectionList-Specific Scenarios with-header-footer 1": {
+    "metrics": {
+      "name": "SectionList with-header-footer",
+      "meanDuration": 2.1,
+      "medianDuration": 2,
+      "stdDev": 0.31622776601683794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.878Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.880Z"
+  },
+  "SectionList Performance SectionList-Specific Scenarios with-section-footer 1": {
+    "metrics": {
+      "name": "SectionList with-section-footer",
+      "meanDuration": 2.1,
+      "medianDuration": 2,
+      "stdDev": 0.5676462121975469,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.909Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.911Z"
+  },
+  "SectionList Performance SectionList-Specific Scenarios with-sticky-section-headers 1": {
+    "metrics": {
+      "name": "SectionList with-sticky-section-headers",
+      "meanDuration": 2.4,
+      "medianDuration": 2,
+      "stdDev": 1.2649110640673518,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.942Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.945Z"
+  },
+  "SectionList Performance SectionList-Specific Scenarios with-empty-list 1": {
+    "metrics": {
+      "name": "SectionList with-empty-list",
+      "meanDuration": 0.6,
+      "medianDuration": 1,
+      "stdDev": 0.5163977794943223,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.954Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:01.964Z"
+  },
+  "SectionList Performance SectionList-Specific Scenarios with-50-sections-20-items 1": {
+    "metrics": {
+      "name": "SectionList with-50-sections-1000-items",
+      "meanDuration": 1.8,
+      "medianDuration": 2,
+      "stdDev": 0.4216370213557839,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:01.990Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 10,
+      "maxRenderCount": 5,
+      "minRuns": 10,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-02-25T08:49:01.992Z"
+  }
+}

@@ -342,6 +342,15 @@ export function createComponentGenerator({
           })
           .join('\n');
 
+        const eventPropFields = componentShape.events.length
+          ? `   // These fields can be used to determine if JS has registered for this event\n` +
+            componentShape.events
+              .map(event => {
+                return `  REACT_FIELD(${event.name})\n  bool ${event.name}{false};\n`;
+              })
+              .join('\n')
+          : '';
+
         const propInitializers = componentShape.props
           .map(prop => {
             if (prop.typeAnnotation.type === 'MixedTypeAnnotation')
@@ -349,6 +358,14 @@ export function createComponentGenerator({
             else return `       ${prop.name} = cloneFromProps->${prop.name};`;
           })
           .join('\n');
+
+        const eventPropInitializers = componentShape.events.length
+          ? componentShape.events
+              .map(event => {
+                return `       ${event.name} = cloneFromProps->${event.name};`;
+              })
+              .join('\n')
+          : '';
 
         const propObjectTypes = propObjectAliases.jobs
           .map(propObjectTypeName => {
@@ -578,8 +595,14 @@ ${
             .replace(/::_EVENT_EMITTER_NAME_::/g, eventEmitterName)
             .replace(/::_PROPS_NAME_::/g, propsName)
             .replace(/::_COMPONENT_NAME_::/g, componentName)
-            .replace(/::_PROP_INITIALIZERS_::/g, propInitializers)
-            .replace(/::_PROPS_FIELDS_::/g, propsFields)
+            .replace(
+              /::_PROP_INITIALIZERS_::/g,
+              [propInitializers, eventPropInitializers].join('\n'),
+            )
+            .replace(
+              /::_PROPS_FIELDS_::/g,
+              [propsFields, eventPropFields].join('\n'),
+            )
             .replace(/::_NAMESPACE_::/g, namespace)
             .replace(/\n\n\n+/g, '\n\n');
         };

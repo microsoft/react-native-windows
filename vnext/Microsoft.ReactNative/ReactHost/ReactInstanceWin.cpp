@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4996) // deprecated APIs
+#endif
+
 #include "ReactInstanceWin.h"
 
 #include <AppModelHelpers.h>
@@ -57,6 +62,7 @@
 #include <react/nativemodule/core/ReactCommon/TurboModuleBinding.h>
 #include <react/renderer/componentregistry/componentNameByReactViewName.h>
 #include <react/renderer/componentregistry/native/NativeComponentRegistryBinding.h>
+#include <react/runtime/JSRuntimeBindings.h>
 #include <react/runtime/PlatformTimerRegistry.h>
 #include <react/runtime/TimerManager.h>
 #include <react/threading/MessageQueueThreadImpl.h>

@@ -9,37 +9,9 @@ param(
 	[string[]] $Extensions = ('h', 'hpp', 'def')
 )
 
-[xml]$props = gc $PSScriptRoot\..\..\Directory.Build.props
-[string] $FollyVersion = $props.Project.PropertyGroup.FollyVersion;
-$FollyVersion = $FollyVersion.Trim() # The extracted FollyVersion contains a space at the end that isn't actually present, issue #6216
-$FollyRoot = "$SourceRoot\node_modules\.folly";
-$FollyOverrideRoot = "$ReactWindowsRoot\Folly\TEMP_UntilFollyUpdate";
-
-[string] $FmtVersion = $props.Project.PropertyGroup.FmtVersion;
-$FmtVersion = $FmtVersion.Trim() # The extracted FmtVersion contains a space at the end that isn't actually present, issue #6216
-$FmtRoot = "$SourceRoot\node_modules\.fmt\fmt-${FmtVersion}";
-
-# Download Folly if running on a machine which hasn't run native build logic to acquire it
-if (!(Test-Path $FollyRoot)) {
-	Write-Host "Downloading Folly $FollyVersion"
-	$FollyZip = "$SourceRoot\node_modules\.folly\folly-${FollyVersion}.zip"
-	$FollyDest = "$SourceRoot\node_modules\.folly"
-
-	New-Item $FollyRoot -ItemType Directory
-	Invoke-RestMethod -Uri "https://github.com/facebook/folly/archive/v$FollyVersion.zip" -OutFile $FollyZip
-	Expand-Archive -LiteralPath $FollyZip -DestinationPath $FollyRoot
-}
-
-# Download Fmt if running on a machine which hasn't run native build logic to acquire it
-if (!(Test-Path $FmtRoot)) {
-	Write-Host "Downloading Fmt $FmtVersion"
-	$FmtZip = "$SourceRoot\node_modules\.fmt\fmt-${FmtVersion}.zip"
-	$FmtDest = "$SourceRoot\node_modules\.fmt"
-
-	New-Item $FmtRoot -ItemType Directory
-	Invoke-RestMethod -Uri "https://github.com/fmtlib/fmt/archive/refs/tags/$FmtVersion.zip" -OutFile $FmtZip
-	Expand-Archive -LiteralPath $FmtZip -DestinationPath $FmtDest
-}
+# Folly and fmt source are committed in vnext/external/ — no download needed
+$FollyRoot = "$ReactWindowsRoot\external\folly";
+$FmtRoot = "$ReactWindowsRoot\external\fmt";
 
 Write-Host "Source root: [$SourceRoot]"
 Write-Host "Destination root: [$TargetRoot]"
@@ -67,13 +39,6 @@ Get-ChildItem -Path $ReactNativeRoot\ReactCommon\yoga\yoga -Name -Recurse -Inclu
 Get-ChildItem -Path $FollyRoot -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
 	-Path        $FollyRoot\$_ `
 	-Destination (New-Item -ItemType Directory $TargetRoot\inc\folly\$(Split-Path $_) -Force) `
-	-Force
-}
-
-# Folly overrides
-Get-ChildItem -Path $FollyOverrideRoot -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
-	-Path        $FollyOverrideRoot\$_ `
-	-Destination (New-Item -ItemType Directory $TargetRoot\inc\folly\folly-$FollyVersion\folly\$(Split-Path $_) -Force) `
 	-Force
 }
 
@@ -115,4 +80,4 @@ Get-ChildItem -Path $ReactWindowsRoot\Desktop.DLL -Recurse -Include '*.def' | Fo
 Copy-Item -Force -Recurse -Path $ReactWindowsRoot\include -Destination $TargetRoot\inc
 
 # Natvis files
-Copy-Item -Force -Path $ReactWindowsRoot\Folly\Folly.natvis -Destination (New-Item -ItemType Directory $TargetRoot\natvis -Force)
+Copy-Item -Force -Path $ReactWindowsRoot\external\folly\Folly.natvis -Destination (New-Item -ItemType Directory $TargetRoot\natvis -Force)

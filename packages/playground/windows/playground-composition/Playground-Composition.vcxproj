@@ -82,11 +82,11 @@
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <WarningLevel>Level4</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj /FS</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>shell32.lib;user32.lib;windowsapp.lib;%(AdditionalDependenices)</AdditionalDependencies>
+      <AdditionalDependencies>shell32.lib;user32.lib;windowsapp.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
@@ -143,9 +143,6 @@
       <SubType>Code</SubType>
     </Midl>
     <Midl Include="YogaXamlPanel.idl" />
-  </ItemGroup>
-  <ItemGroup>
-    <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Playground-Composition.rc" />

@@ -1,8 +1,47 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Sat, 10 Jan 2026 06:40:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.133
+
+Tue, 07 Apr 2026 05:29:55 GMT
+
+### Changes
+
+- fix: capture live run metrics in PerfJsonReporter instead of re-reading baselines (74712637+iamAbhi-916@users.noreply.github.com)
+- Move to yarn 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.72
+
+## 0.0.0-canary.132
+
+Wed, 25 Mar 2026 02:08:12 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.71
+
+## 0.0.0-canary.131
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- refactor: replace depcheck with knip (PHILLIPS71@users.noreply.github.com)
+- Integrate 0.83.0-nightly-20251104-502efe1cc (66076509+vineethkuttan@users.noreply.github.com)
+- Stop writing codegen files if it just changes new lines (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.130
+
+Wed, 04 Mar 2026 22:34:21 GMT
+
+### Changes
+
+- Generate fields to notify native if a JS event is being listened to (30809111+acoates-ms@users.noreply.github.com)
+- Fix issues with more complex props and event types (30809111+acoates-ms@users.noreply.github.com)
+- Fix lifetime issue with codegen'd eventemitter args (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.129
 

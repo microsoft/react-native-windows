@@ -1,8 +1,53 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Tue, 13 Jan 2026 13:00:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.287
+
+Tue, 07 Apr 2026 05:29:55 GMT
+
+### Changes
+
+- Upgrade to yarn v4 (30809111+acoates-ms@users.noreply.github.com)
+- Fork fmt lib locally (vmorozov@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.133
+- Bump @react-native-windows/fs to v0.0.0-canary.72
+- Bump @react-native-windows/package-utils to v0.0.0-canary.98
+- Bump @react-native-windows/telemetry to v0.0.0-canary.133
+
+## 0.0.0-canary.286
+
+Wed, 25 Mar 2026 02:08:12 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.132
+- Bump @react-native-windows/fs to v0.0.0-canary.71
+- Bump @react-native-windows/package-utils to v0.0.0-canary.97
+- Bump @react-native-windows/telemetry to v0.0.0-canary.132
+
+## 0.0.0-canary.285
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- Bump TS target (30809111+acoates-ms@users.noreply.github.com)
+- refactor: replace depcheck with knip (PHILLIPS71@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.131
+- Bump @react-native-windows/telemetry to v0.0.0-canary.131
+
+## 0.0.0-canary.284
+
+Wed, 04 Mar 2026 22:34:24 GMT
+
+### Changes
+
+- Fixed template info not detecting mixed architecture projects (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.130
 
 ## 0.0.0-canary.283
 

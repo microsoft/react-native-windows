@@ -67,7 +67,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
                         {
                           "Size": "128, 128",
                           "Type": "Local",
-                          "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/dislike.png",
+                          "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/dislike.png",
                         },
                       ],
                     },

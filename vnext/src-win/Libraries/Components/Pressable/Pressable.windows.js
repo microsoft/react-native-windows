@@ -16,7 +16,8 @@ import type {
   // [Windows
   BlurEvent,
   FocusEvent,
-  KeyEvent, // Windows]
+  KeyUpEvent, // Windows]
+  KeyDownEvent, // Windows]
 } from '../../Types/CoreEventTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
 
@@ -93,41 +94,41 @@ type PressableBaseProps = $ReadOnly<{
   /**
    * Called when this view's layout changes.
    */
-  onLayout?: ?(event: LayoutChangeEvent) => mixed,
+  onLayout?: ?(event: LayoutChangeEvent) => unknown,
 
   /**
    * Called when the hover is activated to provide visual feedback.
    */
-  onHoverIn?: ?(event: MouseEvent) => mixed,
+  onHoverIn?: ?(event: MouseEvent) => unknown,
 
   /**
    * Called when the hover is deactivated to undo visual feedback.
    */
-  onHoverOut?: ?(event: MouseEvent) => mixed,
+  onHoverOut?: ?(event: MouseEvent) => unknown,
 
   /**
    * Called when a long-tap gesture is detected.
    */
-  onLongPress?: ?(event: GestureResponderEvent) => mixed,
+  onLongPress?: ?(event: GestureResponderEvent) => unknown,
 
   /**
    * Called when a single tap gesture is detected.
    */
-  onPress?: ?(event: GestureResponderEvent) => mixed,
+  onPress?: ?(event: GestureResponderEvent) => unknown,
 
   /**
    * Called when a touch is engaged before `onPress`.
    */
-  onPressIn?: ?(event: GestureResponderEvent) => mixed,
+  onPressIn?: ?(event: GestureResponderEvent) => unknown,
   /**
    * Called when the press location moves.
    */
-  onPressMove?: ?(event: GestureResponderEvent) => mixed,
+  onPressMove?: ?(event: GestureResponderEvent) => unknown,
 
   /**
    * Called when a touch is released before `onPress`.
    */
-  onPressOut?: ?(event: GestureResponderEvent) => mixed,
+  onPressOut?: ?(event: GestureResponderEvent) => unknown,
 
   /**
    * Whether to prevent any other native components from becoming responder
@@ -148,12 +149,12 @@ type PressableBaseProps = $ReadOnly<{
   /*
    * Called after a key down event is detected.
    */
-  onKeyDown?: ?(event: KeyEvent) => mixed,
+  onKeyDown?: ?(event: KeyDownEvent) => mixed,
 
   /*
    * Called after a key up event is detected.
    */
-  onKeyUp?: ?(event: KeyEvent) => mixed,
+  onKeyUp?: ?(event: KeyUpEvent) => mixed,
 
   /*
    * List of keys handled only by JS.
@@ -168,12 +169,12 @@ type PressableBaseProps = $ReadOnly<{
   /*
    * Called in the tunneling phase after a key up event is detected.
    */
-  onKeyDownCapture?: ?(event: KeyEvent) => void,
+  onKeyDownCapture?: ?(event: KeyDownEvent) => void,
 
   /*
    * Called in the tunneling phase after a key up event is detected.
    */
-  onKeyUpCapture?: ?(event: KeyEvent) => void,
+  onKeyUpCapture?: ?(event: KeyUpEvent) => void,
 
   /**
    * Either view styles or a function that receives a boolean reflecting whether

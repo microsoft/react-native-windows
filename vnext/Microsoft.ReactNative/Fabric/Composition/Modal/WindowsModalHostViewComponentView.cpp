@@ -37,9 +37,9 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   ~ModalHostView() {
     if (m_popUp) {
       // Unregister closing event handler
-      if (m_appWindow && m_appWindowClosingToken) {
-        m_appWindow.Closing(m_appWindowClosingToken);
-        m_appWindowClosingToken.value = 0;
+      if (m_appWindowClosingToken) {
+        m_rnWindow.AppWindow().Closing(m_appWindowClosingToken);
+        m_appWindowClosingToken = {};
       }
 
       // Reset topWindowID before destroying
@@ -49,21 +49,15 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
         m_prevWindowID = 0;
       }
 
-      // Close island
-      if (m_reactNativeIsland) {
-        m_reactNativeIsland.Island().Close();
-        m_reactNativeIsland = nullptr;
-      }
-
       // Hide popup
       if (m_popUp.IsVisible()) {
         m_popUp.Hide();
       }
 
       // Destroy AppWindow this automatically resumes parent window to receive inputs
-      if (m_appWindow) {
-        m_appWindow.Destroy();
-        m_appWindow = nullptr;
+      if (m_rnWindow.AppWindow()) {
+        m_rnWindow.Close();
+        m_rnWindow = nullptr;
       }
 
       // Bring parent window to foreground
@@ -111,11 +105,11 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     }
 
     // Update Title if changed and AppWindow exists
-    if (m_appWindow && (!oldProps || newViewProps.title != oldViewProps.title)) {
+    if (m_rnWindow && (!oldProps || newViewProps.title != oldViewProps.title)) {
       // Use empty string if title is not set
       winrt::hstring titleValue =
           newViewProps.title.has_value() ? winrt::to_hstring(newViewProps.title.value()) : winrt::hstring();
-      m_appWindow.Title(titleValue);
+      m_rnWindow.AppWindow().Title(titleValue);
     }
 
     ::Microsoft::ReactNativeSpecs::BaseModalHostView<ModalHostView>::UpdateProps(view, newProps, oldProps);
@@ -181,7 +175,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   }
 
   void AdjustWindowSize(const winrt::Microsoft::ReactNative::LayoutMetrics &layoutMetrics) noexcept {
-    if (!m_appWindow) {
+    if (!m_rnWindow) {
       return;
     }
 
@@ -198,17 +192,17 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     clientHeightPx = std::max(100, clientHeightPx);
 
     // Size the client area directly
-    m_appWindow.ResizeClient({clientWidthPx, clientHeightPx});
+    m_rnWindow.AppWindow().ResizeClient({clientWidthPx, clientHeightPx});
 
     // Center the window on its parent
     RECT parentRC;
     GetWindowRect(m_parentHwnd, &parentRC);
-    auto outerSize = m_appWindow.Size();
+    auto outerSize = m_rnWindow.AppWindow().Size();
 
     int32_t xCor = parentRC.left + (parentRC.right - parentRC.left - outerSize.Width) / 2;
     int32_t yCor = parentRC.top + (parentRC.bottom - parentRC.top - outerSize.Height) / 2;
 
-    m_appWindow.Move({xCor, yCor});
+    m_rnWindow.AppWindow().Move({xCor, yCor});
   };
 
   void ShowOnUIThread(const winrt::Microsoft::ReactNative::ComponentView &view) {
@@ -277,58 +271,55 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
         view.as<::Microsoft::ReactNative::Composition::Experimental::IComponentViewInterop>()->GetHwndForParenting();
 
     auto portal = view.as<winrt::Microsoft::ReactNative::Composition::PortalComponentView>();
-    m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland::CreatePortal(portal);
-    auto contentIsland = m_reactNativeIsland.Island();
-
     m_popUp = winrt::Microsoft::UI::Content::DesktopPopupSiteBridge::Create(
         portal.Parent()
             .as<winrt::Microsoft::ReactNative::Composition::ComponentView>()
             .Root()
             .ReactNativeIsland()
             .Island());
-    m_popUp.Connect(contentIsland);
 
     // Get AppWindow and configure presenter
-    m_appWindow = winrt::Microsoft::UI::Windowing::AppWindow::GetFromWindowId(m_popUp.WindowId());
-    if (m_appWindow) {
-      auto overlappedPresenter = winrt::Microsoft::UI::Windowing::OverlappedPresenter::Create();
+    m_rnWindow = winrt::Microsoft::ReactNative::ReactNativeWindow::CreateFromContentSiteBridgeAndIsland(
+        m_popUp, winrt::Microsoft::ReactNative::ReactNativeIsland::CreatePortal(portal));
+    m_rnWindow.ResizePolicy(winrt::Microsoft::ReactNative::ContentSizePolicy::None);
+    auto overlappedPresenter = winrt::Microsoft::UI::Windowing::OverlappedPresenter::Create();
 
-      // Configure presenter for modal behavior
-      overlappedPresenter.IsModal(true);
-      overlappedPresenter.SetBorderAndTitleBar(true, true);
+    // Configure presenter for modal behavior
+    overlappedPresenter.IsModal(true);
+    overlappedPresenter.SetBorderAndTitleBar(true, true);
 
-      // modal should only have close button
-      overlappedPresenter.IsMinimizable(false);
-      overlappedPresenter.IsMaximizable(false);
+    // modal should only have close button
+    overlappedPresenter.IsMinimizable(false);
+    overlappedPresenter.IsMaximizable(false);
 
-      // Apply the presenter to the window
-      m_appWindow.SetPresenter(overlappedPresenter);
+    // Apply the presenter to the window
+    m_rnWindow.AppWindow().SetPresenter(overlappedPresenter);
 
-      // Hide the title bar icon
-      m_appWindow.TitleBar().IconShowOptions(winrt::Microsoft::UI::Windowing::IconShowOptions::HideIconAndSystemMenu);
+    // Hide the title bar icon
+    m_rnWindow.AppWindow().TitleBar().IconShowOptions(
+        winrt::Microsoft::UI::Windowing::IconShowOptions::HideIconAndSystemMenu);
 
-      // Set initial title using the stored local props
-      if (m_localProps && m_localProps->title.has_value()) {
-        winrt::hstring titleValue = winrt::to_hstring(m_localProps->title.value());
-        m_appWindow.Title(titleValue);
-      } else {
-        m_appWindow.Title(L""); // Empty title if not provided
-      }
-
-      // Handle close request ('X' button)
-      m_appWindowClosingToken =
-          m_appWindow.Closing([wkThis = get_weak()](
-                                  const winrt::Microsoft::UI::Windowing::AppWindow & /*sender*/,
-                                  const winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs &args) {
-            args.Cancel(true); // Prevent default close
-            if (auto strongThis = wkThis.get()) {
-              // Dispatch onRequestClose event
-              if (auto eventEmitter = strongThis->EventEmitter()) {
-                eventEmitter->onRequestClose({});
-              }
-            }
-          });
+    // Set initial title using the stored local props
+    if (m_localProps && m_localProps->title.has_value()) {
+      winrt::hstring titleValue = winrt::to_hstring(m_localProps->title.value());
+      m_rnWindow.AppWindow().Title(titleValue);
+    } else {
+      m_rnWindow.AppWindow().Title(L""); // Empty title if not provided
     }
+
+    // Handle close request ('X' button)
+    m_appWindowClosingToken =
+        m_rnWindow.AppWindow().Closing([wkThis = get_weak()](
+                                           const winrt::Microsoft::UI::Windowing::AppWindow & /*sender*/,
+                                           const winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs &args) {
+          args.Cancel(true); // Prevent default close
+          if (auto strongThis = wkThis.get()) {
+            // Dispatch onRequestClose event
+            if (auto eventEmitter = strongThis->EventEmitter()) {
+              eventEmitter->onRequestClose({});
+            }
+          }
+        });
 
     // set the top-level windows as the new hwnd
     winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
@@ -349,10 +340,10 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
         });
         */
 
-    m_islandStateChangedToken =
-        contentIsland.StateChanged([weakThis = get_weak()](
-                                       winrt::Microsoft::UI::Content::ContentIsland const &island,
-                                       winrt::Microsoft::UI::Content::ContentIslandStateChangedEventArgs const &args) {
+    m_islandStateChangedToken = m_rnWindow.ReactNativeIsland().Island().StateChanged(
+        [weakThis = get_weak()](
+            winrt::Microsoft::UI::Content::ContentIsland const &island,
+            winrt::Microsoft::UI::Content::ContentIslandStateChangedEventArgs const &args) {
           if (auto pThis = weakThis.get()) {
             if (args.DidRasterizationScaleChange() || args.DidLayoutDirectionChange()) {
               pThis->UpdateConstraints();
@@ -372,7 +363,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
         m_popUp.SiteView().EnvironmentView().DisplayId());
     auto workArea = displayArea.WorkArea();
 
-    float scale = m_reactNativeIsland.Island().RasterizationScale();
+    float scale = m_rnWindow.ReactNativeIsland().Island().RasterizationScale();
 
     winrt::Microsoft::ReactNative::LayoutConstraints constraints;
     constraints.MinimumSize = {0, 0};
@@ -381,7 +372,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
         static_cast<float>((workArea.Width / scale) * 0.9), static_cast<float>((workArea.Height / scale) * 0.9)};
     constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
 
-    auto layoutDirection = m_reactNativeIsland.Island().LayoutDirection();
+    auto layoutDirection = m_rnWindow.ReactNativeIsland().Island().LayoutDirection();
     if (layoutDirection == winrt::Microsoft::UI::Content::ContentLayoutDirection::LeftToRight)
       constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight;
     else if (layoutDirection == winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft)
@@ -391,7 +382,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     // When no constraint is set (maxSize is std::numeric_limits<Float>::infinity()), yoga will layout the content to a
     // desired size If we provide a specific max size, then contents with a flex:1 will expand to fill that size. We
     // might want to provide a windows specific property to control this behavior.
-    m_state.UpdateState(winrt::make<ModalHostState>(constraints, m_reactNativeIsland.Island().RasterizationScale()));
+    m_state.UpdateState(winrt::make<ModalHostState>(constraints, scale));
   }
 
   static void TrySetFocus(const winrt::Microsoft::ReactNative::ComponentView &view) {
@@ -411,9 +402,8 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   winrt::event_token m_departFocusToken;
   winrt::event_token m_childLayoutMetricsToken;
   winrt::Microsoft::ReactNative::IComponentState m_state{nullptr};
-  winrt::Microsoft::ReactNative::ReactNativeIsland m_reactNativeIsland{nullptr};
+  winrt::Microsoft::ReactNative::ReactNativeWindow m_rnWindow{nullptr};
   winrt::Microsoft::UI::Content::DesktopPopupSiteBridge m_popUp{nullptr};
-  winrt::Microsoft::UI::Windowing::AppWindow m_appWindow{nullptr};
   winrt::event_token m_appWindowClosingToken;
   winrt::com_ptr<::Microsoft::ReactNativeSpecs::ModalHostViewProps> m_localProps{nullptr};
 };

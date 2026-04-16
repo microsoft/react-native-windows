@@ -19,6 +19,11 @@
 #include <Utils/LocalBundleReader.h>
 #endif
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4996) // deprecated APIs
+#endif
+
 #include <CppRuntimeOptions.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
