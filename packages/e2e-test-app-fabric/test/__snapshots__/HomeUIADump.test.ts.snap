@@ -4272,7 +4272,7 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
     },
     "Comment": "New App Screen",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "966, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5099,12 +5099,12 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "934, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "934, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5180,12 +5180,12 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 16",
+        "Size": "934, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 16",
+            "Size": "934, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5759,7 +5759,7 @@ exports[`Home UIA Tree Dump Text 1`] = `
     },
     "Comment": "Text",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "966, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5840,7 +5840,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
     },
     "Comment": "TextInput",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "966, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6331,12 +6331,12 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "214, 25",
+        "Size": "214, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "214, 25",
+            "Size": "214, 24",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -6574,12 +6574,12 @@ exports[`Home UIA Tree Dump View 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "38, 24",
+        "Size": "38, 25",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "38, 24",
+            "Size": "38, 25",
             "Visual Type": "SpriteVisual",
           },
         ],
