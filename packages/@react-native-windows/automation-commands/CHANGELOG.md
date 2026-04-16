@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-commands
 
-<!-- This log was last generated on Thu, 09 Apr 2026 05:48:39 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 16 Apr 2026 09:13:22 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0-preview.4
+
+Thu, 16 Apr 2026 09:13:22 GMT
+
+### Changes
+
+- fix: auto-discover native perf results in compare report (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.84.0-preview.4
 
 ## 0.84.0-preview.3
 

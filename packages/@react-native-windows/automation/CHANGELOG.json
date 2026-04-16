@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Thu, 16 Apr 2026 09:13:21 GMT",
+      "version": "0.84.0-preview.4",
+      "tag": "@react-native-windows/automation_v0.84.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@react-native-windows/automation",
+            "commit": "c72727372283e8a8b3a82c21d817ad737c27f5ae",
+            "comment": "fix: auto-discover native perf results in compare report"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.84.0-preview.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Apr 2026 05:48:39 GMT",
       "version": "0.84.0-preview.3",
       "tag": "@react-native-windows/automation_v0.84.0-preview.3",

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 16 Apr 2026 09:13:22 GMT",
+      "version": "0.84.0-preview.2",
+      "tag": "@react-native-windows/codegen_v0.84.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "c72727372283e8a8b3a82c21d817ad737c27f5ae",
+            "comment": "fix: capture live run metrics in PerfJsonReporter instead of re-reading baselines"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Apr 2026 06:35:45 GMT",
       "version": "0.84.0-preview.1",
       "tag": "@react-native-windows/codegen_v0.84.0-preview.1",

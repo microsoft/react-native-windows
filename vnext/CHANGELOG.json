@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 16 Apr 2026 09:13:21 GMT",
+      "version": "0.84.0-preview.4",
+      "tag": "react-native-windows_v0.84.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c72727372283e8a8b3a82c21d817ad737c27f5ae",
+            "comment": "fix: respect track mode in compare-results to avoid false regression failures"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c72727372283e8a8b3a82c21d817ad737c27f5ae",
+            "comment": "fix: auto-discover native perf results in compare report"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c72727372283e8a8b3a82c21d817ad737c27f5ae",
+            "comment": "Fix ScrollView keyboard scroll drift on long key press"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c72727372283e8a8b3a82c21d817ad737c27f5ae",
+            "comment": "Fix multiline TextInput crash from TxDrawD2D reentrancy"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c72727372283e8a8b3a82c21d817ad737c27f5ae",
+            "comment": "Performance tests for react native windows(Fabric)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.84.0-preview.2",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.84.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Apr 2026 05:48:39 GMT",
       "version": "0.84.0-preview.3",
       "tag": "react-native-windows_v0.84.0-preview.3",
