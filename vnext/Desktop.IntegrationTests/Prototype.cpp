@@ -197,20 +197,29 @@ TEST_CLASS (Prototype) {
           //        std::move("DummyTest"),
           //        folly::dynamic::object("initialProps", folly::dynamic::object())("rootTag", rootTag));
 
+          const int rootTag = 101;
           auto jsArgs = msrn::JSValueArray
           {
             "DummyTest", // appName
             msrn::JSValueObject
             {
               { "initialProps", msrn::JSValueObject{} },
-              { "rootTag", 101 }
+              { "rootTag", rootTag }
             }
           };
 
             args.Context().CallJSFunction(
                 L"AppRegistry",
                 L"runApplication",
-                msrn::MakeJSValueArgWriter(std::move(jsArgs)));
+                msrn::MakeJSValueArgWriter(jsArgs));
+
+          //TODO: await TestModule
+
+            args.Context().CallJSFunction(
+            L"AppRegistry",
+            L"unmountApplicationComponentAtRootTag",
+            msrn::MakeJSValueArgWriter(msrn::JSValueArray{rootTag})
+          );
       });
     });
 
