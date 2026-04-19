@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.84.0-nightly-20260107-58bc6c3e3",
+  "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
   "overrides": [
     {
       "type": "copy",
@@ -30,7 +30,7 @@
       "type": "derived",
       "file": "src/js/examples-win/Switch/SwitchExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Switch/SwitchExample.js",
-      "baseHash": "cf59144fe876a5dc4acf703849a95e64fd9416f1"
+      "baseHash": "80662bdca686778c035ca49095f3121afdfe0c93"
     },
     {
       "type": "patch",
@@ -43,14 +43,14 @@
       "type": "patch",
       "file": "src/js/examples/FlatList/BaseFlatListExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/BaseFlatListExample.js",
-      "baseHash": "6a140eb7fd8961bbee46fbe6af9d592c0fcf5a2b",
+      "baseHash": "a79e34987dae395540efc0c4df8f999d6e400947",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-basic.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-basic.js",
-      "baseHash": "2e712b5b0e2230bbf0abcf967c497e207c472809",
+      "baseHash": "41945de10fceadb15bebb03f7c386e5f1d7cc59a",
       "issue": 12869
     },
     {
@@ -85,7 +85,7 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "2ee70a725f5a944d99331a951e5389590847731f",
+      "baseHash": "3fc18bff48bbe9506ebe9d200828143b3b79a391",
       "issue": 12869
     },
     {
@@ -111,13 +111,13 @@
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "6eeabfb642d4f0662ac72dcce58103241819b049"
+      "baseHash": "bcf37a6cfe71ae8d9034349c8f61f8fac2c8c2b6"
     },
     {
       "type": "patch",
       "file": "src/js/examples/Text/TextSharedExamples.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextSharedExamples.js",
-      "baseHash": "8f78513f2b33c2858552e9c857fbcc3fbf466ec0",
+      "baseHash": "276177eac14554bc145ccd4125a97ad2b24ea9f3",
       "issue": 15125
     },
     {
@@ -143,7 +143,7 @@
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "8f02aec2ad43cf4a32db1604e3b60e1b41aed919"
+      "baseHash": "8aa56a53370fb53150956fbeb9f5d82c00b677e8"
     },
     {
       "type": "copy",

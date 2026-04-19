@@ -17,7 +17,7 @@
     "lint:fix": "rnw-scripts lint:fix"
   },
   "dependencies": {
-    "@react-native/metro-config": "0.84.0-nightly-20260107-58bc6c3e3",
+    "@react-native/metro-config": "0.85.0-nightly-20260114-f15985f4f",
     "@rnx-kit/metro-config": "^2.2.3",
     "@rnx-kit/metro-plugin-duplicates-checker": "^3.0.2",
     "@rnx-kit/metro-serializer": "^2.0.3",
@@ -30,7 +30,7 @@
     "eslint": "^8.19.0",
     "prettier": "^3.6.2",
     "react": "19.2.3",
-    "react-native": "0.84.0-nightly-20260107-58bc6c3e3",
+    "react-native": "0.85.0-nightly-20260114-f15985f4f",
     "typescript": "5.0.4"
   },
   "peerDependencies": {

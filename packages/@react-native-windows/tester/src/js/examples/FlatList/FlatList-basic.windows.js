@@ -55,7 +55,7 @@ const VIEWABILITY_CONFIG = {
   waitForInteraction: true,
 };
 
-type Props = $ReadOnly<{||}>;
+type Props = Readonly<{||}>;  
 type State = {|
   data: Array<Item>,
   first: number,
