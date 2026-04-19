@@ -6,12 +6,10 @@
 #include <Microsoft.ReactNative/IReactDispatcher.h>
 #include <winrt/Microsoft.UI.Dispatching.h>
 
-
 #include <windows.h>
 #include <MddBootstrap.h>
 #include <WindowsAppSDK-VersionInfo.h>
 #include <winrt/base.h>
-
 
 #include <future>
 
@@ -112,7 +110,10 @@ TestReactNativeHostHolder::TestReactNativeHostHolder(
     settings.Properties().Set(msrn::ReactDispatcherHelper::UIDispatcherProperty(), m_uiDispatcher);
     settings.Properties().Set(PlatformNameOverrideProperty().Handle(), winrt::box_value(L"windows"));
     settings.UseFastRefresh(true);
-    settings.JavaScriptBundleFile(L"IntegrationTests/IntegrationTestsApp");
+
+    // Set on instance creation or load
+    //settings.JavaScriptBundleFile(L"IntegrationTests/IntegrationTestsApp");
+    //settings.JavaScriptBundleFile(L"IntegrationTests/DummyTest");
 
     // To properly enable fabric you need to set a compositor.
     // Since the UTs are ui-less we can force fabric by setting a CompositionContext with a null compositor
@@ -180,7 +181,38 @@ TEST_CLASS (Prototype) {
 
   TEST_METHOD(Proto2)
   {
-    auto holder = TestReactNativeHostHolder(L"TurboModuleTests", [](msrn::ReactNativeHost const &host) noexcept {});
+    auto holder = TestReactNativeHostHolder(L"TurboModuleTests", [](msrn::ReactNativeHost const &host) noexcept {
+      host.InstanceSettings().JavaScriptBundleFile(L"IntegrationTests/DummyTest");
+
+      host.InstanceSettings().InstanceLoaded(
+        [](auto const &, winrt::Microsoft::ReactNative::IInstanceLoadedEventArgs args) noexcept {
+          //if (args.Failed()) {
+          //  TestEventService::LogEvent("InstanceLoaded::Failed", nullptr);
+          //} else {
+          //  TestEventService::LogEvent("InstanceLoaded::Success", nullptr);
+          //}
+
+          //    const int rootTag = 101;
+          //folly::dynamic params = folly::dynamic::array(
+          //        std::move("DummyTest"),
+          //        folly::dynamic::object("initialProps", folly::dynamic::object())("rootTag", rootTag));
+
+          auto jsArgs = msrn::JSValueArray
+          {
+            "DummyTest", // appName
+            msrn::JSValueObject
+            {
+              { "initialProps", msrn::JSValueObject{} },
+              { "rootTag", 101 }
+            }
+          };
+
+            args.Context().CallJSFunction(
+                L"AppRegistry",
+                L"runApplication",
+                msrn::MakeJSValueArgWriter(std::move(jsArgs)));
+      });
+    });
 
     // Wait for React Native instance to be fully initialized
     holder.WaitForInstanceCreated();
