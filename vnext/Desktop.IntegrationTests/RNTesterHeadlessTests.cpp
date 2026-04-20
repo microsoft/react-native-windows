@@ -81,7 +81,7 @@ TEST_CLASS (RNTesterHeadlessTests) {
         [&instanceLoadedEvent, &instanceFailed](msrn::ReactNativeHost const &host) noexcept {
       host.InstanceSettings().InstanceLoaded(
           [&instanceLoadedEvent, &instanceFailed](
-              auto const &, winrt::Microsoft::ReactNative::InstanceLoadedEventArgs args) noexcept {
+              auto const &, msrn::InstanceLoadedEventArgs args) noexcept {
             instanceFailed = args.Failed();
             SetEvent(instanceLoadedEvent.get());
           });
