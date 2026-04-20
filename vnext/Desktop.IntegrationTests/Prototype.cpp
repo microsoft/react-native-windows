@@ -15,6 +15,7 @@
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 
 #include "..\codegen\NativeDeviceInfoSpec.g.h"
+#include "..\codegen\NativeAppStateSpec.g.h"
 
 #include "Modules/TestModule.h"
 #include "MockCompositionContext.h"
@@ -29,30 +30,53 @@ struct DeviceInfo {
   using ModuleSpec = ::Microsoft::ReactNativeSpecs::DeviceInfoSpec;
 
   REACT_INIT(Initialize)
-  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-    m_context = reactContext;
-  }
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &) noexcept {}
 
   REACT_GET_CONSTANTS(GetConstants)
   ::Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants GetConstants() noexcept {
     ::Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants constants;
-    ::Microsoft::ReactNativeSpecs::DeviceInfoSpec_DisplayMetrics screenDisplayMetrics;
-    screenDisplayMetrics.fontScale = 1;
-    screenDisplayMetrics.height = 1024;
-    screenDisplayMetrics.width = 1024;
-    screenDisplayMetrics.scale = 1;
-    constants.Dimensions.screen = screenDisplayMetrics;
-    constants.Dimensions.window = screenDisplayMetrics;
+    ::Microsoft::ReactNativeSpecs::DeviceInfoSpec_DisplayMetrics dm;
+    dm.fontScale = 1;
+    dm.height = 1024;
+    dm.width = 1024;
+    dm.scale = 1;
+    constants.Dimensions.screen = dm;
+    constants.Dimensions.window = dm;
     return constants;
   }
+};
 
- private:
-  winrt::Microsoft::ReactNative::ReactContext m_context;
+// Work around missing AppState in headless environment
+REACT_MODULE(AppState)
+struct AppState {
+  using ModuleSpec = ::Microsoft::ReactNativeSpecs::AppStateSpec;
+
+  REACT_INIT(Initialize)
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &) noexcept {}
+
+  REACT_METHOD(GetCurrentAppState, L"getCurrentAppState")
+  void GetCurrentAppState(
+      std::function<void(::Microsoft::ReactNativeSpecs::AppStateSpec_AppState const &)> const &success,
+      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &) noexcept {
+    success({.app_state = "active"});
+  }
+
+  REACT_METHOD(AddListener, L"addListener")
+  void AddListener(std::string) noexcept {}
+
+  REACT_METHOD(RemoveListeners, L"removeListeners")
+  void RemoveListeners(double) noexcept {}
+
+  REACT_GET_CONSTANTS(GetConstants)
+  ::Microsoft::ReactNativeSpecs::AppStateSpec_AppStateConstants GetConstants() noexcept {
+    return {.initialAppState = "active"};
+  }
 };
 
 struct TestReactPackageProvider : winrt::implements<TestReactPackageProvider, msrn::IReactPackageProvider> {
   void CreatePackage(msrn::IReactPackageBuilder const &packageBuilder) noexcept {
     packageBuilder.AddTurboModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
+    packageBuilder.AddTurboModule(L"AppState", winrt::Microsoft::ReactNative::MakeModuleProvider<AppState>());
     winrt::Microsoft::ReactNative::TryAddAttributedModule(packageBuilder, L"TestModule", true);
   }
 };
