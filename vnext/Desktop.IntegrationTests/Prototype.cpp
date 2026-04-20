@@ -13,6 +13,8 @@
 
 #include <future>
 
+#include "Modules/TestModule.h"
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace msrn = winrt::Microsoft::ReactNative;

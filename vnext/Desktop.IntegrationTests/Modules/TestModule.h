@@ -19,33 +19,33 @@ struct TestModule {
     m_reactContext = reactContext;
   }
 
-  REACT_METHOD(markTestCompleted)
-  void MarkTestCompleted() noexcept {
+  REACT_METHOD(MarkTestCompleted, L"markTestCompleted")
+  void MarkTestCompleted()noexcept {
     MarkTestPassed(true);
   }
 
-  REACT_METHOD(markTestPassed)
+  REACT_METHOD(MarkTestPassed, L"markTestPassed")
   void MarkTestPassed(bool success) noexcept {
     m_status = success ? TestStatus::Passed : TestStatus::Failed;
   }
 
-  REACT_METHOD(verifySnapshot)
+  REACT_METHOD(VerifySnapshot, L"verifySnapshot")
   void VerifySnapshot(std::function<void(bool)> const &callback) noexcept {
     // Snapshot testing is not supported on Windows; always report success.
     callback(true);
   }
 
-  REACT_METHOD(sendAppEvent)
+  REACT_METHOD(SendAppEvent, L"sendAppEvent")
   void SendAppEvent(std::string name, ::React::JSValue body) noexcept {
     // No-op on Windows.
   }
 
-  REACT_METHOD(shouldResolve)
+  REACT_METHOD(ShouldResolve, L"shouldResolve")
   void ShouldResolve(::React::ReactPromise<int> &&result) noexcept {
     result.Resolve(1);
   }
 
-  REACT_METHOD(shouldReject)
+  REACT_METHOD(ShouldReject, L"shouldReject")
   void ShouldReject(::React::ReactPromise<::React::JSValue> &&result) noexcept {
     result.Reject(::React::ReactError{});
   }
