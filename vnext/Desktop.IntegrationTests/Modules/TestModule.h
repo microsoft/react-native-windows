@@ -4,6 +4,8 @@
 #pragma once
 
 #include <NativeModules.h>
+
+// Standard Library
 #include <atomic>
 #include <functional>
 #include <string>
@@ -37,7 +39,7 @@ struct TestModule {
 
   REACT_METHOD(SendAppEvent, L"sendAppEvent")
   void SendAppEvent(std::string name, ::React::JSValue body) noexcept {
-    // No-op on Windows.
+    m_reactContext.EmitJSEvent(L"RCTDeviceEventEmitter", winrt::to_hstring(name), body);
   }
 
   REACT_METHOD(ShouldResolve, L"shouldResolve")
