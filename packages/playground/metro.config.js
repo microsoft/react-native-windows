@@ -11,10 +11,10 @@ const path = require('path');
 
 // On Windows, require.resolve through symlinks (e.g. yarn workspace links) can
 // return paths with a different drive letter case than process.cwd(). Metro's
-// file system lookup is case-sensitive, so we must normalize to match.
+// file system lookup is case-sensitive, so we normalize to match cwd.
 function normalizePathDrive(p) {
   if (process.platform === 'win32' && p.length >= 2 && p[1] === ':') {
-    return p[0].toUpperCase() + p.slice(1);
+    return process.cwd()[0] + p.slice(1);
   }
   return p;
 }
