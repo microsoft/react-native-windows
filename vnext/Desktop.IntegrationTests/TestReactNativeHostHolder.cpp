@@ -10,7 +10,7 @@
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Windows.Foundation.Collections.h>
 
-#include "MockCompositionContext.h"
+#include "TestCompositionContext.h"
 
 msrn::ReactPropertyId<winrt::hstring> PlatformNameOverrideProperty() noexcept {
   static msrn::ReactPropertyId<winrt::hstring> prop{L"ReactNative.Injection", L"PlatformNameOverride"};
@@ -57,7 +57,7 @@ TestReactNativeHostHolder::TestReactNativeHostHolder(
             winrt::Microsoft::ReactNative::ReactPropertyId<
                 winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext>{
                 L"ReactNative.Composition", L"CompositionContext"},
-            winrt::make<MockComposition::MockCompositionContext>());
+            winrt::make<TestComposition::TestCompositionContext>());
 
     hostInitializer(m_host);
 

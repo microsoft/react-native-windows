@@ -10,19 +10,19 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.h>
 
-// Mock implementations of the Composition.Experimental interfaces so that
+// Test implementations of the Composition.Experimental interfaces so that
 // Fabric can run in headless (ui-less) integration tests.  Every method is a
 // no-op and every property returns a sensible default.
 
-namespace MockComposition {
+namespace TestComposition {
 
 namespace Exp = winrt::Microsoft::ReactNative::Composition::Experimental;
 
 // ---------- IBrush / IDrawingSurfaceBrush ----------
 
-struct MockBrush : winrt::implements<MockBrush, Exp::IBrush> {};
+struct TestBrush : winrt::implements<TestBrush, Exp::IBrush> {};
 
-struct MockDrawingSurfaceBrush : winrt::implements<MockDrawingSurfaceBrush, Exp::IDrawingSurfaceBrush, Exp::IBrush> {
+struct TestDrawingSurfaceBrush : winrt::implements<TestDrawingSurfaceBrush, Exp::IDrawingSurfaceBrush, Exp::IBrush> {
   void HorizontalAlignmentRatio(float) {}
   void VerticalAlignmentRatio(float) {}
   void Stretch(Exp::CompositionStretch) {}
@@ -30,7 +30,7 @@ struct MockDrawingSurfaceBrush : winrt::implements<MockDrawingSurfaceBrush, Exp:
 
 // ---------- IDropShadow ----------
 
-struct MockDropShadow : winrt::implements<MockDropShadow, Exp::IDropShadow> {
+struct TestDropShadow : winrt::implements<TestDropShadow, Exp::IDropShadow> {
   void Offset(winrt::Windows::Foundation::Numerics::float3) {}
   void Opacity(float) {}
   void BlurRadius(float) {}
@@ -42,7 +42,7 @@ struct MockDropShadow : winrt::implements<MockDropShadow, Exp::IDropShadow> {
 // ---------- IVisual (shared base for visual mocks) ----------
 
 template <typename D, typename... I>
-struct MockVisualBase : winrt::implements<D, I...> {
+struct TestVisualBase : winrt::implements<D, I...> {
   void InsertAt(Exp::IVisual, int32_t) {}
   void Remove(Exp::IVisual) {}
   Exp::IVisual GetAt(uint32_t) { return nullptr; }
@@ -66,15 +66,15 @@ struct MockVisualBase : winrt::implements<D, I...> {
 
 // ---------- ISpriteVisual ----------
 
-struct MockSpriteVisual : MockVisualBase<MockSpriteVisual, Exp::ISpriteVisual, Exp::IVisual> {
+struct TestSpriteVisual : TestVisualBase<TestSpriteVisual, Exp::ISpriteVisual, Exp::IVisual> {
   void Brush(Exp::IBrush) {}
   void Shadow(Exp::IDropShadow) {}
 };
 
 // ---------- IRoundedRectangleVisual ----------
 
-struct MockRoundedRectangleVisual
-    : MockVisualBase<MockRoundedRectangleVisual, Exp::IRoundedRectangleVisual, Exp::IVisual> {
+struct TestRoundedRectangleVisual
+    : TestVisualBase<TestRoundedRectangleVisual, Exp::IRoundedRectangleVisual, Exp::IVisual> {
   void Brush(Exp::IBrush) {}
   void CornerRadius(winrt::Windows::Foundation::Numerics::float2) {}
   void StrokeBrush(Exp::IBrush) {}
@@ -83,7 +83,7 @@ struct MockRoundedRectangleVisual
 
 // ---------- IScrollVisual ----------
 
-struct MockScrollVisual : MockVisualBase<MockScrollVisual, Exp::IScrollVisual, Exp::IVisual> {
+struct TestScrollVisual : TestVisualBase<TestScrollVisual, Exp::IScrollVisual, Exp::IVisual> {
   void Brush(Exp::IBrush) {}
   void ScrollEnabled(bool) {}
   winrt::event_token ScrollPositionChanged(
@@ -129,8 +129,8 @@ struct MockScrollVisual : MockVisualBase<MockScrollVisual, Exp::IScrollVisual, E
 
 // ---------- IActivityVisual ----------
 
-struct MockActivityVisual : MockVisualBase<MockActivityVisual, Exp::IActivityVisual, Exp::IVisual> {
-  using MockVisualBase::Size; // IVisual::Size(float2)
+struct TestActivityVisual : TestVisualBase<TestActivityVisual, Exp::IActivityVisual, Exp::IVisual> {
+  using TestVisualBase::Size; // IVisual::Size(float2)
   void Size(float) {}         // IActivityVisual::Size(float)
   void Brush(Exp::IBrush) {}
   void StartAnimation() {}
@@ -139,8 +139,8 @@ struct MockActivityVisual : MockVisualBase<MockActivityVisual, Exp::IActivityVis
 
 // ---------- ICaretVisual ----------
 
-struct MockCaretVisual : winrt::implements<MockCaretVisual, Exp::ICaretVisual> {
-  Exp::IVisual InnerVisual() { return winrt::make<MockSpriteVisual>(); }
+struct TestCaretVisual : winrt::implements<TestCaretVisual, Exp::ICaretVisual> {
+  Exp::IVisual InnerVisual() { return winrt::make<TestSpriteVisual>(); }
   void Size(winrt::Windows::Foundation::Numerics::float2) {}
   void Position(winrt::Windows::Foundation::Numerics::float2) {}
   bool IsVisible() { return false; }
@@ -150,8 +150,8 @@ struct MockCaretVisual : winrt::implements<MockCaretVisual, Exp::ICaretVisual> {
 
 // ---------- IFocusVisual ----------
 
-struct MockFocusVisual : winrt::implements<MockFocusVisual, Exp::IFocusVisual> {
-  Exp::IVisual InnerVisual() { return winrt::make<MockSpriteVisual>(); }
+struct TestFocusVisual : winrt::implements<TestFocusVisual, Exp::IFocusVisual> {
+  Exp::IVisual InnerVisual() { return winrt::make<TestSpriteVisual>(); }
   bool IsFocused() { return false; }
   void IsFocused(bool) {}
   float ScaleFactor() { return 1.0f; }
@@ -160,24 +160,24 @@ struct MockFocusVisual : winrt::implements<MockFocusVisual, Exp::IFocusVisual> {
 
 // ---------- ICompositionContext ----------
 
-struct MockCompositionContext
-    : winrt::implements<MockCompositionContext, Exp::ICompositionContext> {
-  Exp::ISpriteVisual CreateSpriteVisual() { return winrt::make<MockSpriteVisual>(); }
-  Exp::IScrollVisual CreateScrollerVisual() { return winrt::make<MockScrollVisual>(); }
+struct TestCompositionContext
+    : winrt::implements<TestCompositionContext, Exp::ICompositionContext> {
+  Exp::ISpriteVisual CreateSpriteVisual() { return winrt::make<TestSpriteVisual>(); }
+  Exp::IScrollVisual CreateScrollerVisual() { return winrt::make<TestScrollVisual>(); }
   Exp::IRoundedRectangleVisual CreateRoundedRectangleVisual() {
-    return winrt::make<MockRoundedRectangleVisual>();
+    return winrt::make<TestRoundedRectangleVisual>();
   }
-  Exp::IActivityVisual CreateActivityVisual() { return winrt::make<MockActivityVisual>(); }
-  Exp::ICaretVisual CreateCaretVisual() { return winrt::make<MockCaretVisual>(); }
-  Exp::IFocusVisual CreateFocusVisual() { return winrt::make<MockFocusVisual>(); }
-  Exp::IDropShadow CreateDropShadow() { return winrt::make<MockDropShadow>(); }
-  Exp::IBrush CreateColorBrush(winrt::Windows::UI::Color) { return winrt::make<MockBrush>(); }
+  Exp::IActivityVisual CreateActivityVisual() { return winrt::make<TestActivityVisual>(); }
+  Exp::ICaretVisual CreateCaretVisual() { return winrt::make<TestCaretVisual>(); }
+  Exp::IFocusVisual CreateFocusVisual() { return winrt::make<TestFocusVisual>(); }
+  Exp::IDropShadow CreateDropShadow() { return winrt::make<TestDropShadow>(); }
+  Exp::IBrush CreateColorBrush(winrt::Windows::UI::Color) { return winrt::make<TestBrush>(); }
   Exp::IDrawingSurfaceBrush CreateDrawingSurfaceBrush(
       winrt::Windows::Foundation::Size,
       winrt::Windows::Graphics::DirectX::DirectXPixelFormat,
       winrt::Windows::Graphics::DirectX::DirectXAlphaMode) {
-    return winrt::make<MockDrawingSurfaceBrush>();
+    return winrt::make<TestDrawingSurfaceBrush>();
   }
 };
 
-} // namespace MockComposition
+} // namespace TestComposition

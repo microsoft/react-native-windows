@@ -3,9 +3,8 @@
 
 #pragma once
 
+#include <codegen/NativeDeviceInfoSpec.g.h>
 #include <NativeModules.h>
-
-#include "..\codegen\NativeDeviceInfoSpec.g.h"
 
 REACT_MODULE(DeviceInfo)
 struct DeviceInfo {

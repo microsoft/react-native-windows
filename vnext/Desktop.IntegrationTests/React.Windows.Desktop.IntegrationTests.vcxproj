@@ -144,7 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HttpServer.h" />
-    <ClInclude Include="MockCompositionContext.h" />
+    <ClInclude Include="TestCompositionContext.h" />
     <ClInclude Include="Modules\TestAppState.h" />
     <ClInclude Include="Modules\TestDeviceInfo.h" />
     <ClInclude Include="Modules\TestDevSettingsModule.h" />

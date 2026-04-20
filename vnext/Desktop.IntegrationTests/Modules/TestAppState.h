@@ -3,9 +3,8 @@
 
 #pragma once
 
+#include <codegen/NativeAppStateSpec.g.h>
 #include <NativeModules.h>
-
-#include "..\codegen\NativeAppStateSpec.g.h"
 
 REACT_MODULE(AppState)
 struct AppState {
