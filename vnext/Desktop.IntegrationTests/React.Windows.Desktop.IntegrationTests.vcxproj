@@ -116,9 +116,14 @@
     <ClCompile Include="HttpOriginPolicyIntegrationTest.cpp" />
     <ClCompile Include="HttpResourceIntegrationTests.cpp" />
     <ClCompile Include="HttpServer.cpp" />
+    <ClCompile Include="Modules\TestAppState.cpp" />
+    <ClCompile Include="Modules\TestDeviceInfo.cpp" />
     <ClCompile Include="Modules\TestDevSettingsModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="Modules\TestImageLoaderModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="Prototype.cpp" />
+    <ClCompile Include="TestReactNativeHostHolder.cpp" />
+    <ClCompile Include="TestReactPackageProvider.cpp" />
+    <ClCompile Include="TestUIDispatcher.cpp" />
     <ClCompile Include="WebSocketIntegrationTest.cpp" />
     <ClCompile Include="WebSocketServer.cpp" />
   </ItemGroup>
@@ -139,9 +144,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HttpServer.h" />
+    <ClInclude Include="MockCompositionContext.h" />
+    <ClInclude Include="Modules\TestAppState.h" />
+    <ClInclude Include="Modules\TestDeviceInfo.h" />
     <ClInclude Include="Modules\TestDevSettingsModule.h" />
     <ClInclude Include="Modules\TestImageLoaderModule.h" />
     <ClInclude Include="Modules\TestModule.h" />
+    <ClInclude Include="TestReactNativeHostHolder.h" />
+    <ClInclude Include="TestReactPackageProvider.h" />
+    <ClInclude Include="TestUIDispatcher.h" />
     <ClInclude Include="WebSocketServer.h" />
   </ItemGroup>
   <ItemGroup>

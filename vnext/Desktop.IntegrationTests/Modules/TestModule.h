@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <windows.h>
+
 #include <NativeModules.h>
 
 // Standard Library
