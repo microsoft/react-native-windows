@@ -1,4 +1,5 @@
-//TODO: copyright
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 
 #include <CppUnitTest.h>
 
@@ -11,17 +12,47 @@
 #include <WindowsAppSDK-VersionInfo.h>
 #include <winrt/base.h>
 #include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 
-#include <future>
+#include "..\codegen\NativeDeviceInfoSpec.g.h"
 
 #include "Modules/TestModule.h"
+#include "MockCompositionContext.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace msrn = winrt::Microsoft::ReactNative;
 
+// Work around crash in DeviceInfo when running outside of XAML environment
+REACT_MODULE(DeviceInfo)
+struct DeviceInfo {
+  using ModuleSpec = ::Microsoft::ReactNativeSpecs::DeviceInfoSpec;
+
+  REACT_INIT(Initialize)
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+    m_context = reactContext;
+  }
+
+  REACT_GET_CONSTANTS(GetConstants)
+  ::Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants GetConstants() noexcept {
+    ::Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants constants;
+    ::Microsoft::ReactNativeSpecs::DeviceInfoSpec_DisplayMetrics screenDisplayMetrics;
+    screenDisplayMetrics.fontScale = 1;
+    screenDisplayMetrics.height = 1024;
+    screenDisplayMetrics.width = 1024;
+    screenDisplayMetrics.scale = 1;
+    constants.Dimensions.screen = screenDisplayMetrics;
+    constants.Dimensions.window = screenDisplayMetrics;
+    return constants;
+  }
+
+ private:
+  winrt::Microsoft::ReactNative::ReactContext m_context;
+};
+
 struct TestReactPackageProvider : winrt::implements<TestReactPackageProvider, msrn::IReactPackageProvider> {
   void CreatePackage(msrn::IReactPackageBuilder const &packageBuilder) noexcept {
+    packageBuilder.AddTurboModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
     winrt::Microsoft::ReactNative::TryAddAttributedModule(packageBuilder, L"TestModule", true);
   }
 };
@@ -72,13 +103,14 @@ struct TestReactNativeHostHolder {
   ~TestReactNativeHostHolder() noexcept;
 
   winrt::Microsoft::ReactNative::ReactNativeHost const &Host() const noexcept;
-  void WaitForInstanceCreated();
+  std::wstring GetLastError() const noexcept;
 
  private:
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::UI::Dispatching::DispatcherQueueController m_queueController{nullptr};
-  winrt::handle m_instanceCreatedEvent{CreateEvent(nullptr, TRUE, FALSE, nullptr)};
   msrn::IReactDispatcher m_uiDispatcher{nullptr};
+  mutable std::mutex m_errorMutex;
+  std::wstring m_lastError;
 };
 
 #pragma region TRNHH impl
@@ -88,52 +120,42 @@ TestReactNativeHostHolder::TestReactNativeHostHolder(
     Mso::Functor<void(winrt::Microsoft::ReactNative::ReactNativeHost const &)> &&hostInitializer,
     Options &&options) noexcept {
   m_host = winrt::Microsoft::ReactNative::ReactNativeHost{};
-
-  // Subscribe to InstanceCreated event BEFORE launching async work
-  m_host.InstanceSettings().InstanceCreated([this](auto&&, auto&&) {
-    SetEvent(m_instanceCreatedEvent.get());
-  });
-
   m_queueController = winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnDedicatedThread();
-
-  // Create UI dispatcher for headless tests using the queue controller's dispatcher
   m_uiDispatcher = winrt::make<TestUIDispatcher>(m_queueController.DispatcherQueue());
+
   m_queueController.DispatcherQueue().TryEnqueue([this,
                                                   jsBundle = std::wstring{jsBundle},
                                                   hostInitializer = std::move(hostInitializer),
                                                   options = std::move(options)]() noexcept {
-    //// bundle is assumed to be co-located with the test binary
-    //wchar_t testBinaryPath[MAX_PATH];
-    //TestCheck(GetModuleFileNameW(NULL, testBinaryPath, MAX_PATH) < MAX_PATH);
-    //testBinaryPath[std::wstring_view{testBinaryPath}.rfind(L"\\")] = 0;
-
-    //m_host.InstanceSettings().BundleRootPath(testBinaryPath);
-    //m_host.InstanceSettings().JavaScriptBundleFile(jsBundle);
-    //m_host.InstanceSettings().UseDeveloperSupport(false);
-    //m_host.InstanceSettings().UseFastRefresh(false);
-    //m_host.InstanceSettings().UseLiveReload(false);
-    //m_host.InstanceSettings().EnableDeveloperMenu(false);
-    //m_host.PackageProviders().Append(winrt::make<TestReactPackageProvider>());
-
     auto settings = m_host.InstanceSettings();
+    settings.JavaScriptBundleFile(jsBundle);
     settings.Properties().Set(msrn::ReactDispatcherHelper::UIDispatcherProperty(), m_uiDispatcher);
     settings.Properties().Set(PlatformNameOverrideProperty().Handle(), winrt::box_value(L"windows"));
+    settings.UseDeveloperSupport(false);
     settings.UseFastRefresh(true);
+    settings.UseLiveReload(false);
+    settings.EnableDeveloperMenu(false);
+    settings.PackageProviders().Append(winrt::make<TestReactPackageProvider>());
 
-    // Set on instance creation or load
-    //settings.JavaScriptBundleFile(L"IntegrationTests/IntegrationTestsApp");
-    //settings.JavaScriptBundleFile(L"IntegrationTests/DummyTest");
+    // Capture errors for diagnostics
+    settings.NativeLogger([this](msrn::LogLevel level, winrt::hstring const &message) {
+      if (static_cast<int>(level) >= static_cast<int>(msrn::LogLevel::Error)) {
+        std::lock_guard lock(m_errorMutex);
+        if (m_lastError.empty()) {
+          m_lastError = message;
+        }
+      }
+    });
 
-    // To properly enable fabric you need to set a compositor.
-    // Since the UTs are ui-less we can force fabric by setting a CompositionContext with a null compositor
-    //winrt::Microsoft::ReactNative::ReactPropertyBag(m_host.InstanceSettings().Properties())
-    //winrt::Microsoft::ReactNative::ReactPropertyBag(settings.Properties())
-    //    .Set(
-    //        winrt::Microsoft::ReactNative::ReactPropertyId<
-    //            winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext>{
-    //            L"ReactNative.Composition", L"CompositionContext"},
-    //        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateContext(
-    //            nullptr));
+    // Enable Fabric by setting a stub CompositionContext.
+    // In a headless test we have no real compositor, but this is sufficient
+    // for the runtime to choose the Fabric code path.
+    winrt::Microsoft::ReactNative::ReactPropertyBag(settings.Properties())
+        .Set(
+            winrt::Microsoft::ReactNative::ReactPropertyId<
+                winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext>{
+                L"ReactNative.Composition", L"CompositionContext"},
+            winrt::make<MockComposition::MockCompositionContext>());
 
     hostInitializer(m_host);
 
@@ -152,26 +174,42 @@ winrt::Microsoft::ReactNative::ReactNativeHost const &TestReactNativeHostHolder:
   return m_host;
 }
 
-void TestReactNativeHostHolder::WaitForInstanceCreated() {
-  WaitForSingleObject(m_instanceCreatedEvent.get(), INFINITE);
+std::wstring TestReactNativeHostHolder::GetLastError() const noexcept {
+  std::lock_guard lock(m_errorMutex);
+  return m_lastError;
 }
 
 #pragma endregion TRNHH impl
 
 TEST_CLASS (Prototype) {
 
+  // The test DLL's embedded manifest (resource ID 2) registers WinRT activatable classes,
+  // but testhost.exe doesn't know about them. We manually activate the DLL's manifest
+  // so that RoGetActivationFactory can find our classes.
+  static inline HANDLE s_actCtx{INVALID_HANDLE_VALUE};
+  static inline ULONG_PTR s_actCtxCookie{0};
+
   TEST_CLASS_INITIALIZE(Initialize)
   {
-    // See
+    HMODULE thisModule{};
+    GetModuleHandleExW(
+        GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
+        reinterpret_cast<LPCWSTR>(&Initialize),
+        &thisModule);
+
+    ACTCTXW actCtx{};
+    actCtx.cbSize = sizeof(actCtx);
+    actCtx.dwFlags = ACTCTX_FLAG_HMODULE_VALID | ACTCTX_FLAG_RESOURCE_NAME_VALID;
+    actCtx.hModule = thisModule;
+    actCtx.lpResourceName = MAKEINTRESOURCEW(2);
+    s_actCtx = CreateActCtxW(&actCtx);
+    if (s_actCtx != INVALID_HANDLE_VALUE) {
+      ActivateActCtx(s_actCtx, &s_actCtxCookie);
+    }
+
     // https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/win32/mddbootstrap/nf-mddbootstrap-mddbootstrapinitialize2
     winrt::uninit_apartment();
     winrt::init_apartment(winrt::apartment_type::multi_threaded);
-
-
-    // Use the version constants from WindowsAppSDK-VersionInfo.h
-    //const UINT32 majorMinor = WINDOWSAPPSDK_RELEASE_MAJORMINOR;
-    //PCWSTR versionTag = WINDOWSAPPSDK_RELEASE_CHANNEL_W; // e.g. LTS, Stable, etc.
-    //PCWSTR minVersion = WINDOWSAPPSDK_RELEASE_VERSION_TAG_W; // e.g. "1.5.240829000"
 
     if (FAILED(MddBootstrapInitialize2(
         Microsoft::WindowsAppSDK::Release::MajorMinor,
@@ -186,84 +224,46 @@ TEST_CLASS (Prototype) {
   TEST_CLASS_CLEANUP(Cleanup)
   {
     MddBootstrapShutdown();
+
+    if (s_actCtxCookie) {
+      DeactivateActCtx(0, s_actCtxCookie);
+      s_actCtxCookie = 0;
+    }
+    if (s_actCtx != INVALID_HANDLE_VALUE) {
+      ReleaseActCtx(s_actCtx);
+      s_actCtx = INVALID_HANDLE_VALUE;
+    }
   }
 
   TEST_METHOD(Proto2)
   {
     Microsoft::React::Test::TestModule::Reset();
 
-    msrn::IReactContext reactContext{nullptr};
     winrt::handle instanceLoadedEvent{CreateEvent(nullptr, TRUE, FALSE, nullptr)};
+    bool instanceFailed{false};
 
-    auto holder = TestReactNativeHostHolder(L"TurboModuleTests",
-        [&reactContext, &instanceLoadedEvent](msrn::ReactNativeHost const &host) noexcept {
-      host.InstanceSettings().JavaScriptBundleFile(L"IntegrationTests/DummyTest");
-      host.PackageProviders().Append(winrt::make<TestReactPackageProvider>());
-
+    auto holder = TestReactNativeHostHolder(L"IntegrationTests/DummyTest",
+        [&instanceLoadedEvent, &instanceFailed](msrn::ReactNativeHost const &host) noexcept {
       host.InstanceSettings().InstanceLoaded(
-        [&reactContext, &instanceLoadedEvent](auto const &, winrt::Microsoft::ReactNative::IInstanceLoadedEventArgs args) noexcept {
-          reactContext = args.Context();
-
-          const int rootTag = 101;
-          auto jsArgs = msrn::JSValueArray
-          {
-            "DummyTest", // appName
-            msrn::JSValueObject
-            {
-              { "initialProps", msrn::JSValueObject{} },
-              { "rootTag", rootTag }
-            }
-          };
-
-          args.Context().CallJSFunction(
-              L"AppRegistry",
-              L"runApplication",
-              msrn::MakeJSValueArgWriter(jsArgs));
-
-          SetEvent(instanceLoadedEvent.get());
-      });
+          [&instanceLoadedEvent, &instanceFailed](
+              auto const &, winrt::Microsoft::ReactNative::InstanceLoadedEventArgs args) noexcept {
+            instanceFailed = args.Failed();
+            SetEvent(instanceLoadedEvent.get());
+          });
     });
 
-    // Wait for the instance to be loaded and the JS bundle to start running
-    WaitForSingleObject(instanceLoadedEvent.get(), INFINITE);
-
-    // Wait for JS to signal test completion via TestModule.markTestPassed
-    auto status = Microsoft::React::Test::TestModule::AwaitCompletion(30000);
-    Assert::IsTrue(status == Microsoft::React::Test::TestStatus::Passed, L"Test did not pass");
-
-    // Unmount the application
-    const int rootTag = 101;
-    reactContext.CallJSFunction(
-        L"AppRegistry",
-        L"unmountApplicationComponentAtRootTag",
-        msrn::MakeJSValueArgWriter(msrn::JSValueArray{rootTag}));
-  }
-
-  TEST_METHOD(Proto1)
-  {
-    bool succeeded = true;
-
-    {
-      auto queueController = winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnDedicatedThread();
-      msrn::IReactDispatcher dispatcher = winrt::make<TestUIDispatcher>(queueController.DispatcherQueue());
-
-      msrn::ReactNativeHost host{};
-
-      auto settings = host.InstanceSettings();
-      settings.Properties().Set(msrn::ReactDispatcherHelper::UIDispatcherProperty(), dispatcher);
-      settings.Properties().Set(PlatformNameOverrideProperty().Handle(), winrt::box_value(L"windows"));
-      settings.UseFastRefresh(true);
-      settings.JavaScriptBundleFile(L"IntegrationTests/IntegrationTestsApp");
-
-
-      auto action = host.ReloadInstance();
-
-      action.get();
-
-      queueController.ShutdownQueueAsync().get();
+    // First, wait for instance to load
+    WaitForSingleObject(instanceLoadedEvent.get(), 5000);
+    if (instanceFailed) {
+      auto err = holder.GetLastError();
+      auto msg = L"InstanceLoaded reported failure: " + (err.empty() ? L"(no error captured)" : err);
+      Assert::Fail(msg.c_str());
     }
 
-    Assert::IsTrue(succeeded);
+    auto status = Microsoft::React::Test::TestModule::AwaitCompletion(5000);
+    Assert::IsTrue(
+        status == Microsoft::React::Test::TestStatus::Passed,
+        L"Test did not pass (JS did not call markTestPassed within timeout)");
   }
 
 };

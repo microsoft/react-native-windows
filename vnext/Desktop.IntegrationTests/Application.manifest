@@ -32,6 +32,18 @@
         name="Microsoft.ReactNative.ReactPropertyBagHelper"
         threadingModel="both"
         xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
+        name="Microsoft.ReactNative.ReactNativeIsland"
+        threadingModel="both"
+        xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
+        name="Microsoft.ReactNative.ReactViewOptions"
+        threadingModel="both"
+        xmlns="urn:schemas-microsoft-com:winrt.v1" />
+    <activatableClass
+        name="Microsoft.ReactNative.ReactCoreInjection"
+        threadingModel="both"
+        xmlns="urn:schemas-microsoft-com:winrt.v1" />
   </file>
 
 </assembly>
