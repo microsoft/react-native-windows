@@ -56,5 +56,8 @@
     <ClInclude Include="WebSocketServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\TestModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

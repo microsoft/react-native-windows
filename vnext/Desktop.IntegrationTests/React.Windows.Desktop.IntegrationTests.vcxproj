@@ -141,6 +141,7 @@
     <ClInclude Include="HttpServer.h" />
     <ClInclude Include="Modules\TestDevSettingsModule.h" />
     <ClInclude Include="Modules\TestImageLoaderModule.h" />
+    <ClInclude Include="Modules\TestModule.h" />
     <ClInclude Include="WebSocketServer.h" />
   </ItemGroup>
   <ItemGroup>
