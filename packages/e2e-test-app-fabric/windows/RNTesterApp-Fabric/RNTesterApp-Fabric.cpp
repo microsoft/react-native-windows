@@ -6,10 +6,18 @@
 
 #include <UIAutomation.h>
 #include <winrt/Windows.Data.Json.h>
+#include <winrt/Windows.Graphics.Capture.h>
 #include "winrt/AutomationChannel.h"
+
+#include "d3d11.h"
+#include <windows.graphics.directx.direct3d11.interop.h>
 
 // Includes from sample-custom-component
 #include <winrt/SampleCustomComponent.h>
+
+#include <wil/resource.h>
+#include <wincodec.h>
+#include <Shlwapi.h>
 
 #include "AutolinkedNativeModules.g.h"
 
@@ -37,6 +45,7 @@ winrt::Microsoft::ReactNative::IReactContext global_reactContext{nullptr};
 // Forward declarations of functions included in this code module:
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload);
 winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload);
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Data::Json::IJsonValue> CreateScreenshot(winrt::Windows::Data::Json::JsonValue /*payload*/);
 winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server);
 
 // Create and configure the ReactNativeHost
@@ -123,6 +132,8 @@ WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* show
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(appWindow.Id());
   global_hwnd = hwnd;
 
+  CreateScreenshot({}); // Temp testing
+
   auto host = CreateReactNativeHost(hwnd, compositor);
 
   // Start the react-native instance, which will create a JavaScript runtime and load the applications bundle
@@ -149,6 +160,8 @@ WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* show
 
   // Set Up Servers for E2E Testing
   winrt::AutomationChannel::CommandHandler handler;
+  //handler.BindOperation(L"CreateScreenshot", CreateScreenshot);
+  handler.BindAsyncOperation(L"CreateScreenshot", CreateScreenshot);
   handler.BindOperation(L"DumpVisualTree", DumpVisualTree);
   handler.BindOperation(L"ListErrors", ListErrors);
   global_rootView = reactNativeWindow.ReactNativeIsland();
@@ -768,6 +781,318 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json
   result.Insert(L"Component Tree", DumpNativeComponentTreeHelper(payloadObj));
   return result;
 }
+
+winrt::com_ptr<ID3D11Device> CreateD3DDevice() noexcept {
+  // This flag adds support for surfaces with a different color channel ordering than the API default.
+  // You need it for compatibility with Direct2D.
+  UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+
+  // #if defined(_DEBUG)
+  //   creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
+  // #endif
+
+  // This array defines the set of DirectX hardware feature levels this app  supports.
+  // The ordering is important and you should  preserve it.
+  // Don't forget to declare your app's minimum required feature level in its
+  // description.  All apps are assumed to support 9.1 unless otherwise stated.
+  D3D_FEATURE_LEVEL featureLevels[] = {
+      D3D_FEATURE_LEVEL_11_1,
+      D3D_FEATURE_LEVEL_11_0,
+      D3D_FEATURE_LEVEL_10_1,
+      D3D_FEATURE_LEVEL_10_0,
+      D3D_FEATURE_LEVEL_9_3,
+      D3D_FEATURE_LEVEL_9_2,
+      D3D_FEATURE_LEVEL_9_1};
+  
+  winrt::com_ptr<ID3D11Device> d3dDevice;
+
+  D3D11CreateDevice(
+      nullptr, // specify null to use the default adapter
+      D3D_DRIVER_TYPE_HARDWARE,
+      0,
+      creationFlags, // optionally set debug and Direct2D compatibility flags
+      featureLevels, // list of feature levels this app can support
+      ARRAYSIZE(featureLevels), // number of possible feature levels
+      D3D11_SDK_VERSION,
+      d3dDevice.put(), // returns the Direct3D device created
+      nullptr /*&m_featureLevel*/, // returns feature level of device created
+      nullptr /*&context*/ // returns the device immediate context
+  );
+
+  return d3dDevice;
+}
+
+
+winrt::com_ptr<ID3D11Texture2D> CopyD3DTexture(winrt::com_ptr<ID3D11Device>& device, winrt::com_ptr<ID3D11Texture2D> const& texture, bool asStagingTexture)
+{
+    winrt::com_ptr<ID3D11DeviceContext> context;
+    device->GetImmediateContext(context.put());
+
+    D3D11_TEXTURE2D_DESC desc = {};
+    texture->GetDesc(&desc);
+    // Clear flags that we don't need
+    desc.Usage = asStagingTexture ? D3D11_USAGE_STAGING : D3D11_USAGE_DEFAULT;
+    desc.BindFlags = asStagingTexture ? 0 : D3D11_BIND_SHADER_RESOURCE;
+    desc.CPUAccessFlags = asStagingTexture ? D3D11_CPU_ACCESS_READ : 0;
+    desc.MiscFlags = 0;
+
+    // Create and fill the texture copy
+    winrt::com_ptr<ID3D11Texture2D> textureCopy;
+    winrt::check_hresult(device->CreateTexture2D(&desc, nullptr, textureCopy.put()));
+    context->CopyResource(textureCopy.get(), texture.get());
+
+    return textureCopy;
+}
+
+
+void WicSaveTexture(LPCWSTR fileName, ID3D11DeviceContext* context, ID3D11Texture2D* texture, UINT subresourceIndex, bool ignoreAlpha)
+{
+    D3D11_TEXTURE2D_DESC desc;
+    texture->GetDesc(&desc);
+
+    winrt::com_ptr<ID3D11Texture2D> cpuTexture;
+    if (desc.CPUAccessFlags & D3D11_CPU_ACCESS_READ)
+    {
+        cpuTexture.copy_from(texture);
+    }
+    else
+    {
+        winrt::com_ptr< ID3D11Device> device;
+        context->GetDevice(device.put());
+
+        D3D11_TEXTURE2D_DESC cpuDesc =
+        {
+            .Width = desc.Width,
+            .Height = desc.Height,
+            .MipLevels = 1,
+            .ArraySize = 1,
+            .Format = desc.Format,
+            .SampleDesc = { 1, 0 },
+            .Usage = D3D11_USAGE_STAGING,
+            .CPUAccessFlags = D3D11_CPU_ACCESS_READ,
+        };
+
+        winrt::check_hresult(device->CreateTexture2D(&cpuDesc, nullptr, cpuTexture.put()));
+        context->CopySubresourceRegion((ID3D11Resource*) cpuTexture.get(), 0, 0, 0, 0, (ID3D11Resource*) texture, subresourceIndex, nullptr);
+        subresourceIndex = 0;
+    }
+
+    D3D11_MAPPED_SUBRESOURCE mapped;
+    winrt::check_hresult(context->Map((ID3D11Resource*) cpuTexture.get(), subresourceIndex, D3D11_MAP_READ, 0, &mapped));
+
+    winrt::com_ptr<IWICStream> stream;
+
+    winrt::com_ptr<IWICImagingFactory> wicFactory;
+    winrt::check_hresult(CoCreateInstance(
+        CLSID_WICImagingFactory,
+        NULL,
+        CLSCTX_INPROC_SERVER,
+        IID_IWICImagingFactory,
+        wicFactory.put_void()));
+
+    winrt::check_hresult(wicFactory->CreateStream(stream.put()));
+    winrt::check_hresult(stream->InitializeFromFilename(fileName, GENERIC_WRITE));
+
+    /*
+    LPWSTR fileExtension = PathFindExtensionW(fileName);
+
+    bool isBmp = CompareStringOrdinal(fileExtension, -1, L".bmp", 4, true) == 0;
+    bool isPng = CompareStringOrdinal(fileExtension, -1, L".png", 4, true) == 0;
+    bool isJpeg = CompareStringOrdinal(fileExtension, -1, L".jpg", 4, true) == 0 || CompareStringOrdinal(fileExtension, -1, L".jpeg", 5, true) == 0;
+    bool isHeif = CompareStringOrdinal(fileExtension, -1, L".heif", 5, true) == 0 || CompareStringOrdinal(fileExtension, -1, L".heic", 5, true) == 0;
+    assert(isBmp || isPng || isJpeg || isHeif);
+    */
+    bool isBmp = false, isJpeg = false;
+    bool isPng = true;
+
+    GUID container = isBmp ? GUID_ContainerFormatBmp : isPng ? GUID_ContainerFormatPng : isJpeg ? GUID_ContainerFormatJpeg : GUID_ContainerFormatHeif;
+
+    winrt::com_ptr<IWICBitmapEncoder> encoder;
+    winrt::check_hresult(wicFactory->CreateEncoder(container, NULL, encoder.put()));
+    winrt::check_hresult(encoder->Initialize(stream.get(), WICBitmapEncoderNoCache));
+
+    winrt::com_ptr<IWICBitmapFrameEncode> frame;
+    winrt::com_ptr<IPropertyBag2> options;
+    winrt::check_hresult(encoder->CreateNewFrame(frame.put(), options.put()));
+
+    WICPixelFormatGUID nativeFormat;
+    if (desc.Format == DXGI_FORMAT_R8_UNORM)
+    {
+        nativeFormat = GUID_WICPixelFormat8bppGray;
+    }
+    else if (desc.Format == DXGI_FORMAT_B8G8R8X8_UNORM)
+    {
+        nativeFormat = GUID_WICPixelFormat32bppBGR;
+    }
+    else if (desc.Format == DXGI_FORMAT_R8G8B8A8_UNORM)
+    {
+        nativeFormat = ignoreAlpha ? GUID_WICPixelFormat32bppRGB : GUID_WICPixelFormat32bppRGBA;
+    }
+    else if (desc.Format == DXGI_FORMAT_B8G8R8A8_UNORM)
+    {
+        nativeFormat = ignoreAlpha ? GUID_WICPixelFormat32bppBGR : GUID_WICPixelFormat32bppBGRA;
+    }
+    else
+    {
+        assert(!"unsupported texture format");
+        nativeFormat = GUID_NULL;
+    }
+
+    if (isBmp && (desc.Format == DXGI_FORMAT_R8G8B8A8_UNORM || desc.Format == DXGI_FORMAT_B8G8R8A8_UNORM))
+    {
+        PROPBAG2 key;
+        key.pstrName = const_cast<wchar_t*>(L"EnableV5Header32bppBGRA");
+        VARIANT value;
+        value.vt = VT_BOOL;
+        value.boolVal = VARIANT_TRUE;
+
+        winrt::check_hresult(options->Write(1, &key, &value));
+    }
+    /*
+      else if (isPng)
+      {
+          // only use "up" filter for faster performance, with minor compression hit
+          PROPBAG2 key = { .pstrName = L"FilterOption" };
+          VARIANT value =
+          {
+              .vt = VT_UI1,
+              .bVal = WICPngFilterUp,
+          };
+          winrt::check_hresult(IPropertyBag2_Write(options, 1, &key, &value));
+      }
+      */
+
+    winrt::check_hresult(frame->Initialize(options.get()));
+    winrt::check_hresult(frame->SetSize(desc.Width, desc.Height));
+
+    if (isBmp && desc.Format == DXGI_FORMAT_R8_UNORM)
+    {
+        nativeFormat = GUID_WICPixelFormat8bppIndexed;
+
+        winrt::com_ptr<IWICPalette> palette;
+        winrt::check_hresult(wicFactory->CreatePalette(palette.put()));
+        winrt::check_hresult(palette->InitializePredefined(WICBitmapPaletteTypeFixedGray256, FALSE));
+        winrt::check_hresult(frame->SetPalette(palette.get()));
+    }
+
+    GUID convertFormat = nativeFormat;
+    winrt::check_hresult(frame->SetPixelFormat(&convertFormat));
+
+    winrt::com_ptr<IWICBitmapSource> source;
+
+    if (!IsEqualGUID(nativeFormat, convertFormat))
+    {
+        if (!source)
+        {
+            winrt::com_ptr<IWICBitmap> bitmap;
+            winrt::check_hresult(wicFactory->CreateBitmapFromMemory(desc.Width, desc.Height, nativeFormat, mapped.RowPitch, mapped.RowPitch * desc.Height, (BYTE*) mapped.pData, bitmap.put()));
+            bitmap.as(source);
+        }
+
+        winrt::com_ptr<IWICFormatConverter> converter;
+        winrt::check_hresult(wicFactory->CreateFormatConverter(converter.put()));
+        winrt::check_hresult(converter->Initialize(source.get(), convertFormat, WICBitmapDitherTypeNone, nullptr, 0, WICBitmapPaletteTypeCustom));
+        converter.as(source);
+    }
+
+    if (source)
+    {
+        winrt::check_hresult(frame->WriteSource(source.get(), nullptr));
+    }
+    else
+    {
+        winrt::check_hresult(frame->WritePixels(desc.Height, mapped.RowPitch, mapped.RowPitch * desc.Height, (BYTE*) mapped.pData));
+    }
+
+    context->Unmap((ID3D11Resource*) cpuTexture.get(), subresourceIndex);
+
+    winrt::check_hresult(frame->Commit());
+    winrt::check_hresult(encoder->Commit());
+    winrt::check_hresult(stream->Commit(STGC_DEFAULT));
+}
+
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Foundation::IInspectable>
+TakeScreenshotAsync()
+{
+    auto d3dDevice = CreateD3DDevice();
+
+    auto windowId = winrt::Microsoft::UI::GetWindowIdFromWindow(global_hwnd);
+    co_await winrt::Windows::Graphics::Capture::GraphicsCaptureAccess::RequestAccessAsync(winrt::Windows::Graphics::Capture::GraphicsCaptureAccessKind::Programmatic);
+
+    auto item = winrt::Windows::Graphics::Capture::GraphicsCaptureItem::TryCreateFromWindowId(winrt::Windows::UI::WindowId { windowId.Value });
+
+
+
+    // Grab the apartment context so we can return to it.
+    winrt::apartment_context context;
+
+    winrt::com_ptr<ID3D11DeviceContext> d3dContext;
+    d3dDevice->GetImmediateContext(d3dContext.put());
+
+    winrt::com_ptr<IDXGIDevice> dxgIDevice;
+    d3dDevice.as(dxgIDevice);
+
+    winrt::Windows::Graphics::DirectX::Direct3D11::IDirect3DDevice device;
+    winrt::com_ptr<IInspectable> inspectableSurface;
+    winrt::check_hresult(CreateDirect3D11DeviceFromDXGIDevice(dxgIDevice.get(), inspectableSurface.put()));
+    
+    inspectableSurface.as<winrt::Windows::Graphics::DirectX::Direct3D11::IDirect3DDevice>(device);
+
+    // Creating our frame pool with CreateFreeThreaded means that we 
+    // will be called back from the frame pool's internal worker thread
+    // instead of the thread we are currently on. It also disables the
+    // DispatcherQueue requirement.
+    auto framePool = winrt::Windows::Graphics::Capture::Direct3D11CaptureFramePool::CreateFreeThreaded(
+        device,
+        winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+        1,
+        item.Size());
+    auto session = framePool.CreateCaptureSession(item);
+
+
+    wil::shared_event captureEvent(wil::EventOptions::ManualReset);
+    winrt::Windows::Graphics::Capture::Direct3D11CaptureFrame frame{ nullptr };
+    framePool.FrameArrived([&frame, captureEvent](auto& framePool, auto&)
+    {
+        frame = framePool.TryGetNextFrame();
+
+        // Complete the operation
+        captureEvent.SetEvent();
+    });
+
+    session.StartCapture();
+    co_await winrt::resume_on_signal(captureEvent.get());
+    co_await context;
+
+    // End the capture
+    session.Close();
+    framePool.Close();
+
+    winrt::com_ptr<Windows::Graphics::DirectX::Direct3D11::IDirect3DDxgiInterfaceAccess> dxgiInterfaceAccess;
+    frame.Surface().as(dxgiInterfaceAccess);
+    winrt::com_ptr< ID3D11Texture2D> texture;
+    winrt::check_hresult(dxgiInterfaceAccess->GetInterface(IID_ID3D11Texture2D, texture.put_void()));
+    auto result = CopyD3DTexture(d3dDevice, texture, true);
+
+    WicSaveTexture(L"D:\\UserRepos\\react-native-windows2\\packages\\e2e-test-app-fabric\\test.png", d3dContext.get(), result.get(), 0, false);
+
+    co_return {};
+}
+
+
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Data::Json::IJsonValue> CreateScreenshot(winrt::Windows::Data::Json::JsonValue /*payload*/)
+{
+    winrt::Windows::Data::Json::JsonObject visualTree;
+    auto root = global_rootView.RootVisual();
+
+    co_await TakeScreenshotAsync();
+
+        //visualTree = DumpVisualTreeRecurse(root, accessibilityId);
+
+    co_return visualTree;
+}
+
+
 
 winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server) {
   while (true) {

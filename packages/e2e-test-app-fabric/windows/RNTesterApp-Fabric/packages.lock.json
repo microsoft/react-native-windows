@@ -26,6 +26,12 @@
         "resolved": "2.0.230706.1",
         "contentHash": "l0D7oCw/5X+xIKHqZTi62TtV+1qeSz7KVluNFdrJ9hXsst4ghvqQ/Yhura7JqRdZWBXAuDS0G0KwALptdoxweQ=="
       },
+      "Microsoft.Windows.ImplementationLibrary": {
+        "type": "Direct",
+        "requested": "[1.0.260126.7, )",
+        "resolved": "1.0.260126.7",
+        "contentHash": "pXT/6g9/W9uOh7NTpGpArYGSm9W0v5EWM0Njhm3YWgKf+71hii5H5aDcD539jG9IZmjT1eT1pn67n4A6zwEQ+A=="
+      },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
         "requested": "[1.8.260209005, )",
