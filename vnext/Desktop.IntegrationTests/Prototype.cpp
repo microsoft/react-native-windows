@@ -10,6 +10,7 @@
 #include <MddBootstrap.h>
 #include <WindowsAppSDK-VersionInfo.h>
 #include <winrt/base.h>
+#include <winrt/Windows.Foundation.Collections.h>
 
 #include <future>
 
@@ -18,6 +19,12 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace msrn = winrt::Microsoft::ReactNative;
+
+struct TestReactPackageProvider : winrt::implements<TestReactPackageProvider, msrn::IReactPackageProvider> {
+  void CreatePackage(msrn::IReactPackageBuilder const &packageBuilder) noexcept {
+    winrt::Microsoft::ReactNative::TryAddAttributedModule(packageBuilder, L"TestModule", true);
+  }
+};
 
 struct TestUIDispatcher : public winrt::implements<TestUIDispatcher, msrn::IReactDispatcher>
 {
@@ -183,21 +190,19 @@ TEST_CLASS (Prototype) {
 
   TEST_METHOD(Proto2)
   {
-    auto holder = TestReactNativeHostHolder(L"TurboModuleTests", [](msrn::ReactNativeHost const &host) noexcept {
+    Microsoft::React::Test::TestModule::Reset();
+
+    msrn::IReactContext reactContext{nullptr};
+    winrt::handle instanceLoadedEvent{CreateEvent(nullptr, TRUE, FALSE, nullptr)};
+
+    auto holder = TestReactNativeHostHolder(L"TurboModuleTests",
+        [&reactContext, &instanceLoadedEvent](msrn::ReactNativeHost const &host) noexcept {
       host.InstanceSettings().JavaScriptBundleFile(L"IntegrationTests/DummyTest");
+      host.PackageProviders().Append(winrt::make<TestReactPackageProvider>());
 
       host.InstanceSettings().InstanceLoaded(
-        [](auto const &, winrt::Microsoft::ReactNative::IInstanceLoadedEventArgs args) noexcept {
-          //if (args.Failed()) {
-          //  TestEventService::LogEvent("InstanceLoaded::Failed", nullptr);
-          //} else {
-          //  TestEventService::LogEvent("InstanceLoaded::Success", nullptr);
-          //}
-
-          //    const int rootTag = 101;
-          //folly::dynamic params = folly::dynamic::array(
-          //        std::move("DummyTest"),
-          //        folly::dynamic::object("initialProps", folly::dynamic::object())("rootTag", rootTag));
+        [&reactContext, &instanceLoadedEvent](auto const &, winrt::Microsoft::ReactNative::IInstanceLoadedEventArgs args) noexcept {
+          reactContext = args.Context();
 
           const int rootTag = 101;
           auto jsArgs = msrn::JSValueArray
@@ -210,25 +215,28 @@ TEST_CLASS (Prototype) {
             }
           };
 
-            args.Context().CallJSFunction(
-                L"AppRegistry",
-                L"runApplication",
-                msrn::MakeJSValueArgWriter(jsArgs));
+          args.Context().CallJSFunction(
+              L"AppRegistry",
+              L"runApplication",
+              msrn::MakeJSValueArgWriter(jsArgs));
 
-          //TODO: await TestModule
-
-            args.Context().CallJSFunction(
-            L"AppRegistry",
-            L"unmountApplicationComponentAtRootTag",
-            msrn::MakeJSValueArgWriter(msrn::JSValueArray{rootTag})
-          );
+          SetEvent(instanceLoadedEvent.get());
       });
     });
 
-    // Wait for React Native instance to be fully initialized
-    holder.WaitForInstanceCreated();
+    // Wait for the instance to be loaded and the JS bundle to start running
+    WaitForSingleObject(instanceLoadedEvent.get(), INFINITE);
 
-    Assert::IsTrue(true);
+    // Wait for JS to signal test completion via TestModule.markTestPassed
+    auto status = Microsoft::React::Test::TestModule::AwaitCompletion(30000);
+    Assert::IsTrue(status == Microsoft::React::Test::TestStatus::Passed, L"Test did not pass");
+
+    // Unmount the application
+    const int rootTag = 101;
+    reactContext.CallJSFunction(
+        L"AppRegistry",
+        L"unmountApplicationComponentAtRootTag",
+        msrn::MakeJSValueArgWriter(msrn::JSValueArray{rootTag}));
   }
 
   TEST_METHOD(Proto1)

@@ -16,6 +16,17 @@ enum class TestStatus { Pending = 0, Passed, Failed };
 
 REACT_MODULE(TestModule)
 struct TestModule {
+  // Static test signaling - call Reset() before each test.
+  static void Reset() noexcept {
+    ResetEvent(s_completed.get());
+    s_status = TestStatus::Pending;
+  }
+
+  static TestStatus AwaitCompletion(DWORD timeoutMs = INFINITE) noexcept {
+    WaitForSingleObject(s_completed.get(), timeoutMs);
+    return s_status;
+  }
+
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
     m_reactContext = reactContext;
@@ -28,7 +39,8 @@ struct TestModule {
 
   REACT_METHOD(MarkTestPassed, L"markTestPassed")
   void MarkTestPassed(bool success) noexcept {
-    m_status = success ? TestStatus::Passed : TestStatus::Failed;
+    s_status = success ? TestStatus::Passed : TestStatus::Failed;
+    SetEvent(s_completed.get());
   }
 
   REACT_METHOD(VerifySnapshot, L"verifySnapshot")
@@ -53,12 +65,14 @@ struct TestModule {
   }
 
   TestStatus Status() const noexcept {
-    return m_status;
+    return s_status;
   }
 
  private:
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
-  std::atomic<TestStatus> m_status{TestStatus::Pending};
+
+  static inline std::atomic<TestStatus> s_status{TestStatus::Pending};
+  static inline winrt::handle s_completed{CreateEvent(nullptr, TRUE /*manualReset*/, FALSE /*initialState*/, nullptr)};
 };
 
 } // namespace Microsoft::React::Test
