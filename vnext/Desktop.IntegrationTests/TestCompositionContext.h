@@ -14,7 +14,7 @@
 // Fabric can run in headless (ui-less) integration tests.  Every method is a
 // no-op and every property returns a sensible default.
 
-namespace TestComposition {
+namespace Microsoft::React::Test {
 
 namespace Exp = winrt::Microsoft::ReactNative::Composition::Experimental;
 
@@ -180,4 +180,4 @@ struct TestCompositionContext
   }
 };
 
-} // namespace TestComposition
+} // namespace Microsoft::React::Test

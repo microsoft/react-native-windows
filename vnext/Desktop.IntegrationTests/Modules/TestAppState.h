@@ -6,6 +6,8 @@
 #include <codegen/NativeAppStateSpec.g.h>
 #include <NativeModules.h>
 
+namespace Microsoft::React::Test {
+
 REACT_MODULE(AppState)
 struct AppState {
   using ModuleSpec = ::Microsoft::ReactNativeSpecs::AppStateSpec;
@@ -27,3 +29,5 @@ struct AppState {
   REACT_GET_CONSTANTS(GetConstants)
   ::Microsoft::ReactNativeSpecs::AppStateSpec_AppStateConstants GetConstants() noexcept;
 };
+
+} // namespace Microsoft::React::Test

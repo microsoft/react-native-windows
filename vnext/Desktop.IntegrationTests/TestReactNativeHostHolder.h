@@ -10,6 +10,8 @@
 #include <mutex>
 #include <string>
 
+namespace Microsoft::React::Test {
+
 namespace msrn = winrt::Microsoft::ReactNative;
 
 struct TestReactNativeHostHolder {
@@ -33,3 +35,5 @@ struct TestReactNativeHostHolder {
   mutable std::mutex m_errorMutex;
   std::wstring m_lastError;
 };
+
+} // namespace Microsoft::React::Test

@@ -12,6 +12,8 @@
 
 #include "TestCompositionContext.h"
 
+namespace Microsoft::React::Test {
+
 msrn::ReactPropertyId<winrt::hstring> PlatformNameOverrideProperty() noexcept {
   static msrn::ReactPropertyId<winrt::hstring> prop{L"ReactNative.Injection", L"PlatformNameOverride"};
   return prop;
@@ -57,7 +59,7 @@ TestReactNativeHostHolder::TestReactNativeHostHolder(
             winrt::Microsoft::ReactNative::ReactPropertyId<
                 winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext>{
                 L"ReactNative.Composition", L"CompositionContext"},
-            winrt::make<TestComposition::TestCompositionContext>());
+            winrt::make<TestCompositionContext>());
 
     hostInitializer(m_host);
 
@@ -80,3 +82,5 @@ std::wstring TestReactNativeHostHolder::GetLastError() const noexcept {
   std::lock_guard lock(m_errorMutex);
   return m_lastError;
 }
+
+} // namespace Microsoft::React::Test

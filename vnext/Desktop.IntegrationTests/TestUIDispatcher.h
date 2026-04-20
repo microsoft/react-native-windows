@@ -8,6 +8,8 @@
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.UI.Dispatching.h>
 
+namespace Microsoft::React::Test {
+
 namespace msrn = winrt::Microsoft::ReactNative;
 
 struct TestUIDispatcher : public winrt::implements<TestUIDispatcher, msrn::IReactDispatcher> {
@@ -20,3 +22,5 @@ struct TestUIDispatcher : public winrt::implements<TestUIDispatcher, msrn::IReac
   winrt::Microsoft::UI::Dispatching::DispatcherQueue m_dispatcherQueue;
   DWORD m_threadId{0};
 };
+
+} // namespace Microsoft::React::Test

@@ -3,6 +3,8 @@
 
 #include "TestAppState.h"
 
+namespace Microsoft::React::Test {
+
 void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &) noexcept {}
 
 void AppState::GetCurrentAppState(
@@ -18,3 +20,5 @@ void AppState::RemoveListeners(double) noexcept {}
 ::Microsoft::ReactNativeSpecs::AppStateSpec_AppStateConstants AppState::GetConstants() noexcept {
   return {.initialAppState = "active"};
 }
+
+} // namespace Microsoft::React::Test

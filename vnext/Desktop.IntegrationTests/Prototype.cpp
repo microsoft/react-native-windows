@@ -14,6 +14,8 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace msrn = winrt::Microsoft::ReactNative;
 
+namespace Microsoft::React::Test {
+
 TEST_CLASS (Prototype) {
 
   // The test DLL's embedded manifest (resource ID 2) registers WinRT activatable classes,
@@ -70,7 +72,7 @@ TEST_CLASS (Prototype) {
 
   TEST_METHOD(Proto2)
   {
-    Microsoft::React::Test::TestModule::Reset();
+    TestModule::Reset();
 
     winrt::handle instanceLoadedEvent{CreateEvent(nullptr, TRUE, FALSE, nullptr)};
     bool instanceFailed{false};
@@ -93,10 +95,12 @@ TEST_CLASS (Prototype) {
       Assert::Fail(msg.c_str());
     }
 
-    auto status = Microsoft::React::Test::TestModule::AwaitCompletion(5000);
+    auto status = TestModule::AwaitCompletion(5000);
     Assert::IsTrue(
-        status == Microsoft::React::Test::TestStatus::Passed,
+        status == TestStatus::Passed,
         L"Test did not pass (JS did not call markTestPassed within timeout)");
   }
 
 };
+
+} // namespace Microsoft::React::Test

@@ -3,6 +3,8 @@
 
 #include "TestDeviceInfo.h"
 
+namespace Microsoft::React::Test {
+
 void DeviceInfo::Initialize(winrt::Microsoft::ReactNative::ReactContext const &) noexcept {}
 
 ::Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants DeviceInfo::GetConstants() noexcept {
@@ -16,3 +18,5 @@ void DeviceInfo::Initialize(winrt::Microsoft::ReactNative::ReactContext const &)
   constants.Dimensions.window = dm;
   return constants;
 }
+
+} // namespace Microsoft::React::Test

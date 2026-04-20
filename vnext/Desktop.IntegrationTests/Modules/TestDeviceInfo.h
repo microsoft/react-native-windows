@@ -6,6 +6,8 @@
 #include <codegen/NativeDeviceInfoSpec.g.h>
 #include <NativeModules.h>
 
+namespace Microsoft::React::Test {
+
 REACT_MODULE(DeviceInfo)
 struct DeviceInfo {
   using ModuleSpec = ::Microsoft::ReactNativeSpecs::DeviceInfoSpec;
@@ -16,3 +18,5 @@ struct DeviceInfo {
   REACT_GET_CONSTANTS(GetConstants)
   ::Microsoft::ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants GetConstants() noexcept;
 };
+
+} // namespace Microsoft::React::Test
