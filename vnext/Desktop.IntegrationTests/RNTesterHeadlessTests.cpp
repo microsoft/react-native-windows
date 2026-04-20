@@ -16,7 +16,7 @@ namespace msrn = winrt::Microsoft::ReactNative;
 
 namespace Microsoft::React::Test {
 
-TEST_CLASS (Prototype) {
+TEST_CLASS (RNTesterHeadlessTests) {
 
   // The test DLL's embedded manifest (resource ID 2) registers WinRT activatable classes,
   // but testhost.exe doesn't know about them. We manually activate the DLL's manifest
@@ -70,7 +70,7 @@ TEST_CLASS (Prototype) {
     }
   }
 
-  TEST_METHOD(Proto2)
+  TEST_METHOD(Dummy)
   {
     TestModule::Reset();
 

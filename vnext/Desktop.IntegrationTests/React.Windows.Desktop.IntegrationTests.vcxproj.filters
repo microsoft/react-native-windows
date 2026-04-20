@@ -39,7 +39,7 @@
     <ClCompile Include="HttpOriginPolicyIntegrationTest.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>
-    <ClCompile Include="Prototype.cpp">
+    <ClCompile Include="RNTesterHeadlessTests.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>
     <ClCompile Include="HttpServer.cpp">

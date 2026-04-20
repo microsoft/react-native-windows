@@ -120,7 +120,7 @@
     <ClCompile Include="Modules\TestDeviceInfo.cpp" />
     <ClCompile Include="Modules\TestDevSettingsModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="Modules\TestImageLoaderModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
-    <ClCompile Include="Prototype.cpp" />
+    <ClCompile Include="RNTesterHeadlessTests.cpp" />
     <ClCompile Include="TestReactNativeHostHolder.cpp" />
     <ClCompile Include="TestReactPackageProvider.cpp" />
     <ClCompile Include="TestUIDispatcher.cpp" />
