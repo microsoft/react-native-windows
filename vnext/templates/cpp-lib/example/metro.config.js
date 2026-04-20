@@ -7,9 +7,19 @@ const pack = require('../package.json');
 const root = path.resolve(__dirname, '..');
 const modules = Object.keys({ ...pack.peerDependencies });
 
-const rnwPath = fs.realpathSync(
+// On Windows, require.resolve through yarn workspace junctions can return paths
+// with a different drive letter case than process.cwd(). Metro's internal file
+// system lookup is case-sensitive, so we normalize to match.
+function normalizePathDrive(p) {
+  if (process.platform === 'win32' && p.length >= 2 && p[1] === ':') {
+    return p[0].toUpperCase() + p.slice(1);
+  }
+  return p;
+}
+
+const rnwPath = normalizePathDrive(fs.realpathSync(
   path.resolve(require.resolve('react-native-windows/package.json'), '..'),
-);
+));
 
 //{{#devMode}} [devMode
 const rnwRootNodeModules = path.resolve(rnwPath, '..', 'node_modules');
