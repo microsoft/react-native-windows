@@ -7,6 +7,7 @@
 #include "TestUIDispatcher.h"
 
 #include <Microsoft.ReactNative/IReactDispatcher.h>
+#include <ReactPropertyBag.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Windows.Foundation.Collections.h>
 
@@ -21,7 +22,7 @@ msrn::ReactPropertyId<winrt::hstring> PlatformNameOverrideProperty() noexcept {
 
 TestReactNativeHostHolder::TestReactNativeHostHolder(
     std::wstring_view jsBundle,
-    Mso::Functor<void(winrt::Microsoft::ReactNative::ReactNativeHost const &)> &&hostInitializer,
+    std::function<void(winrt::Microsoft::ReactNative::ReactNativeHost const &)> hostInitializer,
     Options &&options) noexcept {
   m_host = winrt::Microsoft::ReactNative::ReactNativeHost{};
   m_queueController = winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnDedicatedThread();

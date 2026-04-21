@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <unknwn.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
 #include <winrt/Windows.Foundation.Collections.h>

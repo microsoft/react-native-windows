@@ -51,6 +51,9 @@
     <ClCompile Include="TestReactNativeHostHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WinRTActivationShims.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="TestReactPackageProvider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

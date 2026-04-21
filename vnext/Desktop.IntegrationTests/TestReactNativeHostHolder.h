@@ -3,10 +3,11 @@
 
 #pragma once
 
-#include <Microsoft.ReactNative/ReactHost/React.h>
+#include <unknwn.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.UI.Dispatching.h>
 
+#include <functional>
 #include <mutex>
 #include <string>
 
@@ -21,7 +22,7 @@ struct TestReactNativeHostHolder {
 
   TestReactNativeHostHolder(
       std::wstring_view jsBundle,
-      Mso::Functor<void(winrt::Microsoft::ReactNative::ReactNativeHost const &)> &&hostInitializer,
+      std::function<void(winrt::Microsoft::ReactNative::ReactNativeHost const &)> hostInitializer,
       Options &&options = {}) noexcept;
   ~TestReactNativeHostHolder() noexcept;
 

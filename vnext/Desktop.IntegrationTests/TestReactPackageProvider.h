@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <unknwn.h>
 #include <winrt/Microsoft.ReactNative.h>
 
 namespace Microsoft::React::Test {
