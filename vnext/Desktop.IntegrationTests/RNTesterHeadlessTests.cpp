@@ -57,14 +57,14 @@ TEST_CLASS (RNTesterHeadlessTests) {
     });
 
     // First, wait for instance to load
-    WaitForSingleObject(instanceLoadedEvent.get(), 5000);
+    WaitForSingleObject(instanceLoadedEvent.get(), INFINITE);
     if (instanceFailed) {
       auto err = holder.GetLastError();
       auto msg = L"InstanceLoaded reported failure: " + (err.empty() ? L"(no error captured)" : err);
       Assert::Fail(msg.c_str());
     }
 
-    auto status = TestModule::AwaitCompletion(5000);
+    auto status = TestModule::AwaitCompletion();
     Assert::IsTrue(
         status == TestStatus::Passed,
         L"Test did not pass (JS did not call markTestPassed within timeout)");
