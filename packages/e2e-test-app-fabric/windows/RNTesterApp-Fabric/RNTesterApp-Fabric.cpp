@@ -133,7 +133,7 @@ WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* show
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(appWindow.Id());
   global_hwnd = hwnd;
 
-  CreateScreenshot(winrt::Windows::Data::Json::JsonObject{}); // Temp testing
+  CreateScreenshot(winrt::Windows::Data::Json::JsonValue::CreateNullValue()); // Temp testing
 
   auto host = CreateReactNativeHost(hwnd, compositor);
 
