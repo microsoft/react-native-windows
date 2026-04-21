@@ -84,7 +84,6 @@
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
-      <!-- TODO: VERY HACKY -->
       <AdditionalIncludeDirectories>
         $(VCInstallDir)UnitTest\include;
         "$(ReactNativeWindowsDir)Microsoft.ReactNative";
