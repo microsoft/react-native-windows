@@ -2,6 +2,53 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 21 Apr 2026 02:54:29 GMT",
+      "version": "0.0.0-canary.1050",
+      "tag": "react-native-windows_v0.0.0-canary.1050",
+      "comments": {
+        "none": [
+          {
+            "author": "hmalothu@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "975ff3019b16ed727663e0059a6ad77b0f34ec29",
+            "comment": "Integrate RN 0.85.0-nightly-20260114-f15985f4f"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "975ff3019b16ed727663e0059a6ad77b0f34ec29",
+            "comment": "Fix project compilation"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "975ff3019b16ed727663e0059a6ad77b0f34ec29",
+            "comment": "Fix ScrollView keyboard scroll drift on long key press"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "975ff3019b16ed727663e0059a6ad77b0f34ec29",
+            "comment": "Add folly and fast-float to fork-sync"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "975ff3019b16ed727663e0059a6ad77b0f34ec29",
+            "comment": "Fix multiline TextInput crash from TxDrawD2D reentrancy"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.288",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Apr 2026 13:25:17 GMT",
       "version": "0.0.0-canary.1049",
       "tag": "react-native-windows_v0.0.0-canary.1049",

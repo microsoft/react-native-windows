@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Integrate RN 0.85.0-nightly-20260114-f15985f4f",
-  "packageName": "@react-native-windows/perf-testing",
-  "email": "hmalothu@microsoft.com",
-  "dependentChangeType": "none"
-}
