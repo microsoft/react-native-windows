@@ -13,8 +13,8 @@
 // bypasses RoGetActivationFactory and therefore does not require manifest
 // or activation-context registration.
 
-#include <windows.h>
 #include <activation.h>
+#include <windows.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.h>
 
@@ -32,8 +32,7 @@ template <typename TFactory>
 TFactory GetFactory(std::wstring_view className) {
   winrt::hstring name{className};
   winrt::com_ptr<::IActivationFactory> factory;
-  winrt::check_hresult(
-      GetDllGetActivationFactory()(static_cast<HSTRING>(winrt::get_abi(name)), factory.put()));
+  winrt::check_hresult(GetDllGetActivationFactory()(static_cast<HSTRING>(winrt::get_abi(name)), factory.put()));
   return factory.as<TFactory>();
 }
 
@@ -44,32 +43,26 @@ namespace winrt::Microsoft::ReactNative {
 // ReactPropertyBagHelper statics -----------------------------------------
 
 IReactPropertyNamespace ReactPropertyBagHelper::GetNamespace(param::hstring const &namespaceName) {
-  static auto factory = GetFactory<IReactPropertyBagHelperStatics>(
-      winrt::name_of<ReactPropertyBagHelper>());
+  static auto factory = GetFactory<IReactPropertyBagHelperStatics>(winrt::name_of<ReactPropertyBagHelper>());
   return factory.GetNamespace(namespaceName);
 }
 
-IReactPropertyName ReactPropertyBagHelper::GetName(
-    IReactPropertyNamespace const &ns,
-    param::hstring const &localName) {
-  static auto factory = GetFactory<IReactPropertyBagHelperStatics>(
-      winrt::name_of<ReactPropertyBagHelper>());
+IReactPropertyName ReactPropertyBagHelper::GetName(IReactPropertyNamespace const &ns, param::hstring const &localName) {
+  static auto factory = GetFactory<IReactPropertyBagHelperStatics>(winrt::name_of<ReactPropertyBagHelper>());
   return factory.GetName(ns, localName);
 }
 
 // ReactDispatcherHelper statics ------------------------------------------
 
 IReactPropertyName ReactDispatcherHelper::UIDispatcherProperty() {
-  static auto factory = GetFactory<IReactDispatcherHelperStatics>(
-      winrt::name_of<ReactDispatcherHelper>());
+  static auto factory = GetFactory<IReactDispatcherHelperStatics>(winrt::name_of<ReactDispatcherHelper>());
   return factory.UIDispatcherProperty();
 }
 
 // ReactNativeHost default constructor ------------------------------------
 
 ReactNativeHost::ReactNativeHost()
-    : ReactNativeHost(GetFactory<Windows::Foundation::IActivationFactory>(
-                          winrt::name_of<ReactNativeHost>())
+    : ReactNativeHost(GetFactory<Windows::Foundation::IActivationFactory>(winrt::name_of<ReactNativeHost>())
                           .ActivateInstance<ReactNativeHost>()) {}
 
 } // namespace winrt::Microsoft::ReactNative

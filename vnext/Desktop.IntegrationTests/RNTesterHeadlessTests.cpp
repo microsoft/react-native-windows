@@ -17,44 +17,39 @@ namespace msrn = winrt::Microsoft::ReactNative;
 namespace Microsoft::React::Test {
 
 TEST_CLASS (RNTesterHeadlessTests) {
-
-  TEST_CLASS_INITIALIZE(Initialize)
-  {
+  TEST_CLASS_INITIALIZE(Initialize) {
     // https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/win32/mddbootstrap/nf-mddbootstrap-mddbootstrapinitialize2
     winrt::uninit_apartment();
     winrt::init_apartment(winrt::apartment_type::multi_threaded);
 
     if (FAILED(MddBootstrapInitialize2(
-        Microsoft::WindowsAppSDK::Release::MajorMinor,
-        Microsoft::WindowsAppSDK::Release::VersionTag,
-        { Microsoft::WindowsAppSDK::Runtime::Version::UInt64 },
-            MddBootstrapInitializeOptions::MddBootstrapInitializeOptions_None)))
-    {
+            Microsoft::WindowsAppSDK::Release::MajorMinor,
+            Microsoft::WindowsAppSDK::Release::VersionTag,
+            {Microsoft::WindowsAppSDK::Runtime::Version::UInt64},
+            MddBootstrapInitializeOptions::MddBootstrapInitializeOptions_None))) {
       throw std::exception("Could not initialize Windows App runtime");
     }
   }
 
-  TEST_CLASS_CLEANUP(Cleanup)
-  {
+  TEST_CLASS_CLEANUP(Cleanup) {
     MddBootstrapShutdown();
   }
 
-  TEST_METHOD(Dummy)
-  {
+  TEST_METHOD(Dummy) {
     TestModule::Reset();
 
     winrt::handle instanceLoadedEvent{CreateEvent(nullptr, TRUE, FALSE, nullptr)};
     bool instanceFailed{false};
 
-    auto holder = TestReactNativeHostHolder(L"IntegrationTests/DummyTest",
+    auto holder = TestReactNativeHostHolder(
+        L"IntegrationTests/DummyTest",
         [&instanceLoadedEvent, &instanceFailed](msrn::ReactNativeHost const &host) noexcept {
-      host.InstanceSettings().InstanceLoaded(
-          [&instanceLoadedEvent, &instanceFailed](
-              auto const &, msrn::InstanceLoadedEventArgs args) noexcept {
-            instanceFailed = args.Failed();
-            SetEvent(instanceLoadedEvent.get());
-          });
-    });
+          host.InstanceSettings().InstanceLoaded(
+              [&instanceLoadedEvent, &instanceFailed](auto const &, msrn::InstanceLoadedEventArgs args) noexcept {
+                instanceFailed = args.Failed();
+                SetEvent(instanceLoadedEvent.get());
+              });
+        });
 
     // First, wait for instance to load
     WaitForSingleObject(instanceLoadedEvent.get(), INFINITE);
@@ -65,11 +60,8 @@ TEST_CLASS (RNTesterHeadlessTests) {
     }
 
     auto status = TestModule::AwaitCompletion();
-    Assert::IsTrue(
-        status == TestStatus::Passed,
-        L"Test did not pass (JS did not call markTestPassed within timeout)");
+    Assert::IsTrue(status == TestStatus::Passed, L"Test did not pass (JS did not call markTestPassed within timeout)");
   }
-
 };
 
 } // namespace Microsoft::React::Test

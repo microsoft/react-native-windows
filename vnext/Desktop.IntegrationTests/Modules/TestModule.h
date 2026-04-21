@@ -35,7 +35,7 @@ struct TestModule {
   }
 
   REACT_METHOD(MarkTestCompleted, L"markTestCompleted")
-  void MarkTestCompleted()noexcept {
+  void MarkTestCompleted() noexcept {
     MarkTestPassed(true);
   }
 
