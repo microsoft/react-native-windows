@@ -18,30 +18,8 @@ namespace Microsoft::React::Test {
 
 TEST_CLASS (RNTesterHeadlessTests) {
 
-  // The test DLL's embedded manifest (resource ID 2) registers WinRT activatable classes,
-  // but testhost.exe doesn't know about them. We manually activate the DLL's manifest
-  // so that RoGetActivationFactory can find our classes.
-  static inline HANDLE s_actCtx{INVALID_HANDLE_VALUE};
-  static inline ULONG_PTR s_actCtxCookie{0};
-
   TEST_CLASS_INITIALIZE(Initialize)
   {
-    HMODULE thisModule{};
-    GetModuleHandleExW(
-        GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS | GET_MODULE_HANDLE_EX_FLAG_UNCHANGED_REFCOUNT,
-        reinterpret_cast<LPCWSTR>(&Initialize),
-        &thisModule);
-
-    ACTCTXW actCtx{};
-    actCtx.cbSize = sizeof(actCtx);
-    actCtx.dwFlags = ACTCTX_FLAG_HMODULE_VALID | ACTCTX_FLAG_RESOURCE_NAME_VALID;
-    actCtx.hModule = thisModule;
-    actCtx.lpResourceName = MAKEINTRESOURCEW(2);
-    s_actCtx = CreateActCtxW(&actCtx);
-    if (s_actCtx != INVALID_HANDLE_VALUE) {
-      ActivateActCtx(s_actCtx, &s_actCtxCookie);
-    }
-
     // https://learn.microsoft.com/en-us/windows/windows-app-sdk/api/win32/mddbootstrap/nf-mddbootstrap-mddbootstrapinitialize2
     winrt::uninit_apartment();
     winrt::init_apartment(winrt::apartment_type::multi_threaded);
@@ -59,15 +37,6 @@ TEST_CLASS (RNTesterHeadlessTests) {
   TEST_CLASS_CLEANUP(Cleanup)
   {
     MddBootstrapShutdown();
-
-    if (s_actCtxCookie) {
-      DeactivateActCtx(0, s_actCtxCookie);
-      s_actCtxCookie = 0;
-    }
-    if (s_actCtx != INVALID_HANDLE_VALUE) {
-      ReleaseActCtx(s_actCtx);
-      s_actCtx = INVALID_HANDLE_VALUE;
-    }
   }
 
   TEST_METHOD(Dummy)
