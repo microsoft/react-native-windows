@@ -166,9 +166,6 @@
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
   </ItemGroup>
-  <ItemGroup>
-    <Manifest Include="Application.manifest" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="Test">
     <Exec Command="$(OutDir)$(TargetFileName)" IgnoreStandardErrorWarningFormat="true" />
