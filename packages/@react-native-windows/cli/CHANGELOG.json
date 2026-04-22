@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 22 Apr 2026 14:35:53 GMT",
+      "version": "0.84.0-preview.3",
+      "tag": "@react-native-windows/cli_v0.84.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "nitchaudhary@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "4065de3a56f0db924a7b8849b5946af2472ee050",
+            "comment": "Fix command injection in cleanProject() (CWE-78) and argument injection in uninstallAppPackage() (CWE-88)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Apr 2026 09:13:22 GMT",
       "version": "0.84.0-preview.2",
       "tag": "@react-native-windows/cli_v0.84.0-preview.2",

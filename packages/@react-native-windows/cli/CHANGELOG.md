@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Thu, 16 Apr 2026 09:13:22 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 22 Apr 2026 14:35:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0-preview.3
+
+Wed, 22 Apr 2026 14:35:53 GMT
+
+### Changes
+
+- Fix command injection in cleanProject() (CWE-78) and argument injection in uninstallAppPackage() (CWE-88) (nitchaudhary@microsoft.com)
 
 ## 0.84.0-preview.2
 
