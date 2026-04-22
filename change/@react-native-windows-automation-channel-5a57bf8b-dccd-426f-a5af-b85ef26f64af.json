@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "unbroken linting error fix",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "protikbiswas@microsoft.com",
-  "dependentChangeType": "patch"
-}

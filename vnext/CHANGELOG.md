@@ -1,8 +1,25 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 30 Mar 2026 23:06:11 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 22 Apr 2026 14:36:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.83.0-preview.3
+
+Wed, 22 Apr 2026 14:36:46 GMT
+
+### Changes
+
+- fix: auto-discover native perf results in compare report (74712637+iamAbhi-916@users.noreply.github.com)
+- Fix ScrollView keyboard scroll drift on long key press (74712637+iamAbhi-916@users.noreply.github.com)
+- Re-introduce Desktop integration tests (julio.rocha@microsoft.com)
+- Fix multiline TextInput crash from TxDrawD2D reentrancy (74712637+iamAbhi-916@users.noreply.github.com)
+- Performance tests for react native windows(Fabric) (74712637+iamAbhi-916@users.noreply.github.com)
+- fix: respect track mode in compare-results to avoid false regression failures (74712637+iamAbhi-916@users.noreply.github.com)
+- unbroken linting error fix (protikbiswas@microsoft.com)
+- Upgrade to Boost 1.84 (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.83.0-preview.2
+- Bump @react-native-windows/codegen to v0.83.0-preview.2
 
 ## 0.83.0-preview.2
 

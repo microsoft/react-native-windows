@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Thu, 26 Mar 2026 12:02:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 22 Apr 2026 14:36:47 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.83.0-preview.2
+
+Wed, 22 Apr 2026 14:36:47 GMT
+
+### Changes
+
+- fix: capture live run metrics in PerfJsonReporter instead of re-reading baselines (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.83.0-preview.1
 
