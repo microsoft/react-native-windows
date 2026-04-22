@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 22 Apr 2026 16:40:25 GMT",
+      "version": "0.0.0-canary.1052",
+      "tag": "react-native-windows_v0.0.0-canary.1052",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "23f5103ba5d1c664203036fc2d4dc1849fe1608e",
+            "comment": "Use hermes-windows version 0.0.0-2604.21001-94aa5e1d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Apr 2026 02:49:04 GMT",
       "version": "0.0.0-canary.1051",
       "tag": "react-native-windows_v0.0.0-canary.1051",

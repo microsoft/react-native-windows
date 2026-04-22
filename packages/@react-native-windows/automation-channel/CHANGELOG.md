@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Wed, 22 Apr 2026 02:49:04 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 22 Apr 2026 16:40:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1052
+
+Wed, 22 Apr 2026 16:40:25 GMT
+
+### Changes
+
+- Use hermes-windows version 0.0.0-2604.21001-94aa5e1d (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.1052
 
 ## 0.0.0-canary.1051
 
