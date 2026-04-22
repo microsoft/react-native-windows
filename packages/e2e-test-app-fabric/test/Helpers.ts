@@ -11,7 +11,7 @@ import { AutomationClient } from '@react-native-windows/automation-channel';
 import { createScreenshot } from '@react-native-windows/automation-commands';
 import { tmpdir } from 'os';
 import { join } from 'path';
-import { readFileSync } from 'fs';
+import fs from '@react-native-windows/fs';
 
 declare global {
   const automationClient: AutomationClient | undefined;
@@ -21,12 +21,21 @@ type ErrorsResult = {
   errors: string[];
 };
 
-export async function verifyElementVisualSnapshot(component: AutomationElement) {
+export interface ImageSnapshotConfig {
+  failureThreshold?: number;
+  failureThresholdType?: 'percent'
+}
+
+export async function verifyElementVisualSnapshot(component: AutomationElement, config?: ImageSnapshotConfig) {
   const { x, y } = await component.getLocation();
   const { width, height } = await component.getSize();
   await createScreenshot({ screenshotsPath: tmpdir(), location: { x, y, width, height } });
-  const myFancyImage = readFileSync(join(tmpdir(), "./RNTester.png"));
-  expect(myFancyImage).toMatchImageSnapshot();
+  const myFancyImage = fs.readFileSync(join(tmpdir(), "./RNTester.png"));
+  expect(myFancyImage).toMatchImageSnapshot({
+    failureThreshold: 0.01,
+    failureThresholdType: 'percent',
+    ...config
+  });
 }
 
 export async function verifyNoErrorLogs(

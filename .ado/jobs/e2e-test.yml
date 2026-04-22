@@ -74,6 +74,14 @@ jobs:
               workingDirectory: packages/e2e-test-app-fabric
               timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
 
+            - task: CopyFiles@2
+              displayName: Copy Fabric image diffs
+              inputs:
+                sourceFolder: packages/e2e-test-app-fabric/test/__image_snapshots__/__diff_output__
+                targetFolder: $(Build.StagingDirectory)/snapshots-image-diffs
+                contents: "**"
+              condition: failed()
+
             - script: npx jest --clearCache
               displayName: clear jest cache
               workingDirectory: packages/e2e-test-app-fabric
@@ -141,6 +149,11 @@ jobs:
               condition: failed()
               targetPath: $(Build.StagingDirectory)/snapshots-fabric
               artifactName: Snapshots - RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
+            - output: pipelineArtifact
+              displayName: 'Publish Artifact: Image Diffs'
+              condition: failed()
+              targetPath: $(Build.StagingDirectory)/snapshots-image-diffs
+              artifactName: Snapshots - RNTesterApp-Image-Diffs-${{ matrix.Name }}-$(System.JobAttempt)
             - output: pipelineArtifact
               displayName: 'Publish Artifact: Image Snapshots'
               condition: failed()
