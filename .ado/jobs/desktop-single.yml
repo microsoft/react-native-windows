@@ -21,6 +21,8 @@ parameters:
       - Continuous
 
 steps:
+  - template: ../templates/checkout-shallow.yml
+
   # Set up IIS for integration tests
   - pwsh: |
       Install-WindowsFeature -Name Web-Server, Web-Scripting-Tools
@@ -57,8 +59,6 @@ steps:
       Start-Process -Wait -FilePath .\windowsappruntimeinstall-x64.exe -ArgumentList '--quiet'
       Write-Host 'Installed Windows App SDK Runtime'
     displayName: Install Windows App SDK Runtime
-
-  - template: ../templates/checkout-shallow.yml
 
   - template: ../templates/prepare-js-env.yml
 
