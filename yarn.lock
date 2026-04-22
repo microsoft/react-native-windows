@@ -4749,9 +4749,9 @@ basic-ftp@^5.0.2:
   integrity sha512-VoMINM2rqJwJgfdHq6RiUudKt2BV+FY5ZFezP/ypmwayk68+NzzAQy4XXLlqsGD4MCzq3DrmNFD/uUmBJuGoXw==
 
 beachball@^2.20.0:
-  version "2.64.3"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.64.3.tgz#e965ad2014639c07835f5233beeb9a83b13edf17"
-  integrity sha512-SwWyMslN3kWtrMO3TDmmndIaLfzCpWQcsFmK1p/JE1Gg3A3490HpTJK8wdwz5BCtlXBb3mVYGZjR/1CsBIA9PQ==
+  version "2.65.0"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.65.0.tgz#d7685ea9583876340a09f81511a2ed10e5c4f5b6"
+  integrity sha512-nZuHjXLzZBrkUyKwlHTFi5PgLC2wizd3aPepn3RvCTb8sQdw/fGhrar16maM72tx6LmM6ib/DOn6XrMS6CNoZA==
   dependencies:
     "@vercel/detect-agent" "^1.2.1"
     cosmiconfig "^9.0.1"
@@ -4761,7 +4761,7 @@ beachball@^2.20.0:
     p-limit "^3.1.0"
     prompts "^2.4.2"
     semver "^7.7.4"
-    workspace-tools "^0.41.2"
+    workspace-tools "^0.41.4"
     yargs-parser "^21.1.1"
 
 before-after-hook@^2.2.0:
@@ -11581,9 +11581,9 @@ scheduler@^0.26.0:
   integrity sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==
 
 screenshot-desktop@^1.12.2:
-  version "1.15.3"
-  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.15.3.tgz#59c1abd904e21a5870d8930263db591923cc2eae"
-  integrity sha512-bHztitCmaa+A+ssxRa3LDNepQzCHEEAkz1FaJjoZx2yDMkHIkHLKKcc5xMgkGNas97wSGboSB2BoO0c4RnjlJw==
+  version "1.15.4"
+  resolved "https://registry.yarnpkg.com/screenshot-desktop/-/screenshot-desktop-1.15.4.tgz#b51bff35ccefcaaaeb66b419b98efb839b1ce552"
+  integrity sha512-nvYzQH+pzA9cJVKxZzde4mX1ymZoPETUp3vT5vl72460782i+ZctSbV71vu+YU/9ktAEa9nONLRLpgliXgB5LA==
   dependencies:
     temp "^0.9.4"
 
@@ -13043,10 +13043,10 @@ wordwrap@^1.0.0:
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
-workspace-tools@^0.41.2:
-  version "0.41.3"
-  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.41.3.tgz#f05342404e8053889b900efcc8daf2c53a4f2dc2"
-  integrity sha512-/+C2PiuZuKK8Iq2vxvXJ5+J1bdBFUHp0kqaOgkZ/7WigaH7wIifRhmyVps3LULVolrzPyAsWTeiUzgxz8kYt/g==
+workspace-tools@^0.41.4:
+  version "0.41.4"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.41.4.tgz#443202bc1eafa5119dd4ddd9929082b3d1a6a271"
+  integrity sha512-FuSHMNmM1AXJaaWIUMFsWH/+dR0KEzkHhTv96KZ5iKxCvi4TXnATRr/U23d8d8DMUx7oL/oVfr9SvEaDvDYN2A==
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
     fast-glob "^3.3.3"
