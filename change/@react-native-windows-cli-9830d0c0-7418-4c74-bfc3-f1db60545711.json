@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix command injection in cleanProject() (CWE-78) and argument injection in uninstallAppPackage() (CWE-88)",
-  "packageName": "@react-native-windows/cli",
-  "email": "nitchaudhary@microsoft.com",
-  "dependentChangeType": "patch"
-}

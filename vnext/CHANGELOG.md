@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 16 Apr 2026 09:13:21 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 22 Apr 2026 14:35:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0-preview.5
+
+Wed, 22 Apr 2026 14:35:53 GMT
+
+### Changes
+
+- Re-introduce Desktop integration tests (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.84.0-preview.3
 
 ## 0.84.0-preview.4
 
