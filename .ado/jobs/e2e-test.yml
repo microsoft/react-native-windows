@@ -104,6 +104,14 @@ jobs:
               condition: failed()
 
             - task: CopyFiles@2
+              displayName: Copy Fabric image snapshots
+              inputs:
+                sourceFolder: packages/e2e-test-app-fabric/test/__image_snapshots__
+                targetFolder: $(Build.StagingDirectory)/snapshots-image
+                contents: "**"
+              condition: failed()
+
+            - task: CopyFiles@2
               displayName: Copy RNTesterApp artifacts
               inputs:
                 sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabric/windows/${{ matrix.BuildPlatform }}/Release
@@ -133,6 +141,11 @@ jobs:
               condition: failed()
               targetPath: $(Build.StagingDirectory)/snapshots-fabric
               artifactName: Snapshots - RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
+            - output: pipelineArtifact
+              displayName: 'Publish Artifact: Image Snapshots'
+              condition: failed()
+              targetPath: $(Build.StagingDirectory)/snapshots-image
+              artifactName: Snapshots - RNTesterApp-Image-${{ matrix.Name }}-$(System.JobAttempt)
             - output: pipelineArtifact
               displayName: 'Upload build logs'
               condition: succeededOrFailed()
