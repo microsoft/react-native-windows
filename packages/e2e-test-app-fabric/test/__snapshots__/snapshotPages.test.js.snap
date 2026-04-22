@@ -90549,6 +90549,7 @@ exports[`snapshotAllPages View 18`] = `
 
 exports[`snapshotAllPages View 19`] = `
 <View
+  accessible={true}
   style={
     {
       "flexDirection": "row",
