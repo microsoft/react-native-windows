@@ -1,10 +1,9 @@
 
-struct MakeScreenshotParameters
-{
-	std::string testName;
-	std::string screenshotsPath;
+struct MakeScreenshotParameters {
+  std::string testName;
+  std::string screenshotsPath;
 
-    RECT* pRect { nullptr };
+  RECT *pRect{nullptr};
 };
 
-std::string MakeScreenshot(const MakeScreenshotParameters& parameters) noexcept;
+std::string MakeScreenshot(const MakeScreenshotParameters &parameters) noexcept;
