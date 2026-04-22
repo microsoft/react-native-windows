@@ -424,6 +424,7 @@ function BoxShadowExample(): React.Node {
 
   return (
     <View
+      accessible
       testID="view-test-box-shadow"
       style={{flexDirection: 'row', flexWrap: 'wrap', gap: 30, padding: 20}}>
       <View

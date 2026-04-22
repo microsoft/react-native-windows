@@ -5,18 +5,13 @@
  * @format
  */
 
-// import { AutomationClient } from '@react-native-windows/automation-channel';
-
-// declare global {
-//   const automationClient: AutomationClient | undefined;
-// }
-
 /**
- * Dump a section of the native visual tree.
+ * Take a screenshot of the app window
  */
 export default async function createScreenshot(
   opts?: {
     accessibilityId: string,
+    screenshotsPath?: string,
     location?: { x: number, y: number, width: number, height: number };
   },
 ): Promise<void> {

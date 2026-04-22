@@ -41,11 +41,6 @@
         "resolved": "1.0.3179.45",
         "contentHash": "3pokSH5CnN0G6rGhGFo1y87inxYhNxBQ2Vdf0wlvBj99KHxQJormjDACmqRnFeUsmuNFIhWwfAL1ztq7wD5qRA=="
       },
-      "Microsoft.Windows.ImplementationLibrary": {
-        "type": "Transitive",
-        "resolved": "1.0.260126.7",
-        "contentHash": "pXT/6g9/W9uOh7NTpGpArYGSm9W0v5EWM0Njhm3YWgKf+71hii5H5aDcD539jG9IZmjT1eT1pn67n4A6zwEQ+A=="
-      },
       "Microsoft.Windows.SDK.BuildTools": {
         "type": "Transitive",
         "resolved": "10.0.26100.4654",
@@ -198,7 +193,6 @@
           "Microsoft.JavaScript.Hermes": "[0.0.0-2512.22001-bc3d0ed7, )",
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
-          "Microsoft.Windows.ImplementationLibrary": "[1.0.260126.7, )",
           "Microsoft.WindowsAppSDK": "[1.8.260209005, )",
           "SampleCustomComponent": "[1.0.0, )",
           "boost": "[1.83.0, )"
