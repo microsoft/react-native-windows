@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 22 Apr 2026 08:35:03 GMT",
+      "version": "0.82.5",
+      "tag": "react-native-windows_v0.82.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "56bff6ad766909975dae8df1a7b65789f7bf4cbe",
+            "comment": "Remove dependency ReactWindows.OpenSSL.StdCall.Static"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "56bff6ad766909975dae8df1a7b65789f7bf4cbe",
+            "comment": "Fix ScrollView keyboard scroll drift on long key press"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "56bff6ad766909975dae8df1a7b65789f7bf4cbe",
+            "comment": "Re-introduce Desktop integration tests"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "56bff6ad766909975dae8df1a7b65789f7bf4cbe",
+            "comment": "Fix multiline TextInput crash from TxDrawD2D reentrancy"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Apr 2026 06:12:08 GMT",
       "version": "0.82.4",
       "tag": "react-native-windows_v0.82.4",

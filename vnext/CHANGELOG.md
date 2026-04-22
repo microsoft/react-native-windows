@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 09 Apr 2026 06:12:08 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 22 Apr 2026 08:35:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.5
+
+Wed, 22 Apr 2026 08:35:03 GMT
+
+### Patches
+
+- Remove dependency ReactWindows.OpenSSL.StdCall.Static (julio.rocha@microsoft.com)
+- Fix ScrollView keyboard scroll drift on long key press (74712637+iamAbhi-916@users.noreply.github.com)
+- Re-introduce Desktop integration tests (julio.rocha@microsoft.com)
+- Fix multiline TextInput crash from TxDrawD2D reentrancy (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.82.4
 
