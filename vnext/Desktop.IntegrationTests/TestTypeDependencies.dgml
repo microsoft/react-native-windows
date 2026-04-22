@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+
+  <!-- Nodes -->
+  <Nodes>
+    <!-- Test class -->
+    <Node Id="RNTesterHeadlessTests" Label="RNTesterHeadlessTests" Category="TestClass" />
+
+    <!-- Infrastructure -->
+    <Node Id="TestReactNativeHostHolder" Label="TestReactNativeHostHolder" Category="Infrastructure" />
+    <Node Id="TestReactPackageProvider" Label="TestReactPackageProvider" Category="Infrastructure" />
+    <Node Id="TestUIDispatcher" Label="TestUIDispatcher" Category="Infrastructure" />
+
+    <!-- REACT_MODULE types -->
+    <Node Id="DeviceInfo" Label="DeviceInfo" Category="ReactModule" />
+    <Node Id="AppState" Label="AppState" Category="ReactModule" />
+    <Node Id="TestModule" Label="TestModule" Category="ReactModule" />
+
+    <!-- Composition test types -->
+    <Node Id="TestCompositionContext" Label="TestCompositionContext" Category="Composition" />
+    <Node Id="TestVisualBase" Label="TestVisualBase&lt;D, I...&gt;" Category="Composition" />
+    <Node Id="TestSpriteVisual" Label="TestSpriteVisual" Category="Composition" />
+    <Node Id="TestRoundedRectangleVisual" Label="TestRoundedRectangleVisual" Category="Composition" />
+    <Node Id="TestScrollVisual" Label="TestScrollVisual" Category="Composition" />
+    <Node Id="TestActivityVisual" Label="TestActivityVisual" Category="Composition" />
+    <Node Id="TestCaretVisual" Label="TestCaretVisual" Category="Composition" />
+    <Node Id="TestFocusVisual" Label="TestFocusVisual" Category="Composition" />
+    <Node Id="TestBrush" Label="TestBrush" Category="Composition" />
+    <Node Id="TestDrawingSurfaceBrush" Label="TestDrawingSurfaceBrush" Category="Composition" />
+    <Node Id="TestDropShadow" Label="TestDropShadow" Category="Composition" />
+  </Nodes>
+
+  <!-- Links -->
+  <Links>
+    <!-- RNTesterHeadlessTests dependencies -->
+    <Link Source="RNTesterHeadlessTests" Target="TestReactNativeHostHolder" Category="Uses" />
+    <Link Source="RNTesterHeadlessTests" Target="TestModule" Category="Uses" />
+
+    <!-- TestReactNativeHostHolder dependencies -->
+    <Link Source="TestReactNativeHostHolder" Target="TestUIDispatcher" Category="Creates" />
+    <Link Source="TestReactNativeHostHolder" Target="TestReactPackageProvider" Category="Creates" />
+    <Link Source="TestReactNativeHostHolder" Target="TestCompositionContext" Category="Creates" />
+
+    <!-- TestReactPackageProvider registers modules -->
+    <Link Source="TestReactPackageProvider" Target="DeviceInfo" Category="Registers" />
+    <Link Source="TestReactPackageProvider" Target="AppState" Category="Registers" />
+    <Link Source="TestReactPackageProvider" Target="TestModule" Category="Registers" />
+
+    <!-- TestVisualBase inheritance -->
+    <Link Source="TestSpriteVisual" Target="TestVisualBase" Category="Inherits" />
+    <Link Source="TestRoundedRectangleVisual" Target="TestVisualBase" Category="Inherits" />
+    <Link Source="TestScrollVisual" Target="TestVisualBase" Category="Inherits" />
+    <Link Source="TestActivityVisual" Target="TestVisualBase" Category="Inherits" />
+
+    <!-- TestCompositionContext creates visuals -->
+    <Link Source="TestCompositionContext" Target="TestSpriteVisual" Category="Creates" />
+    <Link Source="TestCompositionContext" Target="TestRoundedRectangleVisual" Category="Creates" />
+    <Link Source="TestCompositionContext" Target="TestScrollVisual" Category="Creates" />
+    <Link Source="TestCompositionContext" Target="TestActivityVisual" Category="Creates" />
+    <Link Source="TestCompositionContext" Target="TestCaretVisual" Category="Creates" />
+    <Link Source="TestCompositionContext" Target="TestFocusVisual" Category="Creates" />
+    <Link Source="TestCompositionContext" Target="TestDropShadow" Category="Creates" />
+    <Link Source="TestCompositionContext" Target="TestBrush" Category="Creates" />
+    <Link Source="TestCompositionContext" Target="TestDrawingSurfaceBrush" Category="Creates" />
+
+    <!-- Caret/Focus visuals create inner SpriteVisual -->
+    <Link Source="TestCaretVisual" Target="TestSpriteVisual" Category="Creates" />
+    <Link Source="TestFocusVisual" Target="TestSpriteVisual" Category="Creates" />
+  </Links>
+
+  <!-- Categories -->
+  <Categories>
+    <Category Id="TestClass" Label="Test Class" Background="#FF4682B4" />
+    <Category Id="Infrastructure" Label="Infrastructure" Background="#FF6B8E23" />
+    <Category Id="ReactModule" Label="React Module" Background="#FFDA70D6" />
+    <Category Id="Composition" Label="Composition" Background="#FFCD853F" />
+    <Category Id="Uses" Label="Uses" Stroke="#FF4682B4" />
+    <Category Id="Creates" Label="Creates" Stroke="#FF6B8E23" StrokeDashArray="4 2" />
+    <Category Id="Registers" Label="Registers" Stroke="#FFDA70D6" StrokeDashArray="2 2" />
+    <Category Id="Inherits" Label="Inherits" Stroke="#FFCD853F" StrokeThickness="2" />
+  </Categories>
+
+  <!-- Styles -->
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Test Class" ValueLabel="True">
+      <Condition Expression="HasCategory('TestClass')" />
+      <Setter Property="Background" Value="#FF4682B4" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="FontWeight" Value="Bold" />
+      <Setter Property="Shape" Value="None" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Infrastructure" ValueLabel="True">
+      <Condition Expression="HasCategory('Infrastructure')" />
+      <Setter Property="Background" Value="#FF6B8E23" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="Shape" Value="None" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="React Module" ValueLabel="True">
+      <Condition Expression="HasCategory('ReactModule')" />
+      <Setter Property="Background" Value="#FFDA70D6" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="Shape" Value="None" />
+    </Style>
+    <Style TargetType="Node" GroupLabel="Composition" ValueLabel="True">
+      <Condition Expression="HasCategory('Composition')" />
+      <Setter Property="Background" Value="#FFCD853F" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="Shape" Value="None" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Inherits" ValueLabel="True">
+      <Condition Expression="HasCategory('Inherits')" />
+      <Setter Property="StrokeThickness" Value="2" />
+      <Setter Property="StrokeDashArray" Value="" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Creates" ValueLabel="True">
+      <Condition Expression="HasCategory('Creates')" />
+      <Setter Property="StrokeDashArray" Value="4 2" />
+    </Style>
+    <Style TargetType="Link" GroupLabel="Registers" ValueLabel="True">
+      <Condition Expression="HasCategory('Registers')" />
+      <Setter Property="StrokeDashArray" Value="2 2" />
+    </Style>
+  </Styles>
+
+</DirectedGraph>

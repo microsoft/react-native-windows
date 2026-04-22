@@ -6,32 +6,10 @@
 
 'use strict';
 
-const React = require('react');
-const ReactNative = require('react-native');
+const {TurboModuleRegistry} = require('react-native');
+const TestModule = TurboModuleRegistry.get('TestModule');
 
-const {AppRegistry, StyleSheet, Text, View} = ReactNative;
-
-const {TestModule} = ReactNative.NativeModules;
-
-class DummyTest extends React.Component {
-  componentDidMount() {
-    TestModule.markTestPassed(true);
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.row}>Some text</Text>
-      </View>
-    );
-  }
+if (!TestModule) {
+  TestModule.markTestPassed(false, 'TestModule is not available');
 }
-
-var styles = StyleSheet.create({
-  container: {},
-  row: {},
-});
-
-AppRegistry.registerComponent('DummyTest', () => DummyTest);
-
-module.exports = DummyTest;
+TestModule.markTestPassed(true);

@@ -79,7 +79,6 @@
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;
-        RN_PLATFORM=win32;
         RN_EXPORT=;
         JSI_EXPORT=;
         %(PreprocessorDefinitions)
@@ -88,10 +87,13 @@
       <AdditionalIncludeDirectories>
         $(VCInstallDir)UnitTest\include;
         "$(ReactNativeWindowsDir)Microsoft.ReactNative";
+        "$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost";
         "$(ReactNativeWindowsDir)\Shared\tracing";
+        "$(IntDir)\..\React.Windows.Desktop\Generated Files";
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
       <UseFullPaths>true</UseFullPaths>
+
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -114,8 +116,15 @@
     <ClCompile Include="HttpOriginPolicyIntegrationTest.cpp" />
     <ClCompile Include="HttpResourceIntegrationTests.cpp" />
     <ClCompile Include="HttpServer.cpp" />
+    <ClCompile Include="Modules\TestAppState.cpp" />
+    <ClCompile Include="Modules\TestDeviceInfo.cpp" />
     <ClCompile Include="Modules\TestDevSettingsModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="Modules\TestImageLoaderModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
+    <ClCompile Include="RNTesterHeadlessTests.cpp" />
+    <ClCompile Include="TestReactNativeHostHolder.cpp" />
+    <ClCompile Include="WinRTActivationShims.cpp" />
+    <ClCompile Include="TestReactPackageProvider.cpp" />
+    <ClCompile Include="TestUIDispatcher.cpp" />
     <ClCompile Include="WebSocketIntegrationTest.cpp" />
     <ClCompile Include="WebSocketServer.cpp" />
   </ItemGroup>
@@ -136,15 +145,27 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HttpServer.h" />
+    <ClInclude Include="TestCompositionContext.h" />
+    <ClInclude Include="Modules\TestAppState.h" />
+    <ClInclude Include="Modules\TestDeviceInfo.h" />
     <ClInclude Include="Modules\TestDevSettingsModule.h" />
     <ClInclude Include="Modules\TestImageLoaderModule.h" />
+    <ClInclude Include="Modules\TestModule.h" />
+    <ClInclude Include="TestReactNativeHostHolder.h" />
+    <ClInclude Include="TestReactPackageProvider.h" />
+    <ClInclude Include="TestUIDispatcher.h" />
     <ClInclude Include="WebSocketServer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestTypeDependencies.dgml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.84.0.0" />
     <!-- TODO: Remove!!! -->
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
+    <PackageReference Include="$(HermesPackageName)" Version="$(HermesVersion)" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="Test">
