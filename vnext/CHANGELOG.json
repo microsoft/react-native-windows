@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 22 Apr 2026 02:49:04 GMT",
+      "version": "0.0.0-canary.1051",
+      "tag": "react-native-windows_v0.0.0-canary.1051",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "43abd576dd1992dbd833063751ec81c3b6c16218",
+            "comment": "Re-introduce Desktop integration tests"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Apr 2026 02:54:29 GMT",
       "version": "0.0.0-canary.1050",
       "tag": "react-native-windows_v0.0.0-canary.1050",
