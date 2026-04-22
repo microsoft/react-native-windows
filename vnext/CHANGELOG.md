@@ -1,8 +1,44 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 22 Apr 2026 02:49:04 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1051
+
+Wed, 22 Apr 2026 02:49:04 GMT
+
+### Changes
+
+- Re-introduce Desktop integration tests (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.1050
+
+Tue, 21 Apr 2026 02:54:29 GMT
+
+### Changes
+
+- Fix project compilation (vmorozov@microsoft.com)
+- Fix ScrollView keyboard scroll drift on long key press (74712637+iamAbhi-916@users.noreply.github.com)
+- Add folly and fast-float to fork-sync (vmorozov@microsoft.com)
+- Fix multiline TextInput crash from TxDrawD2D reentrancy (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.288
+
+## 0.0.0-canary.1049
+
+Wed, 08 Apr 2026 13:25:17 GMT
+
+### Changes
+
+- Upgrade to Boost 1.84 (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.1048
+
+Tue, 07 Apr 2026 23:42:38 GMT
+
+### Changes
+
+- Fix unused function warning (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1047
 

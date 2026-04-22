@@ -29,7 +29,10 @@
     "@rnw-scripts/eslint-config": "1.2.38",
     "@types/node": "^22.14.0",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
-    "@typescript-eslint/parser": "^8.36.0"
+    "@typescript-eslint/parser": "^8.36.0",
+    "eslint": "^8.19.0",
+    "prettier": "^3.6.2",
+    "typescript": "5.0.4"
   },
   "peerDependencies": {
     "eslint": "*",

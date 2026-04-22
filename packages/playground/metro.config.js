@@ -9,13 +9,23 @@ const {makeMetroConfig} = require('@rnw-scripts/metro-dev-config');
 const fs = require('fs');
 const path = require('path');
 
-const rnwPath = fs.realpathSync(
-  path.dirname(require.resolve('react-native-windows/package.json')),
-);
+// On Windows, require.resolve through symlinks (e.g. yarn workspace links) can
+// return paths with a different drive letter case than process.cwd(). Metro's
+// file system lookup is case-sensitive, so we normalize to match cwd.
+function normalizePathDrive(p) {
+  if (process.platform === 'win32' && p.length >= 2 && p[1] === ':') {
+    return process.cwd()[0] + p.slice(1);
+  }
+  return p;
+}
 
-const rnwTesterPath = fs.realpathSync(
+const rnwPath = normalizePathDrive(fs.realpathSync(
+  path.dirname(require.resolve('react-native-windows/package.json')),
+));
+
+const rnwTesterPath = normalizePathDrive(fs.realpathSync(
   path.dirname(require.resolve('@react-native-windows/tester/package.json')),
-);
+));
 
 const devPackages = {
   'react-native': path.normalize(rnwPath),
@@ -144,8 +154,25 @@ function tryResolveDevRelativeImport(
   return null;
 }
 
-module.exports = makeMetroConfig({
+const baseConfig = makeMetroConfig({
   resolver: {
     resolveRequest: devResolveRequest,
   },
 });
+
+// The getModulesRunBeforeMainModule paths (from @rnx-kit/metro-config) may have
+// wrong drive letter case on Windows due to require.resolve through symlinks.
+// Metro compares these paths via strict equality against module paths in the
+// bundle graph, so the case must match exactly.
+const originalGetModulesRunBeforeMainModule =
+  baseConfig.serializer.getModulesRunBeforeMainModule;
+baseConfig.serializer = {
+  ...baseConfig.serializer,
+  getModulesRunBeforeMainModule: (...args) => {
+    return originalGetModulesRunBeforeMainModule(...args).map(p =>
+      normalizePathDrive(fs.realpathSync(p)),
+    );
+  },
+};
+
+module.exports = baseConfig;

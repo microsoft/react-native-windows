@@ -35,11 +35,11 @@ import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
 
 export type {PressableAndroidRippleConfig};
 
-export type PressableStateCallbackType = $ReadOnly<{
+export type PressableStateCallbackType = Readonly<{
   pressed: boolean,
 }>;
 
-type PressableBaseProps = $ReadOnly<{
+type PressableBaseProps = Readonly<{
   /**
    * Whether a press gesture can be interrupted by a parent gesture such as a
    * scroll event. Defaults to true.
@@ -210,7 +210,7 @@ type PressableBaseProps = $ReadOnly<{
   unstable_pressDelay?: ?number,
 }>;
 
-export type PressableProps = $ReadOnly<{
+export type PressableProps = Readonly<{
   // Pressability may override `onMouseEnter` and `onMouseLeave` to
   // implement `onHoverIn` and `onHoverOut` in a platform-agnostic way.
   // Hover events should be used instead of mouse events.

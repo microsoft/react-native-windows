@@ -70,16 +70,16 @@ struct IsReactTurboModule : std::bool_constant<ReactIsReactTurboModuleImpl(stati
   INTERNAL_REACT_RECOMPOSER_4(     \
       (__VA_ARGS__, INTERNAL_REACT_MODULE_3_ARGS, INTERNAL_REACT_MODULE_2_ARGS, INTERNAL_REACT_MODULE_1_ARG, ))
 
-#define INTERNAL_REACT_MODULE_NO_REGISTRATION_AND_PROVIDER(                                            \
-    moduleStruct, moduleName, eventEmitterName, isReactTurboModule)                                    \
-  struct moduleStruct;                                                                                 \
-                                                                                                       \
-  constexpr bool ReactIsReactTurboModuleImpl(moduleStruct *) noexcept { return isReactTurboModule; }   \
-                                                                                                       \
-  template <class TRegistry>                                                                           \
-  constexpr void GetReactModuleInfo(moduleStruct *, TRegistry &registry) noexcept {                    \
-    registry.RegisterModule(                                                                           \
-        moduleName, eventEmitterName, winrt::Microsoft::ReactNative::ReactAttributeId<__COUNTER__>{}); \
+#define INTERNAL_REACT_MODULE_NO_REGISTRATION_AND_PROVIDER(                                                           \
+    moduleStruct, moduleName, eventEmitterName, isReactTurboModule)                                                   \
+  struct moduleStruct;                                                                                                \
+                                                                                                                      \
+  [[maybe_unused]] constexpr bool ReactIsReactTurboModuleImpl(moduleStruct *) noexcept { return isReactTurboModule; } \
+                                                                                                                      \
+  template <class TRegistry>                                                                                          \
+  constexpr void GetReactModuleInfo(moduleStruct *, TRegistry &registry) noexcept {                                   \
+    registry.RegisterModule(                                                                                          \
+        moduleName, eventEmitterName, winrt::Microsoft::ReactNative::ReactAttributeId<__COUNTER__>{});                \
   }
 
 // Another version of REACT_MODULE but does not do auto registration

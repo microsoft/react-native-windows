@@ -51,7 +51,7 @@ export type TouchableWithoutFeedbackPropsWindows = {
 };
 // Windows]
 
-export type TouchableWithoutFeedbackProps = $ReadOnly<
+export type TouchableWithoutFeedbackProps = Readonly<
   {
     children?: ?React.Node,
     /**

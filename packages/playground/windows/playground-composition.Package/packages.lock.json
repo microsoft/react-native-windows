@@ -4,8 +4,8 @@
     "UAP,Version=v10.0.17763": {
       "boost": {
         "type": "Transitive",
-        "resolved": "1.83.0",
-        "contentHash": "cy53VNMzysEMvhBixDe8ujPk67Fcj3v6FPHQnH91NYJNLHpc6jxa2xq9ruCaaJjE4M3YrGSHDi4uUSTGBWw6EQ=="
+        "resolved": "1.84.0",
+        "contentHash": "4el2YP3cNJDVFPdzOso+LxGvdWP2rHxML4siq8VdonNypW2m4q503tHfCj6vK0L1UfxioE2hpFGb4ITEua73tg=="
       },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
@@ -14,8 +14,8 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
-        "resolved": "0.0.0-2512.22001-bc3d0ed7",
-        "contentHash": "aMuCKrIwkCAnT56+oKqmxgfIaAHlKRVt8IiG/jtMbG01QH1mLPwL7wP89jRMsYSJzikW96trqgpUllZZa3O+Qw=="
+        "resolved": "0.0.0-2604.21001-94aa5e1d",
+        "contentHash": "8eHA3O043jIeK7E1gJbzgsdujaDTIBwLSl6pZj7CdQl+ryFqaW88XVU9ogWJPxk5lR2T4cU/OlEJfZynqoyYew=="
       },
       "Microsoft.SourceLink.Common": {
         "type": "Transitive",
@@ -149,43 +149,35 @@
       "common": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.83.0, )"
-        }
-      },
-      "folly": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "[1.83.0, )"
+          "boost": "[1.84.0, )"
         }
       },
       "microsoft.reactnative": {
         "type": "Project",
         "dependencies": {
           "Common": "[1.0.0, )",
-          "Folly": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.0.0-2512.22001-bc3d0ed7, )",
+          "Microsoft.JavaScript.Hermes": "[0.0.0-2604.21001-94aa5e1d, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.WindowsAppSDK": "[1.8.260209005, )",
           "ReactCommon": "[1.0.0, )",
-          "boost": "[1.83.0, )"
+          "boost": "[1.84.0, )"
         }
       },
       "playground-composition": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.JavaScript.Hermes": "[0.0.0-2512.22001-bc3d0ed7, )",
+          "Microsoft.JavaScript.Hermes": "[0.0.0-2604.21001-94aa5e1d, )",
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
           "Microsoft.WindowsAppSDK": "[1.8.260209005, )",
           "SampleCustomComponent": "[1.0.0, )",
-          "boost": "[1.83.0, )"
+          "boost": "[1.84.0, )"
         }
       },
       "reactcommon": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
-          "boost": "[1.83.0, )"
+          "boost": "[1.84.0, )"
         }
       },
       "samplecustomcomponent": {
@@ -194,7 +186,7 @@
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
           "Microsoft.WindowsAppSDK": "[1.8.260209005, )",
-          "boost": "[1.83.0, )"
+          "boost": "[1.84.0, )"
         }
       }
     },

@@ -5,4 +5,6 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="fmt\fmt.vcxitems" />
+  <Import Project="folly\folly.vcxitems" />
+  <Import Project="fast-float\fast-float.vcxitems" />
 </Project>

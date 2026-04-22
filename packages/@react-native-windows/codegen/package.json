@@ -30,6 +30,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.25.2",
     "@rnw-scripts/eslint-config": "1.2.38",
     "@rnw-scripts/jest-unittest-config": "1.5.12",
     "@rnw-scripts/just-task": "2.3.58",
