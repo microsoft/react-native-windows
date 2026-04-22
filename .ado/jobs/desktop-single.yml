@@ -27,21 +27,9 @@ steps:
     displayName: Install IIS
 
   - pwsh: |
-      function Invoke-WebRequestWithRetry($Uri, $OutFile, $MaxRetries = 3) {
-        for ($i = 1; $i -le $MaxRetries; $i++) {
-          try {
-            Write-Host "Downloading $OutFile (attempt $i of $MaxRetries)"
-            Invoke-WebRequest -Uri $Uri -OutFile $OutFile
-            return
-          } catch {
-            Write-Host "Attempt $i failed: $_"
-            if ($i -eq $MaxRetries) { throw }
-            Start-Sleep -Seconds (5 * $i)
-          }
-        }
-      }
+      $DownloadScript = "$(Build.SourcesDirectory)\vnext\Scripts\Tfs\Invoke-WebRequestWithRetry.ps1"
 
-      Invoke-WebRequestWithRetry `
+      & $DownloadScript `
         -Uri 'https://download.visualstudio.microsoft.com/download/pr/20598243-c38f-4538-b2aa-af33bc232f80/ea9b2ca232f59a6fdc84b7a31da88464/dotnet-hosting-8.0.3-win.exe' `
         -OutFile dotnet-hosting-8.0.3-win.exe
 
@@ -49,7 +37,7 @@ steps:
       Start-Process -Wait -FilePath .\dotnet-hosting-8.0.3-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
       Write-Host 'Installed .NET hosting bundle'
 
-      Invoke-WebRequestWithRetry `
+      & $DownloadScript `
         -Uri 'https://download.visualstudio.microsoft.com/download/pr/f2ec926e-0d98-4a8b-8c70-722ccc2ca0e5/b59941b0c60f16421679baafdb7e9338/dotnet-sdk-7.0.407-win-x64.exe' `
         -OutFile dotnet-sdk-7.0.407-win-x64.exe
 
@@ -57,6 +45,18 @@ steps:
       Start-Process -Wait -FilePath .\dotnet-sdk-7.0.407-win-x64.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
       Write-Host 'Installed .NET 7 SDK'
     displayName: Install the .NET Core Hosting Bundle
+
+  - pwsh: |
+      $DownloadScript = "$(Build.SourcesDirectory)\vnext\Scripts\Tfs\Invoke-WebRequestWithRetry.ps1"
+
+      & $DownloadScript `
+        -Uri 'https://aka.ms/windowsappsdk/1.8/latest/windowsappruntimeinstall-x64.exe' `
+        -OutFile windowsappruntimeinstall-x64.exe
+
+      Write-Host 'Installing Windows App SDK Runtime'
+      Start-Process -Wait -FilePath .\windowsappruntimeinstall-x64.exe -ArgumentList '--quiet'
+      Write-Host 'Installed Windows App SDK Runtime'
+    displayName: Install Windows App SDK Runtime
 
   - template: ../templates/checkout-shallow.yml
 
