@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 22 Apr 2026 14:36:47 GMT",
+      "version": "0.83.0-preview.2",
+      "tag": "@office-iss/react-native-win32_v0.83.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "protikbiswas@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "d23bf1e20c21916c5c28bf4d5c781aa58e3999f5",
+            "comment": "updating react-native version to 0.83.4 from RC builds"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Mar 2026 12:02:27 GMT",
       "version": "0.83.0-preview.1",
       "tag": "@office-iss/react-native-win32_v0.83.0-preview.1",
