@@ -36,8 +36,20 @@ updates:
         - 'minor'
         - 'patch'
   ignore:
-    # Pin @types/react* to the React 18.2 minor used by this branch.
+    # Pin react + react-native + react-test-renderer + @types/react* to the React 18.2 minor used by this branch.
     # Bumping to 18.3 breaks TS compilation against the React 18.2 runtime.
+    - dependency-name: "react"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
+    - dependency-name: "react-native"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
+    - dependency-name: "react-test-renderer"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
     - dependency-name: "@types/react"
       update-types:
         - "version-update:semver-minor"
@@ -69,7 +81,19 @@ updates:
         - 'minor'
         - 'patch'
   ignore:
-    # Pin @types/react* to the React 19.1 minor used by this branch.
+    # Pin react + react-native + react-test-renderer + @types/react* to the React 19.1 minor used by this branch.
+    - dependency-name: "react"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
+    - dependency-name: "react-native"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
+    - dependency-name: "react-test-renderer"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
     - dependency-name: "@types/react"
       update-types:
         - "version-update:semver-minor"
@@ -101,7 +125,19 @@ updates:
         - 'minor'
         - 'patch'
   ignore:
-    # Pin @types/react* to the React 19.1 minor used by this branch.
+    # Pin react + react-native + react-test-renderer + @types/react* to the React 19.1 minor used by this branch.
+    - dependency-name: "react"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
+    - dependency-name: "react-native"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
+    - dependency-name: "react-test-renderer"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
     - dependency-name: "@types/react"
       update-types:
         - "version-update:semver-minor"
@@ -133,7 +169,19 @@ updates:
         - 'minor'
         - 'patch'
   ignore:
-    # Pin @types/react* to the React 19.2 minor used by this branch.
+    # Pin react + react-native + react-test-renderer + @types/react* to the React 19.2 minor used by this branch.
+    - dependency-name: "react"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
+    - dependency-name: "react-native"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
+    - dependency-name: "react-test-renderer"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
     - dependency-name: "@types/react"
       update-types:
         - "version-update:semver-minor"
@@ -165,7 +213,19 @@ updates:
         - 'minor'
         - 'patch'
   ignore:
-    # Pin @types/react* to the React 19.2 minor used by this branch.
+    # Pin react + react-native + react-test-renderer + @types/react* to the React 19.2 minor used by this branch.
+    - dependency-name: "react"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
+    - dependency-name: "react-native"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
+    - dependency-name: "react-test-renderer"
+      update-types:
+        - "version-update:semver-minor"
+        - "version-update:semver-major"
     - dependency-name: "@types/react"
       update-types:
         - "version-update:semver-minor"
