@@ -265,31 +265,20 @@ extends:
             timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
             variables:
               - template: .ado/variables/windows.yml@self
-              # Enable if any issues RNTesterIntegrationTests::* become unstable.
+              # Enable if any issues RNTesterHeadlessTests::* become unstable.
               - name: Desktop.IntegrationTests.SkipRNTester
                 value: false
-              #5059 - Disable failing or intermittent tests (IntegrationTestHarness,WebSocket,Logging).
               #10732 - WebSocketIntegrationTest::SendReceiveSsl fails on Windows Server 2022.
               #12714 - Disable for first deployment of test website.
-              #14217 - Reneable RNTesterIntegrationTests
               - name: Desktop.IntegrationTests.Filter
                 value: >
-                  (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
-                  (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
-                  (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketBlob)&
-                  (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketMultipleSend)&
                   (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectClose)&
                   (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectNoClose)&
                   (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveClose)&
                   (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendConsecutive)&
                   (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveLargeMessage)&
                   (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveSsl)&
-                  (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)&
-                  (FullyQualifiedName!=RNTesterIntegrationTests::Dummy)&
-                  (FullyQualifiedName!=RNTesterIntegrationTests::Fetch)&
-                  (FullyQualifiedName!=RNTesterIntegrationTests::XHRSample)&
-                  (FullyQualifiedName!=RNTesterIntegrationTests::Blob)&
-                  (FullyQualifiedName!=RNTesterIntegrationTests::Logging)
+                  (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)
               #6799 - HostFunctionTest, HostObjectProtoTest crash under JSI/V8;
               #        PreparedJavaScriptSourceTest asserts/fails under JSI/ChakraCore
               - name: Desktop.UnitTests.Filter
