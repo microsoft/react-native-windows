@@ -2600,16 +2600,16 @@ __metadata:
   linkType: hard
 
 "@microsoft/api-extractor@npm:^7.52.2":
-  version: 7.58.5
-  resolution: "@microsoft/api-extractor@npm:7.58.5"
+  version: 7.58.7
+  resolution: "@microsoft/api-extractor@npm:7.58.7"
   dependencies:
     "@microsoft/api-extractor-model": "npm:7.33.8"
     "@microsoft/tsdoc": "npm:~0.16.0"
     "@microsoft/tsdoc-config": "npm:~0.18.1"
     "@rushstack/node-core-library": "npm:5.23.1"
     "@rushstack/rig-package": "npm:0.7.3"
-    "@rushstack/terminal": "npm:0.23.0"
-    "@rushstack/ts-command-line": "npm:5.3.8"
+    "@rushstack/terminal": "npm:0.24.0"
+    "@rushstack/ts-command-line": "npm:5.3.9"
     diff: "npm:~8.0.2"
     minimatch: "npm:10.2.3"
     resolve: "npm:~1.22.1"
@@ -2618,7 +2618,7 @@ __metadata:
     typescript: "npm:5.9.3"
   bin:
     api-extractor: bin/api-extractor
-  checksum: 10c0/734abc331b45110bae14e1d27e4a80e50a791021b9f0617ba729af6776d6ae88ca9d0cc8c51fcbb7775a772342a45ea98e74e25991a9ba927bf8837f226e0cb3
+  checksum: 10c0/307bb8c5a689160ae798c231c7a9722df14bbf5963a08d12d0f6a8998959015da3d62ba08e15eea37deae0ac61685d11f4cc765999f2339ffd14ebc1e9bd5c82
   languageName: node
   linkType: hard
 
@@ -5351,9 +5351,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/terminal@npm:0.23.0":
-  version: 0.23.0
-  resolution: "@rushstack/terminal@npm:0.23.0"
+"@rushstack/terminal@npm:0.24.0":
+  version: 0.24.0
+  resolution: "@rushstack/terminal@npm:0.24.0"
   dependencies:
     "@rushstack/node-core-library": "npm:5.23.1"
     "@rushstack/problem-matcher": "npm:0.2.1"
@@ -5363,19 +5363,19 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/9727509417a5fc26a8a99ec57b51a5fde6390a9bf99102d2f82bb3db4f3a76e10826b0ae95b98314f6ddcb49b88016d6105a415684b60d4c82ba87944070c2f7
+  checksum: 10c0/7537ac0f589a1dbdcb4e03c92009aff63165d0d86f2e4511f7e2cb707ae35a9e04f438dd069aedf94ed61e5e6b534ff2e1d4bf2b25187d76fe09b8c52ab7a4ad
   languageName: node
   linkType: hard
 
-"@rushstack/ts-command-line@npm:5.3.8":
-  version: 5.3.8
-  resolution: "@rushstack/ts-command-line@npm:5.3.8"
+"@rushstack/ts-command-line@npm:5.3.9":
+  version: 5.3.9
+  resolution: "@rushstack/ts-command-line@npm:5.3.9"
   dependencies:
-    "@rushstack/terminal": "npm:0.23.0"
+    "@rushstack/terminal": "npm:0.24.0"
     "@types/argparse": "npm:1.0.38"
     argparse: "npm:~1.0.9"
     string-argv: "npm:~0.3.1"
-  checksum: 10c0/a9841b787bab23a2c2ca112bede720b4c375f46d507c967eb5b05cce76960e52e52340894744f312e82eca5eb4dfe81ea6b9d24a25dec06bdead86b57a324850
+  checksum: 10c0/353589c9dbd53dd81cafa059c488a573ff12472b25387863fca9eebd47ae2312cf614689c27ce50eaefba1a7d112539950e7a5c1ea8b15e255a60977659b50fb
   languageName: node
   linkType: hard
 
@@ -7413,8 +7413,8 @@ __metadata:
   linkType: hard
 
 "beachball@npm:^2.20.0":
-  version: 2.64.3
-  resolution: "beachball@npm:2.64.3"
+  version: 2.65.0
+  resolution: "beachball@npm:2.65.0"
   dependencies:
     "@vercel/detect-agent": "npm:^1.2.1"
     cosmiconfig: "npm:^9.0.1"
@@ -7424,11 +7424,11 @@ __metadata:
     p-limit: "npm:^3.1.0"
     prompts: "npm:^2.4.2"
     semver: "npm:^7.7.4"
-    workspace-tools: "npm:^0.41.2"
+    workspace-tools: "npm:^0.41.4"
     yargs-parser: "npm:^21.1.1"
   bin:
     beachball: bin/beachball.js
-  checksum: 10c0/7c1bc757821f6b15399d22121f62a0feadde4c66195f1d2b1f6d1d861e34cea3a58973cc9f99326be3451f7b3eb1e68cd75531055f8cf4677ca798da4f9d2c1a
+  checksum: 10c0/f08f78d0afac87fcb488586f56903c23e1fe89c6777e048e9989a79e77d29236f3831407664fab7ce9ee7359e4f15729f347db24120adf81c32df9a7ceea2f5d
   languageName: node
   linkType: hard
 
@@ -16681,11 +16681,11 @@ __metadata:
   linkType: hard
 
 "screenshot-desktop@npm:^1.12.2":
-  version: 1.15.3
-  resolution: "screenshot-desktop@npm:1.15.3"
+  version: 1.15.4
+  resolution: "screenshot-desktop@npm:1.15.4"
   dependencies:
     temp: "npm:^0.9.4"
-  checksum: 10c0/50907ab4b92f15b70fff2552626d7c61f338aca5fc07dca53b6d3aaf500364bc3abea98bb9ac272f76aff5bbe9c00b4e27bf9a9db267732f58ff979518424a14
+  checksum: 10c0/e9207278398489b63a137874928148a094dd7a5781f3ce3f289c60b6bdd057265f58471a73b7c9392f34c49024dc09f0e79ac8644b79ed2e5afef36e38665f65
   languageName: node
   linkType: hard
 
@@ -18616,9 +18616,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workspace-tools@npm:^0.41.2":
-  version: 0.41.2
-  resolution: "workspace-tools@npm:0.41.2"
+"workspace-tools@npm:^0.41.4":
+  version: 0.41.4
+  resolution: "workspace-tools@npm:0.41.4"
   dependencies:
     "@yarnpkg/lockfile": "npm:^1.1.0"
     fast-glob: "npm:^3.3.3"
@@ -18626,7 +18626,7 @@ __metadata:
     jju: "npm:^1.4.0"
     js-yaml: "npm:^4.1.1"
     micromatch: "npm:^4.0.8"
-  checksum: 10c0/d313d261dfe427805e3099462eaf22ebbee0737d6d57783e58b31061f5b9465797419b295471b03a1fe6b0504570ba3212b0968934bdcee3389cdee068406a65
+  checksum: 10c0/76ebecf762f33761764ce5df35572df80d805130845e7b442ed055c6dbadbb08d2960f36d1366675f1d5754def31e50d356e99f1b3b6ce038e18e06ab9bda03c
   languageName: node
   linkType: hard
 
