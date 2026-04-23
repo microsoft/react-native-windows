@@ -611,6 +611,136 @@ class AccessibilityExample extends React.Component<
   }
 }
 
+function OutlineExample(): React.Node {
+  const defaultStyleSize = {width: 50, height: 50};
+
+  return (
+    <View
+      accessible
+      testID="view-test-outline"
+      style={{
+        padding: 10,
+        flexDirection: 'row',
+        gap: 20,
+        margin: 10,
+        flexWrap: 'wrap',
+      }}>
+      <View
+        style={[
+          defaultStyleSize,
+          {
+            borderColor: 'red',
+            borderWidth: 8,
+            outlineWidth: 8,
+            outlineColor: 'purple',
+          },
+        ]}
+      />
+      <View
+        style={[
+          defaultStyleSize,
+          {
+            borderColor: 'red',
+            borderWidth: 8,
+            outlineWidth: 8,
+            borderRadius: 20,
+            outlineColor: 'purple',
+          },
+        ]}
+      />
+      <View
+        style={[
+          defaultStyleSize,
+          {
+            borderColor: 'red',
+            borderWidth: 8,
+            outlineWidth: 8,
+            borderTopLeftRadius: 20,
+            borderBottomRightRadius: 20,
+            outlineColor: 'purple',
+          },
+        ]}
+      />
+      <View
+        style={[
+          defaultStyleSize,
+          {
+            borderColor: 'green',
+            borderWidth: 8,
+            outlineWidth: 8,
+            outlineColor: 'orange',
+            outlineStyle: 'solid',
+            outlineOffset: 5,
+            marginLeft: 5,
+          },
+        ]}
+      />
+      <View
+        style={[
+          defaultStyleSize,
+          {
+            borderColor: 'green',
+            borderWidth: 8,
+            outlineWidth: 8,
+            borderRadius: 20,
+            outlineColor: 'orange',
+            outlineStyle: 'dotted',
+          },
+        ]}
+      />
+      <View
+        style={[
+          defaultStyleSize,
+          {
+            borderColor: 'green',
+            borderWidth: 8,
+            outlineWidth: 8,
+            borderTopLeftRadius: 20,
+            borderBottomRightRadius: 20,
+            outlineColor: 'orange',
+            outlineStyle: 'dashed',
+          },
+        ]}
+      />
+      <View
+        style={[
+          defaultStyleSize,
+          {
+            width: 100,
+            borderColor: 'green',
+            borderWidth: 8,
+            outlineWidth: 8,
+            borderRadius: '100%',
+            outlineColor: 'orange',
+          },
+        ]}
+      />
+      <View
+        style={[
+          defaultStyleSize,
+          {
+            borderColor: 'green',
+            borderWidth: 12,
+            outlineWidth: 4,
+            outlineOffset: -8,
+            outlineColor: 'orange',
+          },
+        ]}
+      />
+      <View
+        style={[
+          defaultStyleSize,
+          {
+            outlineWidth: 9,
+            outlineColor: 'orange',
+          },
+        ]}
+      />
+    </View>
+  );
+}
+
+
 class HitSlopExample extends React.Component<
   $ReadOnly<{||}>,
   {|color: string|},
@@ -660,7 +790,7 @@ function BoxSizingExample(): React.Node {
   });
 
   return (
-    <View testID={'view-test-box-sizing'}>
+    <View accessible testID={'view-test-box-sizing'}>
       <RNTesterText>Content box 50x25</RNTesterText>
       <View style={[styles.boxSizingBox, {boxSizing: 'content-box'}]}>
         <View style={styles.boxSizingChild} />
@@ -957,6 +1087,7 @@ export default ({
       render(): React.Node {
         return (
           <View
+            accessible
             testID="view-test-rounded-borders-percentages"
             style={{flexDirection: 'row', flexWrap: 'wrap'}}>
             <View
@@ -1421,6 +1552,11 @@ export default ({
       title: 'Box Shadow',
       name: 'box-shadow',
       render: BoxShadowExample,
+    },
+    {
+      title: 'Outline',
+      name: 'outline',
+      render: OutlineExample,
     },
     {
       title: 'Box Sizing',
