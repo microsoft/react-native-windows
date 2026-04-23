@@ -4970,20 +4970,24 @@ __metadata:
   linkType: hard
 
 "@rnx-kit/jest-preset@npm:^0.3.1":
-  version: 0.3.1
-  resolution: "@rnx-kit/jest-preset@npm:0.3.1"
+  version: 0.3.2
+  resolution: "@rnx-kit/jest-preset@npm:0.3.2"
   dependencies:
     "@babel/core": "npm:^7.0.0"
     "@babel/preset-env": "npm:^7.0.0"
     "@babel/preset-typescript": "npm:^7.0.0"
+    "@jest/create-cache-key-function": "npm:^29.7.0"
     "@rnx-kit/tools-react-native": "npm:^2.3.2"
     find-up: "npm:^5.0.0"
   peerDependencies:
+    "@react-native/jest-preset": ">=0.85"
     react-native: ^0.0.0-0 || >=0.73
   peerDependenciesMeta:
+    "@react-native/jest-preset":
+      optional: true
     react-native:
       optional: true
-  checksum: 10c0/db49a32389617e5f2f5f2b8a95768e913cd97de643febab21d4bbd37b0ed3fa862adcccc798b0fdc33662b087ea9f92859ff0a3c65de18e8fe62bc0128c7a33e
+  checksum: 10c0/67cdb8331f4145eadc8704b056ddf53415e41bec1edc2f8c6126aa4cafde9109cb1d6c394eabbf59a6775f2b8ee0565089acb4e52b79b95443b8c2121ae7ab03
   languageName: node
   linkType: hard
 
@@ -7413,8 +7417,8 @@ __metadata:
   linkType: hard
 
 "beachball@npm:^2.20.0":
-  version: 2.65.0
-  resolution: "beachball@npm:2.65.0"
+  version: 2.65.1
+  resolution: "beachball@npm:2.65.1"
   dependencies:
     "@vercel/detect-agent": "npm:^1.2.1"
     cosmiconfig: "npm:^9.0.1"
@@ -7428,7 +7432,7 @@ __metadata:
     yargs-parser: "npm:^21.1.1"
   bin:
     beachball: bin/beachball.js
-  checksum: 10c0/f08f78d0afac87fcb488586f56903c23e1fe89c6777e048e9989a79e77d29236f3831407664fab7ce9ee7359e4f15729f347db24120adf81c32df9a7ceea2f5d
+  checksum: 10c0/02ebf3aceaef525a17dc6e580cc27f1e7b02fa2b161e4c2727b5212c35fd71f7bc3ce33d3b153d7ed903f52d9004c19b73206169b3aafa633aa6e16a6f8ec3a9
   languageName: node
   linkType: hard
 
