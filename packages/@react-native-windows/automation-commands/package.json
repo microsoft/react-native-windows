@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation-commands",
-  "version": "0.0.0-canary.1052",
+  "version": "0.0.0-canary.1053",
   "description": "Allows controlling your react-native-windows application",
   "main": "lib-commonjs/index.js",
   "license": "MIT",

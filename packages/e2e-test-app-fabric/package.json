@@ -42,7 +42,7 @@
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "20.0.0",
     "@react-native-windows/automation": "0.0.0-canary.1052",
-    "@react-native-windows/automation-commands": "0.0.0-canary.1052",
+    "@react-native-windows/automation-commands": "0.0.0-canary.1053",
     "@react-native-windows/fs": "^0.0.0-canary.72",
     "@react-native-windows/perf-testing": "0.0.0-canary.1038",
     "@react-native/metro-config": "0.85.0-nightly-20260114-f15985f4f",

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Thu, 23 Apr 2026 17:24:46 GMT",
+      "version": "0.0.0-canary.1053",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1053",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "4fb52489eb1ca3a577e95cd4b5bfde2ff4e2685a",
+            "comment": "Add ability for e2e screenshots"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Apr 2026 16:40:26 GMT",
       "version": "0.0.0-canary.1052",
       "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1052",

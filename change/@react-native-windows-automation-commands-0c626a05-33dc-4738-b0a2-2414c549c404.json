@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add ability for e2e screenshots",
-  "packageName": "@react-native-windows/automation-commands",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

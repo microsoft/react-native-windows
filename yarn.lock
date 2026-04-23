@@ -3524,7 +3524,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/automation-commands@npm:0.0.0-canary.1052, @react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands":
+"@react-native-windows/automation-commands@npm:0.0.0-canary.1053, @react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands"
   dependencies:
@@ -4369,7 +4369,7 @@ __metadata:
     "@react-native-community/cli": "npm:20.0.0"
     "@react-native-windows/automation": "npm:0.0.0-canary.1052"
     "@react-native-windows/automation-channel": "npm:0.0.0-canary.1052"
-    "@react-native-windows/automation-commands": "npm:0.0.0-canary.1052"
+    "@react-native-windows/automation-commands": "npm:0.0.0-canary.1053"
     "@react-native-windows/fs": "npm:^0.0.0-canary.72"
     "@react-native-windows/perf-testing": "npm:0.0.0-canary.1038"
     "@react-native-windows/tester": "npm:0.0.1"
