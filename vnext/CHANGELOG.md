@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 08 Apr 2026 03:55:02 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 22 Apr 2026 22:50:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.74.57
+
+Wed, 22 Apr 2026 22:50:06 GMT
+
+### Patches
+
+- Use hermes-windows version 0.0.0-2604.21001-94aa5e1d (#16019) (vmorozov@microsoft.com)
 
 ## 0.74.56
 
