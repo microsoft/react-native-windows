@@ -4749,9 +4749,9 @@ basic-ftp@^5.0.2:
   integrity sha512-VoMINM2rqJwJgfdHq6RiUudKt2BV+FY5ZFezP/ypmwayk68+NzzAQy4XXLlqsGD4MCzq3DrmNFD/uUmBJuGoXw==
 
 beachball@^2.20.0:
-  version "2.65.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.65.0.tgz#d7685ea9583876340a09f81511a2ed10e5c4f5b6"
-  integrity sha512-nZuHjXLzZBrkUyKwlHTFi5PgLC2wizd3aPepn3RvCTb8sQdw/fGhrar16maM72tx6LmM6ib/DOn6XrMS6CNoZA==
+  version "2.65.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.65.1.tgz#e3d4d6905650475e4383daca752f2760c098eb7b"
+  integrity sha512-tTbQop5ZXIGjhuIeCLjH14Z5c17YXyshJlKRbi9A+36++IzAL4qhsm2ttFELEdO5fXwa5tPjVSjsqSkClZfAVA==
   dependencies:
     "@vercel/detect-agent" "^1.2.1"
     cosmiconfig "^9.0.1"
