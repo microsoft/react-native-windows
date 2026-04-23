@@ -3600,7 +3600,7 @@ __metadata:
     "@types/xmldom": "npm:^0.1.30"
     "@typescript-eslint/eslint-plugin": "npm:^8.36.0"
     "@typescript-eslint/parser": "npm:^8.36.0"
-    "@xmldom/xmldom": "npm:^0.7.7"
+    "@xmldom/xmldom": "npm:^0.8.13"
     babel-jest: "npm:^29.6.3"
     chalk: "npm:^4.1.0"
     cli-spinners: "npm:^2.2.0"
@@ -3769,7 +3769,7 @@ __metadata:
     "@types/semver": "npm:^7.3.3"
     "@typescript-eslint/eslint-plugin": "npm:^8.36.0"
     "@typescript-eslint/parser": "npm:^8.36.0"
-    "@xmldom/xmldom": "npm:^0.7.7"
+    "@xmldom/xmldom": "npm:^0.8.13"
     babel-jest: "npm:^29.6.3"
     ci-info: "npm:^3.2.0"
     envinfo: "npm:^7.8.1"
@@ -6543,10 +6543,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xmldom/xmldom@npm:^0.7.7":
-  version: 0.7.13
-  resolution: "@xmldom/xmldom@npm:0.7.13"
-  checksum: 10c0/cb02e4e8d986acf18578a5f25d1bce5e18d08718f40d8a0cdd922a4c112c8e00daf94de4e43f9556ed147c696b135f2ab81fa9a2a8a0416f60af15d156b60e40
+"@xmldom/xmldom@npm:^0.8.13":
+  version: 0.8.13
+  resolution: "@xmldom/xmldom@npm:0.8.13"
+  checksum: 10c0/06405ee6fffba631abf715a305ace338420ebcea8baf1317f19f2752f5c505952b7df45159908e7be8451a42faa54326b780616ab4d08242b20477b2973da24b
   languageName: node
   linkType: hard
 
