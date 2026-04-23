@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use hermes-windows version 0.0.0-2604.21001-94aa5e1d",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
