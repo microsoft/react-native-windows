@@ -17,6 +17,10 @@ class InterpolationAnimatedNode final : public ValueAnimatedNode {
   virtual void OnDetachedFromNode(int64_t animatedNodeTag) override;
   virtual void OnAttachToNode(int64_t animatedNodeTag) override;
 
+  bool IsColorValue() override {
+    return m_isColorOutput;
+  }
+
   static constexpr std::string_view ExtrapolateTypeIdentity = "identity";
   static constexpr std::string_view ExtrapolateTypeClamp = "clamp";
   static constexpr std::string_view ExtrapolateTypeExtend = "extend";
@@ -35,11 +39,14 @@ class InterpolationAnimatedNode final : public ValueAnimatedNode {
   winrt::hstring GetRightExpression(const winrt::hstring &, const winrt::hstring &rightInterpolateExpression);
 
   double InterpolateValue(double value);
+  double InterpolateColor(double value);
 
   comp::ExpressionAnimation m_rawValueAnimation{nullptr};
   comp::ExpressionAnimation m_offsetAnimation{nullptr};
+  bool m_isColorOutput{false};
   std::vector<double> m_inputRanges;
-  std::vector<double> m_outputRanges;
+  std::vector<double> m_defaultOutputRanges;
+  std::vector<winrt::Windows::UI::Color> m_colorOutputRanges;
   std::string m_extrapolateLeft;
   std::string m_extrapolateRight;
 
@@ -49,8 +56,11 @@ class InterpolationAnimatedNode final : public ValueAnimatedNode {
 
   static constexpr std::string_view s_inputRangeName{"inputRange"};
   static constexpr std::string_view s_outputRangeName{"outputRange"};
+  static constexpr std::string_view s_outputTypeName{"outputType"};
   static constexpr std::string_view s_extrapolateLeftName{"extrapolateLeft"};
   static constexpr std::string_view s_extrapolateRightName{"extrapolateRight"};
+
+  static constexpr std::string_view s_colorOutputType{"color"};
 
   static constexpr std::wstring_view s_parentPropsName{L"p"};
   static constexpr std::wstring_view s_inputName{L"i"};

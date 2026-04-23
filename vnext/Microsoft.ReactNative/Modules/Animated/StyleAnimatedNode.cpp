@@ -27,7 +27,16 @@ void StyleAnimatedNode::CollectViewUpdates(winrt::Microsoft::ReactNative::JSValu
       if (const auto transformNode = manager->GetTransformAnimatedNode(propMapping.second)) {
         transformNode->CollectViewUpdates(propsMap);
       } else if (const auto node = manager->GetValueAnimatedNode(propMapping.second)) {
-        propsMap[propMapping.first] = node->Value();
+        if (node->IsColorValue()) {
+          const auto value = node->Value();
+          int32_t color;
+          memcpy(&color, &value, sizeof(int32_t));
+          propsMap[propMapping.first] = color;
+        } else {
+          propsMap[propMapping.first] = node->Value();
+        }
+      } else if (const auto node = manager->GetColorAnimatedNode(propMapping.second)) {
+        propsMap[propMapping.first] = node->GetColor();
       }
     }
   }
