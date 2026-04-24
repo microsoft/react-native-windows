@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/automation-commands
 
-<!-- This log was last generated on Wed, 22 Apr 2026 16:40:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 23 Apr 2026 17:24:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1053
+
+Thu, 23 Apr 2026 17:24:46 GMT
+
+### Changes
+
+- Add ability for e2e screenshots (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1052
 

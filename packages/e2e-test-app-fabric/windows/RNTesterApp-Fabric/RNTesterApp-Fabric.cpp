@@ -6,10 +6,13 @@
 
 #include <UIAutomation.h>
 #include <winrt/Windows.Data.Json.h>
+#include <filesystem>
 #include "winrt/AutomationChannel.h"
 
 // Includes from sample-custom-component
 #include <winrt/SampleCustomComponent.h>
+
+#include "Screenshots.h"
 
 #include "AutolinkedNativeModules.g.h"
 
@@ -37,6 +40,7 @@ winrt::Microsoft::ReactNative::IReactContext global_reactContext{nullptr};
 // Forward declarations of functions included in this code module:
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload);
 winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload);
+winrt::Windows::Data::Json::JsonObject CreateScreenshot(winrt::Windows::Data::Json::JsonValue payload);
 winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server);
 
 // Create and configure the ReactNativeHost
@@ -149,6 +153,7 @@ WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* show
 
   // Set Up Servers for E2E Testing
   winrt::AutomationChannel::CommandHandler handler;
+  handler.BindOperation(L"CreateScreenshot", CreateScreenshot);
   handler.BindOperation(L"DumpVisualTree", DumpVisualTree);
   handler.BindOperation(L"ListErrors", ListErrors);
   global_rootView = reactNativeWindow.ReactNativeIsland();
@@ -767,6 +772,32 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json
   result.Insert(L"Visual Tree", DumpVisualTreeHelper(payloadObj));
   result.Insert(L"Component Tree", DumpNativeComponentTreeHelper(payloadObj));
   return result;
+}
+
+winrt::Windows::Data::Json::JsonObject CreateScreenshot(winrt::Windows::Data::Json::JsonValue payload) {
+  RECT rect;
+  auto payloadObj = payload.GetObjectW();
+
+  MakeScreenshotParameters p;
+
+  p.testName = "RNTester";
+  if (payloadObj.HasKey(L"screenshotsPath")) {
+    p.screenshotsPath = winrt::to_string(payloadObj.GetNamedString(L"screenshotsPath"));
+  } else {
+    p.screenshotsPath = std::filesystem::temp_directory_path().string();
+  }
+
+  if (payloadObj.HasKey(L"location")) {
+    auto locObj = payloadObj.GetNamedObject(L"location");
+    rect.left = static_cast<LONG>(locObj.GetNamedNumber(L"x"));
+    rect.top = static_cast<LONG>(locObj.GetNamedNumber(L"y"));
+    rect.right = rect.left + static_cast<LONG>(locObj.GetNamedNumber(L"width"));
+    rect.bottom = rect.top + static_cast<LONG>(locObj.GetNamedNumber(L"height"));
+    p.pRect = &rect;
+  }
+  auto r = MakeScreenshot(p);
+
+  return winrt::Windows::Data::Json::JsonObject{};
 }
 
 winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server) {
