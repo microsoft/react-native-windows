@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <unordered_map>
 #include "Composition.WindowsTextInputComponentView.g.h"
 #include <ReactContext.h>
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
@@ -12,6 +11,7 @@
 #include <textserv.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
+#include <unordered_map>
 #include "../ComponentView.h"
 #include "../CompositionHelpers.h"
 #include "../CompositionViewComponentView.h"
