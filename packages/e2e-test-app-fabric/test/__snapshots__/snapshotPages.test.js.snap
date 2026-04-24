@@ -88876,6 +88876,7 @@ exports[`snapshotAllPages View 6`] = `
 
 exports[`snapshotAllPages View 7`] = `
 <View
+  accessible={true}
   style={
     {
       "flexDirection": "row",
@@ -90712,6 +90713,180 @@ exports[`snapshotAllPages View 19`] = `
 
 exports[`snapshotAllPages View 20`] = `
 <View
+  accessible={true}
+  style={
+    {
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "gap": 20,
+      "margin": 10,
+      "padding": 10,
+    }
+  }
+  testID="view-test-outline"
+>
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "borderColor": "red",
+          "borderWidth": 8,
+          "outlineColor": "purple",
+          "outlineWidth": 8,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "borderColor": "red",
+          "borderRadius": 20,
+          "borderWidth": 8,
+          "outlineColor": "purple",
+          "outlineWidth": 8,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "borderBottomRightRadius": 20,
+          "borderColor": "red",
+          "borderTopLeftRadius": 20,
+          "borderWidth": 8,
+          "outlineColor": "purple",
+          "outlineWidth": 8,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "borderColor": "green",
+          "borderWidth": 8,
+          "marginLeft": 5,
+          "outlineColor": "orange",
+          "outlineOffset": 5,
+          "outlineStyle": "solid",
+          "outlineWidth": 8,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "borderColor": "green",
+          "borderRadius": 20,
+          "borderWidth": 8,
+          "outlineColor": "orange",
+          "outlineStyle": "dotted",
+          "outlineWidth": 8,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "borderBottomRightRadius": 20,
+          "borderColor": "green",
+          "borderTopLeftRadius": 20,
+          "borderWidth": 8,
+          "outlineColor": "orange",
+          "outlineStyle": "dashed",
+          "outlineWidth": 8,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "borderColor": "green",
+          "borderRadius": "100%",
+          "borderWidth": 8,
+          "outlineColor": "orange",
+          "outlineWidth": 8,
+          "width": 100,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "borderColor": "green",
+          "borderWidth": 12,
+          "outlineColor": "orange",
+          "outlineOffset": -8,
+          "outlineWidth": 4,
+        },
+      ]
+    }
+  />
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "outlineColor": "orange",
+          "outlineWidth": 9,
+        },
+      ]
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages View 21`] = `
+<View
+  accessible={true}
   testID="view-test-box-sizing"
 >
   <Text
@@ -90795,7 +90970,7 @@ exports[`snapshotAllPages View 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 21`] = `
+exports[`snapshotAllPages View 22`] = `
 <View
   onBlur={[Function]}
   onFocus={[Function]}
@@ -91025,7 +91200,7 @@ exports[`snapshotAllPages View 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 22`] = `
+exports[`snapshotAllPages View 23`] = `
 <View
   accessibilityLabel="NativeID Example"
   accessible={true}
@@ -91047,7 +91222,7 @@ exports[`snapshotAllPages View 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 23`] = `
+exports[`snapshotAllPages View 24`] = `
 <View
   accessibilityActions={
     [
@@ -91151,7 +91326,7 @@ exports[`snapshotAllPages View 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 24`] = `
+exports[`snapshotAllPages View 25`] = `
 <View
   accessibilityLabel="Shadow Example"
   accessible={true}
@@ -91172,7 +91347,7 @@ exports[`snapshotAllPages View 24`] = `
 />
 `;
 
-exports[`snapshotAllPages View 25`] = `
+exports[`snapshotAllPages View 26`] = `
 <View
   accessibilityLabel="HitSlop Example"
   accessible={true}
@@ -91197,7 +91372,7 @@ exports[`snapshotAllPages View 25`] = `
 />
 `;
 
-exports[`snapshotAllPages View 26`] = `
+exports[`snapshotAllPages View 27`] = `
 <View
   accessibilityLabel="Tooltip Example"
   accessible={true}

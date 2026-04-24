@@ -74,10 +74,10 @@ jobs:
               workingDirectory: packages/e2e-test-app-fabric
               timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
 
-            - script: |
-                if [ -d "packages/e2e-test-app-fabric/test/__image_snapshots__/__diff_output__" ]; then
-                  echo "##vso[task.setvariable variable=DiffOutputExists]true"
-                fi
+            - powershell: |
+                if (Test-Path "packages/e2e-test-app-fabric/test/__image_snapshots__/__diff_output__") {
+                  Write-Host "##vso[task.setvariable variable=DiffOutputExists]true"
+                }
               displayName: Check for image diff output folder
               condition: failed()
 
