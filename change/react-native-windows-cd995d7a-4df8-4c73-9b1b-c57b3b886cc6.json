@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Fix touch event handling, improve reliability, and optimize performance",
   "packageName": "react-native-windows",
   "email": "gordomacmaster@gmail.com",
