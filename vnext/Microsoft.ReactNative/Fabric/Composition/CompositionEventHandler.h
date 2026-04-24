@@ -14,6 +14,7 @@
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
 #include <set>
+#include <unordered_set>
 
 namespace winrt {
 using namespace Windows::UI;
@@ -79,7 +80,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   bool releasePointerCapture(PointerId pointerId, facebook::react::Tag tag) noexcept;
 
   facebook::react::SurfaceId SurfaceId() const noexcept;
-  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView &RootComponentView() const noexcept;
+  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *RootComponentView() const noexcept;
 
   enum class UITouchType {
     Mouse,
@@ -141,7 +142,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
     ReactTaggedView initialComponentView{nullptr};
   };
 
-  static bool IsPointerWithinInitialTree(const ActiveTouch &activeTouch) noexcept;
+  bool IsPointerWithinInitialTree(const ActiveTouch &activeTouch) noexcept;
   static bool IsEndishEventType(TouchEventType eventType) noexcept;
   static const char *PointerTypeCStringFromUITouchType(UITouchType type) noexcept;
   static facebook::react::PointerEvent CreatePointerEventFromActiveTouch(
@@ -149,6 +150,14 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
       TouchEventType eventType) noexcept;
   static void
   UpdateActiveTouch(ActiveTouch &activeTouch, facebook::react::Point ptScaled, facebook::react::Point ptLocal) noexcept;
+
+  void DispatchSynthesizedTouchCancelForActiveTouch(
+      const ActiveTouch &cancelledTouch,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers);
+
+  std::vector<winrt::Microsoft::ReactNative::ComponentView> GetTouchableViewsInPathToRoot(
+      const winrt::Microsoft::ReactNative::ComponentView &componentView);
 
   void UpdateCursor() noexcept;
   void SetCursor(facebook::react::Cursor cursor, HCURSOR hcur) noexcept;
@@ -161,7 +170,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   winrt::Microsoft::ReactNative::ReactContext m_context;
 
   facebook::react::Tag m_pointerCapturingComponentTag{-1}; // Component that has captured input
-  std::vector<PointerId> m_capturedPointers;
+  std::unordered_set<PointerId> m_capturedPointers;
   HCURSOR m_hcursor{nullptr};
   bool m_hcursorOwned{false}; // If we create the cursor, so we need to destroy it
   facebook::react::Cursor m_currentCursor{facebook::react::Cursor::Auto};

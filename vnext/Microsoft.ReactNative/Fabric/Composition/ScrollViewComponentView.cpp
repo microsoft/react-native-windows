@@ -981,8 +981,6 @@ void ScrollViewComponentView::OnPointerPressed(
   Super::OnPointerPressed(args);
 
   if (!args.Handled()) {
-    auto f = args.Pointer();
-    auto g = f.PointerDeviceType();
     m_scrollVisual.OnPointerPressed(args);
   }
 }

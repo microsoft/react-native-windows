@@ -46,12 +46,12 @@ WindowsComponentDescriptorRegistry::WindowsComponentDescriptorRegistry()
 }
 
 void WindowsComponentDescriptorRegistry::add(const facebook::react::ComponentDescriptorProvider &provider) noexcept {
-  m_componentNames.push_back(provider.name);
+  m_componentNames.insert(provider.name);
   m_componentDescriptorRegistry->add(provider);
 }
 
 bool WindowsComponentDescriptorRegistry::hasComponentProvider(const std::string &name) noexcept {
-  return std::find(m_componentNames.begin(), m_componentNames.end(), name) != m_componentNames.end();
+  return m_componentNames.count(name) != 0;
 }
 
 bool WindowsComponentDescriptorRegistry::isXamlSupportRequired() const noexcept {
@@ -68,7 +68,7 @@ void WindowsComponentDescriptorRegistry::Add(
   auto builder = winrt::make<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>();
   provider(builder);
 
-  m_componentNames.push_back(winrt::to_string(componentName));
+  m_componentNames.insert(winrt::to_string(componentName));
   m_descriptorFlavors.emplace_back(std::make_shared<std::string>(winrt::to_string(componentName)));
   auto handle = reinterpret_cast<facebook::react::ComponentHandle>(
       facebook::react::ComponentName(m_descriptorFlavors.back()->c_str()));

@@ -6,6 +6,8 @@
 
 #include "CompositionViewComponentView.h"
 
+#include <vector>
+
 #include <AutoDraw.h>
 #include <Fabric/AbiState.h>
 #include <Fabric/AbiViewProps.h>
@@ -1013,15 +1015,18 @@ bool ComponentView::anyHitTestHelper(
     facebook::react::Tag &targetTag,
     facebook::react::Point &ptContent,
     facebook::react::Point &localPt) const noexcept {
-  if (auto index = m_children.Size()) {
-    do {
-      index--;
-      targetTag = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_children.GetAt(index))
-                      ->hitTest(ptContent, localPt);
-      if (targetTag != -1) {
-        return true;
-      }
-    } while (index != 0);
+  auto size = m_children.Size();
+  if (size == 0) {
+    return false;
+  }
+
+  // m_children is backed by single_threaded_vector (std::vector), so GetAt is O(1)
+  for (uint32_t i = size; i > 0; --i) {
+    targetTag = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_children.GetAt(i - 1))
+                    ->hitTest(ptContent, localPt);
+    if (targetTag != -1) {
+      return true;
+    }
   }
 
   return false;

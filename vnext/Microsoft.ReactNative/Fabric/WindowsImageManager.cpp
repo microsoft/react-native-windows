@@ -72,7 +72,6 @@ wicBitmapSourceFromStream(const winrt::Windows::Storage::Streams::IRandomAccessS
     return {decodedFrame, imagingFactory, nullptr};
   } catch (winrt::hresult_error const &ex) {
     auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
-    errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
     errorInfo->error = ::Microsoft::ReactNative::FormatHResultError(winrt::hresult_error(ex));
     return {nullptr, nullptr, errorInfo};
   }
