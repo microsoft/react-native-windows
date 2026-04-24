@@ -2208,7 +2208,6 @@ struct CompContext : winrt::implements<
   winrt::com_ptr<ID3D11Device> m_d3dDevice;
   winrt::com_ptr<ID2D1Device> m_d2dDevice;
   typename TTypeRedirects::CompositionGraphicsDevice m_compositionGraphicsDevice{nullptr};
-  winrt::com_ptr<ID3D11DeviceContext> m_d3dDeviceContext;
 };
 
 winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual
