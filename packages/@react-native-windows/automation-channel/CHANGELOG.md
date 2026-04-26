@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Thu, 09 Apr 2026 23:43:40 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 26 Apr 2026 00:02:26 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.15
+
+Sun, 26 Apr 2026 00:02:26 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.81.15
 
 ## 0.81.14
 

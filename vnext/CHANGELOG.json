@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 26 Apr 2026 00:02:26 GMT",
+      "version": "0.81.15",
+      "tag": "react-native-windows_v0.81.15",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "38021b85ed4f13c35a4c9aa7cb2fe2e873aa0117",
+            "comment": "Some fixes for rounded borders"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "38021b85ed4f13c35a4c9aa7cb2fe2e873aa0117",
+            "comment": "Fix ScrollView keyboard scroll drift on long key press"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "38021b85ed4f13c35a4c9aa7cb2fe2e873aa0117",
+            "comment": "Fix touch event handling, improve reliability, and optimize performance"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "38021b85ed4f13c35a4c9aa7cb2fe2e873aa0117",
+            "comment": "Fix multiline TextInput crash from TxDrawD2D reentrancy"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Apr 2026 23:43:40 GMT",
       "version": "0.81.14",
       "tag": "react-native-windows_v0.81.14",

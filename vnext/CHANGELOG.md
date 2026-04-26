@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 09 Apr 2026 23:43:40 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 26 Apr 2026 00:02:26 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.15
+
+Sun, 26 Apr 2026 00:02:26 GMT
+
+### Patches
+
+- Some fixes for rounded borders (30809111+acoates-ms@users.noreply.github.com)
+- Fix ScrollView keyboard scroll drift on long key press (74712637+iamAbhi-916@users.noreply.github.com)
+- Fix touch event handling, improve reliability, and optimize performance (gordomacmaster@gmail.com)
+- Fix multiline TextInput crash from TxDrawD2D reentrancy (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.81.14
 
