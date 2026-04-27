@@ -9,6 +9,7 @@
 #include <ReactCoreInjection.h>
 #include <react/runtime/PlatformTimerRegistry.h>
 #include <react/runtime/TimerManager.h>
+#include <atomic>
 
 namespace Microsoft::ReactNative {
 
@@ -114,7 +115,7 @@ struct Timing : public std::enable_shared_from_this<Timing> {
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
   winrt::Microsoft::ReactNative::ITimer m_dispatcherQueueTimer{nullptr};
   winrt::weak_ref<winrt::Microsoft::ReactNative::IReactDispatcher> m_uiDispatcher;
-  bool m_usingRendering{false};
+  std::atomic<bool> m_usingRendering{false};
   bool m_usePostForRendering{false};
 };
 
