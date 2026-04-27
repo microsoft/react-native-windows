@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 22 Apr 2026 14:35:53 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 27 Apr 2026 20:18:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0-preview.6
+
+Mon, 27 Apr 2026 20:18:59 GMT
+
+### Changes
+
+- Fix touch event handling, improve reliability, and optimize performance (gordomacmaster@gmail.com)
 
 ## 0.84.0-preview.5
 
