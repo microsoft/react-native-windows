@@ -260,58 +260,73 @@ export async function codegenWindowsInternal(
   args: string[],
   config: Config,
   options: CodeGenOptions,
+  existingSpinner?: Ora,
 ) {
   const startTime = performance.now();
-  const spinner = newSpinner(
-    options.check
-      ? 'Checking codegen-windows files...'
-      : 'Running codegen-windows...',
-  );
+  const spinner =
+    existingSpinner ||
+    newSpinner(
+      options.check
+        ? 'Checking codegen-windows files...'
+        : 'Running codegen-windows...',
+    );
+  const shouldLog = !existingSpinner; // Only log completion messages if we created our own spinner
+
   try {
     const codegen = new CodeGenWindows(config.root, options);
     await codegen.run(spinner);
     const endTime = performance.now();
 
     if (!codegen.areChangesNeeded()) {
-      console.log(
-        `${chalk.green(
-          'Success:',
-        )} No codegen-windows changes necessary. (${Math.round(
-          endTime - startTime,
-        )}ms)`,
-      );
+      if (shouldLog) {
+        console.log(
+          `${chalk.green(
+            'Success:',
+          )} No codegen-windows changes necessary. (${Math.round(
+            endTime - startTime,
+          )}ms)`,
+        );
+      }
     } else if (options.check) {
       const codegenCommand = 'npx @react-native-community/cli codegen-windows';
-      console.log(
-        `${chalk.yellow(
-          'Warning:',
-        )} Codegen-windows changes were necessary but ${chalk.bold(
-          '--check',
-        )} specified. Run '${chalk.bold(
-          `${codegenCommand}`,
-        )}' to apply the changes. (${Math.round(endTime - startTime)}ms)`,
-      );
+      if (shouldLog) {
+        console.log(
+          `${chalk.yellow(
+            'Warning:',
+          )} Codegen-windows changes were necessary but ${chalk.bold(
+            '--check',
+          )} specified. Run '${chalk.bold(
+            `${codegenCommand}`,
+          )}' to apply the changes. (${Math.round(endTime - startTime)}ms)`,
+        );
+      }
       throw new CodedError(
         'NeedCodegen',
         `Codegen-windows changes were necessary but --check was specified. Run '${codegenCommand}' to apply the changes`,
       );
     } else {
+      if (shouldLog) {
+        console.log(
+          `${chalk.green(
+            'Success:',
+          )} Codegen-windows changes completed. (${Math.round(
+            endTime - startTime,
+          )}ms)`,
+        );
+      }
+    }
+  } catch (e) {
+    if (!existingSpinner) {
+      spinner.fail();
+    }
+    const endTime = performance.now();
+    if (shouldLog) {
       console.log(
-        `${chalk.green(
-          'Success:',
-        )} Codegen-windows changes completed. (${Math.round(
+        `${chalk.red('Error:')} ${(e as any).toString()}. (${Math.round(
           endTime - startTime,
         )}ms)`,
       );
     }
-  } catch (e) {
-    spinner.fail();
-    const endTime = performance.now();
-    console.log(
-      `${chalk.red('Error:')} ${(e as any).toString()}. (${Math.round(
-        endTime - startTime,
-      )}ms)`,
-    );
     throw e;
   }
 }
