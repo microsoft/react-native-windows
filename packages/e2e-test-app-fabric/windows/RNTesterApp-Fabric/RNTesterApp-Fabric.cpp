@@ -5,9 +5,12 @@
 #include "RNTesterApp-Fabric.h"
 
 #include <UIAutomation.h>
+#include <dbghelp.h>
 #include <winrt/Windows.Data.Json.h>
 #include <filesystem>
 #include "winrt/AutomationChannel.h"
+
+#pragma comment(lib, "dbghelp.lib")
 
 // Includes from sample-custom-component
 #include <winrt/SampleCustomComponent.h>
@@ -41,6 +44,7 @@ winrt::Microsoft::ReactNative::IReactContext global_reactContext{nullptr};
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload);
 winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload);
 winrt::Windows::Data::Json::JsonObject CreateScreenshot(winrt::Windows::Data::Json::JsonValue payload);
+winrt::Windows::Data::Json::JsonObject HangForTesting(winrt::Windows::Data::Json::JsonValue payload);
 winrt::Windows::Foundation::IAsyncAction LoopServer(winrt::AutomationChannel::Server &server);
 
 // Create and configure the ReactNativeHost
@@ -103,8 +107,133 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   return host;
 }
 
+// In-process crash dump writer. Installed as the top-level
+// `UnhandledExceptionFilter`, so any unhandled structured exception in the
+// app (e.g. access violations) writes a full-memory minidump to a well-known
+// folder before the OS tears the process down. This is independent of
+// Windows Error Reporting — needed because hosted CI agents route WER through
+// a corporate-server policy that silently ignores per-exe LocalDumps.
+//
+// The dump folder is %ProgramData%\RNW-E2E-Dumps. The pipeline scans that path
+// after a failing test run and publishes anything found.
+static LONG WINAPI WriteDumpOnUnhandledException(EXCEPTION_POINTERS *pExceptionInfo) {
+  wchar_t dumpDir[MAX_PATH];
+  DWORD len = GetEnvironmentVariableW(L"ProgramData", dumpDir, MAX_PATH);
+  if (len == 0 || len >= MAX_PATH) {
+    return EXCEPTION_CONTINUE_SEARCH;
+  }
+  if (FAILED(PathCchAppend(dumpDir, MAX_PATH, L"RNW-E2E-Dumps"))) {
+    return EXCEPTION_CONTINUE_SEARCH;
+  }
+  CreateDirectoryW(dumpDir, nullptr); // ignore ERROR_ALREADY_EXISTS
+
+  wchar_t dumpPath[MAX_PATH];
+  SYSTEMTIME st;
+  GetLocalTime(&st);
+  swprintf_s(
+      dumpPath,
+      MAX_PATH,
+      L"%s\\RNTesterApp-Fabric-%04u%02u%02u-%02u%02u%02u-%u.dmp",
+      dumpDir,
+      st.wYear,
+      st.wMonth,
+      st.wDay,
+      st.wHour,
+      st.wMinute,
+      st.wSecond,
+      GetCurrentProcessId());
+
+  HANDLE hFile = CreateFileW(dumpPath, GENERIC_WRITE, 0, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
+  if (hFile == INVALID_HANDLE_VALUE) {
+    return EXCEPTION_CONTINUE_SEARCH;
+  }
+
+  MINIDUMP_EXCEPTION_INFORMATION exInfo{};
+  exInfo.ThreadId = GetCurrentThreadId();
+  exInfo.ExceptionPointers = pExceptionInfo;
+  exInfo.ClientPointers = FALSE;
+
+  const MINIDUMP_TYPE dumpType = static_cast<MINIDUMP_TYPE>(
+      MiniDumpWithFullMemory | MiniDumpWithHandleData | MiniDumpWithThreadInfo | MiniDumpWithUnloadedModules |
+      MiniDumpWithProcessThreadData);
+
+  MiniDumpWriteDump(
+      GetCurrentProcess(),
+      GetCurrentProcessId(),
+      hFile,
+      dumpType,
+      pExceptionInfo ? &exInfo : nullptr,
+      nullptr,
+      nullptr);
+
+  FlushFileBuffers(hFile);
+  CloseHandle(hFile);
+
+  // Let normal processing continue so the process still terminates and any
+  // downstream handlers (including WER, if it's active) also run.
+  return EXCEPTION_CONTINUE_SEARCH;
+}
+
+static void InstallInProcessCrashDumpWriter() {
+  SetUnhandledExceptionFilter(WriteDumpOnUnhandledException);
+  // Suppress the fault dialog so the process exits promptly after our UEF runs
+  // — on a hosted agent there is nobody to click a dialog anyway.
+  SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX);
+}
+
+// Test-only: if the sentinel file exists, deliberately crash the app on
+// startup. Used by the E2E pipeline (see .ado/jobs/e2e-test.yml
+// `simulateCrashForTesting` parameter) to re-validate that the in-process
+// minidump writer + artifact publish actually produces a usable .dmp.
+// File-based trigger because environment variables do not reliably propagate
+// through the packaged-app activation flow used by the automation test driver.
+static void MaybeSimulateCrashForTesting() {
+  wchar_t flagPath[MAX_PATH];
+  DWORD len = GetEnvironmentVariableW(L"ProgramData", flagPath, MAX_PATH);
+  if (len == 0 || len >= MAX_PATH) {
+    return;
+  }
+  if (FAILED(PathCchAppend(flagPath, MAX_PATH, L"rnw-e2e-simulate-crash.flag"))) {
+    return;
+  }
+  if (GetFileAttributesW(flagPath) == INVALID_FILE_ATTRIBUTES) {
+    return;
+  }
+
+  // Deliberate null-pointer write to trigger an access violation. Volatile so
+  // the optimizer keeps it.
+  *reinterpret_cast<volatile int *>(nullptr) = 0xC0FFEE;
+}
+
+// Test-only: when invoked over the automation channel, jam the UI thread
+// forever. Used by the E2E pipeline (see .ado/jobs/e2e-test.yml
+// `simulateHangForTesting` parameter) to validate that the post-failure
+// ProcDump capture step actually produces a usable dump of a hung app.
+//
+// We Post the sleep onto the UI dispatcher rather than blocking inline so the
+// channel handler returns a normal response to the test client — that's the
+// realistic scenario (the app appears to acknowledge a request, then locks up
+// on the next UI-thread work item, exactly like a deadlock in production).
+winrt::Windows::Data::Json::JsonObject HangForTesting(winrt::Windows::Data::Json::JsonValue /*payload*/) {
+  if (global_reactContext) {
+    global_reactContext.UIDispatcher().Post([]() { ::Sleep(INFINITE); });
+  } else {
+    // Fallback: hang the channel-loop thread itself. Less realistic but still
+    // produces a hung process that the post-failure ProcDump path can capture.
+    ::Sleep(INFINITE);
+  }
+  return {};
+}
+
 _Use_decl_annotations_ int CALLBACK
 WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* showCmd */) {
+  // Install our in-process crash handler before anything else can crash. This
+  // is the primary mechanism for capturing dumps on hosted CI agents, where
+  // Windows Error Reporting is policy-routed away from local disk.
+  InstallInProcessCrashDumpWriter();
+
+  MaybeSimulateCrashForTesting();
+
   // Initialize WinRT.
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 
@@ -156,6 +285,7 @@ WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* show
   handler.BindOperation(L"CreateScreenshot", CreateScreenshot);
   handler.BindOperation(L"DumpVisualTree", DumpVisualTree);
   handler.BindOperation(L"ListErrors", ListErrors);
+  handler.BindOperation(L"HangForTesting", HangForTesting);
   global_rootView = reactNativeWindow.ReactNativeIsland();
 
   auto server = winrt::AutomationChannel::Server(handler);
@@ -765,13 +895,40 @@ winrt::Windows::Data::Json::JsonObject DumpNativeComponentTreeHelper(
   return visualTree;
 }
 
-winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
-  winrt::Windows::Data::Json::JsonObject payloadObj = payload.GetObject();
+static winrt::Windows::Data::Json::JsonObject DumpVisualTreeOnce(winrt::Windows::Data::Json::JsonObject payloadObj) {
   winrt::Windows::Data::Json::JsonObject result;
   result.Insert(L"Automation Tree", DumpUIATreeHelper(payloadObj));
   result.Insert(L"Visual Tree", DumpVisualTreeHelper(payloadObj));
   result.Insert(L"Component Tree", DumpNativeComponentTreeHelper(payloadObj));
   return result;
+}
+
+// Dump the visual / automation / component trees up to 3 times and return
+// the first dump that matches the next one. If no two consecutive dumps
+// agree, return the final attempt as a best-effort.
+//
+// Why: composition `Visual::Size` is read after Composition's commit has
+// already rounded a sub-pixel text-layout result to an integer. Adjacent
+// commits can produce different roundings (24 vs 25 for a ~24.5 measurement),
+// so a single dump captures whichever frame happens to be live. Two
+// consecutive identical dumps indicate the system has reached a stable
+// post-layout state for this query.
+winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json::JsonValue payload) {
+  winrt::Windows::Data::Json::JsonObject payloadObj = payload.GetObject();
+
+  constexpr int kMaxAttempts = 3;
+  constexpr int kSettleDelayMs = 50;
+
+  winrt::Windows::Data::Json::JsonObject prev = DumpVisualTreeOnce(payloadObj);
+  for (int i = 1; i < kMaxAttempts; ++i) {
+    ::Sleep(kSettleDelayMs);
+    auto curr = DumpVisualTreeOnce(payloadObj);
+    if (prev.Stringify() == curr.Stringify()) {
+      return curr;
+    }
+    prev = curr;
+  }
+  return prev;
 }
 
 winrt::Windows::Data::Json::JsonObject CreateScreenshot(winrt::Windows::Data::Json::JsonValue payload) {
