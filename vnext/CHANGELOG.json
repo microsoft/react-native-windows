@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 27 Apr 2026 20:18:59 GMT",
+      "version": "0.84.0-preview.6",
+      "tag": "react-native-windows_v0.84.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "91ceaa8418a39db986927aaaff0cdd07dbf9ba2e",
+            "comment": "Fix touch event handling, improve reliability, and optimize performance"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Apr 2026 14:35:53 GMT",
       "version": "0.84.0-preview.5",
       "tag": "react-native-windows_v0.84.0-preview.5",
