@@ -170,7 +170,7 @@ jobs:
             # written directly at the root were observed to disappear during
             # the long `Update snapshots` step that runs after a failed test;
             # files in a subfolder survive. We don't know which agent
-            # behaviour deletes them — Defender, a 1ES cleanup script, or a
+            # behavior deletes them — Defender, a 1ES cleanup script, or a
             # side-effect of `yarn e2etest -u` — but a subfolder evades it.
             - pwsh: |
                 $procDump = Join-Path "$(ProcDumpPath)" 'procdump64.exe'

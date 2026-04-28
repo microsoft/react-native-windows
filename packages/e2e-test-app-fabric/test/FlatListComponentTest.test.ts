@@ -29,7 +29,7 @@ const searchBox = async (input: string) => {
   await app.waitUntil(
     async () => {
       // Clear before each attempt: WinAppDriver's setValue can fall back to
-      // synthesised keystrokes for custom RN TextInputs, which append rather
+      // synthesized keystrokes for custom RN TextInputs, which append rather
       // than replace. Without the clear, a retry produces concatenated text
       // and the comparison never converges.
       await searchBox.clearValue();
