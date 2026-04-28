@@ -8,6 +8,17 @@ parameters:
       - Continuous
   - name: AgentPool
     type: object
+  # When set to true on a PR-validation queue, the E2E app deliberately
+  # crashes (simulateCrashForTesting) or hangs (simulateHangForTesting) so we
+  # can re-validate that the crash-dump collection path still produces a
+  # usable artifact. Disabled by default — the test step is doomed by design
+  # when these are on.
+  - name: simulateCrashForTesting
+    type: boolean
+    default: false
+  - name: simulateHangForTesting
+    type: boolean
+    default: false
   - name: buildMatrix
     type: object
     default:
@@ -46,6 +57,12 @@ jobs:
                 platform: ${{ matrix.BuildPlatform }}
                 configuration: Release
                 buildEnvironment: ${{ config.buildEnvironment }}
+                # Capture crash dumps for the E2E test app (packaged UWP) and
+                # the Metro bundler. ProcDump-as-AeDebug does not reliably fire
+                # for packaged apps; WER LocalDumps does.
+                localDumpsExeNames:
+                  - RNTesterApp-Fabric
+                  - node
 
             - pwsh: |
                 Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\BuildLogs"
@@ -70,11 +87,238 @@ jobs:
                 echo ##vso[task.setvariable variable=StartedFabricTests]true
               displayName: Set StartedFabricTests
 
-            - script: |
-                yarn e2etest
-              displayName: yarn e2etest
-              workingDirectory: packages/e2e-test-app-fabric
-              timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
+            # Test-only: arm the crash-simulation sentinel so RNTesterApp-Fabric
+            # crashes on startup. Validates the in-process minidump path.
+            - ${{ if eq(parameters.simulateCrashForTesting, true) }}:
+              - pwsh: |
+                  $flagPath = Join-Path $env:ProgramData 'rnw-e2e-simulate-crash.flag'
+                  New-Item -Path $flagPath -ItemType File -Force | Out-Null
+                  Write-Host "Crash-simulation sentinel created at $flagPath"
+                  $dumpDir = Join-Path $env:ProgramData 'RNW-E2E-Dumps'
+                  if (Test-Path $dumpDir) {
+                    Remove-Item -Path "$dumpDir\*" -Recurse -Force -ErrorAction SilentlyContinue
+                    Write-Host "Cleared stale dumps under $dumpDir"
+                  }
+                displayName: Arm crash-simulation sentinel (TEST ONLY)
+
+            # Test-only: arm the hang-simulation env var, which switches on
+            # the HangSimulationTest.test.ts test. That test invokes the
+            # `HangForTesting` automation command, jamming the app's UI thread
+            # so the post-failure ProcDump path captures a hang dump.
+            - ${{ if eq(parameters.simulateHangForTesting, true) }}:
+              - pwsh: |
+                  Write-Host "##vso[task.setvariable variable=RNW_SIMULATE_HANG]1"
+                  Write-Host "Hang simulation armed (RNW_SIMULATE_HANG=1)"
+                displayName: Arm hang-simulation env var (TEST ONLY)
+
+            # When simulating a hang, run ONLY the HangSimulationTest. The default
+            # jest sequencer puts brand-new (no-timing-history) tests late in the order,
+            # so without filtering the test step times out before the hang test even
+            # runs. 4-minute timeout: enough for app launch (~30 s) + the test's 70 s
+            # jest testTimeout + jest teardown attempt; ADO will cut off at 4 min if the
+            # hang prevents jest from exiting cleanly, which is fine — Capture step then
+            # finds the still-alive UI-hung app.
+            - ${{ if eq(parameters.simulateHangForTesting, true) }}:
+              - script: |
+                  yarn e2etest --testPathPattern HangSimulationTest
+                displayName: yarn e2etest (hang simulation only)
+                workingDirectory: packages/e2e-test-app-fabric
+                timeoutInMinutes: 4
+
+            - ${{ if not(eq(parameters.simulateHangForTesting, true)) }}:
+              - script: |
+                  yarn e2etest
+                displayName: yarn e2etest
+                workingDirectory: packages/e2e-test-app-fabric
+                # Drop to 2 min during crash simulation — the app crashes
+                # immediately on startup, so a 10-minute wait is dead time.
+                ${{ if eq(parameters.simulateCrashForTesting, true) }}:
+                  timeoutInMinutes: 2
+                ${{ if not(eq(parameters.simulateCrashForTesting, true)) }}:
+                  timeoutInMinutes: 10
+
+            # Always disarm the crash sentinel so it cannot leak to a rerun on
+            # the same agent.
+            - ${{ if eq(parameters.simulateCrashForTesting, true) }}:
+              - pwsh: |
+                  $flagPath = Join-Path $env:ProgramData 'rnw-e2e-simulate-crash.flag'
+                  if (Test-Path $flagPath) {
+                    Remove-Item $flagPath -Force
+                    Write-Host "Removed crash-simulation sentinel at $flagPath"
+                  }
+                displayName: Disarm crash-simulation sentinel (TEST ONLY)
+                condition: always()
+
+            # Always disarm the hang-simulation env var so the post-failure
+            # `Update snapshots` step (which also runs `yarn e2etest`) does not
+            # re-trigger the hang and burn 10 minutes of dead time. Setting an
+            # ADO variable to empty string clears it for subsequent steps.
+            - ${{ if eq(parameters.simulateHangForTesting, true) }}:
+              - pwsh: |
+                  Write-Host "##vso[task.setvariable variable=RNW_SIMULATE_HANG]"
+                  Write-Host "Hang simulation disarmed (RNW_SIMULATE_HANG cleared)"
+                displayName: Disarm hang-simulation env var (TEST ONLY)
+                condition: always()
+
+            # On test failure, snapshot any lingering RNTesterApp-Fabric / node
+            # processes before subsequent steps (or the agent) tear them down.
+            # WER LocalDumps only fires on actual crashes; this catches hangs
+            # (e.g. "Unable to enter correct text" timeouts) where the process
+            # is alive but unresponsive.
+            #
+            # Dumps must go into a subfolder of $(CrashDumpRootPath). Files
+            # written directly at the root were observed to disappear during
+            # the long `Update snapshots` step that runs after a failed test;
+            # files in a subfolder survive. We don't know which agent
+            # behavior deletes them — Defender, a 1ES cleanup script, or a
+            # side-effect of `yarn e2etest -u` — but a subfolder evades it.
+            - pwsh: |
+                $procDump = Join-Path "$(ProcDumpPath)" 'procdump64.exe'
+                if (-not (Test-Path $procDump)) {
+                  Write-Host "ProcDump not found at $procDump; skipping live-process dump capture."
+                  exit 0
+                }
+
+                $hangDir = Join-Path "$(CrashDumpRootPath)" 'hang'
+                New-Item -ItemType Directory -Path $hangDir -Force | Out-Null
+
+                $targets = @('RNTesterApp-Fabric', 'node')
+                foreach ($name in $targets) {
+                  Get-Process -Name $name -ErrorAction SilentlyContinue | ForEach-Object {
+                    $dumpPath = Join-Path $hangDir ("hang_{0}_{1}.dmp" -f $name, $_.Id)
+                    Write-Host "Capturing full dump of $name (pid $($_.Id)) to $dumpPath"
+                    & $procDump -accepteula -ma $_.Id $dumpPath
+                    Write-Host ("ProcDump exit code: {0} (non-zero is normal - encodes the dump count written)" -f $LASTEXITCODE)
+                  }
+                }
+                # ProcDump uses non-zero exit codes to encode the number of dumps written.
+                # Force a clean PowerShell exit so the step doesn't show as a warning.
+                exit 0
+              displayName: Capture dumps of surviving test processes
+              condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
+              continueOnError: true
+
+            # Collect any in-process minidumps the app's UEF wrote to
+            # %ProgramData%\RNW-E2E-Dumps, plus any dumps WER may have written
+            # to its standard fallback locations, and stage them into
+            # subfolders of $(CrashDumpRootPath) so they ride the crash-dumps
+            # artifact. Dumps in subfolders survive the post-failure
+            # `Update snapshots` step (see comment on the Capture step above).
+            - pwsh: |
+                # In-process minidumps (primary mechanism for actual crashes).
+                $inProc = Join-Path $env:ProgramData 'RNW-E2E-Dumps'
+                if (Test-Path $inProc) {
+                  $dest = Join-Path "$(CrashDumpRootPath)" 'in-process'
+                  New-Item -ItemType Directory -Path $dest -Force | Out-Null
+                  Copy-Item -Path "$inProc\*" -Destination $dest -Recurse -Force -ErrorAction SilentlyContinue
+                  Get-ChildItem -Path $dest -Recurse -Force -ErrorAction SilentlyContinue |
+                    Select-Object FullName, Length | Format-Table -AutoSize | Out-String | Write-Host
+                }
+
+                # Fallback search: if the agent image ever changes back to a
+                # working WER LocalDumps configuration, dumps may land here.
+                $searchRoots = @(
+                  "$env:LOCALAPPDATA\CrashDumps",
+                  "$env:ProgramData\Microsoft\Windows\WER\ReportQueue",
+                  "$env:ProgramData\Microsoft\Windows\WER\ReportArchive",
+                  "$env:ProgramData\Microsoft\Windows\WER\Temp"
+                )
+                $found = @()
+                foreach ($root in $searchRoots) {
+                  if (-not (Test-Path $root)) { continue }
+                  $found += Get-ChildItem -Path $root -Recurse -Include *.dmp,*.mdmp -ErrorAction SilentlyContinue -Force |
+                    Where-Object { -not $_.PSIsContainer -and $_.LastWriteTime -gt (Get-Date).AddHours(-2) }
+                }
+                if ($found.Count -gt 0) {
+                  $dest = Join-Path "$(CrashDumpRootPath)" 'recovered'
+                  New-Item -ItemType Directory -Path $dest -Force | Out-Null
+                  foreach ($h in $found) {
+                    $target = Join-Path $dest ($h.FullName -replace '[:\\/]', '_')
+                    Copy-Item -LiteralPath $h.FullName -Destination $target -Force -ErrorAction SilentlyContinue
+                    Write-Host "Recovered $($h.FullName) ($($h.Length) bytes) -> $target"
+                  }
+                }
+              displayName: Collect in-process and fallback crash dumps
+              condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
+              continueOnError: true
+
+            # Bundle matching PDBs and a debugging README into the Crash dumps
+            # artifact so the dump is self-contained for an offline developer.
+            # Skipped if no .dmp/.mdmp files exist — $(CrashDumpRootPath) also
+            # holds MSBuild failure logs (MSBUILDDEBUGPATH points here), and
+            # those don't need symbols or this README.
+            - pwsh: |
+                $dumps = Get-ChildItem -Path "$(CrashDumpRootPath)" -Recurse -Include *.dmp,*.mdmp -File -ErrorAction SilentlyContinue
+                if (-not $dumps -or $dumps.Count -eq 0) {
+                  Write-Host "No .dmp/.mdmp files in $(CrashDumpRootPath); skipping symbols + README bundling."
+                  exit 0
+                }
+                Write-Host "Found $($dumps.Count) dump file(s); bundling matching PDBs and README."
+
+                $symbolsDir = Join-Path "$(CrashDumpRootPath)" 'symbols'
+                $releaseRoot = "$(Build.SourcesDirectory)\packages\e2e-test-app-fabric\windows\${{ matrix.BuildPlatform }}\Release"
+                if (Test-Path $releaseRoot) {
+                  $pdbs = Get-ChildItem -Path $releaseRoot -Recurse -Filter *.pdb -File -ErrorAction SilentlyContinue
+                  foreach ($pdb in $pdbs) {
+                    $rel = $pdb.FullName.Substring($releaseRoot.Length).TrimStart('\','/')
+                    $target = Join-Path $symbolsDir $rel
+                    New-Item -ItemType Directory -Path (Split-Path -Parent $target) -Force | Out-Null
+                    Copy-Item -LiteralPath $pdb.FullName -Destination $target -Force -ErrorAction SilentlyContinue
+                  }
+                  Write-Host "Staged $($pdbs.Count) PDB(s) under $symbolsDir"
+                } else {
+                  Write-Host "Release root not found at $releaseRoot; skipping PDB stage."
+                }
+
+                $readme = @'
+                # Reading these crash dumps
+
+                This artifact contains crash and/or hang dumps from a failed React
+                Native Windows E2E test run, plus matching debug symbols.
+
+                ## What is in here
+
+                - `hang/` -- full-memory dumps captured by procdump64 from
+                  RNTesterApp-Fabric / node processes that were still alive when
+                  the test step timed out.
+                - `in-process/` -- full-memory minidumps written by
+                  RNTesterApp-Fabric's own unhandled-exception filter when the app
+                  actually crashed.
+                - `recovered/` -- dumps recovered from common WER fallback
+                  locations on the agent. Usually empty.
+                - `symbols/` -- PDBs that match the binaries deployed to the test
+                  agent. Folder layout mirrors the test app's Release deploy tree.
+
+                ## Opening in WinDbg
+
+                1. Download and extract this artifact. Note the absolute path of
+                   the extracted `symbols/` folder.
+                2. Open a dump:
+
+                       windbg -z hang\hang_RNTesterApp-Fabric_<pid>.dmp
+
+                3. Set the symbol path (this artifact's symbols + Microsoft public
+                   symbol server) and reload:
+
+                       .sympath srv*C:\symbols*https://msdl.microsoft.com/download/symbols;<extracted-path>\symbols
+                       .reload /f
+
+                4. Useful first commands:
+                   - `~* k`        -- call stack of every thread (most useful for hangs)
+                   - `!analyze -v` -- automatic crash analysis (most useful for crashes)
+
+                ## If you need the binaries too
+
+                The PDBs alone are enough for stack walks and type info. If you
+                need module bytes (e.g. to disassemble), download the matching
+                `RNTesterApp-Fabric-<plat>-<attempt>` artifact from the same
+                pipeline run; its layout matches `symbols/` here.
+                '@
+                Set-Content -LiteralPath "$(CrashDumpRootPath)\README.md" -Value $readme -Encoding utf8
+                Write-Host "Wrote $(CrashDumpRootPath)\README.md"
+              displayName: Bundle symbols and README with crash dumps
+              condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
+              continueOnError: true
 
             - script: npx jest --clearCache
               displayName: clear jest cache
