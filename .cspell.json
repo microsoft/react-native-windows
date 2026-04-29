@@ -1,7 +1,10 @@
 // cSpell Settings
 {
     "version": "0.2",
-    "language": "en",
+    // American English. The broader "en" accepts both British and American
+    // spellings; "en-US" flags British forms (synthesised, behaviour, etc.)
+    // so contributors and AI assistants don't drift away from US conventions.
+    "language": "en-US",
     "dictionaryDefinitions": [
         {
             "name": "project-words",
