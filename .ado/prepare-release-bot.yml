@@ -62,9 +62,11 @@ jobs:
 
       - script: yarn install --immutable
         displayName: yarn install
+        retryCountOnTaskFailure: 2
 
       - script: npx lage build --scope @rnw-scripts/prepare-release --scope @rnw-scripts/beachball-config
         displayName: Build prepare-release and dependencies
+        retryCountOnTaskFailure: 2
 
       - ${{ if ne(parameters.targetBranch, '(source branch)') }}:
         - pwsh: Write-Host "##vso[task.setvariable variable=TargetBranch]${{ parameters.targetBranch }}"

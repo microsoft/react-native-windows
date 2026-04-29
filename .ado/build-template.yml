@@ -176,10 +176,12 @@ extends:
           - script: yarn install --immutable
             displayName: Strict yarn install @rnw-scripts/beachball-config
             condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
+            retryCountOnTaskFailure: 2
 
           - script: npx lage build --scope @rnw-scripts/prepare-release --scope @rnw-scripts/beachball-config
             displayName: Build prepare-release and beachball-config
             condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
+            retryCountOnTaskFailure: 2
 
           # 5. Beachball check (Developer PR only)
           - pwsh: npx beachball check --branch "origin/$env:BEACHBALL_BRANCH" --verbose --changehint "##vso[task.logissue type=error]Run 'yarn change' from root of repo to generate a change file."

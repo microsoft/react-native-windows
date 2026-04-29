@@ -6,3 +6,4 @@ parameters:
 steps:
   - script: yarn --cwd ${{ parameters.workingDirectory }} install --immutable
     displayName: yarn install (immutable)
+    retryCountOnTaskFailure: 2
