@@ -51,18 +51,21 @@ steps:
         npx --yes @react-native-community/cli@latest init testcli --version $(reactNativeDevDependency) --verbose --skip-install --install-pods false --skip-git-init true
       displayName: Init new app project with @react-native-community/cli init
       workingDirectory: $(Agent.BuildDirectory)
+      retryCountOnTaskFailure: 2
 
   - ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
     - script: |
         npx --yes create-react-native-library@0.48.9 --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type turbo-module --react-native-version $(reactNativeDevDependency) --example vanilla testcli
       displayName: Init new lib project with create-react-native-library
       workingDirectory: $(Agent.BuildDirectory)
+      retryCountOnTaskFailure: 2
 
   - ${{ elseif and(endsWith(parameters.template, '-lib'), startsWith(parameters.template, 'old')) }}:
     - script: |
         npx --yes create-react-native-module@0.20.2 --package-name "testcli" testcli
       displayName: Init new lib project with create-react-native-module
       workingDirectory: $(Agent.BuildDirectory)
+      retryCountOnTaskFailure: 2
 
     - script: |
         rmdir /s /q android
@@ -75,11 +78,13 @@ steps:
         call yarn upgrade react-native@$(reactNativeDevDependency) --dev
       displayName: Update lib project react and react-native dev versions
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      retryCountOnTaskFailure: 2
 
   - script: |
       call yarn install
     displayName: pre-windows yarn install
     workingDirectory: $(Agent.BuildDirectory)\testcli
+    retryCountOnTaskFailure: 2
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
@@ -96,6 +101,7 @@ steps:
         call yarn add react-native-windows@$(npmVersion)
       displayName: yarn add react-native-windows
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      retryCountOnTaskFailure: 2
       env:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
@@ -104,6 +110,7 @@ steps:
         call yarn add react-native-windows@$(npmVersion) --dev
       displayName: yarn add react-native-windows dev/peer
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      retryCountOnTaskFailure: 2
       env:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
@@ -111,6 +118,7 @@ steps:
       call npx @react-native-community/cli init-windows --template ${{ parameters.template }} --overwrite --logging ${{ parameters.additionalInitArguments }}
     displayName: Call @react-native-community/cli init-windows
     workingDirectory: $(Agent.BuildDirectory)\testcli
+    retryCountOnTaskFailure: 2
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
   
@@ -118,6 +126,7 @@ steps:
       call yarn install
     displayName: post-windows yarn install
     workingDirectory: $(Agent.BuildDirectory)\testcli
+    retryCountOnTaskFailure: 2
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
 

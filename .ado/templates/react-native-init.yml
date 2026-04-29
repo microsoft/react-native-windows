@@ -72,11 +72,13 @@ steps:
         npx --yes react-native@$(reactNativeDevDependency) init testcli --template react-native@$(reactNativeDevDependency)
       displayName: Init new app project
       workingDirectory: $(Agent.BuildDirectory)
+      retryCountOnTaskFailure: 2
 
     - script: |
         call yarn install
       displayName: pre-windows yarn install
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      retryCountOnTaskFailure: 2
       env:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
@@ -93,6 +95,7 @@ steps:
         npx --yes create-react-native-module@0.20.2 --package-name "testcli" testcli
       displayName: Init new lib project
       workingDirectory: $(Agent.BuildDirectory)
+      retryCountOnTaskFailure: 2
 
     - script: |
         rmdir /s /q android
@@ -105,12 +108,14 @@ steps:
         call yarn upgrade react-native@$(reactNativeDevDependency) --dev
       displayName: Update lib project react and react-native dev versions
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      retryCountOnTaskFailure: 2
 
   - ${{ if eq(parameters.useNuget, true) }}:
     - script: |
         npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
       displayName: Apply windows template (with nuget)
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      retryCountOnTaskFailure: 2
       env:
         npm_config_registry: http://localhost:4873
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
@@ -120,6 +125,7 @@ steps:
         npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }}
       displayName: Apply windows template (without nuget)
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      retryCountOnTaskFailure: 2
       env:
         npm_config_registry: http://localhost:4873
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
@@ -128,6 +134,7 @@ steps:
       call yarn install
     displayName: post-windows yarn install
     workingDirectory: $(Agent.BuildDirectory)\testcli
+    retryCountOnTaskFailure: 2
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
   
