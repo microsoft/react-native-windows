@@ -106,6 +106,8 @@
         ReactNativeDir;
         ReactNativeWindowsDir;
         FollyDir;
+        IncludeFabricInterface;
+        UseFabric;
         YogaDir;
         WinVer;
       " />
