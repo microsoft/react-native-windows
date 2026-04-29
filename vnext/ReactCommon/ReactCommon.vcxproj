@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</ProjectGuid>
+    <ProjectGuid Condition="'$(ReactTargetWin32)' != 'true'">{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}</ProjectGuid>
     <Keyword>StaticLibrary</Keyword>
-    <ProjectName>ReactCommon</ProjectName>
+    <ProjectName Condition="'$(ReactTargetWin32)' != 'true'">ReactCommon</ProjectName>
     <RootNamespace>ReactCommon</RootNamespace>
-    <AppContainerApplication>true</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <AppContainerApplication Condition="'$(ReactTargetWin32)' != 'true'">true</AppContainerApplication>
+    <ApplicationType Condition="'$(ReactTargetWin32)' != 'true'">Windows Store</ApplicationType>
+    <ApplicationTypeRevision Condition="'$(ReactTargetWin32)' != 'true'">10.0</ApplicationTypeRevision>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -57,6 +57,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(ReactNativeWindowsDir)PropertySheets\HybridCRT.props" Condition="'$(ReactTargetWin32)' == 'true'" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -66,6 +67,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>
@@ -189,9 +191,14 @@
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(ReactTargetWin32)' != 'true'">
     <ProjectReference Include="..\Folly\Folly.vcxproj">
       <Project>{A990658C-CE31-4BCC-976F-0FC6B1AF693D}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(ReactTargetWin32)' == 'true'">
+    <ProjectReference Include="..\Folly\Folly.win32.vcxproj">
+      <Project>{BFF1EAC8-4C70-4A55-9A88-3810052E8FBA}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
