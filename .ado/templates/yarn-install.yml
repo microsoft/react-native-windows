@@ -15,9 +15,11 @@ steps:
   - ${{ if eq(parameters.agentImage, 'ManagedImage') }}:
     - script: midgard-yarn --ignore-scripts --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
       displayName: midgard-yarn (faster yarn install)
+      retryCountOnTaskFailure: 2
 
   # If using an image we don't control, acquire a fixed version of midgard-yarn
   # before install
   - ${{ else }}:
     - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
       displayName: midgard-yarn (faster yarn install)
+      retryCountOnTaskFailure: 2
