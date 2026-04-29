@@ -40,22 +40,20 @@ void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scal
   };
 }
 
+float pixelRoundAndScaleBorderWidth(float width, float scaleFactor) noexcept {
+  if (width == 0)
+    return width = 0;
+  return std::max(1.f, std::round(width * scaleFactor));
+}
+
 void scaleAndPixelRoundBorderWidths(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::BorderMetrics &borderMetrics,
     float scaleFactor) noexcept {
-  borderMetrics.borderWidths.left = (borderMetrics.borderWidths.left == 0)
-      ? 0.f
-      : std::max(1.f, std::round(borderMetrics.borderWidths.left * scaleFactor));
-  borderMetrics.borderWidths.top = (borderMetrics.borderWidths.top == 0)
-      ? 0.f
-      : std::max(1.f, std::round(borderMetrics.borderWidths.top * scaleFactor));
-  borderMetrics.borderWidths.right = (borderMetrics.borderWidths.right == 0)
-      ? 0.f
-      : std::max(1.f, std::round(borderMetrics.borderWidths.right * scaleFactor));
-  borderMetrics.borderWidths.bottom = (borderMetrics.borderWidths.bottom == 0)
-      ? 0.f
-      : std::max(1.f, std::round(borderMetrics.borderWidths.bottom * scaleFactor));
+  borderMetrics.borderWidths.left = pixelRoundAndScaleBorderWidth(borderMetrics.borderWidths.left, scaleFactor);
+  borderMetrics.borderWidths.top = pixelRoundAndScaleBorderWidth(borderMetrics.borderWidths.top, scaleFactor);
+  borderMetrics.borderWidths.right = pixelRoundAndScaleBorderWidth(borderMetrics.borderWidths.right, scaleFactor);
+  borderMetrics.borderWidths.bottom = pixelRoundAndScaleBorderWidth(borderMetrics.borderWidths.bottom, scaleFactor);
 
   // If we rounded both sides of the borderWidths up, we may have made the borderWidths larger than the total
   if (layoutMetrics.frame.size.width * scaleFactor <
@@ -740,9 +738,9 @@ bool BorderPrimitive::requiresBorder(
   auto borderStyle = borderMetrics.borderStyles.left;
 
   bool hasMeaningfulColor =
-      !borderMetrics.borderColors.isUniform() || !isColorMeaningful(borderMetrics.borderColors.left, theme);
+      !borderMetrics.borderColors.isUniform() || isColorMeaningful(borderMetrics.borderColors.left, theme);
   bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
-  if (!hasMeaningfulColor && !hasMeaningfulWidth) {
+  if (!hasMeaningfulColor || !hasMeaningfulWidth) {
     return false;
   }
   return true;

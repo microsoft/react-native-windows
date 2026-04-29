@@ -157,6 +157,9 @@ struct ComponentView : public ComponentViewT<
   facebook::react::BorderMetrics focusBorderMetrics(bool inner, const facebook::react::LayoutMetrics &layoutMetrics)
       const noexcept;
 
+  facebook::react::LayoutMetrics outlineLayoutMetrics() const noexcept;
+  facebook::react::BorderMetrics outlineBorderMetrics() const noexcept;
+
   virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual visualToHostFocus() noexcept;
   virtual winrt::com_ptr<ComponentView> focusVisualRoot(const facebook::react::Rect &focusRect) noexcept;
 
@@ -168,6 +171,7 @@ struct ComponentView : public ComponentViewT<
   winrt::com_ptr<ComponentView>
       m_componentHostingFocusVisual; // The component that we are showing our focus visuals within
   std::shared_ptr<BorderPrimitive> m_borderPrimitive;
+  std::shared_ptr<BorderPrimitive> m_outlinePrimitive;
   std::unique_ptr<FocusPrimitive> m_focusPrimitive{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_outerVisual{nullptr};
   winrt::event<winrt::Windows::Foundation::EventHandler<winrt::IInspectable>> m_themeChangedEvent;

@@ -14,6 +14,8 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 struct ComponentView;
 
+float pixelRoundAndScaleBorderWidth(float width, float scaleFactor) noexcept;
+
 // Controls adding/removing appropriate visuals to a parent to render a specific border without requiring
 struct BorderPrimitive {
   static constexpr size_t SpecialBorderLayerCount = 8;
