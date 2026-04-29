@@ -187,7 +187,7 @@
           "Microsoft.JavaScript.Hermes": "[0.0.0-2511.7001-d7ca19b3, )",
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
-          "Microsoft.WindowsAppSDK": "[1.7.250401001, )",
+          "Microsoft.WindowsAppSDK": "[1.8.251106002, )",
           "boost": "[1.84.0, )"
         }
       }

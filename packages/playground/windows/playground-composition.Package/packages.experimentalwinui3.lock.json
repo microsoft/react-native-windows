@@ -197,7 +197,7 @@
         "dependencies": {
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
-          "Microsoft.WindowsAppSDK": "[1.7.250127003-experimental3, )",
+          "Microsoft.WindowsAppSDK": "[1.8.251106002, )",
           "boost": "[1.84.0, )"
         }
       }
