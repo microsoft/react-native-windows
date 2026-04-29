@@ -68,38 +68,38 @@
         "resolved": "0.71.8",
         "contentHash": "ksHjshj05AMAQ/v7Wet5Dwcwn9Up2BTOIrTv1yEW7+D23FQX0yILW5Zw0bmlWtV8MEtdY611z+06U3Xvu2ygSA=="
       },
-      "common": {
+      "common.win32": {
         "type": "Project",
         "dependencies": {
           "boost": "[1.83.0, )"
         }
       },
-      "fmt": {
+      "fmt.win32": {
         "type": "Project"
       },
-      "folly": {
+      "folly.win32": {
         "type": "Project",
         "dependencies": {
           "boost": "[1.83.0, )",
-          "fmt": "[1.0.0, )"
+          "fmt.win32": "[1.0.0, )"
         }
       },
       "follywin32": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )"
+          "Folly.win32": "[1.0.0, )"
         }
       },
       "react.windows.desktop": {
         "type": "Project",
         "dependencies": {
-          "Common": "[1.0.0, )",
-          "Folly": "[1.0.0, )",
+          "Common.win32": "[1.0.0, )",
+          "Folly.win32": "[1.0.0, )",
           "FollyWin32": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.0.0-2604.21001-94aa5e1d, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.WindowsAppSDK": "[1.7.250401001, )",
-          "ReactCommon": "[1.0.0, )",
+          "ReactCommon.win32": "[1.0.0, )",
           "ReactNative.V8Jsi.Windows": "[0.71.8, )",
           "boost": "[1.83.0, )"
         }
@@ -117,8 +117,8 @@
       "react.windows.integrationtests": {
         "type": "Project",
         "dependencies": {
-          "Common": "[1.0.0, )",
-          "Folly": "[1.0.0, )",
+          "Common.win32": "[1.0.0, )",
+          "Folly.win32": "[1.0.0, )",
           "boost": "[1.83.0, )"
         }
       },
@@ -129,10 +129,10 @@
           "boost": "[1.83.0, )"
         }
       },
-      "reactcommon": {
+      "reactcommon.win32": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
+          "Folly.win32": "[1.0.0, )",
           "boost": "[1.83.0, )"
         }
       }

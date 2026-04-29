@@ -66,32 +66,32 @@
         "resolved": "10.0.22621.756",
         "contentHash": "7ZL2sFSioYm1Ry067Kw1hg0SCcW5kuVezC2SwjGbcPE61Nn+gTbH86T73G3LcEOVj0S3IZzNuE/29gZvOLS7VA=="
       },
-      "common": {
+      "common.win32": {
         "type": "Project",
         "dependencies": {
           "boost": "[1.83.0, )"
         }
       },
-      "fmt": {
+      "fmt.win32": {
         "type": "Project"
       },
-      "folly": {
+      "folly.win32": {
         "type": "Project",
         "dependencies": {
           "boost": "[1.83.0, )",
-          "fmt": "[1.0.0, )"
+          "fmt.win32": "[1.0.0, )"
         }
       },
       "follywin32": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )"
+          "Folly.win32": "[1.0.0, )"
         }
       },
-      "reactcommon": {
+      "reactcommon.win32": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
+          "Folly.win32": "[1.0.0, )",
           "boost": "[1.83.0, )"
         }
       }
