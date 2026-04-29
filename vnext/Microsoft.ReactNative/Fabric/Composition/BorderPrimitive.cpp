@@ -9,18 +9,6 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-// Ideally isColorMeaningful would be sufficient here.  But it appears to detect platformColors as not meaningful
-// https://github.com/microsoft/react-native-windows/issues/14006
-bool isColorMeaningful(
-    const facebook::react::SharedColor &color,
-    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept {
-  if (!color) {
-    return false;
-  }
-
-  return theme->Color(*color).A > 0;
-}
-
 // We don't want half pixel borders, or border radii - they lead to blurry borders
 // Also apply scale factor to the radii at this point
 void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scaleFactor) noexcept {
@@ -354,7 +342,7 @@ void SetBorderLayerPropertiesCommon(
     // Clear with transparency
     pRT->Clear();
 
-    if (!isColorMeaningful(borderColor, theme)) {
+    if (!facebook::react::isColorMeaningful(borderColor)) {
       return;
     }
 
@@ -738,7 +726,7 @@ bool BorderPrimitive::requiresBorder(
   auto borderStyle = borderMetrics.borderStyles.left;
 
   bool hasMeaningfulColor =
-      !borderMetrics.borderColors.isUniform() || isColorMeaningful(borderMetrics.borderColors.left, theme);
+      !borderMetrics.borderColors.isUniform() || facebook::react::isColorMeaningful(borderMetrics.borderColors.left);
   bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
   if (!hasMeaningfulColor || !hasMeaningfulWidth) {
     return false;
@@ -828,7 +816,7 @@ bool BorderPrimitive::TryUpdateSpecialBorderLayers(
   auto borderStyle = borderMetrics.borderStyles.left;
 
   bool hasMeaningfulColor =
-      !borderMetrics.borderColors.isUniform() || !isColorMeaningful(borderMetrics.borderColors.left, theme);
+      !borderMetrics.borderColors.isUniform() || !facebook::react::isColorMeaningful(borderMetrics.borderColors.left);
   bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
   if (!hasMeaningfulColor && !hasMeaningfulWidth) {
     return false;
