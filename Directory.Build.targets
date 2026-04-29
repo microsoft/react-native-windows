@@ -148,7 +148,6 @@
       <_VarsWinUI Include="
         UseWinUI3;
         WinUI3Version;
-        WinUI2xVersion;
         WinUIPackageName;
         WinUIPackageVersion;
         IsWinUIAlpha;

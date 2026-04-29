@@ -39,6 +39,7 @@
     <ProjectName>React.Windows.Desktop.DLL</ProjectName>
     <TargetName>react-native-win32</TargetName>
     <UseV8>true</UseV8>
+    <DisableWindowsAppSDKMLAutoInitialize>true</DisableWindowsAppSDKMLAutoInitialize>
     <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
