@@ -38,10 +38,11 @@ constexpr float FOCUS_VISUAL_RADIUS = 3.0f;
 
 // m_outerVisual
 //   |
-//   ----- m_visual <-- Background / clip - Can be a custom visual depending on Component type
+//   ----- m_visual - Can be a custom visual depending on Component type
 //            |
-//            ----- Border Visuals x N (BorderPrimitive attached to m_visual)
-//            ----- Outline Visuals x N(BorderPrimitive)
+//            ----- m_backgroundVisual <-- Background / clip  (ComponentViewFeatures::Background)
+//            ----- Border Visuals x N (BorderPrimitive attached to m_visual) (ComponentViewFeatures::NativeBorder)
+//            ----- Outline Visuals x N(BorderPrimitive) (ComponentViewFeatures::NativeBorder)
 //            ----- <children> (default: directly in m_visual after border visuals)
 //            ----- m_childrenContainer (created on demand when overflow:hidden, children moved here)
 //   ------Focus Visual Container (created when hosting focus visuals)
@@ -80,13 +81,8 @@ facebook::react::Props::Shared ComponentView::props() noexcept {
 }
 
 void ComponentView::onThemeChanged() noexcept {
-  if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
-    if (viewProps()->backgroundColor) {
-      Visual().as<Experimental::ISpriteVisual>().Brush(theme()->Brush(*viewProps()->backgroundColor));
-    } else {
-      Visual().as<Experimental::ISpriteVisual>().Brush(nullptr);
-    }
-  }
+  if (m_backgroundVisual)
+    m_backgroundVisual.Brush(theme()->Brush(*viewProps()->backgroundColor));
 
   if (m_borderPrimitive) {
     m_borderPrimitive->onThemeChanged(
@@ -158,10 +154,16 @@ void ComponentView::updateProps(
 
   if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
     if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-      if (newViewProps.backgroundColor) {
-        Visual().as<Experimental::ISpriteVisual>().Brush(theme()->Brush(*newViewProps.backgroundColor));
+      if (facebook::react::isColorMeaningful(newViewProps.backgroundColor)) {
+        if (!m_backgroundVisual) {
+          m_backgroundVisual = m_compContext.CreateSpriteVisual();
+          m_backgroundVisual.RelativeSizeWithOffset({0, 0}, {1.0f, 1.0f});
+          Visual().InsertAt(m_backgroundVisual, 0);
+        }
+        m_backgroundVisual.Brush(theme()->Brush(*newViewProps.backgroundColor));
+        // todo set clipping?
       } else {
-        Visual().as<Experimental::ISpriteVisual>().Brush(nullptr);
+        m_backgroundVisual.Brush(nullptr);
       }
     }
   }
@@ -214,8 +216,9 @@ void ComponentView::updateProps(
 void ComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
+  updateClippingPath(layoutMetrics, *viewProps());
+
   if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
-    updateClippingPath(layoutMetrics, *viewProps());
     OuterVisual().Size(
         {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
          layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
@@ -322,7 +325,9 @@ void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentView
     auto outlineMetrics = outlineBorderMetrics();
     if (!m_outlinePrimitive && BorderPrimitive::requiresBorder(outlineMetrics, theme())) {
       m_outlinePrimitive = std::make_shared<BorderPrimitive>(*this);
-      Visual().InsertAt(m_outlinePrimitive->RootVisual(), m_borderPrimitive ? m_borderPrimitive->numberOfVisuals() : 0);
+      Visual().InsertAt(
+          m_outlinePrimitive->RootVisual(),
+          (m_backgroundVisual ? 1 : 0) + (m_borderPrimitive ? m_borderPrimitive->numberOfVisuals() : 0));
     }
 
     if (m_outlinePrimitive) {
@@ -747,7 +752,7 @@ void ComponentView::hostFocusVisual(bool show, winrt::com_ptr<ComponentView> vie
           assert(
               view.get() ==
               this); // When not using lifted comp, focus visuals should always host within their own component
-          OuterVisual().InsertAt(m_focusPrimitive->m_focusVisual, 1);
+          OuterVisual().InsertAt(m_focusPrimitive->m_focusVisual, (m_backgroundVisual ? 2 : 1));
         }
       }
 
@@ -991,9 +996,18 @@ void ComponentView::Toggle() noexcept {
   // no-op
 }
 
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ComponentView::VisualToApplyBackgroundClipTo() const noexcept
+{
+  return m_backgroundVisual;
+}
+
 void ComponentView::updateClippingPath(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
+  auto clipTarget = VisualToApplyBackgroundClipTo();
+  if (!clipTarget)
+    return;
+
   auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
 
   bool hasRoundedCorners = borderMetrics.borderRadii.topLeft.horizontal != 0 ||
@@ -1012,10 +1026,11 @@ void ComponentView::updateClippingPath(
     winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
         m_compContext, borderMetrics.borderRadii, {0, 0, 0, 0}, {0, 0, viewWidth, viewHeight});
 
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
+    clipTarget.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
         pathGeometry.get());
   } else {
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
+    clipTarget.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
+        nullptr);
   }
 }
 
@@ -1180,7 +1195,7 @@ void ViewComponentView::ensureVisual() noexcept {
     } else {
       m_visual = createVisual();
     }
-    OuterVisual().InsertAt(m_visual, 0);
+    OuterVisual().InsertAt(m_visual, m_backgroundVisual ? 1 : 0);
   }
 }
 
@@ -1478,7 +1493,7 @@ void ViewComponentView::updateChildrenClippingPath(
       }
 
       // Insert m_childrenContainer after border visuals in m_visual
-      Visual().InsertAt(m_childrenContainer, borderCount);
+      Visual().InsertAt(m_childrenContainer, (m_backgroundVisual ? 1 : 0) + borderCount);
 
       // Use relative sizing so container automatically tracks parent's size
       m_childrenContainer.RelativeSizeWithOffset({0, 0}, {1, 1});
