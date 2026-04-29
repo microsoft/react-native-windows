@@ -52,7 +52,7 @@ steps:
       $DownloadScript = "$(Build.SourcesDirectory)\vnext\Scripts\Tfs\Invoke-WebRequestWithRetry.ps1"
 
       & $DownloadScript `
-        -Uri 'https://aka.ms/windowsappsdk/1.8/latest/windowsappruntimeinstall-x64.exe' `
+        -Uri 'https://aka.ms/windowsappsdk/1.7/latest/windowsappruntimeinstall-x64.exe' `
         -OutFile windowsappruntimeinstall-x64.exe
 
       Write-Host 'Installing Windows App SDK Runtime'
