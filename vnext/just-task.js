@@ -84,12 +84,19 @@ registerNuGetRestoreTask({
   scriptArguments: ['-SkipLockDeletion'],
 });
 
+function installNuGetPackagesTask() {
+  execSync('nuget install PowerShell -Version 7.6.1', {env: process.env});
+}
+
+task('installNuGetPackages', installNuGetPackagesTask);
+
 task(
   'build',
   series(
     condition('clean', () => argv().clean),
     'copyRNLibraries',
     'copyReadmeAndLicenseFromRoot',
+    'installNuGetPackages',
     'layoutMSRNCxx',
     'compileTsPlatformOverrides',
     'restoreNuGetPackages',
