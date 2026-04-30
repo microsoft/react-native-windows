@@ -4,6 +4,10 @@ parameters:
   default: .
 
 steps:
+  - task: NuGetToolInstaller@1
+    inputs:
+      versionSpec: ">=5.8.0"
+
   - script: yarn --cwd ${{ parameters.workingDirectory }} install --immutable
     displayName: yarn install (immutable)
     retryCountOnTaskFailure: 2
