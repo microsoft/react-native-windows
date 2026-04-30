@@ -710,7 +710,7 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
 BorderPrimitive::BorderPrimitive(
     winrt::Microsoft::ReactNative::Composition::implementation::ComponentView &outer,
     const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &rootVisual)
-    : m_outer(&outer), m_rootVisual(rootVisual) {}
+    : m_outer(&outer), m_rootVisual(rootVisual), m_ownsRootVisual(false) {}
 
 BorderPrimitive::BorderPrimitive(winrt::Microsoft::ReactNative::Composition::implementation::ComponentView &outer)
     : m_outer(&outer), m_rootVisual(outer.CompositionContext().CreateSpriteVisual()) {}
@@ -725,9 +725,8 @@ bool BorderPrimitive::requiresBorder(
   // We only handle a single borderStyle for now
   auto borderStyle = borderMetrics.borderStyles.left;
 
-  // A null border color will get replaced with black, so treat it as meaningful for this check
   bool hasMeaningfulColor =
-      !borderMetrics.borderColors.isUniform() || borderMetrics.borderColors.left == nullptr || facebook::react::isColorMeaningful(borderMetrics.borderColors.left);
+      !borderMetrics.borderColors.isUniform() || facebook::react::isColorMeaningful(borderMetrics.borderColors.left);
   bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
   if (!hasMeaningfulColor || !hasMeaningfulWidth) {
     return false;
@@ -789,8 +788,10 @@ BorderPrimitive::FindSpecialBorderLayers() const noexcept {
       nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
 
   if (m_numBorderVisuals) {
+    auto borderInsertAtIndex = m_ownsRootVisual ? 0 : m_outer->borderInsertAtIndex();
+
     for (uint8_t i = 0; i < m_numBorderVisuals; i++) {
-      auto visual = m_rootVisual.GetAt(i);
+      auto visual = m_rootVisual.GetAt(i + borderInsertAtIndex);
       layers[i] = visual.as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>();
     }
   }
@@ -825,9 +826,10 @@ bool BorderPrimitive::TryUpdateSpecialBorderLayers(
 
   // Create the special border layers if they don't exist yet
   if (!spBorderVisuals[0]) {
+    auto borderInsertAtIndex = m_ownsRootVisual ? 0 : m_outer->borderInsertAtIndex();
     for (uint8_t i = 0; i < SpecialBorderLayerCount; i++) {
       auto visual = m_outer->CompositionContext().CreateSpriteVisual();
-      m_rootVisual.InsertAt(visual, i);
+      m_rootVisual.InsertAt(visual, i + borderInsertAtIndex);
       spBorderVisuals[i] = std::move(visual);
       m_numBorderVisuals++;
     }

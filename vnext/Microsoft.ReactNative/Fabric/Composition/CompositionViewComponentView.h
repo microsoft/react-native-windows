@@ -111,6 +111,9 @@ struct ComponentView : public ComponentViewT<
   bool getAcccessiblityIsReadOnly() noexcept override;
   ToggleState getToggleState() noexcept override;
   void Toggle() noexcept override;
+
+  int32_t borderInsertAtIndex() const noexcept;
+
   virtual winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept;
 
   virtual std::pair<facebook::react::Cursor, HCURSOR> cursor() const noexcept;

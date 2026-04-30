@@ -161,9 +161,11 @@ void ComponentView::updateProps(
           Visual().InsertAt(m_backgroundVisual, 0);
         }
         m_backgroundVisual.Brush(theme()->Brush(*newViewProps.backgroundColor));
-        // todo set clipping?
+        updateClippingPath(m_layoutMetrics, *viewProps());
       } else {
-        m_backgroundVisual.Brush(nullptr);
+        if (m_backgroundVisual) {
+          m_backgroundVisual.Brush(nullptr);
+        }
       }
     }
   }
@@ -994,6 +996,11 @@ ToggleState ComponentView::getToggleState() noexcept {
 
 void ComponentView::Toggle() noexcept {
   // no-op
+}
+
+// This offset ensures that the m_borderPrimitive inserts its layers above the background
+int32_t ComponentView::borderInsertAtIndex() const noexcept {
+  return m_backgroundVisual ? 1 : 0;
 }
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ComponentView::VisualToApplyBackgroundClipTo()

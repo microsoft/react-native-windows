@@ -76,7 +76,8 @@ struct BorderPrimitive {
   uint8_t m_numBorderVisuals{0};
   winrt::Microsoft::ReactNative::Composition::implementation::ComponentView *m_outer;
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_rootVisual{nullptr};
-  bool m_needsUpdate{true};
+  bool m_needsUpdate : 1 {true};
+  bool m_ownsRootVisual : 1 {false};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

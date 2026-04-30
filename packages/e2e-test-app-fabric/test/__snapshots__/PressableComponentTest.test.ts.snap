@@ -327,15 +327,20 @@ exports[`Pressable Tests Pressables can change style when pressed 1`] = `
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
     "Comment": "style-change-pressable",
     "Offset": "0, 0, 0",
     "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 255, 255, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Offset": "426, 6, 0",
         "Size": "64, 22",
@@ -431,15 +436,20 @@ exports[`Pressable Tests Pressables can have advanced borders 1`] = `
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 0, 0, 255)",
-    },
     "Comment": "pressable_hit_slop_button",
     "Offset": "0, 0, 0",
     "Size": "146, 19",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Offset": "0, 0, 0",
         "Size": "146, 19",
@@ -549,10 +559,6 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(249, 249, 249, 255)",
-    },
     "Comment": "pressable_delay_events_console",
     "Offset": "0, 0, 0",
     "Size": "896, 120",
@@ -621,6 +627,15 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
             "Visual Type": "SpriteVisual",
           },
         ],
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(249, 249, 249, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
       },
     ],
   },
@@ -711,10 +726,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(249, 249, 249, 255)",
-    },
     "Comment": "pressable_feedback_events_console",
     "Offset": "0, 0, 0",
     "Size": "896, 120",
@@ -771,6 +782,15 @@ exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
             "Visual Type": "SpriteVisual",
           },
         ],
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(249, 249, 249, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
       },
     ],
   },
@@ -905,10 +925,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 2`]
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(249, 249, 249, 255)",
-    },
     "Comment": "pressable_feedback_events_console",
     "Offset": "0, 0, 0",
     "Size": "896, 120",
@@ -1014,6 +1030,15 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 2`]
           },
         ],
       },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(249, 249, 249, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
     ],
   },
 }
@@ -1049,15 +1074,20 @@ exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 0, 0, 255)",
-    },
     "Comment": "pressable_hit_slop_button",
     "Offset": "0, 0, 0",
     "Size": "146, 19",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Offset": "0, 0, 0",
         "Size": "146, 19",
@@ -1234,14 +1264,21 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Opacity": 0,
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -1251,14 +1288,21 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Opacity": 0.10000000149011612,
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -1268,14 +1312,21 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Opacity": 0.20000000298023224,
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -1285,14 +1336,21 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Opacity": 0.30000001192092896,
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -1302,14 +1360,21 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Opacity": 0.4000000059604645,
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -1319,14 +1384,21 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Opacity": 0.5,
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -1336,14 +1408,21 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Opacity": 0.6000000238418579,
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -1353,14 +1432,21 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Opacity": 0.699999988079071,
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -1370,14 +1456,21 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Opacity": 0.800000011920929,
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -1387,14 +1480,21 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Opacity": 0.8999999761581421,
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -1404,13 +1504,20 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -1849,14 +1956,19 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 255, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "200, 200",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Offset": "83, 90, 0",
                 "Size": "34, 19",
@@ -1879,14 +1991,19 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "200, 200",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Offset": "8, 90, 0",
                 "Size": "184, 19",
@@ -1921,14 +2038,19 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 255, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "200, 200",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Offset": "6, 90, 0",
                 "Size": "188, 20",
@@ -1951,14 +2073,19 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "200, 200",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Offset": "85, 90, 0",
                 "Size": "30, 20",
