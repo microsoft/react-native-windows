@@ -44,11 +44,34 @@ function codegen(test) {
   );
 }
 
+function getGlobalNuGetPackagesFolder() {
+  if (process.env.NUGET_PACKAGES) {
+    return process.env.NUGET_PACKAGES;
+  }
+  try {
+    const output = execSync('nuget locals global-packages -list', {
+      encoding: 'utf8',
+    });
+    const match = output.match(/global-packages:\s*(.+)/i);
+    if (match) {
+      return match[1].trim();
+    }
+  } catch {}
+  return path.join(require('os').homedir(), '.nuget', 'packages');
+}
+
 function layoutMSRNCxx() {
   if (require('os').platform() === 'win32') {
-    const powershell = `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
+    const powershell = path.join(
+      getGlobalNuGetPackagesFolder(),
+      'PowerShell.7.6.1',
+      'tools',
+      'net8.0',
+      'any',
+      'pwsh.exe',
+    );
     execSync(
-      `${powershell} -NoProfile .\\Scripts\\Tfs\\Layout-MSRN-Headers.ps1 -GenerateLocalCxx`,
+      `"${powershell}" -NoProfile .\\Scripts\\Tfs\\Layout-MSRN-Headers.ps1 -GenerateLocalCxx`,
       {
         env: process.env,
       },
@@ -85,7 +108,11 @@ registerNuGetRestoreTask({
 });
 
 function installNuGetPackagesTask() {
-  execSync('nuget install PowerShell -Version 7.6.1', {env: process.env});
+  const globalPackages = getGlobalNuGetPackagesFolder();
+  execSync(
+    `nuget install PowerShell -Version 7.6.1 -OutputDirectory "${globalPackages}"`,
+    {env: process.env},
+  );
 }
 
 task('installNuGetPackages', installNuGetPackagesTask);

@@ -4,7 +4,10 @@
  * @format
  */
 
-import {spawn, SpawnOptions} from 'child_process';
+import {execSync, spawn, SpawnOptions} from 'child_process';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
 import ora from 'ora';
 import spinners from 'cli-spinners';
 import chalk from 'chalk';
@@ -47,7 +50,47 @@ export function newSpinner(text: string) {
   return ora(options).start();
 }
 
-export const powershell = `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
+function getGlobalNuGetPackagesFolder(): string {
+  if (process.env.NUGET_PACKAGES) {
+    return process.env.NUGET_PACKAGES;
+  }
+  try {
+    const output = execSync('nuget locals global-packages -list', {
+      encoding: 'utf8',
+    }).trim();
+    const match = output.match(/global-packages:\s*(.+)/i);
+    if (match) {
+      return match[1].trim();
+    }
+  } catch {}
+  return path.join(os.homedir(), '.nuget', 'packages');
+}
+
+function findPwsh(): string {
+  const nugetPackages = getGlobalNuGetPackagesFolder();
+  const nugetPwsh = path.join(
+    nugetPackages,
+    'PowerShell.7.6.1',
+    'tools',
+    'net8.0',
+    'any',
+    'pwsh.exe',
+  );
+  if (fs.existsSync(nugetPwsh)) {
+    return nugetPwsh;
+  }
+
+  try {
+    const found = execSync('where pwsh.exe', {encoding: 'utf8'}).trim();
+    if (found) {
+      return found.split(/\r?\n/)[0];
+    }
+  } catch {}
+
+  return `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
+}
+
+export const powershell = findPwsh();
 
 export async function runPowerShellScriptFunction(
   taskDescription: string,
