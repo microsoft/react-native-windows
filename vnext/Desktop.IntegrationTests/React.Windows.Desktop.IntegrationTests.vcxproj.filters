@@ -30,13 +30,34 @@
     <ClCompile Include="Modules\TestImageLoaderModule.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\TestAppState.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Modules\TestDeviceInfo.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
     <ClCompile Include="HttpOriginPolicyIntegrationTest.cpp">
+      <Filter>Integration Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="RNTesterHeadlessTests.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>
     <ClCompile Include="HttpServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WebSocketServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestReactNativeHostHolder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WinRTActivationShims.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestReactPackageProvider.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestUIDispatcher.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,11 +68,32 @@
     <ClInclude Include="Modules\TestImageLoaderModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Modules\TestAppState.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\TestDeviceInfo.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
     <ClInclude Include="HttpServer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCompositionContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="WebSocketServer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestReactNativeHostHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestReactPackageProvider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestUIDispatcher.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\TestModule.h">
+      <Filter>Header Files\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

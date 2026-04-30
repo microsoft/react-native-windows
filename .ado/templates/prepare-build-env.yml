@@ -22,6 +22,13 @@ parameters:
     #  - PullRequest
     #  - Continuous
     #  - Publish
+  - name: localDumpsExeNames
+    type: object
+    default: []
+    # List of executable base names (without .exe) to register with WER LocalDumps,
+    # so that crashes in those processes write a dump to $(CrashDumpRootPath).
+    # Required for packaged/UWP apps where ProcDump-as-AeDebug is not reliably
+    # invoked. Example: ['RNTesterApp-Fabric', 'Playground'].
 
 steps:
   # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
@@ -44,8 +51,15 @@ steps:
     displayName: Check and enable Windows Error Reporting
 
   - pwsh: |
-        Write-Host "##vso[task.setvariable variable=CrashDumpRootPath]$(Build.StagingDirectory)\CrashDumps"
-        New-Item -Path '$(Build.StagingDirectory)\CrashDumps' -ItemType Directory
+        $path = '$(Build.StagingDirectory)\CrashDumps'
+        Write-Host "##vso[task.setvariable variable=CrashDumpRootPath]$path"
+        New-Item -Path $path -ItemType Directory -Force | Out-Null
+        # Grant full control to NT AUTHORITY\SYSTEM and Users so the WER service
+        # (running as LocalSystem) and any child process — including packaged
+        # apps — can write dumps here. Without this, per-exe LocalDumps can
+        # silently fail on agents that lock down the work directory.
+        & icacls $path /grant 'SYSTEM:(OI)(CI)F' 'Users:(OI)(CI)F' /T /C | Out-Null
+        & icacls $path
     displayName: Set CrashDumpRootPath
 
   - pwsh: |
@@ -59,4 +73,13 @@ steps:
   - pwsh: |
       & $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1 -ProcDumpArgs @("-mm", "-i", "$(CrashDumpRootPath)") -ProcDumpInstallPath "$(ProcDumpPath)" -Verbose
     displayName: Setup ProcDump as AeDebug
-  
+
+  # Register WER LocalDumps for any executables the caller cares about.
+  # This catches crashes in packaged/UWP apps (e.g. RNTesterApp-Fabric) that
+  # the AeDebug-based ProcDump path does not reliably intercept. Dumps land
+  # in $(CrashDumpRootPath), which is already wired to the crash-dump artifact
+  # publisher in upload-build-logs.yml.
+  - ${{ each exeName in parameters.localDumpsExeNames }}:
+    - script: |
+        call "$(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd" "${{ exeName }}" "$(CrashDumpRootPath)"
+      displayName: Register WER LocalDumps for ${{ exeName }}.exe

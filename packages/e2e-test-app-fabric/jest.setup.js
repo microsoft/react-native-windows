@@ -12,6 +12,10 @@ const sanitizeFilename = require('sanitize-filename');
 // disabled temporarily
 //const {LogBox} = require('react-native');
 
+const { toMatchImageSnapshot } = require('jest-image-snapshot');
+
+expect.extend({ toMatchImageSnapshot });
+
 const screenshotDir = './errorShots';
 fs.mkdirSync(screenshotDir, {recursive: true});
 

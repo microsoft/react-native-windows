@@ -1,8 +1,74 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 31 Mar 2026 21:09:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 22 Apr 2026 16:40:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1052
+
+Wed, 22 Apr 2026 16:40:25 GMT
+
+### Changes
+
+- Use hermes-windows version 0.0.0-2604.21001-94aa5e1d (vmorozov@microsoft.com)
+
+## 0.0.0-canary.1051
+
+Wed, 22 Apr 2026 02:49:04 GMT
+
+### Changes
+
+- Re-introduce Desktop integration tests (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.1050
+
+Tue, 21 Apr 2026 02:54:29 GMT
+
+### Changes
+
+- Fix project compilation (vmorozov@microsoft.com)
+- Fix ScrollView keyboard scroll drift on long key press (74712637+iamAbhi-916@users.noreply.github.com)
+- Add folly and fast-float to fork-sync (vmorozov@microsoft.com)
+- Fix multiline TextInput crash from TxDrawD2D reentrancy (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.288
+
+## 0.0.0-canary.1049
+
+Wed, 08 Apr 2026 13:25:17 GMT
+
+### Changes
+
+- Upgrade to Boost 1.84 (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.1048
+
+Tue, 07 Apr 2026 23:42:38 GMT
+
+### Changes
+
+- Fix unused function warning (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1047
+
+Tue, 07 Apr 2026 05:29:55 GMT
+
+### Changes
+
+- fix: respect track mode in compare-results to avoid false regression failures (74712637+iamAbhi-916@users.noreply.github.com)
+- Fork fmt lib locally (vmorozov@microsoft.com)
+- fix: auto-discover native perf results in compare report (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.287
+- Bump @react-native-windows/codegen to v0.0.0-canary.133
+- Bump react-native-platform-override to v0.0.0-canary.1022
+
+## 0.0.0-canary.1046
+
+Sat, 04 Apr 2026 10:40:19 GMT
+
+### Changes
+
+- Add onAuxClick event (30809111+acoates-ms@users.noreply.github.com)
+- Fix NativeModule templates to work with clang (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1045
 

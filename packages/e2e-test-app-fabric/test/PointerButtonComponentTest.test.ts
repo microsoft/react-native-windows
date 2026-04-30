@@ -25,6 +25,11 @@ const searchBox = async (input: string) => {
   const searchBox = await app.findElementByTestID('example_search');
   await app.waitUntil(
     async () => {
+      // Clear before each attempt: WinAppDriver's setValue can fall back to
+      // synthesized keystrokes for custom RN TextInputs, which append rather
+      // than replace. Without the clear, a retry produces concatenated text
+      // and the comparison never converges.
+      await searchBox.clearValue();
       await searchBox.setValue(input);
       if (input === '') {
         return (await searchBox.getText()) === 'Search...';
@@ -33,8 +38,8 @@ const searchBox = async (input: string) => {
       }
     },
     {
-      interval: 1500,
-      timeout: 5000,
+      interval: 500,
+      timeout: 10000,
       timeoutMsg: `Unable to enter correct search text into test searchbox.`,
     },
   );
@@ -123,18 +128,14 @@ describe('Pointer Button Tests', () => {
   });
   test('onPointerUp reports correct button property on left click', async () => {
     await searchBox('onPointerUp');
-    const component = await app.findElementByTestID(
-      'pointer-up-button-target',
-    );
+    const component = await app.findElementByTestID('pointer-up-button-target');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('pointer-up-button-target');
     expect(dump).toMatchSnapshot();
 
     // Left click release triggers onPointerUp with button=0
     await component.click();
-    const stateText = await app.findElementByTestID(
-      'pointer-up-button-state',
-    );
+    const stateText = await app.findElementByTestID('pointer-up-button-state');
 
     await app.waitUntil(
       async () => {
@@ -155,16 +156,12 @@ describe('Pointer Button Tests', () => {
   });
   test('onPointerUp reports correct button property on middle click', async () => {
     await searchBox('onPointerUp');
-    const component = await app.findElementByTestID(
-      'pointer-up-button-target',
-    );
+    const component = await app.findElementByTestID('pointer-up-button-target');
     await component.waitForDisplayed({timeout: 5000});
 
     // Middle click release triggers onPointerUp with button=1
     await component.click({button: 'middle'});
-    const stateText = await app.findElementByTestID(
-      'pointer-up-button-state',
-    );
+    const stateText = await app.findElementByTestID('pointer-up-button-state');
 
     await app.waitUntil(
       async () => {
@@ -185,16 +182,12 @@ describe('Pointer Button Tests', () => {
   });
   test('onPointerUp reports correct button property on right click', async () => {
     await searchBox('onPointerUp');
-    const component = await app.findElementByTestID(
-      'pointer-up-button-target',
-    );
+    const component = await app.findElementByTestID('pointer-up-button-target');
     await component.waitForDisplayed({timeout: 5000});
 
     // Right click release triggers onPointerUp with button=2
     await component.click({button: 'right'});
-    const stateText = await app.findElementByTestID(
-      'pointer-up-button-state',
-    );
+    const stateText = await app.findElementByTestID('pointer-up-button-state');
 
     await app.waitUntil(
       async () => {

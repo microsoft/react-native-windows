@@ -15,12 +15,10 @@
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch"
   },
-  "bin": {
-    "format-files": "./bin.js"
-  },
+  "bin": "./bin.js",
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
     "async": "^3.2.3",
     "clang-format": "^1.7.0",
     "minimatch": "^10.0.3",

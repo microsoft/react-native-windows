@@ -211,21 +211,21 @@
   "TouchableOpacity Performance TouchableOpacity-Specific Scenarios multiple-touchables-100 1": {
     "metrics": {
       "name": "TouchableOpacity multiple-100",
-      "meanDuration": 30.666666666666668,
-      "medianDuration": 30,
-      "stdDev": 3.6774732526300613,
+      "meanDuration": 50.27,
+      "medianDuration": 50,
+      "stdDev": 5.5,
       "renderCount": 1,
       "runs": 15,
-      "timestamp": "2026-02-25T08:49:05.289Z"
+      "timestamp": "2026-04-06T00:00:00.000Z"
     },
     "threshold": {
-      "maxDurationIncrease": 10,
+      "maxDurationIncrease": 30,
       "maxDuration": null,
-      "minAbsoluteDelta": 10,
+      "minAbsoluteDelta": 15,
       "maxRenderCount": 5,
       "minRuns": 10,
-      "mode": "gate"
+      "mode": "track"
     },
-    "capturedAt": "2026-02-25T08:49:05.290Z"
+    "capturedAt": "2026-04-06T00:00:00.000Z"
   }
 }

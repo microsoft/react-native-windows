@@ -981,8 +981,6 @@ void ScrollViewComponentView::OnPointerPressed(
   Super::OnPointerPressed(args);
 
   if (!args.Handled()) {
-    auto f = args.Pointer();
-    auto g = f.PointerDeviceType();
     m_scrollVisual.OnPointerPressed(args);
   }
 }
@@ -1023,16 +1021,16 @@ void ScrollViewComponentView::OnKeyDown(
       args.Handled(pageUp(true));
       break;
     case winrt::Windows::System::VirtualKey::Up:
-      args.Handled(lineUp(true));
+      args.Handled(lineUp(false));
       break;
     case winrt::Windows::System::VirtualKey::Down:
-      args.Handled(lineDown(true));
+      args.Handled(lineDown(false));
       break;
     case winrt::Windows::System::VirtualKey::Left:
-      args.Handled(lineLeft(true));
+      args.Handled(lineLeft(false));
       break;
     case winrt::Windows::System::VirtualKey::Right:
-      args.Handled(lineRight(true));
+      args.Handled(lineRight(false));
       break;
   }
 

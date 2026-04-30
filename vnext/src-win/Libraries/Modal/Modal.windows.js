@@ -41,13 +41,7 @@ export type PublicModalInstance = HostInstance;
 const ModalEventEmitter =
   (Platform.OS === 'ios' || Platform.OS === 'windows') && // [Windows]
   NativeModalManager != null
-    ? new NativeEventEmitter<ModalEventDefinitions>(
-        // T88715063: NativeEventEmitter only used this parameter on iOS. Now it uses it on all platforms, so this code was modified automatically to preserve its behavior
-        // If you want to use the native module on other platforms, please remove this condition and test its behavior
-        Platform.OS !== 'ios' && Platform.OS !== 'windows' // [Windows]
-          ? null
-          : NativeModalManager,
-      )
+    ? new NativeEventEmitter<ModalEventDefinitions>(NativeModalManager)
     : null;
 
 /**
@@ -62,7 +56,7 @@ const ModalEventEmitter =
 // destroyed before the callback is fired.
 let uniqueModalIdentifier = 0;
 
-type OrientationChangeEvent = $ReadOnly<{
+type OrientationChangeEvent = Readonly<{
   orientation: 'portrait' | 'landscape',
 }>;
 
@@ -397,7 +391,7 @@ const styles = StyleSheet.create({
   },
 });
 
-type ModalRefProps = $ReadOnly<{
+type ModalRefProps = Readonly<{
   ref?: React.RefSetter<PublicModalInstance>,
 }>;
 

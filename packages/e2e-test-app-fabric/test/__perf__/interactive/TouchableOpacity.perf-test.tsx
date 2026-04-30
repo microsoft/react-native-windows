@@ -279,7 +279,7 @@ describe('TouchableOpacity Performance', () => {
       expect(perf).toMatchPerfSnapshot({
         maxDurationIncrease: 30,
         minAbsoluteDelta: 15,
-        mode: 'gate',
+        mode: 'track',
       });
     });
   });

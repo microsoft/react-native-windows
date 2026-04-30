@@ -1,8 +1,67 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Tue, 31 Mar 2026 21:09:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 22 Apr 2026 16:40:26 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1052
+
+Wed, 22 Apr 2026 16:40:26 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1052
+
+## 0.0.0-canary.1051
+
+Wed, 22 Apr 2026 02:49:04 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1051
+
+## 0.0.0-canary.1050
+
+Tue, 21 Apr 2026 02:54:30 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1050
+
+## 0.0.0-canary.1049
+
+Wed, 08 Apr 2026 13:25:17 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1049
+
+## 0.0.0-canary.1048
+
+Tue, 07 Apr 2026 23:42:38 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1048
+
+## 0.0.0-canary.1047
+
+Tue, 07 Apr 2026 05:29:55 GMT
+
+### Changes
+
+- Move to yarn 4 (30809111+acoates-ms@users.noreply.github.com)
+- fix: auto-discover native perf results in compare report (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1047
+- Bump @react-native-windows/fs to v0.0.0-canary.72
+
+## 0.0.0-canary.1046
+
+Sat, 04 Apr 2026 10:40:19 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1046
 
 ## 0.0.0-canary.1045
 

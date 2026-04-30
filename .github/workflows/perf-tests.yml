@@ -44,10 +44,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: yarn
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --immutable
 
       - name: Detect preinstalled Windows SDK
         id: winsdk
@@ -105,6 +104,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: perf-results
+          include-hidden-files: true
           path: |
             packages/e2e-test-app-fabric/.perf-results/
             packages/e2e-test-app-fabric/.native-perf-results/

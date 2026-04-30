@@ -7,6 +7,7 @@
 
 import fs from '@react-native-windows/fs';
 import * as path from 'path';
+import * as os from 'os';
 import type {PerfMetrics} from '../interfaces/PerfMetrics';
 import type {PerfThreshold} from '../interfaces/PerfThreshold';
 
@@ -26,8 +27,63 @@ export type SnapshotFile = Record<string, SnapshotEntry>;
 
 /**
  * Manages reading and writing of perf snapshot files.
+ * Also writes live run metrics to a temp directory so the CI reporter
+ * (which runs in the Jest main process) can access fresh results
+ * from the worker process.
  */
 export class SnapshotManager {
+  /** Directory for live run metrics (cross-process via temp files). */
+  private static readonly _runMetricsDir =
+    process.env.PERF_RUN_METRICS_DIR ||
+    path.join(os.tmpdir(), 'rnw-perf-run-metrics');
+
+  /** Record a live metric entry for the current run (written to temp file). */
+  static recordRunMetric(
+    snapshotFilePath: string,
+    key: string,
+    entry: SnapshotEntry,
+  ): void {
+    const metricsFile = path.join(
+      SnapshotManager._runMetricsDir,
+      Buffer.from(snapshotFilePath).toString('base64url') + '.json',
+    );
+    let existing: SnapshotFile = {};
+    if (fs.existsSync(metricsFile)) {
+      existing = JSON.parse(
+        fs.readFileSync(metricsFile, 'utf-8'),
+      ) as SnapshotFile;
+    } else if (!fs.existsSync(SnapshotManager._runMetricsDir)) {
+      fs.mkdirSync(SnapshotManager._runMetricsDir, {recursive: true});
+    }
+    existing[key] = entry;
+    fs.writeFileSync(
+      metricsFile,
+      JSON.stringify(existing, null, 2) + '\n',
+      'utf-8',
+    );
+  }
+
+  /** Get live run metrics for a snapshot file, or null if none were recorded. */
+  static getRunMetrics(snapshotFilePath: string): SnapshotFile | null {
+    const metricsFile = path.join(
+      SnapshotManager._runMetricsDir,
+      Buffer.from(snapshotFilePath).toString('base64url') + '.json',
+    );
+    if (fs.existsSync(metricsFile)) {
+      return JSON.parse(fs.readFileSync(metricsFile, 'utf-8')) as SnapshotFile;
+    }
+    return null;
+  }
+
+  /** Clean up temp run metrics directory. */
+  static clearRunMetrics(): void {
+    if (fs.existsSync(SnapshotManager._runMetricsDir)) {
+      for (const f of fs.readdirSync(SnapshotManager._runMetricsDir)) {
+        fs.unlinkSync(path.join(SnapshotManager._runMetricsDir, f));
+      }
+    }
+  }
+
   static getSnapshotPath(testFilePath: string): {
     dir: string;
     file: string;

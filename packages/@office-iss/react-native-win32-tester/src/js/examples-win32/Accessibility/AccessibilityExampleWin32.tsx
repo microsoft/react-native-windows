@@ -265,11 +265,11 @@ const SelectionItemComponent: React.FunctionComponent<ISelectionItemComponentPro
   }
 
   function addToSelection() {
-    props.addHandler(props.value);
+    props.addHandler?.(props.value);
   }
 
   function removeFromSelection() {
-    props.removeHandler(props.value);
+    props.removeHandler?.(props.value);
   }
 };
 
@@ -324,14 +324,14 @@ const renderItem = (item: ListRenderItemInfo<IListProps>) => (
   <ListItem label={item.item.label} level={item.item.level} setSize={item.item.setSize} positionInSet={item.item.positionInSet} />
 );
 
-const getItemLayout = (data: ArrayLike<IListProps>, index: number) => ({ length: 30, offset: 30 * index, index });
+const getItemLayout = (data: ArrayLike<IListProps> | null | undefined, index: number) => ({ length: 30, offset: 30 * index, index });
 
 const keyExtractor = (item: IListProps) => item.label.toString();
 
 interface IFlatListProps {
   renderItem: (item: ListRenderItemInfo<IListProps>) => React.JSX.Element;
   getItemLayout?: (
-    data: ArrayLike<IListProps>,
+    data: ArrayLike<IListProps> | null | undefined,
     index: number
   ) => {
     length: number;

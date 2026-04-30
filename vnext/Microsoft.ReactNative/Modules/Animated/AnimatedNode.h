@@ -6,6 +6,7 @@
 #include <JSValue.h>
 #include <cstdint>
 #include <memory>
+#include <unordered_set>
 #include <vector>
 
 namespace Microsoft::ReactNative {
@@ -20,7 +21,7 @@ class AnimatedNode {
   void AddChild(int64_t animatedNode);
   void RemoveChild(int64_t animatedNode);
 
-  std::vector<int64_t> &Children() {
+  std::unordered_set<int64_t> &Children() {
     return m_children;
   }
 
@@ -37,7 +38,7 @@ class AnimatedNode {
   AnimatedNode *GetChildNode(int64_t tag);
   int64_t m_tag{0};
   const std::weak_ptr<NativeAnimatedNodeManager> m_manager;
-  std::vector<int64_t> m_children{};
+  std::unordered_set<int64_t> m_children{};
   bool m_useComposition{false};
 
   bool HasCompatibleAnimationDriver(int64_t tag);
