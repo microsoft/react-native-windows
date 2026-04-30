@@ -10,15 +10,20 @@ exports[`LegacyImageTest ImageRTLTest 1`] = `
     },
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 0, 255)",
-    },
     "Comment": "image-container",
     "Offset": "0, 0, 0",
     "Size": "500, 300",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 255, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Offset": "0, 0, 0",
         "Size": "20, 20",
@@ -74,15 +79,20 @@ exports[`LegacyImageTest ImageWithBorderTest 1`] = `
     },
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 0, 255)",
-    },
     "Comment": "image-container",
     "Offset": "0, 0, 0",
     "Size": "500, 300",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 255, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
@@ -170,14 +180,21 @@ exports[`LegacyImageTest ImageWithoutBorderTest 1`] = `
     },
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 0, 255)",
-    },
     "Comment": "image-container",
     "Offset": "0, 0, 0",
     "Size": "500, 300",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 255, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
   },
 }
 `;
@@ -192,15 +209,20 @@ exports[`LegacyImageTest ImageWithoutBorderTestOneMoreClick 1`] = `
     },
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 0, 255)",
-    },
     "Comment": "image-container",
     "Offset": "0, 0, 0",
     "Size": "500, 300",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 255, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Offset": "0, 0, 0",
         "Size": "20, 20",

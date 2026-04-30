@@ -67,14 +67,21 @@ exports[`Custom Accessibility Tests Verify custom native component has UIA label
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 128, 0, 255)",
-            },
             "Comment": "custom-accessibility-1",
             "Offset": "0, 0, 0",
             "Size": "500, 500",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },

@@ -4675,6 +4675,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Visual Type": "SpriteVisual",
                             "__Children": [
                               {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
                                 "Visual Type": "SpriteVisual",
@@ -4712,15 +4721,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                               {
                                 "Offset": "0, 1, 0",
                                 "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Brush": {
-                                  "Brush Type": "ColorBrush",
-                                  "Color": "rgba(253, 245, 230, 255)",
-                                },
-                                "Offset": "0, 0, 0",
-                                "Size": "0, 0",
                                 "Visual Type": "SpriteVisual",
                               },
                             ],
@@ -4750,6 +4750,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Visual Type": "SpriteVisual",
                             "__Children": [
                               {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
                                 "Visual Type": "SpriteVisual",
@@ -4787,15 +4796,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                               {
                                 "Offset": "0, 1, 0",
                                 "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Brush": {
-                                  "Brush Type": "ColorBrush",
-                                  "Color": "rgba(253, 245, 230, 255)",
-                                },
-                                "Offset": "0, 0, 0",
-                                "Size": "0, 0",
                                 "Visual Type": "SpriteVisual",
                               },
                             ],
@@ -4825,6 +4825,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Visual Type": "SpriteVisual",
                             "__Children": [
                               {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
                                 "Visual Type": "SpriteVisual",
@@ -4862,15 +4871,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                               {
                                 "Offset": "0, 1, 0",
                                 "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Brush": {
-                                  "Brush Type": "ColorBrush",
-                                  "Color": "rgba(253, 245, 230, 255)",
-                                },
-                                "Offset": "0, 0, 0",
-                                "Size": "0, 0",
                                 "Visual Type": "SpriteVisual",
                               },
                             ],
@@ -4900,6 +4900,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Visual Type": "SpriteVisual",
                             "__Children": [
                               {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
                                 "Visual Type": "SpriteVisual",
@@ -4937,15 +4946,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                               {
                                 "Offset": "0, 1, 0",
                                 "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Brush": {
-                                  "Brush Type": "ColorBrush",
-                                  "Color": "rgba(253, 245, 230, 255)",
-                                },
-                                "Offset": "0, 0, 0",
-                                "Size": "0, 0",
                                 "Visual Type": "SpriteVisual",
                               },
                             ],
@@ -4975,6 +4975,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Visual Type": "SpriteVisual",
                             "__Children": [
                               {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
                                 "Visual Type": "SpriteVisual",
@@ -5012,15 +5021,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                               {
                                 "Offset": "0, 1, 0",
                                 "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Brush": {
-                                  "Brush Type": "ColorBrush",
-                                  "Color": "rgba(253, 245, 230, 255)",
-                                },
-                                "Offset": "0, 0, 0",
-                                "Size": "0, 0",
                                 "Visual Type": "SpriteVisual",
                               },
                             ],
@@ -5073,6 +5073,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Visual Type": "SpriteVisual",
                             "__Children": [
                               {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
                                 "Visual Type": "SpriteVisual",
@@ -5110,15 +5119,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                               {
                                 "Offset": "0, 1, 0",
                                 "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Brush": {
-                                  "Brush Type": "ColorBrush",
-                                  "Color": "rgba(253, 245, 230, 255)",
-                                },
-                                "Offset": "0, 0, 0",
-                                "Size": "0, 0",
                                 "Visual Type": "SpriteVisual",
                               },
                             ],
@@ -5148,6 +5148,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Visual Type": "SpriteVisual",
                             "__Children": [
                               {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
                                 "Visual Type": "SpriteVisual",
@@ -5185,15 +5194,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                               {
                                 "Offset": "0, 1, 0",
                                 "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Brush": {
-                                  "Brush Type": "ColorBrush",
-                                  "Color": "rgba(253, 245, 230, 255)",
-                                },
-                                "Offset": "0, 0, 0",
-                                "Size": "0, 0",
                                 "Visual Type": "SpriteVisual",
                               },
                             ],
@@ -5223,6 +5223,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Visual Type": "SpriteVisual",
                             "__Children": [
                               {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
                                 "Visual Type": "SpriteVisual",
@@ -5260,15 +5269,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                               {
                                 "Offset": "0, 1, 0",
                                 "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Brush": {
-                                  "Brush Type": "ColorBrush",
-                                  "Color": "rgba(253, 245, 230, 255)",
-                                },
-                                "Offset": "0, 0, 0",
-                                "Size": "0, 0",
                                 "Visual Type": "SpriteVisual",
                               },
                             ],
@@ -5298,6 +5298,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Visual Type": "SpriteVisual",
                             "__Children": [
                               {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
                                 "Visual Type": "SpriteVisual",
@@ -5335,15 +5344,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                               {
                                 "Offset": "0, 1, 0",
                                 "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Brush": {
-                                  "Brush Type": "ColorBrush",
-                                  "Color": "rgba(253, 245, 230, 255)",
-                                },
-                                "Offset": "0, 0, 0",
-                                "Size": "0, 0",
                                 "Visual Type": "SpriteVisual",
                               },
                             ],
@@ -5373,6 +5373,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Visual Type": "SpriteVisual",
                             "__Children": [
                               {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
                                 "Visual Type": "SpriteVisual",
@@ -5410,15 +5419,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                               {
                                 "Offset": "0, 1, 0",
                                 "Size": "1, -2",
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Brush": {
-                                  "Brush Type": "ColorBrush",
-                                  "Color": "rgba(253, 245, 230, 255)",
-                                },
-                                "Offset": "0, 0, 0",
-                                "Size": "0, 0",
                                 "Visual Type": "SpriteVisual",
                               },
                             ],
@@ -5509,6 +5509,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                     "Visual Type": "SpriteVisual",
                                                     "__Children": [
                                                       {
+                                                        "Brush": {
+                                                          "Brush Type": "ColorBrush",
+                                                          "Color": "rgba(253, 245, 230, 255)",
+                                                        },
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
                                                         "Offset": "0, 0, 0",
                                                         "Size": "1, 1",
                                                         "Visual Type": "SpriteVisual",
@@ -5546,15 +5555,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                       {
                                                         "Offset": "0, 1, 0",
                                                         "Size": "1, -2",
-                                                        "Visual Type": "SpriteVisual",
-                                                      },
-                                                      {
-                                                        "Brush": {
-                                                          "Brush Type": "ColorBrush",
-                                                          "Color": "rgba(253, 245, 230, 255)",
-                                                        },
-                                                        "Offset": "0, 0, 0",
-                                                        "Size": "0, 0",
                                                         "Visual Type": "SpriteVisual",
                                                       },
                                                     ],
@@ -5584,6 +5584,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                     "Visual Type": "SpriteVisual",
                                                     "__Children": [
                                                       {
+                                                        "Brush": {
+                                                          "Brush Type": "ColorBrush",
+                                                          "Color": "rgba(253, 245, 230, 255)",
+                                                        },
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
                                                         "Offset": "0, 0, 0",
                                                         "Size": "1, 1",
                                                         "Visual Type": "SpriteVisual",
@@ -5621,15 +5630,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                       {
                                                         "Offset": "0, 1, 0",
                                                         "Size": "1, -2",
-                                                        "Visual Type": "SpriteVisual",
-                                                      },
-                                                      {
-                                                        "Brush": {
-                                                          "Brush Type": "ColorBrush",
-                                                          "Color": "rgba(253, 245, 230, 255)",
-                                                        },
-                                                        "Offset": "0, 0, 0",
-                                                        "Size": "0, 0",
                                                         "Visual Type": "SpriteVisual",
                                                       },
                                                     ],
@@ -5659,6 +5659,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                     "Visual Type": "SpriteVisual",
                                                     "__Children": [
                                                       {
+                                                        "Brush": {
+                                                          "Brush Type": "ColorBrush",
+                                                          "Color": "rgba(253, 245, 230, 255)",
+                                                        },
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
                                                         "Offset": "0, 0, 0",
                                                         "Size": "1, 1",
                                                         "Visual Type": "SpriteVisual",
@@ -5696,15 +5705,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                       {
                                                         "Offset": "0, 1, 0",
                                                         "Size": "1, -2",
-                                                        "Visual Type": "SpriteVisual",
-                                                      },
-                                                      {
-                                                        "Brush": {
-                                                          "Brush Type": "ColorBrush",
-                                                          "Color": "rgba(253, 245, 230, 255)",
-                                                        },
-                                                        "Offset": "0, 0, 0",
-                                                        "Size": "0, 0",
                                                         "Visual Type": "SpriteVisual",
                                                       },
                                                     ],
@@ -5734,6 +5734,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                     "Visual Type": "SpriteVisual",
                                                     "__Children": [
                                                       {
+                                                        "Brush": {
+                                                          "Brush Type": "ColorBrush",
+                                                          "Color": "rgba(253, 245, 230, 255)",
+                                                        },
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
                                                         "Offset": "0, 0, 0",
                                                         "Size": "1, 1",
                                                         "Visual Type": "SpriteVisual",
@@ -5771,15 +5780,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                       {
                                                         "Offset": "0, 1, 0",
                                                         "Size": "1, -2",
-                                                        "Visual Type": "SpriteVisual",
-                                                      },
-                                                      {
-                                                        "Brush": {
-                                                          "Brush Type": "ColorBrush",
-                                                          "Color": "rgba(253, 245, 230, 255)",
-                                                        },
-                                                        "Offset": "0, 0, 0",
-                                                        "Size": "0, 0",
                                                         "Visual Type": "SpriteVisual",
                                                       },
                                                     ],
@@ -5809,6 +5809,15 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                     "Visual Type": "SpriteVisual",
                                                     "__Children": [
                                                       {
+                                                        "Brush": {
+                                                          "Brush Type": "ColorBrush",
+                                                          "Color": "rgba(253, 245, 230, 255)",
+                                                        },
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                      {
                                                         "Offset": "0, 0, 0",
                                                         "Size": "1, 1",
                                                         "Visual Type": "SpriteVisual",
@@ -5846,15 +5855,6 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                       {
                                                         "Offset": "0, 1, 0",
                                                         "Size": "1, -2",
-                                                        "Visual Type": "SpriteVisual",
-                                                      },
-                                                      {
-                                                        "Brush": {
-                                                          "Brush Type": "ColorBrush",
-                                                          "Color": "rgba(253, 245, 230, 255)",
-                                                        },
-                                                        "Offset": "0, 0, 0",
-                                                        "Size": "0, 0",
                                                         "Visual Type": "SpriteVisual",
                                                       },
                                                     ],
