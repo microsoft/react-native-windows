@@ -5,6 +5,7 @@
     <ProjectName>Common.win32</ProjectName>
     <Keyword>StaticLibrary</Keyword>
     <ReactTargetWin32>true</ReactTargetWin32>
+    <NuGetLockFileName>$(NuGetLockFileName).win32</NuGetLockFileName>
   </PropertyGroup>
   <Import Project="Common.vcxproj" />
 </Project>
