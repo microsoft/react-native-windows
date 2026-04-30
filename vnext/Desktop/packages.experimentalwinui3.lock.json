@@ -157,32 +157,32 @@
           "Microsoft.WindowsAppSDK.InteractiveExperiences": "1.8.251104001"
         }
       },
-      "common": {
+      "common.win32": {
         "type": "Project",
         "dependencies": {
           "boost": "[1.84.0, )"
         }
       },
-      "fmt": {
+      "fmt.win32": {
         "type": "Project"
       },
-      "folly": {
+      "folly.win32": {
         "type": "Project",
         "dependencies": {
           "boost": "[1.84.0, )",
-          "fmt": "[1.0.0, )"
+          "fmt.win32": "[1.0.0, )"
         }
       },
       "follywin32": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )"
+          "Folly.win32": "[1.0.0, )"
         }
       },
-      "reactcommon": {
+      "reactcommon.win32": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
+          "Folly.win32": "[1.0.0, )",
           "boost": "[1.84.0, )"
         }
       }

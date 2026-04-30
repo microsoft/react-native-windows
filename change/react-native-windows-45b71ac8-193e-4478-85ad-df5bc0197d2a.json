@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Use HybridCRT for react-native-win32",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

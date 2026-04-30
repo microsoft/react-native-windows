@@ -3,16 +3,9 @@
   "dependencies": {
     "native,Version=v0.0": {
       "boost": {
-        "type": "Direct",
-        "requested": "[1.84.0, )",
+        "type": "Transitive",
         "resolved": "1.84.0",
         "contentHash": "4el2YP3cNJDVFPdzOso+LxGvdWP2rHxML4siq8VdonNypW2m4q503tHfCj6vK0L1UfxioE2hpFGb4ITEua73tg=="
-      },
-      "common.win32": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "[1.84.0, )"
-        }
       },
       "fmt.win32": {
         "type": "Project"

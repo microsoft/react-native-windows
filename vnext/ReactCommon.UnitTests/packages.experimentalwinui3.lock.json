@@ -8,11 +8,11 @@
         "resolved": "1.84.0",
         "contentHash": "4el2YP3cNJDVFPdzOso+LxGvdWP2rHxML4siq8VdonNypW2m4q503tHfCj6vK0L1UfxioE2hpFGb4ITEua73tg=="
       },
-      "Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn": {
+      "Microsoft.googletest.v140.windesktop.msvcstl.static.rt-static": {
         "type": "Direct",
         "requested": "[1.8.1.7, )",
         "resolved": "1.8.1.7",
-        "contentHash": "FxNwT4YpsGdqforqFSTGc5f/e+qfRJ+1wf5G1w0nEEkT5pr5M95E5+fOuswpPUGXPZIXM+M7BSVGnCRcQZjomA=="
+        "contentHash": "Yk78bz9F/6wDjOiM3ZeyErqsHsAbHYLZ2ptB1DdOriMPZATsDy3nMridgbc4+IrtEo7+eAUVdyMkWYNyf/X34g=="
       },
       "ReactNative.V8Jsi.Windows": {
         "type": "Direct",
@@ -154,46 +154,46 @@
           "Microsoft.WindowsAppSDK.InteractiveExperiences": "1.8.251104001"
         }
       },
-      "common": {
+      "common.win32": {
         "type": "Project",
         "dependencies": {
           "boost": "[1.84.0, )"
         }
       },
-      "fmt": {
+      "fmt.win32": {
         "type": "Project"
       },
-      "folly": {
+      "folly.win32": {
         "type": "Project",
         "dependencies": {
           "boost": "[1.84.0, )",
-          "fmt": "[1.0.0, )"
+          "fmt.win32": "[1.0.0, )"
         }
       },
       "follywin32": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )"
+          "Folly.win32": "[1.0.0, )"
         }
       },
       "react.windows.desktop": {
         "type": "Project",
         "dependencies": {
-          "Common": "[1.0.0, )",
-          "Folly": "[1.0.0, )",
+          "Common.win32": "[1.0.0, )",
+          "Folly.win32": "[1.0.0, )",
           "FollyWin32": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.0.0-2511.7001-d7ca19b3, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.WindowsAppSDK": "[1.8.251106002, )",
-          "ReactCommon": "[1.0.0, )",
+          "ReactCommon.win32": "[1.0.0, )",
           "ReactNative.V8Jsi.Windows": "[0.71.8, )",
           "boost": "[1.84.0, )"
         }
       },
-      "reactcommon": {
+      "reactcommon.win32": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
+          "Folly.win32": "[1.0.0, )",
           "boost": "[1.84.0, )"
         }
       }
