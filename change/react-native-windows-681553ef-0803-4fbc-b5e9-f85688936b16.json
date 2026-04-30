@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Revert \"[0.74] Use hermes 0.0.0-2604.21001-94aa5e1d (#16031)\"",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
