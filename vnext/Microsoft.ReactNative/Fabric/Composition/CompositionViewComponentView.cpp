@@ -996,8 +996,8 @@ void ComponentView::Toggle() noexcept {
   // no-op
 }
 
-winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ComponentView::VisualToApplyBackgroundClipTo() const noexcept
-{
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ComponentView::VisualToApplyBackgroundClipTo()
+    const noexcept {
   return m_backgroundVisual;
 }
 
@@ -1029,8 +1029,7 @@ void ComponentView::updateClippingPath(
     clipTarget.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
         pathGeometry.get());
   } else {
-    clipTarget.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
-        nullptr);
+    clipTarget.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
   }
 }
 

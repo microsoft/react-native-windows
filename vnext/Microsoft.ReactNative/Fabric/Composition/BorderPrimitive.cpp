@@ -725,8 +725,9 @@ bool BorderPrimitive::requiresBorder(
   // We only handle a single borderStyle for now
   auto borderStyle = borderMetrics.borderStyles.left;
 
+  // A null border color will get replaced with black, so treat it as meaningful for this check
   bool hasMeaningfulColor =
-      !borderMetrics.borderColors.isUniform() || facebook::react::isColorMeaningful(borderMetrics.borderColors.left);
+      !borderMetrics.borderColors.isUniform() || borderMetrics.borderColors.left == nullptr || facebook::react::isColorMeaningful(borderMetrics.borderColors.left);
   bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
   if (!hasMeaningfulColor || !hasMeaningfulWidth) {
     return false;

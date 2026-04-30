@@ -236,8 +236,8 @@ void ImageComponentView::onThemeChanged() noexcept {
   Super::onThemeChanged();
 }
 
-winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ImageComponentView::VisualToApplyBackgroundClipTo() const noexcept
-{
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ImageComponentView::VisualToApplyBackgroundClipTo()
+    const noexcept {
   return Visual();
 }
 

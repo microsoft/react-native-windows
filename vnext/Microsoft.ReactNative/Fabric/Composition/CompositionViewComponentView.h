@@ -130,7 +130,8 @@ struct ComponentView : public ComponentViewT<
   void ThemeChanged(winrt::event_token const &token) noexcept;
 
  protected:
-  virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual VisualToApplyBackgroundClipTo() const noexcept;
+  virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual VisualToApplyBackgroundClipTo()
+      const noexcept;
   bool anyHitTestHelper(
       facebook::react::Tag &targetTag,
       facebook::react::Point &ptContent,
@@ -142,7 +143,7 @@ struct ComponentView : public ComponentViewT<
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   comp::CompositionPropertySet m_centerPropSet{nullptr};
   facebook::react::SharedViewEventEmitter m_eventEmitter;
-  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_backgroundVisual { nullptr };
+  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_backgroundVisual{nullptr};
 
  private:
   void updateFocusLayoutMetrics() noexcept;
