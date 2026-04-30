@@ -7419,8 +7419,8 @@ __metadata:
   linkType: hard
 
 "beachball@npm:^2.20.0":
-  version: 2.65.1
-  resolution: "beachball@npm:2.65.1"
+  version: 2.65.3
+  resolution: "beachball@npm:2.65.3"
   dependencies:
     "@vercel/detect-agent": "npm:^1.2.1"
     cosmiconfig: "npm:^9.0.1"
@@ -7430,11 +7430,11 @@ __metadata:
     p-limit: "npm:^3.1.0"
     prompts: "npm:^2.4.2"
     semver: "npm:^7.7.4"
-    workspace-tools: "npm:^0.41.4"
+    workspace-tools: "npm:^0.41.6"
     yargs-parser: "npm:^21.1.1"
   bin:
     beachball: bin/beachball.js
-  checksum: 10c0/02ebf3aceaef525a17dc6e580cc27f1e7b02fa2b161e4c2727b5212c35fd71f7bc3ce33d3b153d7ed903f52d9004c19b73206169b3aafa633aa6e16a6f8ec3a9
+  checksum: 10c0/2eff9b8404aa95060049e6784d5b05bd27810ce0190418b00cab3a28764a776fbc18905a63a716ab69540a487b0e49feece1e44a53bd7b40aece501c7395a6d9
   languageName: node
   linkType: hard
 
@@ -12753,8 +12753,8 @@ __metadata:
   linkType: hard
 
 "lage@npm:^2.7.1":
-  version: 2.15.9
-  resolution: "lage@npm:2.15.9"
+  version: 2.15.11
+  resolution: "lage@npm:2.15.11"
   dependencies:
     fsevents: "npm:~2.3.2"
     glob-hasher: "npm:^1.4.2"
@@ -12764,7 +12764,7 @@ __metadata:
   bin:
     lage: dist/lage.js
     lage-server: dist/lage-server.js
-  checksum: 10c0/92632bac15c75e2601850be5947fcaa61c2d176779a4351876a00ca8a0766b44db73edfb3823d0c2fed48bcaf3e1d2dfbd2ebd98a441a30be5390b67c9c3062e
+  checksum: 10c0/6a7fbfbb420bed5251da4c531f4c8fed907fd1b7a896bcc5303b830ce4ce0b4eab7b0b16007998bded0b3936a80e7ceb989e41d8e768938a40717c7014b222d8
   languageName: node
   linkType: hard
 
@@ -13456,8 +13456,8 @@ __metadata:
   linkType: hard
 
 "metro-babel-register@npm:^0.83.3":
-  version: 0.83.6
-  resolution: "metro-babel-register@npm:0.83.6"
+  version: 0.83.7
+  resolution: "metro-babel-register@npm:0.83.7"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/plugin-proposal-export-namespace-from": "npm:^7.18.9"
@@ -13470,7 +13470,7 @@ __metadata:
     babel-plugin-transform-flow-enums: "npm:^0.0.2"
     escape-string-regexp: "npm:^1.0.5"
     flow-enums-runtime: "npm:^0.0.6"
-  checksum: 10c0/c3018f4678b196b568ca8e4908efad3b70c4493dc03c16508b1f4cb89e7fff0090fc83a4a6d1ceae4b0fc52abec75291953b59d8645ffd060df33518437d092a
+  checksum: 10c0/7ed2459fb555356d9ac2683833c14a0c784813f151542ca3fd7ee778e9be8a83cec8e633cdf316da79f872700bf775a86b8c5b15f8bf75052640f9a942ae1db9
   languageName: node
   linkType: hard
 
@@ -13590,12 +13590,12 @@ __metadata:
   linkType: hard
 
 "metro-runtime@npm:^0.83.3":
-  version: 0.83.6
-  resolution: "metro-runtime@npm:0.83.6"
+  version: 0.83.7
+  resolution: "metro-runtime@npm:0.83.7"
   dependencies:
     "@babel/runtime": "npm:^7.25.0"
     flow-enums-runtime: "npm:^0.0.6"
-  checksum: 10c0/f70d0e4310b4ab65d403634ce8f0cafc7bbb0fbf81c569b5345bf52bfbda49f778f4b270ca52cd41baab3337443859aaab46bcc4b2598cc2b1689ef94711b4ab
+  checksum: 10c0/b9feb9cffdf4df086cea91d803529d706c1a212d0c6b9d138ef4985905cb9bd22f9861a77061364a397917b772d2ef722e465a5b198d6405f574481dfa35a9a7
   languageName: node
   linkType: hard
 
@@ -13616,20 +13616,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"metro-source-map@npm:0.83.6, metro-source-map@npm:^0.83.3":
-  version: 0.83.6
-  resolution: "metro-source-map@npm:0.83.6"
+"metro-source-map@npm:0.83.7, metro-source-map@npm:^0.83.3":
+  version: 0.83.7
+  resolution: "metro-source-map@npm:0.83.7"
   dependencies:
     "@babel/traverse": "npm:^7.29.0"
     "@babel/types": "npm:^7.29.0"
     flow-enums-runtime: "npm:^0.0.6"
     invariant: "npm:^2.2.4"
-    metro-symbolicate: "npm:0.83.6"
+    metro-symbolicate: "npm:0.83.7"
     nullthrows: "npm:^1.1.1"
-    ob1: "npm:0.83.6"
+    ob1: "npm:0.83.7"
     source-map: "npm:^0.5.6"
     vlq: "npm:^1.0.0"
-  checksum: 10c0/52f1bfe68132c624abe5b17b1155be06ae0d27649455c22df0989b28f601a1c3ab5274fdf7068942b67f7eab228f64728252af01c787a84e7415137834c40e23
+  checksum: 10c0/6c424f6258a2128bb4ae6e7591fb7ed1f79b042978397c24a1e35d8bdfcd8960655b3cdd0c4d8ff90f3055ce5b00eca5cb61b327720e7029b3f334fd8ae1776d
   languageName: node
   linkType: hard
 
@@ -13649,19 +13649,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"metro-symbolicate@npm:0.83.6":
-  version: 0.83.6
-  resolution: "metro-symbolicate@npm:0.83.6"
+"metro-symbolicate@npm:0.83.7":
+  version: 0.83.7
+  resolution: "metro-symbolicate@npm:0.83.7"
   dependencies:
     flow-enums-runtime: "npm:^0.0.6"
     invariant: "npm:^2.2.4"
-    metro-source-map: "npm:0.83.6"
+    metro-source-map: "npm:0.83.7"
     nullthrows: "npm:^1.1.1"
     source-map: "npm:^0.5.6"
     vlq: "npm:^1.0.0"
   bin:
     metro-symbolicate: src/index.js
-  checksum: 10c0/2193baf4203b2a61c4b73dfbbad21381085d6987b76ea647d5b1f2fc58d29765252444d2dc858ff33cb017d2ec5cdd0c28ddee79b314574c92bbeaa0d424a2cf
+  checksum: 10c0/4968a89d9bdd040e0cb6328852f14a8555e912875a1661e639566879e548fbfb849134b8f55076f875c062d202c713be1c9f47b4e68c627a4f8b367d7e208213
   languageName: node
   linkType: hard
 
@@ -13680,8 +13680,8 @@ __metadata:
   linkType: hard
 
 "metro-transform-plugins@npm:^0.83.3":
-  version: 0.83.6
-  resolution: "metro-transform-plugins@npm:0.83.6"
+  version: 0.83.7
+  resolution: "metro-transform-plugins@npm:0.83.7"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/generator": "npm:^7.29.1"
@@ -13689,7 +13689,7 @@ __metadata:
     "@babel/traverse": "npm:^7.29.0"
     flow-enums-runtime: "npm:^0.0.6"
     nullthrows: "npm:^1.1.1"
-  checksum: 10c0/b587d4c2d83aa4f6616eed17e290d3ad6906ac4de7adfd0d03615fa730ebb73fbd2746a134e3e31d488734b8703f0b290e3089e2d5057b0b4c36dcb67f12fd5b
+  checksum: 10c0/2fce17ba1013e96278bd6800141ff050af0331a60c4c0dbc24f83c6b524806b6ff4089b36e3268c2315375211d16e875d644b7cbf2b23d43dc050047ec019556
   languageName: node
   linkType: hard
 
@@ -14687,12 +14687,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ob1@npm:0.83.6":
-  version: 0.83.6
-  resolution: "ob1@npm:0.83.6"
+"ob1@npm:0.83.7":
+  version: 0.83.7
+  resolution: "ob1@npm:0.83.7"
   dependencies:
     flow-enums-runtime: "npm:^0.0.6"
-  checksum: 10c0/c8c5b01ea3d270ca771ba194cdb6944f1b0477e7cdf3a930e3bc001a976e0ba10502d9bb6675cdedd42e1ef9b921d85aaee32ece761e7bbcff923807afaf7a20
+  checksum: 10c0/b009d7a79b7ccf8db520acdc713a544a1ec379ae804438328080715c66944aa871551b8d7b1cf7cfb89cbe53bbab29f3345097c455259d7b7fe76b0891860187
   languageName: node
   linkType: hard
 
@@ -18688,9 +18688,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workspace-tools@npm:^0.41.4":
-  version: 0.41.4
-  resolution: "workspace-tools@npm:0.41.4"
+"workspace-tools@npm:^0.41.6":
+  version: 0.41.6
+  resolution: "workspace-tools@npm:0.41.6"
   dependencies:
     "@yarnpkg/lockfile": "npm:^1.1.0"
     fast-glob: "npm:^3.3.3"
@@ -18698,7 +18698,7 @@ __metadata:
     jju: "npm:^1.4.0"
     js-yaml: "npm:^4.1.1"
     micromatch: "npm:^4.0.8"
-  checksum: 10c0/76ebecf762f33761764ce5df35572df80d805130845e7b442ed055c6dbadbb08d2960f36d1366675f1d5754def31e50d356e99f1b3b6ce038e18e06ab9bda03c
+  checksum: 10c0/5c201662eb9f486471f0ee0a7bdda1ca1767c285f468f7931b53354741e6eb42901d02a4b4338cfa097819e5b1a8fc86a1e239b8ab6e0abc6e3e3f49fa550fa6
   languageName: node
   linkType: hard
 
