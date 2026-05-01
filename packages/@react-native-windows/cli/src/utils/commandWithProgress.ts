@@ -55,7 +55,7 @@ function getGlobalNuGetPackagesFolder(): string {
     return process.env.NUGET_PACKAGES;
   }
   try {
-    const output = execSync('nuget locals global-packages -list', {
+    const output = execSync('dotnet.exe nuget locals global-packages --list', {
       encoding: 'utf8',
     }).trim();
     const match = output.match(/global-packages:\s*(.+)/i);
