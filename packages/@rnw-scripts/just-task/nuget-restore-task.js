@@ -59,7 +59,7 @@ function executeNuGetRestore(config) {
     : '';
   const restoreCommand = `call ${quote(
     vsDevCmd,
-  )} && ${powershell} -NoProfile -ExecutionPolicy Bypass -File ${quote(
+  )} && "${powershell}" -NoProfile -ExecutionPolicy Bypass -File ${quote(
     config.scriptPath,
   )}${scriptArgs}`;
   const wrappedCommand = `${restoreCommand}`;

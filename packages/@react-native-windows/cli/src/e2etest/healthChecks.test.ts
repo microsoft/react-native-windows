@@ -22,7 +22,7 @@ test('Verify list of health checks aligns with rnw-dependencies', async () => {
   );
 
   const rnwDeps = execSync(
-    `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -ListChecks`,
+    `"${powershell}" -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -ListChecks`,
     {stdio: 'pipe'},
   );
   const deps = rnwDeps.toString().trim().split('\n');

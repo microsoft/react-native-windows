@@ -78,7 +78,7 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
             };
           },
           runAutomaticFix: async ({loader, logManualInstallation}) => {
-            const command = `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -Check ${id}`;
+            const command = `"${powershell}" -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -Check ${id}`;
             try {
               const {exitCode} = await execa(command, {stdio: 'inherit'});
               if (exitCode) {
