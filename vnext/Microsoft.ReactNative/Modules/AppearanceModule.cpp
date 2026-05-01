@@ -9,7 +9,7 @@
 using UISettings = winrt::Windows::UI::ViewManagement::UISettings;
 
 namespace Microsoft::ReactNative {
-  
+
 static const React::ReactPropertyId<bool> &AppearanceCurrentThemePropertyId() noexcept {
   static const React::ReactPropertyId<bool> prop{L"ReactNative.Appearance", L"ApplicationTheme"};
   return prop;
@@ -39,7 +39,8 @@ void Appearance::Initialize(winrt::Microsoft::ReactNative::ReactContext const &r
       });
 }
 
-Appearance::ApplicationTheme CurrentThemeFromUISettings(const winrt::Windows::UI::ViewManagement::UISettings &uiSettings) {
+Appearance::ApplicationTheme CurrentThemeFromUISettings(
+    const winrt::Windows::UI::ViewManagement::UISettings &uiSettings) {
   return IsColorLight(uiSettings.GetColorValue(winrt::Windows::UI::ViewManagement::UIColorType::Foreground))
       ? Appearance::ApplicationTheme::Dark
       : Appearance::ApplicationTheme::Light;
@@ -56,7 +57,9 @@ const char *Appearance::ToString(ApplicationTheme theme) noexcept {
 
 void Appearance::RequeryTheme() noexcept {
   auto theme = GetCurrentTheme();
-  auto oldTheme = m_context.Properties().Get(AppearanceCurrentThemePropertyId()).value_or(false) ? Appearance::ApplicationTheme::Dark : Appearance::ApplicationTheme::Light;
+  auto oldTheme = m_context.Properties().Get(AppearanceCurrentThemePropertyId()).value_or(false)
+      ? Appearance::ApplicationTheme::Dark
+      : Appearance::ApplicationTheme::Light;
 
   if (oldTheme != theme) {
     appearanceChanged({ToString(theme)});
@@ -76,7 +79,10 @@ void Appearance::setColorScheme(std::string style) noexcept {
 }
 
 std::optional<std::string> Appearance::getColorScheme() noexcept {
-  return ToString(m_context.Properties().Get(AppearanceCurrentThemePropertyId()).value_or(false) ? Appearance::ApplicationTheme::Dark : Appearance::ApplicationTheme::Light);
+  return ToString(
+      m_context.Properties().Get(AppearanceCurrentThemePropertyId()).value_or(false)
+          ? Appearance::ApplicationTheme::Dark
+          : Appearance::ApplicationTheme::Light);
 }
 
 void Appearance::addListener(std::string eventName) noexcept {

@@ -70,9 +70,9 @@
 
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
-#include "Modules/AppearanceModule.h"
 #include "Modules/AppStateModule.h"
 #include "Modules/AppThemeModuleUwp.h"
+#include "Modules/AppearanceModule.h"
 #include "Modules/ClipboardModule.h"
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/ExceptionsManager.h"
