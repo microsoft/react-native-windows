@@ -9,6 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const {execSync, spawnSync} = require('child_process');
 const {task} = require('just-scripts');
+const {findPwsh} = require('@react-native-windows/find-dotnet-tools');
 
 function registerNuGetRestoreTask(options) {
   const config = normalizeOptions(options);
@@ -50,51 +51,6 @@ function executeNuGetRestore(config) {
   console.log(
     `Restoring NuGet packages (log: ${path.relative(process.cwd(), logPath)})`,
   );
-
-  function getGlobalNuGetPackagesFolder() {
-    if (process.env.NUGET_PACKAGES) {
-      return process.env.NUGET_PACKAGES;
-    }
-    try {
-      const output = execSync('dotnet.exe nuget locals global-packages --list', {
-        encoding: 'utf8',
-      });
-      const match = output.match(/global-packages:\s*(.+)/i);
-      if (match) {
-        return match[1].trim();
-      }
-    } catch {}
-    return path.join(require('os').homedir(), '.nuget', 'packages');
-  }
-
-  function findPwsh() {
-    // Build agents already have PowerShell (pwsh) installed
-    if (!process.env.TF_BUILD) {
-      const nugetPackages = getGlobalNuGetPackagesFolder();
-      const nugetPwsh = path.join(
-        nugetPackages,
-        'PowerShell',
-        '7.6.1',
-        'tools',
-        'net10.0',
-        'any',
-        'win',
-        'pwsh.exe',
-      );
-      if (fs.existsSync(nugetPwsh)) {
-        return nugetPwsh;
-      }
-    }
-
-    try {
-      const found = execSync('where pwsh.exe', { encoding: 'utf8' }).trim();
-      if (found) {
-        return found.split(/\r?\n/)[0];
-      }
-    } catch { }
-
-    return `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
-  }
 
   const powershell = findPwsh();
 

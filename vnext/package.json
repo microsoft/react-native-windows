@@ -73,6 +73,7 @@
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
     "@react-native-windows/codegen": "0.0.0-canary.133",
+    "@react-native-windows/find-dotnet-tools": "0.0.0-canary.1",
     "@react-native/metro-config": "0.85.0-nightly-20260114-f15985f4f",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",
