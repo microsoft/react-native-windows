@@ -1358,8 +1358,7 @@ void CompositionEventHandler::onPointerPressed(
     // and corrupts touch state, leaving Pressables stuck after a scroll.
     // Mouse pointer ID is always 1 (MOUSE_POINTER_ID), which is already within the safe range —
     // use it directly to preserve stable, predictable identifier assignment for mouse input.
-    activeTouch.touch.identifier =
-        (pointerPoint.PointerDeviceType() == Composition::Input::PointerDeviceType::Mouse)
+    activeTouch.touch.identifier = (pointerPoint.PointerDeviceType() == Composition::Input::PointerDeviceType::Mouse)
         ? static_cast<int>(MOUSE_POINTER_ID)
         : AllocateTouchIdentifier();
 
