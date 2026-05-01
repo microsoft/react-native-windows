@@ -19,27 +19,6 @@ namespace Microsoft::React::Test {
 // test macros.
 // clang-format off
 
-TEST_CLASS(UtilsTest)
-{
-
-  void ExpectUrl(
-    string urlString,
-    string protocol,
-    string host,
-    string port = "",
-    string path = "/",
-    string query = "")
-  {
-
-    Url url(std::move(urlString));
-
-    Assert::AreEqual(protocol, url.scheme);
-    Assert::AreEqual(host, url.host);
-    Assert::AreEqual(port, url.port);
-    Assert::AreEqual(path, url.path);
-    Assert::AreEqual(query, url.queryString);
-  }
-
 #pragma region Base64 Tests
 
   TEST_METHOD(EncodeStdStringToBase64Succeeds)

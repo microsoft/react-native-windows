@@ -44,12 +44,6 @@
     </Midl>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ABI\MessageQueueShim.cpp">
-      <Filter>ABI</Filter>
-    </ClCompile>
-    <ClCompile Include="ABI\NativeLogEventSource.cpp">
-      <Filter>ABI</Filter>
-    </ClCompile>
     <ClCompile Include="ABI\TestController.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
@@ -70,12 +64,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ABI\MessageQueueShim.h">
-      <Filter>ABI</Filter>
-    </ClInclude>
-    <ClInclude Include="ABI\NativeLogEventSource.h">
-      <Filter>ABI</Filter>
-    </ClInclude>
     <ClInclude Include="ABI\TestController.h">
       <Filter>ABI</Filter>
     </ClInclude>

@@ -16,30 +16,6 @@ namespace ABITests {
 TEST_CLASS (PerfTests) {
   static const uint32_t iterations = 100000000;
 
-  static void HandleLogEvents(::winrt::facebook::react::LogLevel l, hstring const &m) {}
-
-  TEST_METHOD(TimeNewAbiInitializeLogging) {
-    // ensure the DLL has been loaded before starting perf measurements
-    uint32_t loggingRegistrationToken = NativeLogEventSource::InitializeLogging(HandleLogEvents);
-
-    LARGE_INTEGER accu{0}, a{0}, b{0};
-
-    NativeLogHandler logHandler = HandleLogEvents;
-
-    QueryPerformanceCounter(&a);
-
-    for (int i = 0; i < iterations; ++i) {
-      NativeLogEventSource::InitializeLogging(logHandler);
-    }
-
-    QueryPerformanceCounter(&b);
-    accu.QuadPart = b.QuadPart - a.QuadPart;
-
-    PrintResult("TimeNewAbiInitializeLogging", iterations, accu.QuadPart);
-
-    NativeLogEventSource::UninitializeLogging(loggingRegistrationToken);
-  }
-
   TEST_METHOD(TimeOldAbiInitializeLogging) {
     LARGE_INTEGER accu{0}, a{0}, b{0};
 

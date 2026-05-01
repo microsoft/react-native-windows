@@ -10,7 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DynamicReaderWriterTests.cpp" />
-    <ClCompile Include="NativeLogEventTests.cpp" />
     <ClCompile Include="PerfTests.cpp" />
     <ClCompile Include="ReactContextTests.cpp" />
     <ClCompile Include="ReactDispatcherTests.cpp" />
@@ -35,15 +34,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleMessageQueue.cpp">
-      <Filter>Utilities</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
-      <Filter>Utilities</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleMessageQueue.h">
       <Filter>Utilities</Filter>
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative.IntegrationTests\TestEventService.h">

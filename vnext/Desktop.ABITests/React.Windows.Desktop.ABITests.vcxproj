@@ -148,8 +148,6 @@
     <ClCompile Include="ReactPackageBuilderTests.cpp" />
     <ClCompile Include="ReactPackageProviderTests.cpp" />
     <ClCompile Include="RedBoxTests.cpp" />
-    <ClCompile Include="SimpleMessageQueue.cpp" />
-    <ClCompile Include="NativeLogEventTests.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -162,7 +160,6 @@
   <ItemGroup>
     <ClInclude Include="..\Microsoft.ReactNative.IntegrationTests\TestEventService.h" />
     <ClInclude Include="..\Microsoft.ReactNative.IntegrationTests\TestReactNativeHostHolder.h" />
-    <ClInclude Include="SimpleMessageQueue.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

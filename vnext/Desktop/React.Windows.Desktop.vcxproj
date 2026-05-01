@@ -145,14 +145,6 @@
     <Midl Include="ABI\TestController.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ABI\MessageQueueShim.cpp">
-      <DependentUpon>ABI\MessageQueue.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="ABI\NativeLogEventSource.cpp">
-      <DependentUpon>ABI\NativeLogging.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
-    </ClCompile>
     <ClCompile Include="ABI\TestController.cpp">
       <DependentUpon>ABI\TestController.idl</DependentUpon>
     </ClCompile>
@@ -164,12 +156,6 @@
     <ClCompile Include="WebSocketResourceFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ABI\MessageQueueShim.h">
-      <DependentUpon>ABI\MessageQueue.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="ABI\NativeLogEventSource.h">
-      <DependentUpon>ABI\NativeLogging.idl</DependentUpon>
-    </ClInclude>
     <ClInclude Include="ABI\TestController.h">
       <DependentUpon>ABI\TestController.idl</DependentUpon>
     </ClInclude>
