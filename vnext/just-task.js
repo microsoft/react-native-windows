@@ -60,7 +60,7 @@ function getGlobalNuGetPackagesFolder() {
   return path.join(require('os').homedir(), '.nuget', 'packages');
 }
 
-function findPwsh(): string {
+function findPwsh() {
   // Build agents already have PowerShell (pwsh) installed
   if (!process.env.TF_BUILD) {
     const nugetPackages = getGlobalNuGetPackagesFolder();
