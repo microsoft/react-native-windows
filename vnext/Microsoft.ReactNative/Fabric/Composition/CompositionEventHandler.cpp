@@ -1214,6 +1214,28 @@ void CompositionEventHandler::onPointerExited(
   }
 }
 
+// Windows touch pointer IDs can be arbitrarily large (e.g. 2233). React Native's JS
+// touch handler uses identifiers as array indices and warns/misbehaves for values > 20.
+// This function maps each live Windows pointer to a small identifier in [0, 19] by
+// scanning m_activeTouches for in-use slots and cycling from the last assigned index.
+int CompositionEventHandler::AllocateTouchIdentifier() noexcept {
+  constexpr int kMaxTouchIdentifier = 20;
+  for (int i = 0; i < kMaxTouchIdentifier; i++) {
+    int candidate = (m_touchId + i) % kMaxTouchIdentifier;
+    bool inUse = std::any_of(m_activeTouches.begin(), m_activeTouches.end(), [candidate](const auto &pair) {
+      return pair.second.touch.identifier == candidate;
+    });
+    if (!inUse) {
+      m_touchId = (candidate + 1) % kMaxTouchIdentifier;
+      return candidate;
+    }
+  }
+  // All 20 slots occupied (> 20 simultaneous touch points) — wrap anyway.
+  int fallback = m_touchId % kMaxTouchIdentifier;
+  m_touchId = (m_touchId + 1) % kMaxTouchIdentifier;
+  return fallback;
+}
+
 void CompositionEventHandler::onPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
@@ -1322,11 +1344,14 @@ void CompositionEventHandler::onPointerPressed(
     UpdateActiveTouch(activeTouch, ptScaled, ptLocal);
 
     activeTouch.isPrimary = pointerId == 1;
-    activeTouch.touch.identifier = pointerId;
+    // Map the Windows pointer ID to a small identifier (0–19) safe for use as a JS array index.
+    // Windows touch IDs can be arbitrarily large (e.g. 2233), which causes React Native to warn
+    // and corrupts touch state, leaving Pressables stuck after a scroll.
+    activeTouch.touch.identifier = AllocateTouchIdentifier();
 
     // If the pointer has not been marked as hovering over views before the touch started, we register
     // that the activeTouch should not maintain its hovered state once the pointer has been lifted.
-    auto currentlyHoveredTags = m_currentlyHoveredViewsPerPointer.find(activeTouch.touch.identifier);
+    auto currentlyHoveredTags = m_currentlyHoveredViewsPerPointer.find(pointerId);
     if (currentlyHoveredTags == m_currentlyHoveredViewsPerPointer.end() || currentlyHoveredTags->second.empty()) {
       activeTouch.shouldLeaveWhenReleased = true;
     }
@@ -1641,7 +1666,7 @@ void CompositionEventHandler::DispatchTouchEvent(
       continue;
     }
 
-    if (activeTouch.touch.identifier == pointerId) {
+    if (pair.first == pointerId) {
       event.changedTouches.insert(activeTouch.touch);
     }
     uniqueEventEmitters.insert(activeTouch.eventEmitter);
