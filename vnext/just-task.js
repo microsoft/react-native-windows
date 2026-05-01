@@ -60,16 +60,37 @@ function getGlobalNuGetPackagesFolder() {
   return path.join(require('os').homedir(), '.nuget', 'packages');
 }
 
-function layoutMSRNCxx() {
-  if (require('os').platform() === 'win32') {
-    const powershell = path.join(
-      getGlobalNuGetPackagesFolder(),
+function findPwsh(): string {
+  // Build agents already have PowerShell (pwsh) installed
+  if (!process.env.TF_BUILD) {
+    const nugetPackages = getGlobalNuGetPackagesFolder();
+    const nugetPwsh = path.join(
+      nugetPackages,
       'PowerShell.7.6.1',
       'tools',
       'net8.0',
       'any',
       'pwsh.exe',
     );
+    if (fs.existsSync(nugetPwsh)) {
+      return nugetPwsh;
+    }
+  }
+
+  try {
+    const found = execSync('where pwsh.exe', { encoding: 'utf8' }).trim();
+    if (found) {
+      return found.split(/\r?\n/)[0];
+    }
+  } catch { }
+
+  return `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
+}
+
+const powershell = findPwsh();
+
+function layoutMSRNCxx() {
+  if (require('os').platform() === 'win32') {
     execSync(
       `"${powershell}" -NoProfile .\\Scripts\\Tfs\\Layout-MSRN-Headers.ps1 -GenerateLocalCxx`,
       {

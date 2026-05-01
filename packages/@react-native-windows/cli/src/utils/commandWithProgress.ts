@@ -67,17 +67,20 @@ function getGlobalNuGetPackagesFolder(): string {
 }
 
 function findPwsh(): string {
-  const nugetPackages = getGlobalNuGetPackagesFolder();
-  const nugetPwsh = path.join(
-    nugetPackages,
-    'PowerShell.7.6.1',
-    'tools',
-    'net8.0',
-    'any',
-    'pwsh.exe',
-  );
-  if (fs.existsSync(nugetPwsh)) {
-    return nugetPwsh;
+  // Build agents already have PowerShell (pwsh) installed
+  if (!process.env.TF_BUILD) {
+    const nugetPackages = getGlobalNuGetPackagesFolder();
+    const nugetPwsh = path.join(
+      nugetPackages,
+      'PowerShell.7.6.1',
+      'tools',
+      'net8.0',
+      'any',
+      'pwsh.exe',
+    );
+    if (fs.existsSync(nugetPwsh)) {
+      return nugetPwsh;
+    }
   }
 
   try {

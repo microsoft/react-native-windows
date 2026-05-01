@@ -4,15 +4,6 @@ parameters:
   default: .
 
 steps:
-  - task: NuGetToolInstaller@1
-    inputs:
-      versionSpec: ">=5.8.0"
-
-  - task: NuGetAuthenticate@1
-    displayName: 'NuGet Authenticate Internal WinAppSDK Feed'
-    inputs:
-      nuGetServiceConnections: 'WinAppSDK Experimental NuGet for RNW'
-
   - script: yarn --cwd ${{ parameters.workingDirectory }} install --immutable
     displayName: yarn install (immutable)
     retryCountOnTaskFailure: 2
