@@ -1218,10 +1218,14 @@ void CompositionEventHandler::onPointerExited(
 // touch handler uses identifiers as array indices and warns/misbehaves for values > 20.
 // This function maps each live Windows pointer to a small identifier in [0, 19] by
 // scanning m_activeTouches for in-use slots and cycling from the last assigned index.
+// Identifier MOUSE_POINTER_ID (1) is permanently reserved for mouse and never returned here.
 int CompositionEventHandler::AllocateTouchIdentifier() noexcept {
   constexpr int kMaxTouchIdentifier = 20;
   for (int i = 0; i < kMaxTouchIdentifier; i++) {
     int candidate = (m_touchId + i) % kMaxTouchIdentifier;
+    if (candidate == static_cast<int>(MOUSE_POINTER_ID)) {
+      continue; // reserved for mouse
+    }
     bool inUse = std::any_of(m_activeTouches.begin(), m_activeTouches.end(), [candidate](const auto &pair) {
       return pair.second.touch.identifier == candidate;
     });
@@ -1230,9 +1234,14 @@ int CompositionEventHandler::AllocateTouchIdentifier() noexcept {
       return candidate;
     }
   }
-  // All 20 slots occupied (> 20 simultaneous touch points) — wrap anyway.
-  int fallback = m_touchId % kMaxTouchIdentifier;
+  // All non-mouse slots occupied (> 19 simultaneous touch/pen points) — wrap anyway,
+  // skipping the mouse-reserved slot.
+  int fallback = m_touchId;
   m_touchId = (m_touchId + 1) % kMaxTouchIdentifier;
+  if (fallback == static_cast<int>(MOUSE_POINTER_ID)) {
+    fallback = m_touchId;
+    m_touchId = (m_touchId + 1) % kMaxTouchIdentifier;
+  }
   return fallback;
 }
 
@@ -1347,7 +1356,12 @@ void CompositionEventHandler::onPointerPressed(
     // Map the Windows pointer ID to a small identifier (0–19) safe for use as a JS array index.
     // Windows touch IDs can be arbitrarily large (e.g. 2233), which causes React Native to warn
     // and corrupts touch state, leaving Pressables stuck after a scroll.
-    activeTouch.touch.identifier = AllocateTouchIdentifier();
+    // Mouse pointer ID is always 1 (MOUSE_POINTER_ID), which is already within the safe range —
+    // use it directly to preserve stable, predictable identifier assignment for mouse input.
+    activeTouch.touch.identifier =
+        (pointerPoint.PointerDeviceType() == Composition::Input::PointerDeviceType::Mouse)
+        ? static_cast<int>(MOUSE_POINTER_ID)
+        : AllocateTouchIdentifier();
 
     // If the pointer has not been marked as hovering over views before the touch started, we register
     // that the activeTouch should not maintain its hovered state once the pointer has been lifted.
