@@ -104,9 +104,6 @@
     <ClCompile Include="Modules\I18nManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\ImageViewManagerModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\LinkingManagerModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -148,7 +145,6 @@
     </ClCompile>
     <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\ReactViewInstance.cpp" />
-    <ClCompile Include="Utils\KeyboardUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base\CxxReactIncludes.h">
@@ -209,7 +205,6 @@
     <ClInclude Include="ReactHost\ReactNativeHeaders.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
-    <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="TestHook.h" />
     <ClInclude Include="Modules\AccessibilityInfoModule.h">

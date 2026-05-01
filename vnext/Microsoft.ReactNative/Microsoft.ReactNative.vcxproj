@@ -317,7 +317,6 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="RedBox.h" />
-    <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="TestHook.h" />
     <ClInclude Include="QuirkSettings.h">
       <DependentUpon>QuirkSettings.idl</DependentUpon>
@@ -325,39 +324,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
-    <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\AnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\AnimatedPlatformConfig.cpp" />
-    <ClCompile Include="Modules\Animated\AnimationDriver.cpp" />
-    <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp" />
-    <ClCompile Include="Modules\Animated\DecayAnimationDriver.cpp" />
-    <ClCompile Include="Modules\Animated\DiffClampAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\DivisionAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\EventAnimationDriver.cpp" />
-    <ClCompile Include="Modules\Animated\FrameAnimationDriver.cpp" />
-    <ClCompile Include="Modules\Animated\InterpolationAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\ModulusAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\MultiplicationAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\NativeAnimatedModule.cpp" />
-    <ClCompile Include="Modules\Animated\NativeAnimatedNodeManager.cpp" />
-    <ClCompile Include="Modules\Animated\PropsAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
-    <ClCompile Include="Modules\Animated\StyleAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\SubtractionAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\TransformAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\ValueAnimatedNode.cpp" />
     <ClCompile Include="Modules\CreateModules.cpp" />
-    <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="Utils\KeyboardUtils.cpp" />
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
-    <ClCompile Include="ReactSupport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="DocString.idl" />
