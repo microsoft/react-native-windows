@@ -17,6 +17,11 @@ steps:
     displayName: Ensure npm directory for npx commands
     condition: eq(variables['Agent.OS'], 'Windows_NT')
 
+  - task: UseDotNet@2
+    displayName: Install .NET SDK
+    inputs:
+      version: 10.x
+
   - task: DotNetCoreCLI@2
     displayName: Restore .NET Tools
     inputs:
