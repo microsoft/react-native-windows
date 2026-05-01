@@ -40,7 +40,8 @@
   },
   "promoteRelease": true,
   "files": [
-    "lib-commonjs"
+    "lib-commonjs",
+    "README.md"
   ],
   "engines": {
     "node": ">= 22"
