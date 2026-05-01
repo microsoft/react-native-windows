@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 May 2026 00:47:23 GMT",
+      "version": "0.74.58",
+      "tag": "react-native-windows_v0.74.58",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a10e9ddf836af3d978649582cc1748ccdc10d2fb",
+            "comment": "Use HybridCRT for react-native-win32"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a10e9ddf836af3d978649582cc1748ccdc10d2fb",
+            "comment": "Revert \"[0.74] Use hermes 0.0.0-2604.21001-94aa5e1d (#16031)\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Apr 2026 22:50:06 GMT",
       "version": "0.74.57",
       "tag": "react-native-windows_v0.74.57",
