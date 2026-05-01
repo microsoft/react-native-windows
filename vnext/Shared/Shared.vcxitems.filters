@@ -163,6 +163,16 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\oscompat\OSCompatWindows.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\network\NetworkHandler.cpp" />
     <ClCompile Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\AccessibilityInfoModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\AlertModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\AppearanceModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\AppStateModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\AppThemeModuleUwp.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ClipboardModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\DeviceInfoModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\I18nManagerModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\LinkingManagerModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\LogBoxModule.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\EventEmitters.h" />
@@ -297,6 +307,23 @@
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeHost.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\RedBoxHandler.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Timer.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ComponentView.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Composition.Input.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionComponentView.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\FocusManager.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionContext.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionHwndHost.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeIsland.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeWindow.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionSwitcher.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionUIService.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactCompositionViewComponentBuilder.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageBuilderFabric.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactViewComponentBuilder.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Theme.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\UriImageManager.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ViewProps.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeAppBuilder.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp" />

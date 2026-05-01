@@ -11,7 +11,6 @@
 #include <Utils/Helpers.h>
 #include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
-#include <XamlUIService.h>
 #include <XamlUtils.h>
 #include <functional>
 #include <memory>
@@ -21,7 +20,6 @@
 #endif
 
 namespace winrt {
-using namespace xaml;
 using namespace Windows::UI::ViewManagement;
 } // namespace winrt
 

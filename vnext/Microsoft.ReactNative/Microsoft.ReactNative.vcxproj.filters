@@ -86,9 +86,6 @@
     <ClCompile Include="Modules\Animated\ValueAnimatedNode.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\AlertModule.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Modules\AppearanceModule.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
@@ -141,12 +138,6 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Utils\LocalBundleReader.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils\UwpScriptStore.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Utils\ValueUtils.cpp">
@@ -377,12 +368,6 @@
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Utils\UwpPreparedScriptStore.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils\UwpScriptStore.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Utils\ValueUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -453,8 +438,6 @@
   <ItemGroup>
     <Midl Include="ReactApplication.idl" />
     <Midl Include="XamlHelper.idl" />
-    <Midl Include="LayoutService.idl" />
-    <Midl Include="XamlUIService.idl" />
     <Midl Include="Views\cppwinrt\AccessibilityAction.idl">
       <Filter>Views\cppwinrt</Filter>
     </Midl>

@@ -61,12 +61,7 @@
     <V8AppPlatform>win32</V8AppPlatform>
     <HermesCompileRtti>false</HermesCompileRtti>
     <DisableWindowsAppSDKMLAutoInitialize>true</DisableWindowsAppSDKMLAutoInitialize>
-    <!-- Default include the Fabric interface. -->
-    <IncludeFabricInterface Condition="'$(IncludeFabricInterface)'==''">true</IncludeFabricInterface>
-    <!-- Default enable WinUI3, if unset but also check for IncludeFabricInterface as it requires WinUI3 now to compile. -->
-    <UseWinUI3 Condition="'$(IncludeFabricInterface)'=='true' or '$(UseWinUI3)'==''">true</UseWinUI3>
-    <!-- Desktop can use WinUI3 in Old Arch so disable the check. -->
-    <ForcePaperUseWinUI3 Condition="'$(UseWinUI3)'=='true'">true</ForcePaperUseWinUI3>
+    <UseWinUI3>true</UseWinUI3>
     <!-- Prevents Microsoft.Web.WebView2.Core.dll from being added to ReferenceCopyLocalPaths -->
     <WebView2EnableCsWinRTProjectionExcludeCoreRef>true</WebView2EnableCsWinRTProjectionExcludeCoreRef>
   </PropertyGroup>
@@ -104,14 +99,12 @@
     <ClCompile>
       <!--
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
-        CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
       -->
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
         _WINSOCK_DEPRECATED_NO_WARNINGS;
         _WIN32_WINNT=$(WinVer);
         WIN32;
-        CORE_ABI;
         _WINDOWS;
         FOLLY_CFG_NO_COROUTINES;
         FOLLY_NO_CONFIG;
@@ -143,10 +136,6 @@
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
-      <!--
-        CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
-      -->
-      <PreprocessorDefinitions>CORE_ABI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />

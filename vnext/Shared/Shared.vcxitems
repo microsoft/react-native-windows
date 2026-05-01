@@ -29,11 +29,6 @@
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionContext.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionContextHelper_emptyimpl.cpp">
-      <ExcludedFromBuild Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' != 'true'">true</ExcludedFromBuild>
-      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionContext.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ReactCompositionViewComponentBuilder.cpp">
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactCompositionViewComponentBuilder.idl</DependentUpon>
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactViewComponentBuilder.idl</DependentUpon>
@@ -60,11 +55,6 @@
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService.cpp">
-      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionUIService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService_emptyimpl.cpp">
-      <ExcludedFromBuild Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionUIService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
@@ -99,11 +89,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Theme.cpp">
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\Theme.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Theme_emptyimpl.cpp">
-      <ExcludedFromBuild Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' != 'true'">true</ExcludedFromBuild>
-      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\Theme.idl</DependentUpon>
-      <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextDrawing.cpp"/>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TooltipService.cpp"/>
@@ -370,13 +355,23 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\AccessibilityInfoModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\AlertModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\AppearanceModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\AppStateModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\AppThemeModuleUwp.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ClipboardModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\DeviceInfoModule.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\PlatformConstantsWinModule.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ExceptionsManager.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\Timing.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\I18nManagerModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\LinkingManagerModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\LogBoxModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\PlatformConstantsWinModule.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\SampleTurboModule.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\SourceCode.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\Timing.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\CrashManager.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
@@ -568,6 +563,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\threading\TaskDispatchThread.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\DesktopWindowMessage.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\HttpSettings.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueWriter.idl" />
@@ -587,25 +583,25 @@
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\RedBoxHandler.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Timer.idl" />
   </ItemGroup>
-  <ItemGroup Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'">
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ComponentView.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Composition.Input.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionComponentView.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\FocusManager.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionContext.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionHwndHost.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeIsland.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeWindow.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionSwitcher.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionUIService.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactCompositionViewComponentBuilder.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageBuilderFabric.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactViewComponentBuilder.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Theme.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\UriImageManager.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ViewProps.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeAppBuilder.idl" />
-    <Midl Condition="('$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true') AND '$(SupportWinUI3Islands)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\XamlApplication.idl" />
+  <ItemGroup>
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ComponentView.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Composition.Input.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionComponentView.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\FocusManager.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionContext.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionHwndHost.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeIsland.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeWindow.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionSwitcher.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionUIService.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactCompositionViewComponentBuilder.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageBuilderFabric.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactViewComponentBuilder.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Theme.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\UriImageManager.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ViewProps.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeAppBuilder.idl" />
+    <Midl Condition="'$(SupportWinUI3Islands)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\XamlApplication.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.h" />

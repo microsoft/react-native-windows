@@ -33,8 +33,6 @@
     <V8AppPlatform>win32</V8AppPlatform>
     <!-- Default enable WinUI3. -->
     <UseWinUI3 Condition="'$(UseWinUI3)' == ''">true</UseWinUI3>
-    <!-- Desktop can use WinUI3 in Old Arch so disable the check. -->
-    <ForcePaperUseWinUI3 Condition="'$(UseWinUI3)'=='true'">true</ForcePaperUseWinUI3>
     <UseV8>true</UseV8>
     <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
@@ -66,12 +64,9 @@
       <SDLCheck>true</SDLCheck>
       <!--
         See https://stackoverflow.com/questions/42847103/stdtr1-with-visual-studio-2017.
-
-        CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
       -->
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
-        CORE_ABI;
         _WIN32_WINNT=$(WinVer);
         WIN32;
         _WINDOWS;

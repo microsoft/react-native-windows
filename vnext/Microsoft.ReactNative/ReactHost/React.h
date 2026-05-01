@@ -16,11 +16,6 @@
 
 #include <TurboModulesProvider.h>
 
-#ifdef CORE_ABI
-#include <folly/dynamic.h>
-#undef GetCurrentTime
-#endif
-
 #include <IReactInstance.h>
 
 #include <Shared/IReactRootView.h>

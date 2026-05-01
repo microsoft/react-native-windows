@@ -178,11 +178,9 @@ void ReactContext::CallJSFunction(std::string &&module, std::string &&method, fo
 }
 
 void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept {
-#ifndef CORE_ABI // requires instance
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     instance->DispatchEvent(viewTag, std::move(eventName), std::move(eventData));
   }
-#endif
 }
 
 winrt::Microsoft::ReactNative::JsiRuntime ReactContext::JsiRuntime() const noexcept {

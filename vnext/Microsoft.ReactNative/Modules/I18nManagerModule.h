@@ -17,11 +17,11 @@ REACT_MODULE(I18nManager)
 struct I18nManager {
   using ModuleSpec = ReactNativeSpecs::I18nManagerSpec;
 
-  static void InitI18nInfo(const React::ReactPropertyBag &propertyBag) noexcept;
-  static bool IsRTL(const React::ReactPropertyBag &propertyBag) noexcept;
+  static void InitI18nInfo(const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept;
+  static bool IsRTL(const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept;
 
   REACT_INIT(Initialize)
-  void Initialize(React::ReactContext const &reactContext) noexcept;
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   REACT_GET_CONSTANTS(GetConstants)
   ReactNativeSpecs::I18nManagerSpec_I18nManagerConstants GetConstants() noexcept;
@@ -38,7 +38,7 @@ struct I18nManager {
  private:
   bool IsRTL() noexcept;
 
-  React::ReactContext m_context;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
 } // namespace Microsoft::ReactNative

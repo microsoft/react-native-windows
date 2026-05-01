@@ -76,7 +76,7 @@ void Alert::ProcessPendingAlertRequestsMessageDialog() noexcept {
   auto asyncOp = messageDialog.ShowAsync();
   asyncOp.Completed(
       [result, this](
-          const winrt::IAsyncOperation<winrt::Windows::UI::Popups::IUICommand> &asyncOp, winrt::AsyncStatus status) {
+          const winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::UI::Popups::IUICommand> &asyncOp, winrt::Windows::Foundation::AsyncStatus status) {
         auto uicommand = asyncOp.GetResults();
         result(m_constants.buttonClicked, winrt::unbox_value<int>(uicommand.Id()));
         pendingAlerts.pop();
