@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 22 Apr 2026 22:50:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 01 May 2026 00:47:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.74.58
+
+Fri, 01 May 2026 00:47:23 GMT
+
+### Patches
+
+- Use HybridCRT for react-native-win32 (vmorozov@microsoft.com)
+- Revert "[0.74] Use hermes 0.0.0-2604.21001-94aa5e1d (#16031)" (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.57
 
