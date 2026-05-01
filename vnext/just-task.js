@@ -132,7 +132,7 @@ registerNuGetRestoreTask({
 
 function installDotnetToolsTask() {
   execSync(
-    `dotnet tool restore`,
+    `dotnet tool restore --tool-manifest ${path.resolve(__dirname, 'dotnet-tools.json')}`,
     {env: process.env},
   );
 }
