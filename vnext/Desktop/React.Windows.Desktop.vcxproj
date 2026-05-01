@@ -39,19 +39,11 @@
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
     <CppWinRTParameters>-lib $(MSBuildProjectName)</CppWinRTParameters>
-    <!--
-    Cppwinrt.exe derives the names of the source files it generates from the $(RootNamespace)
-    property. Currently, the value of this property differs between the 'Microsoft.ReactNative' and
-    this project which - through mismatching include file names - would prevent sharing ABI
-    implementations between the two projects. The $(CppWinRTRootNamespace) property and the
-    associated 'CppWinRTSetRootNamespace' and 'CppWinRTRestoreRootNamespace' targets below
-    homogenize the root namespace for C++/WinRT code generation.
-    -->
     <CppWinRTRootNamespace>Microsoft.ReactNative</CppWinRTRootNamespace>
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</ProjectGuid>
     <ProjectName>React.Windows.Desktop</ProjectName>
-    <RootNamespace>facebook.react</RootNamespace>
+    <RootNamespace>Microsoft.ReactNative</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <CppWinRTProjectLanguage>C++/WinRT</CppWinRTProjectLanguage>
@@ -222,18 +214,4 @@
     </When>
   </Choose>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <!-- See $(CppWinRTRootNamespace) comments above. -->
-  <Target Name="CppWinRTSetRootNamespace" BeforeTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
-    <PropertyGroup>
-      <_CppWinRTOriginalRootNamespace>$(RootNamespace)</_CppWinRTOriginalRootNamespace>
-      <RootNamespace>$(CppWinRTRootNamespace)</RootNamespace>
-    </PropertyGroup>
-  </Target>
-  <!-- See $(CppWinRTRootNamespace) comments above. -->
-  <Target Name="CppWinRTRestoreRootNamespace" AfterTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
-    <PropertyGroup>
-      <RootNamespace>$(_CppWinRTOriginalRootNamespace)</RootNamespace>
-      <_CppWinRTOriginalRootNamespace />
-    </PropertyGroup>
-  </Target>
 </Project>

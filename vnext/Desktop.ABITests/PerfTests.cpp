@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include <winrt/facebook.react.h>
 
 #include <Shared/Logging.h>
 
