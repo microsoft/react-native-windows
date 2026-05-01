@@ -14,8 +14,10 @@ import type {
   HealthCheckCategory,
   HealthCheckInterface,
 } from '@react-native-community/cli-doctor/build/types';
-import {powershell} from '../../utils/commandWithProgress';
+import {findPowerShell} from '@react-native-windows/find-dotnet-tools';
 import {HealthCheckList} from './healthCheckList';
+
+const powershell = findPowerShell();
 
 export function getHealthChecks(): HealthCheckCategory[] | undefined {
   // #8471: There are known cases where the dependencies script will error out.

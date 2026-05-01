@@ -48,7 +48,7 @@ export function newSpinner(text: string) {
   return ora(options).start();
 }
 
-export const powershell = findPowerShell();
+const powershell = findPowerShell();
 
 export async function runPowerShellScriptFunction(
   taskDescription: string,

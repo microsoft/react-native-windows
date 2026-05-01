@@ -19,8 +19,8 @@ import {
   newSpinner,
   commandWithProgress,
   runPowerShellScriptFunction,
-  powershell,
 } from './commandWithProgress';
+import {findPowerShell} from '@react-native-windows/find-dotnet-tools';
 import * as build from './build';
 import {
   BuildConfig,
@@ -183,6 +183,7 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
     'powershell',
     'WindowsStoreAppUtils.psm1',
   );
+  const powershell = findPowerShell();
   execSync(
     `${powershell} -NoProfile Unblock-File '${windowsStoreAppUtilsPath}'`,
   );
@@ -457,7 +458,7 @@ export async function deployToDesktop(
   }
 
   const appFamilyName = execSync(
-    `${powershell} -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+    `${findPowerShell()} -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
   )
     .toString()
     .trim();
