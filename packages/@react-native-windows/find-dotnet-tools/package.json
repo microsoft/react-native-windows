@@ -16,6 +16,9 @@
     "url": "https://github.com/microsoft/react-native-windows",
     "directory": "packages/@react-native-windows/find-dotnet-tools"
   },
+  "dependencies": {
+    "@react-native-windows/fs": "^0.0.0-canary.72"
+  },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.38",
     "@rnw-scripts/just-task": "2.3.58",
