@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const {execSync, spawnSync} = require('child_process');
 const {task} = require('just-scripts');
-const {findPwsh} = require('@react-native-windows/find-dotnet-tools');
+const {findPowerShell} = require('@react-native-windows/find-dotnet-tools');
 
 function registerNuGetRestoreTask(options) {
   const config = normalizeOptions(options);
@@ -52,7 +52,7 @@ function executeNuGetRestore(config) {
     `Restoring NuGet packages (log: ${path.relative(process.cwd(), logPath)})`,
   );
 
-  const powershell = findPwsh();
+  const powershell = findPowerShell();
 
   const scriptArgs = config.scriptArguments.length
     ? ` ${config.scriptArguments.join(' ')}`

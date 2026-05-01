@@ -14,7 +14,7 @@ import {
   CodedErrors,
   CodedErrorType,
 } from '@react-native-windows/telemetry';
-import {findPwsh} from '@react-native-windows/find-dotnet-tools';
+import {findPowerShell} from '@react-native-windows/find-dotnet-tools';
 
 function setSpinnerText(spinner: ora.Ora, prefix: string, text: string) {
   text = prefix + spinnerString(text);
@@ -48,7 +48,7 @@ export function newSpinner(text: string) {
   return ora(options).start();
 }
 
-export const powershell = findPwsh();
+export const powershell = findPowerShell();
 
 export async function runPowerShellScriptFunction(
   taskDescription: string,

@@ -3551,6 +3551,7 @@ __metadata:
     "@jest/environment": "npm:^29.3.0"
     "@jest/types": "npm:^29.2.1"
     "@react-native-windows/automation-channel": "npm:0.0.0-canary.1052"
+    "@react-native-windows/find-dotnet-tools": "npm:0.0.0-canary.1"
     "@react-native-windows/fs": "npm:^0.0.0-canary.72"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"

@@ -37,7 +37,7 @@ export function getNugetGlobalPackagesFolder(): string {
  * 2. pwsh.exe on the system PATH
  * 3. The built-in Windows PowerShell as a last resort
  */
-export function findPwsh(): string {
+export function findPowerShell(): string {
   // Build agents already have PowerShell (pwsh) installed
   if (!process.env.TF_BUILD) {
     const nugetPackages = getNugetGlobalPackagesFolder();

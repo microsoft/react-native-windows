@@ -25,7 +25,7 @@ const fs = require('fs');
 const {
   registerNuGetRestoreTask,
 } = require('@rnw-scripts/just-task/nuget-restore-task');
-const {findPwsh} = require('@react-native-windows/find-dotnet-tools');
+const {findPowerShell} = require('@react-native-windows/find-dotnet-tools');
 
 option('production');
 option('clean');
@@ -45,7 +45,7 @@ function codegen(test) {
   );
 }
 
-const powershell = findPwsh();
+const powershell = findPowerShell();
 
 function layoutMSRNCxx() {
   if (require('os').platform() === 'win32') {
