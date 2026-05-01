@@ -140,8 +140,6 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <Midl Include="ABI\MessageQueue.idl" />
-    <Midl Include="ABI\NativeLogging.idl" />
     <Midl Include="ABI\TestController.idl" />
   </ItemGroup>
   <ItemGroup>

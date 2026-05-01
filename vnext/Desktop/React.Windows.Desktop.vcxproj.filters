@@ -33,9 +33,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="ABI\MessageQueue.idl">
-      <Filter>ABI</Filter>
-    </Midl>
     <Midl Include="ABI\NativeLogging.idl">
       <Filter>ABI</Filter>
     </Midl>
