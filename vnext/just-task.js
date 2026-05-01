@@ -101,7 +101,7 @@ task(
     condition('clean', () => argv().clean),
     'copyRNLibraries',
     'copyReadmeAndLicenseFromRoot',
-    'installDotnetTools',
+    condition('installDotnetTools', () => !process.env.TF_BUILD),
     'layoutMSRNCxx',
     'compileTsPlatformOverrides',
     'restoreNuGetPackages',
