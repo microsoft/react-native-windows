@@ -72,10 +72,12 @@ function findPwsh(): string {
     const nugetPackages = getGlobalNuGetPackagesFolder();
     const nugetPwsh = path.join(
       nugetPackages,
-      'PowerShell.7.6.1',
+      'PowerShell',
+      '7.6.1',
       'tools',
-      'net8.0',
+      'net10.0',
       'any',
+      'win',
       'pwsh.exe',
     );
     if (fs.existsSync(nugetPwsh)) {

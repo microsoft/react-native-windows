@@ -66,10 +66,12 @@ function findPwsh() {
     const nugetPackages = getGlobalNuGetPackagesFolder();
     const nugetPwsh = path.join(
       nugetPackages,
-      'PowerShell.7.6.1',
+      'PowerShell',
+      '7.6.1',
       'tools',
-      'net8.0',
+      'net10.0',
       'any',
+      'win',
       'pwsh.exe',
     );
     if (fs.existsSync(nugetPwsh)) {
@@ -128,15 +130,14 @@ registerNuGetRestoreTask({
   scriptArguments: ['-SkipLockDeletion'],
 });
 
-function installNuGetPackagesTask() {
-  const globalPackages = getGlobalNuGetPackagesFolder();
+function installDotnetToolsTask() {
   execSync(
-    `nuget install PowerShell -Version 7.6.1 -OutputDirectory "${globalPackages}"`,
+    `dotnet tool restore`,
     {env: process.env},
   );
 }
 
-task('installNuGetPackages', installNuGetPackagesTask);
+task('installDotnetTools', installDotnetToolsTask);
 
 task(
   'build',
@@ -144,7 +145,7 @@ task(
     condition('clean', () => argv().clean),
     'copyRNLibraries',
     'copyReadmeAndLicenseFromRoot',
-    'installNuGetPackages',
+    'installDotnetTools',
     'layoutMSRNCxx',
     'compileTsPlatformOverrides',
     'restoreNuGetPackages',
