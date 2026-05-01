@@ -8,6 +8,7 @@
 import chalk from 'chalk';
 import {spawnSync, spawn, ChildProcess} from 'child_process';
 import fs from '@react-native-windows/fs';
+import {findPwsh} from '@react-native-windows/find-dotnet-tools';
 import path from 'path';
 import readlineSync from 'readline-sync';
 
@@ -335,7 +336,7 @@ function resolveAppName(appName: string): string {
   }
 
   try {
-    const packageFamilyName = spawnSync('powershell', [
+    const packageFamilyName = spawnSync(findPwsh(), [
       `(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
     ])
       .stdout.toString()
