@@ -64,7 +64,7 @@ export async function runPowerShellScriptFunction(
     await commandWithProgress(
       newSpinner(taskDescription),
       taskDescription,
-      powershell,
+      `"${powershell}"`,
       [
         '-NoProfile',
         '-ExecutionPolicy',
