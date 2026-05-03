@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix: Fix tooltip positioning for ContentIsland and dismiss on scroll",
+  "packageName": "react-native-windows",
+  "email": "nitchaudhary@microsoft.com",
+  "dependentChangeType": "patch"
+}
