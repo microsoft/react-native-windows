@@ -317,7 +317,7 @@ export default class MSBuildTools {
         'Eval-MsBuildProperties.ps1',
       );
 
-      let command = `${findPowerShell()} -ExecutionPolicy Unrestricted -NoProfile "${msbuildEvalScriptPath}" -SolutionFile '${solutionFile}' -ProjectFile '${projectFile}' -MSBuildPath '${this.msbuildPath()}'`;
+      let command = `"${findPowerShell()}" -ExecutionPolicy Unrestricted -NoProfile "${msbuildEvalScriptPath}" -SolutionFile '${solutionFile}' -ProjectFile '${projectFile}' -MSBuildPath '${this.msbuildPath()}'`;
 
       if (propertyNames && propertyNames.length > 0) {
         command += ` -PropertyNames '${propertyNames.join(',')}'`;

@@ -458,7 +458,7 @@ export async function deployToDesktop(
   }
 
   const appFamilyName = execSync(
-    `${findPowerShell()} -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+    `"${findPowerShell()}" -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
   )
     .toString()
     .trim();
