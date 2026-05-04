@@ -34,6 +34,10 @@ parameters:
             BuildPlatform: x64
           - Name: X86Hermes
             BuildPlatform: x86
+  #TODO: Delete before merging.
+  - name: System.Debug
+    type: boolean
+    default: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
@@ -48,6 +52,13 @@ jobs:
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
+            #TODO: Delete before merging.
+            - pwsh:  |
+                $PSVersionTable
+                pwsh.exe -Command "$PSVersionTable"
+                Get-Command pwsh.exe | Format-List
+                Get-Service -Name AppXSVC | Format-List
+                Get-Command Get-AppxPackage | Format-List
             - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
