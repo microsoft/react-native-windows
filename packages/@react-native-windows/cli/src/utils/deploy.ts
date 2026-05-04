@@ -360,6 +360,7 @@ export async function deployToDesktop(
   config: Config,
   buildTools: MSBuildTools,
 ) {
+  const useAppxCompatibility = !!process.env.TF_BUILD;
   const windowsConfig: Partial<WindowsProjectConfig> | undefined =
     config.project.windows;
   const slnFile =
@@ -392,6 +393,7 @@ export async function deployToDesktop(
     'EnableDevMode',
     verbose,
     'EnableDevModeFailure',
+    useAppxCompatibility,
   );
 
   const appPackageFolder = getAppPackage(options, projectName);
@@ -404,6 +406,7 @@ export async function deployToDesktop(
       `Uninstall-App ${appName}`,
       verbose,
       'RemoveOldAppVersionFailure',
+      useAppxCompatibility,
     );
 
     const script = glob.sync(
@@ -416,6 +419,7 @@ export async function deployToDesktop(
       `Install-App "${script}" -Force`,
       verbose,
       'InstallAppFailure',
+      useAppxCompatibility,
     );
   } else {
     // Deploy from layout
@@ -443,6 +447,7 @@ export async function deployToDesktop(
         `Install-AppDependencies ${appxManifestPath} ${appPackageFolder} ${options.arch}`,
         verbose,
         'InstallAppDependenciesFailure',
+        useAppxCompatibility,
       );
       await build.buildSolution(
         buildTools,
@@ -457,8 +462,12 @@ export async function deployToDesktop(
     }
   }
 
+  const escapedAppName = appName.replace(/'/g, "''");
+  const appFamilyNameCommand = useAppxCompatibility
+    ? `& { Import-Module Appx -UseWindowsPowerShell; (Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName }`
+    : `(Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName`;
   const appFamilyName = execSync(
-    `"${findPowerShell()}" -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+    `"${findPowerShell()}" -NoProfile -Command "${appFamilyNameCommand}"`,
   )
     .toString()
     .trim();
@@ -489,6 +498,7 @@ export async function deployToDesktop(
       `Start-Locally ${appName} ${args}`,
       verbose,
       'AppStartupFailure',
+      useAppxCompatibility,
     );
   } else {
     newInfo('Skip the step to start the app');

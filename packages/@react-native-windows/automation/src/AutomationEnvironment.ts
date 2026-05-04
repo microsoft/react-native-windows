@@ -251,7 +251,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
     if (this.breakOnStart) {
       readlineSync.question(
         chalk.bold.yellow('Breaking before tests start\n') +
-          'Press Enter to resume...',
+        'Press Enter to resume...',
       );
     }
 
@@ -336,8 +336,15 @@ function resolveAppName(appName: string): string {
   }
 
   try {
+    const useAppxCompatibility = !!process.env.TF_BUILD;
+    const escapedAppName = appName.replace(/'/g, "''");
+    const packageFamilyNameCommand = useAppxCompatibility
+      ? `& { Import-Module Appx -UseWindowsPowerShell; (Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName }`
+      : `(Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName`;
     const packageFamilyName = spawnSync(findPowerShell(), [
-      `(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+      '-NoProfile',
+      '-Command',
+      packageFamilyNameCommand,
     ])
       .stdout.toString()
       .trim();

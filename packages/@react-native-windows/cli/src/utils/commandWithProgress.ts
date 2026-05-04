@@ -56,11 +56,15 @@ export async function runPowerShellScriptFunction(
   funcName: string,
   verbose: boolean,
   errorCategory: CodedErrorType,
+  useAppxCompatibility = false,
 ) {
   try {
     const printException = verbose ? '$_;' : '';
+    const importAppx = useAppxCompatibility
+      ? 'Import-Module Appx -UseWindowsPowerShell; '
+      : '';
     const importScript = script ? `Import-Module '${script}'; ` : '';
-    const powershellCommand = `${importScript}try { ${funcName} -ErrorAction Stop; $lec = $LASTEXITCODE; } catch { $lec = 1; ${printException} }; exit $lec`;
+    const powershellCommand = `${importAppx}${importScript}try { ${funcName} -ErrorAction Stop; $lec = $LASTEXITCODE; } catch { $lec = 1; ${printException} }; exit $lec`;
     await commandWithProgress(
       newSpinner(taskDescription),
       taskDescription,
