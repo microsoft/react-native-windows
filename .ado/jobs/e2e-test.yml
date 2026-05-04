@@ -53,6 +53,24 @@ jobs:
 
           steps:
             #TODO: Delete before merging.
+            - powershell: |
+                Write-Host "pwsh.exe command information:"
+                Get-Command pwsh.exe | Format-List
+
+                Write-Host "PowerShell version information:"
+                $PSVersionTable
+
+                Write-Host "AppXSVC service information:"
+                Get-Service -Name AppXSVC | Format-List
+
+                Write-Host "Appx modules available on this host:"
+                Get-Module -ListAvailable Appx | Format-List
+                Write-Host "Appx module information:"
+                Get-Module -Name Appx
+                Write-Host "Importing Appx module..."
+                Import-Module -Name Appx
+                Write-Host "Get-AppxPackage command information:"
+                Get-Command Get-AppxPackage | Format-List
             - pwsh:  |
                 Write-Host "pwsh.exe command information:"
                 Get-Command pwsh.exe | Format-List
@@ -63,6 +81,8 @@ jobs:
                 Write-Host "AppXSVC service information:"
                 Get-Service -Name AppXSVC | Format-List
 
+                Write-Host "Appx modules available on this host:"
+                Get-Module -ListAvailable Appx | Format-List
                 Write-Host "Appx module information:"
                 Get-Module -Name Appx
                 Write-Host "Importing Appx module..."
