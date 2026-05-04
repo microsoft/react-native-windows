@@ -63,6 +63,8 @@ jobs:
                 Write-Host "AppXSVC service information:"
                 Get-Service -Name AppXSVC | Format-List
 
+                Write-Host "Appx module information:"
+                Get-Module -Name Appx
                 Write-Host "Importing Appx module..."
                 Import-Module -Name Appx
                 Write-Host "Get-AppxPackage command information:"
