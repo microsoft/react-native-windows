@@ -4,7 +4,7 @@
  * @format
  */
 
-import {spawn, execSync, SpawnOptions} from 'child_process';
+import {spawn, execFileSync, SpawnOptions} from 'child_process';
 import fs from '@react-native-windows/fs';
 import http from 'http';
 import path from 'path';
@@ -184,9 +184,11 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
     'WindowsStoreAppUtils.psm1',
   );
   const powershell = findPowerShell();
-  execSync(
-    `"${powershell}" -NoProfile -Command { Unblock-File '${windowsStoreAppUtilsPath}' }`,
-  );
+  execFileSync(powershell, [
+    '-NoProfile',
+    '-Command',
+    `& { Unblock-File '${windowsStoreAppUtilsPath}' }`,
+  ]);
   popd();
   return windowsStoreAppUtilsPath;
 }
@@ -466,9 +468,11 @@ export async function deployToDesktop(
   const appFamilyNameCommand = useAppxCompatibility
     ? `& { Import-Module Appx -UseWindowsPowerShell; (Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName }`
     : `(Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName`;
-  const appFamilyName = execSync(
-    `"${findPowerShell()}" -NoProfile -Command "${appFamilyNameCommand}"`,
-  )
+  const appFamilyName = execFileSync(findPowerShell(), [
+    '-NoProfile',
+    '-Command',
+    appFamilyNameCommand,
+  ])
     .toString()
     .trim();
 
