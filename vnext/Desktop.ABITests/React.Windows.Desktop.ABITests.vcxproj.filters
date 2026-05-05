@@ -10,7 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DynamicReaderWriterTests.cpp" />
-    <ClCompile Include="PerfTests.cpp" />
     <ClCompile Include="ReactContextTests.cpp" />
     <ClCompile Include="ReactDispatcherTests.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\ReactInstanceSettingsTests.cpp" />
