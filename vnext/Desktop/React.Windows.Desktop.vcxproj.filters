@@ -36,9 +36,6 @@
     <Midl Include="ABI\NativeLogging.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="ABI\TestController.idl">
-      <Filter>ABI</Filter>
-    </Midl>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABI\TestController.cpp">

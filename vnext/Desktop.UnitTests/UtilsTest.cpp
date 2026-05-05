@@ -15,6 +15,9 @@ using std::string_view;
 
 namespace Microsoft::React::Test {
 
+TEST_CLASS (UtilsTest) {
+ public:
+
 // We turn clang format off here because it does not work with some of the
 // test macros.
 // clang-format off

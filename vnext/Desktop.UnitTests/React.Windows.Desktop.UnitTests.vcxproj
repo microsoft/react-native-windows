@@ -94,10 +94,6 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="BaseFileReaderResourceUnitTest.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />
     <ClCompile Include="MemoryMappedBufferTests.cpp" />
@@ -129,11 +125,13 @@
   </ItemGroup>
   <!-- Remove the WinMD references we're picking up from Microsoft.WindowsAppSDK in the React.Windows.Desktop.vcxproj",
        which we don't need here. -->
+       <!--
   <Target Name="RemoveCppWinRTDirectWinMDReferences" BeforeTargets="GetCppWinRTMdMergeInputs">
     <ItemGroup>
       <CppWinRTDirectWinMDReferences Remove="@(CppWinRTDirectWinMDReferences)" />
     </ItemGroup>
   </Target>
+  -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="Test">
     <Exec Command="$(OutDir)$(TargetFileName)" IgnoreStandardErrorWarningFormat="true" />

@@ -132,12 +132,6 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <Midl Include="ABI\TestController.idl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ABI\TestController.cpp">
-      <DependentUpon>ABI\TestController.idl</DependentUpon>
-    </ClCompile>
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
     <ClCompile Include="pch.cpp">
@@ -146,9 +140,6 @@
     <ClCompile Include="WebSocketResourceFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ABI\TestController.h">
-      <DependentUpon>ABI\TestController.idl</DependentUpon>
-    </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\DynamicReader.h">
       <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
     </ClInclude>
