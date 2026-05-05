@@ -1,0 +1,29 @@
+diff --git a/dist/commands/bundle/saveAssets.js b/dist/commands/bundle/saveAssets.js
+index 8cbca65..b7f0f68 100644
+--- a/dist/commands/bundle/saveAssets.js
++++ b/dist/commands/bundle/saveAssets.js
+@@ -106,7 +106,12 @@ function copyAll(filesToCopy) {
+   });
+ }
+ function copy(src, dest, callback) {
+-  const destDir = _path.default.dirname(dest);
++  // Metro may append query params (e.g. "?unstable_path=...") to asset paths.
++  // Strip them before filesystem operations on Windows.
++  const srcWithoutQuery = src.split('?')[0];
++  const destWithoutQuery = dest.split('?')[0];
++
++  const destDir = _path.default.dirname(destWithoutQuery);
+   _fs.default.mkdir(
+     destDir,
+     {
+@@ -117,8 +122,8 @@ function copy(src, dest, callback) {
+         return;
+       }
+       _fs.default
+-        .createReadStream(src)
+-        .pipe(_fs.default.createWriteStream(dest))
++        .createReadStream(srcWithoutQuery)
++        .pipe(_fs.default.createWriteStream(destWithoutQuery))
+         .on("finish", callback);
+     },
+   );

@@ -70,7 +70,8 @@
     "@react-native/monorepo/jest-junit": "^13.0.0",
     "@react-native/monorepo/ws": "^6.2.3",
     "@react-native/tester/ws": "^6.2.3",
-    "puppeteer-core/ws": "^8.17.1"
+    "puppeteer-core/ws": "^8.17.1",
+    "@react-native/community-cli-plugin": "patch:@react-native/community-cli-plugin@npm:0.85.0-nightly-20260114-f15985f4f#./.yarn/patches/@react-native+community-cli-plugin@npm-0.85.0-nightly-20260114-f15985f4f.patch"
   },
   "packageManager": "yarn@4.13.0"
 }
