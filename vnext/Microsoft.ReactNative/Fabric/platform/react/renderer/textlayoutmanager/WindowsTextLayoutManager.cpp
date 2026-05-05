@@ -196,12 +196,7 @@ void WindowsTextLayoutManager::GetTextLayout(
       ));
 
   // Apply max width constraint and ellipsis trimming to ensure consistency with rendering
-  DWRITE_TEXT_METRICS metrics;
-  winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
-
-  if (metrics.width > size.width) {
-    spTextLayout->SetMaxWidth(size.width);
-  }
+  spTextLayout->SetMaxWidth(size.width);
 
   // Apply DWRITE_TRIMMING for ellipsizeMode
   DWRITE_TRIMMING trimming = {};
@@ -396,7 +391,7 @@ void WindowsTextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
   }
 }
 
-// measure entire text (inluding attachments)
+// measure entire text (including attachments)
 TextMeasurement TextLayoutManager::measure(
     const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,

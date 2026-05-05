@@ -9,18 +9,6 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-// Ideally isColorMeaningful would be sufficient here.  But it appears to detect platformColors as not meaningful
-// https://github.com/microsoft/react-native-windows/issues/14006
-bool isColorMeaningful(
-    const facebook::react::SharedColor &color,
-    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept {
-  if (!color) {
-    return false;
-  }
-
-  return theme->Color(*color).A > 0;
-}
-
 // We don't want half pixel borders, or border radii - they lead to blurry borders
 // Also apply scale factor to the radii at this point
 void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scaleFactor) noexcept {
@@ -40,22 +28,20 @@ void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scal
   };
 }
 
+float pixelRoundAndScaleBorderWidth(float width, float scaleFactor) noexcept {
+  if (width == 0)
+    return width = 0;
+  return std::max(1.f, std::round(width * scaleFactor));
+}
+
 void scaleAndPixelRoundBorderWidths(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::BorderMetrics &borderMetrics,
     float scaleFactor) noexcept {
-  borderMetrics.borderWidths.left = (borderMetrics.borderWidths.left == 0)
-      ? 0.f
-      : std::max(1.f, std::round(borderMetrics.borderWidths.left * scaleFactor));
-  borderMetrics.borderWidths.top = (borderMetrics.borderWidths.top == 0)
-      ? 0.f
-      : std::max(1.f, std::round(borderMetrics.borderWidths.top * scaleFactor));
-  borderMetrics.borderWidths.right = (borderMetrics.borderWidths.right == 0)
-      ? 0.f
-      : std::max(1.f, std::round(borderMetrics.borderWidths.right * scaleFactor));
-  borderMetrics.borderWidths.bottom = (borderMetrics.borderWidths.bottom == 0)
-      ? 0.f
-      : std::max(1.f, std::round(borderMetrics.borderWidths.bottom * scaleFactor));
+  borderMetrics.borderWidths.left = pixelRoundAndScaleBorderWidth(borderMetrics.borderWidths.left, scaleFactor);
+  borderMetrics.borderWidths.top = pixelRoundAndScaleBorderWidth(borderMetrics.borderWidths.top, scaleFactor);
+  borderMetrics.borderWidths.right = pixelRoundAndScaleBorderWidth(borderMetrics.borderWidths.right, scaleFactor);
+  borderMetrics.borderWidths.bottom = pixelRoundAndScaleBorderWidth(borderMetrics.borderWidths.bottom, scaleFactor);
 
   // If we rounded both sides of the borderWidths up, we may have made the borderWidths larger than the total
   if (layoutMetrics.frame.size.width * scaleFactor <
@@ -356,7 +342,7 @@ void SetBorderLayerPropertiesCommon(
     // Clear with transparency
     pRT->Clear();
 
-    if (!isColorMeaningful(borderColor, theme)) {
+    if (!facebook::react::isColorMeaningful(borderColor)) {
       return;
     }
 
@@ -724,7 +710,7 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
 BorderPrimitive::BorderPrimitive(
     winrt::Microsoft::ReactNative::Composition::implementation::ComponentView &outer,
     const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &rootVisual)
-    : m_outer(&outer), m_rootVisual(rootVisual) {}
+    : m_outer(&outer), m_rootVisual(rootVisual), m_ownsRootVisual(false) {}
 
 BorderPrimitive::BorderPrimitive(winrt::Microsoft::ReactNative::Composition::implementation::ComponentView &outer)
     : m_outer(&outer), m_rootVisual(outer.CompositionContext().CreateSpriteVisual()) {}
@@ -740,9 +726,9 @@ bool BorderPrimitive::requiresBorder(
   auto borderStyle = borderMetrics.borderStyles.left;
 
   bool hasMeaningfulColor =
-      !borderMetrics.borderColors.isUniform() || !isColorMeaningful(borderMetrics.borderColors.left, theme);
+      !borderMetrics.borderColors.isUniform() || facebook::react::isColorMeaningful(borderMetrics.borderColors.left);
   bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
-  if (!hasMeaningfulColor && !hasMeaningfulWidth) {
+  if (!hasMeaningfulColor || !hasMeaningfulWidth) {
     return false;
   }
   return true;
@@ -802,8 +788,10 @@ BorderPrimitive::FindSpecialBorderLayers() const noexcept {
       nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
 
   if (m_numBorderVisuals) {
+    auto borderInsertAtIndex = m_ownsRootVisual ? 0 : m_outer->borderInsertAtIndex();
+
     for (uint8_t i = 0; i < m_numBorderVisuals; i++) {
-      auto visual = m_rootVisual.GetAt(i);
+      auto visual = m_rootVisual.GetAt(i + borderInsertAtIndex);
       layers[i] = visual.as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>();
     }
   }
@@ -830,7 +818,7 @@ bool BorderPrimitive::TryUpdateSpecialBorderLayers(
   auto borderStyle = borderMetrics.borderStyles.left;
 
   bool hasMeaningfulColor =
-      !borderMetrics.borderColors.isUniform() || !isColorMeaningful(borderMetrics.borderColors.left, theme);
+      !borderMetrics.borderColors.isUniform() || !facebook::react::isColorMeaningful(borderMetrics.borderColors.left);
   bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
   if (!hasMeaningfulColor && !hasMeaningfulWidth) {
     return false;
@@ -838,9 +826,10 @@ bool BorderPrimitive::TryUpdateSpecialBorderLayers(
 
   // Create the special border layers if they don't exist yet
   if (!spBorderVisuals[0]) {
+    auto borderInsertAtIndex = m_ownsRootVisual ? 0 : m_outer->borderInsertAtIndex();
     for (uint8_t i = 0; i < SpecialBorderLayerCount; i++) {
       auto visual = m_outer->CompositionContext().CreateSpriteVisual();
-      m_rootVisual.InsertAt(visual, i);
+      m_rootVisual.InsertAt(visual, i + borderInsertAtIndex);
       spBorderVisuals[i] = std::move(visual);
       m_numBorderVisuals++;
     }

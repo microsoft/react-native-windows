@@ -52,6 +52,8 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
 
   virtual std::string DefaultControlType() const noexcept;
   static facebook::react::SharedViewProps defaultProps() noexcept;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual VisualToApplyBackgroundClipTo()
+      const noexcept override;
 
   ImageComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,

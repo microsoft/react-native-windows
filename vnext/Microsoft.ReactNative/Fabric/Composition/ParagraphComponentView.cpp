@@ -338,7 +338,9 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
             break;
         }
       }
-      winrt::check_hresult(m_textLayout->SetTextAlignment(alignment));
+
+      if (alignment != m_textLayout->GetTextAlignment())
+        winrt::check_hresult(m_textLayout->SetTextAlignment(alignment));
     }
 
     requireNewBrush = true;
