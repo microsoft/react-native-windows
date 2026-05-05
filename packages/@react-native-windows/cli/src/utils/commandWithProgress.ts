@@ -61,7 +61,7 @@ export async function runPowerShellScriptFunction(
   try {
     const printException = verbose ? '$_;' : '';
     const importAppx = useAppxCompatibility
-      ? 'Import-Module Appx -UseWindowsPowerShell; '
+      ? 'Import-Module Appx -UseWindowsPowerShell 3>$null; '
       : '';
     const importScript = script ? `Import-Module '${script}'; ` : '';
     const powershellCommand = `${importAppx}${importScript}try { ${funcName} -ErrorAction Stop; $lec = $LASTEXITCODE; } catch { $lec = 1; ${printException} }; exit $lec`;
