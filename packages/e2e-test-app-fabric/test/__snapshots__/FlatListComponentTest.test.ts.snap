@@ -128,14 +128,19 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
-                    "Brush": {
-                      "Brush Type": "ColorBrush",
-                      "Color": "rgba(255, 255, 255, 255)",
-                    },
                     "Offset": "0, 0, 0",
                     "Size": "998, 422",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(255, 255, 255, 255)",
+                        },
+                        "Offset": "0, 0, 0",
+                        "Size": "0, 0",
+                        "Visual Type": "SpriteVisual",
+                      },
                       {
                         "Offset": "0, 0, 0",
                         "Size": "998, 100",
@@ -261,13 +266,20 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
                                         "Visual Type": "SpriteVisual",
                                         "__Children": [
                                           {
-                                            "Brush": {
-                                              "Brush Type": "ColorBrush",
-                                              "Color": "rgba(255, 255, 255, 255)",
-                                            },
                                             "Offset": "0, 0, 0",
                                             "Size": "998, 72",
                                             "Visual Type": "SpriteVisual",
+                                            "__Children": [
+                                              {
+                                                "Brush": {
+                                                  "Brush Type": "ColorBrush",
+                                                  "Color": "rgba(255, 255, 255, 255)",
+                                                },
+                                                "Offset": "0, 0, 0",
+                                                "Size": "0, 0",
+                                                "Visual Type": "SpriteVisual",
+                                              },
+                                            ],
                                           },
                                         ],
                                       },
@@ -842,15 +854,20 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Pizza",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -873,15 +890,20 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Burger",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -904,15 +926,20 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Risotto",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -935,15 +962,20 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "French Fries",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -966,15 +998,20 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Onion Rings",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -997,15 +1034,20 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Fried Shrimps",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1028,15 +1070,20 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Water",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1059,15 +1106,20 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Coke",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1090,15 +1142,20 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Beer",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1121,15 +1178,20 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Cheesecake",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1152,15 +1214,20 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Brownie",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1610,15 +1677,20 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Pizza",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1641,15 +1713,20 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Burger",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1672,15 +1749,20 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Risotto",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1703,15 +1785,20 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "French Fries",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1734,15 +1821,20 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Onion Rings",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1765,15 +1857,20 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Fried Shrimps",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1796,15 +1893,20 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Water",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1827,15 +1929,20 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Coke",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1858,15 +1965,20 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Beer",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1889,15 +2001,20 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Cheesecake",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -1920,15 +2037,20 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Brownie",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -2548,15 +2670,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Pizza",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -2579,13 +2706,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 12",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -2608,15 +2742,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Burger",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -2639,13 +2778,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 12",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -2668,15 +2814,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Risotto",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -2699,13 +2850,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 12",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -2728,15 +2886,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "French Fries",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -2759,13 +2922,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 12",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -2788,15 +2958,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Onion Rings",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -2819,13 +2994,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 12",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -2848,15 +3030,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Fried Shrimps",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -2879,13 +3066,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 12",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -2908,15 +3102,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Water",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -2939,13 +3138,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 12",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -2968,15 +3174,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Coke",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -2999,13 +3210,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 12",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3028,15 +3246,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Beer",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -3059,13 +3282,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 12",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3088,15 +3318,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Cheesecake",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -3119,13 +3354,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 12",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3148,15 +3390,20 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Brownie",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -3492,13 +3739,20 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 72",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3520,13 +3774,20 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 72",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3548,13 +3809,20 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 72",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3576,13 +3844,20 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 71",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3604,13 +3879,20 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 72",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3632,13 +3914,20 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 72",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3660,13 +3949,20 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 72",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3688,13 +3984,20 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "998, 72",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3726,13 +4029,20 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
-                                    "Brush": {
-                                      "Brush Type": "ColorBrush",
-                                      "Color": "rgba(255, 192, 203, 255)",
-                                    },
                                     "Offset": "0, 0, 0",
                                     "Size": "998, 72",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Brush": {
+                                          "Brush Type": "ColorBrush",
+                                          "Color": "rgba(255, 192, 203, 255)",
+                                        },
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -3768,13 +4078,20 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
-                                    "Brush": {
-                                      "Brush Type": "ColorBrush",
-                                      "Color": "rgba(255, 192, 203, 255)",
-                                    },
                                     "Offset": "0, 0, 0",
                                     "Size": "998, 72",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Brush": {
+                                          "Brush Type": "ColorBrush",
+                                          "Color": "rgba(255, 192, 203, 255)",
+                                        },
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -3810,13 +4127,20 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
-                                    "Brush": {
-                                      "Brush Type": "ColorBrush",
-                                      "Color": "rgba(255, 192, 203, 255)",
-                                    },
                                     "Offset": "0, 0, 0",
                                     "Size": "998, 72",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Brush": {
+                                          "Brush Type": "ColorBrush",
+                                          "Color": "rgba(255, 192, 203, 255)",
+                                        },
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -4288,13 +4612,20 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(240, 128, 128, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "996, 40",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(240, 128, 128, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -4316,13 +4647,20 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "478, 460",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -4332,14 +4670,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "458, 72",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
@@ -4402,14 +4745,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "458, 72",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
@@ -4472,14 +4820,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "458, 72",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
@@ -4542,14 +4895,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "458, 72",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
@@ -4612,14 +4970,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "458, 72",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
@@ -4682,13 +5045,20 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(144, 238, 144, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "478, 460",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(144, 238, 144, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -4698,14 +5068,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "458, 72",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
@@ -4768,14 +5143,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "458, 72",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
@@ -4838,14 +5218,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "458, 72",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
@@ -4908,14 +5293,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "458, 72",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
@@ -4978,14 +5368,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(253, 245, 230, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "458, 72",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(253, 245, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "0, 0, 0",
                                 "Size": "1, 1",
@@ -5048,13 +5443,20 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(173, 216, 230, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "996, 72",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(173, 216, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -5102,14 +5504,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                 "Visual Type": "SpriteVisual",
                                                 "__Children": [
                                                   {
-                                                    "Brush": {
-                                                      "Brush Type": "ColorBrush",
-                                                      "Color": "rgba(253, 245, 230, 255)",
-                                                    },
                                                     "Offset": "0, 0, 0",
                                                     "Size": "144, 72",
                                                     "Visual Type": "SpriteVisual",
                                                     "__Children": [
+                                                      {
+                                                        "Brush": {
+                                                          "Brush Type": "ColorBrush",
+                                                          "Color": "rgba(253, 245, 230, 255)",
+                                                        },
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
                                                       {
                                                         "Offset": "0, 0, 0",
                                                         "Size": "1, 1",
@@ -5172,14 +5579,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                 "Visual Type": "SpriteVisual",
                                                 "__Children": [
                                                   {
-                                                    "Brush": {
-                                                      "Brush Type": "ColorBrush",
-                                                      "Color": "rgba(253, 245, 230, 255)",
-                                                    },
                                                     "Offset": "0, 0, 0",
                                                     "Size": "144, 72",
                                                     "Visual Type": "SpriteVisual",
                                                     "__Children": [
+                                                      {
+                                                        "Brush": {
+                                                          "Brush Type": "ColorBrush",
+                                                          "Color": "rgba(253, 245, 230, 255)",
+                                                        },
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
                                                       {
                                                         "Offset": "0, 0, 0",
                                                         "Size": "1, 1",
@@ -5242,14 +5654,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                 "Visual Type": "SpriteVisual",
                                                 "__Children": [
                                                   {
-                                                    "Brush": {
-                                                      "Brush Type": "ColorBrush",
-                                                      "Color": "rgba(253, 245, 230, 255)",
-                                                    },
                                                     "Offset": "0, 0, 0",
                                                     "Size": "144, 72",
                                                     "Visual Type": "SpriteVisual",
                                                     "__Children": [
+                                                      {
+                                                        "Brush": {
+                                                          "Brush Type": "ColorBrush",
+                                                          "Color": "rgba(253, 245, 230, 255)",
+                                                        },
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
                                                       {
                                                         "Offset": "0, 0, 0",
                                                         "Size": "1, 1",
@@ -5312,14 +5729,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                 "Visual Type": "SpriteVisual",
                                                 "__Children": [
                                                   {
-                                                    "Brush": {
-                                                      "Brush Type": "ColorBrush",
-                                                      "Color": "rgba(253, 245, 230, 255)",
-                                                    },
                                                     "Offset": "0, 0, 0",
                                                     "Size": "144, 72",
                                                     "Visual Type": "SpriteVisual",
                                                     "__Children": [
+                                                      {
+                                                        "Brush": {
+                                                          "Brush Type": "ColorBrush",
+                                                          "Color": "rgba(253, 245, 230, 255)",
+                                                        },
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
                                                       {
                                                         "Offset": "0, 0, 0",
                                                         "Size": "1, 1",
@@ -5382,14 +5804,19 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                 "Visual Type": "SpriteVisual",
                                                 "__Children": [
                                                   {
-                                                    "Brush": {
-                                                      "Brush Type": "ColorBrush",
-                                                      "Color": "rgba(253, 245, 230, 255)",
-                                                    },
                                                     "Offset": "0, 0, 0",
                                                     "Size": "144, 72",
                                                     "Visual Type": "SpriteVisual",
                                                     "__Children": [
+                                                      {
+                                                        "Brush": {
+                                                          "Brush Type": "ColorBrush",
+                                                          "Color": "rgba(253, 245, 230, 255)",
+                                                        },
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
                                                       {
                                                         "Offset": "0, 0, 0",
                                                         "Size": "1, 1",
@@ -5524,13 +5951,20 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(173, 216, 230, 255)",
-                            },
                             "Offset": "0, 0, 0",
                             "Size": "996, 72",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(173, 216, 230, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -5967,15 +6401,20 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Pizza",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -5998,15 +6437,20 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Burger",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6029,15 +6473,20 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Risotto",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6060,15 +6509,20 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "French Fries",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6091,15 +6545,20 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Onion Rings",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6122,15 +6581,20 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Fried Shrimps",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6153,15 +6617,20 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Water",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6184,15 +6653,20 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Coke",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6215,15 +6689,20 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Beer",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6246,15 +6725,20 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Cheesecake",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6277,15 +6761,20 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Brownie",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6735,15 +7224,20 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Pizza",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6766,15 +7260,20 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Burger",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6797,15 +7296,20 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Risotto",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6828,15 +7332,20 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "French Fries",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6859,15 +7368,20 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Onion Rings",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6890,15 +7404,20 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Fried Shrimps",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6921,15 +7440,20 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Water",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6952,15 +7476,20 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Coke",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -6983,15 +7512,20 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Beer",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -7014,15 +7548,20 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Cheesecake",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
@@ -7045,15 +7584,20 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
-                            "Brush": {
-                              "Brush Type": "ColorBrush",
-                              "Color": "rgba(255, 192, 203, 255)",
-                            },
                             "Comment": "Brownie",
                             "Offset": "0, 0, 0",
                             "Size": "998, 70",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
+                              {
+                                "Brush": {
+                                  "Brush Type": "ColorBrush",
+                                  "Color": "rgba(255, 192, 203, 255)",
+                                },
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
                               {
                                 "Offset": "20, 19, 0",
                                 "Size": "958, 32",
