@@ -162,8 +162,13 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   void UpdateCursor() noexcept;
   void SetCursor(facebook::react::Cursor cursor, HCURSOR hcur) noexcept;
 
+  // Allocates a small touch identifier (0–19) that is safe to use as a JS array index.
+  // Windows pointer IDs can be arbitrarily large, which causes React Native to warn and
+  // back-fill huge arrays, corrupting touch state after scrolling.
+  int AllocateTouchIdentifier() noexcept;
+
   std::map<PointerId, ActiveTouch> m_activeTouches; // iOS is map of touch event args to ActiveTouch..?
-  PointerId m_touchId = 0;
+  int m_touchId = 0; // cycling base used by AllocateTouchIdentifier
 
   std::map<PointerId, std::vector<ReactTaggedView>> m_currentlyHoveredViewsPerPointer;
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView;
