@@ -14,14 +14,21 @@ exports[`Pointer Button Tests onPointerDown reports correct button property on l
     },
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 0, 255, 255)",
-    },
     "Comment": "pointer-button-target",
     "Offset": "0, 0, 0",
     "Size": "200, 200",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 0, 255, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
   },
 }
 `;
@@ -40,14 +47,21 @@ exports[`Pointer Button Tests onPointerUp reports correct button property on lef
     },
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 0, 255, 255)",
-    },
     "Comment": "pointer-up-button-target",
     "Offset": "0, 0, 0",
     "Size": "200, 200",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 0, 255, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
   },
 }
 `;

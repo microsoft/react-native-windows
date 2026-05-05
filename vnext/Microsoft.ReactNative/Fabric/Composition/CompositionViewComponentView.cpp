@@ -40,9 +40,11 @@ constexpr float FOCUS_VISUAL_RADIUS = 3.0f;
 
 // m_outerVisual
 //   |
-//   ----- m_visual <-- Background / clip - Can be a custom visual depending on Component type
+//   ----- m_visual - Can be a custom visual depending on Component type
 //            |
-//            ----- Border Visuals x N (BorderPrimitive attached to m_visual)
+//            ----- m_backgroundVisual <-- Background / clip  (ComponentViewFeatures::Background)
+//            ----- Border Visuals x N (BorderPrimitive attached to m_visual) (ComponentViewFeatures::NativeBorder)
+//            ----- Outline Visuals x N(BorderPrimitive) (ComponentViewFeatures::NativeBorder)
 //            ----- <children> (default: directly in m_visual after border visuals)
 //            ----- m_childrenContainer (created on demand when overflow:hidden, children moved here)
 //   ------Focus Visual Container (created when hosting focus visuals)
@@ -81,17 +83,15 @@ facebook::react::Props::Shared ComponentView::props() noexcept {
 }
 
 void ComponentView::onThemeChanged() noexcept {
-  if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
-    if (viewProps()->backgroundColor) {
-      Visual().as<Experimental::ISpriteVisual>().Brush(theme()->Brush(*viewProps()->backgroundColor));
-    } else {
-      Visual().as<Experimental::ISpriteVisual>().Brush(nullptr);
-    }
-  }
+  if (m_backgroundVisual)
+    m_backgroundVisual.Brush(theme()->Brush(*viewProps()->backgroundColor));
 
   if (m_borderPrimitive) {
     m_borderPrimitive->onThemeChanged(
         m_layoutMetrics, BorderPrimitive::resolveAndAlignBorderMetrics(m_layoutMetrics, *viewProps()));
+  }
+  if (m_outlinePrimitive) {
+    m_outlinePrimitive->onThemeChanged(outlineLayoutMetrics(), outlineBorderMetrics());
   }
   if (m_componentHostingFocusVisual) {
     if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive) {
@@ -156,16 +156,34 @@ void ComponentView::updateProps(
 
   if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
     if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-      if (newViewProps.backgroundColor) {
-        Visual().as<Experimental::ISpriteVisual>().Brush(theme()->Brush(*newViewProps.backgroundColor));
+      if (facebook::react::isColorMeaningful(newViewProps.backgroundColor)) {
+        if (!m_backgroundVisual) {
+          m_backgroundVisual = m_compContext.CreateSpriteVisual();
+          m_backgroundVisual.RelativeSizeWithOffset({0, 0}, {1.0f, 1.0f});
+          Visual().InsertAt(m_backgroundVisual, 0);
+        }
+        m_backgroundVisual.Brush(theme()->Brush(*newViewProps.backgroundColor));
+        updateClippingPath(m_layoutMetrics, *viewProps());
       } else {
-        Visual().as<Experimental::ISpriteVisual>().Brush(nullptr);
+        if (m_backgroundVisual) {
+          m_backgroundVisual.Brush(nullptr);
+        }
       }
     }
   }
 
   if (m_borderPrimitive) {
     m_borderPrimitive->updateProps(oldViewProps, newViewProps);
+  }
+
+  if (m_outlinePrimitive) {
+    if (oldViewProps.outlineOffset != newViewProps.outlineOffset ||
+        oldViewProps.outlineWidth != newViewProps.outlineWidth ||
+        oldViewProps.borderRadii != newViewProps.borderRadii ||
+        oldViewProps.outlineColor != newViewProps.outlineColor ||
+        oldViewProps.outlineStyle != newViewProps.outlineStyle) {
+      m_outlinePrimitive->markNeedsUpdate();
+    }
   }
 
   if (m_componentHostingFocusVisual) {
@@ -202,8 +220,9 @@ void ComponentView::updateProps(
 void ComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
+  updateClippingPath(layoutMetrics, *viewProps());
+
   if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
-    updateClippingPath(layoutMetrics, *viewProps());
     OuterVisual().Size(
         {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
          layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
@@ -219,6 +238,9 @@ void ComponentView::updateLayoutMetrics(
   if (layoutMetrics != oldLayoutMetrics) {
     if (m_borderPrimitive) {
       m_borderPrimitive->markNeedsUpdate();
+    }
+    if (m_outlinePrimitive) {
+      m_outlinePrimitive->markNeedsUpdate();
     }
 
     if (m_componentHostingFocusVisual) {
@@ -302,6 +324,23 @@ void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentView
 
     if (m_borderPrimitive) {
       m_borderPrimitive->finalize(m_layoutMetrics, borderMetrics);
+    }
+
+    auto outlineMetrics = outlineBorderMetrics();
+    if (!m_outlinePrimitive && BorderPrimitive::requiresBorder(outlineMetrics, theme())) {
+      m_outlinePrimitive = std::make_shared<BorderPrimitive>(*this);
+      Visual().InsertAt(
+          m_outlinePrimitive->RootVisual(),
+          (m_backgroundVisual ? 1 : 0) + (m_borderPrimitive ? m_borderPrimitive->numberOfVisuals() : 0));
+    }
+
+    if (m_outlinePrimitive) {
+      auto offset = pixelRoundAndScaleBorderWidth(viewProps()->outlineWidth, m_layoutMetrics.pointScaleFactor) +
+          std::round(viewProps()->outlineOffset * m_layoutMetrics.pointScaleFactor);
+      m_outlinePrimitive->RootVisual().Offset({-offset, -offset, 0.0f});
+      m_outlinePrimitive->RootVisual().RelativeSizeWithOffset({offset * 2, offset * 2}, {1.0f, 1.0f});
+
+      m_outlinePrimitive->finalize(outlineLayoutMetrics(), outlineMetrics);
     }
   }
 
@@ -583,6 +622,67 @@ facebook::react::LayoutMetrics ComponentView::focusLayoutMetrics(bool inner) con
   return layoutMetrics;
 }
 
+facebook::react::LayoutMetrics ComponentView::outlineLayoutMetrics() const noexcept {
+  auto &props = *viewProps();
+  auto offset = (pixelRoundAndScaleBorderWidth(viewProps()->outlineWidth, m_layoutMetrics.pointScaleFactor) +
+                 std::round(viewProps()->outlineOffset * m_layoutMetrics.pointScaleFactor)) /
+      m_layoutMetrics.pointScaleFactor;
+  facebook::react::LayoutMetrics layoutMetrics = m_layoutMetrics;
+  layoutMetrics.frame.origin.x -= offset;
+  layoutMetrics.frame.origin.y -= offset;
+  layoutMetrics.frame.size.height += offset * 2;
+  layoutMetrics.frame.size.width += offset * 2;
+  return layoutMetrics;
+}
+
+facebook::react::BorderMetrics ComponentView::outlineBorderMetrics() const noexcept {
+  auto &props = *viewProps();
+
+  facebook::react::BorderMetrics metrics = BorderPrimitive::resolveAndAlignBorderMetrics(m_layoutMetrics, props);
+  metrics.borderColors.bottom = metrics.borderColors.left = metrics.borderColors.right = metrics.borderColors.top =
+      props.outlineColor;
+
+  auto offset = pixelRoundAndScaleBorderWidth(viewProps()->outlineWidth, m_layoutMetrics.pointScaleFactor) +
+      std::round(viewProps()->outlineOffset * m_layoutMetrics.pointScaleFactor);
+
+  if (metrics.borderRadii.bottomLeft.horizontal)
+    metrics.borderRadii.bottomLeft.horizontal = std::max(0.0f, metrics.borderRadii.bottomLeft.horizontal + offset);
+  if (metrics.borderRadii.bottomLeft.vertical)
+    metrics.borderRadii.bottomLeft.vertical = std::max(0.0f, metrics.borderRadii.bottomLeft.vertical + offset);
+  if (metrics.borderRadii.bottomRight.horizontal)
+    metrics.borderRadii.bottomRight.horizontal = std::max(0.0f, metrics.borderRadii.bottomRight.horizontal + offset);
+  if (metrics.borderRadii.bottomRight.vertical)
+    metrics.borderRadii.bottomRight.vertical = std::max(0.0f, metrics.borderRadii.bottomRight.vertical + offset);
+  if (metrics.borderRadii.topLeft.horizontal)
+    metrics.borderRadii.topLeft.horizontal = std::max(0.0f, metrics.borderRadii.topLeft.horizontal + offset);
+  if (metrics.borderRadii.topLeft.vertical)
+    metrics.borderRadii.topLeft.vertical = std::max(0.0f, metrics.borderRadii.topLeft.vertical + offset);
+  if (metrics.borderRadii.topRight.horizontal)
+    metrics.borderRadii.topRight.horizontal = std::max(0.0f, metrics.borderRadii.topRight.horizontal + offset);
+  if (metrics.borderRadii.topRight.vertical)
+    metrics.borderRadii.topRight.vertical = std::max(0.0f, metrics.borderRadii.topRight.vertical + offset);
+
+  static_assert(
+      facebook::react::BorderStyle::Solid ==
+      static_cast<facebook::react::BorderStyle>(facebook::react::OutlineStyle::Solid));
+  static_assert(
+      facebook::react::BorderStyle::Dotted ==
+      static_cast<facebook::react::BorderStyle>(facebook::react::OutlineStyle::Dotted));
+  static_assert(
+      facebook::react::BorderStyle::Dashed ==
+      static_cast<facebook::react::BorderStyle>(facebook::react::OutlineStyle::Dashed));
+  assert(
+      props.outlineStyle == facebook::react::OutlineStyle::Solid ||
+      props.outlineStyle == facebook::react::OutlineStyle::Dotted ||
+      props.outlineStyle == facebook::react::OutlineStyle::Dashed);
+  metrics.borderStyles.bottom = metrics.borderStyles.left = metrics.borderStyles.right = metrics.borderStyles.top =
+      static_cast<facebook::react::BorderStyle>(props.outlineStyle);
+
+  metrics.borderWidths.bottom = metrics.borderWidths.left = metrics.borderWidths.right = metrics.borderWidths.top =
+      pixelRoundAndScaleBorderWidth(viewProps()->outlineWidth, m_layoutMetrics.pointScaleFactor);
+  return metrics;
+}
+
 facebook::react::BorderMetrics ComponentView::focusBorderMetrics(
     bool inner,
     const facebook::react::LayoutMetrics &layoutMetrics) const noexcept {
@@ -656,7 +756,7 @@ void ComponentView::hostFocusVisual(bool show, winrt::com_ptr<ComponentView> vie
           assert(
               view.get() ==
               this); // When not using lifted comp, focus visuals should always host within their own component
-          OuterVisual().InsertAt(m_focusPrimitive->m_focusVisual, 1);
+          OuterVisual().InsertAt(m_focusPrimitive->m_focusVisual, (m_backgroundVisual ? 2 : 1));
         }
       }
 
@@ -900,9 +1000,23 @@ void ComponentView::Toggle() noexcept {
   // no-op
 }
 
+// This offset ensures that the m_borderPrimitive inserts its layers above the background
+int32_t ComponentView::borderInsertAtIndex() const noexcept {
+  return m_backgroundVisual ? 1 : 0;
+}
+
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ComponentView::VisualToApplyBackgroundClipTo()
+    const noexcept {
+  return m_backgroundVisual;
+}
+
 void ComponentView::updateClippingPath(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
+  auto clipTarget = VisualToApplyBackgroundClipTo();
+  if (!clipTarget)
+    return;
+
   auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
 
   bool hasRoundedCorners = borderMetrics.borderRadii.topLeft.horizontal != 0 ||
@@ -921,10 +1035,10 @@ void ComponentView::updateClippingPath(
     winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
         m_compContext, borderMetrics.borderRadii, {0, 0, 0, 0}, {0, 0, viewWidth, viewHeight});
 
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
+    clipTarget.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
         pathGeometry.get());
   } else {
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
+    clipTarget.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
   }
 }
 
@@ -935,6 +1049,9 @@ std::pair<facebook::react::Cursor, HCURSOR> ComponentView::cursor() const noexce
 void ComponentView::indexOffsetForBorder(uint32_t &index) const noexcept {
   if (m_borderPrimitive) {
     index += m_borderPrimitive->numberOfVisuals();
+  }
+  if (m_outlinePrimitive) {
+    index += 1;
   }
 }
 
@@ -1086,7 +1203,7 @@ void ViewComponentView::ensureVisual() noexcept {
     } else {
       m_visual = createVisual();
     }
-    OuterVisual().InsertAt(m_visual, 0);
+    OuterVisual().InsertAt(m_visual, m_backgroundVisual ? 1 : 0);
   }
 }
 
@@ -1384,7 +1501,7 @@ void ViewComponentView::updateChildrenClippingPath(
       }
 
       // Insert m_childrenContainer after border visuals in m_visual
-      Visual().InsertAt(m_childrenContainer, borderCount);
+      Visual().InsertAt(m_childrenContainer, (m_backgroundVisual ? 1 : 0) + borderCount);
 
       // Use relative sizing so container automatically tracks parent's size
       m_childrenContainer.RelativeSizeWithOffset({0, 0}, {1, 1});
