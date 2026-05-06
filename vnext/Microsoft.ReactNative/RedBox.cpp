@@ -14,8 +14,6 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.h>
 
-#ifndef CORE_ABI
-
 #include <ReactCoreInjection.h>
 #include <Shobjidl.h>
 #include <Utils/Helpers.h>
@@ -27,7 +25,6 @@
 #include <winrt/Windows.Web.Http.h>
 #include "CppWinRTIncludes.h"
 #include "Utils/Helpers.h"
-#endif // CORE_ABI
 #include "XamlUtils.h"
 
 using namespace winrt::Windows::Foundation;
@@ -36,7 +33,6 @@ namespace Mso::React {
 
 using IInspectable = winrt::Windows::Foundation::IInspectable;
 
-#ifndef CORE_ABI
 struct RedBox : public std::enable_shared_from_this<RedBox> {
   RedBox(
       winrt::Microsoft::ReactNative::ReactPropertyBag &propBag,
@@ -272,7 +268,6 @@ struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultR
   std::vector<std::shared_ptr<RedBox>> m_redBoxes; // Protected by m_lockRedBox
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
 };
-#endif // CORE_ABI
 
 struct RedBoxHandler final : public Mso::React::IRedBoxHandler {
   RedBoxHandler(winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) : m_redBoxHandler(redBoxHandler) {}
@@ -316,11 +311,7 @@ std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(
     const winrt::Microsoft::ReactNative::ReactPropertyBag &propBag,
     Mso::WeakPtr<IReactHost> &&weakReactHost,
     const Mso::React::IDispatchQueue2 &uiQueue) noexcept {
-#ifndef CORE_ABI
   return std::make_shared<DefaultRedBoxHandler>(propBag, std::move(weakReactHost), uiQueue);
-#else
-  return nullptr;
-#endif
 }
 
 } // namespace Mso::React

@@ -68,20 +68,17 @@
 #include <react/threading/MessageQueueThreadImpl.h>
 #include "Inspector/ReactInspectorThread.h"
 
-#ifndef CORE_ABI
-#include <Utils/UwpPreparedScriptStore.h>
-#include <Utils/UwpScriptStore.h>
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
 #include "Modules/AppStateModule.h"
 #include "Modules/AppThemeModuleUwp.h"
+#include "Modules/AppearanceModule.h"
 #include "Modules/ClipboardModule.h"
 #include "Modules/DeviceInfoModule.h"
+#include "Modules/ExceptionsManager.h"
 #include "Modules/I18nManagerModule.h"
 #include "Modules/LinkingManagerModule.h"
 #include "Modules/LogBoxModule.h"
-#endif
-#include "Modules/ExceptionsManager.h"
 #include "Modules/PlatformConstantsWinModule.h"
 #include "Modules/ReactRootViewTagGenerator.h"
 #include "Modules/SourceCode.h"
@@ -245,7 +242,6 @@ void ReactInstanceWin::LoadModules(
       L"FabricUIManagerBinding",
       winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
 
-#ifndef CORE_ABI
   registerTurboModule(
       L"AccessibilityInfo",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AccessibilityInfo>());
@@ -277,15 +273,6 @@ void ReactInstanceWin::LoadModules(
   registerTurboModule(
       L"NativeAnimatedModule",
       winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
-
-#else
-  registerTurboModule(
-      L"ImageLoader", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
-
-  registerTurboModule(
-      L"NativeAnimatedModule",
-      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
-#endif
 
   turboModulesProvider->AddModuleProvider(
       L"SampleTurboModule",
@@ -330,14 +317,12 @@ void ReactInstanceWin::LoadModules(
   registerTurboModule(
       L"DevSettings", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DevSettings>());
 
-#ifndef CORE_ABI
   registerTurboModule(
       L"I18nManager", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::I18nManager>());
 
   registerTurboModule(
       L"LinkingManager",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>());
-#endif
 
   registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Timing>());
 
@@ -362,13 +347,11 @@ void ReactInstanceWin::InitDevMenu() noexcept {
 }
 
 void ReactInstanceWin::InitUIDependentCalls() noexcept {
-#ifndef CORE_ABI
   Microsoft::ReactNative::AppThemeHolder::InitAppThemeHolder(GetReactContext());
   Microsoft::ReactNative::I18nManager::InitI18nInfo(
       winrt::Microsoft::ReactNative::ReactPropertyBag(Options().Properties));
   Microsoft::ReactNative::Appearance::InitOnUIThread(GetReactContext());
   Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(GetReactContext());
-#endif // CORE_ABI
 }
 
 std::shared_ptr<facebook::react::DevSettings> ReactInstanceWin::CreateDevSettings() noexcept {
@@ -399,11 +382,6 @@ std::shared_ptr<facebook::react::DevSettings> ReactInstanceWin::CreateDevSetting
           [context = strongThis->m_reactContext]() { Microsoft::ReactNative::DevMenuManager::Show(context); });
     }
   };
-
-  bool useRuntimeScheduler = winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseRuntimeScheduler(
-      winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
-
-  devSettings->useRuntimeScheduler = useRuntimeScheduler;
 
   devSettings->inspectorHostTarget = m_options.InspectorHostTarget;
 
@@ -797,14 +775,12 @@ facebook::react::NativeLoggingHook ReactInstanceWin::GetLoggingCallback() noexce
 std::shared_ptr<IRedBoxHandler> ReactInstanceWin::GetRedBoxHandler() noexcept {
   if (m_options.RedBoxHandler) {
     return m_options.RedBoxHandler;
-#ifndef CORE_ABI
   } else if (UseDeveloperSupport()) {
     auto localWkReactHost = m_weakReactHost;
     return CreateDefaultRedBoxHandler(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()),
         std::move(localWkReactHost),
         *m_uiQueue);
-#endif
   } else {
     return {};
   }

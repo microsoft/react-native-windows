@@ -17,9 +17,13 @@ struct AppearanceChangeArgs {
 
 REACT_MODULE(Appearance)
 struct Appearance : std::enable_shared_from_this<Appearance> {
-  using ApplicationTheme = xaml::ApplicationTheme;
   using UISettings = winrt::Windows::UI::ViewManagement::UISettings;
   using ModuleSpec = ReactNativeSpecs::AppearanceSpec;
+
+  enum class ApplicationTheme {
+    Light = 0,
+    Dark,
+  };
 
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;

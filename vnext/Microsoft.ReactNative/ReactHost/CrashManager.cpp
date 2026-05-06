@@ -47,13 +47,9 @@ void __cdecl on_sigabrt(int signum) {
 
 void InternalRegisterCustomHandler() noexcept {
   // Do this now because by the time we catch the exception we may be in OOM
-#ifndef CORE_ABI // win32 vs uwp file permissions
   wchar_t currentDirectory[MAX_PATH]{};
   VerifyElseCrash(!!GetTempPath(MAX_PATH, currentDirectory));
   g_logFileName = currentDirectory;
-#else
-  g_logFileName = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path() + L"\\";
-#endif
 
   g_logFileName += L"ReactNativeCrashDetails_" + std::to_wstring(GetCurrentProcessId()) + L".txt";
 

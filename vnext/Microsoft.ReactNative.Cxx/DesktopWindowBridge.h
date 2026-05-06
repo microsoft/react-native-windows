@@ -8,9 +8,6 @@
 #include <winrt/Windows.Foundation.h>
 #include <functional>
 
-#if !defined(CORE_ABI) && !defined(__APPLE__) && \
-    WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP | WINAPI_PARTITION_SYSTEM | WINAPI_PARTITION_GAMES)
-
 #include <winrt/Microsoft.ReactNative.h>
 
 #include "CppWinRTIncludes.h"
@@ -62,25 +59,6 @@ inline std::unordered_map<uint32_t, ReactNotificationSubscription> SubscribeToWi
   }
   return result;
 }
-
-#else
-namespace winrt::Microsoft::ReactNative {
-
-/// Stubs for UWP
-template <typename... T>
-void ForwardWindowMessage(const ReactNotificationService &svc, T &&...) noexcept {}
-
-template <typename... T>
-ReactNotificationSubscription SubscribeToWindowMessage(const ReactNotificationService &svc, T &&...) noexcept {
-  return nullptr;
-}
-
-template <typename... T>
-std::unordered_map<uint32_t, ReactNotificationSubscription>
-SubscribeToWindowMessage(const ReactNotificationService &svc, std::initializer_list<uint32_t> msgs, T &&...) noexcept {
-  return std::unordered_map<uint32_t, ReactNotificationSubscription>{};
-}
-#endif
 
 namespace details {
 struct IndirectLibraryDeleter {

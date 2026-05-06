@@ -41,7 +41,6 @@ struct DeviceInfoHolder {
   uint32_t m_screenWidth{0};
   uint32_t m_screenHeight{0};
 
-  winrt::Windows::UI::Core::CoreWindow::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::Windows::Graphics::Display::DisplayInformation::DpiChanged_revoker m_dpiChangedRevoker{};
   Mso::Functor<void(winrt::Microsoft::ReactNative::JSValueObject &&)> m_notifyCallback;
   winrt::Microsoft::ReactNative::ReactNotificationSubscription m_wmSubscription{};

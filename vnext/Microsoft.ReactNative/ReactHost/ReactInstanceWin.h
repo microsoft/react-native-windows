@@ -12,11 +12,6 @@
 #include "React_win.h"
 #include "activeObject/activeObject.h"
 
-#ifndef CORE_ABI
-#include <Modules/AppearanceModule.h>
-#include <Modules/I18nManagerModule.h>
-#endif
-
 #include <react/runtime/ReactInstance.h>
 
 namespace winrt::Microsoft::ReactNative {

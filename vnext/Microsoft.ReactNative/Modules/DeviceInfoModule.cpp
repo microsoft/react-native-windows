@@ -7,7 +7,6 @@
 #include <IReactDispatcher.h>
 #include <IReactPropertyBag.h>
 #include <Utils/Helpers.h>
-#include <XamlUIService.h>
 #include <XamlUtils.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.UI.Core.h>
@@ -114,12 +113,8 @@ void DeviceInfoHolder::SetCallback(
 }
 
 void DeviceInfoHolder::updateDeviceInfo() noexcept {
-  auto hwnd = XamlUIService::GetIslandWindowHandle(m_context->Properties());
-
-  if (IsFabricEnabled(m_context->Properties())) {
-    winrt::Microsoft::ReactNative::ReactPropertyBag pb{m_context->Properties()};
-    hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(pb.Handle());
-  }
+  winrt::Microsoft::ReactNative::ReactPropertyBag pb{m_context->Properties()};
+  auto hwnd = winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(pb.Handle());
 
   if (hwnd) {
     RECT rect{};
