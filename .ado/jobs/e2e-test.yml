@@ -48,6 +48,41 @@ jobs:
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
+            #TODO: DELETE BEFORE MERGING!
+            - powershell: |
+                $ErrorActionPreference = 'Stop'
+                $pkg = 'Microsoft.WindowsAlarms'
+                $pfn = (Get-AppxPackage -Name $pkg | Select-Object -First 1 -ExpandProperty PackageFamilyName)
+
+                if ([string]::IsNullOrWhiteSpace($pfn)) {
+                  throw "Windows PowerShell: failed to resolve PackageFamilyName for '$pkg'."
+                }
+
+                Write-Host "SHELL=powershell"
+                Write-Host "PACKAGE=$pkg"
+                Write-Host "PFN=$pfn"
+
+                # Optional: expose for later comparison steps
+                Write-Host "##vso[task.setvariable variable=PackageResolution_PFN_PowerShell]$pfn"
+              displayName: 'Package resolution via Windows PowerShell'
+
+            - pwsh: |
+                $ErrorActionPreference = 'Stop'
+                $pkg = 'Microsoft.WindowsAlarms'
+                $pfn = (Get-AppxPackage -Name $pkg | Select-Object -First 1 -ExpandProperty PackageFamilyName)
+
+                if ([string]::IsNullOrWhiteSpace($pfn)) {
+                  throw "PowerShell 7: failed to resolve PackageFamilyName for '$pkg'."
+                }
+
+                Write-Host "SHELL=pwsh"
+                Write-Host "PACKAGE=$pkg"
+                Write-Host "PFN=$pfn"
+
+                # Optional: expose for later comparison steps
+                Write-Host "##vso[task.setvariable variable=PackageResolution_PFN_Pwsh]$pfn"
+              displayName: 'Package resolution via PowerShell 7'
+
             - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
