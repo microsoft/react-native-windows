@@ -11,10 +11,10 @@
     js-tokens "^4.0.0"
     picocolors "^1.1.1"
 
-"@babel/compat-data@^7.28.6", "@babel/compat-data@^7.29.0":
-  version "7.29.0"
-  resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.29.0.tgz#00d03e8c0ac24dd9be942c5370990cbe1f17d88d"
-  integrity sha512-T1NCJqT/j9+cn8fvkt7jtwbLBfLC/1y1c7NtCeXFRgzGTsafi68MRv8yzkYSapBnFA6L3U2VSc02ciDzoAJhJg==
+"@babel/compat-data@^7.28.6", "@babel/compat-data@^7.29.3":
+  version "7.29.3"
+  resolved "https://registry.yarnpkg.com/@babel/compat-data/-/compat-data-7.29.3.tgz#e3f5347f0589596c91d227ccb6a541d37fb1307b"
+  integrity sha512-LIVqM46zQWZhj17qA8wb4nW/ixr2y1Nw+r1etiAWgRM6U1IqP+LNhL1yg440jYZR72jCWcWbLWzIosH+uP1fqg==
 
 "@babel/core@^7.0.0", "@babel/core@^7.11.6", "@babel/core@^7.12.3", "@babel/core@^7.13.16", "@babel/core@^7.22.0", "@babel/core@^7.23.9", "@babel/core@^7.24.4", "@babel/core@^7.25.2":
   version "7.29.0"
@@ -277,6 +277,14 @@
   integrity sha512-g4L7OYun04N1WyqMNjldFwlfPCLVkgB54A/YCXICZYBsvJJE3kByKv9c9+R/nAfmIfjl2rKYLNyMHboYbZaWaA==
   dependencies:
     "@babel/helper-plugin-utils" "^7.27.1"
+
+"@babel/plugin-bugfix-safari-rest-destructuring-rhs-array@^7.29.3":
+  version "7.29.3"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-bugfix-safari-rest-destructuring-rhs-array/-/plugin-bugfix-safari-rest-destructuring-rhs-array-7.29.3.tgz#2e14f9335803d892ccb67ef487e23cf9726156fe"
+  integrity sha512-SRS46DFR4HqzUzCVgi90/xMoL+zeBDBvWdKYXSEzh79kXswNFEglUpMKxR04//dPqwYXWUBJ3mpUd933ru9Kmg==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.28.6"
+    "@babel/helper-skip-transparent-expression-wrappers" "^7.27.1"
 
 "@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@^7.27.1":
   version "7.27.1"
@@ -706,10 +714,10 @@
     "@babel/helper-module-transforms" "^7.28.6"
     "@babel/helper-plugin-utils" "^7.28.6"
 
-"@babel/plugin-transform-modules-systemjs@^7.29.0":
-  version "7.29.0"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-modules-systemjs/-/plugin-transform-modules-systemjs-7.29.0.tgz#e458a95a17807c415924106a3ff188a3b8dee964"
-  integrity sha512-PrujnVFbOdUpw4UHiVwKvKRLMMic8+eC0CuNlxjsyZUiBjhFdPsewdXCkveh2KqBA9/waD0W1b4hXSOBQJezpQ==
+"@babel/plugin-transform-modules-systemjs@^7.29.4":
+  version "7.29.4"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-modules-systemjs/-/plugin-transform-modules-systemjs-7.29.4.tgz#f621105da99919c15cf4bde6fcc7346ef95e7b20"
+  integrity sha512-N7QmZ0xRZfjHOfZeQLJjwgX2zS9pdGHSVl/cjSGlo4dXMqvurfxXDMKY4RqEKzPozV78VMcd0lxyG13mlbKc4w==
   dependencies:
     "@babel/helper-module-transforms" "^7.28.6"
     "@babel/helper-plugin-utils" "^7.28.6"
@@ -963,17 +971,18 @@
     "@babel/helper-plugin-utils" "^7.28.6"
 
 "@babel/preset-env@^7.0.0", "@babel/preset-env@^7.22.0", "@babel/preset-env@^7.25.3":
-  version "7.29.2"
-  resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.29.2.tgz#5a173f22c7d8df362af1c9fe31facd320de4a86c"
-  integrity sha512-DYD23veRYGvBFhcTY1iUvJnDNpuqNd/BzBwCvzOTKUnJjKg5kpUBh3/u9585Agdkgj+QuygG7jLfOPWMa2KVNw==
+  version "7.29.5"
+  resolved "https://registry.yarnpkg.com/@babel/preset-env/-/preset-env-7.29.5.tgz#c48b7ed94582c8b685e21b8b42de8633ec289268"
+  integrity sha512-/69t2aEzGKHD76DyLbHysF/QH2LJOB8iFnYO37unDTKBTubzcMRv0f3H5EiN1Q6ajOd/eB7dAInF0qdFVS06kA==
   dependencies:
-    "@babel/compat-data" "^7.29.0"
+    "@babel/compat-data" "^7.29.3"
     "@babel/helper-compilation-targets" "^7.28.6"
     "@babel/helper-plugin-utils" "^7.28.6"
     "@babel/helper-validator-option" "^7.27.1"
     "@babel/plugin-bugfix-firefox-class-in-computed-class-key" "^7.28.5"
     "@babel/plugin-bugfix-safari-class-field-initializer-scope" "^7.27.1"
     "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression" "^7.27.1"
+    "@babel/plugin-bugfix-safari-rest-destructuring-rhs-array" "^7.29.3"
     "@babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining" "^7.27.1"
     "@babel/plugin-bugfix-v8-static-class-fields-redefine-readonly" "^7.28.6"
     "@babel/plugin-proposal-private-property-in-object" "7.21.0-placeholder-for-preset-env.2"
@@ -1005,7 +1014,7 @@
     "@babel/plugin-transform-member-expression-literals" "^7.27.1"
     "@babel/plugin-transform-modules-amd" "^7.27.1"
     "@babel/plugin-transform-modules-commonjs" "^7.28.6"
-    "@babel/plugin-transform-modules-systemjs" "^7.29.0"
+    "@babel/plugin-transform-modules-systemjs" "^7.29.4"
     "@babel/plugin-transform-modules-umd" "^7.27.1"
     "@babel/plugin-transform-named-capturing-groups-regex" "^7.29.0"
     "@babel/plugin-transform-new-target" "^7.27.1"
@@ -2850,13 +2859,14 @@
   integrity sha512-8kyM0TUWpawWlaypHKWLgJjPoF5HcsjIxx9LSnYM8VgwBW1gOl2cCDhPYaeS8IG9m0fi4rMtQD8OJqmwpJ2jEg==
 
 "@rnx-kit/jest-preset@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.3.1.tgz#1e6c017350790ce4760b012bf44ac2b4c1871d89"
-  integrity sha512-cCWioErXqm2xEOgGscor6TH5qpVsCQBOwrLyqu8bF0PT+u4VCho5GgbXnNjiSjvbh34q/fsjfFFx70gWlBC4fg==
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.3.2.tgz#b016b4ac8d7d3e02f09e42a7f89620f6299369e2"
+  integrity sha512-ayzx1UZ0pxC1/o6zJsR8rx2aNySQW4wRbuxoqQu2kFwWlHn7AQNR5JoePkVVe540MGCVsNR++vpUKkNlOC/6Zg==
   dependencies:
     "@babel/core" "^7.0.0"
     "@babel/preset-env" "^7.0.0"
     "@babel/preset-typescript" "^7.0.0"
+    "@jest/create-cache-key-function" "^29.7.0"
     "@rnx-kit/tools-react-native" "^2.3.2"
     find-up "^5.0.0"
 
@@ -4743,9 +4753,9 @@ basic-ftp@^5.0.2:
   integrity sha512-VoMINM2rqJwJgfdHq6RiUudKt2BV+FY5ZFezP/ypmwayk68+NzzAQy4XXLlqsGD4MCzq3DrmNFD/uUmBJuGoXw==
 
 beachball@^2.20.0:
-  version "2.65.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.65.0.tgz#d7685ea9583876340a09f81511a2ed10e5c4f5b6"
-  integrity sha512-nZuHjXLzZBrkUyKwlHTFi5PgLC2wizd3aPepn3RvCTb8sQdw/fGhrar16maM72tx6LmM6ib/DOn6XrMS6CNoZA==
+  version "2.65.4"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.65.4.tgz#9bdce6eaf28440cbfe24c6226b69c2728b3206b1"
+  integrity sha512-ag2DrWfFMOPhjM0gnJXLsgqF2hJ9he1vyqjoS9bHwiGUFpaQuO8MB3mj2AeI+PwNztaTx8yBzFSP6vdrAyDXhg==
   dependencies:
     "@vercel/detect-agent" "^1.2.1"
     cosmiconfig "^9.0.1"
@@ -4755,7 +4765,7 @@ beachball@^2.20.0:
     p-limit "^3.1.0"
     prompts "^2.4.2"
     semver "^7.7.4"
-    workspace-tools "^0.41.4"
+    workspace-tools "^0.41.6"
     yargs-parser "^21.1.1"
 
 before-after-hook@^2.2.0:
@@ -8738,9 +8748,9 @@ knip@^5.85.0:
     zod "^4.1.11"
 
 lage@^2.7.1:
-  version "2.15.9"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.15.9.tgz#99dbeddc4a30fea5366e5f67ca878d034e84e707"
-  integrity sha512-xK8xzEgsjUyUkcpnTiWaxL001NdwJ7RQovoqSg8g/Ipe39mzhEaSfzR/M4CLgsnHuESaZpgWFzgqHCq9pxoS1w==
+  version "2.15.12"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.15.12.tgz#8dfc2b343aacfd33323108ee7247186b3f5e0913"
+  integrity sha512-4q7IqUo9Czae79DfRDfn+DJFc9eiQjEVh0t5GLGCXcWlwL1fkZgP2TE7LBtc2hBq4+FANB407a2VXkstdIQumg==
   dependencies:
     glob-hasher "^1.4.2"
   optionalDependencies:
@@ -9373,9 +9383,9 @@ metro-runtime@0.83.3:
     flow-enums-runtime "^0.0.6"
 
 metro-runtime@^0.83.3:
-  version "0.83.6"
-  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.83.6.tgz#77eec399263a4be97c2c3938cfd0f84c584821c9"
-  integrity sha512-WQPua1G2VgYbwRn6vSKxOhTX7CFbSf/JdUu6Nd8bZnPXckOf7HQ2y51NXNQHoEsiuawathrkzL8pBhv+zgZFmg==
+  version "0.83.7"
+  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.83.7.tgz#3606a71c94a4ef862b7a0e43156b35f7a4e4cf17"
+  integrity sha512-9GKkJURaB2iyYoEExKnedzAHzxmKtSi+k0tsZUvMoU27tBZJElchYt7JH/Ai/XzYAI9lCAaV7u5HZSI8J5Z+wQ==
   dependencies:
     "@babel/runtime" "^7.25.0"
     flow-enums-runtime "^0.0.6"
@@ -9396,18 +9406,18 @@ metro-source-map@0.83.3:
     source-map "^0.5.6"
     vlq "^1.0.0"
 
-metro-source-map@0.83.6, metro-source-map@^0.83.3:
-  version "0.83.6"
-  resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.83.6.tgz#65465faaf98664e1e5f2719db00c354a4d67697e"
-  integrity sha512-AqJbOMMpeyyM4iNI91pchqDIszzNuuHApEhg6OABqZ+9mjLEqzcIEQ/fboZ7x74fNU5DBd2K36FdUQYPqlGClA==
+metro-source-map@0.83.7, metro-source-map@^0.83.3:
+  version "0.83.7"
+  resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.83.7.tgz#6208e72427c987e66a9ec23ebaee0b3cc76dd16c"
+  integrity sha512-JgA1h7oc1a1jydBe1GhVFsUoMYo3wLPk7oRA32rjlDsq+sP2JLt9x2p2lWbNSxTm/u8NV4VRid3hvEJgcX8tKw==
   dependencies:
     "@babel/traverse" "^7.29.0"
     "@babel/types" "^7.29.0"
     flow-enums-runtime "^0.0.6"
     invariant "^2.2.4"
-    metro-symbolicate "0.83.6"
+    metro-symbolicate "0.83.7"
     nullthrows "^1.1.1"
-    ob1 "0.83.6"
+    ob1 "0.83.7"
     source-map "^0.5.6"
     vlq "^1.0.0"
 
@@ -9423,14 +9433,14 @@ metro-symbolicate@0.83.3:
     source-map "^0.5.6"
     vlq "^1.0.0"
 
-metro-symbolicate@0.83.6:
-  version "0.83.6"
-  resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.83.6.tgz#8c16c187ac92cd4dc7e381ec7a482b110484ba18"
-  integrity sha512-4nvkmv9T7ozhprlPwk/+xm0SVPsxly5kYyMHdNaOlFemFz4df9BanvD46Ac6OISu/4Idinzfk2KVb++6OfzPAQ==
+metro-symbolicate@0.83.7:
+  version "0.83.7"
+  resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.83.7.tgz#ee10cfbafb5ed5ae5f04a565c496fd772afb3f5c"
+  integrity sha512-g4suyxw20WOHWI680c+Kq4wC/NF+Hx5pRH9afrMp+sMTxqLeKcPR1Xf4wMhsjlbvx7LbIREdke6q928jEjvJWw==
   dependencies:
     flow-enums-runtime "^0.0.6"
     invariant "^2.2.4"
-    metro-source-map "0.83.6"
+    metro-source-map "0.83.7"
     nullthrows "^1.1.1"
     source-map "^0.5.6"
     vlq "^1.0.0"
@@ -10186,10 +10196,10 @@ ob1@0.83.3:
   dependencies:
     flow-enums-runtime "^0.0.6"
 
-ob1@0.83.6:
-  version "0.83.6"
-  resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.83.6.tgz#7506c02651efe4c6d3ab19884fe3d91a56fca555"
-  integrity sha512-m/xZYkwcjo6UqLMrUICEB3iHk7Bjt3RSR7KXMi6Y1MO/kGkPhoRmfUDF6KAan3rLAZ7ABRqnQyKUTwaqZgUV4w==
+ob1@0.83.7:
+  version "0.83.7"
+  resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.83.7.tgz#0f9a9461ee3c3048eacd40893fee3385d42d8731"
+  integrity sha512-9M5kpuOLyTPogMtZiQUIxdAZxl7Dxs6tVBbJErSumsqGMuhVSoUbkfeZ3XNPpLpwBBtqY5QDUzGwggLHX3slQg==
   dependencies:
     flow-enums-runtime "^0.0.6"
 
@@ -13040,10 +13050,10 @@ wordwrap@^1.0.0:
   resolved "https://registry.yarnpkg.com/wordwrap/-/wordwrap-1.0.0.tgz#27584810891456a4171c8d0226441ade90cbcaeb"
   integrity sha512-gvVzJFlPycKc5dZN4yPkP8w7Dc37BtP1yczEneOb4uq34pXZcvrtRTmWV8W+Ume+XCxKgbjM+nevkyFPMybd4Q==
 
-workspace-tools@^0.41.4:
-  version "0.41.4"
-  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.41.4.tgz#443202bc1eafa5119dd4ddd9929082b3d1a6a271"
-  integrity sha512-FuSHMNmM1AXJaaWIUMFsWH/+dR0KEzkHhTv96KZ5iKxCvi4TXnATRr/U23d8d8DMUx7oL/oVfr9SvEaDvDYN2A==
+workspace-tools@^0.41.6:
+  version "0.41.7"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.41.7.tgz#79178e0797580aac11b984559529f1f3adcd3aa1"
+  integrity sha512-krsae4CHOG+jBRj76xtiFeQ35BEJC1Yb4601a3dLoZm1oeswSRiEvgcHJel2JXZESiKT/pXiISOodpLsIKWf+Q==
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
     fast-glob "^3.3.3"
