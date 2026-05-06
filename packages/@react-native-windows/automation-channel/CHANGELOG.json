@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Tue, 05 May 2026 19:45:01 GMT",
+      "version": "0.84.0-preview.7",
+      "tag": "@react-native-windows/automation-channel_v0.84.0-preview.7",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "4c8074d47d675aee1d2110c5b92e9e349bfa1abb",
+            "comment": "Use hermes-windows version 0.0.0-2604.21001-94aa5e1d (#16019)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.84.0-preview.7",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Apr 2026 20:18:59 GMT",
       "version": "0.84.0-preview.6",
       "tag": "@react-native-windows/automation-channel_v0.84.0-preview.6",

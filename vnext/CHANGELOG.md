@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 27 Apr 2026 20:18:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 05 May 2026 19:45:01 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0-preview.7
+
+Tue, 05 May 2026 19:45:01 GMT
+
+### Changes
+
+- Use hermes-windows version 0.0.0-2604.21001-94aa5e1d (#16019) (vmorozov@microsoft.com)
+- fix: map Windows touch pointer IDs to small JS-safe identifiers in CompositionEventHandler (gordomacmaster@gmail.com)
 
 ## 0.84.0-preview.6
 
