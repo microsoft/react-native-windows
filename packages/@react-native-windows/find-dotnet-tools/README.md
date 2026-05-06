@@ -24,7 +24,8 @@ Locates a PowerShell executable by checking, in order:
 
 1. A `dotnet-tool`-restored copy of `pwsh.exe` (skipped in CI builds)
 2. `pwsh.exe` on the system PATH
-3. The built-in Windows PowerShell as a last resort
+
+Throws an error if `pwsh.exe` cannot be found.
 
 ```js
 import {findPowerShell} from '@react-native-windows/find-dotnet-tools';

@@ -35,7 +35,8 @@ export function getNugetGlobalPackagesFolder(): string {
  * Locates a PowerShell executable, checking (in order):
  * 1. A NuGet-restored copy of pwsh (skipped in CI builds)
  * 2. pwsh.exe on the system PATH
- * 3. The built-in Windows PowerShell as a last resort
+ *
+ * Throws if no pwsh.exe can be located.
  */
 export function findPowerShell(): string {
   // Build agents already have PowerShell (pwsh) installed
@@ -63,5 +64,7 @@ export function findPowerShell(): string {
     }
   } catch {}
 
-  return `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
+  throw new Error(
+    'Unable to find pwsh.exe. Install PowerShell 7 or ensure pwsh.exe is available on PATH.',
+  );
 }
