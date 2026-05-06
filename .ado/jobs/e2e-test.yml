@@ -68,6 +68,7 @@ jobs:
 
             - pwsh: |
                 $ErrorActionPreference = 'Stop'
+                Import-Module Appx -UseWindowsPowerShell
                 $pkg = 'Microsoft.WindowsAlarms'
                 $pfn = (Get-AppxPackage -Name $pkg | Select-Object -First 1 -ExpandProperty PackageFamilyName)
 
