@@ -73,7 +73,7 @@ jobs:
 
             - pwsh: |
                 $ErrorActionPreference = 'Stop'
-                Import-Module Appx -UseWindowsPowerShell
+                Import-Module -Name Appx -UseWindowsPowerShell -WarningAction SilentlyContinue
                 $pkg = 'Windows.PrintDialog'
                 $pfn = (Get-AppxPackage -Name $pkg | Select-Object -First 1 -ExpandProperty PackageFamilyName)
 
