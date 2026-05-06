@@ -65,6 +65,6 @@ export function findPowerShell(): string {
   } catch {}
 
   throw new Error(
-    'Unable to find pwsh.exe. Install PowerShell 7 or ensure pwsh.exe is available on PATH.',
+    'Unable to find pwsh.exe. It should have been made available by `yarn install`.',
   );
 }
