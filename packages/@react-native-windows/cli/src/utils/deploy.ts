@@ -466,7 +466,7 @@ export async function deployToDesktop(
 
   const escapedAppName = appName.replace(/'/g, "''");
   const appFamilyNameCommand = useAppxCompatibility
-    ? `& { Import-Module Appx -UseWindowsPowerShell 3>$null; (Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName }`
+    ? `& { Import-Module Appx -UseWindowsPowerShell -WarningAction SilentlyContinue; (Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName }`
     : `(Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName`;
   const appFamilyName = execFileSync(findPowerShell(), [
     '-NoProfile',
