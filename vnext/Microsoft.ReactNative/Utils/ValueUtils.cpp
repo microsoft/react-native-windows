@@ -48,7 +48,7 @@ struct ColorComp {
 };
 
 winrt::Color ColorFromNumber(DWORD argb) noexcept {
-  return xaml::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
+  return winrt::Windows::UI::Color{GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb)};
 }
 
 REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic &d) {

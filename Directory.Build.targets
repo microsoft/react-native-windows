@@ -108,7 +108,6 @@
         RnwNewArch;
         UseFabric;
         FollyDir;
-        IncludeFabricInterface;
         UseFabric;
         YogaDir;
         WinVer;

@@ -86,9 +86,6 @@ struct DevSettings {
 
   bool enableDefaultCrashHandler{false};
 
-  // Enable concurrent mode by installing runtimeScheduler
-  bool useRuntimeScheduler{false};
-
   // The HostTarget instance for Fusebox
   facebook::react::jsinspector_modern::HostTarget *inspectorHostTarget;
 };

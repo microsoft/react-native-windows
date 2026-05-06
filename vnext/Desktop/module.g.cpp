@@ -5,7 +5,6 @@
 
 #include "pch.h"
 #include "winrt/base.h"
-void* winrt_make_Microsoft_Internal_TestController();
 void* winrt_make_Microsoft_ReactNative_Color();
 void* winrt_make_Microsoft_ReactNative_ReactNativeIsland();
 void *winrt_make_Microsoft_ReactNative_Composition_ImageFailedResponse();
@@ -25,7 +24,6 @@ void* winrt_make_Microsoft_ReactNative_ReactPropertyBagHelper();
 void* winrt_make_Microsoft_ReactNative_ReactViewOptions();
 void* winrt_make_Microsoft_ReactNative_RedBoxHelper();
 void* winrt_make_Microsoft_ReactNative_QuirkSettings();
-void* winrt_make_facebook_react_NativeLogEventSource();
 
 bool __stdcall winrt_can_unload_now() noexcept
 {
@@ -45,10 +43,6 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
         return std::equal(left.rbegin(), left.rend(), right.rbegin(), right.rend());
     };
 
-    if (requal(name, L"Microsoft.Internal.TestController"))
-    {
-        return winrt_make_Microsoft_Internal_TestController();
-    }
     if (requal(name, L"Microsoft.ReactNative.Color")) {
       return winrt_make_Microsoft_ReactNative_Color();
     }
@@ -125,12 +119,6 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
     {
         return winrt_make_Microsoft_ReactNative_QuirkSettings();
     }
-
-    if (requal(name, L"facebook.react.NativeLogEventSource"))
-    {
-        return winrt_make_facebook_react_NativeLogEventSource();
-    }
-
 
     return nullptr;
 }

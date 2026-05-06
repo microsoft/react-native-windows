@@ -30,12 +30,3 @@ WINRT_IMPL_GetModuleHandleW(_In_opt_ LPCWSTR lpModuleName);
 #endif
 WINRT_IMPL_LINK(GetModuleHandleW, 4);
 #undef WINRT_IMPL_LINK
-
-namespace XAML_CPPWINRT_NAMESPACE {
-
-// Using Windows::UI::ColorHelper causes the process to load Windows.UI.Xaml.dll which is not needed just to fill a
-// Color struct
-inline winrt::Windows::UI::Color FromArgb(uint8_t a, uint8_t r, uint8_t g, uint8_t b) {
-  return winrt::Windows::UI::Color{a, r, g, b};
-}
-} // namespace XAML_CPPWINRT_NAMESPACE
