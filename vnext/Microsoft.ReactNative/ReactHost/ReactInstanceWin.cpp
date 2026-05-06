@@ -241,6 +241,7 @@ void ReactInstanceWin::LoadModules(
   registerTurboModule(
       L"FabricUIManagerBinding",
       winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
+  turboModulesProvider->AddEagerInit("FabricUIManagerBinding");
 
   registerTurboModule(
       L"AccessibilityInfo",
