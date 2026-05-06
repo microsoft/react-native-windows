@@ -215,11 +215,17 @@ export default class AutomationEnvironment extends NodeEnvironment {
       const pollInterval = 2000;
       const deadline = Date.now() + windowTimeout;
       let appWindow: webdriverio.Element | undefined;
+      const sampledWindowNames = new Set<string>();
 
       while (Date.now() < deadline) {
         const allWindows = await rootBrowser.$$('//Window');
         for (const window of allWindows) {
-          if ((await window.getAttribute('Name')) === appName) {
+          const windowName = ((await window.getAttribute('Name')) ?? '').trim();
+          if (windowName.length > 0 && sampledWindowNames.size < 30) {
+            sampledWindowNames.add(windowName);
+          }
+
+          if (windowName === appName) {
             appWindow = window;
             break;
           }
@@ -231,7 +237,17 @@ export default class AutomationEnvironment extends NodeEnvironment {
       }
 
       if (!appWindow) {
-        throw new Error(`Unable to find window with Name === '${appName}'.`);
+        const sampledNames =
+          sampledWindowNames.size > 0
+            ? Array.from(sampledWindowNames)
+              .slice(0, 20)
+              .map(name => `'${name}'`)
+              .join(', ')
+            : '<none>';
+        throw new Error(
+          `Unable to find window with Name === '${appName}'. ` +
+          `Sampled window names: ${sampledNames}.`,
+        );
       }
 
       // Swap the the window handle for WinAppDriver
