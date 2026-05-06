@@ -50,8 +50,13 @@ jobs:
           steps:
             #TODO: DELETE BEFORE MERGING!
             - powershell: |
+                Get-AppxPackage -Name Windows.PrintDialog
+
+                Get-AppxPackage
+              displayName: List appx packages
+            - powershell: |
                 $ErrorActionPreference = 'Stop'
-                $pkg = 'Microsoft.WindowsAlarms'
+                $pkg = 'Windows.PrintDialog'
                 $pfn = (Get-AppxPackage -Name $pkg | Select-Object -First 1 -ExpandProperty PackageFamilyName)
 
                 if ([string]::IsNullOrWhiteSpace($pfn)) {
@@ -69,7 +74,7 @@ jobs:
             - pwsh: |
                 $ErrorActionPreference = 'Stop'
                 Import-Module Appx -UseWindowsPowerShell
-                $pkg = 'Microsoft.WindowsAlarms'
+                $pkg = 'Windows.PrintDialog'
                 $pfn = (Get-AppxPackage -Name $pkg | Select-Object -First 1 -ExpandProperty PackageFamilyName)
 
                 if ([string]::IsNullOrWhiteSpace($pfn)) {
