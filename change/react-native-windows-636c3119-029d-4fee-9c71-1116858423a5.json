@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Minor text rendering perf improvement",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",

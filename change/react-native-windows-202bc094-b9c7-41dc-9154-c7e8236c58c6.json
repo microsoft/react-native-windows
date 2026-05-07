@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Implement outline properties on view",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",

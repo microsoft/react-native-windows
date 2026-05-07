@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "fix: map Windows touch pointer IDs to small JS-safe identifiers in CompositionEventHandler",
   "packageName": "react-native-windows",
   "email": "gordomacmaster@gmail.com",
