@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix: cancel active touches in onPointerCaptureLost to prevent zombie touch state",
-  "packageName": "react-native-windows",
-  "email": "gordomacmaster@gmail.com",
-  "dependentChangeType": "patch"
-}

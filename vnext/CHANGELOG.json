@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 07 May 2026 13:58:26 GMT",
+      "version": "0.84.0-preview.8",
+      "tag": "react-native-windows_v0.84.0-preview.8",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "1558420ae5c9c06f126fff301eeec6426c245312",
+            "comment": "fix: cancel active touches in onPointerCaptureLost to prevent zombie touch state"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 May 2026 19:45:01 GMT",
       "version": "0.84.0-preview.7",
       "tag": "react-native-windows_v0.84.0-preview.7",

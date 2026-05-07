@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 05 May 2026 19:45:01 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 07 May 2026 13:58:26 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0-preview.8
+
+Thu, 07 May 2026 13:58:26 GMT
+
+### Changes
+
+- fix: cancel active touches in onPointerCaptureLost to prevent zombie touch state (gordomacmaster@gmail.com)
 
 ## 0.84.0-preview.7
 
