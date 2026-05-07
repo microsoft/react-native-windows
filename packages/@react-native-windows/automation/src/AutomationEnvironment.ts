@@ -339,20 +339,17 @@ function resolveAppName(appName: string): string {
     const useAppxCompatibility = !!process.env.TF_BUILD;
     const escapedAppName = appName.replace(/'/g, "''");
     const packageFamilyNameCommand = useAppxCompatibility
-      ? `& { Import-Module Appx -UseWindowsPowerShell -WarningAction SilentlyContinue; Get-AppxPackage -Name '${escapedAppName}' | Select-Object -First 1 -ExpandProperty PackageFamilyName }`
-      : `Get-AppxPackage -Name '${escapedAppName}' | Select-Object -First 1 -ExpandProperty PackageFamilyName`;
-    const result = spawnSync(findPowerShell(), [
+      ? `& { Import-Module Appx -UseWindowsPowerShell -WarningAction SilentlyContinue; (Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName }`
+      : `(Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName`;
+    const packageFamilyName = spawnSync(findPowerShell(), [
       '-NoProfile',
       '-Command',
       packageFamilyNameCommand,
-    ]);
-    const packageFamilyName = result.stdout
-      .toString()
-      .split(/\r?\n/)
-      .map(line => line.trim())
-      .find(line => line.length > 0);
+    ])
+      .stdout.toString()
+      .trim();
 
-    if (result.status !== 0 || !packageFamilyName) {
+    if (packageFamilyName.length === 0) {
       // Rethrown below
       throw new Error();
     }
