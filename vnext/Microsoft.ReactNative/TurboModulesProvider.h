@@ -26,6 +26,7 @@ class TurboModulesProvider final : public facebook::react::TurboModuleRegistry {
       winrt::hstring const &moduleName,
       ReactModuleProvider const &moduleProvider,
       bool overwriteExisting) noexcept;
+  void AddEagerInit(std::string moduleName) noexcept;
   std::shared_ptr<facebook::react::LongLivedObjectCollection> const &LongLivedObjectCollection() noexcept;
 
  private:
@@ -33,6 +34,7 @@ class TurboModulesProvider final : public facebook::react::TurboModuleRegistry {
   std::shared_ptr<facebook::react::LongLivedObjectCollection> m_longLivedObjectCollection{
       std::make_shared<facebook::react::LongLivedObjectCollection>()};
   std::unordered_map<std::string, ReactModuleProvider> m_moduleProviders;
+  std::vector<std::string> m_eagerInitModuleNames;
   IReactContext m_reactContext;
 };
 
