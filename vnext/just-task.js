@@ -25,6 +25,7 @@ const fs = require('fs');
 const {
   registerNuGetRestoreTask,
 } = require('@rnw-scripts/just-task/nuget-restore-task');
+const {findPowerShell} = require('@react-native-windows/find-dotnet-tools');
 
 option('production');
 option('clean');
@@ -44,11 +45,12 @@ function codegen(test) {
   );
 }
 
+const powershell = findPowerShell();
+
 function layoutMSRNCxx() {
   if (require('os').platform() === 'win32') {
-    const powershell = `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
     execSync(
-      `${powershell} -NoProfile .\\Scripts\\Tfs\\Layout-MSRN-Headers.ps1 -GenerateLocalCxx`,
+      `"${powershell}" -NoProfile .\\Scripts\\Tfs\\Layout-MSRN-Headers.ps1 -GenerateLocalCxx`,
       {
         env: process.env,
       },
@@ -84,12 +86,22 @@ registerNuGetRestoreTask({
   scriptArguments: ['-SkipLockDeletion'],
 });
 
+function installDotnetToolsTask() {
+  execSync(
+    `dotnet tool restore --tool-manifest ${path.resolve(__dirname, 'dotnet-tools.json')}`,
+    {env: process.env},
+  );
+}
+
+task('installDotnetTools', installDotnetToolsTask);
+
 task(
   'build',
   series(
     condition('clean', () => argv().clean),
     'copyRNLibraries',
     'copyReadmeAndLicenseFromRoot',
+    condition('installDotnetTools', () => !process.env.TF_BUILD),
     'layoutMSRNCxx',
     'compileTsPlatformOverrides',
     'restoreNuGetPackages',
