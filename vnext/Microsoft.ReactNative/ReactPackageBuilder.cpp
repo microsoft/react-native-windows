@@ -34,6 +34,13 @@ void ReactPackageBuilder::AddTurboModule(
   m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider, true);
 }
 
+void ReactPackageBuilder::AddEagerInitTurboModule(
+    hstring const &moduleName,
+    ReactModuleProvider const &moduleProvider) noexcept {
+  m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider, true);
+  m_turboModulesProvider->AddEagerInit(winrt::to_string(moduleName));
+}
+
 void ReactPackageBuilder::AddViewComponent(
     winrt::hstring componentName,
     ReactViewComponentProvider const &viewComponentProvider) noexcept {
