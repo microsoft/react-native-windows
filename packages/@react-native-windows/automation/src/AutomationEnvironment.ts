@@ -197,32 +197,15 @@ export default class AutomationEnvironment extends NodeEnvironment {
       // Extract out the saved window name
       const appName = (this.webDriverOptions.capabilities! as any)
         .appTopLevelWindow;
-      let launchDiagnostics = '';
-      let launchExitCode: number | null | undefined;
-      let resolvedAumid: string | undefined;
-      const powerShellPath = appName.endsWith('.exe')
-        ? '<n/a>'
-        : findPowerShell();
 
       if (this.rootLaunchApp) {
         const appPackageName = resolveAppName(appName);
-        resolvedAumid = appPackageName;
-        const launchResult = spawnSync('cmd', [
+        spawnSync('cmd', [
           '/c',
           'start',
           `shell:AppsFolder\\${appPackageName}`,
         ]);
-        launchExitCode = launchResult.status;
-        launchDiagnostics =
-          `AUMID='${appPackageName}', ` +
-          `startExitCode=${launchResult.status ?? '<null>'}, ` +
-          `stdout='${launchResult.stdout?.toString().trim() ?? ''}', ` +
-          `stderr='${launchResult.stderr?.toString().trim() ?? ''}'`;
       }
-
-      console.log(
-        `[AutomationEnvironment] Root launch diagnostics: AUMID='${resolvedAumid ?? '<none>'}', pwsh='${powerShellPath}', startExitCode=${launchExitCode ?? '<none>'}`,
-      );
 
       // Set up the "Desktop" or Root session
       const rootBrowser = await webdriverio.remote(this.rootWebDriverOptions);
@@ -263,8 +246,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
             : '<none>';
         throw new Error(
           `Unable to find window with Name === '${appName}'. ` +
-          `Sampled window names: ${sampledNames}. ` +
-          `Launch diagnostics: ${launchDiagnostics || '<rootLaunchApp disabled>'}.`,
+          `Sampled window names: ${sampledNames}.`,
         );
       }
 
@@ -384,8 +366,7 @@ function resolveAppName(appName: string): string {
       .toString()
       .split(/\r?\n/)
       .map(line => line.trim())
-      .find(line => line.length > 0)
-      ?.trim();
+      .find(line => line.length > 0);
 
     if (result.status !== 0 || !packageFamilyName) {
       // Rethrown below
