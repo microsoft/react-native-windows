@@ -18,8 +18,8 @@ import {
   newSpinner,
   newSuccess,
   newError,
-  powershell,
 } from './commandWithProgress';
+import {findPowerShell} from '@react-native-windows/find-dotnet-tools';
 import {execSync} from 'child_process';
 import {BuildArch, BuildConfig} from '../commands/runWindows/runWindowsOptions';
 import {findLatestVsInstall} from './vsInstalls';
@@ -317,7 +317,7 @@ export default class MSBuildTools {
         'Eval-MsBuildProperties.ps1',
       );
 
-      let command = `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${msbuildEvalScriptPath}" -SolutionFile '${solutionFile}' -ProjectFile '${projectFile}' -MSBuildPath '${this.msbuildPath()}'`;
+      let command = `"${findPowerShell()}" -ExecutionPolicy Unrestricted -NoProfile "${msbuildEvalScriptPath}" -SolutionFile '${solutionFile}' -ProjectFile '${projectFile}' -MSBuildPath '${this.msbuildPath()}'`;
 
       if (propertyNames && propertyNames.length > 0) {
         command += ` -PropertyNames '${propertyNames.join(',')}'`;

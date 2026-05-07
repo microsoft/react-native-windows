@@ -459,6 +459,21 @@ jobs:
               condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
               continueOnError: true
 
+            - pwsh: |
+                if (Test-Path "packages/e2e-test-app-fabric/test/__image_snapshots__/__diff_output__") {
+                  Write-Host "##vso[task.setvariable variable=DiffOutputExists]true"
+                }
+              displayName: Check for image diff output folder
+              condition: failed()
+
+            - task: CopyFiles@2
+              displayName: Copy Fabric image diffs
+              inputs:
+                sourceFolder: packages/e2e-test-app-fabric/test/__image_snapshots__/__diff_output__
+                targetFolder: $(Build.StagingDirectory)/snapshots-image-diffs
+                contents: "**"
+              condition: and(failed(), eq(variables.DiffOutputExists, 'true'))
+
             - script: npx jest --clearCache
               displayName: clear jest cache
               workingDirectory: packages/e2e-test-app-fabric
