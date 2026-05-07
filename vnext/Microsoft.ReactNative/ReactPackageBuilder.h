@@ -43,6 +43,7 @@ struct ReactPackageBuilder : winrt::implements<
   void AddViewManager(hstring const &viewManagerName, ReactViewManagerProvider const &viewManagerProvider) noexcept;
 #endif
   void AddTurboModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
+  void AddEagerInitTurboModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
 
 #ifdef USE_FABRIC
   // IReactPackageBuilderFabric

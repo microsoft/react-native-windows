@@ -32,6 +32,11 @@ namespace Microsoft.ReactNative
     "NOTE: TurboModules using JSI directly will not run correctly while using @ReactInstanceSettings.UseWebDebugger")
     void AddTurboModule(String moduleName, ReactModuleProvider moduleProvider);
 
+    DOC_STRING("Adds a custom native module. See @ReactModuleProvider. This will register the"
+    "module as a TurboModule.  This module will be created and have init called as soon as the"
+    "instance is created, event before the module is accessed from JavaScript.")
+    void AddEagerInitTurboModule(String moduleName, ReactModuleProvider moduleProvider);
+
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
     DOC_STRING("Adds a custom view manager. See @ReactViewManagerProvider.")
     void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);

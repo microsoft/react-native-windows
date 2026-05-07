@@ -16,14 +16,21 @@ exports[`View Tests Views can have a hitslop region 1`] = `
     },
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(128, 128, 128, 255)",
-    },
     "Comment": "hitslop",
     "Offset": "0, 0, 0",
     "Size": "200, 200",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(128, 128, 128, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
   },
 }
 `;
@@ -190,14 +197,19 @@ exports[`View Tests Views can have a z-index 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(100, 181, 246, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "100, 50",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(100, 181, 246, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Offset": "0, 15, 0",
                 "Size": "100, 20",
@@ -232,14 +244,19 @@ exports[`View Tests Views can have a z-index 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(129, 199, 132, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "100, 50",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(129, 199, 132, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Offset": "0, 15, 0",
                 "Size": "100, 20",
@@ -262,14 +279,19 @@ exports[`View Tests Views can have a z-index 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 241, 118, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "100, 50",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 241, 118, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Offset": "0, 15, 0",
                 "Size": "100, 20",
@@ -292,14 +314,19 @@ exports[`View Tests Views can have a z-index 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(229, 115, 115, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "100, 50",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(229, 115, 115, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Offset": "0, 15, 0",
                 "Size": "100, 20",
@@ -352,15 +379,20 @@ exports[`View Tests Views can have aria-labels 1`] = `
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(82, 127, 228, 255)",
-    },
     "Comment": "view-test-aria-label",
     "Offset": "0, 0, 0",
     "Size": "916, 24",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(82, 127, 228, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Offset": "5, 5, 0",
         "Size": "906, 16",
@@ -505,13 +537,20 @@ exports[`View Tests Views can have backface visibility 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 255, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "150, 150",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -533,14 +572,19 @@ exports[`View Tests Views can have backface visibility 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "150, 150",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Offset": "10, 56, 0",
                 "Size": "130, 38",
@@ -575,13 +619,20 @@ exports[`View Tests Views can have backface visibility 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 255, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "150, 150",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 255, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -603,13 +654,20 @@ exports[`View Tests Views can have backface visibility 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "150, 150",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -661,15 +719,20 @@ exports[`View Tests Views can have background color 1`] = `
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(82, 127, 228, 255)",
-    },
     "Comment": "view-test-background-color",
     "Offset": "0, 0, 0",
     "Size": "916, 24",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(82, 127, 228, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Offset": "5, 5, 0",
         "Size": "906, 16",
@@ -1597,14 +1660,19 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(82, 127, 228, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "915, 27",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(82, 127, 228, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Offset": "0, 0, 0",
                 "Size": "1, 1",
@@ -1667,14 +1735,19 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(82, 127, 228, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "905, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(82, 127, 228, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Offset": "0, 0, 0",
                 "Size": "1, 1",
@@ -1737,14 +1810,19 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(82, 127, 228, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "133, 42",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(82, 127, 228, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Offset": "0, 0, 0",
                 "Size": "1, 1",
@@ -1983,13 +2061,20 @@ exports[`View Tests Views can have flexgap 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -1999,13 +2084,20 @@ exports[`View Tests Views can have flexgap 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2015,13 +2107,20 @@ exports[`View Tests Views can have flexgap 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 192, 203, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 192, 203, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2031,13 +2130,20 @@ exports[`View Tests Views can have flexgap 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2047,13 +2153,20 @@ exports[`View Tests Views can have flexgap 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2063,13 +2176,20 @@ exports[`View Tests Views can have flexgap 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2079,13 +2199,20 @@ exports[`View Tests Views can have flexgap 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2095,13 +2222,20 @@ exports[`View Tests Views can have flexgap 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 192, 203, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 192, 203, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2111,13 +2245,20 @@ exports[`View Tests Views can have flexgap 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 192, 203, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 192, 203, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2127,13 +2268,20 @@ exports[`View Tests Views can have flexgap 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 192, 203, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 192, 203, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2143,13 +2291,20 @@ exports[`View Tests Views can have flexgap 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 192, 203, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 192, 203, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2374,13 +2529,20 @@ exports[`View Tests Views can have insets 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(82, 127, 228, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "904, 28",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(82, 127, 228, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2456,13 +2618,20 @@ exports[`View Tests Views can have insets 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(82, 127, 228, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "68, 28",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(82, 127, 228, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2538,13 +2707,20 @@ exports[`View Tests Views can have insets 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(82, 127, 228, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "86, 25",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(82, 127, 228, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2620,13 +2796,20 @@ exports[`View Tests Views can have insets 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(82, 127, 228, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "90, 24",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(82, 127, 228, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2702,13 +2885,20 @@ exports[`View Tests Views can have insets 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(82, 127, 228, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "904, 24",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(82, 127, 228, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2784,13 +2974,20 @@ exports[`View Tests Views can have insets 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(82, 127, 228, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "87, 24",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(82, 127, 228, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -2866,13 +3063,20 @@ exports[`View Tests Views can have insets 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(82, 127, 228, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "91, 24",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(82, 127, 228, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -3323,13 +3527,20 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 111, 89, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "100, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 111, 89, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -3339,13 +3550,20 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(247, 203, 21, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "100, 50",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(247, 203, 21, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -3390,13 +3608,20 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
-                    "Brush": {
-                      "Brush Type": "ColorBrush",
-                      "Color": "rgba(255, 111, 89, 255)",
-                    },
                     "Offset": "0, 0, 0",
                     "Size": "100, 50",
                     "Visual Type": "SpriteVisual",
+                    "__Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(255, 111, 89, 255)",
+                        },
+                        "Offset": "0, 0, 0",
+                        "Size": "0, 0",
+                        "Visual Type": "SpriteVisual",
+                      },
+                    ],
                   },
                 ],
               },
@@ -3406,13 +3631,20 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
-                    "Brush": {
-                      "Brush Type": "ColorBrush",
-                      "Color": "rgba(247, 203, 21, 255)",
-                    },
                     "Offset": "0, 0, 0",
                     "Size": "100, 50",
                     "Visual Type": "SpriteVisual",
+                    "__Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(247, 203, 21, 255)",
+                        },
+                        "Offset": "0, 0, 0",
+                        "Size": "0, 0",
+                        "Visual Type": "SpriteVisual",
+                      },
+                    ],
                   },
                 ],
               },

@@ -268,10 +268,6 @@ exports[`Touchable Tests Touchables can be disabled 1`] = `
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(0, 0, 0, 0)",
-    },
     "Comment": "disabled_touchable",
     "Offset": "0, 0, 0",
     "Size": "916, 38",
@@ -327,10 +323,6 @@ exports[`Touchable Tests Touchables can be disabled 2`] = `
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(0, 0, 0, 0)",
-    },
     "Comment": "disabled_touchable",
     "Offset": "0, 0, 0",
     "Size": "916, 38",
@@ -545,15 +537,20 @@ exports[`Touchable Tests Touchables can enable a hit slop region 1`] = `
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 0, 0, 255)",
-    },
     "Comment": "touchable_hit_slop_button",
     "Offset": "0, 0, 0",
     "Size": "146, 19",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Offset": "0, 0, 0",
         "Size": "146, 20",
