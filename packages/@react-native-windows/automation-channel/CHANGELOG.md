@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Sun, 26 Apr 2026 00:02:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 29 Apr 2026 21:36:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.16
+
+Wed, 29 Apr 2026 21:36:11 GMT
+
+### Patches
+
+- Update WinAppSdk to 1.8 (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-windows to v0.81.16
 
 ## 0.81.15
 
