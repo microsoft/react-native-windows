@@ -320,7 +320,7 @@ jobs:
               condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
               continueOnError: true
 
-            - powershell: |
+            - pwsh: |
                 if (Test-Path "packages/e2e-test-app-fabric/test/__image_snapshots__/__diff_output__") {
                   Write-Host "##vso[task.setvariable variable=DiffOutputExists]true"
                 }
