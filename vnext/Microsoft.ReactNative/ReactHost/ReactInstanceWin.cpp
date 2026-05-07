@@ -345,10 +345,12 @@ void ReactInstanceWin::LoadModules(
   };
 
 #ifdef USE_FABRIC
-  registerTurboModule(
-      L"FabricUIManagerBinding",
-      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
-  turboModulesProvider->AddEagerInit("FabricUIManagerBinding");
+  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
+    registerTurboModule(
+        L"FabricUIManagerBinding",
+        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
+    turboModulesProvider->AddEagerInit("FabricUIManagerBinding");
+  }
 #endif
 
 #if !defined(CORE_ABI) && !defined(USE_FABRIC)
@@ -356,6 +358,7 @@ void ReactInstanceWin::LoadModules(
       L"UIManager",
       // TODO: Use MakeTurboModuleProvider after it satisfies ReactNativeSpecs::UIManagerSpec
       winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::UIManager>());
+  turboModulesProvider->AddEagerInit("UIManager");
 #endif
 
 #ifndef CORE_ABI
