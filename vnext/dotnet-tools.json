@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "powershell": {
+      "version": "7.6.1",
+      "commands": [
+        "pwsh"
+      ]
+    }
+  }
+}
