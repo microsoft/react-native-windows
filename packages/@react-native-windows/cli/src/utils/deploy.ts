@@ -464,10 +464,9 @@ export async function deployToDesktop(
     }
   }
 
-  const escapedAppName = appName.replace(/'/g, "''");
   const appFamilyNameCommand = useAppxCompatibility
-    ? `& { Import-Module Appx -UseWindowsPowerShell -WarningAction SilentlyContinue; (Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName }`
-    : `(Get-AppxPackage -Name '${escapedAppName}').PackageFamilyName`;
+    ? `& { Import-Module Appx -UseWindowsPowerShell -WarningAction SilentlyContinue; (Get-AppxPackage -Name '${appName}').PackageFamilyName }`
+    : `(Get-AppxPackage -Name '${appName}').PackageFamilyName`;
   const appFamilyName = execFileSync(findPowerShell(), [
     '-NoProfile',
     '-Command',
