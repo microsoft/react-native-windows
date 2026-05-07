@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 29 Apr 2026 21:36:11 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 07 May 2026 15:35:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.17
+
+Thu, 07 May 2026 15:35:59 GMT
+
+### Patches
+
+- fix: map Windows touch pointer IDs to small JS-safe identifiers in CompositionEventHandler (gordomacmaster@gmail.com)
+- Add ability to register modules as eager init (30809111+acoates-ms@users.noreply.github.com)
+- Minor text rendering perf improvement (30809111+acoates-ms@users.noreply.github.com)
+- fix: cancel active touches in onPointerCaptureLost to prevent zombie touch state (gordomacmaster@gmail.com)
+- Implement outline properties on view (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.16
 

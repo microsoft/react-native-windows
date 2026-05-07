@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 07 May 2026 15:35:59 GMT",
+      "version": "0.81.17",
+      "tag": "react-native-windows_v0.81.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "729d396e02a5b85c492bcb634a2a40d6b6d02de5",
+            "comment": "fix: map Windows touch pointer IDs to small JS-safe identifiers in CompositionEventHandler"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "729d396e02a5b85c492bcb634a2a40d6b6d02de5",
+            "comment": "Add ability to register modules as eager init"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "729d396e02a5b85c492bcb634a2a40d6b6d02de5",
+            "comment": "Minor text rendering perf improvement"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "729d396e02a5b85c492bcb634a2a40d6b6d02de5",
+            "comment": "fix: cancel active touches in onPointerCaptureLost to prevent zombie touch state"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "729d396e02a5b85c492bcb634a2a40d6b6d02de5",
+            "comment": "Implement outline properties on view"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Apr 2026 21:36:11 GMT",
       "version": "0.81.16",
       "tag": "react-native-windows_v0.81.16",
