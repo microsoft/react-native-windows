@@ -1366,7 +1366,7 @@ void CompositionEventHandler::onPointerPressed(
 
     UpdateActiveTouch(activeTouch, ptScaled, ptLocal);
 
-    activeTouch.isPrimary = pointerId == 1;
+    activeTouch.isPrimary = pointerPoint.Properties().IsPrimary();
     // Map the Windows pointer ID to a small identifier (0–19) safe for use as a JS array index.
     // Windows touch IDs can be arbitrarily large (e.g. 2233), which causes React Native to warn
     // and corrupts touch state, leaving Pressables stuck after a scroll.
