@@ -45,39 +45,65 @@ jobs:
           git config user.name "React-Native-Windows Bot"
           git config user.email "53619745+rnbot@users.noreply.github.com"
 
-      - name: Checkout target branch
-        working-directory: ./repo
-        run: |
-          git checkout "${{ github.event.inputs.target_branch }}"
-          git pull origin "${{ github.event.inputs.target_branch }}"
-
-      - name: Cherry-pick commit
+      - name: Create feature branch and cherry-pick
         working-directory: ./repo
         run: |
           COMMIT_ID="${{ github.event.inputs.commit_id }}"
           TARGET_BRANCH="${{ github.event.inputs.target_branch }}"
+          SHORT_ID="${COMMIT_ID:0:9}"
+          FEATURE_BRANCH="copilot/cherry-pick-${SHORT_ID}-to-${TARGET_BRANCH}"
 
-          echo "🍒 Cherry-picking commit $COMMIT_ID into branch $TARGET_BRANCH"
+          echo "🌿 Creating feature branch $FEATURE_BRANCH from $TARGET_BRANCH"
+          git checkout -b "$FEATURE_BRANCH" "origin/$TARGET_BRANCH"
 
-          if git cherry-pick "$COMMIT_ID"; then
+          echo "🍒 Cherry-picking commit $COMMIT_ID"
+          if git cherry-pick -x "$COMMIT_ID"; then
             echo "✅ Cherry-pick successful"
           else
             echo "❌ Cherry-pick failed with conflicts"
-            echo "Conflict details:"
             git status
             exit 1
           fi
 
-      - name: Push changes
+          echo "FEATURE_BRANCH=$FEATURE_BRANCH" >> "$GITHUB_ENV"
+          echo "SHORT_ID=$SHORT_ID" >> "$GITHUB_ENV"
+
+      - name: Push feature branch
+        working-directory: ./repo
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          FEATURE_BRANCH="${{ env.FEATURE_BRANCH }}"
+          REPO_URL="https://x-access-token:${GH_TOKEN}@github.com"
+          REPO_URL="${REPO_URL}/${{ github.repository }}.git"
+          echo "📤 Pushing feature branch $FEATURE_BRANCH"
+          git push "$REPO_URL" "$FEATURE_BRANCH"
+          echo "✅ Feature branch pushed"
+
+      - name: Create Pull Request
         working-directory: ./repo
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           COMMIT_ID="${{ github.event.inputs.commit_id }}"
           TARGET_BRANCH="${{ github.event.inputs.target_branch }}"
+          FEATURE_BRANCH="${{ env.FEATURE_BRANCH }}"
+          SHORT_ID="${{ env.SHORT_ID }}"
 
-          echo "📤 Pushing cherry-picked commit to $TARGET_BRANCH"
-          REPO_URL="https://x-access-token:${GH_TOKEN}@github.com"
-          REPO_URL="${REPO_URL}/${{ github.repository }}.git"
-          git push "$REPO_URL" "$TARGET_BRANCH"
-          echo "✅ Successfully cherry-picked $COMMIT_ID to $TARGET_BRANCH"
+          COMMIT_MSG=$(git log --format="%s" -1 "$COMMIT_ID" 2>/dev/null || echo "Cherry-pick $SHORT_ID")
+
+          gh pr create \
+            --repo "${{ github.repository }}" \
+            --base "$TARGET_BRANCH" \
+            --head "$FEATURE_BRANCH" \
+            --title "[${TARGET_BRANCH}] Cherry-pick: $COMMIT_MSG" \
+            --body "Cherry-pick of commit \`$COMMIT_ID\` to \`$TARGET_BRANCH\`.
+
+**Original commit:** https://github.com/${{ github.repository }}/commit/$COMMIT_ID
+
+**Cherry-picked by:** GitHub Actions workflow (\`cherry-pick-commit.yml\`)
+
+---
+$COMMIT_MSG"
+
+          echo "✅ Pull request created targeting $TARGET_BRANCH"
