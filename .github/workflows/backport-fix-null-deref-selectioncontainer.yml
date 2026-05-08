@@ -50,7 +50,7 @@ jobs:
         run: |
           COMMIT_ID="2269a198b3d64ff4ed66d16222e4038178eef1cf"
           TARGET_BRANCH="${{ matrix.target_branch }}"
-          FEATURE_BRANCH="copilot/cherry-pick-2269a198b-to-${TARGET_BRANCH}"
+          FEATURE_BRANCH="backport/cherry-pick-2269a198b-to-${TARGET_BRANCH}"
 
           echo "🌿 Creating feature branch $FEATURE_BRANCH from $TARGET_BRANCH"
           git checkout -b "$FEATURE_BRANCH" "origin/$TARGET_BRANCH"

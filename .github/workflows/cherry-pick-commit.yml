@@ -51,7 +51,7 @@ jobs:
           COMMIT_ID="${{ github.event.inputs.commit_id }}"
           TARGET_BRANCH="${{ github.event.inputs.target_branch }}"
           SHORT_ID="${COMMIT_ID:0:9}"
-          FEATURE_BRANCH="copilot/cherry-pick-${SHORT_ID}-to-${TARGET_BRANCH}"
+          FEATURE_BRANCH="backport/cherry-pick-${SHORT_ID}-to-${TARGET_BRANCH}"
 
           echo "🌿 Creating feature branch $FEATURE_BRANCH from $TARGET_BRANCH"
           git checkout -b "$FEATURE_BRANCH" "origin/$TARGET_BRANCH"
