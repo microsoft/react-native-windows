@@ -1,0 +1,122 @@
+---
+name: Backport fix for null dereference in get_SelectionContainer (#16091)
+
+'on':
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  backport:
+    name: Backport to ${{ matrix.target_branch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target_branch:
+          - 0.81-stable
+          - 0.82-stable
+          - 0.83-stable
+          - 0.84-stable
+
+    steps:
+      - name: Install GitHub CLI
+        run: |
+          sudo apt update
+          sudo apt install -y gh
+
+      - name: Authenticate GitHub CLI
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      - name: Clone repository
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh auth setup-git
+          gh repo clone "${{ github.repository }}" repo
+          cd repo
+          git fetch origin
+
+      - name: Configure Git
+        working-directory: ./repo
+        run: |
+          git config user.name "React-Native-Windows Bot"
+          git config user.email "53619745+rnbot@users.noreply.github.com"
+
+      - name: Create feature branch and cherry-pick
+        working-directory: ./repo
+        run: |
+          COMMIT_ID="2269a198b3d64ff4ed66d16222e4038178eef1cf"
+          TARGET_BRANCH="${{ matrix.target_branch }}"
+          FEATURE_BRANCH="copilot/cherry-pick-2269a198b-to-${TARGET_BRANCH}"
+
+          echo "🌿 Creating feature branch $FEATURE_BRANCH from $TARGET_BRANCH"
+          git checkout -b "$FEATURE_BRANCH" "origin/$TARGET_BRANCH"
+
+          echo "🍒 Cherry-picking commit $COMMIT_ID"
+          if git cherry-pick -x "$COMMIT_ID"; then
+            echo "✅ Cherry-pick successful"
+          else
+            echo "❌ Cherry-pick failed with conflicts"
+            git status
+            exit 1
+          fi
+
+          echo "FEATURE_BRANCH=$FEATURE_BRANCH" >> "$GITHUB_ENV"
+
+      - name: Push feature branch
+        working-directory: ./repo
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          FEATURE_BRANCH="${{ env.FEATURE_BRANCH }}"
+          REPO_URL="https://x-access-token:${GH_TOKEN}@github.com"
+          REPO_URL="${REPO_URL}/${{ github.repository }}.git"
+          echo "📤 Pushing feature branch $FEATURE_BRANCH"
+          git push "$REPO_URL" "$FEATURE_BRANCH"
+          echo "✅ Feature branch pushed"
+
+      - name: Create Pull Request
+        working-directory: ./repo
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TARGET_BRANCH="${{ matrix.target_branch }}"
+          FEATURE_BRANCH="${{ env.FEATURE_BRANCH }}"
+
+          gh pr create \
+            --repo "${{ github.repository }}" \
+            --base "$TARGET_BRANCH" \
+            --head "$FEATURE_BRANCH" \
+            --title "[${TARGET_BRANCH}] fix: null dereference in get_SelectionContainer when no selection container exists (#16091)" \
+            --body "Cherry-pick of commit \`2269a198b3d64ff4ed66d16222e4038178eef1cf\` to \`${TARGET_BRANCH}\`.
+
+## Description
+
+### Type of Change
+- Bug fix (non-breaking change which fixes an issue)
+
+### Why
+Backports the fix for a null dereference crash in \`get_SelectionContainer\` that occurs when no selection container exists in the composition accessibility provider.
+
+Original fix: https://github.com/${{ github.repository }}/commit/2269a198b3d64ff4ed66d16222e4038178eef1cf
+PR: https://github.com/${{ github.repository }}/pull/16091
+
+### What
+- Adds a null check in \`CompositionDynamicAutomationProvider.cpp\` before dereferencing the selection container pointer in \`get_SelectionContainer\`
+- Includes the associated change file
+
+## Screenshots
+N/A
+
+## Testing
+Verify accessibility functionality in compositions with no selection container.
+
+## Changelog
+Should this change be included in the release notes: yes
+
+Fix null dereference in \`get_SelectionContainer\` when no selection container exists."
+
+          echo "✅ Pull request created targeting $TARGET_BRANCH"
