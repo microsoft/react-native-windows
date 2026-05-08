@@ -133,12 +133,12 @@ parameters:
             configuration: Release
             platform: x64
             lowResource: true
-          - Name: PaperX64ReleaseCppWinUI3
-            template: old/uwp-cpp-app
-            configuration: Release
-            platform: x64
-            runWack: true
-            useExperimentalWinUI3: true
+          # - Name: PaperX64ReleaseCppWinUI3
+          #   template: old/uwp-cpp-app
+          #   configuration: Release
+          #   platform: x64
+          #   runWack: true
+          #   useExperimentalWinUI3: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: FabricX64Debug
