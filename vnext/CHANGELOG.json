@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 May 2026 05:46:15 GMT",
+      "version": "0.81.18",
+      "tag": "react-native-windows_v0.81.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ffbb7afa1dbc3a60b57a6bca6025d3c0537b569e",
+            "comment": "Bump release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 May 2026 15:35:59 GMT",
       "version": "0.81.17",
       "tag": "react-native-windows_v0.81.17",
