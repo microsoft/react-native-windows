@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix: cancel zombie touch state when ScrollView redirects pointer for manipulation, scope per-pointer events to the changed pointer, and remove always-true IsPointerWithinInitialTree fallback",
+  "packageName": "react-native-windows",
+  "email": "gordomacmaster@gmail.com",
+  "dependentChangeType": "patch"
+}
