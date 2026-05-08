@@ -1116,6 +1116,25 @@ void CompositionEventHandler::onPointerCaptureLost(
 
     m_pointerCapturingComponentTag = -1;
   }
+
+  // Also cancel any active touch for the specific pointer that lost capture, even
+  // when no JS-level CapturePointer was ever issued. This handles ScrollView (and
+  // any other VisualInteractionSource) calling TryRedirectForManipulation: the OS
+  // reassigns the pointer to the InteractionTracker, fires PointerCaptureLost, and
+  // then stops delivering PointerMoved/PointerReleased to us. Without this cleanup
+  // m_activeTouches keeps a zombie entry whose target is the originally-pressed
+  // Pressable, leaving it visually pressed and causing later taps to be attributed
+  // to that original target. If the entry was already cleared above (for a JS-level
+  // capture) or by onPointerReleased running first, the find() is a no-op.
+  PointerId pointerId = pointerPoint.PointerId();
+  auto activeTouch = m_activeTouches.find(pointerId);
+  if (activeTouch != m_activeTouches.end()) {
+    ActiveTouch cancelledTouchCopy = std::move(activeTouch->second);
+    m_activeTouches.erase(activeTouch);
+    if (cancelledTouchCopy.eventEmitter) {
+      DispatchSynthesizedTouchCancelForActiveTouch(cancelledTouchCopy, pointerPoint, keyModifiers);
+    }
+  }
 }
 
 void CompositionEventHandler::onPointerMoved(
@@ -1614,16 +1633,6 @@ bool CompositionEventHandler::IsPointerWithinInitialTree(const ActiveTouch &acti
     currentView = currentView.Parent();
   }
 
-  // Fallback: if the pointer drifted spatially but the original target
-  // is still structurally within the initial tree, honor the tap.
-  // This provides touch-device tolerance for finger drift.
-  auto targetView = viewRegistry.componentViewDescriptorWithTag(activeTouch.touch.target).view;
-  while (targetView) {
-    if (targetView.Tag() == initialTag)
-      return true;
-    targetView = targetView.Parent();
-  }
-
   return false;
 }
 
@@ -1685,7 +1694,15 @@ void CompositionEventHandler::DispatchTouchEvent(
 
   facebook::react::TouchEvent event;
 
-  size_t index = 0;
+  // First pass: build changedTouches and the set of unique emitters from every active
+  // touch. The per-pointer PointerEvent dispatch (onPointerDown/Move/Up/Cancel/Click) is
+  // fired only for the touch whose state actually changed — non-changed touches contribute
+  // to the W3C TouchEvent's touches/targetTouches sets in the loops below but must not
+  // re-fire pointer events of their own. Previously we dispatched the per-pointer event
+  // for every entry in m_activeTouches, which produced duplicated onPointerMove on
+  // non-moving fingers and replayed onPointerUp/onClick on stale targets after the OS
+  // reclaimed a pointer (e.g. ScrollView manipulation redirect leaving a zombie touch).
+  const ActiveTouch *changedTouch = nullptr;
   for (const auto &pair : m_activeTouches) {
     const auto &activeTouch = pair.second;
 
@@ -1694,14 +1711,17 @@ void CompositionEventHandler::DispatchTouchEvent(
     }
 
     if (pair.first == pointerId) {
+      changedTouch = &activeTouch;
       event.changedTouches.insert(activeTouch.touch);
     }
     uniqueEventEmitters.insert(activeTouch.eventEmitter);
+  }
 
-    facebook::react::PointerEvent pointerEvent = CreatePointerEventFromActiveTouch(activeTouch, eventType);
+  if (changedTouch) {
+    facebook::react::PointerEvent pointerEvent = CreatePointerEventFromActiveTouch(*changedTouch, eventType);
 
     winrt::Microsoft::ReactNative::ComponentView targetView{nullptr};
-    bool shouldLeave = (eventType == TouchEventType::End && activeTouch.shouldLeaveWhenReleased) ||
+    bool shouldLeave = (eventType == TouchEventType::End && changedTouch->shouldLeaveWhenReleased) ||
         eventType == TouchEventType::Cancel;
     if (!shouldLeave) {
       auto *rootViewForHit = RootComponentView();
@@ -1716,29 +1736,29 @@ void CompositionEventHandler::DispatchTouchEvent(
       }
     }
 
-    auto handler = [this, &activeTouch, eventType, &pointerEvent](
+    auto handler = [this, changedTouch, eventType, &pointerEvent](
                        std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {
       switch (eventType) {
         case TouchEventType::Start:
-          activeTouch.eventEmitter->onPointerDown(pointerEvent);
+          changedTouch->eventEmitter->onPointerDown(pointerEvent);
           break;
         case TouchEventType::Move: {
-          activeTouch.eventEmitter->onPointerMove(pointerEvent);
+          changedTouch->eventEmitter->onPointerMove(pointerEvent);
           break;
         }
         case TouchEventType::End:
-          activeTouch.eventEmitter->onPointerUp(pointerEvent);
+          changedTouch->eventEmitter->onPointerUp(pointerEvent);
           if (pointerEvent.isPrimary && pointerEvent.button == 0) {
-            if (IsPointerWithinInitialTree(activeTouch)) {
-              activeTouch.eventEmitter->onClick(pointerEvent);
+            if (IsPointerWithinInitialTree(*changedTouch)) {
+              changedTouch->eventEmitter->onClick(pointerEvent);
             }
-          } /* else if (IsPointerWithinInitialTree(activeTouch)) {
-            activeTouch.eventEmitter->onAuxClick(pointerEvent);
-          } */
+          } else if (IsPointerWithinInitialTree(*changedTouch)) {
+            changedTouch->eventEmitter->onAuxClick(pointerEvent);
+          }
           break;
         case TouchEventType::Cancel:
         case TouchEventType::CaptureLost:
-          activeTouch.eventEmitter->onPointerCancel(pointerEvent);
+          changedTouch->eventEmitter->onPointerCancel(pointerEvent);
           break;
       }
     };
