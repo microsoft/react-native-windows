@@ -13,3 +13,4 @@ steps:
 
   - script: npx --yes midgard-yarn-strict@1.2.4 ${{ parameters.workspace }}
     displayName: Strict yarn install ${{ parameters.workspace }}
+    retryCountOnTaskFailure: 2
