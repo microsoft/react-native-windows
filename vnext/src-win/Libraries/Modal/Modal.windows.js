@@ -352,6 +352,8 @@ class Modal extends React.Component<ModalProps, ModalState> {
         onOrientationChange={this.props.onOrientationChange}
         allowSwipeDismissal={this.props.allowSwipeDismissal}
         testID={this.props.testID}
+        hideTitleBar={this.props.hideTitleBar} // [Windows]
+        hideBorder={this.props.hideBorder} // [Windows]
         title={this.props.title}>
         <VirtualizedListContextResetter>
           <ScrollView.Context.Provider value={null}>

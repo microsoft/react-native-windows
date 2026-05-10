@@ -19,7 +19,7 @@ import {RNTesterThemeContext} from '../../components/RNTesterTheme';
 import RNTOption from '../../components/RNTOption';
 import * as React from 'react';
 import {useCallback, useContext, useState} from 'react';
-import {Modal, Platform, StyleSheet, Switch, Text, View} from 'react-native';
+import {Modal, Platform, StyleSheet, Switch, Text, TextInput, View} from 'react-native';
 
 const animationTypes = ['slide', 'none', 'fade'] as const;
 const presentationStyles = [
@@ -70,6 +70,9 @@ function ModalPresentation() {
       ios: ['portrait'],
     }),
     transparent: false,
+    hideBorder: false, // Windows
+    hideTitleBar: false, // Windows
+    title: 'Modal Presentation', // Windows
     visible: false,
   });
   const presentationStyle = props.presentationStyle;
@@ -187,6 +190,37 @@ function ModalPresentation() {
             value={props.transparent}
             onValueChange={enabled =>
               setProps(prev => ({...prev, transparent: enabled}))
+            }
+          />
+        </View>
+        {/* [Windows] - HideTitleBar is a Windows only prop. It is not supported on iOS or Android. */}
+        <View style={styles.rowWithSpaceBetween}>
+          <RNTesterText style={styles.title}>HideTitleBar</RNTesterText>
+          <Switch
+            value={props.hideTitleBar}
+            onValueChange={enabled =>
+              setProps(prev => ({...prev, hideTitleBar: enabled}))
+            }
+          />
+        </View>
+        {/* [Windows] - HideBorder is a Windows only prop. It is not supported on iOS or Android. */}
+        <View style={styles.rowWithSpaceBetween}>
+          <RNTesterText style={styles.title}>HideBorder</RNTesterText>
+          <Switch
+            value={props.hideBorder}
+            onValueChange={enabled =>
+              setProps(prev => ({...prev, hideBorder: enabled}))
+            }
+          />
+        </View>
+        {/* [Windows] - Title is a Windows only prop. It is not supported on iOS or Android. */}
+        <View style={{flexDirection: 'row'}}>
+          <RNTesterText style={styles.title}>Title</RNTesterText>
+          <TextInput
+            style={{flex: 1, borderWidth: 1, marginLeft: 10, padding: 5}}
+            value={props.title}
+            onChangeText={text =>
+              setProps(prev => ({...prev, title: text}))
             }
           />
         </View>
