@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Image does not consistently rerender on image source change",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

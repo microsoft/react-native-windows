@@ -130,6 +130,7 @@ void ImageComponentView::didReceiveImage(const std::shared_ptr<ImageResponseImag
 #endif
 
   m_imageResponseImage = imageResponseImage;
+  m_requiresImageRedraw = true;
   ensureDrawingSurface();
 }
 
@@ -310,6 +311,9 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
   } else if (m_imageResponseImage->m_brushFactory) {
     Visual().as<Experimental::ISpriteVisual>().Brush(
         m_imageResponseImage->m_brushFactory(m_reactContext.Handle(), m_compContext));
+  } else if (m_requiresImageRedraw) {
+    m_requiresImageRedraw = false;
+    DrawImage();
   }
 }
 
