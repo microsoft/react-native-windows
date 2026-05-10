@@ -99,6 +99,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface;
   std::shared_ptr<ImageResponseImage> m_imageResponseImage;
   std::shared_ptr<WindowsImageResponseObserver> m_imageResponseObserver;
+  bool m_requiresImageRedraw{true};
   facebook::react::ImageShadowNode::ConcreteState::Shared m_state;
 };
 
