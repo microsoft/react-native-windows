@@ -174,6 +174,8 @@ export type ModalPropsWindows = {
    * [Windows] The `title` prop sets the title of the modal window.
    */
   title?: ?string,
+  hideTitleBar?: ?boolean,
+  hideBorder?: ?boolean,
 };
 
 export type ModalProps = {
