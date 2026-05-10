@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use hermes-windows 0.0.0-2605.6002-2279da22",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
