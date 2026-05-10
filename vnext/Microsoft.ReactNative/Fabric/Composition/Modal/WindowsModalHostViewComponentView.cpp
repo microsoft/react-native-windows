@@ -287,14 +287,13 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 
     auto titleBar = m_rnWindow.AppWindow().TitleBar();
     titleBar.ResetToDefault();
+    overlappedPresenter.IsResizable(false);
 
     overlappedPresenter.SetBorderAndTitleBar(!hideBorders, !m_localProps->hideTitleBar.value_or(false));
 
     auto hwnd = GetWindowFromWindowId(m_rnWindow.AppWindow().Id());
 
     if (hideBorders) {
-      overlappedPresenter.IsResizable(false);
-
       const DWMNCRENDERINGPOLICY ncPolicy = DWMNCRP_DISABLED;
       ::DwmSetWindowAttribute(hwnd, DWMWA_NCRENDERING_POLICY, &ncPolicy, sizeof(ncPolicy));
 
@@ -305,24 +304,19 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       ::DwmSetWindowAttribute(hwnd, DWMWA_BORDER_COLOR, &zeroColor, sizeof(zeroColor));
       ::DwmSetWindowAttribute(hwnd, DWMWA_CAPTION_COLOR, &zeroColor, sizeof(zeroColor));
       ::DwmSetWindowAttribute(hwnd, DWMWA_TEXT_COLOR, &zeroColor, sizeof(zeroColor));
-    }
-    else
-    {
-      overlappedPresenter.IsResizable(true);
-      
+    } else {
       const DWMNCRENDERINGPOLICY ncPolicy = DWMNCRP_USEWINDOWSTYLE;
       ::DwmSetWindowAttribute(hwnd, DWMWA_NCRENDERING_POLICY, &ncPolicy, sizeof(ncPolicy));
 
       const DWM_WINDOW_CORNER_PREFERENCE cornerPref = DWMWCP_DEFAULT;
       ::DwmSetWindowAttribute(hwnd, DWMWA_WINDOW_CORNER_PREFERENCE, &cornerPref, sizeof(cornerPref));
 
-      const COLORREF zeroColor = DWMWA_COLOR_DEFAULT ;
+      const COLORREF zeroColor = DWMWA_COLOR_DEFAULT;
       ::DwmSetWindowAttribute(hwnd, DWMWA_BORDER_COLOR, &zeroColor, sizeof(zeroColor));
       ::DwmSetWindowAttribute(hwnd, DWMWA_CAPTION_COLOR, &zeroColor, sizeof(zeroColor));
       ::DwmSetWindowAttribute(hwnd, DWMWA_TEXT_COLOR, &zeroColor, sizeof(zeroColor));
 
-      titleBar.IconShowOptions(
-        winrt::Microsoft::UI::Windowing::IconShowOptions::HideIconAndSystemMenu);
+      titleBar.IconShowOptions(winrt::Microsoft::UI::Windowing::IconShowOptions::HideIconAndSystemMenu);
     }
   }
 
@@ -352,8 +346,6 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     m_rnWindow.ResizePolicy(winrt::Microsoft::ReactNative::ContentSizePolicy::None);
 
     UpdateTitleBarAndBorder();
-
-
 
     // Set initial title using the stored local props
     if (m_localProps && m_localProps->title.has_value()) {
