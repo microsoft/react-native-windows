@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 08 May 2026 05:46:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 11 May 2026 05:13:49 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.19
+
+Mon, 11 May 2026 05:13:49 GMT
+
+### Patches
+
+- fix: null dereference in get_SelectionContainer when no container found (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.81.18
 
