@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove CORE_ABI and bring rnwin32 and MS.RN much closer in functionality",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

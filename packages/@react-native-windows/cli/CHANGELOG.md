@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Tue, 21 Apr 2026 02:54:29 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 10 May 2026 18:20:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.289
+
+Sun, 10 May 2026 18:20:42 GMT
+
+### Changes
+
+- Upgrade to PowerShell 7 (julio.rocha@microsoft.com)
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.2
 
 ## 0.0.0-canary.288
 

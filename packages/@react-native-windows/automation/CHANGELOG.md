@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Wed, 22 Apr 2026 16:40:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 10 May 2026 18:20:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1053
+
+Sun, 10 May 2026 18:20:42 GMT
+
+### Changes
+
+- Migrate to PowerShell 7 (julio.rocha@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1053
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.2
 
 ## 0.0.0-canary.1052
 

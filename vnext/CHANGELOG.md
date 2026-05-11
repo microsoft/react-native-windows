@@ -1,8 +1,30 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 22 Apr 2026 16:40:25 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 10 May 2026 18:20:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1053
+
+Sun, 10 May 2026 18:20:42 GMT
+
+### Changes
+
+- Fix touch event handling, improve reliability, and optimize performance (gordomacmaster@gmail.com)
+- fix: cancel active touches in onPointerCaptureLost to prevent zombie touch state (gordomacmaster@gmail.com)
+- Upgrade to PowerShell 7 (julio.rocha@microsoft.com)
+- Image does not consistently rerender on image source change (30809111+acoates-ms@users.noreply.github.com)
+- fix: null dereference in get_SelectionContainer when no container found (66076509+vineethkuttan@users.noreply.github.com)
+- Use hermes-windows 0.0.0-2605.6002-2279da22 (vmorozov@microsoft.com)
+- Implement outline properties on view (30809111+acoates-ms@users.noreply.github.com)
+- fix: map Windows touch pointer IDs to small JS-safe identifiers in CompositionEventHandler (gordomacmaster@gmail.com)
+- Add ability to register modules as eager init (30809111+acoates-ms@users.noreply.github.com)
+- Some fixes for rounded borders (30809111+acoates-ms@users.noreply.github.com)
+- Minor text rendering perf improvement (30809111+acoates-ms@users.noreply.github.com)
+- Remove CORE_ABI and bring rnwin32 and MS.RN much closer in functionality (30809111+acoates-ms@users.noreply.github.com)
+- fix: cancel zombie touch state when ScrollView redirects pointer for manipulation, scope per-pointer events to the changed pointer, and remove always-true IsPointerWithinInitialTree fallback (gordomacmaster@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.289
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.2
 
 ## 0.0.0-canary.1052
 
