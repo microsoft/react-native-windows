@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 11 May 2026 05:13:51 GMT",
+      "version": "0.82.6",
+      "tag": "react-native-windows_v0.82.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9bb8f2aa4292e281b6e80fd8398fc1de19b3b6ed",
+            "comment": "fix: null dereference in get_SelectionContainer when no container found"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9bb8f2aa4292e281b6e80fd8398fc1de19b3b6ed",
+            "comment": "Use hermes-windows version 0.0.0-2604.21001-94aa5e1d (#16019)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Apr 2026 08:35:03 GMT",
       "version": "0.82.5",
       "tag": "react-native-windows_v0.82.5",

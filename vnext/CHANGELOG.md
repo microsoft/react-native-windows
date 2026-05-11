@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 22 Apr 2026 08:35:03 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 11 May 2026 05:13:51 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.6
+
+Mon, 11 May 2026 05:13:51 GMT
+
+### Patches
+
+- fix: null dereference in get_SelectionContainer when no container found (66076509+vineethkuttan@users.noreply.github.com)
+- Use hermes-windows version 0.0.0-2604.21001-94aa5e1d (#16019) (vmorozov@microsoft.com)
 
 ## 0.82.5
 
