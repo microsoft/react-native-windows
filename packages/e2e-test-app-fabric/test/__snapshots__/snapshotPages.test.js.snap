@@ -31524,6 +31524,119 @@ exports[`snapshotAllPages Modal 1`] = `
         value={false}
       />
     </View>
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+              "margin": 3,
+            },
+          ]
+        }
+      >
+        HideTitleBar
+      </Text>
+      <RCTSwitch
+        accessibilityRole="switch"
+        accessible={true}
+        focusable={true}
+        onChange={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "height": 31,
+            "width": 51,
+          }
+        }
+        value={false}
+      />
+    </View>
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+              "margin": 3,
+            },
+          ]
+        }
+      >
+        HideBorder
+      </Text>
+      <RCTSwitch
+        accessibilityRole="switch"
+        accessible={true}
+        focusable={true}
+        onChange={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "height": 31,
+            "width": 51,
+          }
+        }
+        value={false}
+      />
+    </View>
+    <View
+      style={
+        {
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+              "margin": 3,
+            },
+          ]
+        }
+      >
+        Title
+      </Text>
+      <TextInput
+        onChangeText={[Function]}
+        style={
+          {
+            "borderWidth": 1,
+            "flex": 1,
+            "marginLeft": 10,
+            "padding": 5,
+          }
+        }
+        value="Modal Presentation"
+      />
+    </View>
   </View>
   <View
     style={

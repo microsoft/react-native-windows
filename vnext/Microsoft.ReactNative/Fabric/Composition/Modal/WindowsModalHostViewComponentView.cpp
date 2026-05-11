@@ -7,6 +7,7 @@
 
 #include "../../../codegen/react/components/rnwcore/ModalHostView.g.h"
 #include <ComponentView.Experimental.interop.h>
+#include <dwmapi.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Microsoft.UI.Windowing.h>
@@ -110,6 +111,12 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       winrt::hstring titleValue =
           newViewProps.title.has_value() ? winrt::to_hstring(newViewProps.title.value()) : winrt::hstring();
       m_rnWindow.AppWindow().Title(titleValue);
+    }
+
+    if (m_rnWindow &&
+        (newViewProps.hideTitleBar != oldViewProps.hideTitleBar ||
+         newViewProps.hideBorder != oldViewProps.hideBorder)) {
+      UpdateTitleBarAndBorder();
     }
 
     ::Microsoft::ReactNativeSpecs::BaseModalHostView<ModalHostView>::UpdateProps(view, newProps, oldProps);
@@ -258,6 +265,61 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     }
   }
 
+  void UpdateTitleBarAndBorder() noexcept {
+    if (!m_rnWindow) {
+      return;
+    }
+
+    auto overlappedPresenter = winrt::Microsoft::UI::Windowing::OverlappedPresenter::Create();
+
+    // Configure presenter for modal behavior
+    overlappedPresenter.IsModal(true);
+
+    // modal should only have close button
+    overlappedPresenter.IsMinimizable(false);
+    overlappedPresenter.IsMaximizable(false);
+
+    // Apply the presenter to the window
+    m_rnWindow.AppWindow().SetPresenter(overlappedPresenter);
+
+    // We only hide the borders if the titlebar is also hidden.
+    const bool hideBorders = m_localProps->hideTitleBar.value_or(false) && m_localProps->hideBorder.value_or(false);
+
+    auto titleBar = m_rnWindow.AppWindow().TitleBar();
+    titleBar.ResetToDefault();
+    overlappedPresenter.IsResizable(false);
+
+    overlappedPresenter.SetBorderAndTitleBar(!hideBorders, !m_localProps->hideTitleBar.value_or(false));
+
+    auto hwnd = GetWindowFromWindowId(m_rnWindow.AppWindow().Id());
+
+    if (hideBorders) {
+      const DWMNCRENDERINGPOLICY ncPolicy = DWMNCRP_DISABLED;
+      ::DwmSetWindowAttribute(hwnd, DWMWA_NCRENDERING_POLICY, &ncPolicy, sizeof(ncPolicy));
+
+      const DWM_WINDOW_CORNER_PREFERENCE cornerPref = DWMWCP_DEFAULT;
+      ::DwmSetWindowAttribute(hwnd, DWMWA_WINDOW_CORNER_PREFERENCE, &cornerPref, sizeof(cornerPref));
+
+      const COLORREF zeroColor = 0;
+      ::DwmSetWindowAttribute(hwnd, DWMWA_BORDER_COLOR, &zeroColor, sizeof(zeroColor));
+      ::DwmSetWindowAttribute(hwnd, DWMWA_CAPTION_COLOR, &zeroColor, sizeof(zeroColor));
+      ::DwmSetWindowAttribute(hwnd, DWMWA_TEXT_COLOR, &zeroColor, sizeof(zeroColor));
+    } else {
+      const DWMNCRENDERINGPOLICY ncPolicy = DWMNCRP_USEWINDOWSTYLE;
+      ::DwmSetWindowAttribute(hwnd, DWMWA_NCRENDERING_POLICY, &ncPolicy, sizeof(ncPolicy));
+
+      const DWM_WINDOW_CORNER_PREFERENCE cornerPref = DWMWCP_DEFAULT;
+      ::DwmSetWindowAttribute(hwnd, DWMWA_WINDOW_CORNER_PREFERENCE, &cornerPref, sizeof(cornerPref));
+
+      const COLORREF zeroColor = DWMWA_COLOR_DEFAULT;
+      ::DwmSetWindowAttribute(hwnd, DWMWA_BORDER_COLOR, &zeroColor, sizeof(zeroColor));
+      ::DwmSetWindowAttribute(hwnd, DWMWA_CAPTION_COLOR, &zeroColor, sizeof(zeroColor));
+      ::DwmSetWindowAttribute(hwnd, DWMWA_TEXT_COLOR, &zeroColor, sizeof(zeroColor));
+
+      titleBar.IconShowOptions(winrt::Microsoft::UI::Windowing::IconShowOptions::HideIconAndSystemMenu);
+    }
+  }
+
   // creates a new modal window
   void EnsureModalCreated(const winrt::Microsoft::ReactNative::ComponentView &view) {
     if (m_popUp) {
@@ -282,22 +344,8 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     m_rnWindow = winrt::Microsoft::ReactNative::ReactNativeWindow::CreateFromContentSiteBridgeAndIsland(
         m_popUp, winrt::Microsoft::ReactNative::ReactNativeIsland::CreatePortal(portal));
     m_rnWindow.ResizePolicy(winrt::Microsoft::ReactNative::ContentSizePolicy::None);
-    auto overlappedPresenter = winrt::Microsoft::UI::Windowing::OverlappedPresenter::Create();
 
-    // Configure presenter for modal behavior
-    overlappedPresenter.IsModal(true);
-    overlappedPresenter.SetBorderAndTitleBar(true, true);
-
-    // modal should only have close button
-    overlappedPresenter.IsMinimizable(false);
-    overlappedPresenter.IsMaximizable(false);
-
-    // Apply the presenter to the window
-    m_rnWindow.AppWindow().SetPresenter(overlappedPresenter);
-
-    // Hide the title bar icon
-    m_rnWindow.AppWindow().TitleBar().IconShowOptions(
-        winrt::Microsoft::UI::Windowing::IconShowOptions::HideIconAndSystemMenu);
+    UpdateTitleBarAndBorder();
 
     // Set initial title using the stored local props
     if (m_localProps && m_localProps->title.has_value()) {
