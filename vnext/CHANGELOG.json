@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 11 May 2026 01:39:06 GMT",
+      "version": "0.84.0-preview.9",
+      "tag": "react-native-windows_v0.84.0-preview.9",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "724a8ddbf9f6996e42bbab42ae4e642efaffe27f",
+            "comment": "Image does not consistently rerender on image source change"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 May 2026 13:58:26 GMT",
       "version": "0.84.0-preview.8",
       "tag": "react-native-windows_v0.84.0-preview.8",

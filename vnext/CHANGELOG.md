@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 07 May 2026 13:58:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 11 May 2026 01:39:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0-preview.9
+
+Mon, 11 May 2026 01:39:06 GMT
+
+### Changes
+
+- Image does not consistently rerender on image source change (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.84.0-preview.8
 
