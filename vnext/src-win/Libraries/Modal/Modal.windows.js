@@ -174,6 +174,8 @@ export type ModalPropsWindows = {
    * [Windows] The `title` prop sets the title of the modal window.
    */
   title?: ?string,
+  hideTitleBar?: ?boolean,
+  hideBorder?: ?boolean,
 };
 
 export type ModalProps = {
@@ -352,6 +354,8 @@ class Modal extends React.Component<ModalProps, ModalState> {
         onOrientationChange={this.props.onOrientationChange}
         allowSwipeDismissal={this.props.allowSwipeDismissal}
         testID={this.props.testID}
+        hideTitleBar={this.props.hideTitleBar} // [Windows]
+        hideBorder={this.props.hideBorder} // [Windows]
         title={this.props.title}>
         <VirtualizedListContextResetter>
           <ScrollView.Context.Provider value={null}>
