@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 11 May 2026 14:34:27 GMT",
+      "version": "0.0.0-canary.1054",
+      "tag": "react-native-windows_v0.0.0-canary.1054",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "981b29dfd21dd1cce485adedebcaa6d1fd06b803",
+            "comment": "Add hideTitleBar and hideBorder to Modal"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "981b29dfd21dd1cce485adedebcaa6d1fd06b803",
+            "comment": "fix: use IsPrimary() for touch pointer isPrimary instead of hardcoded pointer ID check"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 10 May 2026 18:20:42 GMT",
       "version": "0.0.0-canary.1053",
       "tag": "react-native-windows_v0.0.0-canary.1053",
