@@ -470,6 +470,8 @@ class ModalHostViewProps final : public ViewProps {
   ModalHostViewSupportedOrientationsMask supportedOrientations{static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)};
   int identifier{0};
   std::string title{};
+  bool hideTitleBar{false};
+  bool hideBorder{false};
 
   #ifdef RN_SERIALIZABLE_STATE
   ComponentName getDiffPropsImplementationTarget() const override;

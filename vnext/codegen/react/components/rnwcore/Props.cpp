@@ -477,7 +477,9 @@ ModalHostViewProps::ModalHostViewProps(
     allowSwipeDismissal(convertRawProp(context, rawProps, "allowSwipeDismissal", sourceProps.allowSwipeDismissal, {false})),
     supportedOrientations(convertRawProp(context, rawProps, "supportedOrientations", ModalHostViewSupportedOrientationsMaskWrapped{ .value = sourceProps.supportedOrientations }, {static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)}).value),
     identifier(convertRawProp(context, rawProps, "identifier", sourceProps.identifier, {0})),
-    title(convertRawProp(context, rawProps, "title", sourceProps.title, {})) {}
+    title(convertRawProp(context, rawProps, "title", sourceProps.title, {})),
+    hideTitleBar(convertRawProp(context, rawProps, "hideTitleBar", sourceProps.hideTitleBar, {false})),
+    hideBorder(convertRawProp(context, rawProps, "hideBorder", sourceProps.hideBorder, {false})) {}
     
 #ifdef RN_SERIALIZABLE_STATE
 ComponentName ModalHostViewProps::getDiffPropsImplementationTarget() const {
@@ -541,6 +543,14 @@ folly::dynamic ModalHostViewProps::getDiffProps(
     
   if (title != oldProps->title) {
     result["title"] = title;
+  }
+    
+  if (hideTitleBar != oldProps->hideTitleBar) {
+    result["hideTitleBar"] = hideTitleBar;
+  }
+    
+  if (hideBorder != oldProps->hideBorder) {
+    result["hideBorder"] = hideBorder;
   }
   return result;
 }
