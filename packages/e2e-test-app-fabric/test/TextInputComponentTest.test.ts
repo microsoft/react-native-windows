@@ -30,6 +30,10 @@ const searchBox = async (input: string) => {
       // than replace. Without the clear, a retry produces "onPressInonPressIn"
       // and the comparison never converges.
       await searchBox.clearValue();
+
+      // Do an extra wait here, since the autofocus textinput will move focus to itself and steal focus from the search box, causing the setValue to fail.
+      await new Promise(resolve => setTimeout(resolve, 500));
+
       await searchBox.setValue(input);
       return (await searchBox.getText()) === input;
     },
