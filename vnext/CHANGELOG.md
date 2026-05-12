@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sun, 10 May 2026 18:20:42 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 11 May 2026 14:34:27 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1054
+
+Mon, 11 May 2026 14:34:27 GMT
+
+### Changes
+
+- Add hideTitleBar and hideBorder to Modal (30809111+acoates-ms@users.noreply.github.com)
+- fix: use IsPrimary() for touch pointer isPrimary instead of hardcoded pointer ID check (gordomacmaster@gmail.com)
 
 ## 0.0.0-canary.1053
 
