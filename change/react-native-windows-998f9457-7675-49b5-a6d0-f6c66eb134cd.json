@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix Modal title bar and close button fading on focus loss for accessibility",
+  "packageName": "react-native-windows",
+  "email": "165954728+copilot-swe-agent@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

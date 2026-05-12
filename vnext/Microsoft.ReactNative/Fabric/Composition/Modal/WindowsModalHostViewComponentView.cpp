@@ -7,6 +7,7 @@
 
 #include "../../../codegen/react/components/rnwcore/ModalHostView.g.h"
 #include <ComponentView.Experimental.interop.h>
+#include <commctrl.h>
 #include <dwmapi.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -54,6 +55,9 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       if (m_popUp.IsVisible()) {
         m_popUp.Hide();
       }
+
+      // Remove the WM_NCACTIVATE subclass before the HWND is destroyed
+      RemoveActiveTitleBarSubclass();
 
       // Destroy AppWindow this automatically resumes parent window to receive inputs
       if (m_rnWindow.AppWindow()) {
@@ -347,6 +351,12 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 
     UpdateTitleBarAndBorder();
 
+    // Install a subclass that always reports the title bar as active so the
+    // title text and caption (close) button do not fade when the modal loses
+    // focus. The standard inactive Win32 caption colors have low contrast and
+    // cause accessibility issues for the modal's title and close button.
+    InstallActiveTitleBarSubclass();
+
     // Set initial title using the stored local props
     if (m_localProps && m_localProps->title.has_value()) {
       winrt::hstring titleValue = winrt::to_hstring(m_localProps->title.value());
@@ -439,8 +449,52 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     focusController.TrySetFocus();
   }
 
+  // Subclass id used to install/remove the active-title-bar subclass on the modal HWND.
+  static constexpr UINT_PTR kActiveTitleBarSubclassId = 1;
+
+  // Subclass procedure that forces WM_NCACTIVATE to always render the title bar
+  // in its active state, preventing the title text and close button from
+  // appearing faded when the modal loses focus. This addresses accessibility
+  // issues where the inactive caption colors have insufficient contrast.
+  static LRESULT CALLBACK ActiveTitleBarSubclassProc(
+      HWND hwnd,
+      UINT uMsg,
+      WPARAM wParam,
+      LPARAM lParam,
+      UINT_PTR /*uIdSubclass*/,
+      DWORD_PTR /*dwRefData*/) noexcept {
+    if (uMsg == WM_NCACTIVATE) {
+      // Always pass TRUE so DWM draws the active title bar style. We must still
+      // return TRUE from this message to allow the activation change to proceed.
+      DefSubclassProc(hwnd, uMsg, TRUE, lParam);
+      return TRUE;
+    }
+    return DefSubclassProc(hwnd, uMsg, wParam, lParam);
+  }
+
+  void InstallActiveTitleBarSubclass() noexcept {
+    if (m_subclassedHwnd || !m_rnWindow) {
+      return;
+    }
+    HWND hwnd = GetWindowFromWindowId(m_rnWindow.AppWindow().Id());
+    if (!hwnd) {
+      return;
+    }
+    if (::SetWindowSubclass(hwnd, &ActiveTitleBarSubclassProc, kActiveTitleBarSubclassId, 0)) {
+      m_subclassedHwnd = hwnd;
+    }
+  }
+
+  void RemoveActiveTitleBarSubclass() noexcept {
+    if (m_subclassedHwnd) {
+      ::RemoveWindowSubclass(m_subclassedHwnd, &ActiveTitleBarSubclassProc, kActiveTitleBarSubclassId);
+      m_subclassedHwnd = nullptr;
+    }
+  }
+
   ReactContext m_reactContext{nullptr};
   HWND m_parentHwnd{nullptr};
+  HWND m_subclassedHwnd{nullptr};
   uint64_t m_prevWindowID;
   bool m_showQueued{false};
   bool m_visible{false};
