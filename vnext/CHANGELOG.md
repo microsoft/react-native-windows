@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 11 May 2026 01:39:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 12 May 2026 03:52:17 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0-preview.10
+
+Tue, 12 May 2026 03:52:17 GMT
+
+### Changes
+
+- fix: cancel zombie touch state when ScrollView redirects pointer for manipulation, scope per-pointer events to the changed pointer, and remove always-true IsPointerWithinInitialTree fallback (gordomacmaster@gmail.com)
+- fix: null dereference in get_SelectionContainer when no container found (66076509+vineethkuttan@users.noreply.github.com)
+- Use hermes-windows 0.0.0-2605.6002-2279da22 (vmorozov@microsoft.com)
 
 ## 0.84.0-preview.9
 
