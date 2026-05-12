@@ -287,7 +287,7 @@ ReactHost::ReactHost(Mso::DispatchQueue const &queue) noexcept
       m_options{Queue(), m_mutex},
       m_notifyWhenClosed{ReactHostRegistry::Register(*this), Queue(), m_mutex} {
   static std::once_flag initFeatureFlagsOnce;
-  std::call_once(initFeatureFlagsOnce, []() noexcept { ReactNativeFeatureFlags::commonTestFlag(); });
+  std::call_once(initFeatureFlagsOnce, []() noexcept { facebook::react::ReactNativeFeatureFlags::commonTestFlag(); });
 }
 
 ReactHost::~ReactHost() noexcept {}
