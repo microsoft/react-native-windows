@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix: use IsPrimary() for touch pointer isPrimary instead of hardcoded pointer ID check",
-  "packageName": "react-native-windows",
-  "email": "gordomacmaster@gmail.com",
-  "dependentChangeType": "patch"
-}
