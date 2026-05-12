@@ -45,8 +45,8 @@ export function getBuildConfiguration(options: RunWindowsOptions): BuildConfig {
       ? 'ReleaseBundle'
       : 'Release'
     : options.bundle
-    ? 'DebugBundle'
-    : 'Debug';
+      ? 'DebugBundle'
+      : 'Debug';
 }
 
 function shouldDeployByPackage(
@@ -314,8 +314,8 @@ export async function deployToDevice(
   const deployTarget = options.target
     ? options.target
     : options.emulator
-    ? 'emulator'
-    : 'device';
+      ? 'emulator'
+      : 'device';
   const deployTool = new WinAppDeployTool();
   const appxManifest = getAppxManifest(options, projectName);
   const shouldLaunch = shouldLaunchApp(options);
@@ -512,9 +512,11 @@ export function startServerInNewWindow(
   options: RunWindowsOptions,
   verbose: boolean,
 ): Promise<void> {
+  const port = options.port ?? 8081;
+
   return new Promise(resolve => {
     http
-      .get('http://localhost:8081/status', res => {
+      .get(`http://localhost:${port}/status`, res => {
         if (res.statusCode === 200) {
           newSuccess('React-Native Server already started');
         } else {
@@ -537,5 +539,11 @@ function launchServer(options: RunWindowsOptions, verbose: boolean) {
     stdio: verbose ? 'inherit' : 'ignore',
   };
 
-  spawn('cmd.exe', ['/C', 'start npx @react-native-community/cli start'], opts);
+  const port = options.port ?? 8081;
+
+  spawn(
+    'cmd.exe',
+    ['/C', `start npx @react-native-community/cli start --port ${port}`],
+    opts,
+  );
 }
