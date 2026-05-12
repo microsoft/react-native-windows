@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 12 May 2026 17:51:34 GMT",
+      "version": "0.84.0-preview.11",
+      "tag": "react-native-windows_v0.84.0-preview.11",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "fcfb1bedcd2eade316aab5ece0cc0cb25c68e0d3",
+            "comment": "fix: use IsPrimary() for touch pointer isPrimary instead of hardcoded pointer ID check"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 May 2026 03:52:17 GMT",
       "version": "0.84.0-preview.10",
       "tag": "react-native-windows_v0.84.0-preview.10",
