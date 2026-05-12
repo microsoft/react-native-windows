@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix possible crash when creating multiple ReactNativeHost's at once",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

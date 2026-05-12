@@ -4,6 +4,7 @@
 #include "ReactHost.h"
 #include <Future/FutureWait.h>
 #include <ReactPropertyBag.h>
+#include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <winrt/Windows.Foundation.h>
 
 namespace Mso::React {
@@ -284,7 +285,10 @@ bool ReactOptions::EnableDefaultCrashHandler() const noexcept {
 ReactHost::ReactHost(Mso::DispatchQueue const &queue) noexcept
     : Super{EnsureSerialQueue(queue)},
       m_options{Queue(), m_mutex},
-      m_notifyWhenClosed{ReactHostRegistry::Register(*this), Queue(), m_mutex} {}
+      m_notifyWhenClosed{ReactHostRegistry::Register(*this), Queue(), m_mutex} {
+  static std::once_flag initFeatureFlagsOnce;
+  std::call_once(initFeatureFlagsOnce, []() noexcept { facebook::react::ReactNativeFeatureFlags::commonTestFlag(); });
+}
 
 ReactHost::~ReactHost() noexcept {}
 
