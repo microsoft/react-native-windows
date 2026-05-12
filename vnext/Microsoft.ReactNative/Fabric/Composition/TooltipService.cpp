@@ -267,9 +267,7 @@ void TooltipTracker::OnGotFocus(
   }
 
   // Anchor in DIPs at the horizontal center of the view's top edge; ShowTooltip re-applies scaleFactor.
-  m_pos = {
-      static_cast<float>(rc.left + rc.right) / 2.0f / scaleFactor,
-      static_cast<float>(rc.top) / scaleFactor};
+  m_pos = {static_cast<float>(rc.left + rc.right) / 2.0f / scaleFactor, static_cast<float>(rc.top) / scaleFactor};
 
   m_focusTooltip = true;
   // Claim the single tooltip slot, dismissing any other tracker's pending or visible tooltip.

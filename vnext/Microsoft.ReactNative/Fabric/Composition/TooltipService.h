@@ -42,7 +42,8 @@ struct TooltipTracker {
 
   facebook::react::Tag Tag() const noexcept;
 
-  // Cancel pending dwell timer and close any visible tooltip popup; used by the service when another tracker takes over.
+  // Cancel pending dwell timer and close any visible tooltip popup; used by the service when another tracker takes
+  // over.
   void DismissForExternalRequest() noexcept;
 
  private:
