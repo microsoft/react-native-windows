@@ -117,6 +117,11 @@ struct TestScrollVisual : TestVisualBase<TestScrollVisual, Exp::IScrollVisual, E
     return {};
   }
   void ScrollMomentumEnd(winrt::event_token) {}
+  winrt::event_token InteractingStateEntered(
+      winrt::Windows::Foundation::EventHandler<Exp::IInteractingStateEnteredArgs> const &) {
+    return {};
+  }
+  void InteractingStateEntered(winrt::event_token) {}
   void ContentSize(winrt::Windows::Foundation::Numerics::float2) {}
   winrt::Windows::Foundation::Numerics::float3 ScrollPosition() {
     return {};

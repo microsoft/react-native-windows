@@ -101,6 +101,17 @@ enum SnapPointsAlignment {
   };
 }
 
+// Fired when the underlying InteractionTracker claims a pointer for scrolling
+// (TryRedirectForManipulation succeeded and the user moved enough). Carries the
+// PointerId of the touch that was redirected so the caller can cancel any active
+// touch RN is tracking for it. The OS does not reliably deliver
+// PointerCaptureLost / PointerReleased after redirect (see issue #16047).
+[webhosthidden][experimental] interface IInteractingStateEnteredArgs {
+  Int32 PointerId {
+    get;
+  };
+}
+
     [webhosthidden][experimental] interface IScrollVisual
   requires IVisual
 {
@@ -111,6 +122,7 @@ enum SnapPointsAlignment {
   event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollEndDrag;
   event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollMomentumBegin;
   event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollMomentumEnd;
+  event Windows.Foundation.EventHandler<IInteractingStateEnteredArgs> InteractingStateEntered;
   void ContentSize(Windows.Foundation.Numerics.Vector2 size);
   Windows.Foundation.Numerics.Vector3 ScrollPosition {
     get;
