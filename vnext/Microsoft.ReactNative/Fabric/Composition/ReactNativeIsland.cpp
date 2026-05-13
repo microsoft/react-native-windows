@@ -470,12 +470,6 @@ void ReactNativeIsland::ReleasePointerCapture(
   }
 }
 
-void ReactNativeIsland::CancelTouchesForPointer(int32_t pointerId) noexcept {
-  if (m_CompositionEventHandler) {
-    m_CompositionEventHandler->CancelTouchesForPointer(static_cast<::Microsoft::ReactNative::PointerId>(pointerId));
-  }
-}
-
 void ReactNativeIsland::InitRootView(
     winrt::Microsoft::ReactNative::IReactContext &&context,
     winrt::Microsoft::ReactNative::ReactViewOptions &&viewOptions) noexcept {

@@ -224,6 +224,28 @@ void CompositionEventHandler::Initialize() noexcept {
           }
         });
 
+    // Issue #16047: when ScrollView calls VisualInteractionSource::TryRedirectForManipulation
+    // and the OS hands the pointer over to the InteractionTracker, WinAppSDK
+    // does not fire PointerCaptureLost on this source — but it does fire
+    // PointerRoutedAway. Treat it the same way as captureloss: cancel any
+    // active touch RN is tracking for this pointer so Pressables don't get
+    // stuck in their pressed state.
+    m_pointerRoutedAwayToken = pointerSource.PointerRoutedAway(
+        [wkThis = weak_from_this()](
+            winrt::Microsoft::UI::Input::InputPointerSource const &,
+            winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
+          if (auto strongThis = wkThis.lock()) {
+            if (auto strongRootView = strongThis->m_wkRootView.get()) {
+              if (strongThis->SurfaceId() == -1)
+                return;
+
+              auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+                  args.CurrentPoint(), strongRootView.ScaleFactor());
+              strongThis->onPointerRoutedAway(pp, args.KeyModifiers());
+            }
+          }
+        });
+
     m_pointerWheelChangedToken =
         pointerSource.PointerWheelChanged([wkThis = weak_from_this()](
                                               winrt::Microsoft::UI::Input::InputPointerSource const &,
@@ -369,6 +391,7 @@ CompositionEventHandler::~CompositionEventHandler() {
       pointerSource.PointerReleased(m_pointerReleasedToken);
       pointerSource.PointerMoved(m_pointerMovedToken);
       pointerSource.PointerCaptureLost(m_pointerCaptureLostToken);
+      pointerSource.PointerRoutedAway(m_pointerRoutedAwayToken);
       pointerSource.PointerWheelChanged(m_pointerWheelChangedToken);
       pointerSource.PointerExited(m_pointerExitedToken);
       auto keyboardSource = winrt::Microsoft::UI::Input::InputKeyboardSource::GetForIsland(island);
@@ -1118,13 +1141,27 @@ void CompositionEventHandler::onPointerCaptureLost(
   }
 
   // Defense-in-depth cleanup for the specific pointer that lost capture, even
-  // when no JS-level CapturePointer was ever issued. WinAppSDK does NOT
-  // reliably fire PointerCaptureLost for pointers redirected via
-  // VisualInteractionSource::TryRedirectForManipulation (issue #16047), so the
-  // ScrollView redirect path is handled separately via CancelTouchesForPointer
-  // wired to IScrollVisual::InteractingStateEntered. This path covers the
-  // remaining system-driven losses (focus change, another window stealing
-  // input, system back gesture, etc.).
+  // when no JS-level CapturePointer was ever issued. The ScrollView
+  // TryRedirectForManipulation path comes in via PointerRoutedAway, not
+  // PointerCaptureLost (see onPointerRoutedAway and issue #16047), so this
+  // path covers the remaining system-driven losses (focus change, another
+  // window stealing input, system back gesture, etc.).
+  CancelActiveTouchForPointerInternal(pointerPoint.PointerId(), pointerPoint, keyModifiers);
+}
+
+void CompositionEventHandler::onPointerRoutedAway(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+    winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
+  if (SurfaceId() == -1)
+    return;
+
+  // Issue #16047: WinAppSDK fires PointerRoutedAway when the OS hands the
+  // pointer to another InputPointerSource — most importantly for us, when
+  // ScrollView calls VisualInteractionSource::TryRedirectForManipulation and
+  // the InteractionTracker takes the gesture for scrolling. We never get
+  // PointerMoved / PointerReleased / PointerCaptureLost for that pointer
+  // afterwards, so without this cleanup m_activeTouches keeps a zombie entry
+  // and the originally-pressed Pressable stays stuck in its pressed state.
   CancelActiveTouchForPointerInternal(pointerPoint.PointerId(), pointerPoint, keyModifiers);
 }
 
@@ -1144,31 +1181,8 @@ bool CompositionEventHandler::CancelActiveTouchForPointerInternal(
     return false;
   }
 
-  // Prefer the live PointerPoint passed in by the caller; fall back to the
-  // last one observed for this active touch (set in onPointerPressed and
-  // refreshed in onPointerMoved). The cached point is needed when the caller
-  // doesn't have access to a PointerPoint, e.g. CancelTouchesForPointer
-  // invoked from the ScrollView InteractionTracker callback.
-  auto pointForDispatch = pointerPoint;
-  if (!pointForDispatch) {
-    pointForDispatch = cancelledTouchCopy.lastPointerPoint;
-  }
-  if (!pointForDispatch) {
-    return false;
-  }
-
-  DispatchSynthesizedTouchCancelForActiveTouch(cancelledTouchCopy, pointForDispatch, keyModifiers);
+  DispatchSynthesizedTouchCancelForActiveTouch(cancelledTouchCopy, pointerPoint, keyModifiers);
   return true;
-}
-
-bool CompositionEventHandler::CancelTouchesForPointer(PointerId pointerId) noexcept {
-  // Issue #16047: ScrollView's InteractionTracker calls this when it claims a
-  // pointer for manipulation. Pass a null PointerPoint — the internal helper
-  // will fall back to the cached lastPointerPoint from the ActiveTouch.
-  return CancelActiveTouchForPointerInternal(
-      pointerId,
-      winrt::Microsoft::ReactNative::Composition::Input::PointerPoint{nullptr},
-      winrt::Windows::System::VirtualKeyModifiers::None);
 }
 
 void CompositionEventHandler::onPointerMoved(
@@ -1226,11 +1240,6 @@ void CompositionEventHandler::onPointerMoved(
     if (isActiveTouch) {
       // For active touches with responders, also dispatch through touch event system
       UpdateActiveTouch(activeTouch->second, ptScaled, ptLocal);
-      // Cache the latest PointerPoint so CancelActiveTouchForPointerInternal
-      // can synthesize a touch-cancel event with realistic coordinates when
-      // it's invoked from a path that doesn't carry its own PointerPoint
-      // (e.g. ScrollView's InteractionTracker callback for issue #16047).
-      activeTouch->second.lastPointerPoint = pointerPoint;
       DispatchTouchEvent(TouchEventType::Move, pointerId, pointerPoint, keyModifiers);
     }
   }
@@ -1423,10 +1432,6 @@ void CompositionEventHandler::onPointerPressed(
     }
 
     UpdateActiveTouch(activeTouch, ptScaled, ptLocal);
-    // Cache the latest PointerPoint so CancelActiveTouchForPointerInternal
-    // can synthesize a touch-cancel with realistic coordinates when invoked
-    // from a path lacking its own PointerPoint (issue #16047 ScrollView path).
-    activeTouch.lastPointerPoint = pointerPoint;
 
     activeTouch.isPrimary = pointerPoint.Properties().IsPrimary();
     // Map the Windows pointer ID to a small identifier (0–19) safe for use as a JS array index.

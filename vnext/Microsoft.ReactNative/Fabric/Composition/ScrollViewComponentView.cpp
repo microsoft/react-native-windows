@@ -1420,30 +1420,6 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
         }
       });
 
-  // Issue #16047: when the InteractionTracker claims a touch for scrolling, the
-  // OS stops delivering further pointer events for that PointerId — including
-  // PointerCaptureLost and PointerReleased — so RN's m_activeTouches keeps a
-  // zombie entry and the originally-pressed Pressable never receives an
-  // onPressOut. Synthesize a touch-cancel ourselves the moment the tracker
-  // takes over, before the user lifts their finger.
-  m_scrollInteractingStateEnteredRevoker = m_scrollVisual.InteractingStateEntered(
-      winrt::auto_revoke,
-      [this](
-          winrt::IInspectable const & /*sender*/,
-          winrt::Microsoft::ReactNative::Composition::Experimental::IInteractingStateEnteredArgs const &args) {
-        const int32_t pointerId = args.PointerId();
-        auto root = rootComponentView();
-        if (!root) {
-          return;
-        }
-        auto rootView = root->ReactNativeIsland();
-        if (!rootView) {
-          return;
-        }
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)
-            ->CancelTouchesForPointer(pointerId);
-      });
-
   return visual;
 }
 
