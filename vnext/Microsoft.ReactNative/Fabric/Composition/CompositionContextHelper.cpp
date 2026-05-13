@@ -703,6 +703,20 @@ struct CompScrollPositionChangedArgs
   winrt::Windows::Foundation::Numerics::float2 m_position;
 };
 
+struct CompInteractingStateEnteredArgs
+    : winrt::implements<
+          CompInteractingStateEnteredArgs,
+          winrt::Microsoft::ReactNative::Composition::Experimental::IInteractingStateEnteredArgs> {
+  CompInteractingStateEnteredArgs(int32_t pointerId) : m_pointerId(pointerId) {}
+
+  int32_t PointerId() const noexcept {
+    return m_pointerId;
+  }
+
+ private:
+  int32_t m_pointerId;
+};
+
 template <typename TTypeRedirects>
 struct CompScrollerVisual : winrt::implements<
                                 CompScrollerVisual<TTypeRedirects>,
@@ -740,6 +754,10 @@ struct CompScrollerVisual : winrt::implements<
       m_outer->m_custom = false;
       m_outer->m_inertia = false;
       m_outer->m_interacting = false;
+      // Defensive: if InteractingStateEntered never fired (tap that didn't move
+      // far enough to claim the gesture), the redirected pointerId would leak
+      // forward and be wrongly cancelled on the *next* press's interaction.
+      m_outer->m_redirectedPointerId = -1;
     }
     void InertiaStateEntered(
         typename TTypeRedirects::InteractionTracker sender,
@@ -766,6 +784,17 @@ struct CompScrollerVisual : winrt::implements<
         typename TTypeRedirects::InteractionTrackerInteractingStateEnteredArgs args) noexcept {
       // Mark that we're now interacting and remember the requestId (user manipulations => 0)
       m_outer->m_interacting = true;
+
+      // Surface the redirected pointerId so RN can synthesize a touch-cancel.
+      // Only fire for user-driven manipulations (requestId == 0); programmatic
+      // Try* calls don't have an originating pointer.
+      if (args.RequestId() == 0 && m_outer->m_redirectedPointerId != -1) {
+        const int32_t pointerIdToCancel = m_outer->m_redirectedPointerId;
+        // Clear before firing so re-entrant callers (e.g. another touch arriving
+        // synchronously inside the cancel) don't double-cancel the same id.
+        m_outer->m_redirectedPointerId = -1;
+        m_outer->FireInteractingStateEntered(pointerIdToCancel);
+      }
 
       // Fire when the user starts dragging the object
       m_outer->FireScrollBeginDrag({sender.Position().x, sender.Position().y});
@@ -825,6 +854,15 @@ struct CompScrollerVisual : winrt::implements<
     if constexpr (std::is_same_v<TTypeRedirects, MicrosoftTypeRedirects>) {
       auto pointerDeviceType = args.Pointer().PointerDeviceType();
       if (pointerDeviceType == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Touch) {
+        // Issue #16047: remember which pointerId we asked the InteractionTracker
+        // to manipulate. If the tracker actually claims the gesture
+        // (InteractingStateEntered), we'll surface this id so RN can synthesize a
+        // touch-cancel — the OS does not reliably deliver PointerCaptureLost or
+        // PointerReleased for the redirected pointer. Multi-finger panning would
+        // clobber this single-slot id; the common case is one finger, and the
+        // worst-case for multi-touch matches the pre-fix behavior (the second
+        // touch's cancel would still be missed).
+        m_redirectedPointerId = static_cast<int32_t>(args.Pointer().PointerId());
         m_visualInteractionSource.TryRedirectForManipulation(args.GetCurrentPoint(args.OriginalSource()).Inner());
       }
     }
@@ -1081,6 +1119,13 @@ struct CompScrollerVisual : winrt::implements<
     return m_scrollMomentumEndEvent.add(handler);
   }
 
+  winrt::event_token InteractingStateEntered(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Experimental::IInteractingStateEnteredArgs> const
+          &handler) noexcept {
+    return m_interactingStateEnteredEvent.add(handler);
+  }
+
   void ScrollPositionChanged(winrt::event_token const &token) noexcept {
     m_scrollPositionChangedEvent.remove(token);
   }
@@ -1099,6 +1144,10 @@ struct CompScrollerVisual : winrt::implements<
 
   void ScrollMomentumEnd(winrt::event_token const &token) noexcept {
     m_scrollMomentumEndEvent.remove(token);
+  }
+
+  void InteractingStateEntered(winrt::event_token const &token) noexcept {
+    m_interactingStateEnteredEvent.remove(token);
   }
 
   void ContentSize(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
@@ -1189,6 +1238,10 @@ struct CompScrollerVisual : winrt::implements<
 
   void FireScrollMomentumEnd(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
     m_scrollMomentumEndEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));
+  }
+
+  void FireInteractingStateEntered(int32_t pointerId) noexcept {
+    m_interactingStateEnteredEvent(*this, winrt::make<CompInteractingStateEnteredArgs>(pointerId));
   }
 
   void UpdateMaxPosition() noexcept {
@@ -1443,6 +1496,15 @@ struct CompScrollerVisual : winrt::implements<
   winrt::event<winrt::Windows::Foundation::EventHandler<
       winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs>>
       m_scrollMomentumEndEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<
+      winrt::Microsoft::ReactNative::Composition::Experimental::IInteractingStateEnteredArgs>>
+      m_interactingStateEnteredEvent;
+  // PointerId of the touch that was passed to TryRedirectForManipulation. Set in
+  // OnPointerPressed for touch pointers; cleared in InteractingStateEntered (after
+  // surfacing it) and defensively in IdleStateEntered. -1 means "no redirect
+  // pending" (e.g. mouse, programmatic scroll, or the redirect already produced
+  // an InteractingStateEntered).
+  int32_t m_redirectedPointerId{-1};
   typename TTypeRedirects::SpriteVisual m_visual{nullptr};
   typename TTypeRedirects::SpriteVisual m_contentVisual{nullptr};
   typename TTypeRedirects::InteractionTracker m_interactionTracker{nullptr};

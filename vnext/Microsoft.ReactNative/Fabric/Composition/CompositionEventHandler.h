@@ -47,6 +47,15 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
       facebook::react::Tag tag) noexcept;
   facebook::react::Tag PointerCapturingComponent() noexcept;
 
+  // Issue #16047: cancel any active touch RN is tracking for the given pointerId,
+  // dispatching onPointerCancel + onTouchCancel and removing it from m_activeTouches.
+  // Returns true if a touch was cancelled. Used by ScrollView to break out of
+  // stuck-touch states when VisualInteractionSource::TryRedirectForManipulation
+  // hands the pointer to the InteractionTracker (after which the OS stops
+  // delivering PointerMoved / PointerReleased / PointerCaptureLost for it).
+  // Safe no-op if pointerId is unknown.
+  bool CancelTouchesForPointer(PointerId pointerId) noexcept;
+
  private:
   void onPointerPressed(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
@@ -140,6 +149,14 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
      * A component view on which the touch was begun.
      */
     ReactTaggedView initialComponentView{nullptr};
+
+    /*
+     * The most recent PointerPoint seen for this pointer (set on press, refreshed
+     * on each move). Used to synthesize Cancel events when the OS stops delivering
+     * pointer events for this pointer (e.g. ScrollView called
+     * TryRedirectForManipulation and the InteractionTracker claimed the gesture).
+     */
+    winrt::Microsoft::ReactNative::Composition::Input::PointerPoint lastPointerPoint{nullptr};
   };
 
   bool IsPointerWithinInitialTree(const ActiveTouch &activeTouch) noexcept;
@@ -155,6 +172,15 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
       const ActiveTouch &cancelledTouch,
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers);
+
+  // Look up the active touch for pointerId, erase it, and dispatch cancel events.
+  // pointerPoint is used for hover bookkeeping during cancel dispatch; if null,
+  // the cached lastPointerPoint from the active touch is used. Returns true iff
+  // a touch was found and cancel events were dispatched.
+  bool CancelActiveTouchForPointerInternal(
+      PointerId pointerId,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
 
   std::vector<winrt::Microsoft::ReactNative::ComponentView> GetTouchableViewsInPathToRoot(
       const winrt::Microsoft::ReactNative::ComponentView &componentView);
