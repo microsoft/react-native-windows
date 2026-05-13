@@ -861,8 +861,7 @@ void ScrollViewComponentView::updateStateWithContentOffset() noexcept {
   // press. The JS-event-emitter paths in this file (see lines using
   // args.Position() / pointScaleFactor) already do this division.
   auto rawScrollPosition = m_scrollVisual.ScrollPosition();
-  const float pointScaleFactor =
-      m_layoutMetrics.pointScaleFactor > 0.0f ? m_layoutMetrics.pointScaleFactor : 1.0f;
+  const float pointScaleFactor = m_layoutMetrics.pointScaleFactor > 0.0f ? m_layoutMetrics.pointScaleFactor : 1.0f;
   facebook::react::Point contentOffsetDips{
       rawScrollPosition.x / pointScaleFactor, rawScrollPosition.y / pointScaleFactor};
 
