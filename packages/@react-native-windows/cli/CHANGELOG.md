@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Sun, 10 May 2026 18:20:42 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 13 May 2026 18:22:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.290
+
+Wed, 13 May 2026 18:22:07 GMT
+
+### Changes
+
+- Add a run-windows port option for Metro (vivekjm77@gmail.com)
 
 ## 0.0.0-canary.289
 
