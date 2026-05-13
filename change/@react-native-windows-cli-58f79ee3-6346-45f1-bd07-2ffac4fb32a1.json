@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add a run-windows port option for Metro",
-  "packageName": "@react-native-windows/cli",
-  "email": "vivekjm77@gmail.com",
-  "dependentChangeType": "patch"
-}
