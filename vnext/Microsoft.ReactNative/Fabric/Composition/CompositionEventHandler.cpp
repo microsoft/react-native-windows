@@ -230,10 +230,10 @@ void CompositionEventHandler::Initialize() noexcept {
     // PointerRoutedAway. Treat it the same way as captureloss: cancel any
     // active touch RN is tracking for this pointer so Pressables don't get
     // stuck in their pressed state.
-    m_pointerRoutedAwayToken = pointerSource.PointerRoutedAway(
-        [wkThis = weak_from_this()](
-            winrt::Microsoft::UI::Input::InputPointerSource const &,
-            winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
+    m_pointerRoutedAwayToken =
+        pointerSource.PointerRoutedAway([wkThis = weak_from_this()](
+                                            winrt::Microsoft::UI::Input::InputPointerSource const &,
+                                            winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
           if (auto strongThis = wkThis.lock()) {
             if (auto strongRootView = strongThis->m_wkRootView.get()) {
               if (strongThis->SurfaceId() == -1)
