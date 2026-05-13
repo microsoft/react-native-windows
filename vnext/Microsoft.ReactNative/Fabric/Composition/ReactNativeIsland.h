@@ -135,11 +135,6 @@ struct ReactNativeIsland
       const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
       facebook::react::Tag tag) noexcept;
 
-  // Cancel any active touch for the given pointerId. Forwarded by ScrollView when
-  // the underlying InteractionTracker claims a touch for scrolling — see
-  // CompositionEventHandler::CancelTouchesForPointer for the rationale (issue #16047).
-  void CancelTouchesForPointer(int32_t pointerId) noexcept;
-
   void AddFragmentCompositionEventHandler(
       winrt::Microsoft::ReactNative::IReactContext context,
       winrt::Microsoft::ReactNative::ComponentView componentView) noexcept;

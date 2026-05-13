@@ -163,8 +163,6 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       m_scrollMomentumBeginRevoker{};
   winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual::ScrollMomentumEnd_revoker
       m_scrollMomentumEndRevoker{};
-  winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual::InteractingStateEntered_revoker
-      m_scrollInteractingStateEnteredRevoker{};
 
   float m_zoomFactor{1.0f};
   bool m_isScrollingFromInertia = false;
