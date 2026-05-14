@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 11 May 2026 05:13:51 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 14 May 2026 11:15:24 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.7
+
+Thu, 14 May 2026 11:15:24 GMT
+
+### Patches
+
+- Show tooltip on keyboard focus, enforce single visible tooltip (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.82.6
 
