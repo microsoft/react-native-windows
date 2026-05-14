@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 12 May 2026 20:54:57 GMT",
+      "version": "0.74.59",
+      "tag": "react-native-windows_v0.74.59",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "17abfe82955afec1da2e9032cbd50368394d21ec",
+            "comment": "Fix possible crash when creating multiple ReactNativeHost's at once"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 May 2026 00:47:23 GMT",
       "version": "0.74.58",
       "tag": "react-native-windows_v0.74.58",
