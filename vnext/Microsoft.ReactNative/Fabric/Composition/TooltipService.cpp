@@ -169,10 +169,20 @@ TooltipTracker::TooltipTracker(
   view.PointerEntered({this, &TooltipTracker::OnPointerEntered});
   view.PointerExited({this, &TooltipTracker::OnPointerExited});
   view.PointerMoved({this, &TooltipTracker::OnPointerMoved});
+  view.GotFocus({this, &TooltipTracker::OnGotFocus});
+  view.LostFocus({this, &TooltipTracker::OnLostFocus});
   view.Unmounted({this, &TooltipTracker::OnUnmounted});
 }
 
 TooltipTracker::~TooltipTracker() {
+  DestroyTimer();
+  DestroyTooltip();
+  m_outer->NotifyDismiss(this);
+}
+
+void TooltipTracker::DismissForExternalRequest() noexcept {
+  // Service is already updating its active slot; do not call back into it.
+  m_focusTooltip = false;
   DestroyTimer();
   DestroyTooltip();
 }
@@ -191,6 +201,9 @@ void TooltipTracker::OnPointerEntered(
 
   auto pp = args.GetCurrentPoint(-1);
   m_pos = pp.Position();
+
+  // Claim the single tooltip slot, dismissing any other tracker's pending or visible tooltip.
+  m_outer->NotifyShow(this);
 
   m_timer = winrt::Microsoft::ReactNative::Timer::Create(m_properties.Handle());
   m_timer.Interval(std::chrono::milliseconds(toolTipTimeToShowMs));
@@ -225,6 +238,56 @@ void TooltipTracker::OnPointerExited(
     return;
   DestroyTimer();
   DestroyTooltip();
+  m_outer->NotifyDismiss(this);
+}
+
+void TooltipTracker::OnGotFocus(
+    const winrt::Windows::Foundation::IInspectable & /*sender*/,
+    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs & /*args*/) noexcept {
+  // Skip if a mouse-driven tooltip or its dwell timer is already in flight on this view.
+  if (m_hwndTip || m_timer) {
+    return;
+  }
+
+  auto view = m_view.view();
+  if (!view) {
+    return;
+  }
+
+  auto viewCompView = view.try_as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
+  if (!viewCompView) {
+    return;
+  }
+  auto selfView =
+      winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>(viewCompView);
+  RECT rc = selfView->getClientRect();
+  auto scaleFactor = view.LayoutMetrics().PointScaleFactor;
+  if (scaleFactor <= 0) {
+    return;
+  }
+
+  // Anchor in DIPs at the horizontal center of the view's top edge; ShowTooltip re-applies scaleFactor.
+  m_pos = {static_cast<float>(rc.left + rc.right) / 2.0f / scaleFactor, static_cast<float>(rc.top) / scaleFactor};
+
+  m_focusTooltip = true;
+  // Claim the single tooltip slot, dismissing any other tracker's pending or visible tooltip.
+  m_outer->NotifyShow(this);
+  m_timer = winrt::Microsoft::ReactNative::Timer::Create(m_properties.Handle());
+  m_timer.Interval(std::chrono::milliseconds(toolTipTimeToShowMs));
+  m_timer.Tick({this, &TooltipTracker::OnTick});
+  m_timer.Start();
+}
+
+void TooltipTracker::OnLostFocus(
+    const winrt::Windows::Foundation::IInspectable & /*sender*/,
+    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs & /*args*/) noexcept {
+  if (!m_focusTooltip) {
+    return;
+  }
+  m_focusTooltip = false;
+  DestroyTimer();
+  DestroyTooltip();
+  m_outer->NotifyDismiss(this);
 }
 
 void TooltipTracker::OnUnmounted(
@@ -232,6 +295,7 @@ void TooltipTracker::OnUnmounted(
     const winrt::Microsoft::ReactNative::ComponentView &) noexcept {
   DestroyTimer();
   DestroyTooltip();
+  m_outer->NotifyDismiss(this);
 }
 
 void TooltipTracker::ShowTooltip(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
@@ -323,6 +387,22 @@ void TooltipService::StopTracking(const winrt::Microsoft::ReactNative::Component
       it = m_trackers.erase(it);
     else
       ++it;
+  }
+}
+
+void TooltipService::NotifyShow(TooltipTracker *tracker) noexcept {
+  if (m_activeTracker == tracker) {
+    return;
+  }
+  if (m_activeTracker) {
+    m_activeTracker->DismissForExternalRequest();
+  }
+  m_activeTracker = tracker;
+}
+
+void TooltipService::NotifyDismiss(TooltipTracker *tracker) noexcept {
+  if (m_activeTracker == tracker) {
+    m_activeTracker = nullptr;
   }
 }
 
