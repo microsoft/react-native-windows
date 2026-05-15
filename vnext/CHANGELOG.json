@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 15 May 2026 06:58:54 GMT",
+      "version": "0.83.0-preview.5",
+      "tag": "react-native-windows_v0.83.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "20fcf2815085ce9334a7ca613f7fc48498a81199",
+            "comment": "Show tooltip on keyboard focus, enforce single visible tooltip"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 May 2026 07:29:15 GMT",
       "version": "0.83.0-preview.4",
       "tag": "react-native-windows_v0.83.0-preview.4",
