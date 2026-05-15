@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 12 May 2026 03:57:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 15 May 2026 18:42:58 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.21
+
+Fri, 15 May 2026 18:42:58 GMT
+
+### Patches
+
+- Fix assert in x86 when using custom align (30809111+acoates-ms@users.noreply.github.com)
+- Show tooltip on keyboard focus, enforce single visible tooltip (74712637+iamAbhi-916@users.noreply.github.com)
 
 ## 0.81.20
 
