@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 15 May 2026 18:42:58 GMT",
+      "version": "0.81.21",
+      "tag": "react-native-windows_v0.81.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8620c45845172a7428e8d0e27037515b6382e5dd",
+            "comment": "Fix assert in x86 when using custom align"
+          },
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8620c45845172a7428e8d0e27037515b6382e5dd",
+            "comment": "Show tooltip on keyboard focus, enforce single visible tooltip"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 May 2026 03:57:28 GMT",
       "version": "0.81.20",
       "tag": "react-native-windows_v0.81.20",

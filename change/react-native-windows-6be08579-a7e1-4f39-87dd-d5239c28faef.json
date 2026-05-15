@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix assert in x86 when using custom align",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
