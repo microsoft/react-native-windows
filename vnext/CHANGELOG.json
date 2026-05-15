@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 12 May 2026 03:57:28 GMT",
+      "version": "0.81.20",
+      "tag": "react-native-windows_v0.81.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "29ff929a448c74d7ab0362c6ef8bde4313d31b47",
+            "comment": "Add hideTitleBar and hideBorder to Modal"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "29ff929a448c74d7ab0362c6ef8bde4313d31b47",
+            "comment": "fix: use IsPrimary() for touch pointer isPrimary instead of hardcoded pointer ID check"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "29ff929a448c74d7ab0362c6ef8bde4313d31b47",
+            "comment": "fix: cancel zombie touch state when ScrollView redirects pointer for manipulation, scope per-pointer events to the changed pointer, and remove always-true IsPointerWithinInitialTree fallback"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "29ff929a448c74d7ab0362c6ef8bde4313d31b47",
+            "comment": "Image does not consistently rerender on image source change"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 May 2026 05:13:49 GMT",
       "version": "0.81.19",
       "tag": "react-native-windows_v0.81.19",

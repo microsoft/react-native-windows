@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 11 May 2026 05:13:49 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 12 May 2026 03:57:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.20
+
+Tue, 12 May 2026 03:57:28 GMT
+
+### Patches
+
+- Add hideTitleBar and hideBorder to Modal (30809111+acoates-ms@users.noreply.github.com)
+- fix: use IsPrimary() for touch pointer isPrimary instead of hardcoded pointer ID check (gordomacmaster@gmail.com)
+- fix: cancel zombie touch state when ScrollView redirects pointer for manipulation, scope per-pointer events to the changed pointer, and remove always-true IsPointerWithinInitialTree fallback (gordomacmaster@gmail.com)
+- Image does not consistently rerender on image source change (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.19
 

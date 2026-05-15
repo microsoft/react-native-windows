@@ -37,6 +37,8 @@ struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microso
        supportedOrientations = cloneFromProps->supportedOrientations;
        identifier = cloneFromProps->identifier;
        title = cloneFromProps->title;
+       hideTitleBar = cloneFromProps->hideTitleBar;
+       hideBorder = cloneFromProps->hideBorder;
        onRequestClose = cloneFromProps->onRequestClose;
        onShow = cloneFromProps->onShow;
        onDismiss = cloneFromProps->onDismiss;
@@ -83,6 +85,12 @@ struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microso
 
   REACT_FIELD(title)
   std::optional<std::string> title;
+
+  REACT_FIELD(hideTitleBar)
+  std::optional<bool> hideTitleBar{};
+
+  REACT_FIELD(hideBorder)
+  std::optional<bool> hideBorder{};
 
    // These fields can be used to determine if JS has registered for this event
   REACT_FIELD(onRequestClose)
