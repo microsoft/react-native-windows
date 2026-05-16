@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 12 May 2026 17:51:34 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 16 May 2026 09:00:47 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0-preview.12
+
+Sat, 16 May 2026 09:00:47 GMT
+
+### Changes
+
+- Show tooltip on keyboard focus, enforce single visible tooltip (74712637+iamAbhi-916@users.noreply.github.com)
+- Fix #16047: Pressables inside ScrollView remained stuck in the pressed state after a touch-driven scroll, and on non-100% Windows display scales the next tap on a row would not register `press`. Two underlying causes were addressed: (1) VisualInteractionSource::TryRedirectForManipulation does not deliver PointerCaptureLost for the redirected pointer, leaving a zombie entry in CompositionEventHandler::m_activeTouches — now resolved by synthesizing a touchcancel from the InputPointerSource.PointerRoutedAway event, which fires reliably on the redirect path; and (2) ScrollViewComponentView::updateStateWithContentOffset wrote the raw physical-pixel ScrollPosition into ScrollViewShadowNode state's contentOffset, which Fabric layout treats as DIPs, so JS UIManager.measure() over-subtracted the offset by pointScaleFactor after any scroll on a >100% display, causing Pressability to fire LEAVE_PRESS_RECT synchronously and suppress press — now divides by pointScaleFactor to match the JS event-emitter paths in the same file. (gordomacmaster@gmail.com)
 
 ## 0.84.0-preview.11
 
