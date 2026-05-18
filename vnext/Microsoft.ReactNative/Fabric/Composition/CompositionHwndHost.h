@@ -5,6 +5,7 @@
 #include "CompositionHwndHost.g.h"
 
 #include <windows.ui.composition.interop.h>
+#include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include "ReactHost/React.h"
 
@@ -34,6 +35,7 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
 
   HWND m_hwnd;
   winrt::Microsoft::ReactNative::ReactNativeIsland m_compRootView{nullptr};
+  winrt::Microsoft::UI::Content::DesktopChildSiteBridge m_bridge{nullptr};
   LONG m_height{0};
   LONG m_width{0};
 

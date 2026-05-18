@@ -34,16 +34,19 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
       ReactViewHost().ReactNativeHost().InstanceSettings().Properties());
   m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
 
-  auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
+  m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
       compositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
 
+  // ResizePolicy must be set before Connect so the bridge configures the
+  // island's coordinate space with correct DPI awareness (matches
+  // ReactNativeWindow::ContentSiteBridge initialization order).
+  m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+
   auto island = m_compRootView.Island();
-
-  bridge.Connect(island);
-  bridge.Show();
-
   m_compRootView.ScaleFactor(ScaleFactor());
-  bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+
+  m_bridge.Connect(island);
+  m_bridge.Show();
 
   m_compRootView.ReactViewHost(std::move(m_reactViewHost));
   m_compRootView.ScaleFactor(ScaleFactor());
@@ -80,6 +83,26 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t 
   switch (msg) {
     case WM_WINDOWPOSCHANGED: {
       UpdateSize();
+      return 0;
+    }
+    case WM_DPICHANGED: {
+      m_compRootView.ScaleFactor(ScaleFactor());
+      // Invalidate cached pixel dimensions so the WM_WINDOWPOSCHANGED that
+      // follows SetWindowPos always passes UpdateSize's dimension guard and
+      // re-runs Arrange with the new DIP scale.  Without this, a same-monitor
+      // scale change (identical pixel rect) would short-circuit UpdateSize and
+      // leave layout stale.
+      m_width = 0;
+      m_height = 0;
+      auto *suggestedRect = reinterpret_cast<const RECT *>(lParam);
+      SetWindowPos(
+          m_hwnd,
+          nullptr,
+          suggestedRect->left,
+          suggestedRect->top,
+          suggestedRect->right - suggestedRect->left,
+          suggestedRect->bottom - suggestedRect->top,
+          SWP_NOZORDER | SWP_NOACTIVATE);
       return 0;
     }
   }
