@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fix CompositionHwndHost initialization order and add WM_DPICHANGED handling: ResizePolicy is now set before Connect and ScaleFactor before the island is connected, matching the ReactNativeWindow reference pattern, so that secondary windows render with correct DPI-aware touch coordinates. A new WM_DPICHANGED handler updates the island's scale factor and invalidates cached pixel dimensions before SetWindowPos, ensuring layout re-arranges immediately on runtime DPI changes — including same-monitor scale changes where the pixel rect is unchanged.",
+  "comment": "Fix CompositionHwndHost initialization order: ResizePolicy is now set before Connect and ScaleFactor before the island is connected, matching the ReactNativeWindow reference pattern, so that secondary windows render with correct DPI-aware touch coordinates.",
   "packageName": "react-native-windows",
   "email": "gordomacmaster@gmail.com",
   "dependentChangeType": "patch"

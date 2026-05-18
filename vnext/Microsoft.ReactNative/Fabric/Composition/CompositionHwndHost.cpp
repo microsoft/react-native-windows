@@ -85,26 +85,6 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t 
       UpdateSize();
       return 0;
     }
-    case WM_DPICHANGED: {
-      m_compRootView.ScaleFactor(ScaleFactor());
-      // Invalidate cached pixel dimensions so the WM_WINDOWPOSCHANGED that
-      // follows SetWindowPos always passes UpdateSize's dimension guard and
-      // re-runs Arrange with the new DIP scale.  Without this, a same-monitor
-      // scale change (identical pixel rect) would short-circuit UpdateSize and
-      // leave layout stale.
-      m_width = 0;
-      m_height = 0;
-      auto *suggestedRect = reinterpret_cast<const RECT *>(lParam);
-      SetWindowPos(
-          m_hwnd,
-          nullptr,
-          suggestedRect->left,
-          suggestedRect->top,
-          suggestedRect->right - suggestedRect->left,
-          suggestedRect->bottom - suggestedRect->top,
-          SWP_NOZORDER | SWP_NOACTIVATE);
-      return 0;
-    }
   }
 
   if (m_compRootView) {
