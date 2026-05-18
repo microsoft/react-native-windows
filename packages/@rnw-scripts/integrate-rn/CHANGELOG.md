@@ -1,8 +1,43 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-<!-- This log was last generated on Tue, 07 Oct 2025 05:27:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 17 Nov 2025 06:42:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.67
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.99
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @react-native-windows/package-utils to v0.0.0-canary.96
+- Bump react-native-platform-override to v1.9.61
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 1.4.66
+
+Wed, 12 Nov 2025 21:00:43 GMT
+
+### Patches
+
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.98
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @react-native-windows/package-utils to v0.0.0-canary.95
+- Bump react-native-platform-override to v1.9.60
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
+
+## 1.4.65
+
+Tue, 21 Oct 2025 05:28:11 GMT
+
+### Patches
+
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
 
 ## 1.4.64
 

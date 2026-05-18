@@ -10,6 +10,8 @@
 
 'use strict';
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+
 import RNTesterButton from '../../components/RNTesterButton';
 import RNTesterText from '../../components/RNTesterText';
 import React from 'react';
@@ -20,7 +22,7 @@ function burnCPU(milliseconds: number) {
   while (global.performance.now() < start + milliseconds) {}
 }
 
-type RequestIdleCallbackTesterProps = $ReadOnly<{}>;
+type RequestIdleCallbackTesterProps = Readonly<{}>;
 type RequestIdleCallbackTesterState = {message: string};
 
 class RequestIdleCallbackTester extends React.Component<
@@ -144,7 +146,7 @@ class RequestIdleCallbackTester extends React.Component<
   };
 }
 
-type TimerTesterProps = $ReadOnly<{
+type TimerTesterProps = Readonly<{
   dt?: any,
   type: string,
 }>;
@@ -269,7 +271,7 @@ class TimerTester extends React.Component<TimerTesterProps> {
 }
 
 class IntervalExample extends React.Component<
-  $ReadOnly<{}>,
+  Readonly<{}>,
   {
     showTimer: boolean,
   },
@@ -376,4 +378,4 @@ exports.examples = [
       return <IntervalExample />;
     },
   },
-];
+] as Array<RNTesterModuleExample>;

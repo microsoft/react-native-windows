@@ -7,7 +7,7 @@ parameters:
   type: string
 
 steps:
-  - powershell: |
+  - pwsh: |
       [xml] $xmlDoc = Get-Content .\ExperimentalFeatures.props
       # Add to new property group at the end of the file to ensure it overrides any other setting
       $propertyGroup = $xmlDoc.CreateElement("PropertyGroup", $xmlDoc.DocumentElement.NamespaceURI);

@@ -69,8 +69,8 @@ struct ::_OBJECT_NAME_:: {
 ::_OBJECT_FIELDS_::};
 `;
 
-const eventEmitterMethodTemplate = `  void ::_EVENT_NAME_::(::_EVENT_OBJECT_TYPE_:: &value) const {
-    m_eventEmitter.DispatchEvent(L"::_EVENT_NAME_NO_ON_::", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+const eventEmitterMethodTemplate = `  void ::_EVENT_NAME_::(::_EVENT_OBJECT_TYPE_:: &&value) const {
+    m_eventEmitter.DispatchEvent(L"::_EVENT_NAME_NO_ON_::", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }`;
@@ -139,6 +139,12 @@ struct Base::_COMPONENT_NAME_:: {
   // FinalizeUpdate will only be called if this method is overridden
   virtual void FinalizeUpdate(const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
                                         winrt::Microsoft::ReactNative::ComponentViewUpdateMask /*mask*/) noexcept {
+  }
+
+  // CreateAutomationPeer will only be called if this method is overridden
+  virtual winrt::Windows::Foundation::IInspectable CreateAutomationPeer(const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
+                                        const winrt::Microsoft::ReactNative::CreateAutomationPeerArgs& /*args*/) noexcept {
+    return nullptr;
   }
 
 ::_COMPONENT_VIEW_COMMAND_HANDLERS_::
@@ -221,6 +227,14 @@ void Register::_COMPONENT_NAME_::NativeComponent(
             return userData->UnmountChildComponentView(view, args);
           });
         }
+
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateAutomationPeer != &Base::_COMPONENT_NAME_::<TUserData>::CreateAutomationPeer) {
+            builder.SetCreateAutomationPeerHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                     const winrt::Microsoft::ReactNative::CreateAutomationPeerArgs& args) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            return userData->CreateAutomationPeer(view, args);
+          });
+        } 
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();
@@ -328,11 +342,30 @@ export function createComponentGenerator({
           })
           .join('\n');
 
+        const eventPropFields = componentShape.events.length
+          ? `   // These fields can be used to determine if JS has registered for this event\n` +
+            componentShape.events
+              .map(event => {
+                return `  REACT_FIELD(${event.name})\n  bool ${event.name}{false};\n`;
+              })
+              .join('\n')
+          : '';
+
         const propInitializers = componentShape.props
           .map(prop => {
-            return `       ${prop.name} = cloneFromProps->${prop.name};`;
+            if (prop.typeAnnotation.type === 'MixedTypeAnnotation')
+              return `       ${prop.name} = cloneFromProps->${prop.name}.Copy();`;
+            else return `       ${prop.name} = cloneFromProps->${prop.name};`;
           })
           .join('\n');
+
+        const eventPropInitializers = componentShape.events.length
+          ? componentShape.events
+              .map(event => {
+                return `       ${event.name} = cloneFromProps->${event.name};`;
+              })
+              .join('\n')
+          : '';
 
         const propObjectTypes = propObjectAliases.jobs
           .map(propObjectTypeName => {
@@ -400,7 +433,30 @@ export function createComponentGenerator({
           })
           .join('\n\n');
 
+        const eventObjectUsings = eventObjectAliases.jobs
+          .map(eventObjectTypeName => {
+            return `  using ${eventObjectTypeName.replace('on', 'On')} = ${
+              getAliasCppName(eventObjectTypeName) /*.replace('_on', '_On')*/
+            };`;
+          })
+          .join('\n');
+
+        // Collect all the alias types for the event objects so that we can generate the unnamed types within objects
+        eventObjectAliases.jobs.forEach(eventObjectTypeName => {
+          const eventObjectType =
+            eventObjectAliases.types[eventObjectTypeName]!;
+          eventObjectType.properties.forEach(property => {
+            translateComponentEventType(
+              property.typeAnnotation,
+              eventObjectAliases,
+              eventObjectTypeName,
+              cppCodegenOptions,
+            );
+          });
+        });
+
         const eventObjects = eventObjectAliases.jobs
+          .reverse()
           .map(eventObjectTypeName => {
             const eventObjectType =
               eventObjectAliases.types[eventObjectTypeName]!;
@@ -423,18 +479,9 @@ export function createComponentGenerator({
             return eventsObjectTemplate
               .replace(
                 /::_OBJECT_NAME_::/g,
-                `${componentName}_${eventObjectTypeName.replace('on', 'On')}`,
+                getAliasCppName(eventObjectTypeName) /*.replace('_on', '_On')*/,
               )
               .replace(/::_OBJECT_FIELDS_::/g, eventObjectFields);
-          })
-          .join('\n');
-
-        const eventObjectUsings = eventObjectAliases.jobs
-          .map(eventObjectTypeName => {
-            return `  using ${eventObjectTypeName.replace(
-              'on',
-              'On',
-            )} = ${componentName}_${eventObjectTypeName.replace('on', 'On')};`;
           })
           .join('\n');
 
@@ -548,8 +595,14 @@ ${
             .replace(/::_EVENT_EMITTER_NAME_::/g, eventEmitterName)
             .replace(/::_PROPS_NAME_::/g, propsName)
             .replace(/::_COMPONENT_NAME_::/g, componentName)
-            .replace(/::_PROP_INITIALIZERS_::/g, propInitializers)
-            .replace(/::_PROPS_FIELDS_::/g, propsFields)
+            .replace(
+              /::_PROP_INITIALIZERS_::/g,
+              [propInitializers, eventPropInitializers].join('\n'),
+            )
+            .replace(
+              /::_PROPS_FIELDS_::/g,
+              [propsFields, eventPropFields].join('\n'),
+            )
             .replace(/::_NAMESPACE_::/g, namespace)
             .replace(/\n\n\n+/g, '\n\n');
         };

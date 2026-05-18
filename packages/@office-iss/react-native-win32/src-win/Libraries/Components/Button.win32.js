@@ -28,7 +28,7 @@ import View from './View/View';
 import invariant from 'invariant';
 import * as React from 'react';
 
-export type ButtonProps = $ReadOnly<{
+export type ButtonProps = Readonly<{
   /**
     Text to display inside the button. On Android the given title will be
     converted to the uppercased form.
@@ -39,7 +39,7 @@ export type ButtonProps = $ReadOnly<{
     Handler to be called when the user taps the button. The first function
     argument is an event in form of [GestureResponderEvent](pressevent).
    */
-  onPress?: (event?: GestureResponderEvent) => mixed,
+  onPress?: (event?: GestureResponderEvent) => unknown,
 
   /**
     If `true`, doesn't play system sound on touch.
@@ -149,7 +149,7 @@ export type ButtonProps = $ReadOnly<{
    */
   accessible?: ?boolean,
   accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
-  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
+  onAccessibilityAction?: ?(event: AccessibilityActionEvent) => unknown,
   accessibilityState?: ?AccessibilityState,
 
   /**
@@ -186,9 +186,6 @@ export type ButtonProps = $ReadOnly<{
 
   [button:source]:
   https://github.com/facebook/react-native/blob/HEAD/Libraries/Components/Button.js
-
-  [button:examples]:
-  https://js.coach/?menu%5Bcollections%5D=React%20Native&page=1&query=button
 
   ```jsx
   <Button
@@ -394,7 +391,7 @@ const Button: component(
       touchSoundDisabled={touchSoundDisabled}
       // $FlowFixMe[incompatible-exact]
       // $FlowFixMe[prop-missing]
-      // $FlowFixMe[incompatible-type-arg]
+      // $FlowFixMe[incompatible-type]
       ref={ref}>
       <View style={buttonStyles}>
         <Text style={textStyles} disabled={disabled}>

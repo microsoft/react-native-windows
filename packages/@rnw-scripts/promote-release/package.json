@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/promote-release",
-  "version": "2.1.63",
+  "version": "2.1.65",
+  "private": true,
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -14,29 +15,28 @@
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch"
   },
-  "bin": {
-    "promote-release": "./bin.js"
-  },
+  "bin": "./bin.js",
   "dependencies": {
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.97",
-    "@react-native-windows/fs": "^0.0.0-canary.68",
-    "@react-native-windows/package-utils": "^0.0.0-canary.94",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.101",
+    "@react-native-windows/fs": "^0.0.0-canary.72",
+    "@react-native-windows/package-utils": "^0.0.0-canary.98",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
     "chalk": "^4.1.0",
+    "minimatch": "^10.0.3",
     "simple-git": "^3.3.0",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.37",
-    "@rnw-scripts/just-task": "2.3.56",
+    "@rnw-scripts/eslint-config": "1.2.38",
+    "@rnw-scripts/just-task": "2.3.58",
     "@rnw-scripts/ts-config": "2.0.6",
     "@types/chalk": "^2.2.0",
     "@types/node": "^22.14.0",
     "@types/yargs": "^16.0.0",
     "eslint": "^8.19.0",
-    "prettier": "2.8.8",
+    "prettier": "^3.6.2",
     "typescript": "5.0.4"
   },
   "files": [

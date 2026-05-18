@@ -10,6 +10,7 @@
 #include <Fabric/Composition/ImageResponseImage.h>
 #include <Fabric/Composition/UriImageManager.h>
 #include <Networking/NetworkPropertyIds.h>
+#include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/ImageUtils.h>
 #include <fmt/format.h>
 #include <functional/functor.h>
@@ -71,7 +72,6 @@ wicBitmapSourceFromStream(const winrt::Windows::Storage::Streams::IRandomAccessS
     return {decodedFrame, imagingFactory, nullptr};
   } catch (winrt::hresult_error const &ex) {
     auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
-    errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
     errorInfo->error = ::Microsoft::ReactNative::FormatHResultError(winrt::hresult_error(ex));
     return {nullptr, nullptr, errorInfo};
   }
@@ -131,7 +131,19 @@ WindowsImageManager::GetImageRandomAccessStreamAsync(
     request.Content(bodyContent);
   }
 
-  winrt::Windows::Web::Http::HttpResponseMessage response(co_await m_httpClient.SendRequestAsync(request));
+  auto asyncOp = m_httpClient.SendRequestAsync(request);
+  co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncOperationWithProgress<
+      winrt::Windows::Web::Http::HttpResponseMessage,
+      winrt::Windows::Web::Http::HttpProgress>>{asyncOp};
+
+  if (asyncOp.Status() == winrt::Windows::Foundation::AsyncStatus::Error ||
+      asyncOp.Status() == winrt::Windows::Foundation::AsyncStatus::Canceled) {
+    auto errorMessage = FormatHResultError(winrt::hresult_error(asyncOp.ErrorCode()));
+    co_return winrt::Microsoft::ReactNative::Composition::ImageFailedResponse(
+        winrt::to_hstring("Network request failed: " + errorMessage));
+  }
+
+  winrt::Windows::Web::Http::HttpResponseMessage response = asyncOp.GetResults();
 
   if (!response.IsSuccessStatusCode()) {
     co_return winrt::Microsoft::ReactNative::Composition::ImageFailedResponse(

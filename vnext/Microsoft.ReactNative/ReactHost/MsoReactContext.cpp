@@ -16,13 +16,6 @@ namespace Mso::React {
 ReactSettingsSnapshot::ReactSettingsSnapshot(Mso::WeakPtr<ReactInstanceWin> &&reactInstance) noexcept
     : m_reactInstance{std::move(reactInstance)} {}
 
-bool ReactSettingsSnapshot::UseWebDebugger() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->UseWebDebugger();
-  }
-  return false;
-}
-
 bool ReactSettingsSnapshot::UseFastRefresh() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->UseFastRefresh();
@@ -185,11 +178,9 @@ void ReactContext::CallJSFunction(std::string &&module, std::string &&method, fo
 }
 
 void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept {
-#ifndef CORE_ABI // requires instance
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     instance->DispatchEvent(viewTag, std::move(eventName), std::move(eventData));
   }
-#endif
 }
 
 winrt::Microsoft::ReactNative::JsiRuntime ReactContext::JsiRuntime() const noexcept {
@@ -214,14 +205,6 @@ bool ReactContext::IsLoaded() const noexcept {
   }
 
   return false;
-}
-
-std::shared_ptr<facebook::react::Instance> ReactContext::GetInnerInstance() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->GetInnerInstance();
-  }
-
-  return nullptr;
 }
 
 IReactSettingsSnapshot const &ReactContext::SettingsSnapshot() const noexcept {

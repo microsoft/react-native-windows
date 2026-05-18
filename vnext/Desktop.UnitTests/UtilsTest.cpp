@@ -15,154 +15,11 @@ using std::string_view;
 
 namespace Microsoft::React::Test {
 
-// We turn clang format off here because it does not work with some of the
-// test macros.
-// clang-format off
-
-TEST_CLASS(UtilsTest)
-{
-
-  void ExpectUrl(
-    string urlString,
-    string protocol,
-    string host,
-    string port = "",
-    string path = "/",
-    string query = "")
-  {
-
-    Url url(std::move(urlString));
-
-    Assert::AreEqual(protocol, url.scheme);
-    Assert::AreEqual(host, url.host);
-    Assert::AreEqual(port, url.port);
-    Assert::AreEqual(path, url.path);
-    Assert::AreEqual(query, url.queryString);
-  }
-
-#pragma region Url Tests
-
-  TEST_METHOD(UtilsTest_ValidProtocols)
-  {
-    string protocols[4] { "http", "https", "ws", "wss" };
-    for (auto protocol : protocols)
-    {
-      ExpectUrl(string(protocol + "://internal"), protocol, "internal");
-    }
-  }
-
-  TEST_METHOD(UtilsTest_IntraHost)
-  {
-    ExpectUrl("ws://internal", "ws", "internal");
-  }
-
-  TEST_METHOD(UtilsTest_IntraHostTrailing)
-  {
-    ExpectUrl("ws://internal/", "ws", "internal");
-  }
-
-  TEST_METHOD(UtilsTest_IntraHostQueryLeading)
-  {
-    ExpectUrl("ws://internal?", "ws", "internal");
-  }
-
-  TEST_METHOD(UtilsTest_IntraHostTrailingQueryLeading)
-  {
-    ExpectUrl("ws://internal/?", "ws", "internal");
-  }
-
-  TEST_METHOD(UtilsTest_NormalHostQueryLeading)
-  {
-    ExpectUrl("ws://example.com?", "ws", "example.com");
-  }
-
-  TEST_METHOD(UtilsTest_IntraPort)
-  {
-    ExpectUrl("ws://internal:5000", "ws", "internal", "5000");
-  }
-
-  TEST_METHOD(UtilsTest_NormalPort)
-  {
-    ExpectUrl("ws://example.com:443", "ws", "example.com", "443");
-  }
-
-  TEST_METHOD(UtilsTest_PortPath)
-  {
-    ExpectUrl("ws://example.com:5000/ws", "ws", "example.com", "5000", "/ws");
-  }
-
-  TEST_METHOD(UtilsTest_Query)
-  {
-    ExpectUrl(
-      "ws://example.com?a=1&b=2", "ws", "example.com", "", "/", "a=1&b=2");
-  }
-
-  TEST_METHOD(UtilsTest_TrailingPathQuery)
-  {
-    ExpectUrl(
-      "ws://example.com/?a=1&b=2", "ws", "example.com", "", "/", "a=1&b=2");
-  }
-
-  TEST_METHOD(UtilsTest_HyphenHostInternal)
-  {
-    ExpectUrl("wss://-my-hyphened-host--", "wss", "-my-hyphened-host--");
-  }
-
-  TEST_METHOD(UtilsTest_NestedPathTrailingSlashLeadingQuestionMark)
-  {
-    ExpectUrl(
-      "ws://example.com/the/nested/path/?",
-      "ws",
-      "example.com",
-      "",
-      "/the/nested/path/");
-  }
-
-  TEST_METHOD(UtilsTest_NestedSubdomain)
-  {
-    ExpectUrl(
-      "ws://nested.sub.domain.of.example.com",
-      "ws",
-      "nested.sub.domain.of.example.com");
-  }
-
-#pragma region Url Negative Tests
-
-  TEST_METHOD(UtilsTest_EmptyStringFails)
-  {
-    Assert::ExpectException<std::exception>([]()
-    {
-      Url("");
-    });
-  }
-
-  TEST_METHOD(UtilsTest_WrongProtocol)
-  {
-    Assert::ExpectException<std::exception>([]()
-    {
-      Url("foos://internal");
-    });
-  }
-
-  TEST_METHOD(UtilsTest_BadCharsInPort)
-  {
-    Assert::ExpectException<std::exception>([]()
-    {
-      Url("ws://internal:50O0");
-    });
-  }
-
-  TEST_METHOD(UtilsTest_SpacesInProtocol)
-  {
-    Assert::ExpectException<std::exception>([]()
-    {
-      Url(" ws://internal");
-    });
-  }
-
-#pragma endregion
-
-#pragma endregion
+TEST_CLASS (UtilsTest) {
+ public:
+  // We turn clang format off here because it does not work with some of the
+  // test macros.
+  // clang-format off
 
 #pragma region Base64 Tests
 
@@ -268,6 +125,85 @@ TEST_CLASS(UtilsTest)
   }
 
 #pragma endregion Base64 Tests
+
+#pragma region FormatString Tests
+
+  TEST_METHOD(UtilsTest_StringFormat_Simple)
+  {
+    std::string result = Microsoft::React::FormatString("Hello, %s!", "World");
+    Assert::AreEqual("Hello, World!", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_Integer)
+  {
+    std::string result = Microsoft::React::FormatString("Port: %d", 8081);
+    Assert::AreEqual("Port: 8081", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_Multiple)
+  {
+    std::string result = Microsoft::React::FormatString("%s:%d", "localhost", 8081);
+    Assert::AreEqual("localhost:8081", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_Complex)
+  {
+    std::string result = Microsoft::React::FormatString(
+      "http://%s/%s.bundle?platform=%s&dev=%s&hot=%s",
+      "localhost:8081",
+      "index",
+      "windows",
+      "true",
+      "false");
+    Assert::AreEqual(
+      "http://localhost:8081/index.bundle?platform=windows&dev=true&hot=false",
+      result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_EmptyString)
+  {
+    std::string result = Microsoft::React::FormatString("");
+    Assert::AreEqual("", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_NullPtr)
+  {
+    std::string result = Microsoft::React::FormatString(nullptr);
+    Assert::AreEqual("", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_NoArgs)
+  {
+    std::string result = Microsoft::React::FormatString("no args here");
+    Assert::AreEqual("no args here", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_LargeString)
+  {
+    std::string longString(1000, 'a');
+    std::string result = Microsoft::React::FormatString("%s", longString.c_str());
+    Assert::AreEqual(longString.c_str(), result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_MixedTypes)
+  {
+    std::string result = Microsoft::React::FormatString(
+      "Int: %d, Uint: %u, Hex: %x, String: %s, Float: %.2f",
+      -42,
+      42u,
+      255,
+      "test",
+      3.14159);
+    Assert::AreEqual("Int: -42, Uint: 42, Hex: ff, String: test, Float: 3.14", result.c_str());
+  }
+
+  TEST_METHOD(UtilsTest_StringFormat_SpecialChars)
+  {
+    std::string result = Microsoft::React::FormatString("100%% complete");
+    Assert::AreEqual("100% complete", result.c_str());
+  }
+
+#pragma endregion FormatString Tests
 };
 
 // clang-format on

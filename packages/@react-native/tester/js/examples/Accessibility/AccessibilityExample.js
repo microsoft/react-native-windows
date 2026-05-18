@@ -10,6 +10,7 @@
 
 'use strict';
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 import type {EventSubscription, GestureResponderEvent} from 'react-native';
 
 import RNTesterBlock from '../../components/RNTesterBlock';
@@ -29,6 +30,7 @@ import {
   ScrollView,
   StyleSheet,
   Switch,
+  Text,
   TextInput,
   TouchableNativeFeedback,
   TouchableOpacity,
@@ -1291,6 +1293,44 @@ class AnnounceForAccessibility extends React.Component<{}> {
     );
   };
 
+  _handleOnPressHighPriority = () => {
+    setTimeout(
+      () =>
+        AccessibilityInfo.announceForAccessibilityWithOptions(
+          'High Priority Announcement Test',
+          {priority: 'high'},
+        ),
+      1000,
+    );
+
+    setTimeout(
+      () =>
+        AccessibilityInfo.announceForAccessibility(
+          'Normal Priority Announcement',
+        ),
+      1100,
+    );
+  };
+
+  _handleOnPressLowPriority = () => {
+    setTimeout(
+      () =>
+        AccessibilityInfo.announceForAccessibilityWithOptions(
+          'Low Priority Announcement Test',
+          {priority: 'low'},
+        ),
+      1000,
+    );
+
+    setTimeout(
+      () =>
+        AccessibilityInfo.announceForAccessibility(
+          'Normal Priority Announcement',
+        ),
+      1100,
+    );
+  };
+
   render(): React.Node {
     return Platform.OS === 'ios' ? (
       <View>
@@ -1305,6 +1345,14 @@ class AnnounceForAccessibility extends React.Component<{}> {
         <Button
           onPress={this._handleOnPressQueueMultiple}
           title="Announce for Accessibility Queue Multiple"
+        />
+        <Button
+          onPress={this._handleOnPressHighPriority}
+          title="Announce for Accessibility High Priority"
+        />
+        <Button
+          onPress={this._handleOnPressLowPriority}
+          title="Announce for Accessibility Low Priority"
         />
       </View>
     ) : (
@@ -1329,7 +1377,7 @@ function SetAccessibilityFocusExample(props: {}): React.Node {
 
   return (
     <View>
-      {/* $FlowFixMe[prop-missing] */}
+      {/* $FlowFixMe[incompatible-type] */}
       <RNTesterText ref={myRef}>
         SetAccessibilityFocus on native element. This should get focus after
         clicking the button!
@@ -1460,7 +1508,7 @@ class EnabledExample extends React.Component<
     isEnabled: false,
   };
   _subscription: EventSubscription;
-  componentDidMount(): null | Promise<mixed> {
+  componentDidMount(): null | Promise<unknown> {
     this._subscription = AccessibilityInfo.addEventListener(
       this.props.eventListener,
       this._handleToggled,
@@ -2135,6 +2183,91 @@ function LabelCooptingExample(): React.Node {
   );
 }
 
+function AriaHiddenExample(): React.Node {
+  const [ariaHidden, setAriaHidden] = useState(false);
+
+  return (
+    <View>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: 10,
+          marginBottom: 40,
+        }}>
+        <RNTesterText variant="label" style={{flex: 1}}>
+          Enable aria-hidden
+        </RNTesterText>
+        <Switch
+          value={ariaHidden}
+          onValueChange={() => setAriaHidden(!ariaHidden)}
+          accessibilityLabel="Enable aria-hidden"
+        />
+      </View>
+
+      <View
+        accessible
+        aria-hidden={ariaHidden}
+        aria-label={
+          ariaHidden ? 'This should be hidden' : 'This should be accessible'
+        }
+        style={styles.smallRedSquare}
+      />
+
+      <View
+        accessible
+        aria-hidden={ariaHidden}
+        aria-label={
+          ariaHidden ? 'This should be hidden' : 'This should be accessible'
+        }>
+        <Text>View with Text content</Text>
+      </View>
+
+      <Text aria-hidden={ariaHidden}>Regular Text</Text>
+
+      <TextInput
+        editable={false}
+        aria-hidden={ariaHidden}
+        aria-label={
+          ariaHidden ? 'This should be hidden' : 'This should be accessible'
+        }
+        placeholder={`Non-editable TextInput`}
+      />
+
+      <TextInput
+        editable={false}
+        aria-hidden={ariaHidden}
+        aria-label={
+          ariaHidden ? 'This should be hidden' : 'This should be accessible'
+        }
+        placeholder={`Non-editable multiline TextInput`}
+        multiline
+        numberOfLines={3}
+      />
+
+      <Pressable
+        aria-hidden={ariaHidden}
+        onPress={() => console.log('Pressed')}
+        aria-label={
+          ariaHidden ? 'This should be hidden' : 'This should be accessible'
+        }
+        style={styles.button}>
+        <Text>Pressable with text content</Text>
+      </Pressable>
+
+      <Image
+        accessible
+        aria-hidden={ariaHidden}
+        aria-label={
+          ariaHidden ? 'This should be hidden' : 'This should be accessible'
+        }
+        source={require('../../assets/like.png')}
+        style={styles.button}
+      />
+    </View>
+  );
+}
+
 exports.title = 'Accessibility';
 exports.documentationURL = 'https://reactnative.dev/docs/accessibilityinfo';
 exports.description = 'Examples of using Accessibility APIs.';
@@ -2250,4 +2383,10 @@ exports.examples = [
       return <LabelCooptingExample />;
     },
   },
-];
+  {
+    title: 'aria-hidden',
+    render(): React.MixedElement {
+      return <AriaHiddenExample />;
+    },
+  },
+] as Array<RNTesterModuleExample>;

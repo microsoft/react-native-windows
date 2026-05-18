@@ -43,6 +43,13 @@ namespace Microsoft::React::Networking {
 #pragma region CaseInsensitiveComparer
 
 bool OriginPolicyHttpFilter::CaseInsensitiveComparer::operator()(const wchar_t *a, const wchar_t *b) const {
+  if (a == b)
+    return false;
+  // Validate a, b before calling _wcsicmp
+  if (a == nullptr)
+    return false;
+  if (b == nullptr)
+    return true;
   return _wcsicmp(a, b) < 0;
 }
 
@@ -758,7 +765,8 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
     if (originPolicy == OriginPolicy::CrossOriginResourceSharing) {
       // If inner filter can AllowRedirect, disable for preflight.
       winrt::impl::com_ref<IHttpBaseProtocolFilter> baseFilter;
-      if (baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+      baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>();
+      if (baseFilter) {
         baseFilter.AllowAutoRedirect(false);
       }
 

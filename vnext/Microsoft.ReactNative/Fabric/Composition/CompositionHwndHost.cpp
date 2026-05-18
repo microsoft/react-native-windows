@@ -18,10 +18,8 @@
 #include "CompositionRootAutomationProvider.h"
 #include "ReactNativeIsland.h"
 
-#if USE_WINUI3
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.interop.h>
-#endif
 
 WINUSERAPI UINT WINAPI GetDpiForWindow(_In_ HWND hwnd);
 
@@ -32,55 +30,20 @@ CompositionHwndHost::CompositionHwndHost() noexcept {}
 void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
   m_hwnd = (HWND)hwnd;
 
-  auto compositionContext =
-      winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
-          ReactViewHost().ReactNativeHost().InstanceSettings().Properties());
-#if USE_WINUI3
-  if (auto liftedCompositor =
-          winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
-              compositionContext)) {
-    m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(liftedCompositor);
+  auto compositor = winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositor(
+      ReactViewHost().ReactNativeHost().InstanceSettings().Properties());
+  m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
 
-    auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
-        liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
+  auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
+      compositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
 
-    auto island = m_compRootView.Island();
+  auto island = m_compRootView.Island();
 
-    bridge.Connect(island);
-    bridge.Show();
+  bridge.Connect(island);
+  bridge.Show();
 
-    m_compRootView.ScaleFactor(ScaleFactor());
-    bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
-  } else {
-    m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland();
-    m_compRootView.as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
-        .SetWindow(reinterpret_cast<uint64_t>(m_hwnd));
-
-#endif
-    auto compositor =
-        winrt::Microsoft::ReactNative::Composition::Experimental::SystemCompositionContextHelper::InnerCompositor(
-            compositionContext);
-    auto interop = compositor.as<ABI::Windows::UI::Composition::Desktop::ICompositorDesktopInterop>();
-    winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget target{nullptr};
-    check_hresult(interop->CreateDesktopWindowTarget(
-        m_hwnd,
-        false,
-        reinterpret_cast<ABI::Windows::UI::Composition::Desktop::IDesktopWindowTarget **>(put_abi(target))));
-
-    auto root = compositor.CreateContainerVisual();
-    root.RelativeSizeAdjustment({1.0f, 1.0f});
-    root.Offset({0, 0, 0});
-    root.Comment(L"Root Visual");
-    target.Root(root);
-
-    m_compRootView.as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
-        .InternalRootVisual(
-            winrt::Microsoft::ReactNative::Composition::Experimental::SystemCompositionContextHelper::CreateVisual(
-                target.Root()));
-
-#if USE_WINUI3
-  }
-#endif
+  m_compRootView.ScaleFactor(ScaleFactor());
+  bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
   m_compRootView.ReactViewHost(std::move(m_reactViewHost));
   m_compRootView.ScaleFactor(ScaleFactor());
@@ -122,9 +85,7 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t 
   }
 
   if (m_compRootView) {
-#if USE_WINUI3
     if (!m_compRootView.Island()) // When using Island hosting we dont need to forward window messages
-#endif
       return static_cast<LRESULT>(
           m_compRootView.as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
               .SendMessage(msg, wParam, lParam));

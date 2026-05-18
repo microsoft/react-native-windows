@@ -6,10 +6,9 @@
 #include "JsiError.g.h"
 #include "JsiPreparedJavaScript.g.h"
 #include "JsiRuntime.g.h"
+#include <JSI/RuntimeHolder.h>
 #include <unordered_map>
 #include "winrt/Microsoft.ReactNative.h"
-
-#include "ChakraRuntimeHolder.h"
 
 namespace facebook::jsi {
 class Runtime;
@@ -71,7 +70,7 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
       std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept;
 
  public: // JsiRuntime
-  static Microsoft::ReactNative::JsiRuntime MakeChakraRuntime();
+  static Microsoft::ReactNative::JsiRuntime MakeRuntime();
 
   JsiValueRef EvaluateJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl);
   ReactNative::JsiPreparedJavaScript PrepareJavaScript(IJsiByteBuffer const &buffer, hstring const &sourceUrl);

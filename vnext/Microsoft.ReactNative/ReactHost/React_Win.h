@@ -3,10 +3,7 @@
 
 #pragma once
 
-#ifndef CORE_ABI
-#include <INativeUIManager.h>
 #include <IReactInstance.h>
-#endif
 
 #include <functional/functor.h>
 #include <string>

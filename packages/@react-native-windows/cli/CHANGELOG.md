@@ -1,8 +1,140 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Tue, 07 Oct 2025 05:27:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 13 May 2026 18:22:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.290
+
+Wed, 13 May 2026 18:22:07 GMT
+
+### Changes
+
+- Add a run-windows port option for Metro (vivekjm77@gmail.com)
+
+## 0.0.0-canary.289
+
+Sun, 10 May 2026 18:20:42 GMT
+
+### Changes
+
+- Upgrade to PowerShell 7 (julio.rocha@microsoft.com)
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.2
+
+## 0.0.0-canary.288
+
+Tue, 21 Apr 2026 02:54:29 GMT
+
+### Changes
+
+- Add folly and fast-float to fork-sync (vmorozov@microsoft.com)
+- Fix command injection in cleanProject() (CWE-78) and argument injection in uninstallAppPackage() (CWE-88) (nitchaudhary@microsoft.com)
+
+## 0.0.0-canary.287
+
+Tue, 07 Apr 2026 05:29:55 GMT
+
+### Changes
+
+- Upgrade to yarn v4 (30809111+acoates-ms@users.noreply.github.com)
+- Fork fmt lib locally (vmorozov@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.133
+- Bump @react-native-windows/fs to v0.0.0-canary.72
+- Bump @react-native-windows/package-utils to v0.0.0-canary.98
+- Bump @react-native-windows/telemetry to v0.0.0-canary.133
+
+## 0.0.0-canary.286
+
+Wed, 25 Mar 2026 02:08:12 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.132
+- Bump @react-native-windows/fs to v0.0.0-canary.71
+- Bump @react-native-windows/package-utils to v0.0.0-canary.97
+- Bump @react-native-windows/telemetry to v0.0.0-canary.132
+
+## 0.0.0-canary.285
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- Bump TS target (30809111+acoates-ms@users.noreply.github.com)
+- refactor: replace depcheck with knip (PHILLIPS71@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.131
+- Bump @react-native-windows/telemetry to v0.0.0-canary.131
+
+## 0.0.0-canary.284
+
+Wed, 04 Mar 2026 22:34:24 GMT
+
+### Changes
+
+- Fixed template info not detecting mixed architecture projects (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.130
+
+## 0.0.0-canary.283
+
+Tue, 13 Jan 2026 13:00:14 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.130
+
+## 0.0.0-canary.282
+
+Sat, 10 Jan 2026 06:40:18 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.129
+
+## 0.0.0-canary.281
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.128
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @react-native-windows/package-utils to v0.0.0-canary.96
+- Bump @react-native-windows/telemetry to v0.0.0-canary.129
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 0.0.0-canary.280
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Changes
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.128
+
+## 0.0.0-canary.279
+
+Wed, 12 Nov 2025 21:00:41 GMT
+
+### Changes
+
+- Remove paper (30809111+acoates-ms@users.noreply.github.com)
+- Remove web debugging support (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.127
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @react-native-windows/package-utils to v0.0.0-canary.95
+- Bump @react-native-windows/telemetry to v0.0.0-canary.127
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
+
+## 0.0.0-canary.278
+
+Tue, 21 Oct 2025 05:28:10 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.126
 
 ## 0.0.0-canary.277
 

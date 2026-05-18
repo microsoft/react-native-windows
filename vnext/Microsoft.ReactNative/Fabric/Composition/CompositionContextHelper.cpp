@@ -2,13 +2,14 @@
 #include "pch.h"
 #include "CompositionContextHelper.h"
 #include <algorithm>
+#include <cassert>
+#include <exception>
+#include <vector>
 #if __has_include("Composition.Experimental.SystemCompositionContextHelper.g.cpp")
 #include "Composition.Experimental.SystemCompositionContextHelper.g.cpp"
 #endif
-#ifdef USE_WINUI3
 #if __has_include("Composition.Experimental.MicrosoftCompositionContextHelper.g.cpp")
 #include "Composition.Experimental.MicrosoftCompositionContextHelper.g.cpp"
-#endif
 #endif
 
 #include <Windows.Graphics.Interop.h>
@@ -19,11 +20,9 @@
 #include <winrt/Windows.UI.Composition.interactions.h>
 #include "CompositionHelpers.h"
 
-#ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Composition.interactions.h>
 #include <winrt/Microsoft.UI.Composition.interop.h>
-#endif
 
 namespace Microsoft::ReactNative::Composition::Experimental {
 
@@ -54,6 +53,7 @@ struct CompositionTypeTraits<WindowsTypeTag> {
   using CompositionStretch = winrt::Windows::UI::Composition::CompositionStretch;
   using CompositionStrokeCap = winrt::Windows::UI::Composition::CompositionStrokeCap;
   using CompositionSurfaceBrush = winrt::Windows::UI::Composition::CompositionSurfaceBrush;
+  using CompositionDropShadowSourcePolicy = winrt::Windows::UI::Composition::CompositionDropShadowSourcePolicy;
   using Compositor = winrt::Windows::UI::Composition::Compositor;
   using ContainerVisual = winrt::Windows::UI::Composition::ContainerVisual;
   using CubicBezierEasingFunction = winrt::Windows::UI::Composition::CubicBezierEasingFunction;
@@ -102,7 +102,6 @@ struct CompositionTypeTraits<WindowsTypeTag> {
 };
 using WindowsTypeRedirects = CompositionTypeTraits<WindowsTypeTag>;
 
-#ifdef USE_WINUI3
 struct MicrosoftTypeTag;
 template <>
 struct CompositionTypeTraits<MicrosoftTypeTag> {
@@ -127,6 +126,7 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
   using CompositionStretch = winrt::Microsoft::UI::Composition::CompositionStretch;
   using CompositionStrokeCap = winrt::Microsoft::UI::Composition::CompositionStrokeCap;
   using CompositionSurfaceBrush = winrt::Microsoft::UI::Composition::CompositionSurfaceBrush;
+  using CompositionDropShadowSourcePolicy = winrt::Microsoft::UI::Composition::CompositionDropShadowSourcePolicy;
   using Compositor = winrt::Microsoft::UI::Composition::Compositor;
   using ContainerVisual = winrt::Microsoft::UI::Composition::ContainerVisual;
   using CubicBezierEasingFunction = winrt::Microsoft::UI::Composition::CubicBezierEasingFunction;
@@ -174,7 +174,6 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
       winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper;
 };
 using MicrosoftTypeRedirects = CompositionTypeTraits<MicrosoftTypeTag>;
-#endif
 
 struct GeometrySource : public winrt::implements<
                             GeometrySource,
@@ -224,13 +223,24 @@ struct CompDropShadow : public winrt::implements<
     m_shadow.Color(color);
   }
 
+  void Mask(winrt::Microsoft::ReactNative::Composition::Experimental::IBrush const &mask) noexcept {
+    if (mask) {
+      m_shadow.Mask(mask.as<typename TTypeRedirects::IInnerCompositionBrush>()->InnerBrush());
+    } else {
+      m_shadow.Mask(nullptr);
+    }
+  }
+
+  void SourcePolicy(
+      winrt::Microsoft::ReactNative::Composition::Experimental::CompositionDropShadowSourcePolicy policy) noexcept {
+    m_shadow.SourcePolicy(static_cast<typename TTypeRedirects::CompositionDropShadowSourcePolicy>(policy));
+  }
+
  private:
   typename TTypeRedirects::DropShadow m_shadow;
 };
 using WindowsCompDropShadow = CompDropShadow<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompDropShadow = CompDropShadow<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompBrush : public winrt::implements<
@@ -247,9 +257,7 @@ struct CompBrush : public winrt::implements<
   typename TTypeRedirects::CompositionBrush m_brush;
 };
 using WindowsCompBrush = CompBrush<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompBrush = CompBrush<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompDrawingSurfaceBrush : public winrt::implements<
@@ -328,9 +336,7 @@ struct CompDrawingSurfaceBrush : public winrt::implements<
   winrt::com_ptr<typename TTypeRedirects::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop;
 };
 using WindowsCompDrawingSurfaceBrush = CompDrawingSurfaceBrush<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompDrawingSurfaceBrush = CompDrawingSurfaceBrush<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 void SetAnimationClass(
@@ -428,30 +434,43 @@ struct CompVisualImpl {
   void InsertAt(
       const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual,
       uint32_t index) noexcept {
+    if (index > m_childrenCache.size()) {
+      std::terminate();
+    }
     auto containerChildren = InnerVisual().as<typename TTypeRedirects::ContainerVisual>().Children();
     auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     if (index == 0) {
       containerChildren.InsertAtBottom(compVisual);
-      return;
+    } else {
+      auto insertAfter = containerChildren.First();
+      for (uint32_t i = 1; i < index; i++)
+        insertAfter.MoveNext();
+      containerChildren.InsertAbove(compVisual, insertAfter.Current());
     }
-    auto insertAfter = containerChildren.First();
-    for (uint32_t i = 1; i < index; i++)
-      insertAfter.MoveNext();
-    containerChildren.InsertAbove(compVisual, insertAfter.Current());
+    if (index >= m_childrenCache.size()) {
+      m_childrenCache.push_back(visual);
+    } else {
+      m_childrenCache.insert(m_childrenCache.begin() + index, visual);
+    }
   }
 
   void Remove(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept {
     auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     auto containerChildren = InnerVisual().as<typename TTypeRedirects::ContainerVisual>().Children();
     containerChildren.Remove(compVisual);
+    auto it = std::find_if(
+        m_childrenCache.begin(), m_childrenCache.end(), [&visual](const auto &cached) { return cached == visual; });
+    if (it != m_childrenCache.end()) {
+      m_childrenCache.erase(it);
+    }
   }
 
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual GetAt(uint32_t index) noexcept {
-    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
-    auto it = containerChildren.First();
-    for (uint32_t i = 0; i < index; i++)
-      it.MoveNext();
-    return TTypeRedirects::CompositionContextHelper::CreateVisual(it.Current());
+    if (index < m_childrenCache.size()) {
+      return m_childrenCache[index];
+    }
+    assert(false && "GetAt called with out-of-range index");
+    return nullptr;
   }
 
   void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
@@ -531,6 +550,7 @@ struct CompVisualImpl {
 
  protected:
   TVisual m_visual;
+  std::vector<winrt::Microsoft::ReactNative::Composition::Experimental::IVisual> m_childrenCache;
 };
 
 template <typename TTypeRedirects>
@@ -554,9 +574,7 @@ struct CompVisual : public winrt::implements<
   }
 };
 using WindowsCompVisual = CompVisual<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompVisual = CompVisual<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompSpriteVisual : winrt::implements<
@@ -588,9 +606,7 @@ struct CompSpriteVisual : winrt::implements<
   }
 };
 using WindowsCompSpriteVisual = CompSpriteVisual<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompSpriteVisual = CompSpriteVisual<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompRoundedRectangleVisual
@@ -671,9 +687,7 @@ struct CompRoundedRectangleVisual
   typename TTypeRedirects::CompositionRoundedRectangleGeometry m_geometry{nullptr};
 };
 using WindowsCompRoundedRectangleVisual = CompRoundedRectangleVisual<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompRoundedRectangleVisual = CompRoundedRectangleVisual<MicrosoftTypeRedirects>;
-#endif
 
 struct CompScrollPositionChangedArgs
     : winrt::implements<
@@ -851,30 +865,43 @@ struct CompScrollerVisual : winrt::implements<
   void InsertAt(
       const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual,
       uint32_t index) noexcept {
+    if (index > m_childrenCache.size()) {
+      std::terminate();
+    }
     auto containerChildren = m_contentVisual.Children();
     auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     if (index == 0) {
       containerChildren.InsertAtBottom(compVisual);
-      return;
+    } else {
+      auto insertAfter = containerChildren.First();
+      for (uint32_t i = 1; i < index; i++)
+        insertAfter.MoveNext();
+      containerChildren.InsertAbove(compVisual, insertAfter.Current());
     }
-    auto insertAfter = containerChildren.First();
-    for (uint32_t i = 1; i < index; i++)
-      insertAfter.MoveNext();
-    containerChildren.InsertAbove(compVisual, insertAfter.Current());
+    if (index >= m_childrenCache.size()) {
+      m_childrenCache.push_back(visual);
+    } else {
+      m_childrenCache.insert(m_childrenCache.begin() + index, visual);
+    }
   }
 
   void Remove(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept {
     auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     auto containerChildren = m_contentVisual.Children();
     containerChildren.Remove(compVisual);
+    auto it = std::find_if(
+        m_childrenCache.begin(), m_childrenCache.end(), [&visual](const auto &cached) { return cached == visual; });
+    if (it != m_childrenCache.end()) {
+      m_childrenCache.erase(it);
+    }
   }
 
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual GetAt(uint32_t index) noexcept {
-    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
-    auto it = containerChildren.First();
-    for (uint32_t i = 0; i < index; i++)
-      it.MoveNext();
-    return TTypeRedirects::CompositionContextHelper::CreateVisual(it.Current());
+    if (index < m_childrenCache.size()) {
+      return m_childrenCache[index];
+    }
+    assert(false && "GetAt called with out-of-range index");
+    return nullptr;
   }
 
   void Brush(const winrt::Microsoft::ReactNative::Composition::Experimental::IBrush &brush) noexcept {
@@ -910,6 +937,31 @@ struct CompScrollerVisual : winrt::implements<
         m_snapToOffsets.push_back(offset);
       }
     }
+    // Match Paper behavior: snapToOffsets disables pagingEnabled and snapToInterval
+    if (!m_snapToOffsets.empty()) {
+      m_pagingEnabled = false;
+      m_snapToInterval = 0.0f;
+    }
+    ConfigureSnapInertiaModifiers();
+  }
+
+  void PagingEnabled(bool pagingEnabled) noexcept {
+    m_pagingEnabled = pagingEnabled;
+    ConfigureSnapInertiaModifiers();
+  }
+
+  void SnapToInterval(float interval) noexcept {
+    m_snapToInterval = interval;
+    // Match Paper behavior: snapToOffsets disables snapToInterval
+    if (!m_snapToOffsets.empty()) {
+      m_snapToInterval = 0.0f;
+    }
+    ConfigureSnapInertiaModifiers();
+  }
+
+  void SnapToAlignment(
+      winrt::Microsoft::ReactNative::Composition::Experimental::SnapPointsAlignment alignment) noexcept {
+    m_snapToAlignment = alignment;
     ConfigureSnapInertiaModifiers();
   }
 
@@ -934,9 +986,13 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
+    bool sizeChanged = (m_visualSize.x != size.x || m_visualSize.y != size.y);
     m_visualSize = size;
     m_visual.Size(size);
     UpdateMaxPosition();
+    if (sizeChanged && m_pagingEnabled) {
+      ConfigureSnapInertiaModifiers();
+    }
   }
 
   void Offset(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept {
@@ -1046,9 +1102,13 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void ContentSize(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
+    bool sizeChanged = (m_contentSize.x != size.x || m_contentSize.y != size.y);
     m_contentSize = size;
     m_contentVisual.Size(size);
     UpdateMaxPosition();
+    if (sizeChanged && m_pagingEnabled) {
+      ConfigureSnapInertiaModifiers();
+    }
   }
 
   winrt::Windows::Foundation::Numerics::float3 ScrollPosition() const noexcept {
@@ -1155,13 +1215,81 @@ struct CompScrollerVisual : winrt::implements<
     // Collect and deduplicate all snap positions
     std::vector<float> snapPositions;
 
-    if (m_snapToStart) {
-      snapPositions.push_back(0.0f);
+    // Priority: snapToOffsets > snapToInterval > pagingEnabled
+    if (!m_snapToOffsets.empty()) {
+      // Use explicit snap points when snapToOffsets is set (highest priority)
+      if (m_snapToStart) {
+        snapPositions.push_back(0.0f);
+      }
+      snapPositions.insert(snapPositions.end(), m_snapToOffsets.begin(), m_snapToOffsets.end());
+    } else if (m_snapToInterval > 0.0f) {
+      // Generate snap points at interval positions
+      float viewportSize = m_horizontal ? visualSize.x : visualSize.y;
+      float maxScroll =
+          m_horizontal ? std::max(contentSize.x - visualSize.x, 0.0f) : std::max(contentSize.y - visualSize.y, 0.0f);
+
+      // Calculate alignment offset based on snapToAlignment
+      float alignmentOffset = 0.0f;
+      using SnapPointsAlignment = winrt::Microsoft::ReactNative::Composition::Experimental::SnapPointsAlignment;
+      if (m_snapToAlignment == SnapPointsAlignment::Center) {
+        alignmentOffset = -viewportSize / 2.0f;
+      } else if (m_snapToAlignment == SnapPointsAlignment::Far) {
+        alignmentOffset = -viewportSize;
+      }
+      // Near (start) alignment has no offset (alignmentOffset = 0)
+
+      // Generate snap points at interval positions with alignment offset
+      for (float position = alignmentOffset; position <= maxScroll; position += m_snapToInterval) {
+        if (position >= 0.0f) { // Only include positions >= 0
+          snapPositions.push_back(position);
+        }
+      }
+
+      // Ensure we have at least the start position
+      if (snapPositions.empty() || snapPositions.front() > 0.0f) {
+        snapPositions.insert(snapPositions.begin(), 0.0f);
+      }
+
+      // Ensure the end position is included if not already
+      if (!snapPositions.empty() && snapPositions.back() < maxScroll) {
+        snapPositions.push_back(maxScroll);
+      }
+    } else if (m_pagingEnabled) {
+      // Generate snap points at viewport intervals (paging)
+      float viewportSize = m_horizontal ? visualSize.x : visualSize.y;
+      float maxScroll =
+          m_horizontal ? std::max(contentSize.x - visualSize.x, 0.0f) : std::max(contentSize.y - visualSize.y, 0.0f);
+
+      // Only generate paging snap points if viewport size is valid
+      if (viewportSize > 0 && maxScroll > 0) {
+        // Add snap points at each page (viewport size) interval
+        for (float position = 0.0f; position <= maxScroll; position += viewportSize) {
+          snapPositions.push_back(position);
+        }
+
+        // Ensure the end position is included if not already
+        if (!snapPositions.empty() && snapPositions.back() < maxScroll) {
+          snapPositions.push_back(maxScroll);
+        }
+      } else {
+        // If content fits in viewport or invalid size, just snap to start
+        snapPositions.push_back(0.0f);
+      }
+    } else {
+      // No interval or paging - use explicit snap points only
+      if (m_snapToStart) {
+        snapPositions.push_back(0.0f);
+      }
     }
 
-    snapPositions.insert(snapPositions.end(), m_snapToOffsets.begin(), m_snapToOffsets.end());
     std::sort(snapPositions.begin(), snapPositions.end());
     snapPositions.erase(std::unique(snapPositions.begin(), snapPositions.end()), snapPositions.end());
+
+    // Skip reconfiguration if snap points haven't changed
+    if (snapPositions == m_previousSnapPositions) {
+      return;
+    }
+    m_previousSnapPositions = snapPositions;
 
     std::vector<typename TTypeRedirects::InteractionTrackerInertiaRestingValue> restingValues;
 
@@ -1222,7 +1350,8 @@ struct CompScrollerVisual : winrt::implements<
       restingValues.push_back(restingValue);
     }
 
-    if (m_snapToEnd) {
+    // Only add snapToEnd handling when NOT using pagingEnabled or snapToInterval (they already include end position)
+    if (m_snapToEnd && !m_pagingEnabled && m_snapToInterval <= 0.0f) {
       auto endRestingValue = TTypeRedirects::InteractionTrackerInertiaRestingValue::Create(compositor);
 
       // Create property sets to dynamically compute content - visual size
@@ -1286,7 +1415,12 @@ struct CompScrollerVisual : winrt::implements<
   bool m_horizontal{false};
   bool m_snapToStart{true};
   bool m_snapToEnd{true};
+  bool m_pagingEnabled{false};
+  float m_snapToInterval{0.0f};
+  winrt::Microsoft::ReactNative::Composition::Experimental::SnapPointsAlignment m_snapToAlignment{
+      winrt::Microsoft::ReactNative::Composition::Experimental::SnapPointsAlignment::Near};
   std::vector<float> m_snapToOffsets;
+  std::vector<float> m_previousSnapPositions;
   bool m_inertia{false};
   bool m_custom{false};
   bool m_interacting{false};
@@ -1313,11 +1447,10 @@ struct CompScrollerVisual : winrt::implements<
   typename TTypeRedirects::SpriteVisual m_contentVisual{nullptr};
   typename TTypeRedirects::InteractionTracker m_interactionTracker{nullptr};
   typename TTypeRedirects::VisualInteractionSource m_visualInteractionSource{nullptr};
+  std::vector<winrt::Microsoft::ReactNative::Composition::Experimental::IVisual> m_childrenCache;
 };
 using WindowsCompScrollerVisual = CompScrollerVisual<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompScrollerVisual = CompScrollerVisual<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompActivityVisual : winrt::implements<
@@ -1805,9 +1938,7 @@ struct CompActivityVisual : winrt::implements<
   typename TTypeRedirects::SpriteVisual m_contentVisual{nullptr};
 };
 using WindowsCompActivityVisual = CompActivityVisual<WindowsTypeRedirects>;
-#ifdef USE_WINUI3
 using MicrosoftCompActivityVisual = CompActivityVisual<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompCaretVisual : winrt::implements<
@@ -1890,13 +2021,11 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual CompCaretVisua
 }
 using WindowsCompCaretVisual = CompCaretVisual<WindowsTypeRedirects>;
 
-#ifdef USE_WINUI3
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 CompCaretVisual<MicrosoftTypeRedirects>::CreateVisual() const noexcept {
   return winrt::make<Composition::Experimental::MicrosoftCompSpriteVisual>(m_compVisual);
 }
 using MicrosoftCompCaretVisual = CompCaretVisual<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompFocusVisual : winrt::implements<
@@ -1961,13 +2090,11 @@ CompFocusVisual<WindowsTypeRedirects>::CreateVisual() noexcept {
 }
 using WindowsCompFocusVisual = CompFocusVisual<WindowsTypeRedirects>;
 
-#ifdef USE_WINUI3
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 CompFocusVisual<MicrosoftTypeRedirects>::CreateVisual() noexcept {
   return winrt::make<Composition::Experimental::MicrosoftCompSpriteVisual>(m_compVisual);
 }
 using MicrosoftCompFocusVisual = CompFocusVisual<MicrosoftTypeRedirects>;
-#endif
 
 template <typename TTypeRedirects>
 struct CompContext : winrt::implements<
@@ -2081,7 +2208,6 @@ struct CompContext : winrt::implements<
   winrt::com_ptr<ID3D11Device> m_d3dDevice;
   winrt::com_ptr<ID2D1Device> m_d2dDevice;
   typename TTypeRedirects::CompositionGraphicsDevice m_compositionGraphicsDevice{nullptr};
-  winrt::com_ptr<ID3D11DeviceContext> m_d3dDeviceContext;
 };
 
 winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual
@@ -2154,7 +2280,6 @@ CompContext<WindowsTypeRedirects>::CompositionGraphicsDevice() noexcept {
 
 using WindowsCompContext = CompContext<WindowsTypeRedirects>;
 
-#ifdef USE_WINUI3
 winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual
 CompContext<MicrosoftTypeRedirects>::CreateSpriteVisual() noexcept {
   return winrt::make<Composition::Experimental::MicrosoftCompSpriteVisual>(m_compositor.CreateSpriteVisual());
@@ -2219,7 +2344,6 @@ CompContext<MicrosoftTypeRedirects>::CompositionGraphicsDevice() noexcept {
 }
 
 using MicrosoftCompContext = CompContext<MicrosoftTypeRedirects>;
-#endif
 
 } // namespace Microsoft::ReactNative::Composition::Experimental
 
@@ -2269,7 +2393,6 @@ winrt::Windows::UI::Composition::ICompositionSurface SystemCompositionContextHel
   return s ? s->Inner() : nullptr;
 }
 
-#ifdef USE_WINUI3
 ICompositionContext MicrosoftCompositionContextHelper::CreateContext(
     winrt::Microsoft::UI::Composition::Compositor const &compositor) noexcept {
   return winrt::make<::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompContext>(compositor);
@@ -2320,7 +2443,5 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IBrush MicrosoftCompos
     const winrt::Microsoft::UI::Composition::CompositionBrush &brush) noexcept {
   return winrt::make<::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompBrush>(brush);
 }
-
-#endif
 
 } // namespace winrt::Microsoft::ReactNative::Composition::Experimental::implementation

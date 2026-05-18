@@ -9,8 +9,7 @@ import requireNativeComponent from '../../ReactNative/requireNativeComponent';
 import codegenNativeCommands from '../../Utilities/codegenNativeCommands';
 import type {TextInputNativeCommands} from './TextInputNativeCommands';
 
-// $FlowFixMe[incompatible-type-arg]
-type NativeType = HostComponent<mixed>;
+type NativeType = HostComponent<{...}>;
 
 type NativeCommands = TextInputNativeCommands<NativeType>;
 
@@ -20,7 +19,7 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
 
 const WindowsTextInputComponent: NativeType =
   // $FlowFixMe[incompatible-call]
-  requireNativeComponent<mixed>('RCTTextInput');
+  requireNativeComponent<{...}>('RCTTextInput');
 
 export default WindowsTextInputComponent;
 // [Windows]

@@ -7,6 +7,7 @@
 #include <cxxreact/JSBigString.h>
 #include <cxxreact/JSExecutor.h>
 #include <cxxreact/MessageQueueThread.h>
+#include <cxxreact/ModuleRegistry.h>
 #include <cxxreact/RAMBundleRegistry.h>
 
 namespace Microsoft::React::Test {

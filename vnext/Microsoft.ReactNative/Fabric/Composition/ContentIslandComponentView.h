@@ -32,6 +32,8 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
       uint32_t index) noexcept override;
   void Connect(const winrt::Microsoft::UI::Content::ContentIsland &contentIsland) noexcept;
 
+  winrt::Microsoft::UI::Content::ChildSiteLink ChildSiteLink() noexcept;
+
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept;
@@ -40,7 +42,10 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
 
   bool focusable() const noexcept override;
 
-  winrt::Windows::Foundation::IInspectable EnsureUiaProvider() noexcept override;
+  facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
+      const noexcept override;
+
+  winrt::Windows::Foundation::IInspectable CreateAutomationProvider() noexcept override;
 
   void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
 
@@ -55,22 +60,31 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   void OnMounted() noexcept;
   void OnUnmounted() noexcept;
   void ParentLayoutChanged() noexcept;
+  void ConnectInternal() noexcept;
+  winrt::Microsoft::UI::Content::ContentIsland ParentContentIsland() noexcept;
 
   bool m_layoutChangePosted{false};
+  winrt::Microsoft::UI::Content::ContentIsland m_parentContentIsland{nullptr};
   winrt::Microsoft::UI::Content::ContentIsland m_islandToConnect{nullptr};
+  std::optional<winrt::Microsoft::UI::Input::FocusNavigationReason> m_pendingNavigateFocus;
+
   winrt::event_token m_mountedToken;
   winrt::event_token m_unmountedToken;
   std::vector<winrt::Microsoft::ReactNative::ComponentView::LayoutMetricsChanged_revoker> m_layoutMetricChangedRevokers;
   winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
   winrt::Microsoft::UI::Input::InputFocusNavigationHost m_navigationHost{nullptr};
   winrt::event_token m_navigationHostDepartFocusRequestedToken{};
+  std::optional<winrt::Microsoft::UI::Input::FocusNavigationReason> m_pendingFocus;
+
+  // Issue #15557: Store ViewChanged subscriptions to parent ScrollViews for transform updates
+  struct ViewChangedSubscription {
+    winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView> scrollView;
+    winrt::event_token token;
+  };
+  std::vector<ViewChangedSubscription> m_viewChangedSubscriptions;
 
   // Automation
   void ConfigureChildSiteLinkAutomation() noexcept;
-  winrt::event_token m_fragmentRootAutomationProviderRequestedToken{};
-  winrt::event_token m_parentAutomationProviderRequestedToken{};
-  winrt::event_token m_nextSiblingAutomationProviderRequestedToken{};
-  winrt::event_token m_previousSiblingAutomationProviderRequestedToken{};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

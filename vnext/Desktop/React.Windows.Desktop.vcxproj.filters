@@ -33,37 +33,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="ABI\MessageQueue.idl">
-      <Filter>ABI</Filter>
-    </Midl>
     <Midl Include="ABI\NativeLogging.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="ABI\NativeTracing.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="ABI\TestController.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl">
       <Filter>ABI</Filter>
     </Midl>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ABI\MessageQueueShim.cpp">
-      <Filter>ABI</Filter>
-    </ClCompile>
-    <ClCompile Include="ABI\NativeLogEventSource.cpp">
-      <Filter>ABI</Filter>
-    </ClCompile>
-    <ClCompile Include="ABI\NativeTraceEventSource.cpp">
-      <Filter>ABI</Filter>
-    </ClCompile>
     <ClCompile Include="ABI\TestController.cpp">
       <Filter>ABI</Filter>
-    </ClCompile>
-    <ClCompile Include="CxxReactWin32\JSBigString.cpp">
-      <Filter>Source Files\CxxReactWin32</Filter>
     </ClCompile>
     <ClCompile Include="JSBigStringResourceDll.cpp">
       <Filter>Source Files</Filter>
@@ -77,21 +53,11 @@
     <ClCompile Include="WebSocketResourceFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ABI\MessageQueueShim.h">
-      <Filter>ABI</Filter>
-    </ClInclude>
-    <ClInclude Include="ABI\NativeLogEventSource.h">
-      <Filter>ABI</Filter>
-    </ClInclude>
-    <ClInclude Include="ABI\NativeTraceEventSource.h">
-      <Filter>ABI</Filter>
-    </ClInclude>
     <ClInclude Include="ABI\TestController.h">
       <Filter>ABI</Filter>
     </ClInclude>

@@ -4,10 +4,8 @@
 #include "pch.h"
 #include <Utils/ThemeUtils.h>
 
-#ifdef USE_FABRIC
 #include <react/renderer/graphics/Color.h>
 #include <react/renderer/graphics/HostPlatformColor.h>
-#endif
 #include <winuser.h>
 
 namespace Microsoft::ReactNative {
@@ -43,7 +41,6 @@ int CalculateColorBrightness(int r, int g, int b) noexcept {
       kColorBrightnessDivisor;
 }
 
-#ifdef USE_FABRIC
 bool isColorMeaningful(const facebook::react::SharedColor &color) noexcept {
   return facebook::react::isColorMeaningful(color);
 }
@@ -77,6 +74,5 @@ facebook::react::SharedColor GetCaretColor(
     return defaultCaretColor;
   }
 }
-#endif
 
 } // namespace Microsoft::ReactNative

@@ -8,7 +8,10 @@
 
 #include <Fabric/FabricUIManagerModule.h>
 #include <winrt/Microsoft.UI.Input.h>
+#include "CompositionDynamicAutomationProvider.h"
 #include "CompositionRootAutomationProvider.h"
+#include "ContentIslandComponentView.h"
+#include "ParagraphComponentView.h"
 #include "ReactNativeIsland.h"
 #include "Theme.h"
 
@@ -79,7 +82,8 @@ winrt::Microsoft::ReactNative::ComponentView RootComponentView::GetFocusedCompon
 
 void RootComponentView::SetFocusedComponent(
     const winrt::Microsoft::ReactNative::ComponentView &value,
-    winrt::Microsoft::ReactNative::FocusNavigationDirection direction) noexcept {
+    winrt::Microsoft::ReactNative::FocusNavigationDirection direction,
+    winrt::Microsoft::ReactNative::FocusState focusState) noexcept {
   if (m_focusedComponent == value)
     return;
 
@@ -94,9 +98,24 @@ void RootComponentView::SetFocusedComponent(
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->TrySetFocus();
     }
     m_focusedComponent = value;
+    if (focusState == winrt::Microsoft::ReactNative::FocusState::Programmatic) {
+      focusState =
+          (!m_useKeyboardForProgrammaticFocus || m_focusState == winrt::Microsoft::ReactNative::FocusState::Pointer)
+          ? winrt::Microsoft::ReactNative::FocusState::Pointer
+          : winrt::Microsoft::ReactNative::FocusState::Keyboard;
+    }
+    m_focusState = focusState;
     auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>(value, direction);
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(value)->onGotFocus(args);
   }
+}
+
+winrt::Microsoft::ReactNative::FocusState RootComponentView::focusState() const noexcept {
+  return m_focusState;
+}
+
+void RootComponentView::UseKeyboardForProgrammaticFocus(bool value) noexcept {
+  m_useKeyboardForProgrammaticFocus = value;
 }
 
 bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
@@ -113,7 +132,8 @@ bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::Focus
         view,
         request.Reason() == winrt::Microsoft::ReactNative::FocusNavigationReason::First
             ? winrt::Microsoft::ReactNative::FocusNavigationDirection::First
-            : winrt::Microsoft::ReactNative::FocusNavigationDirection::Last);
+            : winrt::Microsoft::ReactNative::FocusNavigationDirection::Last,
+        winrt::Microsoft::ReactNative::FocusState::Programmatic);
   }
   return view != nullptr;
 }
@@ -121,6 +141,7 @@ bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::Focus
 bool RootComponentView::TrySetFocusedComponent(
     const winrt::Microsoft::ReactNative::ComponentView &view,
     winrt::Microsoft::ReactNative::FocusNavigationDirection direction,
+    winrt::Microsoft::ReactNative::FocusState focusState,
     bool forceNoSelectionIfCannotMove /*= false*/) noexcept {
   auto target = view;
   auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
@@ -154,15 +175,15 @@ bool RootComponentView::TrySetFocusedComponent(
 
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(losingFocusArgs.NewFocusedComponent())
         ->rootComponentView()
-        ->SetFocusedComponent(gettingFocusArgs.NewFocusedComponent(), direction);
+        ->SetFocusedComponent(gettingFocusArgs.NewFocusedComponent(), direction, focusState);
   } else {
-    SetFocusedComponent(nullptr, direction);
+    SetFocusedComponent(nullptr, direction, focusState);
   }
 
   return true;
 }
 
-bool RootComponentView::TryMoveFocus(bool next) noexcept {
+bool RootComponentView::TryMoveFocus(bool next, winrt::Microsoft::ReactNative::FocusState focusState) noexcept {
   if (!m_focusedComponent) {
     return NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
         next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First
@@ -170,7 +191,8 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
   }
 
   Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
-      [currentlyFocused = m_focusedComponent, next](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+      [currentlyFocused = m_focusedComponent, next, focusState](
+          const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
         if (view == currentlyFocused)
           return false;
         auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view);
@@ -182,7 +204,8 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
             ->TrySetFocusedComponent(
                 view,
                 next ? winrt::Microsoft::ReactNative::FocusNavigationDirection::Next
-                     : winrt::Microsoft::ReactNative::FocusNavigationDirection::Previous);
+                     : winrt::Microsoft::ReactNative::FocusNavigationDirection::Previous,
+                focusState);
       };
 
   if (winrt::Microsoft::ReactNative::implementation::walkTree(m_focusedComponent, next, fn)) {
@@ -246,7 +269,10 @@ void RootComponentView::start(const winrt::Microsoft::ReactNative::ReactNativeIs
 }
 
 void RootComponentView::stop() noexcept {
-  SetFocusedComponent(nullptr, winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+  SetFocusedComponent(
+      nullptr,
+      winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+      winrt::Microsoft::ReactNative::FocusState::Programmatic);
   if (m_visualAddedToIsland) {
     if (auto rootView = m_wkRootView.get()) {
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->RemoveRenderedVisual(
@@ -275,7 +301,7 @@ facebook::react::Point RootComponentView::getClientOffset() const noexcept {
   return {};
 }
 
-winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixels) noexcept {
+winrt::IUnknown RootComponentView::UiaProviderFromPoint(const POINT &ptPixels, const POINT &ptScreen) noexcept {
   facebook::react::Point ptDips{
       static_cast<facebook::react::Float>(ptPixels.x) / m_layoutMetrics.pointScaleFactor,
       static_cast<facebook::react::Float>(ptPixels.y) / m_layoutMetrics.pointScaleFactor};
@@ -295,7 +321,41 @@ winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixel
   if (view == nullptr)
     return nullptr;
 
-  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->EnsureUiaProvider();
+  auto uiaProvider =
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->EnsureUiaProvider();
+
+  if (auto contentIsland =
+          view.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ContentIslandComponentView>()) {
+    if (contentIsland->InnerAutomationProvider()) {
+      if (auto childProvider = contentIsland->InnerAutomationProvider()->TryGetChildSiteLinkAutomationProvider()) {
+        // ChildProvider is the the automation provider from the ChildSiteLink.  In the case of WinUI, this
+        // is a pointer to WinUI's internal CUIAHostWindow object.
+        // It seems odd, but even though this node doesn't behave as a fragment root in our case (the real fragment root
+        // is the RootComponentView's UIA provider), we still use its IRawElementProviderFragmentRoot -- just so
+        // we can do the ElementProviderFromPoint call.  (this was recommended by the team who did the initial
+        // architecture work).
+        if (auto fragmentRoot = childProvider.try_as<IRawElementProviderFragmentRoot>()) {
+          com_ptr<IRawElementProviderFragment> frag;
+          // WinUI then does its own hitTest inside the XAML tree.
+          fragmentRoot->ElementProviderFromPoint(
+              ptScreen
+                  .x, // Note since we're going through IRawElementProviderFragment the coordinates are in screen space.
+              ptScreen.y,
+              frag.put());
+          // We return the specific child provider(frag) when hosted XAML has an element
+          // under the cursor. This satisfies the UIA "element at point" contract and exposes
+          // the control’s patterns/properties. If the hosted tree finds nothing, we fall back
+          // to the RNW container’s provider (uiaProvider) to keep the island accessible.
+          // (A Microsoft_UI_Xaml!CUIAWrapper object)
+          if (frag) {
+            return frag.as<winrt::IUnknown>();
+          }
+        }
+      }
+    }
+  }
+
+  return uiaProvider;
 }
 
 float RootComponentView::FontSizeMultiplier() const noexcept {
@@ -347,6 +407,20 @@ HWND RootComponentView::GetHwndForParenting() noexcept {
   }
 
   return base_type::GetHwndForParenting();
+}
+
+void RootComponentView::ClearCurrentTextSelection() noexcept {
+  if (auto view = m_viewWithTextSelection.view()) {
+    if (auto paragraphView = view.try_as<ParagraphComponentView>()) {
+      paragraphView->ClearSelection();
+    }
+  }
+  m_viewWithTextSelection =
+      ::Microsoft::ReactNative::ReactTaggedView{winrt::Microsoft::ReactNative::ComponentView{nullptr}};
+}
+
+void RootComponentView::SetViewWithTextSelection(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+  m_viewWithTextSelection = ::Microsoft::ReactNative::ReactTaggedView{view};
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

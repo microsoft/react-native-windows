@@ -1,8 +1,132 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Tue, 07 Oct 2025 05:27:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Apr 2026 05:29:56 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.311
+
+Tue, 07 Apr 2026 05:29:56 GMT
+
+### Changes
+
+- Upgrade to yarn v4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1022
+
+## 0.0.0-canary.310
+
+Fri, 27 Mar 2026 03:00:07 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20260107-58bc6c3e3 (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.309
+
+Wed, 25 Mar 2026 02:08:13 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1021
+
+## 0.0.0-canary.308
+
+Wed, 11 Mar 2026 03:08:37 GMT
+
+### Changes
+
+- Update require's from TouchableWin32 to be imports (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.307
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- Fix images not showing in test app (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.83.0-nightly-20251104-502efe1cc (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1020
+
+## 0.0.0-canary.306
+
+Wed, 04 Mar 2026 22:34:24 GMT
+
+### Changes
+
+- Fix TextWin32 export (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.83.0-nightly-20250917-18cb4edfa (66076509+vineethkuttan@users.noreply.github.com)
+- Fix TouchableWin32 and LogBox (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.83.0-nightly-20251012-6f482708b (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.305
+
+Tue, 13 Jan 2026 13:00:13 GMT
+
+### Changes
+
+- integrate 0.82.0-nightly-20250902-9731e8ebc (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1019
+
+## 0.0.0-canary.304
+
+Tue, 30 Dec 2025 06:39:29 GMT
+
+### Changes
+
+- Use experimental WinAppSDK (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1018
+
+## 0.0.0-canary.303
+
+Thu, 25 Dec 2025 06:39:16 GMT
+
+### Changes
+
+- Integrate 0.82.0-nightly-20250821-0ef21bf8a (66076509+vineethkuttan@users.noreply.github.com)
+- Bump Jsi Version to 21 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1017
+
+## 0.0.0-canary.302
+
+Wed, 03 Dec 2025 06:40:45 GMT
+
+### Changes
+
+- Use 0.0.0-canary.1015 version for public NPM packages (vmorozov@microsoft.com)
+- Bump react-native-platform-override to v0.0.0-canary.1016
+
+## 0.0.0-canary.301
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Changes
+
+- Bump @rnw-scripts/just-task to v2.3.58
+- Bump react-native-platform-override to v1.9.61
+
+## 0.0.0-canary.300
+
+Wed, 12 Nov 2025 21:00:43 GMT
+
+### Changes
+
+- Remove paper (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.42
+- Bump @rnw-scripts/just-task to v2.3.57
+- Bump react-native-platform-override to v1.9.60
+
+## 0.0.0-canary.299
+
+Tue, 21 Oct 2025 05:28:10 GMT
+
+### Changes
+
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
+- fix: stricter checks against key events (sanajmi@microsoft.com)
 
 ## 0.0.0-canary.298
 

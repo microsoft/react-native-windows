@@ -12,7 +12,7 @@ import type {
   NativeModuleUnionTypeAnnotation,
   NativeModuleStringTypeAnnotation,
   NativeModuleFunctionTypeAnnotation,
-  NativeModuleStringLiteralTypeAnnotation,
+  StringLiteralTypeAnnotation,
   StringLiteralUnionTypeAnnotation,
   UnsafeAnyTypeAnnotation,
   Nullable,
@@ -33,19 +33,44 @@ function translateUnionReturnType(
   type: NativeModuleEnumDeclaration | NativeModuleUnionTypeAnnotation,
   options: CppCodegenOptions,
 ): string {
-  const memberType = type.memberType;
-  switch (type.memberType) {
-    case 'StringTypeAnnotation':
-      return options.cppStringType;
-    case 'NumberTypeAnnotation':
-      return 'double';
-    case 'ObjectTypeAnnotation':
-      return '::React::JSValue';
-    default:
-      throw new Error(
-        `Unknown enum/union member type in translateReturnType: ${memberType}`,
-      );
+  if (type.type === 'EnumDeclaration') {
+    switch (type.memberType) {
+      case 'StringTypeAnnotation':
+        return options.cppStringType;
+      case 'NumberTypeAnnotation':
+        return 'double';
+      default:
+        throw new Error(
+          `Unknown enum member type in translateReturnType: ${type.memberType}`,
+        );
+    }
   }
+
+  // UnionTypeAnnotation: determine C++ type from the types array
+  const types = type.types;
+  if (types.length === 0) {
+    return '::React::JSValue';
+  }
+
+  const allString = types.every(
+    t =>
+      t.type === 'StringTypeAnnotation' ||
+      t.type === 'StringLiteralTypeAnnotation',
+  );
+  if (allString) {
+    return options.cppStringType;
+  }
+
+  const allNumber = types.every(
+    t =>
+      t.type === 'NumberTypeAnnotation' ||
+      t.type === 'NumberLiteralTypeAnnotation',
+  );
+  if (allNumber) {
+    return 'double';
+  }
+
+  return '::React::JSValue';
 }
 
 // eslint-disable-next-line complexity
@@ -55,7 +80,7 @@ export function translateFieldOrReturnType(
         | NativeModuleBaseTypeAnnotation
         | NativeModuleStringTypeAnnotation
         | NativeModuleFunctionTypeAnnotation
-        | NativeModuleStringLiteralTypeAnnotation
+        | StringLiteralTypeAnnotation
         | StringLiteralUnionTypeAnnotation
       >
     | UnsafeAnyTypeAnnotation,
@@ -69,7 +94,6 @@ export function translateFieldOrReturnType(
   switch (type.type) {
     case 'StringTypeAnnotation':
     case 'StringLiteralTypeAnnotation':
-    case 'StringLiteralUnionTypeAnnotation':
       return options.cppStringType;
     case 'NumberTypeAnnotation':
     case 'FloatTypeAnnotation':

@@ -8,6 +8,8 @@
  * @format
  */
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+
 import RNTesterText from '../../components/RNTesterText';
 import React from 'react';
 import {
@@ -18,7 +20,7 @@ import {
   View,
 } from 'react-native';
 
-type Data = $ReadOnly<{
+type Data = Readonly<{
   clicks: number,
   text: string,
 }>;
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
 });
 
 class Row extends React.Component<
-  $ReadOnly<{
+  Readonly<{
     data: Data,
     onClick: Data => void,
   }>,
@@ -63,14 +65,14 @@ class Row extends React.Component<
   }
 }
 
-type RefreshControlExampleState = $ReadOnly<{
+type RefreshControlExampleState = Readonly<{
   isRefreshing: boolean,
   loaded: number,
   rowData: $ReadOnlyArray<Data>,
 }>;
 
 class RefreshControlExample extends React.Component<
-  $ReadOnly<{}>,
+  Readonly<{}>,
   RefreshControlExampleState,
 > {
   state: RefreshControlExampleState = {
@@ -154,4 +156,4 @@ exports.examples = [
       return <RefreshControlExample />;
     },
   },
-];
+] as Array<RNTesterModuleExample>;

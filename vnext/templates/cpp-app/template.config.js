@@ -130,7 +130,7 @@ async function postInstall(config = {}, options = {}) {
       'test:windows': 'jest --config jest.config.windows.js',
     },
     devDependencies: {
-      '@rnx-kit/jest-preset': '^0.1.17',
+      '@rnx-kit/jest-preset': '^0.3.1',
     },
   });
 

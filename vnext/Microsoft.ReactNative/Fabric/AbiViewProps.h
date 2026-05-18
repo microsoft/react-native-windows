@@ -43,10 +43,8 @@ struct Color : ColorT<Color, Composition::Experimental::IInternalColor> {
   Color(facebook::react::SharedColor color);
 
   winrt::Windows::UI::Color AsWindowsColor(const winrt::Microsoft::ReactNative::Composition::Theme &theme) noexcept;
-#ifdef USE_WINUI3
   winrt::Microsoft::UI::Composition::CompositionBrush AsBrush(
       const winrt::Microsoft::ReactNative::Composition::Theme theme) noexcept;
-#endif
   winrt::Microsoft::ReactNative::Composition::Experimental::IBrush AsInternalBrush(
       const winrt::Microsoft::ReactNative::Composition::Theme theme) noexcept;
 
@@ -101,6 +99,7 @@ struct ViewProps : ViewPropsT<ViewProps> {
   winrt::Microsoft::ReactNative::Color BackgroundColor() noexcept;
   winrt::hstring TestId() noexcept;
   winrt::hstring AccessibilityLabel() noexcept;
+  winrt::Microsoft::ReactNative::Overflow Overflow() noexcept;
 
  protected:
   facebook::react::SharedViewProps m_props;

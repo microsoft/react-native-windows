@@ -22,7 +22,6 @@ Options:
 | `--language`  | Which language the app is written in.          | [string] [choices: "cs", "cpp"] [default: "cpp"] |
 | `--overwrite` | Overwrite any existing files without prompting | [boolean]                                        |
 | `--useWinUI3`         | Targets WinUI 3 (through the [Windows App SDK](https://docs.microsoft.com/windows/apps/windows-app-sdk/)) instead of UWP XAML. | [boolean] |
-| `--useHermes`         | Use Hermes instead of Chakra as the JS engine (supported on 0.64+) | [boolean] |
 | `--no-telemetry` | Disables sending telemetry that allows analysis of failures of the react-native-windows CLI | [boolean] |
 
 

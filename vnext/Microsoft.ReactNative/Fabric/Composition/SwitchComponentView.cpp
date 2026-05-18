@@ -7,7 +7,6 @@
 #include "SwitchComponentView.h"
 #include <AutoDraw.h>
 #include <Fabric/AbiViewProps.h>
-#include "CompositionDynamicAutomationProvider.h"
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
 
@@ -272,7 +271,10 @@ void SwitchComponentView::OnPointerPressed(
     m_supressAnimationForNextFrame = true;
 
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+      root->TrySetFocusedComponent(
+          *get_strong(),
+          winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+          winrt::Microsoft::ReactNative::FocusState::Pointer);
     }
 
     updateVisuals();

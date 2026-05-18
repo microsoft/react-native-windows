@@ -98,7 +98,7 @@ function focusTextInput(textField: ?HostInstance) {
   } else if (textField != null) {
     const fieldCanBeFocused =
       currentlyFocusedInputRef !== textField &&
-      // $FlowFixMe - `currentProps` is missing in `NativeMethods`
+      // $FlowFixMe[prop-missing] - `currentProps` is missing in `NativeMethods`
       textField.currentProps?.editable !== false;
 
     if (!fieldCanBeFocused) {
@@ -161,7 +161,7 @@ function blurTextInput(textField: ?HostInstance) {
  * noop if the focused text field is same
  */
 function setFocusedTextInput(textField: HostInstance) {
-  if (currentlyFocusedInputRef !== textField && textField !== null) {
+  if (currentlyFocusedInputRef !== textField) {
     currentlyFocusedInputRef = textField;
   }
 }
@@ -172,7 +172,7 @@ function setFocusedTextInput(textField: HostInstance) {
  * noop if the focused text field is not same
  */
 function clearFocusedTextInput(textField: HostInstance) {
-  if (currentlyFocusedInputRef === textField && textField !== null) {
+  if (currentlyFocusedInputRef === textField) {
     currentlyFocusedInputRef = null;
   }
 }

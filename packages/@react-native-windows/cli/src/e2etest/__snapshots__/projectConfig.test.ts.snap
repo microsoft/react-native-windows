@@ -28,79 +28,25 @@ exports[`projectConfig - MissingProjectFilesApp (Use react-native.config.js) 1`]
 }
 `;
 
-exports[`projectConfig - SimpleCSharpApp (Ignore react-native.config.js) 1`] = `
-{
-  "experimentalFeatures": {
-    "ReactExperimentalFeaturesSet": "true",
-    "UseExperimentalNuget": "false",
-    "UseHermes": "false",
-  },
-  "folder": StringContaining "SimpleCSharpApp",
-  "project": {
-    "projectFile": "SimpleCSharpApp\\SimpleCSharpApp.csproj",
-    "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
-    "projectLang": "cs",
-    "projectName": "SimpleCSharpApp",
-  },
-  "rnwConfig": {
-    "init-windows": {
-      "template": "old/uwp-cs-app",
-    },
-    "projectArch": "old",
-    "projectLang": "cs",
-    "projectType": "app",
-  },
-  "solutionFile": "SimpleCSharpApp.sln",
-  "sourceDir": "windows",
-}
-`;
-
-exports[`projectConfig - SimpleCSharpApp (Use react-native.config.js) 1`] = `
-{
-  "experimentalFeatures": {
-    "ReactExperimentalFeaturesSet": "true",
-    "UseExperimentalNuget": "false",
-    "UseHermes": "false",
-  },
-  "folder": StringContaining "SimpleCSharpApp",
-  "project": {
-    "projectFile": "SimpleCSharpApp\\SimpleCSharpApp.csproj",
-    "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
-    "projectLang": "cs",
-    "projectName": "SimpleCSharpApp",
-  },
-  "rnwConfig": {
-    "init-windows": {
-      "template": "old/uwp-cs-app",
-    },
-    "projectArch": "old",
-    "projectLang": "cs",
-    "projectType": "app",
-  },
-  "solutionFile": "SimpleCSharpApp.sln",
-  "sourceDir": "windows",
-}
-`;
-
 exports[`projectConfig - SimpleCppApp (Ignore react-native.config.js) 1`] = `
 {
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
-    "UseHermes": "false",
+    "UseHermes": "",
   },
   "folder": StringContaining "SimpleCppApp",
   "project": {
     "projectFile": "SimpleCppApp\\SimpleCppApp.vcxproj",
-    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
     "projectLang": "cpp",
     "projectName": "SimpleCppApp",
   },
   "rnwConfig": {
     "init-windows": {
-      "template": "old/uwp-cpp-app",
+      "template": "cpp-app",
     },
-    "projectArch": "old",
+    "projectArch": "new",
     "projectLang": "cpp",
     "projectType": "app",
   },
@@ -114,20 +60,20 @@ exports[`projectConfig - SimpleCppApp (Use react-native.config.js) 1`] = `
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
-    "UseHermes": "false",
+    "UseHermes": "",
   },
   "folder": StringContaining "SimpleCppApp",
   "project": {
     "projectFile": "SimpleCppApp\\SimpleCppApp.vcxproj",
-    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
     "projectLang": "cpp",
     "projectName": "SimpleCppApp",
   },
   "rnwConfig": {
     "init-windows": {
-      "template": "old/uwp-cpp-app",
+      "template": "cpp-app",
     },
-    "projectArch": "old",
+    "projectArch": "new",
     "projectLang": "cpp",
     "projectType": "app",
   },
@@ -141,20 +87,20 @@ exports[`projectConfig - WithExperimentalNuget (Ignore react-native.config.js) 1
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "true",
-    "UseHermes": "false",
+    "UseHermes": "",
   },
   "folder": StringContaining "WithExperimentalNuget",
   "project": {
     "projectFile": "WithExperimentalNuGet\\WithExperimentalNuGet.vcxproj",
-    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
     "projectLang": "cpp",
     "projectName": "WithExperimentalNuGet",
   },
   "rnwConfig": {
     "init-windows": {
-      "template": "old/uwp-cpp-app",
+      "template": "cpp-app",
     },
-    "projectArch": "old",
+    "projectArch": "new",
     "projectLang": "cpp",
     "projectType": "app",
   },
@@ -168,20 +114,20 @@ exports[`projectConfig - WithExperimentalNuget (Use react-native.config.js) 1`] 
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "true",
-    "UseHermes": "false",
+    "UseHermes": "",
   },
   "folder": StringContaining "WithExperimentalNuget",
   "project": {
     "projectFile": "WithExperimentalNuGet\\WithExperimentalNuGet.vcxproj",
-    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
     "projectLang": "cpp",
     "projectName": "WithExperimentalNuGet",
   },
   "rnwConfig": {
     "init-windows": {
-      "template": "old/uwp-cpp-app",
+      "template": "cpp-app",
     },
-    "projectArch": "old",
+    "projectArch": "new",
     "projectLang": "cpp",
     "projectType": "app",
   },
@@ -195,20 +141,20 @@ exports[`projectConfig - WithHermes (Ignore react-native.config.js) 1`] = `
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
-    "UseHermes": "true",
+    "UseHermes": "",
   },
   "folder": StringContaining "WithHermes",
   "project": {
     "projectFile": "WithHermes\\WithHermes.vcxproj",
-    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
     "projectLang": "cpp",
     "projectName": "WithHermes",
   },
   "rnwConfig": {
     "init-windows": {
-      "template": "old/uwp-cpp-app",
+      "template": "cpp-app",
     },
-    "projectArch": "old",
+    "projectArch": "new",
     "projectLang": "cpp",
     "projectType": "app",
   },
@@ -222,20 +168,20 @@ exports[`projectConfig - WithHermes (Use react-native.config.js) 1`] = `
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
-    "UseHermes": "true",
+    "UseHermes": "",
   },
   "folder": StringContaining "WithHermes",
   "project": {
     "projectFile": "WithHermes\\WithHermes.vcxproj",
-    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
     "projectLang": "cpp",
     "projectName": "WithHermes",
   },
   "rnwConfig": {
     "init-windows": {
-      "template": "old/uwp-cpp-app",
+      "template": "cpp-app",
     },
-    "projectArch": "old",
+    "projectArch": "new",
     "projectLang": "cpp",
     "projectType": "app",
   },
@@ -294,20 +240,20 @@ exports[`projectConfig - WithWinUI3 (Ignore react-native.config.js) 1`] = `
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
-    "UseHermes": "false",
+    "UseHermes": "",
   },
   "folder": StringContaining "WithWinUI3",
   "project": {
     "projectFile": "WithWinUI3\\WithWinUI3.vcxproj",
-    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
     "projectLang": "cpp",
     "projectName": "WithWinUI3",
   },
   "rnwConfig": {
     "init-windows": {
-      "template": "old/uwp-cpp-app",
+      "template": "cpp-app",
     },
-    "projectArch": "old",
+    "projectArch": "new",
     "projectLang": "cpp",
     "projectType": "app",
   },
@@ -321,20 +267,20 @@ exports[`projectConfig - WithWinUI3 (Use react-native.config.js) 1`] = `
   "experimentalFeatures": {
     "ReactExperimentalFeaturesSet": "true",
     "UseExperimentalNuget": "false",
-    "UseHermes": "false",
+    "UseHermes": "",
   },
   "folder": StringContaining "WithWinUI3",
   "project": {
     "projectFile": "WithWinUI3\\WithWinUI3.vcxproj",
-    "projectGuid": "{416476d5-974a-4ee2-8145-4e331297247e}",
+    "projectGuid": "{416476D5-974A-4EE2-8145-4E331297247E}",
     "projectLang": "cpp",
     "projectName": "WithWinUI3",
   },
   "rnwConfig": {
     "init-windows": {
-      "template": "old/uwp-cpp-app",
+      "template": "cpp-app",
     },
-    "projectArch": "old",
+    "projectArch": "new",
     "projectLang": "cpp",
     "projectType": "app",
   },

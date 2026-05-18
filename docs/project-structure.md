@@ -5,7 +5,6 @@ Sample applications are not covered.
 
 ## Alphabetical Index
 - [Common\Common.vcxproj](#Common)
-- [Chakra\Chakra.vcxitems](#Chakra)
 - [Desktop\React.Windows.Desktop.vcxproj](#React.Windows.Desktop)
 - **[Desktop.DLL\React.Windows.Desktop.DLL.vcxproj](#React.Windows.Desktop.DLL)**
 - [Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.vcxproj](#React.Windows.Desktop.IntegrationTests)
@@ -42,10 +41,6 @@ See https://github.com/facebook/react-native/tree/v0.62.0/ReactCommon.
 *Static Library*\
 Folly variant type system for JavaScript/C++ interoperability.\
 Sources provided as part of the `react-native` Node dependency. Not part of this repository.
-
-### Chakra
-*Shared Items (no build artifact)*\
-ChakraCore bridging layer. May use different compiler flags between Windows variants.
 
 ### Microsoft.ReactNative.Cxx
 *Shared Items (no build artifact)*\
@@ -92,7 +87,7 @@ Validates [React.Windows.Desktop.DLL](#React.Windows.Desktop.DLL).
 ### ReactCommon.UnitTests
 *Google Test Application*\
 Gathers tests within `react-native\ReactCommon`.\
-Its main purpose is to validate JSI with any given engine (V8, ChakraCore, etc).
+Its main purpose is to validate JSI with any given engine (V8, etc).
 
 ### FollyWin32
 *Static Library*\

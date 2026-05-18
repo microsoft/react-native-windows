@@ -6,5 +6,6 @@
  */
 
 import dumpVisualTree from './dumpVisualTree';
+import createScreenshot from './screenshot';
 
-export {dumpVisualTree};
+export { dumpVisualTree, createScreenshot };

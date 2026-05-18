@@ -5,9 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4996) // deprecated APIs
+#endif
+
 #include "NativeToJsBridge.h"
 
-#ifndef RCT_FIT_RM_OLD_RUNTIME
+#ifndef RCT_REMOVE_LEGACY_ARCH
 
 #include <ReactCommon/CallInvoker.h>
 #include <folly/json.h>
@@ -26,6 +31,7 @@
 #include "TraceSection.h"
 
 #include <memory>
+#include <utility>
 
 #ifdef WITH_FBSYSTRACE
 #include <fbsystrace.h>
@@ -36,12 +42,14 @@ using fbsystrace::FbSystraceAsyncFlow;
 namespace facebook::react {
 
 // This class manages calls from JS to native code.
-class JsToNativeBridge : public react::ExecutorDelegate {
+class [[deprecated(
+    "This API will be removed along with the legacy architecture.")]]
+JsToNativeBridge : public react::ExecutorDelegate {
  public:
   JsToNativeBridge(
       std::shared_ptr<ModuleRegistry> registry,
       std::shared_ptr<InstanceCallback> callback)
-      : m_registry(registry), m_callback(callback) {}
+      : m_registry(std::move(registry)), m_callback(std::move(callback)) {}
 
   std::shared_ptr<ModuleRegistry> getModuleRegistry() override {
     return m_registry;
@@ -343,9 +351,13 @@ NativeToJsBridge::getDecoratedNativeMethodCallInvoker(
 
 jsinspector_modern::RuntimeTargetDelegate&
 NativeToJsBridge::getInspectorTargetDelegate() {
-  return  m_executor->getRuntimeTargetDelegate();
+  return m_executor->getRuntimeTargetDelegate();
 }
 
 } // namespace facebook::react
 
-#endif // RCT_FIT_RM_OLD_RUNTIME
+#endif // RCT_REMOVE_LEGACY_ARCH
+
+#if _MSC_VER
+#pragma warning(pop)
+#endif

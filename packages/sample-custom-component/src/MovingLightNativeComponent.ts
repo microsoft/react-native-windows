@@ -1,5 +1,4 @@
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
+import { codegenNativeComponent, codegenNativeCommands } from 'react-native';
 import type { ColorValue, HostComponent, ViewProps } from 'react-native';
 
 import type {
@@ -8,6 +7,7 @@ import type {
   Double,
   Int32,
   WithDefault,
+  UnsafeMixed,
 } from 'react-native/Libraries/Types/CodegenTypes';
 
 export type SomethingEvent = {
@@ -18,12 +18,16 @@ export type SomethingEvent = {
 export interface MovingLightProps extends ViewProps {
   // Props
   size?: WithDefault<Float, 42>;
-  color?: ColorValue
+  color?: ColorValue;
+  testMixed?: UnsafeMixed;
   eventParam?: string;
-  objectProp?: { number: Double, string: string};
+  objectProp?: { number: Double, string: string };
 
   // Events
   onSomething?: DirectEventHandler<SomethingEvent>,
+  onTestObjectEvent?: DirectEventHandler<{ target: Int32; testObject: UnsafeMixed }>;
+  onEventWithInlineTypes?: DirectEventHandler<{ target: Int32; contentInset: { top: Double; bottom: Double; left: Double; right: Double }; contentOffset: { x: Double; y: Double }; contentSize: { width: Double; height: Double }; layoutMeasurement: { width: Double; height: Double }; velocity: { x: Double; y: Double }; isUserTriggered: boolean }>;
+  onEventWithMultipleAliasTypes?: DirectEventHandler<{ target: Int32; contentInset: { top: Double; bottom: Double; left: Double; right: Double }; contentOffset: { x: Double; y: Double }; contentSize: { width: Double; height: Double }; layoutMeasurement: { width: Double; height: Double }; velocity: { x: Double; y: Double }; isUserTriggered: boolean }>;
 }
 
 

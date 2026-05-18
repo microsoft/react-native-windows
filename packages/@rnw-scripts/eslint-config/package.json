@@ -1,6 +1,7 @@
 {
   "name": "@rnw-scripts/eslint-config",
-  "version": "1.2.37",
+  "version": "1.2.38",
+  "private": true,
   "license": "MIT",
   "main": "eslintrc.js",
   "repository": {
@@ -12,14 +13,17 @@
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
     "@microsoft/eslint-plugin-sdl": "^0.2.0",
-    "@react-native/eslint-config": "0.79.0-nightly-20250123-d1028885e",
+    "@react-native/eslint-config": "0.85.0-nightly-20260114-f15985f4f",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-ft-flow": "^2.0.1",
     "hermes-eslint": "0.23.1"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "eslint": "^8.19.0",
-    "prettier": "2.8.8"
+    "eslint-plugin-jest": "^29.0.1",
+    "prettier": "^3.6.2",
+    "typescript": "5.0.4"
   },
   "peerDependencies": {
     "eslint": "*",

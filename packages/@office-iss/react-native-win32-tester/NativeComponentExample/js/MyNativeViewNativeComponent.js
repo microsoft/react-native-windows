@@ -8,10 +8,10 @@
  * @format
  */
 
-import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
+import {codegenNativeComponent} from 'react-native';
+import {codegenNativeCommands} from 'react-native';
 import type {HostComponent} from 'react-native';
-import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
+import type {ViewProps} from 'react-native';
 import type {Float} from 'react-native/Libraries/Types/CodegenTypes';
 import * as React from 'react';
 

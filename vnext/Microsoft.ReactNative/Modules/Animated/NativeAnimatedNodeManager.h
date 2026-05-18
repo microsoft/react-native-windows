@@ -5,7 +5,6 @@
 // Licensed under the MIT License.
 
 #include <IReactInstance.h>
-#include <UI.Xaml.Media.h>
 #include "AnimatedNode.h"
 #include "AnimationDriver.h"
 #include "EventAnimationDriver.h"

@@ -25,7 +25,8 @@ struct CalendarViewProps : winrt::implements<CalendarViewProps, winrt::Microsoft
   {
      if (cloneFrom) {
        auto cloneFromProps = cloneFrom.as<CalendarViewProps>();
-       label = cloneFromProps->label;  
+       label = cloneFromProps->label;
+       onSelectedDatesChanged = cloneFromProps->onSelectedDatesChanged;  
      }
   }
 
@@ -36,11 +37,15 @@ struct CalendarViewProps : winrt::implements<CalendarViewProps, winrt::Microsoft
   REACT_FIELD(label)
   std::string label;
 
+   // These fields can be used to determine if JS has registered for this event
+  REACT_FIELD(onSelectedDatesChanged)
+  bool onSelectedDatesChanged{false};
+
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
-REACT_STRUCT(CalendarView_OnSelectedDatesChanged)
-struct CalendarView_OnSelectedDatesChanged {
+REACT_STRUCT(CalendarViewSpec_onSelectedDatesChanged)
+struct CalendarViewSpec_onSelectedDatesChanged {
   REACT_FIELD(value)
   bool value{};
 
@@ -52,10 +57,10 @@ struct CalendarViewEventEmitter {
   CalendarViewEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
-  using OnSelectedDatesChanged = CalendarView_OnSelectedDatesChanged;
+  using OnSelectedDatesChanged = CalendarViewSpec_onSelectedDatesChanged;
 
-  void onSelectedDatesChanged(OnSelectedDatesChanged &value) const {
-    m_eventEmitter.DispatchEvent(L"selectedDatesChanged", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+  void onSelectedDatesChanged(OnSelectedDatesChanged &&value) const {
+    m_eventEmitter.DispatchEvent(L"selectedDatesChanged", [value = std::move(value)](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }
@@ -113,6 +118,12 @@ struct BaseCalendarView {
   // FinalizeUpdate will only be called if this method is overridden
   virtual void FinalizeUpdate(const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
                                         winrt::Microsoft::ReactNative::ComponentViewUpdateMask /*mask*/) noexcept {
+  }
+
+  // CreateAutomationPeer will only be called if this method is overridden
+  virtual winrt::Windows::Foundation::IInspectable CreateAutomationPeer(const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
+                                        const winrt::Microsoft::ReactNative::CreateAutomationPeerArgs& /*args*/) noexcept {
+    return nullptr;
   }
 
   
@@ -189,6 +200,14 @@ void RegisterCalendarViewNativeComponent(
             return userData->UnmountChildComponentView(view, args);
           });
         }
+
+        if CONSTEXPR_SUPPORTED_ON_VIRTUAL_FN_ADDRESS (&TUserData::CreateAutomationPeer != &BaseCalendarView<TUserData>::CreateAutomationPeer) {
+            builder.SetCreateAutomationPeerHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                     const winrt::Microsoft::ReactNative::CreateAutomationPeerArgs& args) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            return userData->CreateAutomationPeer(view, args);
+          });
+        } 
 
         compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
           auto userData = winrt::make_self<TUserData>();

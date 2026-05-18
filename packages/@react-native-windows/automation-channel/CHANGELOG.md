@@ -1,8 +1,478 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Thu, 09 Oct 2025 05:28:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 13 May 2026 18:22:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1055
+
+Wed, 13 May 2026 18:22:07 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1055
+
+## 0.0.0-canary.1054
+
+Mon, 11 May 2026 14:34:27 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1054
+
+## 0.0.0-canary.1053
+
+Sun, 10 May 2026 18:20:42 GMT
+
+### Changes
+
+- Use hermes-windows 0.0.0-2605.6002-2279da22 (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.1053
+
+## 0.0.0-canary.1052
+
+Wed, 22 Apr 2026 16:40:25 GMT
+
+### Changes
+
+- Use hermes-windows version 0.0.0-2604.21001-94aa5e1d (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.1052
+
+## 0.0.0-canary.1051
+
+Wed, 22 Apr 2026 02:49:04 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1051
+
+## 0.0.0-canary.1050
+
+Tue, 21 Apr 2026 02:54:29 GMT
+
+### Changes
+
+- Add folly and fast-float to fork-sync (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.1050
+
+## 0.0.0-canary.1049
+
+Wed, 08 Apr 2026 13:25:17 GMT
+
+### Changes
+
+- Upgrade to Boost 1.84 (julio.rocha@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.1049
+
+## 0.0.0-canary.1048
+
+Tue, 07 Apr 2026 23:42:38 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1048
+
+## 0.0.0-canary.1047
+
+Tue, 07 Apr 2026 05:29:56 GMT
+
+### Changes
+
+- fix: auto-discover native perf results in compare report (74712637+iamAbhi-916@users.noreply.github.com)
+- Upgrade to yarn v4 (30809111+acoates-ms@users.noreply.github.com)
+- Fork fmt lib locally (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.1047
+
+## 0.0.0-canary.1046
+
+Sat, 04 Apr 2026 10:40:19 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1046
+
+## 0.0.0-canary.1045
+
+Tue, 31 Mar 2026 21:09:16 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1045
+
+## 0.0.0-canary.1044
+
+Tue, 31 Mar 2026 16:27:46 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1044
+
+## 0.0.0-canary.1043
+
+Tue, 31 Mar 2026 03:37:03 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1043
+
+## 0.0.0-canary.1042
+
+Mon, 30 Mar 2026 03:55:34 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1042
+
+## 0.0.0-canary.1041
+
+Sat, 28 Mar 2026 02:02:45 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1041
+
+## 0.0.0-canary.1040
+
+Fri, 27 Mar 2026 03:00:07 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20260107-58bc6c3e3 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.1040
+
+## 0.0.0-canary.1039
+
+Wed, 25 Mar 2026 02:08:13 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.1039
+
+## 0.0.0-canary.1038
+
+Sat, 21 Mar 2026 09:44:24 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1038
+
+## 0.0.0-canary.1037
+
+Tue, 17 Mar 2026 18:21:32 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1037
+
+## 0.0.0-canary.1036
+
+Thu, 12 Mar 2026 03:10:14 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1036
+
+## 0.0.0-canary.1035
+
+Wed, 11 Mar 2026 03:08:37 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1035
+
+## 0.0.0-canary.1034
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- Integrate 0.83.0-nightly-20251104-502efe1cc (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.1034
+
+## 0.0.0-canary.1033
+
+Wed, 04 Mar 2026 22:34:21 GMT
+
+### Changes
+
+- Update canary version (66076509+vineethkuttan@users.noreply.github.com)
+- Update WinAppSdk to 1.8.260209005 (66076509+vineethkuttan@users.noreply.github.com)
+- Fix XAML popup positioning and light dismiss in ScrollView (#15557) (nitchaudhary@microsoft.com)
+- Integrate 0.83.0-nightly-20251012-6f482708b (66076509+vineethkuttan@users.noreply.github.com)
+- Integrate 0.83.0-nightly-20250917-18cb4edfa (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.1033
+
+## 0.0.0-canary.1031
+
+Sat, 17 Jan 2026 06:40:58 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1031
+
+## 0.0.0-canary.1030
+
+Tue, 13 Jan 2026 13:00:13 GMT
+
+### Changes
+
+- integrate 0.82.0-nightly-20250902-9731e8ebc (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.1030
+
+## 0.0.0-canary.1029
+
+Tue, 13 Jan 2026 06:39:28 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1029
+
+## 0.0.0-canary.1028
+
+Sat, 10 Jan 2026 06:40:18 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1028
+
+## 0.0.0-canary.1027
+
+Wed, 07 Jan 2026 06:40:55 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1027
+
+## 0.0.0-canary.1026
+
+Tue, 06 Jan 2026 06:38:13 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1026
+
+## 0.0.0-canary.1025
+
+Tue, 30 Dec 2025 06:39:29 GMT
+
+### Changes
+
+- Use experimental WinAppSDK (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.1025
+
+## 0.0.0-canary.1024
+
+Thu, 25 Dec 2025 06:39:17 GMT
+
+### Changes
+
+- Integrate 0.82.0-nightly-20250821-0ef21bf8a (66076509+vineethkuttan@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.1024
+
+## 0.0.0-canary.1023
+
+Wed, 24 Dec 2025 06:32:41 GMT
+
+### Changes
+
+- bump hermes to 0.0.0-2512.22001-bc3d0ed7 (74712637+iamAbhi-916@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.1023
+
+## 0.0.0-canary.1022
+
+Fri, 19 Dec 2025 06:34:05 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1022
+
+## 0.0.0-canary.1021
+
+Wed, 17 Dec 2025 06:33:16 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1021
+
+## 0.0.0-canary.1020
+
+Sat, 13 Dec 2025 06:33:40 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1020
+
+## 0.0.0-canary.1019
+
+Sun, 07 Dec 2025 06:34:40 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1019
+
+## 0.0.0-canary.1018
+
+Sat, 06 Dec 2025 06:38:46 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1018
+
+## 0.0.0-canary.1017
+
+Fri, 05 Dec 2025 06:34:57 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1017
+
+## 0.0.0-canary.1016
+
+Wed, 03 Dec 2025 06:40:45 GMT
+
+### Changes
+
+- Use 0.0.0-canary.1015 version for public NPM packages (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.1016
+
+## 0.12.355-0
+
+Tue, 02 Dec 2025 06:36:52 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1015
+
+## 0.12.354
+
+Mon, 01 Dec 2025 06:36:40 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1014
+
+## 0.12.353
+
+Thu, 27 Nov 2025 06:35:01 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1013
+
+## 0.12.352
+
+Wed, 26 Nov 2025 06:36:13 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1012
+
+## 0.12.351
+
+Fri, 21 Nov 2025 06:43:27 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1011
+
+## 0.12.350
+
+Thu, 20 Nov 2025 06:39:28 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1010
+
+## 0.12.349
+
+Wed, 19 Nov 2025 06:41:09 GMT
+
+### Patches
+
+- Update WinAppSdk to 1.8 (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.1009
+
+## 0.12.348
+
+Tue, 18 Nov 2025 06:41:41 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1008
+
+## 0.12.347
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.3.58
+- Bump react-native-windows to v0.0.0-canary.1007
+
+## 0.12.346
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Patches
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.1006
+
+## 0.12.345
+
+Thu, 13 Nov 2025 14:35:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1005
+
+## 0.12.344
+
+Wed, 12 Nov 2025 21:00:45 GMT
+
+### Patches
+
+- Use Hermes version 0.0.0-2511.7001-d7ca19b3 (vmorozov@microsoft.com)
+- Use hermes-windows version 0.0.0-2511.3001-9e4cf518 (vmorozov@microsoft.com)
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
+- Bump react-native-windows to v0.0.0-canary.1004
+
+## 0.12.343
+
+Thu, 30 Oct 2025 05:29:15 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1003
+
+## 0.12.342
+
+Tue, 28 Oct 2025 23:42:04 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1002
+
+## 0.12.341
+
+Fri, 24 Oct 2025 05:26:22 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.1001
+
+## 0.12.340
+
+Tue, 21 Oct 2025 05:28:10 GMT
+
+### Patches
+
+- Integrate 0.81.0-nightly-20250709-6892dde36 (kvineeth@microsoft.com)
+- Integrate 0.81.0-nightly-20250702-b41b924b2 (kvineeth@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.1000
 
 ## 0.12.339
 

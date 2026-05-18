@@ -8,6 +8,7 @@
 #include <Threading/MessageDispatchQueue.h>
 #include <crash/verifyElseCrash.h>
 #include <winrt/Windows.Foundation.Collections.h>
+#include "HermesRuntimeHolder.h"
 #include "ReactHost/MsoUtils.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -479,20 +480,20 @@ facebook::jsi::JSError const &jsError) {                             \
       }();
     )JS");
   // TODO: consider implementing this script as a resource file and loading it with the resource URL.
-  jsiRuntime->evaluateJavaScript(jsiPalBuffer, "Form_JSI_API_not_a_real_file");
+  jsiRuntime->evaluateJavaScript(jsiPalBuffer, "jsi-internal://host-function-manager.js");
   ReactNative::JsiRuntime abiJsiResult{make<JsiRuntime>(Mso::Copy(jsiRuntimeHolder), Mso::Copy(jsiRuntime))};
   std::scoped_lock lock{s_mutex};
   auto it = s_jsiRuntimeMap.try_emplace(reinterpret_cast<uintptr_t>(jsiRuntime.get()), abiJsiResult);
   return it.first->second.get();
 }
 
-ReactNative::JsiRuntime JsiRuntime::MakeChakraRuntime() {
+ReactNative::JsiRuntime JsiRuntime::MakeRuntime() {
   auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
   auto jsThread = std::make_shared<Mso::React::MessageDispatchQueue>(jsDispatchQueue, nullptr, nullptr);
   auto devSettings = std::make_shared<facebook::react::DevSettings>();
 
-  auto runtimeHolder = std::make_shared<::Microsoft::JSI::ChakraRuntimeHolder>(
-      std::move(devSettings), std::move(jsThread), nullptr, nullptr);
+  auto runtimeHolder =
+      std::make_shared<::Microsoft::ReactNative::HermesRuntimeHolder>(devSettings, std::move(jsThread), nullptr);
   auto runtime = runtimeHolder->getRuntime();
   return Create(runtimeHolder, runtime);
 }

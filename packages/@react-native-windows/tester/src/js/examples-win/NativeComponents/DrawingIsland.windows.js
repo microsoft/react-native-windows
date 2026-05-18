@@ -13,7 +13,7 @@
 import React from 'react';
 import {View} from 'react-native';
 
-import {DrawingIsland} from 'sample-custom-component';
+import {DrawingIsland} from '@rnw-scripts/sample-custom-component';
 
 const DrawingIslandExample = () => {
   return (

@@ -96,7 +96,10 @@ void WindowsTextLayoutManager::GetTextLayout(
 
   winrt::com_ptr<IDWriteTextFormat> spTextFormat;
 
-  float fontSizeText = outerFragment.textAttributes.fontSize;
+  float fontSizeText =
+      (std::isnan(outerFragment.textAttributes.fontSize)
+           ? facebook::react::TextAttributes::defaultTextAttributes().fontSize
+           : outerFragment.textAttributes.fontSize);
   if (outerFragment.textAttributes.allowFontScaling.value_or(true) &&
       !std::isnan(outerFragment.textAttributes.fontSizeMultiplier)) {
     float maxFontSizeMultiplierText = cDefaultMaxFontSizeMultiplier;
@@ -136,6 +139,25 @@ void WindowsTextLayoutManager::GetTextLayout(
         outerFragment.textAttributes.lineHeight * 0.8f));
   }
 
+  // Set reading direction (RTL/LTR) based on baseWritingDirection
+  // Only set reading direction if explicitly specified to avoid breaking existing layouts
+  bool isRTL = false;
+  if (outerFragment.textAttributes.baseWritingDirection.has_value()) {
+    DWRITE_READING_DIRECTION readingDirection = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
+    if (*outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::RightToLeft) {
+      readingDirection = DWRITE_READING_DIRECTION_RIGHT_TO_LEFT;
+      isRTL = true;
+    } else if (*outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::LeftToRight) {
+      readingDirection = DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
+      isRTL = false;
+    } else if (*outerFragment.textAttributes.baseWritingDirection == facebook::react::WritingDirection::Natural) {
+      // Natural uses the layout direction from textAttributes
+      isRTL = (outerFragment.textAttributes.layoutDirection == facebook::react::LayoutDirection::RightToLeft);
+      readingDirection = isRTL ? DWRITE_READING_DIRECTION_RIGHT_TO_LEFT : DWRITE_READING_DIRECTION_LEFT_TO_RIGHT;
+    }
+    winrt::check_hresult(spTextFormat->SetReadingDirection(readingDirection));
+  }
+
   // Set text alignment
   DWRITE_TEXT_ALIGNMENT alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
   if (outerFragment.textAttributes.alignment) {
@@ -152,9 +174,9 @@ void WindowsTextLayoutManager::GetTextLayout(
       case facebook::react::TextAlignment::Right:
         alignment = DWRITE_TEXT_ALIGNMENT_TRAILING;
         break;
-      // TODO use LTR values
       case facebook::react::TextAlignment::Natural:
-        alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
+        // Natural alignment respects reading direction if baseWritingDirection was set
+        alignment = isRTL ? DWRITE_TEXT_ALIGNMENT_TRAILING : DWRITE_TEXT_ALIGNMENT_LEADING;
         break;
       default:
         assert(false);
@@ -174,12 +196,7 @@ void WindowsTextLayoutManager::GetTextLayout(
       ));
 
   // Apply max width constraint and ellipsis trimming to ensure consistency with rendering
-  DWRITE_TEXT_METRICS metrics;
-  winrt::check_hresult(spTextLayout->GetMetrics(&metrics));
-
-  if (metrics.width > size.width) {
-    spTextLayout->SetMaxWidth(size.width);
-  }
+  spTextLayout->SetMaxWidth(size.width);
 
   // Apply DWRITE_TRIMMING for ellipsizeMode
   DWRITE_TRIMMING trimming = {};
@@ -268,7 +285,9 @@ void WindowsTextLayoutManager::GetTextLayout(
       maxFontSizeMultiplier =
           (!std::isnan(attributes.maxFontSizeMultiplier) ? attributes.maxFontSizeMultiplier
                                                          : cDefaultMaxFontSizeMultiplier);
-      float fontSize = attributes.fontSize;
+      float fontSize =
+          (std::isnan(attributes.fontSize) ? facebook::react::TextAttributes::defaultTextAttributes().fontSize
+                                           : attributes.fontSize);
       if (attributes.allowFontScaling.value_or(true) && (!std::isnan(attributes.fontSizeMultiplier))) {
         fontSize *= (maxFontSizeMultiplier >= 1.0f) ? std::min(maxFontSizeMultiplier, attributes.fontSizeMultiplier)
                                                     : attributes.fontSizeMultiplier;
@@ -372,7 +391,7 @@ void WindowsTextLayoutManager::GetTextLayoutByAdjustingFontSizeToFit(
   }
 }
 
-// measure entire text (inluding attachments)
+// measure entire text (including attachments)
 TextMeasurement TextLayoutManager::measure(
     const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,

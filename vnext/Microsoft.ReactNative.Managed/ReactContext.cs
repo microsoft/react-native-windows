@@ -1,12 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#if !USE_WINUI3
-using System.Reflection.Metadata;
-using Windows.UI.Xaml;
-#else
 using Microsoft.UI.Xaml;
-#endif
 
 namespace Microsoft.ReactNative.Managed
 {
@@ -39,15 +34,6 @@ namespace Microsoft.ReactNative.Managed
 
     public void DispatchEvent<T>(FrameworkElement view, string eventName, T arg)
     {
-      var argWriter = arg as JSValueArgWriter;
-      if (argWriter != null)
-      {
-        XamlUIService.FromContext(Handle).DispatchEvent(view, eventName, argWriter);
-      }
-      else
-      {
-        XamlUIService.FromContext(Handle).DispatchEvent(view, eventName, (IJSValueWriter writer) => writer.WriteValue(arg));
-      }
     }
 
     public void CallJSFunction(string moduleName, string methodName)

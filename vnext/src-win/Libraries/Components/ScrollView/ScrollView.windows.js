@@ -31,6 +31,7 @@ import {
   VScrollContentViewNativeComponent,
   VScrollViewNativeComponent,
 } from '../../../src/private/components/scrollview/VScrollViewNativeComponents';
+import * as ReactNativeFeatureFlags from '../../../src/private/featureflags/ReactNativeFeatureFlags';
 import AnimatedImplementation from '../../Animated/AnimatedImplementation';
 import FrameRateLogger from '../../Interaction/FrameRateLogger';
 import {findNodeHandle} from '../../ReactNative/RendererProxy';
@@ -173,7 +174,7 @@ export interface PublicScrollViewInstance
 
 type InnerViewInstance = React.ElementRef<typeof View>;
 
-export type ScrollViewPropsIOS = $ReadOnly<{
+export type ScrollViewPropsIOS = Readonly<{
   /**
    * Controls whether iOS should automatically adjust the content inset
    * for scroll views that are placed behind a navigation bar or
@@ -329,7 +330,7 @@ export type ScrollViewPropsIOS = $ReadOnly<{
   ),
 }>;
 
-export type ScrollViewPropsAndroid = $ReadOnly<{
+export type ScrollViewPropsAndroid = Readonly<{
   /**
    * Enables nested scrolling for Android API level 21+.
    * Nested scrolling is supported by default on iOS
@@ -390,11 +391,11 @@ export type ScrollViewPropsAndroid = $ReadOnly<{
 }>;
 
 type StickyHeaderComponentType = component(
-  ref?: React.RefSetter<$ReadOnly<interface {setNextHeaderY: number => void}>>,
+  ref?: React.RefSetter<Readonly<interface {setNextHeaderY: number => void}>>,
   ...ScrollViewStickyHeaderProps
 );
 
-type ScrollViewBaseProps = $ReadOnly<{
+type ScrollViewBaseProps = Readonly<{
   /**
    * These styles will be applied to the scroll view content container which
    * wraps all of the child views. Example:
@@ -513,7 +514,7 @@ type ScrollViewBaseProps = $ReadOnly<{
    * whether content is "visible" or not.
    *
    */
-  maintainVisibleContentPosition?: ?$ReadOnly<{
+  maintainVisibleContentPosition?: ?Readonly<{
     minIndexForVisible: number,
     autoscrollToTopThreshold?: ?number,
   }>,
@@ -672,7 +673,7 @@ type ScrollViewBaseProps = $ReadOnly<{
   scrollViewRef?: React.RefSetter<PublicScrollViewInstance>,
 }>;
 
-export type ScrollViewProps = $ReadOnly<{
+export type ScrollViewProps = Readonly<{
   ...ViewProps,
   ...ScrollViewPropsIOS,
   ...ScrollViewPropsAndroid,
@@ -685,7 +686,7 @@ type ScrollViewState = {
 
 const IS_ANIMATING_TOUCH_START_THRESHOLD_MS = 16;
 
-export type ScrollViewComponentStatics = $ReadOnly<{
+export type ScrollViewComponentStatics = Readonly<{
   Context: typeof ScrollViewContext,
 }>;
 
@@ -1169,7 +1170,8 @@ class ScrollView extends React.Component<ScrollViewProps, ScrollViewState> {
       // they are callable from the ref.
 
       // $FlowFixMe[prop-missing] - Known issue with appending custom methods.
-      // $FlowFixMe[unsafe-object-assign] - Using Object.assign to append methods to native instance
+      // $FlowFixMe[incompatible-type]
+      // $FlowFixMe[unsafe-object-assign]
       const publicInstance: PublicScrollViewInstance = Object.assign(
         nativeInstance,
         {
@@ -1502,7 +1504,7 @@ class ScrollView extends React.Component<ScrollViewProps, ScrollViewState> {
         keyboardNeverPersistTaps &&
         this._keyboardIsDismissible() &&
         e.target != null &&
-        // $FlowFixMe[incompatible-type]
+        // $FlowFixMe[incompatible-type] Error supressed during the migration of HostInstance to ReactNativeElement
         !TextInputState.isTextInput(e.target)
       ) {
         return true;
@@ -1688,6 +1690,7 @@ class ScrollView extends React.Component<ScrollViewProps, ScrollViewState> {
           return (
             <StickyHeaderComponent
               key={key}
+              /* $FlowFixMe[incompatible-type] */
               ref={ref => this._setStickyHeaderRef(key, ref)}
               nextHeaderLayoutY={this._headerLayoutYs.get(
                 this._getKeyForIndex(nextIndex, children),
@@ -1753,8 +1756,11 @@ class ScrollView extends React.Component<ScrollViewProps, ScrollViewState> {
 
     const baseStyle = horizontal ? styles.baseHorizontal : styles.baseVertical;
 
-    const {experimental_endDraggingSensitivityMultiplier, ...otherProps} =
-      this.props;
+    const {
+      experimental_endDraggingSensitivityMultiplier,
+      maintainVisibleContentPosition,
+      ...otherProps
+    } = this.props;
     const props = {
       ...otherProps,
       accessible, // [Windows]
@@ -1808,6 +1814,10 @@ class ScrollView extends React.Component<ScrollViewProps, ScrollViewState> {
           this.props.snapToInterval != null ||
           this.props.snapToOffsets != null,
       }),
+      maintainVisibleContentPosition:
+        ReactNativeFeatureFlags.disableMaintainVisibleContentPosition()
+          ? undefined
+          : this.props.maintainVisibleContentPosition,
     };
 
     const {decelerationRate} = this.props;
@@ -1837,7 +1847,7 @@ class ScrollView extends React.Component<ScrollViewProps, ScrollViewState> {
         // Note: we should split props.style on the inner and outer props
         // however, the ScrollView still needs the baseStyle to be scrollable
         const {outer, inner} = splitLayoutProps(flattenStyle(props.style));
-        // $FlowFixMe[incompatible-call]
+        // $FlowFixMe[incompatible-type]
         return cloneElement(
           refreshControl,
           {style: StyleSheet.compose(baseStyle, outer)},

@@ -8,6 +8,8 @@
  * @format
  */
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+
 import * as React from 'react';
 import {useState} from 'react';
 import {
@@ -40,7 +42,7 @@ function ScrollViewKeyboardInsetsExample(): React.Node {
   const renderItem = ({
     item,
     index,
-  }: $ReadOnly<{item: number, index: number, ...}>) => {
+  }: Readonly<{item: number, index: number, ...}>) => {
     const largeInput = index % 5 === 4;
     return (
       <View key={item} style={styles.textInputRow}>
@@ -185,4 +187,4 @@ exports.examples = [
     title: '<ScrollView> automaticallyAdjustKeyboardInsets Example',
     render: (): React.Node => <ScrollViewKeyboardInsetsExample />,
   },
-];
+] as Array<RNTesterModuleExample>;

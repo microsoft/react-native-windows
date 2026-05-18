@@ -17,19 +17,24 @@
 // The macros below are internal implementation details for macro defined in nativeModules.h
 //
 
+// ADL-based fallback: returns false for any type not tagged by the macros below.
+// Using ADL instead of explicit template specialization allows the macros to be
+// used inside a namespace (explicit specializations of a global template must
+// occur at global scope, which the macros cannot guarantee).
 template <typename T>
-struct IsReactTurboModule;
+constexpr bool ReactIsReactTurboModuleImpl(T *) noexcept {
+  return false;
+}
 
-// Default to false if no specific override
 template <typename T>
-struct IsReactTurboModule : std::false_type {};
+struct IsReactTurboModule : std::bool_constant<ReactIsReactTurboModuleImpl(static_cast<T *>(nullptr))> {};
 
 #define INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(                                                            \
-    moduleStruct, moduleName, eventEmitterName, isReactTurboModule)                                                 \
+    moduleStruct, moduleName, eventEmitterName, isReactTurboModule, isEagerInit)                                    \
   struct moduleStruct;                                                                                              \
                                                                                                                     \
-  template <>                                                                                                       \
-  struct IsReactTurboModule<moduleStruct> : std::isReactTurboModule##_type {};                                      \
+  constexpr bool ReactIsReactTurboModuleImpl(moduleStruct *) noexcept { return isReactTurboModule; }                \
+  constexpr bool ReactIsEagerInitTurboModuleImpl(moduleStruct *) noexcept { return isEagerInit; }                   \
                                                                                                                     \
   template <class TDummy>                                                                                           \
   struct moduleStruct##_ModuleRegistration final : winrt::Microsoft::ReactNative::ModuleRegistration {              \
@@ -40,6 +45,7 @@ struct IsReactTurboModule : std::false_type {};
     }                                                                                                               \
                                                                                                                     \
     bool ShouldRegisterAsTurboModule() const noexcept override { return isReactTurboModule; }                       \
+    bool IsEagerInit() const noexcept override { return isEagerInit; }                                              \
                                                                                                                     \
     static const moduleStruct##_ModuleRegistration Registration;                                                    \
   };                                                                                                                \
@@ -55,7 +61,7 @@ struct IsReactTurboModule : std::false_type {};
   }
 
 #define INTERNAL_REACT_MODULE_3_ARGS(moduleStruct, moduleName, eventEmitterName) \
-  INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, eventEmitterName, false)
+  INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, eventEmitterName, false, false)
 
 #define INTERNAL_REACT_MODULE_2_ARGS(moduleStruct, moduleName) \
   INTERNAL_REACT_MODULE_3_ARGS(moduleStruct, moduleName, L"")
@@ -66,17 +72,16 @@ struct IsReactTurboModule : std::false_type {};
   INTERNAL_REACT_RECOMPOSER_4(     \
       (__VA_ARGS__, INTERNAL_REACT_MODULE_3_ARGS, INTERNAL_REACT_MODULE_2_ARGS, INTERNAL_REACT_MODULE_1_ARG, ))
 
-#define INTERNAL_REACT_MODULE_NO_REGISTRATION_AND_PROVIDER(                                            \
-    moduleStruct, moduleName, eventEmitterName, isReactTurboModule)                                    \
-  struct moduleStruct;                                                                                 \
-                                                                                                       \
-  template <>                                                                                          \
-  struct IsReactTurboModule<moduleStruct> : std::isReactTurboModule##_type {};                         \
-                                                                                                       \
-  template <class TRegistry>                                                                           \
-  constexpr void GetReactModuleInfo(moduleStruct *, TRegistry &registry) noexcept {                    \
-    registry.RegisterModule(                                                                           \
-        moduleName, eventEmitterName, winrt::Microsoft::ReactNative::ReactAttributeId<__COUNTER__>{}); \
+#define INTERNAL_REACT_MODULE_NO_REGISTRATION_AND_PROVIDER(                                                           \
+    moduleStruct, moduleName, eventEmitterName, isReactTurboModule)                                                   \
+  struct moduleStruct;                                                                                                \
+                                                                                                                      \
+  [[maybe_unused]] constexpr bool ReactIsReactTurboModuleImpl(moduleStruct *) noexcept { return isReactTurboModule; } \
+                                                                                                                      \
+  template <class TRegistry>                                                                                          \
+  constexpr void GetReactModuleInfo(moduleStruct *, TRegistry &registry) noexcept {                                   \
+    registry.RegisterModule(                                                                                          \
+        moduleName, eventEmitterName, winrt::Microsoft::ReactNative::ReactAttributeId<__COUNTER__>{});                \
   }
 
 // Another version of REACT_MODULE but does not do auto registration
@@ -101,17 +106,27 @@ struct IsReactTurboModule : std::false_type {};
 
 // Register struct as a ReactNative module.
 #define INTERNAL_REACT_TURBO_MODULE_2_ARGS(moduleStruct, moduleName) \
-  INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, L"", true)
+  INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, L"", true, false)
+
+#define INTERNAL_REACT_EAGER_TURBO_MODULE_2_ARGS(moduleStruct, moduleName) \
+  INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, L"", true, true)
 
 #define INTERNAL_REACT_TURBO_MODULE_1_ARG(moduleStruct) \
   INTERNAL_REACT_TURBO_MODULE_2_ARGS(moduleStruct, L## #moduleStruct)
 
+#define INTERNAL_REACT_EAGER_TURBO_MODULE_1_ARG(moduleStruct) \
+  INTERNAL_REACT_EAGER_TURBO_MODULE_2_ARGS(moduleStruct, L## #moduleStruct)
+
 #define INTERNAL_REACT_TURBO_MODULE(...) \
   INTERNAL_REACT_RECOMPOSER_3((__VA_ARGS__, INTERNAL_REACT_TURBO_MODULE_2_ARGS, INTERNAL_REACT_TURBO_MODULE_1_ARG, ))
 
+#define INTERNAL_REACT_EAGER_TURBO_MODULE(...) \
+  INTERNAL_REACT_RECOMPOSER_3(                 \
+      (__VA_ARGS__, INTERNAL_REACT_EAGER_TURBO_MODULE_2_ARGS, INTERNAL_REACT_EAGER_TURBO_MODULE_1_ARG, ))
+
 // Another version of REACT_MODULE but does not do auto registration
 #define INTERNAL_REACT_TURBO_MODULE_NOREG_2_ARGS(moduleStruct, moduleName) \
-  INTERNAL_REACT_MODULE_NO_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, L"", true)
+  INTERNAL_REACT_MODULE_NO_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, L"", true, false)
 
 #define INTERNAL_REACT_TURBO_MODULE_NOREG_1_ARG(moduleStruct) \
   INTERNAL_REACT_TURBO_MODULE_NOREG_2_ARGS(moduleStruct, L## #moduleStruct)
@@ -150,6 +165,7 @@ struct ModuleRegistration {
 
   virtual ReactModuleProvider MakeModuleProvider() const noexcept = 0;
   virtual bool ShouldRegisterAsTurboModule() const noexcept = 0;
+  virtual bool IsEagerInit() const noexcept = 0;
 
   static ModuleRegistration const *Head() noexcept {
     return s_head;

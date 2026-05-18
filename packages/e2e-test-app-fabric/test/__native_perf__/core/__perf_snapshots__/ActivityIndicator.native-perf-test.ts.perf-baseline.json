@@ -1,0 +1,43 @@
+{
+  "Native Render Pipeline ActivityIndicator native mount 1": {
+    "metrics": {
+      "name": "ActivityIndicator native mount",
+      "meanDuration": 2.4800000031789144,
+      "medianDuration": 2.484100043773651,
+      "stdDev": 0.5289090397238356,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        2.568000018596649,
+        2.912999987602234,
+        2.0101999640464783,
+        1.866599977016449,
+        1.9577000141143799,
+        1.8373000025749207,
+        2.2786999940872192,
+        2.484100043773651,
+        2.536500036716461,
+        2.217199981212616,
+        3.1218000054359436,
+        2.221000015735626,
+        2.5859000086784363,
+        2.8073999881744385,
+        3.794600009918213
+      ],
+      "timestamp": "2026-03-25T09:12:07.260Z",
+      "nativeTimings": {
+        "fullPipeline": 2.484100043773651
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-25T09:12:07.262Z"
+  }
+}

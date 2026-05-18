@@ -1,0 +1,43 @@
+{
+  "Native Render Pipeline Modal native mount 1": {
+    "metrics": {
+      "name": "Modal native mount",
+      "meanDuration": 1.3649799942970275,
+      "medianDuration": 1.217699944972992,
+      "stdDev": 0.23040005387861157,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        1.7878000140190125,
+        1.6008999943733215,
+        1.3690999746322632,
+        1.6188000440597534,
+        1.5525999665260315,
+        1.2020000219345093,
+        1.1894000172615051,
+        1.2010000348091125,
+        1.136900007724762,
+        1.1675999760627747,
+        1.2005999684333801,
+        1.217699944972992,
+        1.3144999742507935,
+        1.1704000234603882,
+        1.7453999519348145
+      ],
+      "timestamp": "2026-03-25T09:12:40.886Z",
+      "nativeTimings": {
+        "fullPipeline": 1.217699944972992
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-25T09:12:40.888Z"
+  }
+}

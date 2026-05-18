@@ -8,6 +8,8 @@
  * @format
  */
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+
 import RNTesterBlock from '../../components/RNTesterBlock';
 import RNTesterText from '../../components/RNTesterText';
 import React from 'react';
@@ -23,7 +25,7 @@ import {
 } from 'react-native';
 
 class OpenURLButton extends React.Component<
-  $ReadOnly<{
+  Readonly<{
     url: string,
   }>,
 > {
@@ -53,7 +55,7 @@ class OpenURLButton extends React.Component<
   }
 }
 
-class OpenSettingsExample extends React.Component<$ReadOnly<{}>> {
+class OpenSettingsExample extends React.Component<Readonly<{}>> {
   openSettings = () => {
     void Linking.openSettings();
   };
@@ -66,7 +68,7 @@ class OpenSettingsExample extends React.Component<$ReadOnly<{}>> {
 const SendIntentButton = ({
   action,
   extras,
-}: $ReadOnly<{
+}: Readonly<{
   action: string,
   extras?: Array<{
     key: string,
@@ -98,7 +100,7 @@ const SendIntentButton = ({
   );
 };
 
-class IntentAndroidExample extends React.Component<$ReadOnly<{}>> {
+class IntentAndroidExample extends React.Component<Readonly<{}>> {
   render(): React.Node {
     return (
       <View>
@@ -168,4 +170,4 @@ exports.examples = [
       return <OpenSettingsExample />;
     },
   },
-];
+] as Array<RNTesterModuleExample>;

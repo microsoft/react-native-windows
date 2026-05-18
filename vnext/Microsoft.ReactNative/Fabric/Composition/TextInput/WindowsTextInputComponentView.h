@@ -11,6 +11,7 @@
 #include <textserv.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
+#include <unordered_map>
 #include "../ComponentView.h"
 #include "../CompositionHelpers.h"
 #include "../CompositionViewComponentView.h"
@@ -67,17 +68,20 @@ struct WindowsTextInputComponentView
   void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void OnCharacterReceived(const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs
                                &args) noexcept override;
+  void OnContextMenuKey(
+      const winrt::Microsoft::ReactNative::Composition::Input::ContextMenuKeyEventArgs &args) noexcept override;
   void onMounted() noexcept override;
 
   std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
-  bool IsDoubleClick();
+  bool IsDoubleClick(uint32_t pointerId);
 
   WindowsTextInputComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+  ~WindowsTextInputComponentView();
 
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual createVisual() noexcept;
 
@@ -115,9 +119,10 @@ struct WindowsTextInputComponentView
       const std::string &previousCapitalizationType,
       const std::string &newcapitalizationType) noexcept;
 
-  void updateLetterSpacing(float letterSpacing) noexcept;
   void updateAutoCorrect(bool value) noexcept;
   void updateSpellCheck(bool value) noexcept;
+  void ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept;
+  void calculateContentVerticalOffset() noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
@@ -142,10 +147,14 @@ struct WindowsTextInputComponentView
   bool m_hasFocus{false};
   bool m_clearTextOnSubmit{false};
   bool m_multiline{false};
+  LONG m_contentVerticalOffsetPx{0}; // Used to center single line text within the client rect
+  bool m_recalculateContentVerticalOffset{true};
+  POINT m_contentOffsetPx{0, 0};
   DWORD m_propBitsMask{0};
   DWORD m_propBits{0};
   HCURSOR m_hcursor{nullptr};
-  std::chrono::steady_clock::time_point m_lastClickTime{};
+  POINT m_caretPosition{0, 0};
+  std::unordered_map<uint32_t, std::chrono::steady_clock::time_point> m_lastClickTimeByPointer;
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
 };
 

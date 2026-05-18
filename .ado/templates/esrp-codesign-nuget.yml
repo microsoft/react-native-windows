@@ -1,0 +1,39 @@
+parameters:
+  - name: displayName
+    type: string
+  - name: folderPath
+    type: string
+  - name: pattern
+    type: string
+
+steps:
+  - task: EsrpCodeSigning@6
+    displayName: ${{ parameters.displayName }}
+    inputs:
+      ConnectedServiceName: 'ESRP-CodeSigning-OGX-JSHost-RNW'
+      AppRegistrationClientId: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+      AppRegistrationTenantId: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+      AuthAKVName: 'OGX-JSHost-KV'
+      AuthCertName: 'OGX-JSHost-Auth4'
+      AuthSignCertName: 'OGX-JSHost-Sign3'
+      FolderPath: ${{ parameters.folderPath }}
+      Pattern: ${{ parameters.pattern }}
+      UseMinimatch: true
+      signConfigType: inlineSignParams
+      inlineOperation: |
+        [
+          {
+            "KeyCode" : "CP-401405",
+            "OperationCode" : "NuGetSign",
+            "Parameters" : {},
+            "ToolName" : "sign",
+            "ToolVersion" : "1.0"
+          },
+          {
+            "KeyCode" : "CP-401405",
+            "OperationCode" : "NuGetVerify",
+            "Parameters" : {},
+            "ToolName" : "sign",
+            "ToolVersion" : "1.0"
+          }
+        ]

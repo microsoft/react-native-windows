@@ -22,14 +22,14 @@ class FocusManager {
     if (ref) {
       if (setWindowFocus) {
         UIManager.dispatchViewManagerCommand(
-          // $FlowIgnoreMe[incompatible-call]
+          // $FlowFixMe[incompatible-type]
           findNodeHandle(ref),
           UIManager.getViewManagerConfig('RCTView').Commands.aggressivefocus,
           [],
         );
       } else {
         UIManager.dispatchViewManagerCommand(
-          // $FlowIgnoreMe[incompatible-call]
+          // $FlowFixMe[incompatible-type]
           findNodeHandle(ref),
           UIManager.getViewManagerConfig('RCTView').Commands.politefocus,
           [],

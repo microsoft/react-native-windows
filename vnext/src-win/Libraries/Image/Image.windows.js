@@ -35,7 +35,7 @@ import * as React from 'react';
 function getSize(
   uri: string,
   success?: (width: number, height: number) => void,
-  failure?: (error: mixed) => void,
+  failure?: (error: unknown) => void,
 ): void | Promise<ImageSize> {
   const promise = NativeImageLoaderIOS.getSize(uri).then(([width, height]) => ({
     width,
@@ -58,7 +58,7 @@ function getSizeWithHeaders(
   uri: string,
   headers: {[string]: string, ...},
   success?: (width: number, height: number) => void,
-  failure?: (error: mixed) => void,
+  failure?: (error: unknown) => void,
 ): void | Promise<ImageSize> {
   const promise = NativeImageLoaderIOS.getSizeWithHeaders(uri, headers);
   if (typeof success !== 'function') {
@@ -155,6 +155,7 @@ let BaseImage: AbstractImageIOS = ({
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-selected': ariaSelected,
+    'aria-hidden': ariaHidden,
     'aria-readonly': ariaReadOnly, // Windows
     'aria-multiselectable': ariaMultiselectable, // Windows
     'aria-required': ariaRequired, // Windows,
@@ -177,6 +178,10 @@ let BaseImage: AbstractImageIOS = ({
       ariaMultiselectable ?? props.accessibilityState?.multiselectable, // Windows
     required: ariaRequired ?? props.accessibilityState?.required, // Windows
   };
+
+  // In order for `aria-hidden` to work on iOS we must set `accessible` to false (`accessibilityElementsHidden` is not enough).
+  const accessible =
+    ariaHidden !== true && (props.alt !== undefined ? true : props.accessible);
   const accessibilityLabel = props['aria-label'] ?? props.accessibilityLabel;
   const accessibilityLevel = ariaLevel ?? props.accessibilityLevel; // Windows
   const accessibilityPosInSet = ariaPosinset ?? props.accessibilityPosInSet; // Windows
@@ -184,67 +189,29 @@ let BaseImage: AbstractImageIOS = ({
 
   const actualRef = useWrapRefWithImageAttachedCallbacks(forwardedRef);
 
-  // [Windows - Paper doesn't support Views in Text while Fabric does
-  if (global.RN$Bridgeless !== true) {
-    return (
-      // [Windows
-      <TextAncestor.Consumer>
-        {hasTextAncestor => {
-          invariant(
-            !hasTextAncestor,
-            'Nesting of <Image> within <Text> is not currently supported.',
-          );
-          // windows]
-          return (
-            <ImageAnalyticsTagContext.Consumer>
-              {analyticTag => (
-                <ImageViewNativeComponent
-                  accessibilityState={_accessibilityState}
-                  {...restProps}
-                  accessible={props.alt !== undefined ? true : props.accessible}
-                  accessibilityLabel={accessibilityLabel ?? props.alt}
-                  accessibilityLevel={accessibilityLevel} // Windows
-                  accessibilityPosInSet={accessibilityPosInSet} // Windows
-                  accessibilitySetSize={accessibilitySetSize} // Windows
-                  ref={actualRef}
-                  style={style}
-                  resizeMode={resizeMode}
-                  tintColor={tintColor}
-                  source={sources}
-                  internal_analyticTag={analyticTag}
-                />
-              )}
-            </ImageAnalyticsTagContext.Consumer>
-          );
-        }}
-      </TextAncestor.Consumer>
-    );
-  } else {
-    return (
-      <ImageAnalyticsTagContext.Consumer>
-        {analyticTag => {
-          return (
-            <ImageViewNativeComponent
-              accessibilityState={_accessibilityState}
-              {...restProps}
-              accessible={props.alt !== undefined ? true : props.accessible}
-              accessibilityLabel={accessibilityLabel ?? props.alt}
-              accessibilityLevel={accessibilityLevel} // Windows
-              accessibilityPosInSet={accessibilityPosInSet} // Windows
-              accessibilitySetSize={accessibilitySetSize} // Windows
-              ref={actualRef}
-              style={style}
-              resizeMode={resizeMode}
-              tintColor={tintColor}
-              source={sources}
-              internal_analyticTag={analyticTag}
-            />
-          );
-        }}
-      </ImageAnalyticsTagContext.Consumer>
-    );
-    // Windows]
-  }
+  return (
+    <ImageAnalyticsTagContext.Consumer>
+      {analyticTag => {
+        return (
+          <ImageViewNativeComponent
+            accessibilityState={_accessibilityState}
+            {...restProps}
+            accessible={accessible}
+            accessibilityLabel={accessibilityLabel ?? props.alt}
+            accessibilityLevel={accessibilityLevel} // Windows
+            accessibilityPosInSet={accessibilityPosInSet} // Windows
+            accessibilitySetSize={accessibilitySetSize} // Windows
+            ref={actualRef}
+            style={style}
+            resizeMode={resizeMode}
+            tintColor={tintColor}
+            source={sources}
+            internal_analyticTag={analyticTag}
+          />
+        );
+      }}
+    </ImageAnalyticsTagContext.Consumer>
+  );
 };
 
 const imageComponentDecorator = unstable_getImageComponentDecorator();

@@ -494,16 +494,11 @@ std::shared_ptr<facebook::react::TurboModule> TurboModulesProvider::getModule(
 }
 
 std::vector<std::string> TurboModulesProvider::getEagerInitModuleNames() noexcept {
-  std::vector<std::string> eagerModules;
-  auto it = m_moduleProviders.find("UIManager");
-  if (it != m_moduleProviders.end()) {
-    eagerModules.push_back("UIManager");
-  }
-  it = m_moduleProviders.find("FabricUIManagerBinding");
-  if (it != m_moduleProviders.end()) {
-    eagerModules.push_back("FabricUIManagerBinding");
-  }
-  return eagerModules;
+  return m_eagerInitModuleNames;
+}
+
+void TurboModulesProvider::AddEagerInit(std::string moduleName) noexcept {
+  m_eagerInitModuleNames.push_back(moduleName);
 }
 
 void TurboModulesProvider::SetReactContext(const IReactContext &reactContext) noexcept {

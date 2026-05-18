@@ -36,9 +36,6 @@ namespace Microsoft.ReactNative.Managed.IntegrationTests
         Host.InstanceSettings.BundleRootPath = Path.GetFullPath(testBinaryPath + "\\..\\JSBundles");
         Host.InstanceSettings.JavaScriptBundleFile = jsBundle;
         Host.InstanceSettings.UseDeveloperSupport = false;
-#pragma warning disable 612, 618 // Deprecated
-        Host.InstanceSettings.UseWebDebugger = false;
-#pragma warning restore 612, 618
         Host.InstanceSettings.UseFastRefresh = false;
         Host.InstanceSettings.UseDeveloperSupport = false;
 

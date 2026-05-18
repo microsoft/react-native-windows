@@ -10,6 +10,8 @@
 
 'use strict';
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+
 import RNTesterBlock from '../../components/RNTesterBlock';
 import RNTesterPage from '../../components/RNTesterPage';
 import RNTesterText from '../../components/RNTesterText';
@@ -32,7 +34,7 @@ function blobToBase64(blob: Blob) {
       if (typeof result === 'string') {
         resolve(result);
       } else {
-        reject('error: incompatible types');
+        reject(new Error('error: incompatible types'));
       }
     };
     reader.readAsDataURL(blob);
@@ -116,4 +118,4 @@ exports.examples = [
       return <ContentURLAndroidExample />;
     },
   },
-];
+] as Array<RNTesterModuleExample>;

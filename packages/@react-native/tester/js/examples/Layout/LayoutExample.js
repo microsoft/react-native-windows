@@ -10,6 +10,7 @@
 
 'use strict';
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 import RNTesterBlock from '../../components/RNTesterBlock';
@@ -18,7 +19,7 @@ import RNTesterText from '../../components/RNTesterText';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-type CicleProps = $ReadOnly<{
+type CicleProps = Readonly<{
   backgroundColor?: string,
   size?: number,
 }>;
@@ -40,7 +41,7 @@ function Circle({
   );
 }
 
-type CircleBlockProps = $ReadOnly<{
+type CircleBlockProps = Readonly<{
   children: React.Node,
   style: ViewStyleProp,
 }>;
@@ -210,4 +211,4 @@ exports.examples = [
       return <LayoutExample />;
     },
   },
-];
+] as Array<RNTesterModuleExample>;

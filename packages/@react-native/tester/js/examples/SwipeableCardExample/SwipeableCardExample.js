@@ -8,6 +8,7 @@
  * @format
  */
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 import type {ListRenderItemInfo} from 'react-native';
 
 import * as React from 'react';
@@ -39,7 +40,7 @@ module.exports = {
         return <SwipeableCardExample />;
       },
     },
-  ],
+  ] as Array<RNTesterModuleExample>,
 };
 
 function SwipeableCardExample() {
@@ -148,7 +149,7 @@ function Card(props: {color: string}) {
 
   const separatorComponent = () => <View style={styles.separator} />;
 
-  const listRef = useRef<?FlatList<mixed>>();
+  const listRef = useRef<?FlatList<unknown>>();
 
   useEffect(() => {
     listRef.current?.scrollToOffset({offset: 0, animated: false});

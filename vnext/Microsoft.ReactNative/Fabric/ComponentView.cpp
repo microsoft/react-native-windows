@@ -8,6 +8,7 @@
 #include "DynamicReader.h"
 
 #include "ComponentView.g.cpp"
+#include "CreateAutomationPeerArgs.g.h"
 #include "LayoutMetricsChangedArgs.g.cpp"
 #include "MountChildComponentViewArgs.g.cpp"
 #include "UnmountChildComponentViewArgs.g.cpp"
@@ -71,7 +72,7 @@ void ComponentView::onMounted() noexcept {
   m_mountedEvent(*this, *this);
 }
 
-bool ComponentView::isMounted() noexcept {
+bool ComponentView::isMounted() const noexcept {
   return m_mounted;
 }
 
@@ -282,6 +283,7 @@ void ComponentView::parent(const winrt::Microsoft::ReactNative::ComponentView &p
         oldRootView->TrySetFocusedComponent(
             oldParent,
             winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+            winrt::Microsoft::ReactNative::FocusState::Programmatic,
             true /*forceNoSelectionIfCannotMove*/);
       }
     }
@@ -430,9 +432,10 @@ void ComponentView::GotFocus(winrt::event_token const &token) noexcept {
   m_gotFocusEvent.remove(token);
 }
 
-bool ComponentView::TryFocus() noexcept {
+bool ComponentView::TryFocus(winrt::Microsoft::ReactNative::FocusState focusState) noexcept {
   if (auto root = rootComponentView()) {
-    return root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+    return root->TrySetFocusedComponent(
+        *get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None, focusState);
   }
 
   return false;
@@ -466,6 +469,16 @@ winrt::event_token ComponentView::CharacterReceived(
 
 void ComponentView::CharacterReceived(winrt::event_token const &token) noexcept {
   m_characterReceivedEvent.remove(token);
+}
+
+winrt::event_token ComponentView::ContextMenuKey(
+    winrt::Windows::Foundation::EventHandler<
+        winrt::Microsoft::ReactNative::Composition::Input::ContextMenuKeyEventArgs> const &handler) noexcept {
+  return m_contextMenuKeyEvent.add(handler);
+}
+
+void ComponentView::ContextMenuKey(winrt::event_token const &token) noexcept {
+  m_contextMenuKeyEvent.remove(token);
 }
 
 winrt::event_token ComponentView::PointerPressed(
@@ -608,6 +621,14 @@ void ComponentView::OnCharacterReceived(
   }
 }
 
+void ComponentView::OnContextMenuKey(
+    const winrt::Microsoft::ReactNative::Composition::Input::ContextMenuKeyEventArgs &args) noexcept {
+  m_contextMenuKeyEvent(*this, args);
+  if (m_parent && !args.Handled()) {
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->OnContextMenuKey(args);
+  }
+}
+
 bool ComponentView::focusable() const noexcept {
   return false;
 }
@@ -641,7 +662,32 @@ facebook::react::Tag ComponentView::hitTest(
   return -1;
 }
 
+struct CreateAutomationPeerArgs
+    : public winrt::Microsoft::ReactNative::implementation::CreateAutomationPeerArgsT<CreateAutomationPeerArgs> {
+  CreateAutomationPeerArgs(winrt::Windows::Foundation::IInspectable defaultAutomationPeer)
+      : m_defaultAutomationPeer(defaultAutomationPeer) {}
+
+  winrt::Windows::Foundation::IInspectable DefaultAutomationPeer() const noexcept {
+    return m_defaultAutomationPeer;
+  }
+
+ private:
+  winrt::Windows::Foundation::IInspectable m_defaultAutomationPeer;
+};
+
 winrt::IInspectable ComponentView::EnsureUiaProvider() noexcept {
+  if (m_uiaProvider == nullptr) {
+    if (m_builder && m_builder->CreateAutomationPeerHandler()) {
+      m_uiaProvider = m_builder->CreateAutomationPeerHandler()(
+          *this, winrt::make<CreateAutomationPeerArgs>(CreateAutomationProvider()));
+    } else {
+      m_uiaProvider = CreateAutomationProvider();
+    }
+  }
+  return m_uiaProvider;
+}
+
+winrt::Windows::Foundation::IInspectable ComponentView::CreateAutomationProvider() noexcept {
   return nullptr;
 }
 

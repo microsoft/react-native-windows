@@ -1,18 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#ifndef USE_WINUI3
-#define XAML_NAMESPACE Windows.UI.Xaml
-#else
-#define XAML_NAMESPACE Microsoft.UI.Xaml
-#endif
-
 namespace PlaygroundApp
 {
   // Used to notify of layout changes to forward to yoga
   [default_interface]
   [webhosthidden]
-  runtimeclass YogaXamlPanel : XAML_NAMESPACE.Controls.Panel
+  runtimeclass YogaXamlPanel : Microsoft.UI.Xaml.Controls.Panel
   {
   }
 }

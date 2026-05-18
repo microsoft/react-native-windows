@@ -19,8 +19,11 @@ namespace Microsoft::ReactNative {
 struct CompContext;
 } // namespace Microsoft::ReactNative
 
-namespace winrt::Microsoft::ReactNative::Composition::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
+class CompositionDynamicAutomationProvider;
+}
 
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct FocusPrimitive {
   std::shared_ptr<BorderPrimitive> m_focusInnerPrimitive;
   std::shared_ptr<BorderPrimitive> m_focusOuterPrimitive;
@@ -100,12 +103,17 @@ struct ComponentView : public ComponentViewT<
   comp::CompositionPropertySet EnsureCenterPointPropertySet() noexcept;
   void EnsureTransformMatrixFacade() noexcept;
 
-  winrt::IInspectable EnsureUiaProvider() noexcept override;
+  winrt::Windows::Foundation::IInspectable CreateAutomationProvider() noexcept override;
+  const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
+      &InnerAutomationProvider() const noexcept;
   std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
   ToggleState getToggleState() noexcept override;
   void Toggle() noexcept override;
+
+  int32_t borderInsertAtIndex() const noexcept;
+
   virtual winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept;
 
   virtual std::pair<facebook::react::Cursor, HCURSOR> cursor() const noexcept;
@@ -125,15 +133,20 @@ struct ComponentView : public ComponentViewT<
   void ThemeChanged(winrt::event_token const &token) noexcept;
 
  protected:
+  virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual VisualToApplyBackgroundClipTo()
+      const noexcept;
   bool anyHitTestHelper(
       facebook::react::Tag &targetTag,
       facebook::react::Point &ptContent,
       facebook::react::Point &localPt) const noexcept;
 
-  winrt::IInspectable m_uiaProvider{nullptr};
+  // Most access should be through EnsureUIAProvider, instead of direct access to this.
+  winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
+      m_innerAutomationProvider;
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   comp::CompositionPropertySet m_centerPropSet{nullptr};
   facebook::react::SharedViewEventEmitter m_eventEmitter;
+  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_backgroundVisual{nullptr};
 
  private:
   void updateFocusLayoutMetrics() noexcept;
@@ -150,6 +163,9 @@ struct ComponentView : public ComponentViewT<
   facebook::react::BorderMetrics focusBorderMetrics(bool inner, const facebook::react::LayoutMetrics &layoutMetrics)
       const noexcept;
 
+  facebook::react::LayoutMetrics outlineLayoutMetrics() const noexcept;
+  facebook::react::BorderMetrics outlineBorderMetrics() const noexcept;
+
   virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual visualToHostFocus() noexcept;
   virtual winrt::com_ptr<ComponentView> focusVisualRoot(const facebook::react::Rect &focusRect) noexcept;
 
@@ -161,6 +177,7 @@ struct ComponentView : public ComponentViewT<
   winrt::com_ptr<ComponentView>
       m_componentHostingFocusVisual; // The component that we are showing our focus visuals within
   std::shared_ptr<BorderPrimitive> m_borderPrimitive;
+  std::shared_ptr<BorderPrimitive> m_outlinePrimitive;
   std::unique_ptr<FocusPrimitive> m_focusPrimitive{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_outerVisual{nullptr};
   winrt::event<winrt::Windows::Foundation::EventHandler<winrt::IInspectable>> m_themeChangedEvent;
@@ -226,11 +243,15 @@ struct ViewComponentView : public ViewComponentViewT<
 
  protected:
   virtual winrt::Microsoft::ReactNative::ViewProps ViewPropsInner() noexcept;
+  virtual void updateChildrenClippingPath(
+      facebook::react::LayoutMetrics const &layoutMetrics,
+      const facebook::react::ViewProps &viewProps) noexcept;
 
  private:
   bool m_hasNonVisualChildren{false};
   facebook::react::SharedViewProps m_props;
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_childrenContainer{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::CreateInternalVisualDelegate m_createInternalVisualHandler{
       nullptr};
 };

@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-<!-- This log was last generated on Sat, 23 Aug 2025 05:30:42 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 12 Nov 2025 21:00:43 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.2.38
+
+Wed, 12 Nov 2025 21:00:43 GMT
+
+### Patches
+
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 1.2.37
 

@@ -8,6 +8,8 @@
 #endif
 
 #include "CalendarView.h"
+#include "ComboBox.h"
+#include "CustomAccessibility.h"
 #include "DrawingIsland.h"
 #include "MovingLight.h"
 
@@ -22,6 +24,8 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
   RegisterDrawingIslandComponentView(packageBuilder);
   RegisterMovingLightNativeComponent(packageBuilder);
   RegisterCalendarViewComponentView(packageBuilder);
+  RegisterCustomAccessibilityComponentView(packageBuilder);
+  RegisterComboBoxComponentView(packageBuilder);
 #endif // #ifdef RNW_NEW_ARCH
 }
 

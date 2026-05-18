@@ -18,7 +18,6 @@ class ReactSettingsSnapshot final : public Mso::UnknownObject<IReactSettingsSnap
   ReactSettingsSnapshot(Mso::WeakPtr<ReactInstanceWin> &&reactInstance) noexcept;
 
  public: // IReactSettingsSnapshot
-  bool UseWebDebugger() const noexcept override;
   bool UseFastRefresh() const noexcept override;
   bool UseDirectDebugger() const noexcept override;
   bool DebuggerBreakOnNextLine() const noexcept override;
@@ -53,7 +52,6 @@ class ReactContext final : public Mso::UnknownObject<IReactContext> {
   winrt::Microsoft::ReactNative::JsiRuntime JsiRuntime() const noexcept override;
   ReactInstanceState State() const noexcept override;
   bool IsLoaded() const noexcept override;
-  std::shared_ptr<facebook::react::Instance> GetInnerInstance() const noexcept override;
   IReactSettingsSnapshot const &SettingsSnapshot() const noexcept override;
 
  private:

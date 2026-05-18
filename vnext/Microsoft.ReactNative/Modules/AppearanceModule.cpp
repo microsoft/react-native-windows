@@ -4,17 +4,14 @@
 #include "pch.h"
 #include "AppearanceModule.h"
 #include <Utils/ThemeUtils.h>
-#include <XamlUtils.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
-using Application = xaml::Application;
-using ApplicationTheme = xaml::ApplicationTheme;
 using UISettings = winrt::Windows::UI::ViewManagement::UISettings;
 
 namespace Microsoft::ReactNative {
 
-static const React::ReactPropertyId<ApplicationTheme> &AppearanceCurrentThemePropertyId() noexcept {
-  static const React::ReactPropertyId<ApplicationTheme> prop{L"ReactNative.Appearance", L"ApplicationTheme"};
+static const React::ReactPropertyId<bool> &AppearanceCurrentThemePropertyId() noexcept {
+  static const React::ReactPropertyId<bool> prop{L"ReactNative.Appearance", L"ApplicationTheme"};
   return prop;
 }
 
@@ -42,18 +39,15 @@ void Appearance::Initialize(winrt::Microsoft::ReactNative::ReactContext const &r
       });
 }
 
-ApplicationTheme CurrentThemeFromUISettings(const winrt::Windows::UI::ViewManagement::UISettings &uiSettings) {
+Appearance::ApplicationTheme CurrentThemeFromUISettings(
+    const winrt::Windows::UI::ViewManagement::UISettings &uiSettings) {
   return IsColorLight(uiSettings.GetColorValue(winrt::Windows::UI::ViewManagement::UIColorType::Foreground))
-      ? ApplicationTheme::Dark
-      : ApplicationTheme::Light;
+      ? Appearance::ApplicationTheme::Dark
+      : Appearance::ApplicationTheme::Light;
 }
 
-ApplicationTheme Appearance::GetCurrentTheme() noexcept {
+Appearance::ApplicationTheme Appearance::GetCurrentTheme() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess()); // xaml::Application is only accessible on the UI thread
-  if (auto currentApp = xaml::TryGetCurrentUwpXamlApplication()) {
-    return currentApp.RequestedTheme();
-  }
-
   return CurrentThemeFromUISettings(m_uiSettings);
 }
 
@@ -63,9 +57,9 @@ const char *Appearance::ToString(ApplicationTheme theme) noexcept {
 
 void Appearance::RequeryTheme() noexcept {
   auto theme = GetCurrentTheme();
-  auto oldThemeBoxed =
-      m_context.Properties().Handle().Set(AppearanceCurrentThemePropertyId().Handle(), winrt::box_value(theme));
-  auto oldTheme = winrt::unbox_value_or<ApplicationTheme>(oldThemeBoxed, ApplicationTheme::Light);
+  auto oldTheme = m_context.Properties().Get(AppearanceCurrentThemePropertyId()).value_or(false)
+      ? Appearance::ApplicationTheme::Dark
+      : Appearance::ApplicationTheme::Light;
 
   if (oldTheme != theme) {
     appearanceChanged({ToString(theme)});
@@ -73,15 +67,11 @@ void Appearance::RequeryTheme() noexcept {
 }
 
 void Appearance::InitOnUIThread(const Mso::React::IReactContext &context) noexcept {
-  xaml::ApplicationTheme theme = ApplicationTheme::Light;
-  if (auto currentApp = xaml::TryGetCurrentUwpXamlApplication()) {
-    theme = currentApp.RequestedTheme();
-  } else {
-    theme = CurrentThemeFromUISettings(winrt::Windows::UI::ViewManagement::UISettings());
-  }
+  Appearance::ApplicationTheme theme = Appearance::ApplicationTheme::Light;
+  theme = CurrentThemeFromUISettings(winrt::Windows::UI::ViewManagement::UISettings());
 
   winrt::Microsoft::ReactNative::ReactPropertyBag pb{context.Properties()};
-  pb.Set(AppearanceCurrentThemePropertyId(), theme);
+  pb.Set(AppearanceCurrentThemePropertyId(), theme == Appearance::ApplicationTheme::Dark);
 }
 
 void Appearance::setColorScheme(std::string style) noexcept {
@@ -89,7 +79,10 @@ void Appearance::setColorScheme(std::string style) noexcept {
 }
 
 std::optional<std::string> Appearance::getColorScheme() noexcept {
-  return ToString(*(m_context.Properties().Get(AppearanceCurrentThemePropertyId())));
+  return ToString(
+      m_context.Properties().Get(AppearanceCurrentThemePropertyId()).value_or(false)
+          ? Appearance::ApplicationTheme::Dark
+          : Appearance::ApplicationTheme::Light);
 }
 
 void Appearance::addListener(std::string eventName) noexcept {

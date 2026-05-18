@@ -42,9 +42,7 @@ class CompositionRootAutomationProvider : public winrt::implements<
   CompositionRootAutomationProvider(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept;
 
   void SetHwnd(HWND hwnd) noexcept;
-#ifdef USE_WINUI3
   void SetIsland(winrt::Microsoft::UI::Content::ContentIsland &island) noexcept;
-#endif
   bool WasPropertyAdvised(PROPERTYID prop) noexcept;
   bool WasEventAdvised(EVENTID event) noexcept;
 
@@ -75,9 +73,7 @@ class CompositionRootAutomationProvider : public winrt::implements<
   std::vector<AdvisedEvent> m_advisedProperties{};
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView;
   HWND m_hwnd{nullptr};
-#ifdef USE_WINUI3
   winrt::Microsoft::UI::Content::ContentIsland m_island{nullptr};
-#endif
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

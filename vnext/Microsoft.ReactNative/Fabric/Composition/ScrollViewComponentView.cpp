@@ -6,7 +6,7 @@
 
 #include "ScrollViewComponentView.h"
 
-#include <UI.Xaml.Controls.h>
+#include <Fabric/ComponentView.h>
 #include <Utils/ValueUtils.h>
 
 #pragma warning(push)
@@ -20,8 +20,10 @@
 #include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
 #include <unicode.h>
-#include "CompositionDynamicAutomationProvider.h"
+#include <functional>
+#include "ContentIslandComponentView.h"
 #include "JSValueReader.h"
+#include "ReactNativeIsland.h"
 #include "RootComponentView.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
@@ -814,6 +816,25 @@ void ScrollViewComponentView::updateProps(
     }
     m_scrollVisual.SetSnapPoints(newViewProps.snapToStart, newViewProps.snapToEnd, snapToOffsets.GetView());
   }
+
+  if (!oldProps || oldViewProps.pagingEnabled != newViewProps.pagingEnabled) {
+    m_scrollVisual.PagingEnabled(newViewProps.pagingEnabled);
+  }
+
+  if (!oldProps || oldViewProps.snapToInterval != newViewProps.snapToInterval) {
+    m_scrollVisual.SnapToInterval(static_cast<float>(newViewProps.snapToInterval));
+  }
+
+  if (!oldProps || oldViewProps.snapToAlignment != newViewProps.snapToAlignment) {
+    using SnapPointsAlignment = winrt::Microsoft::ReactNative::Composition::Experimental::SnapPointsAlignment;
+    SnapPointsAlignment alignment = SnapPointsAlignment::Near; // default is "start"
+    if (newViewProps.snapToAlignment == facebook::react::ScrollViewSnapToAlignment::Center) {
+      alignment = SnapPointsAlignment::Center;
+    } else if (newViewProps.snapToAlignment == facebook::react::ScrollViewSnapToAlignment::End) {
+      alignment = SnapPointsAlignment::Far;
+    }
+    m_scrollVisual.SnapToAlignment(alignment);
+  }
 }
 
 void ScrollViewComponentView::updateState(
@@ -829,13 +850,27 @@ void ScrollViewComponentView::updateStateWithContentOffset() noexcept {
     return;
   }
 
-  auto scrollPosition = m_scrollVisual.ScrollPosition();
-  m_verticalScrollbarComponent->ContentOffset(scrollPosition);
-  m_horizontalScrollbarComponent->ContentOffset(scrollPosition);
+  // Issue #16047: m_scrollVisual.ScrollPosition() returns the InteractionTracker
+  // position in PHYSICAL pixels (the visual is sized as
+  // layoutMetrics.frame.size.* * pointScaleFactor — see updateLayoutMetrics /
+  // updateContentVisualSize) but ScrollViewShadowNode state's contentOffset is
+  // in DIPs. Without the conversion, JS UIManager.measure() over-subtracts by
+  // pointScaleFactor on non-100% display scales, leaving Pressables inside a
+  // scrolled ScrollView with stale page-space bounds that don't contain the
+  // touch — Pressability fires LEAVE_PRESS_RECT inside pressIn and suppresses
+  // press. The JS-event-emitter paths in this file (see lines using
+  // args.Position() / pointScaleFactor) already do this division.
+  auto rawScrollPosition = m_scrollVisual.ScrollPosition();
+  const float pointScaleFactor = m_layoutMetrics.pointScaleFactor > 0.0f ? m_layoutMetrics.pointScaleFactor : 1.0f;
+  facebook::react::Point contentOffsetDips{
+      rawScrollPosition.x / pointScaleFactor, rawScrollPosition.y / pointScaleFactor};
 
-  m_state->updateState([scrollPosition](const facebook::react::ScrollViewShadowNode::ConcreteState::Data &data) {
+  m_verticalScrollbarComponent->ContentOffset(rawScrollPosition);
+  m_horizontalScrollbarComponent->ContentOffset(rawScrollPosition);
+
+  m_state->updateState([contentOffsetDips](const facebook::react::ScrollViewShadowNode::ConcreteState::Data &data) {
     auto newData = data;
-    newData.contentOffset = {scrollPosition.x, scrollPosition.y};
+    newData.contentOffset = contentOffsetDips;
     return std::make_shared<facebook::react::ScrollViewShadowNode::ConcreteState::Data const>(newData);
   });
 }
@@ -866,6 +901,13 @@ void ScrollViewComponentView::updateContentVisualSize() noexcept {
 }
 
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
+
+void ScrollViewComponentView::updateChildrenClippingPath(
+    facebook::react::LayoutMetrics const & /*layoutMetrics*/,
+    const facebook::react::ViewProps & /*viewProps*/) noexcept {
+  // No-op: ScrollView mounts children into m_scrollVisual (not Visual()),
+  // and scroll visuals inherently clip their content.
+}
 
 /*
 ScrollViewComponentView::ScrollInteractionTrackerOwner::ScrollInteractionTrackerOwner(
@@ -954,8 +996,6 @@ void ScrollViewComponentView::OnPointerPressed(
   Super::OnPointerPressed(args);
 
   if (!args.Handled()) {
-    auto f = args.Pointer();
-    auto g = f.PointerDeviceType();
     m_scrollVisual.OnPointerPressed(args);
   }
 }
@@ -996,16 +1036,16 @@ void ScrollViewComponentView::OnKeyDown(
       args.Handled(pageUp(true));
       break;
     case winrt::Windows::System::VirtualKey::Up:
-      args.Handled(lineUp(true));
+      args.Handled(lineUp(false));
       break;
     case winrt::Windows::System::VirtualKey::Down:
-      args.Handled(lineDown(true));
+      args.Handled(lineDown(false));
       break;
     case winrt::Windows::System::VirtualKey::Left:
-      args.Handled(lineLeft(true));
+      args.Handled(lineLeft(false));
       break;
     case winrt::Windows::System::VirtualKey::Right:
-      args.Handled(lineRight(true));
+      args.Handled(lineRight(false));
       break;
   }
 
@@ -1308,6 +1348,10 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
             m_allowNextScrollNoMatterWhat = false;
           }
         }
+
+        // Issue #15557: Notify listeners that scroll position has changed,
+        // so ContentIslandComponentView can update LocalToParentTransformMatrix
+        FireViewChanged();
       });
 
   m_scrollBeginDragRevoker = m_scrollVisual.ScrollBeginDrag(
@@ -1315,6 +1359,9 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        // Issue #15557: Notify listeners that scroll position has changed
+        FireViewChanged();
+
         m_allowNextScrollNoMatterWhat = true; // Ensure next scroll event is recorded, regardless of throttle
         updateStateWithContentOffset();
         auto eventEmitter = GetEventEmitter();
@@ -1357,6 +1404,13 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        // Issue #16047: push the FINAL settled scroll position into Fabric's
+        // shadow tree before notifying JS. The per-frame ScrollPositionChanged
+        // updates can drop the last inertia delta, leaving contentOffset stale
+        // and JS UIManager.measure() returning pre-settle-relative bounds.
+        // ScrollEndDrag / ScrollBeginDrag already call this; momentum-end was
+        // the missing completion path.
+        updateStateWithContentOffset();
         auto eventEmitter = GetEventEmitter();
         if (eventEmitter) {
           auto scrollMetrics = getScrollMetrics(eventEmitter, args);
@@ -1460,5 +1514,21 @@ void ScrollViewComponentView::updateShowsVerticalScrollIndicator(bool value) noe
 
 void ScrollViewComponentView::updateDecelerationRate(float value) noexcept {
   m_scrollVisual.SetDecelerationRate({value, value, value});
+}
+
+// Issue #15557: Notify listeners that scroll position has changed.
+// ContentIslandComponentView subscribes to this to update LocalToParentTransformMatrix.
+void ScrollViewComponentView::FireViewChanged() noexcept {
+  m_viewChangedEvent(*this, nullptr);
+}
+
+// Issue #15557: Event accessors for ViewChanged
+winrt::event_token ScrollViewComponentView::ViewChanged(
+    winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) noexcept {
+  return m_viewChangedEvent.add(handler);
+}
+
+void ScrollViewComponentView::ViewChanged(winrt::event_token const &token) noexcept {
+  m_viewChangedEvent.remove(token);
 }
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

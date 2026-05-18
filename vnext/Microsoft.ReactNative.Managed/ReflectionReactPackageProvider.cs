@@ -6,7 +6,7 @@ using Microsoft.ReactNative;
 namespace Microsoft.ReactNative.Managed
 {
   /// <summary>
-  /// A default implementation that uses reflection to extract the Modules and ViewManagers
+  /// A default implementation that uses reflection to extract the Modules
   /// to be registered on the package builder.
   /// </summary>
   /// <typeparam name="T">This must be thea type defined in the assembly where the items for the react package should be extracted.</typeparam>
@@ -47,7 +47,6 @@ namespace Microsoft.ReactNative.Managed
       var assembly = typeof(T).Assembly;
 
       packageBuilder.AddAttributedModules(assembly);
-      packageBuilder.AddViewManagers(assembly);
       JSValueReaderGenerator.RegisterAssembly(assembly);
       JSValueWriterGenerator.RegisterAssembly(assembly);
     }

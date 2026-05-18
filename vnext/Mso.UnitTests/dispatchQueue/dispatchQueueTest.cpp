@@ -11,13 +11,8 @@
 
 using namespace winrt;
 using namespace Windows::Foundation;
-#ifndef USE_WINUI3
-#include "winrt/Windows.System.h"
-using namespace Windows::System;
-#else
 #include "winrt/Microsoft.UI.Dispatching.h"
 using namespace Microsoft::UI::Dispatching;
-#endif
 
 namespace Mso {
 extern void Test_ThreadPoolSchedulerWin_EnableThreadPoolWorkTracking(bool enable) noexcept;

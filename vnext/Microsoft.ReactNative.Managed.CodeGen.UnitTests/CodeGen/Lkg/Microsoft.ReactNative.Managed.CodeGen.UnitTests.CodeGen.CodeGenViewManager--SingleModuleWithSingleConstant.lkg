@@ -1,4 +1,0 @@
-internal void CreateViewManagers(global::Microsoft.ReactNative.IReactPackageBuilder packageBuilder)
-{
-    packageBuilder.AddViewManager("MyViewManager", () => new global::TestClass.MyViewManager());
-}

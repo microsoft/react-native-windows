@@ -15,6 +15,7 @@
 #include <winrt/Windows.UI.Input.h>
 #include "Composition.Input.h"
 #include "CompositionViewComponentView.h"
+#include "ParagraphComponentView.h"
 #include "ReactNativeIsland.h"
 #include "RootComponentView.h"
 
@@ -117,7 +118,6 @@ struct CompositionKeyboardSource
   CompositionEventHandler *m_outer{nullptr};
 };
 
-#ifdef USE_WINUI3
 struct CompositionInputKeyboardSource : winrt::implements<
                                             CompositionInputKeyboardSource,
                                             winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource> {
@@ -137,7 +137,6 @@ struct CompositionInputKeyboardSource : winrt::implements<
  private:
   winrt::Microsoft::UI::Input::InputKeyboardSource m_source{nullptr};
 };
-#endif
 
 CompositionEventHandler::CompositionEventHandler(
     const winrt::Microsoft::ReactNative::ReactContext &context,
@@ -145,7 +144,6 @@ CompositionEventHandler::CompositionEventHandler(
     : m_context(context), m_wkRootView(reactNativeIsland) {}
 
 void CompositionEventHandler::Initialize() noexcept {
-#ifdef USE_WINUI3
   if (auto island = m_wkRootView.get().Island()) {
     auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
 
@@ -226,6 +224,28 @@ void CompositionEventHandler::Initialize() noexcept {
           }
         });
 
+    // Issue #16047: when ScrollView calls VisualInteractionSource::TryRedirectForManipulation
+    // and the OS hands the pointer over to the InteractionTracker, WinAppSDK
+    // does not fire PointerCaptureLost on this source — but it does fire
+    // PointerRoutedAway. Treat it the same way as captureloss: cancel any
+    // active touch RN is tracking for this pointer so Pressables don't get
+    // stuck in their pressed state.
+    m_pointerRoutedAwayToken =
+        pointerSource.PointerRoutedAway([wkThis = weak_from_this()](
+                                            winrt::Microsoft::UI::Input::InputPointerSource const &,
+                                            winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
+          if (auto strongThis = wkThis.lock()) {
+            if (auto strongRootView = strongThis->m_wkRootView.get()) {
+              if (strongThis->SurfaceId() == -1)
+                return;
+
+              auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+                  args.CurrentPoint(), strongRootView.ScaleFactor());
+              strongThis->onPointerRoutedAway(pp, args.KeyModifiers());
+            }
+          }
+        });
+
     m_pointerWheelChangedToken =
         pointerSource.PointerWheelChanged([wkThis = weak_from_this()](
                                               winrt::Microsoft::UI::Input::InputPointerSource const &,
@@ -252,7 +272,10 @@ void CompositionEventHandler::Initialize() noexcept {
           if (strongThis->SurfaceId() == -1)
             return;
 
-          auto focusedComponent = strongThis->RootComponentView().GetFocusedComponent();
+          auto *rootView = strongThis->RootComponentView();
+          if (!rootView)
+            return;
+          auto focusedComponent = rootView->GetFocusedComponent();
           auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
           auto keyArgs =
               winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
@@ -278,7 +301,10 @@ void CompositionEventHandler::Initialize() noexcept {
           if (strongThis->SurfaceId() == -1)
             return;
 
-          auto focusedComponent = strongThis->RootComponentView().GetFocusedComponent();
+          auto *rootView = strongThis->RootComponentView();
+          if (!rootView)
+            return;
+          auto focusedComponent = rootView->GetFocusedComponent();
           auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
           auto keyArgs =
               winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
@@ -305,7 +331,10 @@ void CompositionEventHandler::Initialize() noexcept {
               if (strongThis->SurfaceId() == -1)
                 return;
 
-              auto focusedComponent = strongThis->RootComponentView().GetFocusedComponent();
+              auto *rootView = strongThis->RootComponentView();
+              if (!rootView)
+                return;
+              auto focusedComponent = rootView->GetFocusedComponent();
               auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
               auto charArgs = winrt::make<
                   winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
@@ -322,12 +351,39 @@ void CompositionEventHandler::Initialize() noexcept {
             }
           }
         });
+
+    m_contextMenuKeyToken =
+        keyboardSource.ContextMenuKey([wkThis = weak_from_this()](
+                                          winrt::Microsoft::UI::Input::InputKeyboardSource const & /*source*/,
+                                          winrt::Microsoft::UI::Input::ContextMenuKeyEventArgs const &args) {
+          if (auto strongThis = wkThis.lock()) {
+            if (auto strongRootView = strongThis->m_wkRootView.get()) {
+              if (strongThis->SurfaceId() == -1)
+                return;
+
+              auto *rootView = strongThis->RootComponentView();
+              if (!rootView)
+                return;
+              auto focusedComponent = rootView->GetFocusedComponent();
+              if (focusedComponent) {
+                auto tag =
+                    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
+                        ->Tag();
+                auto contextMenuArgs = winrt::make<
+                    winrt::Microsoft::ReactNative::Composition::Input::implementation::ContextMenuKeyEventArgs>(tag);
+                winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
+                    ->OnContextMenuKey(contextMenuArgs);
+                if (contextMenuArgs.Handled()) {
+                  args.Handled(true);
+                }
+              }
+            }
+          }
+        });
   }
-#endif
 }
 
 CompositionEventHandler::~CompositionEventHandler() {
-#ifdef USE_WINUI3
   if (auto strongRootView = m_wkRootView.get()) {
     if (auto island = strongRootView.Island()) {
       auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
@@ -335,14 +391,16 @@ CompositionEventHandler::~CompositionEventHandler() {
       pointerSource.PointerReleased(m_pointerReleasedToken);
       pointerSource.PointerMoved(m_pointerMovedToken);
       pointerSource.PointerCaptureLost(m_pointerCaptureLostToken);
+      pointerSource.PointerRoutedAway(m_pointerRoutedAwayToken);
       pointerSource.PointerWheelChanged(m_pointerWheelChangedToken);
+      pointerSource.PointerExited(m_pointerExitedToken);
       auto keyboardSource = winrt::Microsoft::UI::Input::InputKeyboardSource::GetForIsland(island);
       keyboardSource.KeyDown(m_keyDownToken);
       keyboardSource.KeyUp(m_keyUpToken);
       keyboardSource.CharacterReceived(m_characterReceivedToken);
+      keyboardSource.ContextMenuKey(m_contextMenuKeyToken);
     }
   }
-#endif
 
   if (m_hcursorOwned) {
     ::DestroyCursor(m_hcursor);
@@ -358,10 +416,15 @@ facebook::react::SurfaceId CompositionEventHandler::SurfaceId() const noexcept {
   return -1;
 }
 
-winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView &
+winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
 CompositionEventHandler::RootComponentView() const noexcept {
   auto island = m_wkRootView.get();
-  return *winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(island)->GetComponentView();
+  if (!island) {
+    return nullptr;
+  }
+  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(island)
+      ->GetComponentView()
+      .get();
 }
 
 void CompositionEventHandler::onPointerWheelChanged(
@@ -376,8 +439,11 @@ void CompositionEventHandler::onPointerWheelChanged(
 
     // In the case of a sub rootview, we may have a non-zero origin.  hitTest takes a pt in the parent coords, so we
     // need to apply the current origin
-    ptScaled += RootComponentView().layoutMetrics().frame.origin;
-    auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
+    auto *rootView = RootComponentView();
+    if (!rootView)
+      return;
+    ptScaled += rootView->layoutMetrics().frame.origin;
+    auto tag = rootView->hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
@@ -448,6 +514,54 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
       }
       return 0;
     }
+    case WM_RBUTTONDOWN: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerPressed(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_RBUTTONUP: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerReleased(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_MBUTTONDOWN: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerPressed(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_MBUTTONUP: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerReleased(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_XBUTTONDOWN: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerPressed(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_XBUTTONUP: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerReleased(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
     case WM_POINTERUP: {
       if (auto strongRootView = m_wkRootView.get()) {
         auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
@@ -483,7 +597,10 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
     case WM_CHAR:
     case WM_SYSCHAR: {
       if (auto strongRootView = m_wkRootView.get()) {
-        auto focusedComponent = RootComponentView().GetFocusedComponent();
+        auto *rootView = RootComponentView();
+        if (!rootView)
+          break;
+        auto focusedComponent = rootView->GetFocusedComponent();
         auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
         auto args = winrt::make<
             winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
@@ -506,7 +623,10 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
     case WM_SYSKEYDOWN:
     case WM_SYSKEYUP: {
       if (auto strongRootView = m_wkRootView.get()) {
-        auto focusedComponent = RootComponentView().GetFocusedComponent();
+        auto *rootView = RootComponentView();
+        if (!rootView)
+          break;
+        auto focusedComponent = rootView->GetFocusedComponent();
         auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
         auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
             focusedComponent
@@ -538,7 +658,12 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
 
 void CompositionEventHandler::onKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
+  auto *rootView = RootComponentView();
+  if (!rootView)
+    return;
+  rootView->UseKeyboardForProgrammaticFocus(true);
+
+  if (auto focusedComponent = rootView->GetFocusedComponent()) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)->OnKeyDown(args);
 
     if (args.Handled())
@@ -561,7 +686,7 @@ void CompositionEventHandler::onKeyDown(
   }
 
   if (!fCtrl && args.Key() == winrt::Windows::System::VirtualKey::Tab) {
-    if (RootComponentView().TryMoveFocus(!fShift)) {
+    if (rootView->TryMoveFocus(!fShift, winrt::Microsoft::ReactNative::FocusState::Keyboard)) {
       args.Handled(true);
     }
 
@@ -571,7 +696,12 @@ void CompositionEventHandler::onKeyDown(
 
 void CompositionEventHandler::onKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
+  auto *rootView = RootComponentView();
+  if (!rootView)
+    return;
+  rootView->UseKeyboardForProgrammaticFocus(true);
+
+  if (auto focusedComponent = rootView->GetFocusedComponent()) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)->OnKeyUp(args);
 
     if (args.Handled())
@@ -581,7 +711,10 @@ void CompositionEventHandler::onKeyUp(
 
 void CompositionEventHandler::onCharacterReceived(
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
-  if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
+  auto *rootView = RootComponentView();
+  if (!rootView)
+    return;
+  if (auto focusedComponent = rootView->GetFocusedComponent()) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
         ->OnCharacterReceived(args);
 
@@ -590,7 +723,7 @@ void CompositionEventHandler::onCharacterReceived(
   }
 }
 
-std::vector<winrt::Microsoft::ReactNative::ComponentView> GetTouchableViewsInPathToRoot(
+std::vector<winrt::Microsoft::ReactNative::ComponentView> CompositionEventHandler::GetTouchableViewsInPathToRoot(
     const winrt::Microsoft::ReactNative::ComponentView &componentView) {
   std::vector<winrt::Microsoft::ReactNative::ComponentView> results;
   auto view = componentView;
@@ -600,6 +733,7 @@ std::vector<winrt::Microsoft::ReactNative::ComponentView> GetTouchableViewsInPat
     }
     view = view.Parent();
   }
+
   return results;
 }
 
@@ -900,8 +1034,8 @@ void CompositionEventHandler::UpdateActiveTouch(
   // activeTouch.touch.isEraser = false;
   activeTouch.touch.pagePoint.x = ptScaled.x;
   activeTouch.touch.pagePoint.y = ptScaled.y;
-  activeTouch.touch.screenPoint.x = ptLocal.x;
-  activeTouch.touch.screenPoint.y = ptLocal.y;
+  activeTouch.touch.screenPoint.x = ptScaled.x;
+  activeTouch.touch.screenPoint.y = ptScaled.y;
   activeTouch.touch.offsetPoint.x = ptLocal.x;
   activeTouch.touch.offsetPoint.y = ptLocal.y;
   activeTouch.touch.timestamp = static_cast<facebook::react::Float>(
@@ -912,8 +1046,6 @@ void CompositionEventHandler::UpdateActiveTouch(
   // activeTouch.touch.shiftKey = false;
   // activeTouch.touch.ctrlKey = false;
   // activeTouch.touch.altKey = false;
-
-  // activeTouch.touch.isPrimary = true;
 }
 
 facebook::react::PointerEvent CreatePointerEventFromIncompleteHoverData(
@@ -956,9 +1088,12 @@ void CompositionEventHandler::getTargetPointerArgs(
 
   // In the case of a sub rootview, we may have a non-zero origin.  hitTest takes a pt in the parent coords, so we need
   // to apply the current origin
-  ptScaled += RootComponentView().layoutMetrics().frame.origin;
+  auto *rootView = RootComponentView();
+  if (!rootView)
+    return;
+  ptScaled += rootView->layoutMetrics().frame.origin;
 
-  if (std::find(m_capturedPointers.begin(), m_capturedPointers.end(), pointerId) != m_capturedPointers.end()) {
+  if (m_capturedPointers.count(pointerId)) {
     assert(m_pointerCapturingComponentTag != -1);
     tag = m_pointerCapturingComponentTag;
 
@@ -970,7 +1105,7 @@ void CompositionEventHandler::getTargetPointerArgs(
       ptLocal.y = ptScaled.y - (clientRect.top / strongRootView.ScaleFactor());
     }
   } else {
-    tag = RootComponentView().hitTest(ptScaled, ptLocal);
+    tag = rootView->hitTest(ptScaled, ptLocal);
   }
 }
 
@@ -980,16 +1115,74 @@ void CompositionEventHandler::onPointerCaptureLost(
   if (SurfaceId() == -1)
     return;
 
-  if (m_pointerCapturingComponentTag) {
+  if (m_pointerCapturingComponentTag != -1) {
     // copy array to avoid iterator being invalidated during deletion
-    std::vector<PointerId> capturedPointers = m_capturedPointers;
+    std::unordered_set<PointerId> capturedPointers = m_capturedPointers;
 
     for (auto pointerId : capturedPointers) {
       releasePointerCapture(pointerId, m_pointerCapturingComponentTag);
+
+      // Cancel any active touch for this pointer so React Native is notified that
+      // the touch ended. Without this, m_activeTouches retains a zombie entry and
+      // RN JS is never told the touch is gone — leaving Pressables stuck in a
+      // pressed state after a system-interrupted gesture (e.g. system back swipe,
+      // Alt+Tab, another window coming foreground).
+      auto activeTouch = m_activeTouches.find(pointerId);
+      if (activeTouch != m_activeTouches.end()) {
+        ActiveTouch cancelledTouchCopy = std::move(activeTouch->second);
+        m_activeTouches.erase(activeTouch);
+        if (cancelledTouchCopy.eventEmitter) {
+          DispatchSynthesizedTouchCancelForActiveTouch(cancelledTouchCopy, pointerPoint, keyModifiers);
+        }
+      }
     }
 
     m_pointerCapturingComponentTag = -1;
   }
+
+  // Defense-in-depth cleanup for the specific pointer that lost capture, even
+  // when no JS-level CapturePointer was ever issued. The ScrollView
+  // TryRedirectForManipulation path comes in via PointerRoutedAway, not
+  // PointerCaptureLost (see onPointerRoutedAway and issue #16047), so this
+  // path covers the remaining system-driven losses (focus change, another
+  // window stealing input, system back gesture, etc.).
+  CancelActiveTouchForPointerInternal(pointerPoint.PointerId(), pointerPoint, keyModifiers);
+}
+
+void CompositionEventHandler::onPointerRoutedAway(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+    winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
+  if (SurfaceId() == -1)
+    return;
+
+  // Issue #16047: WinAppSDK fires PointerRoutedAway when the OS hands the
+  // pointer to another InputPointerSource — most importantly for us, when
+  // ScrollView calls VisualInteractionSource::TryRedirectForManipulation and
+  // the InteractionTracker takes the gesture for scrolling. We never get
+  // PointerMoved / PointerReleased / PointerCaptureLost for that pointer
+  // afterwards, so without this cleanup m_activeTouches keeps a zombie entry
+  // and the originally-pressed Pressable stays stuck in its pressed state.
+  CancelActiveTouchForPointerInternal(pointerPoint.PointerId(), pointerPoint, keyModifiers);
+}
+
+bool CompositionEventHandler::CancelActiveTouchForPointerInternal(
+    PointerId pointerId,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+    winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
+  auto activeTouch = m_activeTouches.find(pointerId);
+  if (activeTouch == m_activeTouches.end()) {
+    return false;
+  }
+
+  ActiveTouch cancelledTouchCopy = std::move(activeTouch->second);
+  m_activeTouches.erase(activeTouch);
+
+  if (!cancelledTouchCopy.eventEmitter) {
+    return false;
+  }
+
+  DispatchSynthesizedTouchCancelForActiveTouch(cancelledTouchCopy, pointerPoint, keyModifiers);
+  return true;
 }
 
 void CompositionEventHandler::onPointerMoved(
@@ -1029,10 +1222,11 @@ void CompositionEventHandler::onPointerMoved(
 
     auto handler = [&, targetView, pointerEvent, isActiveTouch](
                        std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {
+      auto *rootViewForEmitter = RootComponentView();
       const auto eventEmitter = targetView
           ? winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetView)
                 ->eventEmitterAtPoint(pointerEvent.offsetPoint)
-          : RootComponentView().eventEmitterAtPoint(pointerEvent.offsetPoint);
+          : (rootViewForEmitter ? rootViewForEmitter->eventEmitterAtPoint(pointerEvent.offsetPoint) : nullptr);
 
       if (eventEmitter != nullptr) {
         eventEmitter->onPointerMove(pointerEvent);
@@ -1058,7 +1252,10 @@ void CompositionEventHandler::ClearAllHoveredForPointer(const facebook::react::P
   // events. If we get null for the targetView, that means that the mouse is no over any components, so we have no
   // element to send the move event to. However we need to send something so that any previously hovered elements
   // are no longer hovered.
-  auto children = RootComponentView().Children();
+  auto *rootView = RootComponentView();
+  if (!rootView)
+    return;
+  auto children = rootView->Children();
   if (auto size = children.Size()) {
     auto firstChild = children.GetAt(0);
     if (auto childEventEmitter =
@@ -1098,19 +1295,67 @@ void CompositionEventHandler::onPointerExited(
   }
 }
 
+// Windows touch pointer IDs can be arbitrarily large (e.g. 2233). React Native's JS
+// touch handler uses identifiers as array indices and warns/misbehaves for values > 20.
+// This function maps each live Windows pointer to a small identifier in [0, 19] by
+// scanning m_activeTouches for in-use slots and cycling from the last assigned index.
+// Identifier MOUSE_POINTER_ID (1) is permanently reserved for mouse and never returned here.
+int CompositionEventHandler::AllocateTouchIdentifier() noexcept {
+  constexpr int kMaxTouchIdentifier = 20;
+  for (int i = 0; i < kMaxTouchIdentifier; i++) {
+    int candidate = (m_touchId + i) % kMaxTouchIdentifier;
+    if (candidate == static_cast<int>(MOUSE_POINTER_ID)) {
+      continue; // reserved for mouse
+    }
+    bool inUse = std::any_of(m_activeTouches.begin(), m_activeTouches.end(), [candidate](const auto &pair) {
+      return pair.second.touch.identifier == candidate;
+    });
+    if (!inUse) {
+      m_touchId = (candidate + 1) % kMaxTouchIdentifier;
+      return candidate;
+    }
+  }
+  // All non-mouse slots occupied (> 19 simultaneous touch/pen points) — wrap anyway,
+  // skipping the mouse-reserved slot.
+  int fallback = m_touchId;
+  m_touchId = (m_touchId + 1) % kMaxTouchIdentifier;
+  if (fallback == static_cast<int>(MOUSE_POINTER_ID)) {
+    fallback = m_touchId;
+    m_touchId = (m_touchId + 1) % kMaxTouchIdentifier;
+  }
+  return fallback;
+}
+
 void CompositionEventHandler::onPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
+  namespace Composition = winrt::Microsoft::ReactNative::Composition;
+
+  auto *rootView = RootComponentView();
+  if (!rootView)
+    return;
+  rootView->UseKeyboardForProgrammaticFocus(false);
+
+  // Clears any active text selection when left pointer is pressed
+  if (pointerPoint.Properties().PointerUpdateKind() != Composition::Input::PointerUpdateKind::RightButtonPressed) {
+    rootView->ClearCurrentTextSelection();
+  }
+
   PointerId pointerId = pointerPoint.PointerId();
 
-  auto staleTouch = std::find_if(m_activeTouches.begin(), m_activeTouches.end(), [pointerId](const auto &pair) {
-    return pair.second.touch.identifier == pointerId;
-  });
+  auto staleTouch = m_activeTouches.find(pointerId);
 
   if (staleTouch != m_activeTouches.end()) {
-    // A pointer with this ID already exists - Should we fire a button cancel or something?
-    // assert(false);
-    return;
+    // A previous pointer with this ID was never properly released (e.g., app lost focus,
+    // pointer left window). Cancel the stale touch and clean it up so the new press can proceed.
+    // Copy and erase before dispatching to avoid holding a reference into m_activeTouches
+    // across DispatchSynthesizedTouchCancelForActiveTouch, which calls HandleIncomingPointerEvent
+    // and iterates m_activeTouches internally.
+    ActiveTouch staleTouchCopy = std::move(staleTouch->second);
+    m_activeTouches.erase(staleTouch);
+    if (staleTouchCopy.eventEmitter) {
+      DispatchSynthesizedTouchCancelForActiveTouch(staleTouchCopy, pointerPoint, keyModifiers);
+    }
   }
 
   const auto eventType = TouchEventType::Start;
@@ -1131,7 +1376,42 @@ void CompositionEventHandler::onPointerPressed(
         ->OnPointerPressed(args);
 
     ActiveTouch activeTouch{0};
-    activeTouch.touchType = UITouchType::Mouse;
+    switch (pointerPoint.PointerDeviceType()) {
+      case Composition::Input::PointerDeviceType::Touch:
+        activeTouch.touchType = UITouchType::Touch;
+        break;
+      case Composition::Input::PointerDeviceType::Pen:
+        activeTouch.touchType = UITouchType::Pen;
+        break;
+      case Composition::Input::PointerDeviceType::Mouse:
+      default:
+        activeTouch.touchType = UITouchType::Mouse;
+        break;
+    }
+
+    // Map PointerUpdateKind to W3C button value
+    // https://developer.mozilla.org/docs/Web/API/MouseEvent/button
+    auto updateKind = pointerPoint.Properties().PointerUpdateKind();
+    switch (updateKind) {
+      case Composition::Input::PointerUpdateKind::LeftButtonPressed:
+        activeTouch.button = 0;
+        break;
+      case Composition::Input::PointerUpdateKind::MiddleButtonPressed:
+        activeTouch.button = 1;
+        break;
+      case Composition::Input::PointerUpdateKind::RightButtonPressed:
+        activeTouch.button = 2;
+        break;
+      case Composition::Input::PointerUpdateKind::XButton1Pressed:
+        activeTouch.button = 3;
+        break;
+      case Composition::Input::PointerUpdateKind::XButton2Pressed:
+        activeTouch.button = 4;
+        break;
+      default:
+        activeTouch.button = -1;
+        break;
+    }
 
     while (targetComponentView) {
       if (auto eventEmitter =
@@ -1139,20 +1419,33 @@ void CompositionEventHandler::onPointerPressed(
                   ->eventEmitterAtPoint(ptLocal)) {
         activeTouch.eventEmitter = eventEmitter;
         activeTouch.touch.target = targetComponentView.Tag();
-        // activeTouch.componentView = componentView;
+        activeTouch.initialComponentView = targetComponentView;
         break;
       }
       targetComponentView = targetComponentView.Parent();
     }
 
+    // Don't register the touch if no eventEmitter was found — inserting a null-emitter entry
+    // into m_activeTouches would block future presses with the same pointer ID.
+    if (!activeTouch.eventEmitter) {
+      return;
+    }
+
     UpdateActiveTouch(activeTouch, ptScaled, ptLocal);
 
-    // activeTouch.touch.isPrimary = true;
-    activeTouch.touch.identifier = pointerId;
+    activeTouch.isPrimary = pointerPoint.Properties().IsPrimary();
+    // Map the Windows pointer ID to a small identifier (0–19) safe for use as a JS array index.
+    // Windows touch IDs can be arbitrarily large (e.g. 2233), which causes React Native to warn
+    // and corrupts touch state, leaving Pressables stuck after a scroll.
+    // Mouse pointer ID is always 1 (MOUSE_POINTER_ID), which is already within the safe range —
+    // use it directly to preserve stable, predictable identifier assignment for mouse input.
+    activeTouch.touch.identifier = (pointerPoint.PointerDeviceType() == Composition::Input::PointerDeviceType::Mouse)
+        ? static_cast<int>(MOUSE_POINTER_ID)
+        : AllocateTouchIdentifier();
 
     // If the pointer has not been marked as hovering over views before the touch started, we register
     // that the activeTouch should not maintain its hovered state once the pointer has been lifted.
-    auto currentlyHoveredTags = m_currentlyHoveredViewsPerPointer.find(activeTouch.touch.identifier);
+    auto currentlyHoveredTags = m_currentlyHoveredViewsPerPointer.find(pointerId);
     if (currentlyHoveredTags == m_currentlyHoveredViewsPerPointer.end() || currentlyHoveredTags->second.empty()) {
       activeTouch.shouldLeaveWhenReleased = true;
     }
@@ -1168,9 +1461,12 @@ void CompositionEventHandler::onPointerReleased(
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
   int pointerId = pointerPoint.PointerId();
 
-  auto activeTouch = std::find_if(m_activeTouches.begin(), m_activeTouches.end(), [pointerId](const auto &pair) {
-    return pair.second.touch.identifier == pointerId;
-  });
+  auto *rootView = RootComponentView();
+  if (!rootView)
+    return;
+  rootView->UseKeyboardForProgrammaticFocus(false);
+
+  auto activeTouch = m_activeTouches.find(pointerId);
 
   if (activeTouch == m_activeTouches.end()) {
     return;
@@ -1182,8 +1478,13 @@ void CompositionEventHandler::onPointerReleased(
     facebook::react::Point ptLocal, ptScaled;
     getTargetPointerArgs(fabricuiManager, pointerPoint, tag, ptScaled, ptLocal);
 
-    if (tag == -1)
+    if (tag == -1) {
+      if (activeTouch->second.eventEmitter) {
+        DispatchSynthesizedTouchCancelForActiveTouch(activeTouch->second, pointerPoint, keyModifiers);
+      }
+      m_activeTouches.erase(pointerId);
       return;
+    }
 
     auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
     auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
@@ -1215,7 +1516,7 @@ bool CompositionEventHandler::CapturePointer(
   }
 
   m_pointerCapturingComponentTag = tag;
-  m_capturedPointers.push_back(pointer.PointerId());
+  m_capturedPointers.insert(pointer.PointerId());
   return true;
 }
 
@@ -1230,11 +1531,9 @@ bool CompositionEventHandler::releasePointerCapture(PointerId pointerId, faceboo
   bool result = false;
 
   if (m_pointerCapturingComponentTag == tag) {
-    auto it = std::find(m_capturedPointers.begin(), m_capturedPointers.end(), pointerId);
-    if (it == m_capturedPointers.end()) {
+    if (m_capturedPointers.erase(pointerId) == 0) {
       return false;
     }
-    m_capturedPointers.erase(it);
 
     if (std::shared_ptr<FabricUIManager> fabricuiManager =
             ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
@@ -1245,7 +1544,7 @@ bool CompositionEventHandler::releasePointerCapture(PointerId pointerId, faceboo
           ->OnPointerCaptureLost();
     }
 
-    if (m_capturedPointers.size() == 0) {
+    if (m_capturedPointers.empty()) {
       m_pointerCapturingComponentTag = -1;
       return true;
     }
@@ -1317,16 +1616,114 @@ facebook::react::PointerEvent CompositionEventHandler::CreatePointerEventFromAct
 
   event.detail = 0;
 
-  // event.button = activeTouch.button;
-  // event.buttons = ButtonMaskToButtons(activeTouch.buttonMask);
+  event.button = activeTouch.button;
+
+  // Build W3C buttons bitmask from the active button
+  // https://developer.mozilla.org/docs/Web/API/MouseEvent/buttons
+  if (IsEndishEventType(eventType)) {
+    event.buttons = 0;
+  } else {
+    switch (activeTouch.button) {
+      case 0:
+        event.buttons = 1;
+        break; // primary
+      case 1:
+        event.buttons = 4;
+        break; // auxiliary (middle)
+      case 2:
+        event.buttons = 2;
+        break; // secondary (right)
+      case 3:
+        event.buttons = 8;
+        break; // X1
+      case 4:
+        event.buttons = 16;
+        break; // X2
+      default:
+        event.buttons = 0;
+        break;
+    }
+  }
 
   // UpdatePointerEventModifierFlags(event, activeTouch.modifierFlags);
 
   // event.tangentialPressure = 0.0;
   // event.twist = 0;
-  // event.isPrimary = activeTouch.isPrimary;
+  event.isPrimary = activeTouch.isPrimary;
 
   return event;
+}
+
+bool CompositionEventHandler::IsPointerWithinInitialTree(const ActiveTouch &activeTouch) noexcept {
+  auto initialComponentView = activeTouch.initialComponentView.view();
+  if (!initialComponentView)
+    return false;
+
+  auto *rootView = RootComponentView();
+  if (!rootView)
+    return false;
+
+  facebook::react::Point ptLocal;
+  auto currentTag = rootView->hitTest(activeTouch.touch.pagePoint, ptLocal);
+  if (currentTag == -1)
+    return false;
+
+  auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
+  if (!fabricuiManager)
+    return false;
+
+  auto initialTag = initialComponentView.Tag();
+  auto &viewRegistry = fabricuiManager->GetViewRegistry();
+  auto currentView = viewRegistry.componentViewDescriptorWithTag(currentTag).view;
+  while (currentView) {
+    if (currentView.Tag() == initialTag)
+      return true;
+    currentView = currentView.Parent();
+  }
+
+  return false;
+}
+
+void CompositionEventHandler::DispatchSynthesizedTouchCancelForActiveTouch(
+    const ActiveTouch &cancelledTouch,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+    winrt::Windows::System::VirtualKeyModifiers keyModifiers) {
+  if (!cancelledTouch.eventEmitter) {
+    return;
+  }
+
+  facebook::react::PointerEvent pointerEvent =
+      CreatePointerEventFromActiveTouch(cancelledTouch, TouchEventType::Cancel);
+  winrt::Microsoft::ReactNative::ComponentView targetView{nullptr};
+  facebook::react::SharedTouchEventEmitter emitter = cancelledTouch.eventEmitter;
+  auto pointerHandler = [emitter, pointerEvent](std::vector<winrt::Microsoft::ReactNative::ComponentView> &) {
+    emitter->onPointerCancel(pointerEvent);
+  };
+  HandleIncomingPointerEvent(pointerEvent, targetView, pointerPoint, keyModifiers, pointerHandler);
+
+  facebook::react::TouchEvent touchEvent;
+  touchEvent.changedTouches.insert(cancelledTouch.touch);
+
+  for (const auto &pair : m_activeTouches) {
+    if (!pair.second.eventEmitter) {
+      continue;
+    }
+
+    if (touchEvent.changedTouches.find(pair.second.touch) != touchEvent.changedTouches.end()) {
+      continue;
+    }
+
+    touchEvent.touches.insert(pair.second.touch);
+  }
+
+  for (const auto &pair : m_activeTouches) {
+    if (pair.second.eventEmitter == cancelledTouch.eventEmitter &&
+        touchEvent.changedTouches.find(pair.second.touch) == touchEvent.changedTouches.end()) {
+      touchEvent.targetTouches.insert(pair.second.touch);
+    }
+  }
+
+  cancelledTouch.eventEmitter->onTouchCancel(touchEvent);
 }
 
 // If we have events that include multiple pointer updates, we should change arg from pointerId to vector<pointerId>
@@ -1345,7 +1742,15 @@ void CompositionEventHandler::DispatchTouchEvent(
 
   facebook::react::TouchEvent event;
 
-  size_t index = 0;
+  // First pass: build changedTouches and the set of unique emitters from every active
+  // touch. The per-pointer PointerEvent dispatch (onPointerDown/Move/Up/Cancel/Click) is
+  // fired only for the touch whose state actually changed — non-changed touches contribute
+  // to the W3C TouchEvent's touches/targetTouches sets in the loops below but must not
+  // re-fire pointer events of their own. Previously we dispatched the per-pointer event
+  // for every entry in m_activeTouches, which produced duplicated onPointerMove on
+  // non-moving fingers and replayed onPointerUp/onClick on stale targets after the OS
+  // reclaimed a pointer (e.g. ScrollView manipulation redirect leaving a zombie touch).
+  const ActiveTouch *changedTouch = nullptr;
   for (const auto &pair : m_activeTouches) {
     const auto &activeTouch = pair.second;
 
@@ -1353,42 +1758,55 @@ void CompositionEventHandler::DispatchTouchEvent(
       continue;
     }
 
-    if (activeTouch.touch.identifier == pointerId) {
+    if (pair.first == pointerId) {
+      changedTouch = &activeTouch;
       event.changedTouches.insert(activeTouch.touch);
     }
     uniqueEventEmitters.insert(activeTouch.eventEmitter);
+  }
 
-    facebook::react::PointerEvent pointerEvent = CreatePointerEventFromActiveTouch(activeTouch, eventType);
+  if (changedTouch) {
+    facebook::react::PointerEvent pointerEvent = CreatePointerEventFromActiveTouch(*changedTouch, eventType);
 
     winrt::Microsoft::ReactNative::ComponentView targetView{nullptr};
-    bool shouldLeave = (eventType == TouchEventType::End && activeTouch.shouldLeaveWhenReleased) ||
+    bool shouldLeave = (eventType == TouchEventType::End && changedTouch->shouldLeaveWhenReleased) ||
         eventType == TouchEventType::Cancel;
     if (!shouldLeave) {
-      const auto &viewRegistry = fabricuiManager->GetViewRegistry();
-      facebook::react::Point ptLocal;
-      auto targetTag = RootComponentView().hitTest(pointerEvent.clientPoint, ptLocal);
-      if (targetTag != -1) {
-        auto targetComponentViewDescriptor = viewRegistry.componentViewDescriptorWithTag(targetTag);
-        targetView = FindClosestFabricManagedTouchableView(targetComponentViewDescriptor.view);
+      auto *rootViewForHit = RootComponentView();
+      if (rootViewForHit) {
+        const auto &viewRegistry = fabricuiManager->GetViewRegistry();
+        facebook::react::Point ptLocal;
+        auto targetTag = rootViewForHit->hitTest(pointerEvent.clientPoint, ptLocal);
+        if (targetTag != -1) {
+          auto targetComponentViewDescriptor = viewRegistry.componentViewDescriptorWithTag(targetTag);
+          targetView = FindClosestFabricManagedTouchableView(targetComponentViewDescriptor.view);
+        }
       }
     }
 
-    auto handler = [&activeTouch, eventType, &pointerEvent](
+    auto handler = [this, changedTouch, eventType, &pointerEvent](
                        std::vector<winrt::Microsoft::ReactNative::ComponentView> &eventPathViews) {
       switch (eventType) {
         case TouchEventType::Start:
-          activeTouch.eventEmitter->onPointerDown(pointerEvent);
+          changedTouch->eventEmitter->onPointerDown(pointerEvent);
           break;
         case TouchEventType::Move: {
-          activeTouch.eventEmitter->onPointerMove(pointerEvent);
+          changedTouch->eventEmitter->onPointerMove(pointerEvent);
           break;
         }
         case TouchEventType::End:
-          activeTouch.eventEmitter->onPointerUp(pointerEvent);
+          changedTouch->eventEmitter->onPointerUp(pointerEvent);
+          if (pointerEvent.isPrimary && pointerEvent.button == 0) {
+            if (IsPointerWithinInitialTree(*changedTouch)) {
+              changedTouch->eventEmitter->onClick(pointerEvent);
+            }
+          } else if (IsPointerWithinInitialTree(*changedTouch)) {
+            changedTouch->eventEmitter->onAuxClick(pointerEvent);
+          }
           break;
         case TouchEventType::Cancel:
         case TouchEventType::CaptureLost:
-          activeTouch.eventEmitter->onPointerCancel(pointerEvent);
+          changedTouch->eventEmitter->onPointerCancel(pointerEvent);
           break;
       }
     };

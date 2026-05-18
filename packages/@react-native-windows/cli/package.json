@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.277",
+  "version": "0.0.0-canary.290",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,10 +17,11 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.126",
-    "@react-native-windows/fs": "^0.0.0-canary.68",
-    "@react-native-windows/package-utils": "^0.0.0-canary.94",
-    "@react-native-windows/telemetry": "^0.0.0-canary.125",
+    "@react-native-windows/codegen": "0.0.0-canary.133",
+    "@react-native-windows/find-dotnet-tools": "0.0.0-canary.2",
+    "@react-native-windows/fs": "^0.0.0-canary.72",
+    "@react-native-windows/package-utils": "^0.0.0-canary.98",
+    "@react-native-windows/telemetry": "^0.0.0-canary.133",
     "@xmldom/xmldom": "^0.7.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
@@ -40,11 +41,12 @@
     "xpath": "^0.0.27"
   },
   "devDependencies": {
-    "@react-native-community/cli-doctor": "17.0.0",
-    "@react-native-community/cli-types": "17.0.0",
-    "@rnw-scripts/eslint-config": "1.2.37",
+    "@babel/core": "^7.25.2",
+    "@react-native-community/cli-doctor": "20.0.0",
+    "@react-native-community/cli-types": "20.0.0",
+    "@rnw-scripts/eslint-config": "1.2.38",
     "@rnw-scripts/jest-unittest-config": "1.5.12",
-    "@rnw-scripts/just-task": "2.3.56",
+    "@rnw-scripts/just-task": "2.3.58",
     "@rnw-scripts/ts-config": "2.0.6",
     "@types/chalk": "^2.2.0",
     "@types/jest": "^29.2.2",
@@ -57,12 +59,14 @@
     "@types/shelljs": "^0.8.8",
     "@types/xml-parser": "^1.2.29",
     "@types/xmldom": "^0.1.30",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
     "jest": "^29.7.0",
-    "prettier": "2.8.8",
+    "prettier": "^3.6.2",
+    "react": "19.2.3",
+    "react-native": "0.85.0-nightly-20260114-f15985f4f",
     "typescript": "5.0.4"
   },
   "peerDependencies": {

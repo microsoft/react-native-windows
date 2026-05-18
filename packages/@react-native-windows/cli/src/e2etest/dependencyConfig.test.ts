@@ -13,7 +13,6 @@ import {
 
 import {
   ensureCppAppProject,
-  ensureCSharpAppProject,
   tryMkdir,
   templateRoot,
   testProjectGuid,
@@ -56,7 +55,7 @@ const projects: TargetProject[] = [
     };
 
     await copyAndReplace(
-      path.join(templateRoot, 'cpp-lib/proj/MyLib.sln'),
+      path.join(templateRoot, 'cpp-lib/windows/MyLib.sln'),
       path.join(windowsDir, 'SimpleCppLib.sln'),
       replacements,
       null,
@@ -66,42 +65,8 @@ const projects: TargetProject[] = [
     await tryMkdir(projDir);
 
     await copyAndReplace(
-      path.join(templateRoot, 'cpp-lib/proj/MyLib.vcxproj'),
+      path.join(templateRoot, 'cpp-lib/windows/MyLib/MyLib.vcxproj'),
       path.join(projDir, 'SimpleCppLib.vcxproj'),
-      replacements,
-      null,
-    );
-  }),
-  // New C# app project based on the template
-  project('SimpleCSharpApp', async (folder: string) => {
-    await ensureCSharpAppProject(folder, 'SimpleCSharpApp');
-  }),
-  // New C# project based on the template
-  project('SimpleCSharpLib', async (folder: string) => {
-    const windowsDir = path.join(folder, 'windows');
-    await tryMkdir(windowsDir);
-
-    const replacements = {
-      name: 'SimpleCSharpLib',
-      namespace: 'SimpleCSharpLib',
-      useMustache: true,
-      projectGuidUpper: testProjectGuid,
-      projectGuidLower: testProjectGuid.toLowerCase(),
-    };
-
-    await copyAndReplace(
-      path.join(templateRoot, 'cs-lib/proj/MyLib.sln'),
-      path.join(windowsDir, 'SimpleCSharpLib.sln'),
-      replacements,
-      null,
-    );
-
-    const projDir = path.join(windowsDir, 'SimpleCSharpLib');
-    await tryMkdir(projDir);
-
-    await copyAndReplace(
-      path.join(templateRoot, 'cs-lib/proj/MyLib.csproj'),
-      path.join(projDir, 'SimpleCSharpLib.csproj'),
       replacements,
       null,
     );

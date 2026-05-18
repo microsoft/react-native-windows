@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Integrate 0.81.0-nightly-20250702-b41b924b2",
-  "packageName": "@rnw-scripts/integrate-rn",
-  "email": "kvineeth@microsoft.com",
-  "dependentChangeType": "patch"
-}

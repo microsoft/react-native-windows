@@ -117,6 +117,10 @@ export interface ModalWindowsProps {
   /* title for the modal, shown in the title bar */
   // [Windows
   title?: string | undefined;
+
+  hideTitleBar?: boolean | undefined;
+
+  hideBorder?: boolean | undefined;
   // Windows]
 }
 

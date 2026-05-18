@@ -5,6 +5,7 @@
 
 #include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
+#include <react/renderer/attributedstring/PlaceholderAttributedString.h>
 #include <react/renderer/attributedstring/TextAttributes.h>
 #include <react/renderer/components/text/BaseTextShadowNode.h>
 #include <react/renderer/core/LayoutConstraints.h>
@@ -14,6 +15,7 @@
 
 namespace facebook::react {
 
+// NOLINTNEXTLINE(modernize-avoid-c-arrays)
 extern const char WindowsTextInputComponentName[] = "WindowsTextInput";
 
 void WindowsTextInputShadowNode::setTextLayoutManager(std::shared_ptr<const TextLayoutManager> textLayoutManager) {
@@ -185,6 +187,7 @@ AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(cons
   const auto &props = getConcreteProps();
 
   AttributedString attributedString;
+  attributedString.setBaseTextAttributes(props.textAttributes);
   //[windows
   if (!props.placeholder.empty()) {
     auto textAttributes = TextAttributes::defaultTextAttributes();
@@ -203,7 +206,7 @@ AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(cons
   }
   // windows]
 
-  return attributedString;
+  return ensurePlaceholderIfEmpty_DO_NOT_USE(attributedString);
 }
 
 #pragma mark - LayoutableShadowNode

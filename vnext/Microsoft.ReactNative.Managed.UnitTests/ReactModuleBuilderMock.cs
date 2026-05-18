@@ -7,11 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-#if !USE_WINUI3
-using Windows.UI.Xaml;
-#else
 using Microsoft.UI.Xaml;
-#endif
 
 namespace Microsoft.ReactNative.Managed.UnitTests
 {
@@ -320,10 +316,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     public bool UseDirectDebugger => throw new NotImplementedException();
 
     public bool UseFastRefresh => throw new NotImplementedException();
-
-#pragma warning disable 612, 618 // Deprecated
-    public bool UseWebDebugger => throw new NotImplementedException();
-#pragma warning restore 612, 618
 
     public string BundleRootPath => throw new NotImplementedException();
 

@@ -6,10 +6,11 @@
 #include <CppRuntimeOptions.h>
 #include <Networking/IHttpResource.h>
 #include <Networking/OriginPolicy.h>
-#include <Test/HttpServer.h>
 
 // Standard Library
 #include <future>
+
+#include "HttpServer.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -110,7 +111,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
       case http::verb::options:
       default:
-	    Assert::Fail(L"Unsupported request method");
+           Assert::Fail(L"Unsupported request method");
     }
 
     return server;

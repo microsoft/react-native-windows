@@ -6,15 +6,15 @@
 
 #include "CompositionViewComponentView.h"
 
+#include <vector>
+
 #include <AutoDraw.h>
 #include <Fabric/AbiState.h>
 #include <Fabric/AbiViewProps.h>
 #include <Fabric/Composition/ReactNativeIsland.h>
 #include <Fabric/FabricUIManagerModule.h>
-#include <UI.Xaml.Controls.h>
 #include <Utils/KeyboardUtils.h>
 #include <Utils/ValueUtils.h>
-#include <Views/FrameworkElementTransferProperties.h>
 #include <atlcomcli.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -38,10 +38,13 @@ constexpr float FOCUS_VISUAL_RADIUS = 3.0f;
 
 // m_outerVisual
 //   |
-//   |
-//   ----- m_visual <-- Background / clip - Can be a custom visual depending on Component type
+//   ----- m_visual - Can be a custom visual depending on Component type
 //            |
-//            ----- Border Visuals x N (BorderPrimitive attached to m_visual)
+//            ----- m_backgroundVisual <-- Background / clip  (ComponentViewFeatures::Background)
+//            ----- Border Visuals x N (BorderPrimitive attached to m_visual) (ComponentViewFeatures::NativeBorder)
+//            ----- Outline Visuals x N(BorderPrimitive) (ComponentViewFeatures::NativeBorder)
+//            ----- <children> (default: directly in m_visual after border visuals)
+//            ----- m_childrenContainer (created on demand when overflow:hidden, children moved here)
 //   ------Focus Visual Container (created when hosting focus visuals)
 //           |
 //           |------Inner Focus Visual
@@ -78,17 +81,15 @@ facebook::react::Props::Shared ComponentView::props() noexcept {
 }
 
 void ComponentView::onThemeChanged() noexcept {
-  if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
-    if (viewProps()->backgroundColor) {
-      Visual().as<Experimental::ISpriteVisual>().Brush(theme()->Brush(*viewProps()->backgroundColor));
-    } else {
-      Visual().as<Experimental::ISpriteVisual>().Brush(nullptr);
-    }
-  }
+  if (m_backgroundVisual)
+    m_backgroundVisual.Brush(theme()->Brush(*viewProps()->backgroundColor));
 
   if (m_borderPrimitive) {
     m_borderPrimitive->onThemeChanged(
         m_layoutMetrics, BorderPrimitive::resolveAndAlignBorderMetrics(m_layoutMetrics, *viewProps()));
+  }
+  if (m_outlinePrimitive) {
+    m_outlinePrimitive->onThemeChanged(outlineLayoutMetrics(), outlineBorderMetrics());
   }
   if (m_componentHostingFocusVisual) {
     if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive) {
@@ -153,16 +154,34 @@ void ComponentView::updateProps(
 
   if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
     if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-      if (newViewProps.backgroundColor) {
-        Visual().as<Experimental::ISpriteVisual>().Brush(theme()->Brush(*newViewProps.backgroundColor));
+      if (facebook::react::isColorMeaningful(newViewProps.backgroundColor)) {
+        if (!m_backgroundVisual) {
+          m_backgroundVisual = m_compContext.CreateSpriteVisual();
+          m_backgroundVisual.RelativeSizeWithOffset({0, 0}, {1.0f, 1.0f});
+          Visual().InsertAt(m_backgroundVisual, 0);
+        }
+        m_backgroundVisual.Brush(theme()->Brush(*newViewProps.backgroundColor));
+        updateClippingPath(m_layoutMetrics, *viewProps());
       } else {
-        Visual().as<Experimental::ISpriteVisual>().Brush(nullptr);
+        if (m_backgroundVisual) {
+          m_backgroundVisual.Brush(nullptr);
+        }
       }
     }
   }
 
   if (m_borderPrimitive) {
     m_borderPrimitive->updateProps(oldViewProps, newViewProps);
+  }
+
+  if (m_outlinePrimitive) {
+    if (oldViewProps.outlineOffset != newViewProps.outlineOffset ||
+        oldViewProps.outlineWidth != newViewProps.outlineWidth ||
+        oldViewProps.borderRadii != newViewProps.borderRadii ||
+        oldViewProps.outlineColor != newViewProps.outlineColor ||
+        oldViewProps.outlineStyle != newViewProps.outlineStyle) {
+      m_outlinePrimitive->markNeedsUpdate();
+    }
   }
 
   if (m_componentHostingFocusVisual) {
@@ -199,8 +218,9 @@ void ComponentView::updateProps(
 void ComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
+  updateClippingPath(layoutMetrics, *viewProps());
+
   if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
-    updateClippingPath(layoutMetrics, *viewProps());
     OuterVisual().Size(
         {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
          layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
@@ -216,6 +236,9 @@ void ComponentView::updateLayoutMetrics(
   if (layoutMetrics != oldLayoutMetrics) {
     if (m_borderPrimitive) {
       m_borderPrimitive->markNeedsUpdate();
+    }
+    if (m_outlinePrimitive) {
+      m_outlinePrimitive->markNeedsUpdate();
     }
 
     if (m_componentHostingFocusVisual) {
@@ -300,6 +323,23 @@ void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentView
     if (m_borderPrimitive) {
       m_borderPrimitive->finalize(m_layoutMetrics, borderMetrics);
     }
+
+    auto outlineMetrics = outlineBorderMetrics();
+    if (!m_outlinePrimitive && BorderPrimitive::requiresBorder(outlineMetrics, theme())) {
+      m_outlinePrimitive = std::make_shared<BorderPrimitive>(*this);
+      Visual().InsertAt(
+          m_outlinePrimitive->RootVisual(),
+          (m_backgroundVisual ? 1 : 0) + (m_borderPrimitive ? m_borderPrimitive->numberOfVisuals() : 0));
+    }
+
+    if (m_outlinePrimitive) {
+      auto offset = pixelRoundAndScaleBorderWidth(viewProps()->outlineWidth, m_layoutMetrics.pointScaleFactor) +
+          std::round(viewProps()->outlineOffset * m_layoutMetrics.pointScaleFactor);
+      m_outlinePrimitive->RootVisual().Offset({-offset, -offset, 0.0f});
+      m_outlinePrimitive->RootVisual().RelativeSizeWithOffset({offset * 2, offset * 2}, {1.0f, 1.0f});
+
+      m_outlinePrimitive->finalize(outlineLayoutMetrics(), outlineMetrics);
+    }
   }
 
   if (m_componentHostingFocusVisual) {
@@ -374,7 +414,8 @@ void ComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   if (args.OriginalSource() == Tag()) {
     m_eventEmitter->onFocus();
-    if (viewProps()->enableFocusRing) {
+    if (viewProps()->enableFocusRing &&
+        rootComponentView()->focusState() == winrt::Microsoft::ReactNative::FocusState::Keyboard) {
       facebook::react::Rect focusRect = m_layoutMetrics.frame;
       focusRect.origin.x -= (FOCUS_VISUAL_WIDTH * 2);
       focusRect.origin.y -= (FOCUS_VISUAL_WIDTH * 2);
@@ -427,15 +468,20 @@ void ComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCom
   auto commandName = args.CommandName();
   if (commandName == L"focus") {
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
+      root->TrySetFocusedComponent(
+          *get_strong(),
+          winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+          winrt::Microsoft::ReactNative::FocusState::Programmatic);
     }
     return;
   }
   if (commandName == L"blur") {
     if (auto root = rootComponentView()) {
       root->TrySetFocusedComponent(
-          nullptr, winrt::Microsoft::ReactNative::FocusNavigationDirection::None); // Todo store this component as
-                                                                                   // previously focused element
+          nullptr,
+          winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+          winrt::Microsoft::ReactNative::FocusState::Programmatic); // Todo store this component as
+                                                                    // previously focused element
     }
     return;
   }
@@ -527,10 +573,10 @@ facebook::react::RectangleEdges<bool> ComponentView::focusNudges() const noexcep
 
   Assert(m_componentHostingFocusVisual);
 
-  if (layoutMetrics.frame.origin.x < 0) {
+  if (layoutMetrics.frame.origin.x < m_componentHostingFocusVisual->m_layoutMetrics.frame.origin.x) {
     nudgeEdges.left = true;
   }
-  if (layoutMetrics.frame.origin.y < 0) {
+  if (layoutMetrics.frame.origin.y < m_componentHostingFocusVisual->m_layoutMetrics.frame.origin.y) {
     nudgeEdges.top = true;
   }
   if (layoutMetrics.frame.getMaxX() > m_componentHostingFocusVisual->m_layoutMetrics.frame.getMaxX()) {
@@ -572,6 +618,67 @@ facebook::react::LayoutMetrics ComponentView::focusLayoutMetrics(bool inner) con
   }
 
   return layoutMetrics;
+}
+
+facebook::react::LayoutMetrics ComponentView::outlineLayoutMetrics() const noexcept {
+  auto &props = *viewProps();
+  auto offset = (pixelRoundAndScaleBorderWidth(viewProps()->outlineWidth, m_layoutMetrics.pointScaleFactor) +
+                 std::round(viewProps()->outlineOffset * m_layoutMetrics.pointScaleFactor)) /
+      m_layoutMetrics.pointScaleFactor;
+  facebook::react::LayoutMetrics layoutMetrics = m_layoutMetrics;
+  layoutMetrics.frame.origin.x -= offset;
+  layoutMetrics.frame.origin.y -= offset;
+  layoutMetrics.frame.size.height += offset * 2;
+  layoutMetrics.frame.size.width += offset * 2;
+  return layoutMetrics;
+}
+
+facebook::react::BorderMetrics ComponentView::outlineBorderMetrics() const noexcept {
+  auto &props = *viewProps();
+
+  facebook::react::BorderMetrics metrics = BorderPrimitive::resolveAndAlignBorderMetrics(m_layoutMetrics, props);
+  metrics.borderColors.bottom = metrics.borderColors.left = metrics.borderColors.right = metrics.borderColors.top =
+      props.outlineColor;
+
+  auto offset = pixelRoundAndScaleBorderWidth(viewProps()->outlineWidth, m_layoutMetrics.pointScaleFactor) +
+      std::round(viewProps()->outlineOffset * m_layoutMetrics.pointScaleFactor);
+
+  if (metrics.borderRadii.bottomLeft.horizontal)
+    metrics.borderRadii.bottomLeft.horizontal = std::max(0.0f, metrics.borderRadii.bottomLeft.horizontal + offset);
+  if (metrics.borderRadii.bottomLeft.vertical)
+    metrics.borderRadii.bottomLeft.vertical = std::max(0.0f, metrics.borderRadii.bottomLeft.vertical + offset);
+  if (metrics.borderRadii.bottomRight.horizontal)
+    metrics.borderRadii.bottomRight.horizontal = std::max(0.0f, metrics.borderRadii.bottomRight.horizontal + offset);
+  if (metrics.borderRadii.bottomRight.vertical)
+    metrics.borderRadii.bottomRight.vertical = std::max(0.0f, metrics.borderRadii.bottomRight.vertical + offset);
+  if (metrics.borderRadii.topLeft.horizontal)
+    metrics.borderRadii.topLeft.horizontal = std::max(0.0f, metrics.borderRadii.topLeft.horizontal + offset);
+  if (metrics.borderRadii.topLeft.vertical)
+    metrics.borderRadii.topLeft.vertical = std::max(0.0f, metrics.borderRadii.topLeft.vertical + offset);
+  if (metrics.borderRadii.topRight.horizontal)
+    metrics.borderRadii.topRight.horizontal = std::max(0.0f, metrics.borderRadii.topRight.horizontal + offset);
+  if (metrics.borderRadii.topRight.vertical)
+    metrics.borderRadii.topRight.vertical = std::max(0.0f, metrics.borderRadii.topRight.vertical + offset);
+
+  static_assert(
+      facebook::react::BorderStyle::Solid ==
+      static_cast<facebook::react::BorderStyle>(facebook::react::OutlineStyle::Solid));
+  static_assert(
+      facebook::react::BorderStyle::Dotted ==
+      static_cast<facebook::react::BorderStyle>(facebook::react::OutlineStyle::Dotted));
+  static_assert(
+      facebook::react::BorderStyle::Dashed ==
+      static_cast<facebook::react::BorderStyle>(facebook::react::OutlineStyle::Dashed));
+  assert(
+      props.outlineStyle == facebook::react::OutlineStyle::Solid ||
+      props.outlineStyle == facebook::react::OutlineStyle::Dotted ||
+      props.outlineStyle == facebook::react::OutlineStyle::Dashed);
+  metrics.borderStyles.bottom = metrics.borderStyles.left = metrics.borderStyles.right = metrics.borderStyles.top =
+      static_cast<facebook::react::BorderStyle>(props.outlineStyle);
+
+  metrics.borderWidths.bottom = metrics.borderWidths.left = metrics.borderWidths.right = metrics.borderWidths.top =
+      pixelRoundAndScaleBorderWidth(viewProps()->outlineWidth, m_layoutMetrics.pointScaleFactor);
+  return metrics;
 }
 
 facebook::react::BorderMetrics ComponentView::focusBorderMetrics(
@@ -647,7 +754,7 @@ void ComponentView::hostFocusVisual(bool show, winrt::com_ptr<ComponentView> vie
           assert(
               view.get() ==
               this); // When not using lifted comp, focus visuals should always host within their own component
-          OuterVisual().InsertAt(m_focusPrimitive->m_focusVisual, 1);
+          OuterVisual().InsertAt(m_focusPrimitive->m_focusVisual, (m_backgroundVisual ? 2 : 1));
         }
       }
 
@@ -710,7 +817,9 @@ void ComponentView::applyShadowProps(const facebook::react::ViewProps &viewProps
       shadow.Color(theme()->Color(*viewProps.shadowColor));
   }
 
-  Visual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(shadow);
+  // Apply shadow to OuterVisual (not Visual) because Visual may have a rounded-corner clip
+  // from updateClippingPath, which would clip the shadow. OuterVisual is not clipped.
+  OuterVisual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(shadow);
 }
 
 void ComponentView::updateTransformProps(
@@ -801,8 +910,8 @@ void ComponentView::updateAccessibilityProps(
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(),
       UIA_LiveSettingPropertyId,
-      oldViewProps.accessibilityLiveRegion,
-      newViewProps.accessibilityLiveRegion);
+      winrt::Microsoft::ReactNative::implementation::GetLiveSetting(oldViewProps.accessibilityLiveRegion),
+      winrt::Microsoft::ReactNative::implementation::GetLiveSetting(newViewProps.accessibilityLiveRegion));
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       EnsureUiaProvider(), UIA_LevelPropertyId, oldViewProps.accessibilityLevel, newViewProps.accessibilityLevel);
@@ -857,14 +966,13 @@ void ComponentView::updateAccessibilityProps(
 
   if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
       ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {
-    auto compProvider =
-        EnsureUiaProvider()
-            .try_as<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>();
-    if (compProvider) {
+    EnsureUiaProvider();
+    if (m_innerAutomationProvider) {
       if ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value())) {
-        winrt::Microsoft::ReactNative::implementation::AddSelectionItemsToContainer(compProvider.get());
+        winrt::Microsoft::ReactNative::implementation::AddSelectionItemsToContainer(m_innerAutomationProvider.get());
       } else {
-        winrt::Microsoft::ReactNative::implementation::RemoveSelectionItemsFromContainer(compProvider.get());
+        winrt::Microsoft::ReactNative::implementation::RemoveSelectionItemsFromContainer(
+            m_innerAutomationProvider.get());
       }
     }
   }
@@ -890,28 +998,45 @@ void ComponentView::Toggle() noexcept {
   // no-op
 }
 
+// This offset ensures that the m_borderPrimitive inserts its layers above the background
+int32_t ComponentView::borderInsertAtIndex() const noexcept {
+  return m_backgroundVisual ? 1 : 0;
+}
+
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ComponentView::VisualToApplyBackgroundClipTo()
+    const noexcept {
+  return m_backgroundVisual;
+}
+
 void ComponentView::updateClippingPath(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
+  auto clipTarget = VisualToApplyBackgroundClipTo();
+  if (!clipTarget)
+    return;
+
   auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
 
-  if (borderMetrics.borderRadii.topLeft.horizontal == 0 && borderMetrics.borderRadii.topRight.horizontal == 0 &&
-      borderMetrics.borderRadii.bottomLeft.horizontal == 0 && borderMetrics.borderRadii.bottomRight.horizontal == 0 &&
-      borderMetrics.borderRadii.topLeft.vertical == 0 && borderMetrics.borderRadii.topRight.vertical == 0 &&
-      borderMetrics.borderRadii.bottomLeft.vertical == 0 && borderMetrics.borderRadii.bottomRight.vertical == 0) {
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
-  } else {
-    winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
-        m_compContext,
-        borderMetrics.borderRadii,
-        {0, 0, 0, 0},
-        {0,
-         0,
-         layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-         layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+  bool hasRoundedCorners = borderMetrics.borderRadii.topLeft.horizontal != 0 ||
+      borderMetrics.borderRadii.topRight.horizontal != 0 || borderMetrics.borderRadii.bottomLeft.horizontal != 0 ||
+      borderMetrics.borderRadii.bottomRight.horizontal != 0 || borderMetrics.borderRadii.topLeft.vertical != 0 ||
+      borderMetrics.borderRadii.topRight.vertical != 0 || borderMetrics.borderRadii.bottomLeft.vertical != 0 ||
+      borderMetrics.borderRadii.bottomRight.vertical != 0;
 
-    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
+  const float scale = layoutMetrics.pointScaleFactor;
+  const float viewWidth = layoutMetrics.frame.size.width * scale;
+  const float viewHeight = layoutMetrics.frame.size.height * scale;
+
+  // Apply clipping to m_visual only for rounded corners
+  // overflow:hidden clipping is handled separately via m_childrenContainer in ViewComponentView
+  if (hasRoundedCorners) {
+    winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
+        m_compContext, borderMetrics.borderRadii, {0, 0, 0, 0}, {0, 0, viewWidth, viewHeight});
+
+    clipTarget.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
         pathGeometry.get());
+  } else {
+    clipTarget.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
   }
 }
 
@@ -922,6 +1047,9 @@ std::pair<facebook::react::Cursor, HCURSOR> ComponentView::cursor() const noexce
 void ComponentView::indexOffsetForBorder(uint32_t &index) const noexcept {
   if (m_borderPrimitive) {
     index += m_borderPrimitive->numberOfVisuals();
+  }
+  if (m_outlinePrimitive) {
+    index += 1;
   }
 }
 
@@ -1004,15 +1132,18 @@ bool ComponentView::anyHitTestHelper(
     facebook::react::Tag &targetTag,
     facebook::react::Point &ptContent,
     facebook::react::Point &localPt) const noexcept {
-  if (auto index = m_children.Size()) {
-    do {
-      index--;
-      targetTag = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_children.GetAt(index))
-                      ->hitTest(ptContent, localPt);
-      if (targetTag != -1) {
-        return true;
-      }
-    } while (index != 0);
+  auto size = m_children.Size();
+  if (size == 0) {
+    return false;
+  }
+
+  // m_children is backed by single_threaded_vector (std::vector), so GetAt is O(1)
+  for (uint32_t i = size; i > 0; --i) {
+    targetTag = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_children.GetAt(i - 1))
+                    ->hitTest(ptContent, localPt);
+    if (targetTag != -1) {
+      return true;
+    }
   }
 
   return false;
@@ -1070,7 +1201,7 @@ void ViewComponentView::ensureVisual() noexcept {
     } else {
       m_visual = createVisual();
     }
-    OuterVisual().InsertAt(m_visual, 0);
+    OuterVisual().InsertAt(m_visual, m_backgroundVisual ? 1 : 0);
   }
 }
 
@@ -1086,6 +1217,11 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 ViewComponentView::VisualToMountChildrenInto() noexcept {
   if (m_builder && m_builder->VisualToMountChildrenIntoHandler())
     return m_builder->VisualToMountChildrenIntoHandler()(*this);
+  // When overflow:hidden, children are hosted in m_childrenContainer (child of m_visual)
+  // so we can apply clipping without affecting borders/background.
+  // Otherwise children go directly into Visual() (the original behavior).
+  if (m_childrenContainer)
+    return m_childrenContainer;
   return Visual();
 }
 
@@ -1094,8 +1230,13 @@ void ViewComponentView::MountChildComponentView(
     uint32_t index) noexcept {
   base_type::MountChildComponentView(childComponentView, index);
 
-  indexOffsetForBorder(index);
   ensureVisual();
+
+  // When children are in Visual() directly, offset past border visuals.
+  // When children are in m_childrenContainer, no offset needed.
+  if (!m_childrenContainer) {
+    indexOffsetForBorder(index);
+  }
 
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
     auto visualIndex = index;
@@ -1108,6 +1249,7 @@ void ViewComponentView::MountChildComponentView(
         }
       }
     }
+
     VisualToMountChildrenInto().InsertAt(compositionChild->OuterVisual(), visualIndex);
   } else {
     m_hasNonVisualChildren = true;
@@ -1119,7 +1261,6 @@ void ViewComponentView::UnmountChildComponentView(
     uint32_t index) noexcept {
   base_type::UnmountChildComponentView(childComponentView, index);
 
-  indexOffsetForBorder(index);
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
     VisualToMountChildrenInto().Remove(compositionChild->OuterVisual());
   }
@@ -1161,15 +1302,17 @@ facebook::react::Tag ViewComponentView::hitTest(
 
   facebook::react::Tag targetTag = -1;
 
+  bool isPointInside = ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+      ptLocal.y <= m_layoutMetrics.frame.size.height;
+
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
-      anyHitTestHelper(targetTag, ptLocal, localPt))
+      (isPointInside || !viewProps()->getClipsContentToBounds()) && anyHitTestHelper(targetTag, ptLocal, localPt))
     return targetTag;
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
-      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
-      ptLocal.y <= m_layoutMetrics.frame.size.height) {
+      isPointInside) {
     localPt = ptLocal;
     return Tag();
   }
@@ -1319,6 +1462,61 @@ void ViewComponentView::updateLayoutMetrics(
   Visual().Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+
+  // Update children container clipping for overflow:hidden
+  updateChildrenClippingPath(layoutMetrics, *viewProps());
+}
+
+void ViewComponentView::updateChildrenClippingPath(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    const facebook::react::ViewProps &viewProps) noexcept {
+  // Views with a custom visual to mount children into should to do their own handling of children clipping path
+  if (m_builder && m_builder->VisualToMountChildrenIntoHandler())
+    return;
+
+  const float scale = layoutMetrics.pointScaleFactor;
+  const float viewWidth = layoutMetrics.frame.size.width * scale;
+  const float viewHeight = layoutMetrics.frame.size.height * scale;
+
+  if (viewProps.getClipsContentToBounds()) {
+    // Create m_childrenContainer on demand (like iOS _containerView pattern)
+    // m_childrenContainer is a child of m_visual, placed after border visuals.
+    if (!m_childrenContainer) {
+      m_childrenContainer = m_compContext.CreateSpriteVisual();
+
+      // Insert at the end of m_visual's children (after border visuals + existing children)
+      // Then move existing children from m_visual into m_childrenContainer
+      uint32_t borderCount = 0;
+      indexOffsetForBorder(borderCount);
+
+      // Move existing child visuals from m_visual to m_childrenContainer
+      uint32_t childVisualIndex = 0;
+      for (auto it = m_children.begin(); it != m_children.end(); ++it) {
+        if (auto compositionChild = (*it).try_as<ComponentView>()) {
+          Visual().Remove(compositionChild->OuterVisual());
+          m_childrenContainer.InsertAt(compositionChild->OuterVisual(), childVisualIndex++);
+        }
+      }
+
+      // Insert m_childrenContainer after border visuals in m_visual
+      Visual().InsertAt(m_childrenContainer, (m_backgroundVisual ? 1 : 0) + borderCount);
+
+      // Use relative sizing so container automatically tracks parent's size
+      m_childrenContainer.RelativeSizeWithOffset({0, 0}, {1, 1});
+    }
+
+    // Clip children to view bounds using outer border radii (matches iOS default behavior)
+    auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
+    winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
+        m_compContext, borderMetrics.borderRadii, {0, 0, 0, 0}, {0, 0, viewWidth, viewHeight});
+
+    m_childrenContainer.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
+        pathGeometry.get());
+  } else if (m_childrenContainer) {
+    // overflow changed from hidden to visible. Keep container, just remove clip.
+    m_childrenContainer.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
+        nullptr);
+  }
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}
@@ -1354,12 +1552,17 @@ std::string ViewComponentView::DefaultControlType() const noexcept {
   return "group";
 }
 
-winrt::IInspectable ComponentView::EnsureUiaProvider() noexcept {
-  if (m_uiaProvider == nullptr) {
-    m_uiaProvider =
-        winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(*get_strong());
-  }
-  return m_uiaProvider;
+winrt::Windows::Foundation::IInspectable ComponentView::CreateAutomationProvider() noexcept {
+  Assert(!m_innerAutomationProvider);
+  m_innerAutomationProvider =
+      winrt::make_self<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>(
+          *get_strong());
+  return *m_innerAutomationProvider;
+}
+
+const winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
+    &ComponentView::InnerAutomationProvider() const noexcept {
+  return m_innerAutomationProvider;
 }
 
 bool IntersectRect(RECT *prcDst, const RECT &prcSrc1, const RECT &prcSrc2) {

@@ -107,16 +107,8 @@ describe('creaternwapp Configuration Tests - Stable Version', () => {
       expect(scriptContent).toContain('set RNW_TEMPLATE_TYPE=cpp-app');
     });
 
-    test('should validate old UWP templates are available', () => {
-      const oldTemplatesDir = path.join(repoRoot, 'vnext/templates/old');
-      expect(fs.existsSync(oldTemplatesDir)).toBe(true);
-
-      const uwpCppAppTemplate = path.join(oldTemplatesDir, 'uwp-cpp-app');
-      expect(fs.existsSync(uwpCppAppTemplate)).toBe(true);
-    });
-
     test('should validate new fabric templates are available', () => {
-      const newTemplatesDir = path.join(repoRoot, 'vnext/template');
+      const newTemplatesDir = path.join(repoRoot, 'vnext/templates');
       expect(fs.existsSync(newTemplatesDir)).toBe(true);
 
       const cppAppTemplate = path.join(newTemplatesDir, 'cpp-app');
@@ -164,16 +156,6 @@ describe('creaternwapp Configuration Tests - Stable Version', () => {
       expect(expectedCommand).not.toContain('/t'); // No template specified = default fabric
     });
 
-    test('should validate old architecture (paper/UWP) command structure', () => {
-      // Test the command that would be used for old arch:
-      // creaternwapp.cmd /rnw preview /t old/uwp-cpp-app test-app-name
-      const expectedCommand = `creaternwapp.cmd /rnw preview /t old/uwp-cpp-app test-app-name`;
-
-      expect(expectedCommand).toContain('/rnw preview');
-      expect(expectedCommand).toContain('/t old/uwp-cpp-app');
-      expect(expectedCommand).toContain('test-app-name');
-    });
-
     test('should validate yarn windows command variations', () => {
       // Test the commands that would be used to build apps:
       const debugCommand = 'yarn windows';
@@ -200,22 +182,6 @@ describe('creaternwapp Configuration Tests - Stable Version', () => {
       expect(workflow.buildDebug).toBe('yarn windows');
       expect(workflow.buildRelease).toBe('yarn windows --release');
     });
-
-    test('should validate complete old architecture workflow commands', () => {
-      const workflow = {
-        create: `creaternwapp.cmd /rnw ${RNW_VERSION} /t old/uwp-cpp-app TestAppPaper`,
-        start: 'yarn start',
-        buildDebug: 'yarn windows',
-        buildRelease: 'yarn windows --release',
-      };
-
-      expect(workflow.create).toContain(RNW_VERSION);
-      expect(workflow.create).toContain('/t old/uwp-cpp-app');
-      expect(workflow.create).toContain('TestAppPaper');
-      expect(workflow.start).toBe('yarn start');
-      expect(workflow.buildDebug).toBe('yarn windows');
-      expect(workflow.buildRelease).toBe('yarn windows --release');
-    });
   });
 
   describe('Documentation and Example Validation', () => {
@@ -231,24 +197,6 @@ describe('creaternwapp Configuration Tests - Stable Version', () => {
       };
 
       expect(procedure.steps[0]).toContain(RNW_VERSION);
-      expect(procedure.steps[1]).toContain('yarn start');
-      expect(procedure.steps[2]).toContain('yarn windows');
-      expect(procedure.steps[3]).toContain('yarn windows --release');
-    });
-
-    test('should document the testing procedure for old architecture', () => {
-      const procedure = {
-        title: 'Old Architecture (Paper/UWP) Testing',
-        steps: [
-          `creaternwapp.cmd /rnw ${RNW_VERSION} /t old/uwp-cpp-app test-app-name`,
-          'yarn start (in test-app-name path)',
-          'cd test-app-name && yarn windows',
-          'cd test-app-name && yarn windows --release',
-        ],
-      };
-
-      expect(procedure.steps[0]).toContain(RNW_VERSION);
-      expect(procedure.steps[0]).toContain('/t old/uwp-cpp-app');
       expect(procedure.steps[1]).toContain('yarn start');
       expect(procedure.steps[2]).toContain('yarn windows');
       expect(procedure.steps[3]).toContain('yarn windows --release');
@@ -293,16 +241,8 @@ describe('creaternwapp Configuration Tests - Preview Version', () => {
       expect(scriptContent).toContain('set RNW_TEMPLATE_TYPE=cpp-app');
     });
 
-    test('should validate old UWP templates are available', () => {
-      const oldTemplatesDir = path.join(repoRoot, 'vnext/templates/old');
-      expect(fs.existsSync(oldTemplatesDir)).toBe(true);
-
-      const uwpCppAppTemplate = path.join(oldTemplatesDir, 'uwp-cpp-app');
-      expect(fs.existsSync(uwpCppAppTemplate)).toBe(true);
-    });
-
     test('should validate new fabric templates are available', () => {
-      const newTemplatesDir = path.join(repoRoot, 'vnext/template');
+      const newTemplatesDir = path.join(repoRoot, 'vnext/templates');
       expect(fs.existsSync(newTemplatesDir)).toBe(true);
 
       const cppAppTemplate = path.join(newTemplatesDir, 'cpp-app');
@@ -350,16 +290,6 @@ describe('creaternwapp Configuration Tests - Preview Version', () => {
       expect(expectedCommand).not.toContain('/t'); // No template specified = default fabric
     });
 
-    test('should validate old architecture (paper/UWP) command structure', () => {
-      // Test the command that would be used for old arch:
-      // creaternwapp.cmd /rnw preview /t old/uwp-cpp-app test-app-name
-      const expectedCommand = `creaternwapp.cmd /rnw preview /t old/uwp-cpp-app test-app-name`;
-
-      expect(expectedCommand).toContain('/rnw preview');
-      expect(expectedCommand).toContain('/t old/uwp-cpp-app');
-      expect(expectedCommand).toContain('test-app-name');
-    });
-
     test('should validate yarn windows command variations', () => {
       // Test the commands that would be used to build apps:
       const debugCommand = 'yarn windows';
@@ -386,22 +316,6 @@ describe('creaternwapp Configuration Tests - Preview Version', () => {
       expect(workflow.buildDebug).toBe('yarn windows');
       expect(workflow.buildRelease).toBe('yarn windows --release');
     });
-
-    test('should validate complete old architecture workflow commands', () => {
-      const workflow = {
-        create: `creaternwapp.cmd /rnw ${RNW_VERSION} /t old/uwp-cpp-app TestAppPaper`,
-        start: 'yarn start',
-        buildDebug: 'yarn windows',
-        buildRelease: 'yarn windows --release',
-      };
-
-      expect(workflow.create).toContain(RNW_VERSION);
-      expect(workflow.create).toContain('/t old/uwp-cpp-app');
-      expect(workflow.create).toContain('TestAppPaper');
-      expect(workflow.start).toBe('yarn start');
-      expect(workflow.buildDebug).toBe('yarn windows');
-      expect(workflow.buildRelease).toBe('yarn windows --release');
-    });
   });
 
   describe('Documentation and Example Validation', () => {
@@ -417,24 +331,6 @@ describe('creaternwapp Configuration Tests - Preview Version', () => {
       };
 
       expect(procedure.steps[0]).toContain(RNW_VERSION);
-      expect(procedure.steps[1]).toContain('yarn start');
-      expect(procedure.steps[2]).toContain('yarn windows');
-      expect(procedure.steps[3]).toContain('yarn windows --release');
-    });
-
-    test('should document the testing procedure for old architecture', () => {
-      const procedure = {
-        title: 'Old Architecture (Paper/UWP) Testing',
-        steps: [
-          `creaternwapp.cmd /rnw ${RNW_VERSION} /t old/uwp-cpp-app test-app-name`,
-          'yarn start (in test-app-name path)',
-          'cd test-app-name && yarn windows',
-          'cd test-app-name && yarn windows --release',
-        ],
-      };
-
-      expect(procedure.steps[0]).toContain(RNW_VERSION);
-      expect(procedure.steps[0]).toContain('/t old/uwp-cpp-app');
       expect(procedure.steps[1]).toContain('yarn start');
       expect(procedure.steps[2]).toContain('yarn windows');
       expect(procedure.steps[3]).toContain('yarn windows --release');

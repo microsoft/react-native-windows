@@ -59,7 +59,6 @@ function optionSanitizer(key: keyof RunWindowsOptions, value: any): any {
     case 'singleproc':
     case 'emulator':
     case 'device':
-    case 'remoteDebugging':
     case 'logging':
     case 'packager':
     case 'bundle':

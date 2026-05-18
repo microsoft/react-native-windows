@@ -4,7 +4,6 @@
 #pragma once
 
 #include "ActivityIndicatorComponentView.h"
-#include "CompositionDynamicAutomationProvider.h"
 
 #include <Windows.UI.Composition.h>
 #include <Windows.h>

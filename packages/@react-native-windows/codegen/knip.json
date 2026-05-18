@@ -1,0 +1,5 @@
+{
+  "ignoreDependencies": [
+    "@react-native/codegen"
+  ]
+}

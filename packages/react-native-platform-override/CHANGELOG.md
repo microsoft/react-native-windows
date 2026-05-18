@@ -1,8 +1,89 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Tue, 07 Oct 2025 05:27:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1022
+
+Tue, 07 Apr 2026 05:29:55 GMT
+
+### Changes
+
+- Move to yarn 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.72
+- Bump @react-native-windows/package-utils to v0.0.0-canary.98
+
+## 0.0.0-canary.1021
+
+Wed, 25 Mar 2026 02:08:12 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.71
+- Bump @react-native-windows/package-utils to v0.0.0-canary.97
+
+## 0.0.0-canary.1020
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- refactor: replace depcheck with knip (PHILLIPS71@users.noreply.github.com)
+
+## 0.0.0-canary.1019
+
+Tue, 13 Jan 2026 13:00:14 GMT
+
+### Changes
+
+- integrate 0.82.0-nightly-20250902-9731e8ebc (74712637+iamAbhi-916@users.noreply.github.com)
+
+## 0.0.0-canary.1018
+
+Tue, 30 Dec 2025 06:39:30 GMT
+
+### Changes
+
+- Use experimental WinAppSDK (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1017
+
+Thu, 25 Dec 2025 06:39:17 GMT
+
+### Changes
+
+- Bump Jsi Version to 21 (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1016
+
+Wed, 03 Dec 2025 06:40:45 GMT
+
+### Changes
+
+- Use 0.0.0-canary.1015 version for public NPM packages (vmorozov@microsoft.com)
+
+## 1.9.61
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @react-native-windows/package-utils to v0.0.0-canary.96
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 1.9.60
+
+Wed, 12 Nov 2025 21:00:47 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @react-native-windows/package-utils to v0.0.0-canary.95
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
 
 ## 1.9.59
 

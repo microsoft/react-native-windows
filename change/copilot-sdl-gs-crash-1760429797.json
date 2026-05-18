@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Implement SDL /GS crash detection and analysis tooling for stack buffer overrun monitoring",
-  "packageName": "react-native-windows",
-  "email": "copilot@github.com",
-  "dependentChangeType": "patch"
-}

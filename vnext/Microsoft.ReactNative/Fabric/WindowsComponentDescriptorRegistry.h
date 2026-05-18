@@ -10,6 +10,8 @@
 #include <ReactPropertyBag.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 
+#include <unordered_set>
+
 namespace Microsoft::ReactNative {
 
 struct WindowsComponentDescriptorRegistry {
@@ -34,11 +36,14 @@ struct WindowsComponentDescriptorRegistry {
 
   bool hasComponentProvider(const std::string &name) noexcept;
 
+  // Returns true if any component requested for XAML support.
+  bool isXamlSupportRequired() const noexcept;
+
  private:
   void add(const facebook::react::ComponentDescriptorProvider &provider) noexcept;
 
   std::vector<std::shared_ptr<const std::string>> m_descriptorFlavors;
-  std::vector<std::string> m_componentNames;
+  std::unordered_set<std::string> m_componentNames;
   std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry> m_componentDescriptorRegistry;
 
   std::map<std::shared_ptr<const std::string>, winrt::Microsoft::ReactNative::IReactViewComponentBuilder const>

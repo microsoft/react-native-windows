@@ -1,5 +1,5 @@
 {
-  "name": "foo",
+  "name": "@rnw-scripts/foo",
   "version": "1.2.3",
   "description": "Synthetic project.json for testing project.json logic",
   "license": "MIT",

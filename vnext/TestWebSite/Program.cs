@@ -71,6 +71,11 @@ app.Map(
   );
 
 app.Map(
+  "/rnw/websockets/echobinary",
+  Microsoft.React.Test.WebSocketTests.EchoBinary
+  );
+
+app.Map(
   "/rnw/websockets/echosuffix",
   Microsoft.React.Test.WebSocketTests.EchoSuffix
   );
@@ -84,6 +89,10 @@ app.MapGet(
   "/officedev/office-js/issues/4144",
    Microsoft.Office.Test.OfficeJsTests.Issue4144)
   .RequireCors(originPolicyName);
+
+app.MapPost(
+  "/officedev/office-js/issues/5869",
+   Microsoft.Office.Test.OfficeJsTests.Issue5869);
 
 #endregion Request Mappings
 

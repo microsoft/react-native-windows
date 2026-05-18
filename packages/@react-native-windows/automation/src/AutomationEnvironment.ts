@@ -8,6 +8,7 @@
 import chalk from 'chalk';
 import {spawnSync, spawn, ChildProcess} from 'child_process';
 import fs from '@react-native-windows/fs';
+import {findPowerShell} from '@react-native-windows/find-dotnet-tools';
 import path from 'path';
 import readlineSync from 'readline-sync';
 
@@ -209,16 +210,24 @@ export default class AutomationEnvironment extends NodeEnvironment {
       // Set up the "Desktop" or Root session
       const rootBrowser = await webdriverio.remote(this.rootWebDriverOptions);
 
-      // Get the list of windows
-      const allWindows = await rootBrowser.$$('//Window');
-
-      // Find our target window
+      // Poll for the app window with timeout (cold starts can be slow)
+      const windowTimeout = 300000; // 5 minutes
+      const pollInterval = 2000;
+      const deadline = Date.now() + windowTimeout;
       let appWindow: webdriverio.Element | undefined;
-      for (const window of allWindows) {
-        if ((await window.getAttribute('Name')) === appName) {
-          appWindow = window;
+
+      while (Date.now() < deadline) {
+        const allWindows = await rootBrowser.$$('//Window');
+        for (const window of allWindows) {
+          if ((await window.getAttribute('Name')) === appName) {
+            appWindow = window;
+            break;
+          }
+        }
+        if (appWindow) {
           break;
         }
+        await new Promise(resolve => setTimeout(resolve, pollInterval));
       }
 
       if (!appWindow) {
@@ -242,7 +251,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
     if (this.breakOnStart) {
       readlineSync.question(
         chalk.bold.yellow('Breaking before tests start\n') +
-          'Press Enter to resume...',
+        'Press Enter to resume...',
       );
     }
 
@@ -327,8 +336,14 @@ function resolveAppName(appName: string): string {
   }
 
   try {
-    const packageFamilyName = spawnSync('powershell', [
-      `(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+    const useAppxCompatibility = !!process.env.TF_BUILD;
+    const packageFamilyNameCommand = useAppxCompatibility
+      ? `& { Import-Module Appx -UseWindowsPowerShell -WarningAction SilentlyContinue; (Get-AppxPackage -Name '${appName}').PackageFamilyName }`
+      : `(Get-AppxPackage -Name '${appName}').PackageFamilyName`;
+    const packageFamilyName = spawnSync(findPowerShell(), [
+      '-NoProfile',
+      '-Command',
+      packageFamilyNameCommand,
     ])
       .stdout.toString()
       .trim();

@@ -98,7 +98,7 @@ function focusTextInput(textField: ?HostInstance) {
   } else if (textField != null) {
     const fieldCanBeFocused =
       currentlyFocusedInputRef !== textField &&
-      // $FlowFixMe - `currentProps` is missing in `NativeMethods`
+      // $FlowFixMe[prop-missing] - `currentProps` is missing in `NativeMethods`
       textField.currentProps?.editable !== false;
 
     if (!fieldCanBeFocused) {

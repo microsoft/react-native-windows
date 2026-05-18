@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Microsoft.Office.Test
 {
@@ -11,6 +12,32 @@ namespace Microsoft.Office.Test
       response.StatusCode = 200;
 
       var bytes = Encoding.UTF8.GetBytes("Check headers: [Access-Control-Allow-Origin]");
+      await response.Body.WriteAsync(bytes);
+    }
+
+    public static async Task Issue5869(HttpContext context)
+    {
+      var response = context.Response;
+      response.ContentType = "text/plain";
+      response.StatusCode = 200;
+
+      var request = context.Request;
+
+      string? resBody;
+      if (Regex.IsMatch(request.ContentType!, @"multipart/form-data(;\s+.*)?"))
+      {
+        resBody = $"Multipart form data with {request.Form.Count} entries";
+      }
+      else if (request.ContentType == "application/x-www-form-urlencoded")
+      {
+        resBody = $"URL-encoded form data with {request.Form.Count} entries";
+      }
+      else
+      {
+        resBody = $"Unknown Content-Type [{request.ContentType}]";
+      }
+
+      var bytes = Encoding.UTF8.GetBytes(resBody);
       await response.Body.WriteAsync(bytes);
     }
   }

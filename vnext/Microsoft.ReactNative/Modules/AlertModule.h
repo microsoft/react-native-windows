@@ -45,9 +45,7 @@ struct Alert : public std::enable_shared_from_this<Alert> {
 
   void ProcessPendingAlertRequests() noexcept;
   void ProcessPendingAlertRequestsXaml() noexcept;
-#ifdef USE_FABRIC
   void ProcessPendingAlertRequestsMessageDialog() noexcept;
-#endif
 };
 
 } // namespace Microsoft::ReactNative

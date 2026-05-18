@@ -1,8 +1,156 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Tue, 07 Oct 2025 05:27:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 13 May 2026 18:22:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1027
+
+Wed, 13 May 2026 18:22:07 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.290
+
+## 0.0.0-canary.1026
+
+Sun, 10 May 2026 18:20:42 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.289
+
+## 0.0.0-canary.1025
+
+Tue, 21 Apr 2026 02:54:29 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.288
+
+## 0.0.0-canary.1024
+
+Tue, 07 Apr 2026 05:29:55 GMT
+
+### Changes
+
+- Move to yarn 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.72
+- Bump @react-native-windows/telemetry to v0.0.0-canary.133
+- Bump @react-native-windows/cli to v0.0.0-canary.287
+
+## 0.0.0-canary.1023
+
+Wed, 25 Mar 2026 02:08:13 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.71
+- Bump @react-native-windows/telemetry to v0.0.0-canary.132
+- Bump @react-native-windows/cli to v0.0.0-canary.286
+
+## 0.0.0-canary.1022
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- refactor: replace depcheck with knip (PHILLIPS71@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.131
+- Bump @react-native-windows/cli to v0.0.0-canary.285
+
+## 0.0.0-canary.1021
+
+Wed, 04 Mar 2026 22:34:25 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.284
+
+## 0.0.0-canary.1020
+
+Tue, 13 Jan 2026 13:00:14 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.130
+- Bump @react-native-windows/cli to v0.0.0-canary.283
+
+## 0.0.0-canary.1019
+
+Sat, 10 Jan 2026 06:40:18 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.282
+
+## 0.0.0-canary.1018
+
+Tue, 30 Dec 2025 06:39:30 GMT
+
+### Changes
+
+- Use experimental WinAppSDK (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1017
+
+Thu, 25 Dec 2025 06:39:17 GMT
+
+### Changes
+
+- Bump Jsi Version to 21 (66076509+vineethkuttan@users.noreply.github.com)
+
+## 0.0.0-canary.1016
+
+Wed, 03 Dec 2025 06:40:45 GMT
+
+### Changes
+
+- Use 0.0.0-canary.1015 version for public NPM packages (vmorozov@microsoft.com)
+
+## 1.4.85
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @react-native-windows/telemetry to v0.0.0-canary.129
+- Bump @react-native-windows/cli to v0.0.0-canary.281
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 1.4.84
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Patches
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.128
+- Bump @react-native-windows/cli to v0.0.0-canary.280
+
+## 1.4.83
+
+Wed, 12 Nov 2025 21:00:45 GMT
+
+### Patches
+
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @react-native-windows/telemetry to v0.0.0-canary.127
+- Bump @react-native-windows/cli to v0.0.0-canary.279
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
+
+## 1.4.82
+
+Tue, 21 Oct 2025 05:28:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.126
+- Bump @react-native-windows/cli to v0.0.0-canary.278
 
 ## 1.4.81
 

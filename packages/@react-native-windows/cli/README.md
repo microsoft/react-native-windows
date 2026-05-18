@@ -93,7 +93,6 @@ Here are the options that `npx @react-native-community/cli run-windows` takes:
 | `--emulator`          | boolean    | Deploys the app to an emulator                   |
 | `--device`            | boolean    | Deploys the app to a connected device            |
 | `--target`            | string     | Deploys the app to the specified `GUID` for a device |
-| `--remote-debugging`  | boolean    | **(Deprecated)** Deploys the app in remote debugging mode |
 | `--logging`           | boolean    | Verbose output logging                           |
 | `--no-packager`       | boolean    | Do not launch the packager while building        |
 | `--bundle`            | boolean    | Enable Bundle configuration, i.e. `ReleaseBundle`/`DebugBundle` rather than `Release`/`Debug` |

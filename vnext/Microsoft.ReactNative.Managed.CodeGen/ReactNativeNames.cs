@@ -29,7 +29,6 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     public static readonly SyntaxToken Module = Identifier("module");
     public static readonly SyntaxToken CreatePackage = Identifier("CreatePackage");
     public static readonly SyntaxToken CreatePackageImplementation = Identifier("CreatePackageImplementation");
-    public static readonly SyntaxToken AddViewManager = Identifier("AddViewManager");
     public static readonly SyntaxToken AddModule = Identifier("AddModule");
 
     public static readonly SyntaxToken AddInitializer = Identifier("AddInitializer");
@@ -37,7 +36,6 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     public static readonly SyntaxToken AddMethod = Identifier("AddMethod");
     public static readonly SyntaxToken AddSyncMethod = Identifier("AddSyncMethod");
 
-    public static readonly SyntaxToken CreateViewManagers = Identifier("CreateViewManagers");
     public static readonly SyntaxToken CreateModules = Identifier("CreateModules");
     public static readonly SyntaxToken CreateSerializers = Identifier("CreateSerializers");
     public static readonly SyntaxToken CreateEnumSerializers = Identifier("CreateEnumSerializers");

@@ -2,7 +2,7 @@
 
 ## e2e-test-app project structure
 
-A test app, test library and test cases are in [`/packages/e2e-test-app/`](../packages/e2e-test-app), and are organized as below.
+A test app, test library and test cases are in [`/packages/e2e-test-app-fabric/`](../packages/e2e-test-app-fabric), and are organized as below.
 
  - `test` – includes Jest tests using webdriverio
  - `windows` – the UWP native app
@@ -14,7 +14,7 @@ A test app, test library and test cases are in [`/packages/e2e-test-app/`](../pa
 
 This will be automatically done for you if you use the [RNW dependency script](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies) with `rnwDev` as an argument.
 
-The E2E tests assume it is installed in the default location under `C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe`. If you choose a different path, you will need to specify it in [`/packages/e2e-test-app/jest.config.js`](../packages/e2e-test-app/jest.config.js).
+The E2E tests assume it is installed in the default location under `C:\Program Files (x86)\Windows Application Driver\WinAppDriver.exe`. If you choose a different path, you will need to specify it in [`/packages/e2e-test-app-fabric/jest.config.js`](../packages/e2e-test-app-fabric/jest.config.js).
 ```js
 module.exports = {
 ...
@@ -27,33 +27,33 @@ module.exports = {
 
 **Build the native test app**
 
-> C:\repo\react-native-windows> `cd packages\e2e-test-app`
+> C:\repo\react-native-windows> `cd packages\e2e-test-app-fabric`
 >
-> C:\repo\react-native-windows\packages\e2e-test-app> `yarn windows --no-launch`
+> C:\repo\react-native-windows\packages\e2e-test-app-fabric> `yarn windows --no-launch`
 
 **Running all tests**
 
-> C:\repo\react-native-windows\packages\e2e-test-app> `yarn start`
+> C:\repo\react-native-windows\packages\e2e-test-app-fabric> `yarn start`
 > 
-> C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest`
+> C:\repo\react-native-windows\packages\e2e-test-app-fabric> `yarn e2etest`
 
 
 **Running a specific test**
 
-> C:\repo\react-native-windows\packages\e2e-test-app> `yarn start`
+> C:\repo\react-native-windows\packages\e2e-test-app-fabric> `yarn start`
 > 
 ⚠ Only the test filename (without the rest of the path) should be included.
-> C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest visitAllPages.test.ts`
+> C:\repo\react-native-windows\packages\e2e-test-app-fabric> `yarn e2etest visitAllPages.test.ts`
 
 **Break on app start**
 
-> C:\repo\react-native-windows\packages\e2e-test-app> `yarn start`
+> C:\repo\react-native-windows\packages\e2e-test-app-fabric> `yarn start`
 > 
-> C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest:debug visitAllPages.test.ts`
+> C:\repo\react-native-windows\packages\e2e-test-app-fabric> `yarn e2etest:debug visitAllPages.test.ts`
 
 ## Debugging E2E Tests in CI
 ### Increasing verbosity
-By default the only messages printed during tests are related to errors returned by WinAppDriver or assertion failures. It is possible to increase verbosity to show individual WebDriver wire commands by editing [`/packages/e2e-test-app/jest.config.js`](../packages/e2e-test-app/jest.config.js).
+By default the only messages printed during tests are related to errors returned by WinAppDriver or assertion failures. It is possible to increase verbosity to show individual WebDriver wire commands by editing [`/packages/e2e-test-app-fabric/jest.config.js`](../packages/e2e-test-app-fabric/jest.config.js).
 
 ```js
 module.exports = {
@@ -103,7 +103,7 @@ provided by a custom environment [`@react-native-windows/automation`](../package
 ## Authoring Tests
 
 Tests are written using Jest and WebDriverIO (see more below) against a test app running `RNTester`. `RNTester` example
-pages are used as Test UI, which is examined via Jest tests. Tests should attempt to target an existing `RNTester` page, but "Legacy" tests exist as custom pages only used by e2e-test-app
+pages are used as Test UI, which is examined via Jest tests. Tests should attempt to target an existing `RNTester` page, but "Legacy" tests exist as custom pages only used by e2e-test-app-fabric
 
 ### Writing a test against an RNTester example page
 
@@ -157,8 +157,8 @@ export const examples = [
 ## Snapshot tests
 
 E2ETests uses [snapshot tests](https://jestjs.io/docs/en/snapshot-testing) to detect unintended visual changes. Instead
-of testing againt the react tree, e2e-test-app compares the fully rendered XAML tree. This allows testing the
-correctness of ViewManagers.
+of testing against the react tree, e2e-test-app-fabric compares the fully rendered composition tree. This allows testing the
+correctness of ViewComponents.
 
 ```ts
 import {dumpVisualTree} from '@react-native-windows/automation-commands';

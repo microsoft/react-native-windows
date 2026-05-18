@@ -18,12 +18,6 @@ namespace Microsoft.ReactNative {
 
         ReactViewOptions ReactViewOptions {get;};
 
-        // TODO: Hide these APIs for now until we're sure we need to expose them and can do so safely
-        // Microsoft.UI.Composition.Compositor Compositor {get;};
-        // Microsoft.UI.Content.DesktopChildSiteBridge DesktopChildSiteBridge {get;};
-        // Microsoft.UI.Dispatching DispatcherQueueController {get;};
-        // ReactNativeIsland ReactNativeIsland {get;};
-
         // Methods
         void Start();
      }
@@ -37,11 +31,6 @@ namespace Microsoft.ReactNative {
         // Methods
 
         ReactNativeAppBuilder SetAppWindow(Microsoft.UI.Windowing.AppWindow appWindow);
-
-        // TODO: Hide these APIs for now until we're sure we need to expose them and can do so safely
-        // Compositor depends on the DispatcherQueue created by DispatcherQueueController
-        // ReactNativeAppBuilder SetCompositor(Microsoft.UI.Composition.Compositor compositor);
-        // ReactNativeAppBuilder SetDispatcherQueueController(Microsoft.UI.Dispatching DispatcherQueueController);
 
         ReactNativeWin32App Build();
     }

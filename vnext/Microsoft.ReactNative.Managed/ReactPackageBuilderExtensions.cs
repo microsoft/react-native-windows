@@ -83,30 +83,5 @@ namespace Microsoft.ReactNative.Managed
       return false;
     }
 
-    /// <summary>
-    /// Adds the view managers defined in the given assembly via reflection to the package builder.
-    /// </summary>
-    public static void AddViewManagers(this IReactPackageBuilder packageBuilder, Assembly assembly)
-    {
-      foreach (var typeInfo in assembly.DefinedTypes)
-      {
-        if (!typeInfo.IsAbstract && typeInfo.ImplementedInterfaces.Contains(typeof(IViewManager)))
-        {
-          packageBuilder.AddViewManager(typeInfo.Name, () => (IViewManager)Activator.CreateInstance(typeInfo.AsType()));
-        }
-      }
-    }
-
-    /// <summary>
-    /// Adds the view manages in the given assembly via reflection to the package builder.
-    /// </summary>
-    /// <remarks>
-    /// This method will be obsolete soon. It should only be called by existing generated project that still use the `Microsoft.ReactNative.SharedManaged` project
-    /// where s_currentAssembly will reflect the users assembly that compiles this code as well.
-    /// </remarks>
-    public static void AddViewManagers(this IReactPackageBuilder packageBuilder)
-    {
-      AddViewManagers(packageBuilder, s_currentAssembly);
-    }
   }
 }

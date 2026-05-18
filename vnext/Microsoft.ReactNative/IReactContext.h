@@ -12,7 +12,6 @@ struct ReactSettingsSnapshot : winrt::implements<ReactSettingsSnapshot, IReactSe
   ReactSettingsSnapshot(Mso::CntPtr<const Mso::React::IReactSettingsSnapshot> &&settings) noexcept;
 
  public: // IReactSettingsSnapshot
-  bool UseWebDebugger() const noexcept;
   bool UseFastRefresh() const noexcept;
   bool UseDirectDebugger() const noexcept;
   bool DebuggerBreakOnNextLine() const noexcept;
@@ -47,12 +46,6 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   IInspectable JSRuntime() noexcept;
   LoadingState LoadingState() noexcept;
 
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  void DispatchEvent(
-      xaml::FrameworkElement const &view,
-      hstring const &eventName,
-      JSValueArgWriter const &eventDataArgWriter) noexcept;
-#endif
   void CallJSFunction(
       hstring const &moduleName,
       hstring const &methodName,

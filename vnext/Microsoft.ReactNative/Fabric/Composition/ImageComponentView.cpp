@@ -6,7 +6,6 @@
 
 #include "ImageComponentView.h"
 
-#include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 
 #include <IReactContext.h>
@@ -22,7 +21,6 @@
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
-#include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
 
@@ -132,6 +130,7 @@ void ImageComponentView::didReceiveImage(const std::shared_ptr<ImageResponseImag
 #endif
 
   m_imageResponseImage = imageResponseImage;
+  m_requiresImageRedraw = true;
   ensureDrawingSurface();
 }
 
@@ -238,6 +237,11 @@ void ImageComponentView::onThemeChanged() noexcept {
   Super::onThemeChanged();
 }
 
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ImageComponentView::VisualToApplyBackgroundClipTo()
+    const noexcept {
+  return Visual();
+}
+
 void ImageComponentView::ensureDrawingSurface() noexcept {
   assert(m_reactContext.UIDispatcher().HasThreadAccess());
 
@@ -312,6 +316,9 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
   } else if (m_imageResponseImage->m_brushFactory) {
     Visual().as<Experimental::ISpriteVisual>().Brush(
         m_imageResponseImage->m_brushFactory(m_reactContext.Handle(), m_compContext));
+  } else if (m_requiresImageRedraw) {
+    m_requiresImageRedraw = false;
+    DrawImage();
   }
 }
 

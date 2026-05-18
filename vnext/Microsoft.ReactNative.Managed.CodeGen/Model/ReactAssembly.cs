@@ -8,8 +8,6 @@ namespace Microsoft.ReactNative.Managed.CodeGen.Model
 {
   public class ReactAssembly
   {
-    public ICollection<INamedTypeSymbol> ViewManagers { get; } = new List<INamedTypeSymbol>();
-
     public ICollection<ReactModule> Modules { get; } = new List<ReactModule>();
 
     public IDictionary<ITypeSymbol, IMethodSymbol> JSReaderFunctions { get; } = new Dictionary<ITypeSymbol, IMethodSymbol>(SymbolEqualityComparer.Default);

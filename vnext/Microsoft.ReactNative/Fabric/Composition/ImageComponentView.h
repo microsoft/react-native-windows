@@ -7,7 +7,6 @@
 #include <Fabric/ComponentView.h>
 
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
-#include <Views/Image/ReactImage.h>
 #include <react/renderer/components/image/ImageShadowNode.h>
 #include <react/renderer/imagemanager/ImageResponseObserver.h>
 #include <wincodec.h>
@@ -53,6 +52,8 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
 
   virtual std::string DefaultControlType() const noexcept;
   static facebook::react::SharedViewProps defaultProps() noexcept;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual VisualToApplyBackgroundClipTo()
+      const noexcept override;
 
   ImageComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
@@ -97,6 +98,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface;
   std::shared_ptr<ImageResponseImage> m_imageResponseImage;
   std::shared_ptr<WindowsImageResponseObserver> m_imageResponseObserver;
+  bool m_requiresImageRedraw{true};
   facebook::react::ImageShadowNode::ConcreteState::Shared m_state;
 };
 

@@ -56,7 +56,7 @@ export default TurboModuleRegistry.getEnforcing<Spec>('SampleTurboModule');
 Checkout the following example:
 
 - Flow definition: [NativeDialogManagerWindows.js](https://github.com/microsoft/react-native-windows/blob/main/vnext/src-win/Libraries/NativeModules/specs/NativeDialogManagerWindows.js)
-- Generated spec file: [NativeDialogManagerWindowsSpec.g.h](https://github.com/microsoft/react-native-windows/blob/main/vnext/codegen/NativeDialogManagerWindowsSpec.g.h)
+- Generated spec file after compilatation in the enlistment: `vnext\codegen\NativeDialogManagerWindowsSpec.g.h`
 - Implementation: [AlertModule.h](https://github.com/microsoft/react-native-windows/blob/main/vnext/Microsoft.ReactNative/Modules/AlertModule.h)
 
 A TurboModule implemetation starts with:

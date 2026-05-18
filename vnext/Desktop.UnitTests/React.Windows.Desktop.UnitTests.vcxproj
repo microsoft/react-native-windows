@@ -94,31 +94,21 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="BaseFileReaderResourceUnitTest.cpp" />
-    <ClCompile Include="BytecodeUnitTests.cpp" />
-    <ClCompile Include="EmptyUIManagerModule.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />
     <ClCompile Include="MemoryMappedBufferTests.cpp" />
-    <ClCompile Include="InstanceMocks.cpp" />
+    <ClCompile Include="InstanceMocks.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="OriginPolicyHttpFilterTest.cpp" />
     <ClCompile Include="RedirectHttpFilterUnitTest.cpp" />
     <ClCompile Include="ScriptStoreTests.cpp" />
     <ClCompile Include="UnicodeConversionTest.cpp" />
     <ClCompile Include="UnicodeTestStrings.cpp" />
-    <ClCompile Include="StringConversionTest_Desktop.cpp" />
-    <ClCompile Include="UIManagerModuleTest.cpp" />
     <ClCompile Include="UtilsTest.cpp" />
-    <ClCompile Include="WebSocketJSExecutorTest.cpp" />
     <ClCompile Include="WebSocketMocks.cpp" />
     <ClCompile Include="WinRTNetworkingMocks.cpp" />
     <ClCompile Include="WinRTWebSocketResourceUnitTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EmptyUIManagerModule.h" />
     <ClInclude Include="InstanceMocks.h" />
     <ClInclude Include="UnicodeTestStrings.h" />
     <ClInclude Include="WebSocketMocks.h" />
@@ -130,17 +120,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.83.0.0" />
+    <PackageReference Include="boost" Version="1.84.0.0" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
-    <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
   </ItemGroup>
   <!-- Remove the WinMD references we're picking up from Microsoft.WindowsAppSDK in the React.Windows.Desktop.vcxproj",
        which we don't need here. -->
+       <!--
   <Target Name="RemoveCppWinRTDirectWinMDReferences" BeforeTargets="GetCppWinRTMdMergeInputs">
     <ItemGroup>
       <CppWinRTDirectWinMDReferences Remove="@(CppWinRTDirectWinMDReferences)" />
     </ItemGroup>
   </Target>
+  -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="Test">
     <Exec Command="$(OutDir)$(TargetFileName)" IgnoreStandardErrorWarningFormat="true" />

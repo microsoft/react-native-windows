@@ -16,6 +16,11 @@
 #include <ReactCommon/CallInvoker.h>
 #include <react/bridging/EventEmitter.h>
 
+#if _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 4996) // deprecated APIs
+#endif
+
 namespace facebook::react {
 
 /**
@@ -36,11 +41,8 @@ enum TurboModuleMethodValueKind {
 /**
  * Determines TurboModuleMethodValueKind based on the jsi::Value type.
  */
-TurboModuleMethodValueKind getTurboModuleMethodValueKind(
-    jsi::Runtime& rt,
-    const jsi::Value* value);
+TurboModuleMethodValueKind getTurboModuleMethodValueKind(jsi::Runtime &rt, const jsi::Value *value);
 
-class TurboCxxModule;
 class TurboModuleBinding;
 
 /**
@@ -55,8 +57,8 @@ class JSI_EXPORT TurboModule : public jsi::HostObject {
   // JS representation. To customize lookup of properties, override `create`.
   // Note: keep this method declared inline to avoid conflicts
   // between RTTI and non-RTTI compilation units
-  jsi::Value get(jsi::Runtime& runtime, const jsi::PropNameID& propName)
-      override {
+  jsi::Value get(jsi::Runtime &runtime, const jsi::PropNameID &propName) override
+  {
     auto prop = create(runtime, propName);
     // If we have a JS wrapper, cache the result of this lookup
     // We don't cache misses, to allow for methodMap_ to dynamically be
@@ -64,15 +66,14 @@ class JSI_EXPORT TurboModule : public jsi::HostObject {
     // [Windows] Reenable once https://github.com/microsoft/react-native-windows/issues/14128 is fixed
 #ifndef WINAPI_FAMILY
     if (jsRepresentation_ && !prop.isUndefined()) {
-      jsRepresentation_->lock(runtime).asObject(runtime).setProperty(
-          runtime, propName, prop);
+      jsRepresentation_->lock(runtime).asObject(runtime).setProperty(runtime, propName, prop);
     }
 #endif
     return prop;
   }
 
-  std::vector<jsi::PropNameID> getPropertyNames(
-      jsi::Runtime& runtime) override {
+  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime &runtime) override
+  {
     std::vector<jsi::PropNameID> result;
     result.reserve(methodMap_.size());
     for (auto it = methodMap_.cbegin(); it != methodMap_.cend(); ++it) {
@@ -87,18 +88,14 @@ class JSI_EXPORT TurboModule : public jsi::HostObject {
 
   struct MethodMetadata {
     size_t argCount;
-    jsi::Value (*invoker)(
-        jsi::Runtime& rt,
-        TurboModule& turboModule,
-        const jsi::Value* args,
-        size_t count);
+    jsi::Value (*invoker)(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value *args, size_t count);
   };
   std::unordered_map<std::string, MethodMetadata> methodMap_;
-  std::unordered_map<std::string, std::shared_ptr<IAsyncEventEmitter>>
-      eventEmitterMap_;
 
-  using ArgFactory =
-      std::function<void(jsi::Runtime& runtime, std::vector<jsi::Value>& args)>;
+  friend class TurboModuleTestFixtureInternal;
+  std::unordered_map<std::string, std::shared_ptr<IAsyncEventEmitter>> eventEmitterMap_;
+
+  using ArgFactory = std::function<void(jsi::Runtime &runtime, std::vector<jsi::Value> &args)>;
 
   /**
    * Calls RCTDeviceEventEmitter.emit to JavaScript, with given event name and
@@ -112,35 +109,31 @@ class JSI_EXPORT TurboModule : public jsi::HostObject {
    *      args.emplace_back(jsi::Value(42));
    *  });
    */
-  void emitDeviceEvent(
-      const std::string& eventName,
-      ArgFactory argFactory = nullptr);
+  void emitDeviceEvent(const std::string &eventName, ArgFactory &&argFactory = nullptr);
 
   // Backwards compatibility version
   void emitDeviceEvent(
-      jsi::Runtime& /*runtime*/,
+      jsi::Runtime & /*runtime*/,
 
-      const std::string& eventName,
-      ArgFactory argFactory = nullptr) {
+      const std::string &eventName,
+      ArgFactory &&argFactory = nullptr)
+  {
     emitDeviceEvent(eventName, std::move(argFactory));
   }
 
-  virtual jsi::Value create(
-      jsi::Runtime& runtime,
-      const jsi::PropNameID& propName) {
+  virtual jsi::Value create(jsi::Runtime &runtime, const jsi::PropNameID &propName)
+  {
     std::string propNameUtf8 = propName.utf8(runtime);
-    if (auto methodIter = methodMap_.find(propNameUtf8);
-        methodIter != methodMap_.end()) {
-      const MethodMetadata& meta = methodIter->second;
+    if (auto methodIter = methodMap_.find(propNameUtf8); methodIter != methodMap_.end()) {
+      const MethodMetadata &meta = methodIter->second;
       return jsi::Function::createFromHostFunction(
           runtime,
           propName,
           static_cast<unsigned int>(meta.argCount),
           [this, meta](
-              jsi::Runtime& rt,
-              [[maybe_unused]] const jsi::Value& thisVal,
-              const jsi::Value* args,
-              size_t count) { return meta.invoker(rt, *this, args, count); });
+              jsi::Runtime &rt, [[maybe_unused]] const jsi::Value &thisVal, const jsi::Value *args, size_t count) {
+            return meta.invoker(rt, *this, args, count);
+          });
     } else if (auto eventEmitterIter = eventEmitterMap_.find(propNameUtf8);
                eventEmitterIter != eventEmitterMap_.end()) {
       return eventEmitterIter->second->get(runtime, jsInvoker_);
@@ -158,8 +151,13 @@ class JSI_EXPORT TurboModule : public jsi::HostObject {
 /**
  * An app/platform-specific provider function to get an instance of a module
  * given a name.
+ *
+ * @deprecated Use TurboModuleProviderFunctionTypeWithRuntime instead.
+ * Remove after React Native 0.84 is released.
  */
-using TurboModuleProviderFunctionType =
-    std::function<std::shared_ptr<TurboModule>(const std::string& name)>;
+using TurboModuleProviderFunctionType [[deprecated("Use TurboModuleProviderFunctionTypeWithRuntime instead")]] =
+    std::function<std::shared_ptr<TurboModule>(const std::string &name)>;
+using TurboModuleProviderFunctionTypeWithRuntime =
+    std::function<std::shared_ptr<TurboModule>(jsi::Runtime &runtime, const std::string &name)>;
 
 } // namespace facebook::react

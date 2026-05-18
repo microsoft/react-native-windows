@@ -4,9 +4,6 @@
 #include "pch.h"
 #include "IReactContext.h"
 #include "DynamicWriter.h"
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-#include "XamlUIService.h"
-#endif
 
 #include "CallInvoker.h"
 #include "Utils/Helpers.h"
@@ -19,10 +16,6 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 ReactSettingsSnapshot::ReactSettingsSnapshot(Mso::CntPtr<const Mso::React::IReactSettingsSnapshot> &&settings) noexcept
     : m_settings{std::move(settings)} {}
-
-bool ReactSettingsSnapshot::UseWebDebugger() const noexcept {
-  return m_settings->UseWebDebugger();
-}
 
 bool ReactSettingsSnapshot::UseFastRefresh() const noexcept {
   return m_settings->UseFastRefresh();
@@ -100,7 +93,7 @@ IReactDispatcher ReactContext::UIDispatcher() noexcept {
 }
 
 IReactDispatcher ReactContext::JSDispatcher() noexcept {
-#if defined(DEBUG) && defined(USE_FABRIC)
+#if defined(DEBUG)
   VerifyElseCrashSz(
       !::Microsoft::ReactNative::IsFabricEnabled(Properties()),
       "ReactContext.JSRuntime is not supported on new arch, use ReactContext.CallInvoker instead.");
@@ -113,7 +106,7 @@ winrt::Microsoft::ReactNative::CallInvoker ReactContext::CallInvoker() noexcept 
 }
 
 winrt::Windows::Foundation::IInspectable ReactContext::JSRuntime() noexcept {
-#if defined(DEBUG) && defined(USE_FABRIC)
+#if defined(DEBUG)
   VerifyElseCrashSz(
       !::Microsoft::ReactNative::IsFabricEnabled(Properties()),
       "ReactContext.JSRuntime is not supported on new arch, use ReactContext.CallInvoker instead.");
@@ -137,22 +130,6 @@ LoadingState ReactContext::LoadingState() noexcept {
       return LoadingState::HasError;
   };
 }
-
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-// Deprecated: Use XamlUIService directly.
-void ReactContext::DispatchEvent(
-    xaml::FrameworkElement const &view,
-    hstring const &eventName,
-    JSValueArgWriter const &eventDataArgWriter) noexcept {
-  auto xamlUIService = Properties()
-                           .Get(XamlUIService::XamlUIServiceProperty().Handle())
-                           .try_as<winrt::Microsoft::ReactNative::XamlUIService>();
-
-  if (xamlUIService) {
-    xamlUIService.DispatchEvent(view, eventName, eventDataArgWriter);
-  }
-}
-#endif
 
 void ReactContext::CallJSFunction(
     hstring const &moduleName,

@@ -1,0 +1,44 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "ReactNativeIsland.idl";
+
+#include "NamespaceRedirect.h"
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+
+  [experimental]
+  enum ContentSizePolicy
+  {
+    None,
+    ResizeContentToParentWindow,
+    ResizeParentWindowToContent,
+  };
+
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("Simplifies hosting a ReactNativeIsland inside a Window.")
+  runtimeclass ReactNativeWindow : Windows.Foundation.IClosable
+  {
+    static ReactNativeWindow CreateFromCompositor(Microsoft.UI.Composition.Compositor compositor);
+    static ReactNativeWindow CreateFromWindow(Microsoft.UI.Windowing.AppWindow appWindow, Microsoft.UI.Composition.Compositor compositor);
+    static ReactNativeWindow CreateFromContentSiteBridgeAndIsland(Microsoft.UI.Content.IContentSiteBridge bridge, Microsoft.ReactNative.ReactNativeIsland island);
+    static ReactNativeWindow CreateFromWindowAndIsland(Microsoft.UI.Windowing.AppWindow appWindow, Microsoft.ReactNative.ReactNativeIsland island);
+
+    ReactNativeIsland ReactNativeIsland { get; };
+
+    Microsoft.UI.Windowing.AppWindow AppWindow { get; };
+
+    Microsoft.UI.Content.IContentSiteBridge ContentSiteBridge { get; };
+    ContentSizePolicy ResizePolicy { get; set; };
+
+    DOC_STRING("When the ResizePolicy is set to ResizeParentWindowToContent, these LayoutConstraints will control the layout of the content."
+     " When ResizePolicy is set to ResizeContentToParentWindow, these constraints will be ignored. Instead the window can be constrained using"
+     " OverlappedPresenter.PreferredMaximumHeight etc.")
+    LayoutConstraints LayoutConstraints { get; set; };
+  }
+
+} // namespace Microsoft.ReactNative

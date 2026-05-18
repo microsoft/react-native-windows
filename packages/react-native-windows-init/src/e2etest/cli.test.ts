@@ -21,7 +21,6 @@ function validateOptionName(
     case 'overwrite':
     case 'projectType':
     case 'experimentalNuGetDependency':
-    case 'useHermes':
     case 'useWinUI3':
     case 'nuGetTestVersion':
     case 'nuGetTestFeed':

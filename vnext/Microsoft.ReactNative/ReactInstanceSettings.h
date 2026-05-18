@@ -72,12 +72,6 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool RequestDevBundle() noexcept;
   void RequestDevBundle(bool value) noexcept;
 
-  //! Should the instance run in a remote environment such as within a browser
-  //! By default, this is using a browser navigated to  http://localhost:8081/debugger-ui served
-  //! by Metro/Haul. Debugging will start as soon as the React Native instance is loaded.
-  bool UseWebDebugger() noexcept;
-  void UseWebDebugger(bool value) noexcept;
-
   //! Should the instance trigger the hot reload logic when it first loads the instance
   //! Most edits should be visible within a second or two without the instance having to reload
   //! Non-compatible changes still cause full reloads
@@ -193,14 +187,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   uint16_t m_sourceBundlePort{0};
   bool m_requestInlineSourceMap{true};
   LogHandler m_nativeLogger{nullptr};
-
-#if USE_HERMES
   JSIEngine m_jSIEngineOverride{JSIEngine::Hermes};
-#elif USE_V8
-  JSIEngine m_jSIEngineOverride{JSIEngine::V8};
-#else
-  JSIEngine m_jSIEngineOverride{JSIEngine::Chakra};
-#endif
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

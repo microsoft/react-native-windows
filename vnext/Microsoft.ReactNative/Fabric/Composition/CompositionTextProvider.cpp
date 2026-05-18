@@ -10,10 +10,8 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionTextProvider::CompositionTextProvider(
-    const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
-    CompositionDynamicAutomationProvider *parentProvider) noexcept
+    const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept
     : m_view{componentView} {
-  m_parentProvider.copy_from(parentProvider);
   EnsureTextRangeProvider();
 }
 
@@ -24,10 +22,9 @@ void CompositionTextProvider::EnsureTextRangeProvider() {
     return;
 
   if (!m_textRangeProvider) {
-    m_textRangeProvider =
-        winrt::make<CompositionTextRangeProvider>(
-            strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>(), m_parentProvider.get())
-            .try_as<ITextRangeProvider>();
+    m_textRangeProvider = winrt::make<CompositionTextRangeProvider>(
+                              strongView.as<winrt::Microsoft::ReactNative::Composition::ComponentView>())
+                              .as<ITextRangeProvider>();
   }
 }
 

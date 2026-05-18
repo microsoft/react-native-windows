@@ -1,1 +1,1 @@
-v8 stubs since we will use chakra
+v8 stubs since we will use Hermes

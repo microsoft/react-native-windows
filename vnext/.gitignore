@@ -74,6 +74,7 @@ Generated Files/
 /WindowsSampleCSharpApp/obj/
 /target/
 /x64/
+/codegen/
 Examples/WindowsSampleApp/Generated Files/
 Examples/WindowsSampleApp/build
 Examples/TypeScript/Generated Files/

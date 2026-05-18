@@ -1,0 +1,212 @@
+{
+  "Switch Performance mount time 1": {
+    "metrics": {
+      "name": "Switch mount",
+      "meanDuration": 0.3,
+      "medianDuration": 0,
+      "stdDev": 0.4830458915396479,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:14.979Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:14.993Z"
+  },
+  "Switch Performance unmount time 1": {
+    "metrics": {
+      "name": "Switch unmount",
+      "meanDuration": 0,
+      "medianDuration": 0,
+      "stdDev": 0,
+      "renderCount": 0,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:14.999Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:15.008Z"
+  },
+  "Switch Performance rerender time 1": {
+    "metrics": {
+      "name": "Switch rerender",
+      "meanDuration": 0.5,
+      "medianDuration": 0.5,
+      "stdDev": 0.5270462766947299,
+      "renderCount": 2,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:15.020Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:15.024Z"
+  },
+  "Switch Performance Switch-Specific Scenarios value-true 1": {
+    "metrics": {
+      "name": "Switch value-true",
+      "meanDuration": 0.1,
+      "medianDuration": 0,
+      "stdDev": 0.31622776601683794,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:15.030Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:15.042Z"
+  },
+  "Switch Performance Switch-Specific Scenarios disabled 1": {
+    "metrics": {
+      "name": "Switch disabled",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:15.048Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:15.060Z"
+  },
+  "Switch Performance Switch-Specific Scenarios with-custom-colors 1": {
+    "metrics": {
+      "name": "Switch custom-colors",
+      "meanDuration": 0.4,
+      "medianDuration": 0,
+      "stdDev": 0.5163977794943223,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:15.067Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:15.079Z"
+  },
+  "Switch Performance Switch-Specific Scenarios with-on-value-change 1": {
+    "metrics": {
+      "name": "Switch on-value-change",
+      "meanDuration": 0.3,
+      "medianDuration": 0,
+      "stdDev": 0.4830458915396479,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:15.085Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:15.097Z"
+  },
+  "Switch Performance Switch-Specific Scenarios with-accessibility 1": {
+    "metrics": {
+      "name": "Switch with-accessibility",
+      "meanDuration": 0.2,
+      "medianDuration": 0,
+      "stdDev": 0.42163702135578396,
+      "renderCount": 1,
+      "runs": 10,
+      "timestamp": "2026-02-25T08:49:15.103Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 3,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:15.116Z"
+  },
+  "Switch Performance Switch-Specific Scenarios multiple-switches-10 1": {
+    "metrics": {
+      "name": "Switch multiple-10",
+      "meanDuration": 2,
+      "medianDuration": 2,
+      "stdDev": 1.1952286093343936,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-25T08:49:15.160Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:15.162Z"
+  },
+  "Switch Performance Switch-Specific Scenarios multiple-switches-50 1": {
+    "metrics": {
+      "name": "Switch multiple-50",
+      "meanDuration": 9.2,
+      "medianDuration": 9,
+      "stdDev": 1.4242792663559447,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-25T08:49:15.323Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 5,
+      "minRuns": 10
+    },
+    "capturedAt": "2026-02-25T08:49:15.326Z"
+  },
+  "Switch Performance Switch-Specific Scenarios multiple-switches-100 1": {
+    "metrics": {
+      "name": "Switch multiple-100",
+      "meanDuration": 17.266666666666666,
+      "medianDuration": 16,
+      "stdDev": 2.0517124090680467,
+      "renderCount": 1,
+      "runs": 15,
+      "timestamp": "2026-02-25T08:49:15.622Z"
+    },
+    "threshold": {
+      "maxDurationIncrease": 10,
+      "maxDuration": null,
+      "minAbsoluteDelta": 10,
+      "maxRenderCount": 5,
+      "minRuns": 10,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-02-25T08:49:15.624Z"
+  }
+}

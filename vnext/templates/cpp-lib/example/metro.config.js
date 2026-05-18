@@ -1,16 +1,25 @@
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 const fs = require('fs');
-const path = require('path');
+const path = require('node:path');
 const escape = require('escape-string-regexp');
-const exclusionList = require('metro-config/src/defaults/exclusionList');
 const pack = require('../package.json');
 
 const root = path.resolve(__dirname, '..');
 const modules = Object.keys({ ...pack.peerDependencies });
 
-const rnwPath = fs.realpathSync(
+// On Windows, require.resolve through yarn workspace junctions can return paths
+// with a different drive letter case than process.cwd(). Metro's internal file
+// system lookup is case-sensitive, so we normalize to match cwd.
+function normalizePathDrive(p) {
+  if (process.platform === 'win32' && p.length >= 2 && p[1] === ':') {
+    return process.cwd()[0] + p.slice(1);
+  }
+  return p;
+}
+
+const rnwPath = normalizePathDrive(fs.realpathSync(
   path.resolve(require.resolve('react-native-windows/package.json'), '..'),
-);
+));
 
 //{{#devMode}} [devMode
 const rnwRootNodeModules = path.resolve(rnwPath, '..', 'node_modules');
@@ -33,7 +42,7 @@ const config = {
   // We need to make sure that only one version is loaded for peerDependencies
   // So we block them at the root, and alias them to the versions in example's node_modules
   resolver: {
-    blacklistRE: exclusionList(
+    blocklist: 
       modules.map(
         (m) =>
           new RegExp(`^${escape(path.join(root, 'node_modules', m))}\\/.*$`)
@@ -46,8 +55,7 @@ const config = {
         new RegExp(`${rnwPath}/build/.*`),
         new RegExp(`${rnwPath}/target/.*`),
         /.*\.ProjectImports\.zip/,
-      ])
-    ),
+      ]),
 
     extraNodeModules: modules.reduce((acc, name) => {
       acc[name] = path.join(__dirname, 'node_modules', name);

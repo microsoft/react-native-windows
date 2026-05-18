@@ -9,16 +9,16 @@
 
   <PropertyGroup>
     <RestoreLockedMode Condition="'$(RestoreLockedMode)'=='' OR '$(BuildingInRnwRepo)'=='true'">true</RestoreLockedMode>
-
-    <!-- RnwNewArchOnly is for projects that always build with RnwNewArch so they don't add .newarch to the filename. -->
-    <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'=='' AND '$(SolutionName)'=='ReactWindows-Desktop'">true</RnwNewArchOnly>
-    <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'=='' AND '$(RnwExternalPropsLoaded)'=='Microsoft.ReactNative.Composition.CppApp.props'">true</RnwNewArchOnly>
-    <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'=='' AND '$(RnwExternalPropsLoaded)'=='Microsoft.ReactNative.Composition.Package.props'">true</RnwNewArchOnly>
-    <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'==''">false</RnwNewArchOnly>
+    <!--
+      VS's NuGet restore cannot evaluate vcxproj PackageReferences through the project reference
+      chain (the VC project system does not report them via the CPS nomination API). This causes
+      NU1004 lock file mismatches for csproj files that reference vcxproj. Disable locked mode
+      in VS so the initial restore succeeds and package targets load correctly.
+      CI is unaffected: it passes /p:RestoreLockedMode=true as a global property which overrides this.
+    -->
+    <RestoreLockedMode Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(MSBuildProjectExtension)' == '.csproj'">false</RestoreLockedMode>
 
     <NuGetLockFileName>packages</NuGetLockFileName>
-    <NuGetLockFileName Condition="'$(UseHermes)'=='false'">$(NuGetLockFileName).chakra</NuGetLockFileName>
-    <NuGetLockFileName Condition="'$(RnwNewArch)'=='true' AND '$(RnwNewArchOnly)'=='false'">$(NuGetLockFileName).newarch</NuGetLockFileName>
     <NuGetLockFileName Condition="'$(UseExperimentalWinUI3)'=='true'">$(NuGetLockFileName).experimentalwinui3</NuGetLockFileName>
     <NuGetLockFilePath>.\$(NuGetLockFileName).lock.json</NuGetLockFilePath>
   </PropertyGroup>

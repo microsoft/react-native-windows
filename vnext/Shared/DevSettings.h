@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 #pragma once
-
-#include "JSI/JSExecutorFactoryDelegate.h"
 #include "Logging.h"
 
 #include <IRedBoxHandler.h>
@@ -23,13 +21,12 @@ struct RuntimeHolderLazyInit;
 namespace facebook {
 namespace react {
 
-enum class JSIEngineOverride : int32_t {
-  Default = 0, // No JSI, will use the legacy ExecutorFactory
-  Chakra = 1, // Use the JSIExecutorFactory with ChakraRuntime
+namespace jsinspector_modern {
+class HostTarget;
+} // namespace jsinspector_modern
 
-#if 0 // Deprecated
-  ChakraCore = 2, // Use the JSIExecutorFactory with ChakraCoreRuntime
-#endif
+enum class JSIEngineOverride : int32_t {
+  Default = 3, // Now defaults to Hermes (New Architecture)
 
   Hermes = 3, // Use the JSIExecutorFactory with Hermes
   V8 = 4, // Use the JSIExecutorFactory with V8
@@ -49,7 +46,6 @@ struct DevSettings {
   std::function<void()> liveReloadCallback;
   std::function<void(std::string)> errorCallback;
   std::function<void()> waitingForDebuggerCallback;
-  std::function<void()> debuggerAttachCallback;
   NativeLoggingHook loggingCallback;
   std::shared_ptr<Mso::React::IRedBoxHandler> redboxHandler;
 
@@ -62,23 +58,11 @@ struct DevSettings {
   /// For direct debugging, break on the next line of JavaScript executed
   bool debuggerBreakOnNextLine{false};
 
-  /// Enable function nativePerformanceNow.
-  /// Method nativePerformanceNow() returns high resolution time info.
-  /// It is not safe to expose to Custom Function. Add this flag so we can turn
-  /// it off for Custom Function.
-  bool enableNativePerformanceNow{true};
-
   /// For direct debugging, the port number to use, or zero for the default
   uint16_t debuggerPort{0};
 
   /// For direct debugging, name of runtime instance, or empty for default.
   std::string debuggerRuntimeName;
-
-  /// Enables debugging by running the JavaScript in a web browser (Chrome)
-  /// using http://localhost:8081/debugger-ui from the React Native packager
-  /// (Metro / Haul). Debugging will start as soon as the React Native instance
-  /// is loaded.
-  bool useWebDebugger{false};
 
   bool useFastRefresh{false};
 
@@ -87,10 +71,6 @@ struct DevSettings {
   /// thread, unless the specific runtime implementation explicitly guarantees
   /// reentrancy.
   std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> jsiRuntimeHolder;
-
-  /// A function that can be called with the current Instance to get
-  /// a JSExecutorFactory. This can be used to bypass the ABI JSI.
-  JSExecutorFactoryDelegate jsExecutorFactoryDelegate{nullptr};
 
   // Until the ABI story is addressed we'll use this instead of the above for
   // the purposes of selecting a JSI Runtime to use.
@@ -106,11 +86,8 @@ struct DevSettings {
 
   bool enableDefaultCrashHandler{false};
 
-  // OC:8368383 - Memory leak under investigation.
-  bool useWebSocketTurboModule{false};
-
-  // Enable concurrent mode by installing runtimeScheduler
-  bool useRuntimeScheduler{false};
+  // The HostTarget instance for Fusebox
+  facebook::react::jsinspector_modern::HostTarget *inspectorHostTarget;
 };
 
 } // namespace react

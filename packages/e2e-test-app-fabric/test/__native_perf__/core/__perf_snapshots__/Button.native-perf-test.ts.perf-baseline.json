@@ -1,0 +1,43 @@
+{
+  "Native Render Pipeline Button native mount 1": {
+    "metrics": {
+      "name": "Button native mount",
+      "meanDuration": 2.9556866606076557,
+      "medianDuration": 2.601099967956543,
+      "stdDev": 0.9540605755854736,
+      "renderCount": 1,
+      "runs": 15,
+      "durations": [
+        2.457200050354004,
+        2.5554999709129333,
+        3.3740000128746033,
+        2.601099967956543,
+        2.444000005722046,
+        3.146499991416931,
+        2.1805999875068665,
+        6.153299987316132,
+        2.8115999698638916,
+        2.360199987888336,
+        2.432099997997284,
+        3.0877000093460083,
+        3.0518999695777893,
+        3.1615999937057495,
+        2.51800000667572
+      ],
+      "timestamp": "2026-03-25T09:12:32.621Z",
+      "nativeTimings": {
+        "fullPipeline": 2.601099967956543
+      }
+    },
+    "threshold": {
+      "maxDurationIncrease": 15,
+      "maxDuration": null,
+      "minAbsoluteDelta": 5,
+      "maxRenderCount": 1,
+      "minRuns": 10,
+      "maxCV": 0.5,
+      "mode": "gate"
+    },
+    "capturedAt": "2026-03-25T09:12:32.623Z"
+  }
+}

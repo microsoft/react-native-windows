@@ -17,7 +17,7 @@
   </Target>
 
   <!-- See https://github.com/facebook/react-native/blob/07d090dbc6c46b8f3760dbd25dbe0540c18cb3f3/react.gradle#L190 for reference -->
-  <Target Name="CompileHermesBytecode" AfterTargets="MakeBundle" Condition="'$(UseBundle)' == 'true' AND '$(UseHermes)' == 'true'">
+  <Target Name="CompileHermesBytecode" AfterTargets="MakeBundle" Condition="'$(UseBundle)' == 'true'">
     <Message Importance="High" Text="Running [$(HermesCompilerCommand) -emit-binary -out $(BundleOutputFile).hbc $(BundleOutputFile) $(HermesCompilerFlags) -output-source-map] to precompile bundle file." />
     <Exec Command='$(HermesCompilerCommand) -emit-binary -out "$(BundleOutputFile).hbc" "$(BundleOutputFile)" $(HermesCompilerFlags) -output-source-map' ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" />
     <Move SourceFiles="$(BundleOutputFile).hbc" DestinationFiles="$(BundleOutputFile)" />

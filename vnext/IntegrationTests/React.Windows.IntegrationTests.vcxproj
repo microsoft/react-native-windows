@@ -71,31 +71,22 @@
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Folly\Folly.vcxproj">
-      <Project>{A990658C-CE31-4BCC-976F-0FC6B1AF693D}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ControllableMessageQueueThread.cpp" />
-    <ClCompile Include="TestInstance.cpp" />
-    <ClCompile Include="TestModule.cpp" />
-    <ClCompile Include="TestRootView.cpp" />
-    <ClCompile Include="TestRunner.cpp" />
+    <ClCompile Include="TestModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ControllableMessageQueueThread.h" />
     <ClInclude Include="MockExecutorDelegate.h" />
-    <ClInclude Include="TestInstance.h" />
     <ClInclude Include="TestModule.h" />
-    <ClInclude Include="TestRootView.h" />
-    <ClInclude Include="TestRunner.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DummyTest.js" />
     <None Include="XHRTest.js" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.83.0.0" />
+    <PackageReference Include="boost" Version="1.84.0.0" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="Test">

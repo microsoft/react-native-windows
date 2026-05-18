@@ -18,8 +18,8 @@ import {
   newSpinner,
   newSuccess,
   newError,
-  powershell,
 } from './commandWithProgress';
+import {findPowerShell} from '@react-native-windows/find-dotnet-tools';
 import {execSync} from 'child_process';
 import {BuildArch, BuildConfig} from '../commands/runWindows/runWindowsOptions';
 import {findLatestVsInstall} from './vsInstalls';
@@ -45,11 +45,11 @@ export default class MSBuildTools {
   }
 
   cleanProject(slnFile: string) {
-    const cmd = `"${path.join(
-      this.msbuildPath(),
-      'msbuild.exe',
-    )}" "${slnFile}" /t:Clean`;
-    const results = child_process.execSync(cmd).toString().split(EOL);
+    const msbuild = path.join(this.msbuildPath(), 'msbuild.exe');
+    const results = child_process
+      .execFileSync(msbuild, [slnFile, '/t:Clean'])
+      .toString()
+      .split(EOL);
     results.forEach(result => console.log(chalk.white(result)));
   }
 
@@ -317,7 +317,7 @@ export default class MSBuildTools {
         'Eval-MsBuildProperties.ps1',
       );
 
-      let command = `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${msbuildEvalScriptPath}" -SolutionFile '${solutionFile}' -ProjectFile '${projectFile}' -MSBuildPath '${this.msbuildPath()}'`;
+      let command = `"${findPowerShell()}" -ExecutionPolicy Unrestricted -NoProfile "${msbuildEvalScriptPath}" -SolutionFile '${solutionFile}' -ProjectFile '${projectFile}' -MSBuildPath '${this.msbuildPath()}'`;
 
       if (propertyNames && propertyNames.length > 0) {
         command += ` -PropertyNames '${propertyNames.join(',')}'`;

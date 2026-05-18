@@ -19,7 +19,7 @@ import {RNTesterThemeContext} from '../../components/RNTesterTheme';
 import RNTOption from '../../components/RNTOption';
 import * as React from 'react';
 import {useCallback, useContext, useState} from 'react';
-import {Modal, Platform, StyleSheet, Switch, Text, View} from 'react-native';
+import {Modal, Platform, StyleSheet, Switch, Text, TextInput, View} from 'react-native';
 
 const animationTypes = ['slide', 'none', 'fade'] as const;
 const presentationStyles = [
@@ -53,24 +53,27 @@ function ModalPresentation() {
   }, []);
 
   const [props, setProps] = useState<ModalProps>({
-    animationType: 'none',
-    transparent: false,
-    hardwareAccelerated: false,
-    statusBarTranslucent: false,
-    navigationBarTranslucent: false,
-    presentationStyle: Platform.select({
-      ios: 'fullScreen',
-      default: undefined,
-    }),
     allowSwipeDismissal: false,
-    supportedOrientations: Platform.select({
-      ios: ['portrait'],
-      default: undefined,
-    }),
+    animationType: 'none',
+    backdropColor: undefined,
+    hardwareAccelerated: false,
+    navigationBarTranslucent: false,
     onDismiss: undefined,
     onShow: undefined,
+    presentationStyle: Platform.select({
+      default: undefined,
+      ios: 'fullScreen',
+    }),
+    statusBarTranslucent: false,
+    supportedOrientations: Platform.select({
+      default: undefined,
+      ios: ['portrait'],
+    }),
+    transparent: false,
+    hideBorder: false, // Windows
+    hideTitleBar: false, // Windows
+    title: 'Modal Presentation', // Windows
     visible: false,
-    backdropColor: undefined,
   });
   const presentationStyle = props.presentationStyle;
   const hardwareAccelerated = props.hardwareAccelerated;
@@ -83,7 +86,7 @@ function ModalPresentation() {
   const [currentOrientation, setCurrentOrientation] = useState('unknown');
 
   type OrientationChangeEvent = Parameters<
-    $NonMaybeType<ModalProps['onOrientationChange']>,
+    NonNullable<ModalProps['onOrientationChange']>,
   >[0];
   const onOrientationChange = (event: OrientationChangeEvent) =>
     setCurrentOrientation(event.nativeEvent.orientation);
@@ -99,8 +102,8 @@ function ModalPresentation() {
           onValueChange={enabled =>
             setProps(prev => ({
               ...prev,
-              statusBarTranslucent: enabled,
               navigationBarTranslucent: false,
+              statusBarTranslucent: enabled,
             }))
           }
         />
@@ -114,8 +117,8 @@ function ModalPresentation() {
           onValueChange={enabled => {
             setProps(prev => ({
               ...prev,
-              statusBarTranslucent: enabled,
               navigationBarTranslucent: enabled,
+              statusBarTranslucent: enabled,
             }));
           }}
         />
@@ -187,6 +190,37 @@ function ModalPresentation() {
             value={props.transparent}
             onValueChange={enabled =>
               setProps(prev => ({...prev, transparent: enabled}))
+            }
+          />
+        </View>
+        {/* [Windows] - HideTitleBar is a Windows only prop. It is not supported on iOS or Android. */}
+        <View style={styles.rowWithSpaceBetween}>
+          <RNTesterText style={styles.title}>HideTitleBar</RNTesterText>
+          <Switch
+            value={props.hideTitleBar}
+            onValueChange={enabled =>
+              setProps(prev => ({...prev, hideTitleBar: enabled}))
+            }
+          />
+        </View>
+        {/* [Windows] - HideBorder is a Windows only prop. It is not supported on iOS or Android. */}
+        <View style={styles.rowWithSpaceBetween}>
+          <RNTesterText style={styles.title}>HideBorder</RNTesterText>
+          <Switch
+            value={props.hideBorder}
+            onValueChange={enabled =>
+              setProps(prev => ({...prev, hideBorder: enabled}))
+            }
+          />
+        </View>
+        {/* [Windows] - Title is a Windows only prop. It is not supported on iOS or Android. */}
+        <View style={{flexDirection: 'row'}}>
+          <RNTesterText style={styles.title}>Title</RNTesterText>
+          <TextInput
+            style={{flex: 1, borderWidth: 1, marginLeft: 10, padding: 5}}
+            value={props.title}
+            onChangeText={text =>
+              setProps(prev => ({...prev, title: text}))
             }
           />
         </View>
@@ -336,34 +370,18 @@ function ModalPresentation() {
 }
 
 const styles = StyleSheet.create({
-  row: {
-    flexWrap: 'wrap',
-    flexDirection: 'row',
-  },
-  rowWithSpaceBetween: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
   block: {
-    borderColor: 'rgba(0,0,0, 0.1)',
     borderBottomWidth: 1,
+    borderColor: 'rgba(0,0,0, 0.1)',
     padding: 6,
   },
   inlineBlock: {
-    padding: 6,
+    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: 'rgba(0,0,0, 0.1)',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    borderColor: 'rgba(0,0,0, 0.1)',
-    borderBottomWidth: 1,
-  },
-  title: {
-    margin: 3,
-    fontWeight: 'bold',
-  },
-  option: {
-    marginRight: 8,
-    marginTop: 6,
+    padding: 6,
   },
   modalContainer: {
     //flex: 1, // [Windows] - This will cause the modal to stretch to be as tall as the availiable space given to it.
@@ -374,16 +392,32 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
   },
-  warning: {
+  option: {
+    marginRight: 8,
+    marginTop: 6,
+  },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  rowWithSpaceBetween: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  title: {
+    fontWeight: 'bold',
     margin: 3,
-    fontSize: 12,
+  },
+  warning: {
     color: 'red',
+    fontSize: 12,
+    margin: 3,
   },
 });
 
 export default ({
-  title: 'Modal Presentation',
-  name: 'basic',
   description: 'Modals can be presented with or without animation',
+  name: 'basic',
   render: (): React.Node => <ModalPresentation />,
+  title: 'Modal Presentation',
 }: RNTesterModuleExample);

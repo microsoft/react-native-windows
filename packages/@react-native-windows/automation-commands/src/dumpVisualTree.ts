@@ -37,6 +37,7 @@ export type AutomationNode = {
   AutomationId?: string;
   ControlType?: number;
   LocalizedControlType?: string;
+  Name?: string;
   __Children?: [AutomationNode];
 };
 
@@ -79,7 +80,7 @@ export default async function dumpVisualTree(
     removeGuidsFromImageSources?: boolean;
     additionalProperties?: string[];
   },
-): Promise<UIElement | VisualTree> {
+): Promise<VisualTree> {
   if (!automationClient) {
     throw new Error('RPC client is not enabled');
   }
@@ -93,21 +94,9 @@ export default async function dumpVisualTree(
     throw new Error(dumpResponse.message);
   }
 
-  const element: UIElement | VisualTree = dumpResponse.result;
+  const element: VisualTree = dumpResponse.result;
 
-  if ('XamlType' in element && opts?.pruneCollapsed !== false) {
-    pruneCollapsedElements(element);
-  }
-
-  if ('XamlType' in element && opts?.deterministicOnly !== false) {
-    removeNonDeterministicProps(element);
-  }
-
-  if ('XamlType' in element && opts?.removeDefaultProps !== false) {
-    removeDefaultProps(element);
-  }
-
-  if (!('XamlType' in element) && opts?.removeGuidsFromImageSources !== false) {
+  if (opts?.removeGuidsFromImageSources !== false) {
     removeGuidsFromImageSources(element);
   }
 
@@ -159,6 +148,15 @@ function removeGuidsFromImageSourcesHelper(node: ComponentNode) {
             '<localOrBundlerUri>',
           );
 
+          // When using rnx-kit's asset monorepo plugin assets outside the project root become something like:
+          // file://D:\\a\\_work\\1\\s\\packages\\e2e-test-app-fabric\\windows\\RNTesterApp-Fabric.Package\\bin\\x64\\Release\\AppX\\RNTesterApp-Fabric\\Bundle\\assets?unstable_path=_@react-native-windows/tester/js/assets/dislike.png
+          // becomes
+          // <localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png
+          source.Uri = source.Uri.replace(
+            new RegExp(`file://${packagesPath}.*\\\\Bundle\\\\assets?`),
+            '<localOrBundlerUri>',
+          );
+
           // When loading the bundle from metro local paths will be replaced with paths to localhost, which will not align with snapshots made with prebuilt bundles.
           // This logic replaces the localhost uri, with the same uri that we would have gotten from a prebuild bundle.  This makes it easier to debug without breaking snapshots
           // http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224
@@ -182,51 +180,4 @@ function removeGuidsFromImageSourcesHelper(node: ComponentNode) {
 
 function removeGuidsFromImageSources(visualTree: VisualTree) {
   removeGuidsFromImageSourcesHelper(visualTree['Component Tree']);
-}
-
-/**
- * Removes trees of XAML that are not visible.
- */
-function pruneCollapsedElements(element: UIElement) {
-  if (!element.children) {
-    return;
-  }
-
-  element.children = element.children.filter(
-    child => child.Visibility !== 'Collapsed',
-  );
-
-  element.children.forEach(pruneCollapsedElements);
-}
-
-/**
- * Removes trees of properties that are not deterministic
- */
-function removeNonDeterministicProps(element: UIElement) {
-  if (element.RenderSize) {
-    // RenderSize is subject to rounding, etc and should mostly be derived from
-    // other deterministic properties in the tree.
-    delete element.RenderSize;
-  }
-
-  if (element.children) {
-    element.children.forEach(removeNonDeterministicProps);
-  }
-}
-
-/**
- * Removes noise from snapshot by removing properties with the default value
- */
-function removeDefaultProps(element: UIElement) {
-  const defaultValues: [string, unknown][] = [['Tooltip', null]];
-
-  defaultValues.forEach(([propname, defaultValue]) => {
-    if (element[propname] === defaultValue) {
-      delete element[propname];
-    }
-  });
-
-  if (element.children) {
-    element.children.forEach(removeDefaultProps);
-  }
 }

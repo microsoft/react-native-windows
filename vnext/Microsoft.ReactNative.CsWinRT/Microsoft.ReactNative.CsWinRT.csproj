@@ -15,9 +15,6 @@
     <WebView2UseWinRT>true</WebView2UseWinRT>
     <WebView2EnableCsWinRTProjectionExcludeCoreRef>true</WebView2EnableCsWinRTProjectionExcludeCoreRef>
     <WebView2EnableCsWinRTProjection>false</WebView2EnableCsWinRTProjection>
-
-    <!-- Ensure we have a valid packages.lock.json and not a packages.newarch.json. -->
-    <RnwNewArchOnly>true</RnwNewArchOnly>
   </PropertyGroup>
 
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.CSharp.props" />

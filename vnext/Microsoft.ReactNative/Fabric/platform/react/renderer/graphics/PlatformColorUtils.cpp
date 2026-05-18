@@ -2,12 +2,8 @@
 // Licensed under the MIT License.
 
 #include "PlatformColorUtils.h"
-#include <UI.Xaml.Media.h>
 #include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
-#ifndef CORE_ABI
-#include <XamlUtils.h>
-#endif // CORE_ABI
 #include <react/renderer/graphics/Color.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "HostPlatformColor.h"
@@ -17,16 +13,6 @@ namespace facebook::react {
 winrt::Windows::UI::Color ResolvePlatformColor(const std::vector<std::string> &semanticItems) {
   if (!semanticItems.empty()) {
     for (auto platformColor : semanticItems) {
-#ifndef CORE_ABI
-      // If XAML is loaded, look in application resources
-      if (xaml::TryGetCurrentUwpXamlApplication()) {
-        xaml::Media::Brush brush{Microsoft::ReactNative::BrushFromColorObject(platformColor)};
-        if (auto scb{brush.try_as<xaml::Media::SolidColorBrush>()}) {
-          return scb.Color();
-        }
-      }
-#endif // CORE_ABI
-
       // Accent colors
       // https://learn.microsoft.com/en-us/uwp/api/windows.ui.viewmanagement.uicolortype?view=winrt-22621
       static std::unordered_map<

@@ -10,9 +10,7 @@
 #include "FacadeType.h"
 #include "JSValue.h"
 
-#ifdef USE_FABRIC
 #include <Fabric/Composition/CompositionViewComponentView.h>
-#endif
 
 namespace Microsoft::ReactNative {
 struct ShadowNodeBase;
@@ -36,26 +34,14 @@ class PropsAnimatedNode final : public AnimatedNode {
 
  private:
   struct AnimationView {
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-    xaml::UIElement m_element;
-#else
     winrt::Microsoft::ReactNative::ComponentView m_componentView;
-#endif
     operator bool() const noexcept {
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-      return m_element != nullptr;
-#else
       return m_componentView != nullptr;
-#endif
     }
   };
 
   void CommitProps();
   void MakeAnimation(int64_t valueNodeTag, FacadeType facadeType);
-#if !defined(CORE_ABI) && !defined(USE_FABRIC)
-  Microsoft::ReactNative::ShadowNodeBase *GetShadowNodeBase();
-  xaml::UIElement GetUIElement();
-#endif
   AnimationView GetAnimationView();
   void StartAnimation(const AnimationView &view, const comp::CompositionAnimation &animation) noexcept;
   comp::CompositionPropertySet EnsureCenterPointPropertySet(const AnimationView &view) noexcept;

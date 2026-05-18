@@ -16,5 +16,4 @@ namespace Microsoft.ReactNative
       "Use the @IReactPackageBuilder to register custom native modules and view managers.")
     void CreatePackage(IReactPackageBuilder packageBuilder);
   };
-
 } // namespace Microsoft.ReactNative

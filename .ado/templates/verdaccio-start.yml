@@ -5,7 +5,7 @@ parameters:
     default: true
 
 steps:
-  - powershell: start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.yaml')
+  - pwsh: start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.yaml')
     displayName: Launch test npm server (verdaccio)
 
   - script: node .ado/scripts/waitForVerdaccio.js
@@ -17,12 +17,26 @@ steps:
   - template: compute-beachball-branch-name.yml
 
   - ${{ if eq(parameters.beachballPublish, true) }}:
-    - script: npx beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --verbose --access public --changehint "Run `yarn change` from root of repo to generate a change file."
+    - pwsh: npx beachball bump --branch "origin/$env:BEACHBALL_BRANCH" --no-push --yes --verbose --changehint "Run 'yarn change' from root of repo to generate a change file."
+      displayName: Beachball bump versions
+      env:
+        BEACHBALL_BRANCH: $(BeachBallBranchName)
+
+    - script: node .ado/scripts/npmPack.js --clean --no-color
+      displayName: Pack all workspace packages
+
+    - script: node .ado/scripts/npmPack.js --no-pack --check-npm --no-color
+      displayName: Remove already published packages
+
+    - script: |
+        for %%f in (npm-pkgs\*.tgz) do (
+          echo Publishing %%f to verdaccio...
+          npm publish "%%f" --registry http://localhost:4873 --access public
+        )
       displayName: Publish packages to verdaccio
     
   - script: | 
       call npm config set registry http://localhost:4873
-      call yarn config set registry http://localhost:4873
       call yarn config set npmRegistryServer http://localhost:4873
       call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
     displayName: Modify npm/yarn config to point to local verdaccio server

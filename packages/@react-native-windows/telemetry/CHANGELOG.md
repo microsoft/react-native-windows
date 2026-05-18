@@ -1,8 +1,78 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Tue, 07 Oct 2025 05:27:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.133
+
+Tue, 07 Apr 2026 05:29:55 GMT
+
+### Changes
+
+- Upgrade to yarn v4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.72
+
+## 0.0.0-canary.132
+
+Wed, 25 Mar 2026 02:08:12 GMT
+
+### Changes
+
+- Integrate 0.84.0-nightly-20251212-dd390dbbe (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.71
+
+## 0.0.0-canary.131
+
+Sat, 07 Mar 2026 04:06:59 GMT
+
+### Changes
+
+- Bump TS target (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.130
+
+Tue, 13 Jan 2026 13:00:13 GMT
+
+### Changes
+
+- fix(telemetry): prevent blank resultCode in command events (raykar.s2504@gmail.com)
+
+## 0.0.0-canary.129
+
+Mon, 17 Nov 2025 06:42:06 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.70
+- Bump @rnw-scripts/just-task to v2.3.58
+
+## 0.0.0-canary.128
+
+Sun, 16 Nov 2025 06:36:28 GMT
+
+### Changes
+
+- Remove chakra support and more legacy instance code (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.127
+
+Wed, 12 Nov 2025 21:00:46 GMT
+
+### Changes
+
+- Integrate 0.82.0-nightly-20250806-5936f29d6 (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.69
+- Bump @rnw-scripts/eslint-config to v1.2.38
+- Bump @rnw-scripts/just-task to v2.3.57
+
+## 0.0.0-canary.126
+
+Tue, 21 Oct 2025 05:28:11 GMT
+
+### Changes
+
+- rever passing localid to telmetry pipeline (hmalothu@microsoft.com)
 
 ## 0.0.0-canary.125
 
