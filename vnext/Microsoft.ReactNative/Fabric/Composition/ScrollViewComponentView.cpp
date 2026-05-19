@@ -23,6 +23,7 @@
 #include <functional>
 #include "ContentIslandComponentView.h"
 #include "JSValueReader.h"
+#include "ReactNativeIsland.h"
 #include "RootComponentView.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
@@ -849,13 +850,27 @@ void ScrollViewComponentView::updateStateWithContentOffset() noexcept {
     return;
   }
 
-  auto scrollPosition = m_scrollVisual.ScrollPosition();
-  m_verticalScrollbarComponent->ContentOffset(scrollPosition);
-  m_horizontalScrollbarComponent->ContentOffset(scrollPosition);
+  // Issue #16047: m_scrollVisual.ScrollPosition() returns the InteractionTracker
+  // position in PHYSICAL pixels (the visual is sized as
+  // layoutMetrics.frame.size.* * pointScaleFactor — see updateLayoutMetrics /
+  // updateContentVisualSize) but ScrollViewShadowNode state's contentOffset is
+  // in DIPs. Without the conversion, JS UIManager.measure() over-subtracts by
+  // pointScaleFactor on non-100% display scales, leaving Pressables inside a
+  // scrolled ScrollView with stale page-space bounds that don't contain the
+  // touch — Pressability fires LEAVE_PRESS_RECT inside pressIn and suppresses
+  // press. The JS-event-emitter paths in this file (see lines using
+  // args.Position() / pointScaleFactor) already do this division.
+  auto rawScrollPosition = m_scrollVisual.ScrollPosition();
+  const float pointScaleFactor = m_layoutMetrics.pointScaleFactor > 0.0f ? m_layoutMetrics.pointScaleFactor : 1.0f;
+  facebook::react::Point contentOffsetDips{
+      rawScrollPosition.x / pointScaleFactor, rawScrollPosition.y / pointScaleFactor};
 
-  m_state->updateState([scrollPosition](const facebook::react::ScrollViewShadowNode::ConcreteState::Data &data) {
+  m_verticalScrollbarComponent->ContentOffset(rawScrollPosition);
+  m_horizontalScrollbarComponent->ContentOffset(rawScrollPosition);
+
+  m_state->updateState([contentOffsetDips](const facebook::react::ScrollViewShadowNode::ConcreteState::Data &data) {
     auto newData = data;
-    newData.contentOffset = {scrollPosition.x, scrollPosition.y};
+    newData.contentOffset = contentOffsetDips;
     return std::make_shared<facebook::react::ScrollViewShadowNode::ConcreteState::Data const>(newData);
   });
 }
@@ -1389,6 +1404,13 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComp
       [this](
           winrt::IInspectable const & /*sender*/,
           winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        // Issue #16047: push the FINAL settled scroll position into Fabric's
+        // shadow tree before notifying JS. The per-frame ScrollPositionChanged
+        // updates can drop the last inertia delta, leaving contentOffset stale
+        // and JS UIManager.measure() returning pre-settle-relative bounds.
+        // ScrollEndDrag / ScrollBeginDrag already call this; momentum-end was
+        // the missing completion path.
+        updateStateWithContentOffset();
         auto eventEmitter = GetEventEmitter();
         if (eventEmitter) {
           auto scrollMetrics = getScrollMetrics(eventEmitter, args);
