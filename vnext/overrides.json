@@ -56,66 +56,9 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/CxxNativeModule.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/CxxNativeModule.cpp",
-      "baseHash": "7a98bc8ce5d46603c6a6b87f6527839b6c6efdfc",
-      "issue": 14819
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/Instance.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/Instance.cpp",
-      "baseHash": "ab06b3ae2b7171317379c28225e5063e3117c573"
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.cpp",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.cpp",
       "baseHash": "055780673941b2ef9997b50c5b88f46d07ec4d28"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSIndexedRAMBundle.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/JSIndexedRAMBundle.cpp",
-      "baseHash": "137b3479e4086c2982b56e5c394951000954dd0a"
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/MethodCall.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/MethodCall.cpp",
-      "baseHash": "dd4bed0b5a3a85c7e73e14283d1b17fa85d96509"
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/ModuleRegistry.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/ModuleRegistry.cpp",
-      "baseHash": "f623fe6407f51b8367af6c5c26ee0bbc40786d31"
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/NativeToJsBridge.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/NativeToJsBridge.cpp",
-      "baseHash": "3d9d0634c89b91fc9bbf94a36a29633e7e0f0b44",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/RAMBundleRegistry.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/RAMBundleRegistry.cpp",
-      "baseHash": "969b5cfaf5fa60186e507fcd895f009f1f293ccc"
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/ReactMarker.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/ReactMarker.cpp",
-      "baseHash": "3320750a1ebb55268cb4504e62b009ae62b5ea9a"
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/TraceSection.h",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/TraceSection.h",
-      "baseHash": "853af760f17a918f4fcc3d139daf0497576055f9",
-      "issue": 14819
     },
     {
       "type": "patch",
@@ -129,12 +72,6 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsiexecutor/jsireact/JSIExecutor.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsiexecutor/jsireact/JSIExecutor.cpp",
       "baseHash": "2579efb816d78bf9516bf7b0d39fea56622621a5"
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsiexecutor/jsireact/JSINativeModules.cpp",
-      "baseFile": "packages/react-native/ReactCommon/jsiexecutor/jsireact/JSINativeModules.cpp",
-      "baseHash": "a174120667713b7e36ad3f18572dd211c854ba45"
     },
     {
       "type": "patch",
@@ -180,13 +117,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModuleWithJSIBindings.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleWithJSIBindings.cpp",
-      "baseHash": "7976153776eee72a33af8e7ef3a24153f38e05d8",
-      "issue": 14820
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/dom/NativeDOM.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/dom/NativeDOM.cpp",
       "baseHash": "3c59e9dc8fd3a6a1dc80737a01795eff5c5849c6",
@@ -198,12 +128,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/dom/NativeDOM.h",
       "baseHash": "d6acbe5683b2cc276509305f9cafc721ad92a88c",
       "issue": 14654
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/webperformance/NativePerformance.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/webperformance/NativePerformance.cpp",
-      "baseHash": "0722acd9ba007eac349a9445b2fcf0cb932cd00d"
     },
     {
       "type": "patch",
@@ -241,13 +165,6 @@
     },
     {
       "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/platform/android/react/renderer/components/text/ParagraphState.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/platform/android/react/renderer/components/text/ParagraphState.h",
-      "baseHash": "e3c032d8e9001dee2893e385135689d3ec33618d",
-      "issue": 15020
-    },
-    {
-      "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseHash": "ce1afd228ac7b82b7ecd614039af4f0be1618fbf"
@@ -276,18 +193,6 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/TouchEventEmitter.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/TouchEventEmitter.h",
       "baseHash": "990884e6164dec969cb56b5c318cd11e13d2b8ee"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/EventDispatcher.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/EventDispatcher.cpp",
-      "baseHash": "42988a48e4c1e7f1628a72676d0bc6cf2c25d8d3"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/EventQueueProcessor.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/EventQueueProcessor.cpp",
-      "baseHash": "f5f29ba820682da68ba6fba7935e2d3a3e2881ed"
     },
     {
       "type": "patch",
