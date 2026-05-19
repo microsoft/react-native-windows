@@ -123,10 +123,9 @@ class AssetResolverLateScaleResolution {
 
 // We should leave the resource scale out of the URI, and do that lookup on the native side.
 // That way we can handle dynamic dpi changes and multimon scenarios better
-function setCustomSourceTransformer(resolver) {
+resolveAssetSource.setCustomSourceTransformer(resolver => {
   const lsrResolver = new AssetResolverLateScaleResolution(resolver);
   return lsrResolver.defaultAsset();
-}
+});
 
-resolveAssetSource.setCustomSourceTransformer = setCustomSourceTransformer;
 export default resolveAssetSource;
