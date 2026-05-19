@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 19 May 2026 04:21:40 GMT",
+      "version": "0.0.0-canary.1056",
+      "tag": "react-native-windows_v0.0.0-canary.1056",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2c9162b168bc338016bbf477d4b718739e9a371f",
+            "comment": "Template should import Microsoft.Cpp.Default.props before setting  ReactNativeWindowsDir"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 May 2026 18:22:07 GMT",
       "version": "0.0.0-canary.1055",
       "tag": "react-native-windows_v0.0.0-canary.1055",

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 13 May 2026 18:22:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 19 May 2026 04:21:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1056
+
+Tue, 19 May 2026 04:21:40 GMT
+
+### Changes
+
+- Template should import Microsoft.Cpp.Default.props before setting  ReactNativeWindowsDir (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1055
 
