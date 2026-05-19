@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 19 May 2026 23:38:50 GMT",
+      "version": "0.81.8",
+      "tag": "@office-iss/react-native-win32_v0.81.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "aaa05f5c3491ec4f2d62cb630b7ae51cd6a0f750",
+            "comment": "asset path shortener not running by default"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Mar 2026 19:38:05 GMT",
       "version": "0.81.7",
       "tag": "@office-iss/react-native-win32_v0.81.7",
