@@ -14,7 +14,9 @@
     "f2ed0cf54f65c4dc153da94f09ac17c9a29b37c58c8fabe3cd3d4e8a4cc2dc16": {
       "signature": "f2ed0cf54f65c4dc153da94f09ac17c9a29b37c58c8fabe3cd3d4e8a4cc2dc16",
       "alternativeSignatures": [
-        "aec58dd9641bbd4c9e2fda58e680240eacd6b01346dce2b12644e45cc0510969"
+        "aec58dd9641bbd4c9e2fda58e680240eacd6b01346dce2b12644e45cc0510969",
+        "a20bb1c640442e82539d9995e6a68cdc015b8bcf124197ca7f8d66dba45836b8",
+        "d59829db4fbf3b9d798e18a8035fb13ef721123f756b6dff0a3957a10b68011d"
       ],
       "target": "vnext/target/x64/Debug/Microsoft.ReactNative/Microsoft.ReactNative.dll",
       "uriBaseId": "file:///D:/a/_work/1/s/",
@@ -23,254 +25,16 @@
       ],
       "tool": "binskim",
       "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:10:52Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "2e81ed89971c8e8718d0f1260b70b1ea8338346e9d0ef555bd6104845117cc69": {
-      "signature": "2e81ed89971c8e8718d0f1260b70b1ea8338346e9d0ef555bd6104845117cc69",
-      "alternativeSignatures": [
-        "ed449a197a9c0cac5018cf9e48a73538b53e2f879fe28117bd225877a1eedc0c"
-      ],
-      "target": "vnext/target/x64/Release/Microsoft.ReactNative/Microsoft.ReactNative.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:12:22Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "afcc5a5fb5c3b889ddc8040e662bf6a9ca31df2515517690120dbb8a8819ced6": {
-      "signature": "afcc5a5fb5c3b889ddc8040e662bf6a9ca31df2515517690120dbb8a8819ced6",
-      "alternativeSignatures": [
-        "4af33c2febcd2b179607781f394796d016122444156a7ba173a3ceeee746a739"
-      ],
-      "target": "vnext/target/ARM64/Debug/Microsoft.ReactNative/Microsoft.ReactNative.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:07:11Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "2a53424cb64846094a502e30a7677abf0a9e2939e652063250e5b482a2569b7d": {
-      "signature": "2a53424cb64846094a502e30a7677abf0a9e2939e652063250e5b482a2569b7d",
-      "alternativeSignatures": [
-        "d9c3aa07f755d3dff5e02302bf01b7468fa367a4f6b5c35d0bd849e804a40814"
-      ],
-      "target": "vnext/target/ARM64EC/Release/React.Windows.Desktop.DLL/react-native-win32.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:10:21Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "688803d8f1e3d282e10db37e811cc47fed7d8578624b1c1e53e894888abdc66c": {
-      "signature": "688803d8f1e3d282e10db37e811cc47fed7d8578624b1c1e53e894888abdc66c",
-      "alternativeSignatures": [
-        "14980d9e3b960faa8e3a6c7381fc8d55cb1cf1c631b4b0285dc3789a2d686566"
-      ],
-      "target": "NugetRoot/Desktop/ARM64EC/Debug/React.Windows.Desktop.DLL/react-native-win32.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:36:09Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "63fcc3a0ca8566a931681a8a8c1f28baf49f6c201bf842e7cf5579ff5e691cf3": {
-      "signature": "63fcc3a0ca8566a931681a8a8c1f28baf49f6c201bf842e7cf5579ff5e691cf3",
-      "alternativeSignatures": [
-        "e602a6306d1b4666ce2ef75d2f0fbbd348d1d4194fde8aa2b3325074bf5655bf"
-      ],
-      "target": "NugetRoot/Desktop/ARM64EC/Release/React.Windows.Desktop.DLL/react-native-win32.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:36:09Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "e33fcf182251f26aafe7858d391d38b1a2d896db3bded7f8347fc9486624a955": {
-      "signature": "e33fcf182251f26aafe7858d391d38b1a2d896db3bded7f8347fc9486624a955",
-      "alternativeSignatures": [
-        "b9dd9bfdb21a69f967e510fd436accefe25d310ce2fa40d300894db7a6a64897"
-      ],
-      "target": "NugetRoot/Desktop/x64/Debug/React.Windows.Desktop.DLL/react-native-win32.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:36:09Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "022d2235552edce91cc2636acb3117aaa2ccdbe556d1fe7a8d1899fef1c96977": {
-      "signature": "022d2235552edce91cc2636acb3117aaa2ccdbe556d1fe7a8d1899fef1c96977",
-      "alternativeSignatures": [
-        "4536b55c0755ae03021209ca81e576574bb386770f25de5433223bcbb5b102de"
-      ],
-      "target": "NugetRoot/Desktop/x64/Release/React.Windows.Desktop.DLL/react-native-win32.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:36:09Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "abb79292d0b4b5e3196ebe22fd519656e8642da4ecd70699844866b66ed4dcc7": {
-      "signature": "abb79292d0b4b5e3196ebe22fd519656e8642da4ecd70699844866b66ed4dcc7",
-      "alternativeSignatures": [
-        "ee1f48cc9e95922c970647f837f9c02f1c30bdaa063f92dbae6102bb7429bac0"
-      ],
-      "target": "NugetRoot/Desktop/x86/Debug/React.Windows.Desktop.DLL/react-native-win32.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:36:09Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "1f56b406b22607dea43183e407ba810237e90ccdc0bb329ff00b841d128e63a1": {
-      "signature": "1f56b406b22607dea43183e407ba810237e90ccdc0bb329ff00b841d128e63a1",
-      "alternativeSignatures": [
-        "c555d3a3583cdcb11545681db95e7db69e708374a66c31e51cb8a12632ba3766"
-      ],
-      "target": "NugetRoot/Desktop/x86/Release/React.Windows.Desktop.DLL/react-native-win32.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:36:09Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "c2c90e9743b86f58606824a6db14290f8241182568c833333a67b7e87101a9f9": {
-      "signature": "c2c90e9743b86f58606824a6db14290f8241182568c833333a67b7e87101a9f9",
-      "alternativeSignatures": [
-        "5885bc2070e63454f470f0a581aedd8b933172228ac8c1699978d94df648c9ce"
-      ],
-      "target": "NugetRoot/ReactWindows/ARM64/Release/Microsoft.ReactNative/Microsoft.ReactNative.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:36:09Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "ed706c480e5d6b53b62981fe65524cfe96f072a3d2acb79ba261d67c016e3ea1": {
-      "signature": "ed706c480e5d6b53b62981fe65524cfe96f072a3d2acb79ba261d67c016e3ea1",
-      "alternativeSignatures": [
-        "f4137c3cb697b844e9d3d8867320b64fef46f79f42afaa92cba399eb0e41fb62"
-      ],
-      "target": "NugetRoot/ReactWindows/x64/Release/Microsoft.ReactNative/Microsoft.ReactNative.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:36:09Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "a6cf7ffe274a0779d8aa9b6e649e0e9a344f90a9d7f7be3e4cb2c2f3f447f761": {
-      "signature": "a6cf7ffe274a0779d8aa9b6e649e0e9a344f90a9d7f7be3e4cb2c2f3f447f761",
-      "alternativeSignatures": [
-        "87c4b69c24e40c69d6168becb0775eee763917ef5bd6d3b3d679faf38024bd1d"
-      ],
-      "target": "NugetRoot/ReactWindows/x86/Release/Microsoft.ReactNative/Microsoft.ReactNative.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:36:09Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "572b50a06b25e58736323f94d174b088e425947d5870ce5ae518f83b528c6e2d": {
-      "signature": "572b50a06b25e58736323f94d174b088e425947d5870ce5ae518f83b528c6e2d",
-      "alternativeSignatures": [
-        "fa14adc368febe268c4e119a5608096df286cd308fa1aeae24ffdae709eea68e"
-      ],
-      "target": "vnext/target/x86/Release/React.Windows.Desktop.DLL/react-native-win32.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:14:09Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "7c8e18bfbf20d73615d077906c1cb3181a9129b87db57994a70526e0b33d7e71": {
-      "signature": "7c8e18bfbf20d73615d077906c1cb3181a9129b87db57994a70526e0b33d7e71",
-      "alternativeSignatures": [
-        "ab9379eb223688f7841a6f891f8c0661de05fff65781fa876f2011c51aa5cece"
-      ],
-      "target": "vnext/target/x86/Debug/React.Windows.Desktop.DLL/react-native-win32.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:11:05Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "25bba357018db7971bcd7b5a166daa780091438df91582a138657338babbee95": {
-      "signature": "25bba357018db7971bcd7b5a166daa780091438df91582a138657338babbee95",
-      "alternativeSignatures": [
-        "1fa28a88246da4815a8c60246c0970e921f0d2a4c83630ac6909c0ac6015df5c"
-      ],
-      "target": "vnext/target/ARM64/Release/Microsoft.ReactNative/Microsoft.ReactNative.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:08:29Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
+      "createdDate": "2026-05-19 04:56:21Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
     },
     "51a105fd20e702818fc3457105ab35b954120c912d56a272a78b6c9d7949d95f": {
       "signature": "51a105fd20e702818fc3457105ab35b954120c912d56a272a78b6c9d7949d95f",
       "alternativeSignatures": [
-        "48d93ff74cd6084a25d58b6916db64f7f376f580544a83f8e30b68f34edd2ab3"
+        "48d93ff74cd6084a25d58b6916db64f7f376f580544a83f8e30b68f34edd2ab3",
+        "3c8a797586058122e89d2058df315aba60d4b4ebd1494b41c109bd009af210b8",
+        "c6997fd19bec317965e1446618f16e54a374e4ee82a081c470c70e219ca90919"
       ],
       "target": "vnext/target/x86/Release/Microsoft.ReactNative/Microsoft.ReactNative.dll",
       "uriBaseId": "file:///D:/a/_work/1/s/",
@@ -279,62 +43,52 @@
       ],
       "tool": "binskim",
       "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:12:27Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
+      "createdDate": "2026-05-19 04:57:12Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
     },
-    "5522f1c27211ae48014df348c9ee2ef4efff347d03f97716bf19b7e2892c3ba9": {
-      "signature": "5522f1c27211ae48014df348c9ee2ef4efff347d03f97716bf19b7e2892c3ba9",
+    "2a53424cb64846094a502e30a7677abf0a9e2939e652063250e5b482a2569b7d": {
+      "signature": "2a53424cb64846094a502e30a7677abf0a9e2939e652063250e5b482a2569b7d",
       "alternativeSignatures": [
-        "2e6396a0961651ac2077ac704557a2bb1340144651a18eb64dda0309b81d4934"
+        "d9c3aa07f755d3dff5e02302bf01b7468fa367a4f6b5c35d0bd849e804a40814",
+        "ebe2928163f199e11626e717e78de4be59d3a5e2c147f461751d93678c48eb50",
+        "76baa15e9b7c956052dbeebc986790023e10b1c529545530fc0c55cdb72ab5a6"
       ],
-      "target": "vnext/target/x86/Debug/Microsoft.ReactNative/Microsoft.ReactNative.dll",
+      "target": "vnext/target/ARM64EC/Release/React.Windows.Desktop.DLL/react-native-win32.dll",
       "uriBaseId": "file:///D:/a/_work/1/s/",
       "memberOf": [
         "default"
       ],
       "tool": "binskim",
       "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:12:50Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
+      "createdDate": "2026-05-19 05:01:10Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
     },
-    "735563a527f27ead8cc9feab0c7d0d4caa1a618acd5d5b3bb3d23e87363ebda7": {
-      "signature": "735563a527f27ead8cc9feab0c7d0d4caa1a618acd5d5b3bb3d23e87363ebda7",
+    "25bba357018db7971bcd7b5a166daa780091438df91582a138657338babbee95": {
+      "signature": "25bba357018db7971bcd7b5a166daa780091438df91582a138657338babbee95",
       "alternativeSignatures": [
-        "0c8ed58595d218fce462d61c4835b2c169d817aff1128482ba05f20c3e9782ce"
+        "1fa28a88246da4815a8c60246c0970e921f0d2a4c83630ac6909c0ac6015df5c",
+        "0937e53d8ef76628c3e65550abe623b8b3256b88c27ca67dd9a6ffb6fbd08ec3",
+        "60432687c4e835d6d924a0687627c8137dbd094c6660660ca6f7f6fafde9de7a"
       ],
-      "target": "vnext/target/ARM64EC/Debug/React.Windows.Desktop.DLL/react-native-win32.dll",
+      "target": "vnext/target/ARM64/Release/Microsoft.ReactNative/Microsoft.ReactNative.dll",
       "uriBaseId": "file:///D:/a/_work/1/s/",
       "memberOf": [
         "default"
       ],
       "tool": "binskim",
       "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:08:06Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
-    },
-    "55fc11d7c2fdb88bd33b1d1b712800586de5466b6180bee30c1b97e3bc7f8de6": {
-      "signature": "55fc11d7c2fdb88bd33b1d1b712800586de5466b6180bee30c1b97e3bc7f8de6",
-      "alternativeSignatures": [
-        "bcd6e88dd528c144d6efeda13170017fd5c451e38945069e0c683347104c9431"
-      ],
-      "target": "vnext/target/x64/Release/React.Windows.Desktop.DLL/react-native-win32.dll",
-      "uriBaseId": "file:///D:/a/_work/1/s/",
-      "memberOf": [
-        "default"
-      ],
-      "tool": "binskim",
-      "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:15:40Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
+      "createdDate": "2026-05-19 04:53:28Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
     },
     "f361a328ed2845ecea35845e2aa765efd85c5cfffe99e4658d6eb504eefc7aa1": {
       "signature": "f361a328ed2845ecea35845e2aa765efd85c5cfffe99e4658d6eb504eefc7aa1",
       "alternativeSignatures": [
-        "acb74c0badf79a8bc5fd0fc2d3c7ce285ba732fca56134f778e0da8e3f988569"
+        "acb74c0badf79a8bc5fd0fc2d3c7ce285ba732fca56134f778e0da8e3f988569",
+        "95e36da0308520887787dd644f062a5c83980a15847f41bc92fa7d721079b5d0",
+        "c7770e270134b516faa0a2c213c6a5d68e5b91437511311de87a8cf18f6db0bb"
       ],
       "target": "vnext/target/x64/Debug/React.Windows.Desktop.DLL/react-native-win32.dll",
       "uriBaseId": "file:///D:/a/_work/1/s/",
@@ -343,9 +97,297 @@
       ],
       "tool": "binskim",
       "ruleId": "BA2007",
-      "createdDate": "2026-03-26 07:10:59Z",
-      "expirationDate": "2026-09-12 08:00:06Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-26 08:00:06Z"
+      "createdDate": "2026-05-19 04:56:58Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "afcc5a5fb5c3b889ddc8040e662bf6a9ca31df2515517690120dbb8a8819ced6": {
+      "signature": "afcc5a5fb5c3b889ddc8040e662bf6a9ca31df2515517690120dbb8a8819ced6",
+      "alternativeSignatures": [
+        "4af33c2febcd2b179607781f394796d016122444156a7ba173a3ceeee746a739",
+        "4218e4f368f55d0bbeb4621f4de61417bcd6e88f8316c8203dcf80dda77c01b7",
+        "b2e0031f6e5cb9bad096d2a3962afa254b3e1d30e6b49f0cf4a29cfbe881b260"
+      ],
+      "target": "vnext/target/ARM64/Debug/Microsoft.ReactNative/Microsoft.ReactNative.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 04:52:32Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "572b50a06b25e58736323f94d174b088e425947d5870ce5ae518f83b528c6e2d": {
+      "signature": "572b50a06b25e58736323f94d174b088e425947d5870ce5ae518f83b528c6e2d",
+      "alternativeSignatures": [
+        "fa14adc368febe268c4e119a5608096df286cd308fa1aeae24ffdae709eea68e",
+        "ce70f4eab15c415c73e74a833c7b1e38292d90cd837e91a6626a80cb56594578",
+        "39fbdddceb6367b91485c1aa409a34052d4eae60c16e6f531c97666f1a6d043c"
+      ],
+      "target": "vnext/target/x86/Release/React.Windows.Desktop.DLL/react-native-win32.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 04:59:43Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "5522f1c27211ae48014df348c9ee2ef4efff347d03f97716bf19b7e2892c3ba9": {
+      "signature": "5522f1c27211ae48014df348c9ee2ef4efff347d03f97716bf19b7e2892c3ba9",
+      "alternativeSignatures": [
+        "2e6396a0961651ac2077ac704557a2bb1340144651a18eb64dda0309b81d4934",
+        "39d4d9183770df7c362989d58d8853830d7e33d7cf5413c137eef077ad24d2b0",
+        "b1a6a3d6c695b0ba02e79810a9ce4f46f052d1c3943166fa2b8aa397b101b23b"
+      ],
+      "target": "vnext/target/x86/Debug/Microsoft.ReactNative/Microsoft.ReactNative.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 04:56:47Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "55fc11d7c2fdb88bd33b1d1b712800586de5466b6180bee30c1b97e3bc7f8de6": {
+      "signature": "55fc11d7c2fdb88bd33b1d1b712800586de5466b6180bee30c1b97e3bc7f8de6",
+      "alternativeSignatures": [
+        "bcd6e88dd528c144d6efeda13170017fd5c451e38945069e0c683347104c9431",
+        "a5b84dc5c8c4b93ebd8a731c69f5cd9ce3b7117df7ec954fbd4a8b2d7fc569c5",
+        "da66691610f7872f498e011d52fea5123eadca51274cda1e193114d9fb94a4b3"
+      ],
+      "target": "vnext/target/x64/Release/React.Windows.Desktop.DLL/react-native-win32.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 05:06:08Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "735563a527f27ead8cc9feab0c7d0d4caa1a618acd5d5b3bb3d23e87363ebda7": {
+      "signature": "735563a527f27ead8cc9feab0c7d0d4caa1a618acd5d5b3bb3d23e87363ebda7",
+      "alternativeSignatures": [
+        "0c8ed58595d218fce462d61c4835b2c169d817aff1128482ba05f20c3e9782ce",
+        "eac42c72675c7fc2bcd4190f47db59290f1f0f89a296282330cd9cc731d5272f",
+        "c77fc1d81e566294b4375529bc6efb3ddb7125503cd64001bfbb99405bb85638"
+      ],
+      "target": "vnext/target/ARM64EC/Debug/React.Windows.Desktop.DLL/react-native-win32.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 04:55:40Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "2e81ed89971c8e8718d0f1260b70b1ea8338346e9d0ef555bd6104845117cc69": {
+      "signature": "2e81ed89971c8e8718d0f1260b70b1ea8338346e9d0ef555bd6104845117cc69",
+      "alternativeSignatures": [
+        "ed449a197a9c0cac5018cf9e48a73538b53e2f879fe28117bd225877a1eedc0c",
+        "19f0eb0176ad105b38ad7fde2463f78ea9dd623ce5475b5fc0a9bc0162dab1f2",
+        "14ef0c61c6d53f006bdb073a97731e89737ba40832bb7d9d019ffc63b7e060c8"
+      ],
+      "target": "vnext/target/x64/Release/Microsoft.ReactNative/Microsoft.ReactNative.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 04:59:19Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "688803d8f1e3d282e10db37e811cc47fed7d8578624b1c1e53e894888abdc66c": {
+      "signature": "688803d8f1e3d282e10db37e811cc47fed7d8578624b1c1e53e894888abdc66c",
+      "alternativeSignatures": [
+        "14980d9e3b960faa8e3a6c7381fc8d55cb1cf1c631b4b0285dc3789a2d686566",
+        "f8a8626d46f00870e5206bf71afb3331e04ade9b277d4f5cff173074e2a11279",
+        "e76d0e405eae8fbdde70d59022eea8ca05f3e5eb2adb642c018626ae0e8e5d8d"
+      ],
+      "target": "NugetRoot/Desktop/ARM64EC/Debug/React.Windows.Desktop.DLL/react-native-win32.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 05:35:31Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "63fcc3a0ca8566a931681a8a8c1f28baf49f6c201bf842e7cf5579ff5e691cf3": {
+      "signature": "63fcc3a0ca8566a931681a8a8c1f28baf49f6c201bf842e7cf5579ff5e691cf3",
+      "alternativeSignatures": [
+        "e602a6306d1b4666ce2ef75d2f0fbbd348d1d4194fde8aa2b3325074bf5655bf",
+        "56910e2aefa61845427237f27718638a22c929c378247f5728630bb2e4f44f55",
+        "49977953bc86f8b2efb3e5ab9f4804c1d21a47f8e261358beff2b0ca02cf37b0"
+      ],
+      "target": "NugetRoot/Desktop/ARM64EC/Release/React.Windows.Desktop.DLL/react-native-win32.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 05:35:31Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "e33fcf182251f26aafe7858d391d38b1a2d896db3bded7f8347fc9486624a955": {
+      "signature": "e33fcf182251f26aafe7858d391d38b1a2d896db3bded7f8347fc9486624a955",
+      "alternativeSignatures": [
+        "b9dd9bfdb21a69f967e510fd436accefe25d310ce2fa40d300894db7a6a64897",
+        "9b165c18c335016d2a524c47b18379a983be9b869a927f76d4e00c98d7d28140",
+        "70d91263ff100429902a275876285eb1995c0115f0e04f67a409b6a50270ea8e"
+      ],
+      "target": "NugetRoot/Desktop/x64/Debug/React.Windows.Desktop.DLL/react-native-win32.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 05:35:31Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "022d2235552edce91cc2636acb3117aaa2ccdbe556d1fe7a8d1899fef1c96977": {
+      "signature": "022d2235552edce91cc2636acb3117aaa2ccdbe556d1fe7a8d1899fef1c96977",
+      "alternativeSignatures": [
+        "4536b55c0755ae03021209ca81e576574bb386770f25de5433223bcbb5b102de",
+        "76a58d9422c112161bf11d739de1b9fcaad73c5c7eb06bc674838f4f19f0616f",
+        "487d9960766c9db9c040e8b14e430a897807025c640981efbd56b9f0f36f5683"
+      ],
+      "target": "NugetRoot/Desktop/x64/Release/React.Windows.Desktop.DLL/react-native-win32.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 05:35:31Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "abb79292d0b4b5e3196ebe22fd519656e8642da4ecd70699844866b66ed4dcc7": {
+      "signature": "abb79292d0b4b5e3196ebe22fd519656e8642da4ecd70699844866b66ed4dcc7",
+      "alternativeSignatures": [
+        "ee1f48cc9e95922c970647f837f9c02f1c30bdaa063f92dbae6102bb7429bac0",
+        "d1af8be291264119326f9eeda79fc50535ab77280f393f286d8a317e0d2faf74",
+        "b029512961c40a7a72a496ac3573f8f0bfbb38d9a95b4ddcd5ee84cc34d2872a"
+      ],
+      "target": "NugetRoot/Desktop/x86/Debug/React.Windows.Desktop.DLL/react-native-win32.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 05:35:31Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "1f56b406b22607dea43183e407ba810237e90ccdc0bb329ff00b841d128e63a1": {
+      "signature": "1f56b406b22607dea43183e407ba810237e90ccdc0bb329ff00b841d128e63a1",
+      "alternativeSignatures": [
+        "c555d3a3583cdcb11545681db95e7db69e708374a66c31e51cb8a12632ba3766",
+        "1ad22e6d4b601dd2124529000eeffade6ec757b53b70253157f28597740d15e5",
+        "845a0b3a1618e34afd3de7ac8ee7a24bd7c8d461c5788a7f097c7372fefa8b92"
+      ],
+      "target": "NugetRoot/Desktop/x86/Release/React.Windows.Desktop.DLL/react-native-win32.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 05:35:31Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "c2c90e9743b86f58606824a6db14290f8241182568c833333a67b7e87101a9f9": {
+      "signature": "c2c90e9743b86f58606824a6db14290f8241182568c833333a67b7e87101a9f9",
+      "alternativeSignatures": [
+        "5885bc2070e63454f470f0a581aedd8b933172228ac8c1699978d94df648c9ce",
+        "53536f5054bce80f3418f0981f56bcee46fe1fcbc96c8b031d2e84314eb813c4",
+        "5168b5e11733a68b36cbf4b35f7ce1e6f0e98c9c1b9855afcb87ba92a23289fb"
+      ],
+      "target": "NugetRoot/ReactWindows/ARM64/Release/Microsoft.ReactNative/Microsoft.ReactNative.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 05:35:31Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "ed706c480e5d6b53b62981fe65524cfe96f072a3d2acb79ba261d67c016e3ea1": {
+      "signature": "ed706c480e5d6b53b62981fe65524cfe96f072a3d2acb79ba261d67c016e3ea1",
+      "alternativeSignatures": [
+        "f4137c3cb697b844e9d3d8867320b64fef46f79f42afaa92cba399eb0e41fb62",
+        "cdb21a1a875ba2b0f453abfc2c5565b2da072085a68ddbaa3c941f43f6ea66fe",
+        "9ca4872477950c2779a9a07411284bd51e42515c0da3e957a660733f82a65472"
+      ],
+      "target": "NugetRoot/ReactWindows/x64/Release/Microsoft.ReactNative/Microsoft.ReactNative.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 05:35:31Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "a6cf7ffe274a0779d8aa9b6e649e0e9a344f90a9d7f7be3e4cb2c2f3f447f761": {
+      "signature": "a6cf7ffe274a0779d8aa9b6e649e0e9a344f90a9d7f7be3e4cb2c2f3f447f761",
+      "alternativeSignatures": [
+        "87c4b69c24e40c69d6168becb0775eee763917ef5bd6d3b3d679faf38024bd1d",
+        "4e43e56b9b1c607d5635fba6a72327a6dc683dee721ded749c8a33faa023b46b",
+        "fff33372585673d645daebfec8a463c2ff3cb4b39142e338a68868497ebfc7bf"
+      ],
+      "target": "NugetRoot/ReactWindows/x86/Release/Microsoft.ReactNative/Microsoft.ReactNative.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 05:35:31Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
+    },
+    "7c8e18bfbf20d73615d077906c1cb3181a9129b87db57994a70526e0b33d7e71": {
+      "signature": "7c8e18bfbf20d73615d077906c1cb3181a9129b87db57994a70526e0b33d7e71",
+      "alternativeSignatures": [
+        "ab9379eb223688f7841a6f891f8c0661de05fff65781fa876f2011c51aa5cece",
+        "cce766e9b1a4842c186cb0852a3000e8e1e58efc6c2c55b0150ed8bef5e5a791",
+        "c6630096a9bf33a6255d12aacede8db30dfb05877ce4a81418334fd6c1c2274e"
+      ],
+      "target": "vnext/target/x86/Debug/React.Windows.Desktop.DLL/react-native-win32.dll",
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-05-19 04:56:22Z",
+      "expirationDate": "2026-11-05 06:07:41Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-05-19 06:07:41Z"
     }
   }
 }
