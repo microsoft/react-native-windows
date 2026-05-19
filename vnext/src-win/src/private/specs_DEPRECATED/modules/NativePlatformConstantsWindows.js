@@ -28,6 +28,7 @@ export type PlatformConstantsWindows = {|
     minor: number,
     patch: number,
   |},
+  Release: string,
   osVersion: number,
 |};
 

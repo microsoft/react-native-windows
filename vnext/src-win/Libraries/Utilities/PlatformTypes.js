@@ -117,6 +117,7 @@ type WindowsPlatform = {
       minor: number,
       patch: number,
     },
+    Release: string,
     osVersion: number,
   },
   // $FlowFixMe[unsafe-getters-setters]
