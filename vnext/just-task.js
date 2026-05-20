@@ -45,10 +45,9 @@ function codegen(test) {
   );
 }
 
-const powershell = findPowerShell();
-
 function layoutMSRNCxx() {
   if (require('os').platform() === 'win32') {
+    const powershell = findPowerShell();
     execSync(
       `"${powershell}" -NoProfile .\\Scripts\\Tfs\\Layout-MSRN-Headers.ps1 -GenerateLocalCxx`,
       {
