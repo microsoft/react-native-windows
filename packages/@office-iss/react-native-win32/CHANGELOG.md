@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Mon, 16 Mar 2026 19:38:05 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 19 May 2026 23:38:50 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.8
+
+Tue, 19 May 2026 23:38:50 GMT
+
+### Patches
+
+- asset path shortener not running by default (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.7
 
