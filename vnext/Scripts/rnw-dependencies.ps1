@@ -116,9 +116,9 @@ $wingetver = "1.7.11261";
 $vsver = "18.6.0";
 
 # The exact .NET SDK version to check for
-$dotnetver = "8.0";
+$dotnetver = "10.0";
 # Version name of the winget package
-$wingetDotNetVer = "8";
+$wingetDotNetVer = "10";
 
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
