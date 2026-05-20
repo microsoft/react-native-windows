@@ -4938,11 +4938,11 @@ __metadata:
   linkType: hard
 
 "@rnx-kit/cli@npm:^1.1.0":
-  version: 1.1.3
-  resolution: "@rnx-kit/cli@npm:1.1.3"
+  version: 1.1.4
+  resolution: "@rnx-kit/cli@npm:1.1.4"
   dependencies:
     "@rnx-kit/align-deps": "npm:^3.4.7"
-    "@rnx-kit/config": "npm:^0.7.5"
+    "@rnx-kit/config": "npm:^0.8.0"
     "@rnx-kit/console": "npm:^2.0.0"
     "@rnx-kit/metro-plugin-cyclic-dependencies-detector": "npm:^2.0.3"
     "@rnx-kit/metro-plugin-duplicates-checker": "npm:^3.0.3"
@@ -4950,7 +4950,7 @@ __metadata:
     "@rnx-kit/metro-serializer": "npm:^2.0.0"
     "@rnx-kit/metro-serializer-esbuild": "npm:^0.3.1"
     "@rnx-kit/metro-service": "npm:^4.1.5"
-    "@rnx-kit/third-party-notices": "npm:^2.0.0"
+    "@rnx-kit/third-party-notices": "npm:^2.0.3"
     "@rnx-kit/tools-android": "npm:^0.2.2"
     "@rnx-kit/tools-apple": "npm:^0.2.2"
     "@rnx-kit/tools-filesystem": "npm:^0.2.0"
@@ -4973,23 +4973,23 @@ __metadata:
       optional: true
   bin:
     rnx-cli: bin/rnx-cli.cjs
-  checksum: 10c0/eb3d03065d00b728bce93adfd2a58f2c5a01e863e477e6b766e26484fa9eaf58474d62be9a9236461ec0a154978ce0b2e496344a28842a1fa9b0ce435951c868
+  checksum: 10c0/df92ce34ce69b0259ef63034837af00b6c51eb3ddc60790e004d25563bda93957104821872c0d4cf405f02b74bc62fefd648128873dad178b24c31deaf430068
   languageName: node
   linkType: hard
 
-"@rnx-kit/config@npm:^0.7.5":
-  version: 0.7.5
-  resolution: "@rnx-kit/config@npm:0.7.5"
+"@rnx-kit/config@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "@rnx-kit/config@npm:0.8.0"
   dependencies:
     "@rnx-kit/console": "npm:^2.0.0"
     "@rnx-kit/tools-node": "npm:^3.0.4"
-    "@rnx-kit/tools-packages": "npm:^0.1.2"
+    "@rnx-kit/tools-packages": "npm:^0.1.3"
     "@rnx-kit/types-bundle-config": "npm:^1.0.0"
     "@rnx-kit/types-kit-config": "npm:^1.0.0"
     "@rnx-kit/types-node": "npm:^1.0.0"
     lodash.merge: "npm:^4.6.2"
     semver: "npm:^7.0.0"
-  checksum: 10c0/daa00e7b591662bd4b5d2fdee99cc03a113776895680777d7e7d7ffc71ae37c1e8f3ad0badd51c55a9015c7cc2b2b7785a5ae684092f42817a359cdcb6b97313
+  checksum: 10c0/6df41bee08bc8eb2c84c0649299b7ee5edfdb53cb06801dc6672176b3eb8601acdcd99fd0ee8c829a27992d91b6942ca247eef4583289a39391862e1b012652f
   languageName: node
   linkType: hard
 
@@ -5135,9 +5135,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rnx-kit/third-party-notices@npm:^2.0.0":
-  version: 2.0.2
-  resolution: "@rnx-kit/third-party-notices@npm:2.0.2"
+"@rnx-kit/third-party-notices@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "@rnx-kit/third-party-notices@npm:2.0.3"
   dependencies:
     "@rnx-kit/console": "npm:^2.0.0"
     "@rnx-kit/tools-node": "npm:^3.0.0"
@@ -5145,7 +5145,7 @@ __metadata:
     yargs: "npm:^16.0.0"
   bin:
     build-tpn: lib/build-tpn.js
-  checksum: 10c0/8b86a45f3ab3576fd4eae5521bdf547e11f59d6f75806c8962fb476d333e0f03b9904970356d00ba727ce66bb6e77ae5df4a1ed0c616515fb36285fb26a5faa4
+  checksum: 10c0/6482974e65d660452bfd26cb984d3d55f18a7c0ab7608dd55f557922705e28780f6b2185a3db6b211ee7d18b52d736a898e19c2f11fa7406f8587e5f7b77fc97
   languageName: node
   linkType: hard
 
@@ -5196,14 +5196,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rnx-kit/tools-packages@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "@rnx-kit/tools-packages@npm:0.1.2"
+"@rnx-kit/tools-packages@npm:^0.1.3":
+  version: 0.1.3
+  resolution: "@rnx-kit/tools-packages@npm:0.1.3"
   dependencies:
     "@rnx-kit/tools-node": "npm:^3.0.4"
     "@rnx-kit/tools-workspaces": "npm:^0.2.1"
     "@rnx-kit/types-node": "npm:^1.0.0"
-  checksum: 10c0/c223858bf84bc8aef1776f3990cfecf3325da6df3b138552f41a5bf45f27055144fe0dd2d5baddb7f915e70e57287da3b6a6b73bf78ed40ab9733668325206e2
+  checksum: 10c0/51007260318286540f9e4c86217080a2af2162e06c0fb4f77017480be8f22b5470e0336452e39a5551f48f9027e04afa2f353c8be6550a6d81fbabc23521ce58
   languageName: node
   linkType: hard
 
