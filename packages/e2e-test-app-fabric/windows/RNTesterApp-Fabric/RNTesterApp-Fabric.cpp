@@ -66,13 +66,13 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
 
   host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
   host.PackageProviders().Append(winrt::SampleCustomComponent::ReactPackageProvider());
-
-#if BUNDLE
   host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
   host.InstanceSettings().BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
+  host.InstanceSettings().DebugBundlePath(L"index");
+
+#if BUNDLE
   host.InstanceSettings().UseFastRefresh(false);
 #else
-  host.InstanceSettings().JavaScriptBundleFile(L"index");
   host.InstanceSettings().UseFastRefresh(true);
 #endif
 
