@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Defer findPowershell to layoutMSRNCxx",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
