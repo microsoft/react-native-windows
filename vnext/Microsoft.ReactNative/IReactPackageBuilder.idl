@@ -21,5 +21,11 @@ namespace Microsoft.ReactNative
     DOC_STRING("Adds a custom native module. See @ReactModuleProvider. This will register the"
     "module as a TurboModule.")
     void AddTurboModule(String moduleName, ReactModuleProvider moduleProvider);
+
+    DOC_STRING("Adds a custom native module. See @ReactModuleProvider. This will register the"
+    "module as a TurboModule.  This module will be created and have init called as soon as the"
+    "instance is created, event before the module is accessed from JavaScript.")
+    void AddEagerInitTurboModule(String moduleName, ReactModuleProvider moduleProvider);
+
   }
 } // namespace Microsoft.ReactNative

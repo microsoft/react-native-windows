@@ -11,6 +11,7 @@
 #include <textserv.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
+#include <unordered_map>
 #include "../ComponentView.h"
 #include "../CompositionHelpers.h"
 #include "../CompositionViewComponentView.h"
@@ -74,12 +75,13 @@ struct WindowsTextInputComponentView
   std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
-  bool IsDoubleClick();
+  bool IsDoubleClick(uint32_t pointerId);
 
   WindowsTextInputComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+  ~WindowsTextInputComponentView();
 
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual createVisual() noexcept;
 
@@ -152,7 +154,7 @@ struct WindowsTextInputComponentView
   DWORD m_propBits{0};
   HCURSOR m_hcursor{nullptr};
   POINT m_caretPosition{0, 0};
-  std::chrono::steady_clock::time_point m_lastClickTime{};
+  std::unordered_map<uint32_t, std::chrono::steady_clock::time_point> m_lastClickTimeByPointer;
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
 };
 

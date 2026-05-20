@@ -22,19 +22,19 @@ int64_t AnimatedNode::Tag() {
 }
 
 void AnimatedNode::AddChild(const int64_t animatedNodeTag) {
-  m_children.push_back(animatedNodeTag);
+  m_children.insert(animatedNodeTag);
   GetChildNode(animatedNodeTag)->OnAttachToNode(m_tag);
 }
 
 void AnimatedNode::RemoveChild(const int64_t tag) {
   if (const auto childNode = GetChildNode(tag)) {
     childNode->OnDetachedFromNode(m_tag);
-    m_children.erase(std::find(m_children.begin(), m_children.end(), tag));
+    m_children.erase(tag);
   }
 }
 
 AnimatedNode *AnimatedNode::GetChildNode(int64_t tag) {
-  if (std::find(m_children.begin(), m_children.end(), tag) != m_children.end()) {
+  if (m_children.count(tag)) {
     if (const auto manager = m_manager.lock()) {
       return manager->GetAnimatedNode(tag);
     }

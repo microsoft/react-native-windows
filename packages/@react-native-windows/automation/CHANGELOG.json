@@ -2,6 +2,63 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Wed, 13 May 2026 18:22:07 GMT",
+      "version": "0.0.0-canary.1055",
+      "tag": "@react-native-windows/automation_v0.0.0-canary.1055",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1055",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 May 2026 14:34:27 GMT",
+      "version": "0.0.0-canary.1054",
+      "tag": "@react-native-windows/automation_v0.0.0-canary.1054",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1054",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 10 May 2026 18:20:42 GMT",
+      "version": "0.0.0-canary.1053",
+      "tag": "@react-native-windows/automation_v0.0.0-canary.1053",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/automation",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "Migrate to PowerShell 7"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1053",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Apr 2026 16:40:26 GMT",
       "version": "0.0.0-canary.1052",
       "tag": "@react-native-windows/automation_v0.0.0-canary.1052",

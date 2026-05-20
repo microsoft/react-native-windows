@@ -4,9 +4,6 @@
 #include "PlatformColorUtils.h"
 #include <Utils/ThemeUtils.h>
 #include <Utils/ValueUtils.h>
-#ifndef CORE_ABI
-#include <XamlUtils.h>
-#endif // CORE_ABI
 #include <react/renderer/graphics/Color.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "HostPlatformColor.h"

@@ -15,8 +15,6 @@ namespace Microsoft::ReactNative {
 
 void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
-  m_deactivated = false;
-  m_enteredBackground = false;
 }
 
 void AppState::GetCurrentAppState(
@@ -39,21 +37,8 @@ ReactNativeSpecs::AppStateSpec_AppStateConstants AppState::GetConstants() noexce
   return {GetAppState()};
 }
 
-void AppState::SetDeactivated(bool deactivated) noexcept {
-  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetMapWindowDeactivatedToAppStateInactive(
-          m_context.Properties())) {
-    m_deactivated = deactivated;
-    AppStateDidChange({GetAppState()});
-  }
-}
-
-void AppState::SetEnteredBackground(bool enteredBackground) noexcept {
-  m_enteredBackground = enteredBackground;
-  AppStateDidChange({GetAppState()});
-}
-
 std::string AppState::GetAppState() noexcept {
-  return m_enteredBackground ? "background" : (m_deactivated ? "inactive" : "active");
+  return "active";
 }
 
 } // namespace Microsoft::ReactNative

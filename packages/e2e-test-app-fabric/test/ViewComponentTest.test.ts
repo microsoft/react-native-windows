@@ -25,12 +25,17 @@ const searchBox = async (input: string) => {
   const searchBox = await app.findElementByTestID('example_search');
   await app.waitUntil(
     async () => {
+      // Clear before each attempt: WinAppDriver's setValue can fall back to
+      // synthesized keystrokes for custom RN TextInputs, which append rather
+      // than replace. Without the clear, a retry produces concatenated text
+      // and the comparison never converges.
+      await searchBox.clearValue();
       await searchBox.setValue(input);
       return (await searchBox.getText()) === input;
     },
     {
-      interval: 1500,
-      timeout: 5000,
+      interval: 500,
+      timeout: 10000,
       timeoutMsg: `Unable to enter correct search text into test searchbox.`,
     },
   );
@@ -59,6 +64,15 @@ describe('View Tests', () => {
     await componentsTab.waitForDisplayed({ timeout: 5000 });
     const dump = await dumpVisualTree('border-style-button');
     expect(dump).toMatchSnapshot();
+    await verifyElementVisualSnapshot(componentsTab);
+  });
+  test('Views can have outlines', async () => {
+    await searchBox('outl');
+    const componentsTab = await app.findElementByTestID('view-test-outline');
+    await componentsTab.waitForDisplayed({ timeout: 5000 });
+    const dump = await dumpVisualTree('view-test-outline');
+    expect(dump).toMatchSnapshot();
+    await verifyElementVisualSnapshot(componentsTab);
   });
   test('Views can have offscreen alpha compositing', async () => {
     await searchBox('off');
@@ -117,6 +131,7 @@ describe('View Tests', () => {
     await componentsTab.waitForDisplayed({ timeout: 5000 });
     const dump = await dumpVisualTree('view-test-rounded-borders');
     expect(dump).toMatchSnapshot();
+    await verifyElementVisualSnapshot(componentsTab);
   });
   test('Views can have overflow', async () => {
     await searchBox('ove');
@@ -125,14 +140,15 @@ describe('View Tests', () => {
     const dump = await dumpVisualTree('view-test-overflow');
     expect(dump).toMatchSnapshot();
   });
-  test('Views can have rounded borders', async () => {
-    await searchBox('bor');
+  test('Views can have rounded borders (Percentages)', async () => {
+    await searchBox('Percen');
     const componentsTab = await app.findElementByTestID(
-      'view-test-rounded-borders',
+      'view-test-rounded-borders-percentages',
     );
     await componentsTab.waitForDisplayed({ timeout: 5000 });
     const dump = await dumpVisualTree('view-test-rounded-borders');
     expect(dump).toMatchSnapshot();
+    await verifyElementVisualSnapshot(componentsTab);
   });
   test('Views can have customized opacity', async () => {
     await searchBox('opa');
@@ -208,4 +224,13 @@ describe('View Tests', () => {
     const dump = await dumpVisualTree('nativeid');
     expect(dump).toMatchSnapshot();
   });
+  test('View box sizing', async () => {
+    await searchBox('box si');
+    const componentsTab = await app.findElementByTestID('view-test-box-sizing');
+    await componentsTab.waitForDisplayed({ timeout: 5000 });
+    const dump = await dumpVisualTree('view-test-box-sizing');
+    expect(dump).toMatchSnapshot();
+    await verifyElementVisualSnapshot(componentsTab);
+  });
+
 });

@@ -304,8 +304,6 @@
     <ClInclude Include="Utils\StandardControlResourceKeyNames.h" />
     <ClInclude Include="Utils\TextTransform.h" />
     <ClInclude Include="Utils\TransformableText.h" />
-    <ClInclude Include="Utils\UwpPreparedScriptStore.h" />
-    <ClInclude Include="Utils\UwpScriptStore.h" />
     <ClInclude Include="Utils\IcuUtils.h" />
     <ClInclude Include="Utils\ValueUtils.h" />
     <ClInclude Include="Utils\XamlIslandUtils.h" />
@@ -319,74 +317,23 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="RedBox.h" />
-    <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="TestHook.h" />
     <ClInclude Include="QuirkSettings.h">
       <DependentUpon>QuirkSettings.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="XamlUIService.h">
-      <DependentUpon>XamlUIService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
-    <ClCompile Include="Modules\AccessibilityInfoModule.cpp" />
-    <ClCompile Include="Modules\AlertModule.cpp" />
-    <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\AnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\AnimatedPlatformConfig.cpp" />
-    <ClCompile Include="Modules\Animated\AnimationDriver.cpp" />
-    <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp" />
-    <ClCompile Include="Modules\Animated\DecayAnimationDriver.cpp" />
-    <ClCompile Include="Modules\Animated\DiffClampAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\DivisionAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\EventAnimationDriver.cpp" />
-    <ClCompile Include="Modules\Animated\FrameAnimationDriver.cpp" />
-    <ClCompile Include="Modules\Animated\InterpolationAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\ModulusAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\MultiplicationAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\NativeAnimatedModule.cpp" />
-    <ClCompile Include="Modules\Animated\NativeAnimatedNodeManager.cpp" />
-    <ClCompile Include="Modules\Animated\PropsAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\SpringAnimationDriver.cpp" />
-    <ClCompile Include="Modules\Animated\StyleAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\SubtractionAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\TrackingAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\TransformAnimatedNode.cpp" />
-    <ClCompile Include="Modules\Animated\ValueAnimatedNode.cpp" />
-    <ClCompile Include="Modules\AppearanceModule.cpp" />
-    <ClCompile Include="Modules\AppStateModule.cpp" />
-    <ClCompile Include="Modules\AppThemeModuleUwp.cpp" />
-    <ClCompile Include="Modules\ClipboardModule.cpp" />
     <ClCompile Include="Modules\CreateModules.cpp" />
-    <ClCompile Include="Modules\DeviceInfoModule.cpp" />
-    <ClCompile Include="Modules\I18nManagerModule.cpp" />
-    <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
-    <ClCompile Include="Modules\LinkingManagerModule.cpp" />
-    <ClCompile Include="Modules\LogBoxModule.cpp" />
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="Utils\KeyboardUtils.cpp" />
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
-    <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" />
-    <ClCompile Include="Utils\UwpScriptStore.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
-    <ClCompile Include="ReactSupport.cpp" />
-    <ClCompile Include="XamlUIService.cpp">
-      <DependentUpon>XamlUIService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="DesktopWindowMessage.idl" />
     <Midl Include="DocString.idl" />
-    <Midl Include="XamlUIService.idl">
-      <SubType>Designer</SubType>
-    </Midl>
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />

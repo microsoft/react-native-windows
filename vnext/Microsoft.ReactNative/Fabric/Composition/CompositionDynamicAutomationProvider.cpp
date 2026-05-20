@@ -1064,6 +1064,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_SelectionContainer(I
   *pRetVal = nullptr;
 
   auto selectionContainerView = GetSelectionContainer();
+  // Per UIA spec, returning S_OK with *pRetVal == nullptr is correct when the element
+  // is not contained within a selection container.
+  if (!selectionContainerView)
+    return S_OK;
+
   auto uiaProvider =
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(selectionContainerView)
           ->EnsureUiaProvider();

@@ -99,6 +99,9 @@ inline ColorComponents colorComponentsFromHostPlatformColor(Color color) {
 
 // windows
 inline bool hostPlatformColorIsColorMeaningful(Color color) noexcept {
+  if (color.m_platformColor.size())
+    return true;
+
   auto windowsColor = color.AsWindowsColor();
   return windowsColor.A > 0;
 }

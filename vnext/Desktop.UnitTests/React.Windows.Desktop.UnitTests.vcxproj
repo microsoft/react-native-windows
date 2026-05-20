@@ -94,14 +94,9 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="BaseFileReaderResourceUnitTest.cpp" />
     <ClCompile Include="LayoutAnimationTests.cpp" />
     <ClCompile Include="MemoryMappedBufferTests.cpp" />
-    <ClCompile Include="InstanceMocks.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="OriginPolicyHttpFilterTest.cpp" />
     <ClCompile Include="RedirectHttpFilterUnitTest.cpp" />
     <ClCompile Include="ScriptStoreTests.cpp" />
@@ -113,7 +108,6 @@
     <ClCompile Include="WinRTWebSocketResourceUnitTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="InstanceMocks.h" />
     <ClInclude Include="UnicodeTestStrings.h" />
     <ClInclude Include="WebSocketMocks.h" />
     <ClInclude Include="WinRTNetworkingMocks.h" />
@@ -129,11 +123,13 @@
   </ItemGroup>
   <!-- Remove the WinMD references we're picking up from Microsoft.WindowsAppSDK in the React.Windows.Desktop.vcxproj",
        which we don't need here. -->
+       <!--
   <Target Name="RemoveCppWinRTDirectWinMDReferences" BeforeTargets="GetCppWinRTMdMergeInputs">
     <ItemGroup>
       <CppWinRTDirectWinMDReferences Remove="@(CppWinRTDirectWinMDReferences)" />
     </ItemGroup>
   </Target>
+  -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="Test">
     <Exec Command="$(OutDir)$(TargetFileName)" IgnoreStandardErrorWarningFormat="true" />

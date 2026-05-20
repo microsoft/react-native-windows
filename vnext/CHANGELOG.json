@@ -2,6 +2,153 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 13 May 2026 18:22:07 GMT",
+      "version": "0.0.0-canary.1055",
+      "tag": "react-native-windows_v0.0.0-canary.1055",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "74712637+iamAbhi-916@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "df07be9b5b0da1edcbca6285cd8f27207f43fcf2",
+            "comment": "Show tooltip on keyboard focus, enforce single visible tooltip"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "df07be9b5b0da1edcbca6285cd8f27207f43fcf2",
+            "comment": "Fix #16047: Pressables inside ScrollView remained stuck in the pressed state after a touch-driven scroll, and on non-100% Windows display scales the next tap on a row would not register `press`. Two underlying causes were addressed: (1) VisualInteractionSource::TryRedirectForManipulation does not deliver PointerCaptureLost for the redirected pointer, leaving a zombie entry in CompositionEventHandler::m_activeTouches — now resolved by synthesizing a touchcancel from the InputPointerSource.PointerRoutedAway event, which fires reliably on the redirect path; and (2) ScrollViewComponentView::updateStateWithContentOffset wrote the raw physical-pixel ScrollPosition into ScrollViewShadowNode state's contentOffset, which Fabric layout treats as DIPs, so JS UIManager.measure() over-subtracted the offset by pointScaleFactor after any scroll on a >100% display, causing Pressability to fire LEAVE_PRESS_RECT synchronously and suppress press — now divides by pointScaleFactor to match the JS event-emitter paths in the same file."
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.290",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 May 2026 14:34:27 GMT",
+      "version": "0.0.0-canary.1054",
+      "tag": "react-native-windows_v0.0.0-canary.1054",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "981b29dfd21dd1cce485adedebcaa6d1fd06b803",
+            "comment": "Add hideTitleBar and hideBorder to Modal"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "981b29dfd21dd1cce485adedebcaa6d1fd06b803",
+            "comment": "fix: use IsPrimary() for touch pointer isPrimary instead of hardcoded pointer ID check"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 10 May 2026 18:20:42 GMT",
+      "version": "0.0.0-canary.1053",
+      "tag": "react-native-windows_v0.0.0-canary.1053",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "Fix touch event handling, improve reliability, and optimize performance"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "fix: cancel active touches in onPointerCaptureLost to prevent zombie touch state"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "Upgrade to PowerShell 7"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "Image does not consistently rerender on image source change"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "fix: null dereference in get_SelectionContainer when no container found"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "Use hermes-windows 0.0.0-2605.6002-2279da22"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "Implement outline properties on view"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "fix: map Windows touch pointer IDs to small JS-safe identifiers in CompositionEventHandler"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "Add ability to register modules as eager init"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "Some fixes for rounded borders"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "Minor text rendering perf improvement"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "Remove CORE_ABI and bring rnwin32 and MS.RN much closer in functionality"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "fix: cancel zombie touch state when ScrollView redirects pointer for manipulation, scope per-pointer events to the changed pointer, and remove always-true IsPointerWithinInitialTree fallback"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.289",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Apr 2026 16:40:25 GMT",
       "version": "0.0.0-canary.1052",
       "tag": "react-native-windows_v0.0.0-canary.1052",

@@ -2,6 +2,42 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 13 May 2026 18:22:07 GMT",
+      "version": "0.0.0-canary.290",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.290",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vivekjm77@gmail.com",
+            "package": "@react-native-windows/cli",
+            "commit": "df07be9b5b0da1edcbca6285cd8f27207f43fcf2",
+            "comment": "Add a run-windows port option for Metro"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 10 May 2026 18:20:42 GMT",
+      "version": "0.0.0-canary.289",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.289",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "7b29fa130d291923efab3d153e54e91f1aa757ab",
+            "comment": "Upgrade to PowerShell 7"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Apr 2026 02:54:29 GMT",
       "version": "0.0.0-canary.288",
       "tag": "@react-native-windows/cli_v0.0.0-canary.288",

@@ -28,6 +28,7 @@ export type BuildConfig = 'Debug' | 'DebugBundle' | 'Release' | 'ReleaseBundle';
  *    deploy-from-layout: Force deploy from layout, even in release builds
  *    sln: String - Solution file to build
  *    msbuildprops: String - Comma separated props to pass to msbuild, eg: prop1=value1,prop2=value2
+ *    port: Number - Port to use for the React Native packager
  *    direct-debugging: Number - Enable direct debugging on specified port
  *    no-telemetry: Boolean - Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI
  */
@@ -52,6 +53,7 @@ export interface RunWindowsOptions {
   msbuildprops?: string;
   buildLogDirectory?: string;
   info?: boolean;
+  port?: number;
   directDebugging?: number;
   telemetry?: boolean;
 }
@@ -148,6 +150,12 @@ export const runWindowsOptions: CommandOption[] = [
     description: 'Dump environment information',
   },
   {
+    name: '--port [number]',
+    description: 'Port to use for the React Native packager',
+    default: 8081,
+    parse: parsePort,
+  },
+  {
     name: '--direct-debugging [number]',
     description: 'Enable direct debugging on specified port',
     parse: parseDirectDebuggingPort,
@@ -171,13 +179,17 @@ function parseBuildArch(arg: string): BuildArch {
 }
 
 function parseDirectDebuggingPort(arg: string): number {
-  const num = parseInt(arg, 10);
+  return parsePort(arg, '--direct-debugging');
+}
+
+function parsePort(arg: string, optionName = '--port'): number {
+  const num = Number(arg);
 
   if (!Number.isInteger(num)) {
-    errorOut(`Expected argument '--direct-debugging' to be a number`);
+    errorOut(`Expected argument '${optionName}' to be a number`);
   }
   if (num < 1024 || num >= 65535) {
-    errorOut('Direct debugging port it out of range');
+    errorOut(`${optionName} is out of range`);
   }
 
   return num;

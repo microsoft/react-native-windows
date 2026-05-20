@@ -20,6 +20,7 @@ struct ReactPackageBuilder : winrt::implements<ReactPackageBuilder, IReactPackag
  public: // IReactPackageBuilder
   void AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
   void AddTurboModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
+  void AddEagerInitTurboModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
 
   // IReactPackageBuilderFabric
   void AddViewComponent(winrt::hstring componentName, ReactViewComponentProvider const &viewComponentProvider) noexcept;

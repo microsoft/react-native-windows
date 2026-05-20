@@ -18,6 +18,7 @@
 #include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.h>
+#include <mutex>
 #include "../Composition.Input.h"
 #include "../CompositionHelpers.h"
 #include "../RootComponentView.h"
@@ -75,36 +76,37 @@ WindowsTextInputComponentView::DrawBlock::~DrawBlock() {
 
 // 	Msftedit.dll vs "Riched20.dll"?
 
+static std::once_flag g_richEditLoadedFlag;
 static HINSTANCE g_hInstRichEdit = nullptr;
 static PCreateTextServices g_pfnCreateTextServices;
 
 HRESULT HrEnsureRichEd20Loaded() noexcept {
-  if (g_hInstRichEdit == nullptr) {
+  HRESULT hr = S_OK;
+  std::call_once(g_richEditLoadedFlag, [&hr]() {
     g_hInstRichEdit = LoadLibrary(L"Msftedit.dll");
-    if (!g_hInstRichEdit)
-      return E_FAIL;
+    if (!g_hInstRichEdit) {
+      hr = E_FAIL;
+      return;
+    }
 
     // Create the windowless control (text services object)
     g_pfnCreateTextServices = (PCreateTextServices)GetProcAddress(g_hInstRichEdit, "CreateTextServices");
-    if (!g_pfnCreateTextServices)
-      return E_FAIL;
-
-    /*
-    // Calling the REExtendedRegisterClass() function is required for
-    // registering the REComboboxW and REListBoxW window classes.
-    PFNREGISTER pfnRegister = (PFNREGISTER)GetProcAddress(g_hInstRichEdit, "REExtendedRegisterClass");
-    if (pfnRegister) {
-      pfnRegister();
-      return S_OK;
-    } else
-      return E_FAIL;
-      */
-  }
-  return NOERROR;
+    if (!g_pfnCreateTextServices) {
+      hr = E_FAIL;
+      return;
+    }
+  });
+  if (!g_hInstRichEdit || !g_pfnCreateTextServices)
+    return E_FAIL;
+  return hr;
 }
 
 struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   CompTextHost(WindowsTextInputComponentView *outer) : m_outer(outer) {}
+
+  void Detach() {
+    m_outer = nullptr;
+  }
 
   //@cmember Get the DC for the host
   HDC TxGetDC() override {
@@ -144,6 +146,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember InvalidateRect
   void TxInvalidateRect(LPCRECT prc, BOOL fMode) override {
+    if (!m_outer)
+      return;
     if (m_outer->m_drawing)
       return;
     m_outer->DrawText();
@@ -151,6 +155,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Send a WM_PAINT to the window
   void TxViewChange(BOOL fUpdate) override {
+    if (!m_outer)
+      return;
     // When keyboard scrolling without scrollbar, TxInvalidateRect is not called.
     // Instead TxViewChange is called with fUpdate = true
     // if (fUpdate && !OnInnerViewerExtentChanged())
@@ -163,12 +169,16 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Create the caret
   BOOL TxCreateCaret(HBITMAP hbmp, INT xWidth, INT yHeight) override {
+    if (!m_outer)
+      return false;
     m_outer->m_caretVisual.Size({static_cast<float>(xWidth), static_cast<float>(yHeight)});
     return true;
   }
 
   //@cmember Show the caret
   BOOL TxShowCaret(BOOL fShow) override {
+    if (!m_outer)
+      return false;
     // Only show the caret if we have focus
     if (fShow && !m_outer->m_hasFocus) {
       return false;
@@ -179,6 +189,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Set the caret position
   BOOL TxSetCaretPos(INT x, INT y) override {
+    if (!m_outer)
+      return false;
     if (x < 0 && y < 0) {
       // RichEdit sends (-32000,-32000) when the caret is not currently visible.
       return false;
@@ -217,6 +229,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get mouse capture
   void TxSetCapture(BOOL fCapture) override {
+    if (!m_outer)
+      return;
     auto mousePointer = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::Pointer>(
         winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse, 1 /* 1 is Mouse PointerId*/);
 
@@ -229,6 +243,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Set the focus to the text window
   void TxSetFocus() override {
+    if (!m_outer)
+      return;
     winrt::Microsoft::ReactNative::ComponentView view{nullptr};
     winrt::check_hresult(
         m_outer->QueryInterface(winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
@@ -242,11 +258,15 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Establish a new cursor shape
   void TxSetCursor(HCURSOR hcur, BOOL fText) override {
+    if (!m_outer)
+      return;
     m_outer->m_hcursor = hcur;
   }
 
   //@cmember Converts screen coordinates of a specified point to the client coordinates
   BOOL TxScreenToClient(LPPOINT lppt) override {
+    if (!m_outer)
+      return false;
     winrt::Windows::Foundation::Point pt{static_cast<float>(lppt->x), static_cast<float>(lppt->y)};
     pt.X -= m_outer->m_contentOffsetPx.x;
     pt.Y -= m_outer->m_contentOffsetPx.y;
@@ -258,6 +278,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Converts the client coordinates of a specified point to screen coordinates
   BOOL TxClientToScreen(LPPOINT lppt) override {
+    if (!m_outer)
+      return false;
     winrt::Windows::Foundation::Point pt{static_cast<float>(lppt->x), static_cast<float>(lppt->y)};
 
     if (!m_outer->m_parent) {
@@ -284,6 +306,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Retrieves the coordinates of a window's client area
   HRESULT TxGetClientRect(LPRECT prc) override {
+    if (!m_outer)
+      return E_FAIL;
     *prc = m_outer->getClientRect();
 
     prc->top += m_outer->m_contentOffsetPx.y;
@@ -310,6 +334,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the default character format for the text
   HRESULT TxGetCharFormat(const CHARFORMATW **ppCF) override {
+    if (!m_outer)
+      return E_FAIL;
     m_outer->UpdateCharFormat();
 
     *ppCF = &(m_outer->m_cf);
@@ -318,6 +344,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the default paragraph format for the text
   HRESULT TxGetParaFormat(const PARAFORMAT **ppPF) override {
+    if (!m_outer)
+      return E_FAIL;
     m_outer->UpdateParaFormat();
 
     *ppPF = &(m_outer->m_pf);
@@ -326,6 +354,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the background color for the window
   COLORREF TxGetSysColor(int nIndex) override {
+    if (!m_outer)
+      return GetSysColor(nIndex);
     // if (/* !m_isDisabled || */ nIndex != COLOR_WINDOW && nIndex != COLOR_WINDOWTEXT && nIndex != COLOR_GRAYTEXT) {
     // This window is either not disabled or the color isn't interesting
     // in the disabled case.
@@ -400,6 +430,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the maximum length for the text
   HRESULT TxGetMaxLength(DWORD *plength) override {
+    if (!m_outer) {
+      *plength = std::numeric_limits<DWORD>::max();
+      return S_OK;
+    }
     auto length = m_outer->windowsTextInputProps().maxLength;
     if (length > static_cast<decltype(m_outer->windowsTextInputProps().maxLength)>(std::numeric_limits<DWORD>::max())) {
       length = std::numeric_limits<DWORD>::max();
@@ -410,6 +444,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the bits representing requested scroll bars for the window
   HRESULT TxGetScrollBars(DWORD *pdwScrollBar) override {
+    if (!m_outer) {
+      *pdwScrollBar = WS_HSCROLL | ES_AUTOHSCROLL;
+      return S_OK;
+    }
     if (m_outer->m_multiline) {
       *pdwScrollBar = WS_VSCROLL | WS_HSCROLL | ES_AUTOVSCROLL | ES_AUTOHSCROLL;
     } else {
@@ -457,7 +495,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Notify host of events
   HRESULT TxNotify(DWORD iNotify, void *pv) override {
-    // TODO
+    if (!m_outer)
+      return S_OK;
 
     switch (iNotify) {
       case EN_UPDATE:
@@ -541,6 +580,16 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
           tag,
           reactContext,
           ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {}
+
+WindowsTextInputComponentView::~WindowsTextInputComponentView() {
+  // Release text services first to prevent further callbacks into CompTextHost.
+  m_textServices = nullptr;
+
+  // Detach the CompTextHost so any lingering references cannot use a dangling pointer.
+  if (m_textHost) {
+    winrt::get_self<CompTextHost>(m_textHost)->Detach();
+  }
+}
 
 void WindowsTextInputComponentView::HandleCommand(
     const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
@@ -649,17 +698,22 @@ WPARAM PointerRoutedEventArgsToMouseWParam(
   return wParam;
 }
 
-bool WindowsTextInputComponentView::IsDoubleClick() {
+bool WindowsTextInputComponentView::IsDoubleClick(uint32_t pointerId) {
   using namespace std::chrono;
 
   auto now = steady_clock::now();
-  auto duration = duration_cast<milliseconds>(now - m_lastClickTime).count();
+  auto it = m_lastClickTimeByPointer.find(pointerId);
+  bool isDouble = false;
 
-  const int DOUBLE_CLICK_TIME_MS = ::GetDoubleClickTime();
+  if (it != m_lastClickTimeByPointer.end()) {
+    auto duration = duration_cast<milliseconds>(now - it->second).count();
+    isDouble = (duration < ::GetDoubleClickTime());
+    it->second = now;
+  } else {
+    m_lastClickTimeByPointer[pointerId] = now;
+  }
 
-  m_lastClickTime = now;
-
-  return (duration < DOUBLE_CLICK_TIME_MS);
+  return isDouble;
 }
 
 void WindowsTextInputComponentView::OnPointerPressed(
@@ -678,7 +732,7 @@ void WindowsTextInputComponentView::OnPointerPressed(
   if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
     switch (pp.Properties().PointerUpdateKind()) {
       case winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::LeftButtonPressed:
-        if (IsDoubleClick()) {
+        if (IsDoubleClick(pp.PointerId())) {
           msg = WM_LBUTTONDBLCLK;
         } else {
           msg = WM_LBUTTONDOWN;
@@ -699,10 +753,14 @@ void WindowsTextInputComponentView::OnPointerPressed(
         wParam |= (XBUTTON2 << 16);
         break;
     }
-    wParam = PointerRoutedEventArgsToMouseWParam(args);
+    wParam |= PointerRoutedEventArgsToMouseWParam(args);
   } else {
-    msg = WM_POINTERDOWN;
-    wParam = PointerPointToPointerWParam(pp);
+    if (IsDoubleClick(pp.PointerId())) {
+      msg = WM_LBUTTONDBLCLK;
+    } else {
+      msg = WM_LBUTTONDOWN;
+    }
+    wParam = PointerRoutedEventArgsToMouseWParam(args);
   }
 
   if (m_textServices && msg) {
@@ -764,10 +822,10 @@ void WindowsTextInputComponentView::OnPointerReleased(
         wParam |= (XBUTTON2 << 16);
         break;
     }
-    wParam = PointerRoutedEventArgsToMouseWParam(args);
+    wParam |= PointerRoutedEventArgsToMouseWParam(args);
   } else {
-    msg = WM_POINTERUP;
-    wParam = PointerPointToPointerWParam(pp);
+    msg = WM_LBUTTONUP;
+    wParam = PointerRoutedEventArgsToMouseWParam(args);
   }
 
   if (m_textServices && msg) {
@@ -817,23 +875,18 @@ void WindowsTextInputComponentView::OnPointerMoved(
       static_cast<LONG>(position.Y * m_layoutMetrics.pointScaleFactor)};
   lParam = static_cast<LPARAM>(POINTTOPOINTS(ptContainer));
 
-  if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
-    msg = WM_MOUSEMOVE;
-    wParam = PointerRoutedEventArgsToMouseWParam(args);
-  } else {
-    msg = WM_POINTERUPDATE;
-    wParam = PointerPointToPointerWParam(pp);
-  }
+  msg = WM_MOUSEMOVE;
+  wParam = PointerRoutedEventArgsToMouseWParam(args);
 
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
     auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
     args.Handled(hr != S_FALSE);
-  }
 
-  m_textServices->OnTxSetCursor(
-      DVASPECT_CONTENT, -1, nullptr, nullptr, nullptr, nullptr, nullptr, ptContainer.x, ptContainer.y);
+    m_textServices->OnTxSetCursor(
+        DVASPECT_CONTENT, -1, nullptr, nullptr, nullptr, nullptr, nullptr, ptContainer.x, ptContainer.y);
+  }
 }
 
 void WindowsTextInputComponentView::OnPointerWheelChanged(
@@ -935,7 +988,7 @@ bool WindowsTextInputComponentView::ShouldSubmit(
         bool ctrlDown = (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
                          winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
             winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
-        bool altDown = (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+        bool altDown = (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
                         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
             winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
         bool metaDown = (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
@@ -946,7 +999,7 @@ bool WindowsTextInputComponentView::ShouldSubmit(
                 winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
         return (submitKeyEvent.shiftKey && shiftDown) || (submitKeyEvent.ctrlKey && ctrlDown) ||
             (submitKeyEvent.altKey && altDown) || (submitKeyEvent.metaKey && metaDown) ||
-            (!submitKeyEvent.shiftKey && !submitKeyEvent.altKey && !submitKeyEvent.metaKey && !submitKeyEvent.altKey &&
+            (!submitKeyEvent.shiftKey && !submitKeyEvent.ctrlKey && !submitKeyEvent.altKey && !submitKeyEvent.metaKey &&
              !shiftDown && !ctrlDown && !altDown && !metaDown);
       } else {
         shouldSubmit = false;
@@ -1836,6 +1889,7 @@ WindowsTextInputComponentView::createVisual() noexcept {
   winrt::com_ptr<::IUnknown> spUnk;
   winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
   spUnk.as(m_textServices);
+  winrt::check_bool(m_textServices != nullptr);
 
   LRESULT res;
   winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_PLAINTEXT, 0, &res));

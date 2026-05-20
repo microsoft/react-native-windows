@@ -30,10 +30,11 @@ template <typename T>
 struct IsReactTurboModule : std::bool_constant<ReactIsReactTurboModuleImpl(static_cast<T *>(nullptr))> {};
 
 #define INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(                                                            \
-    moduleStruct, moduleName, eventEmitterName, isReactTurboModule)                                                 \
+    moduleStruct, moduleName, eventEmitterName, isReactTurboModule, isEagerInit)                                    \
   struct moduleStruct;                                                                                              \
                                                                                                                     \
   constexpr bool ReactIsReactTurboModuleImpl(moduleStruct *) noexcept { return isReactTurboModule; }                \
+  constexpr bool ReactIsEagerInitTurboModuleImpl(moduleStruct *) noexcept { return isEagerInit; }                   \
                                                                                                                     \
   template <class TDummy>                                                                                           \
   struct moduleStruct##_ModuleRegistration final : winrt::Microsoft::ReactNative::ModuleRegistration {              \
@@ -44,6 +45,7 @@ struct IsReactTurboModule : std::bool_constant<ReactIsReactTurboModuleImpl(stati
     }                                                                                                               \
                                                                                                                     \
     bool ShouldRegisterAsTurboModule() const noexcept override { return isReactTurboModule; }                       \
+    bool IsEagerInit() const noexcept override { return isEagerInit; }                                              \
                                                                                                                     \
     static const moduleStruct##_ModuleRegistration Registration;                                                    \
   };                                                                                                                \
@@ -59,7 +61,7 @@ struct IsReactTurboModule : std::bool_constant<ReactIsReactTurboModuleImpl(stati
   }
 
 #define INTERNAL_REACT_MODULE_3_ARGS(moduleStruct, moduleName, eventEmitterName) \
-  INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, eventEmitterName, false)
+  INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, eventEmitterName, false, false)
 
 #define INTERNAL_REACT_MODULE_2_ARGS(moduleStruct, moduleName) \
   INTERNAL_REACT_MODULE_3_ARGS(moduleStruct, moduleName, L"")
@@ -104,17 +106,27 @@ struct IsReactTurboModule : std::bool_constant<ReactIsReactTurboModuleImpl(stati
 
 // Register struct as a ReactNative module.
 #define INTERNAL_REACT_TURBO_MODULE_2_ARGS(moduleStruct, moduleName) \
-  INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, L"", true)
+  INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, L"", true, false)
+
+#define INTERNAL_REACT_EAGER_TURBO_MODULE_2_ARGS(moduleStruct, moduleName) \
+  INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, L"", true, true)
 
 #define INTERNAL_REACT_TURBO_MODULE_1_ARG(moduleStruct) \
   INTERNAL_REACT_TURBO_MODULE_2_ARGS(moduleStruct, L## #moduleStruct)
 
+#define INTERNAL_REACT_EAGER_TURBO_MODULE_1_ARG(moduleStruct) \
+  INTERNAL_REACT_EAGER_TURBO_MODULE_2_ARGS(moduleStruct, L## #moduleStruct)
+
 #define INTERNAL_REACT_TURBO_MODULE(...) \
   INTERNAL_REACT_RECOMPOSER_3((__VA_ARGS__, INTERNAL_REACT_TURBO_MODULE_2_ARGS, INTERNAL_REACT_TURBO_MODULE_1_ARG, ))
 
+#define INTERNAL_REACT_EAGER_TURBO_MODULE(...) \
+  INTERNAL_REACT_RECOMPOSER_3(                 \
+      (__VA_ARGS__, INTERNAL_REACT_EAGER_TURBO_MODULE_2_ARGS, INTERNAL_REACT_EAGER_TURBO_MODULE_1_ARG, ))
+
 // Another version of REACT_MODULE but does not do auto registration
 #define INTERNAL_REACT_TURBO_MODULE_NOREG_2_ARGS(moduleStruct, moduleName) \
-  INTERNAL_REACT_MODULE_NO_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, L"", true)
+  INTERNAL_REACT_MODULE_NO_REGISTRATION_AND_PROVIDER(moduleStruct, moduleName, L"", true, false)
 
 #define INTERNAL_REACT_TURBO_MODULE_NOREG_1_ARG(moduleStruct) \
   INTERNAL_REACT_TURBO_MODULE_NOREG_2_ARGS(moduleStruct, L## #moduleStruct)
@@ -153,6 +165,7 @@ struct ModuleRegistration {
 
   virtual ReactModuleProvider MakeModuleProvider() const noexcept = 0;
   virtual bool ShouldRegisterAsTurboModule() const noexcept = 0;
+  virtual bool IsEagerInit() const noexcept = 0;
 
   static ModuleRegistration const *Head() noexcept {
     return s_head;

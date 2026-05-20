@@ -111,6 +111,9 @@ struct ComponentView : public ComponentViewT<
   bool getAcccessiblityIsReadOnly() noexcept override;
   ToggleState getToggleState() noexcept override;
   void Toggle() noexcept override;
+
+  int32_t borderInsertAtIndex() const noexcept;
+
   virtual winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept;
 
   virtual std::pair<facebook::react::Cursor, HCURSOR> cursor() const noexcept;
@@ -130,6 +133,8 @@ struct ComponentView : public ComponentViewT<
   void ThemeChanged(winrt::event_token const &token) noexcept;
 
  protected:
+  virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual VisualToApplyBackgroundClipTo()
+      const noexcept;
   bool anyHitTestHelper(
       facebook::react::Tag &targetTag,
       facebook::react::Point &ptContent,
@@ -141,6 +146,7 @@ struct ComponentView : public ComponentViewT<
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   comp::CompositionPropertySet m_centerPropSet{nullptr};
   facebook::react::SharedViewEventEmitter m_eventEmitter;
+  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_backgroundVisual{nullptr};
 
  private:
   void updateFocusLayoutMetrics() noexcept;
@@ -157,6 +163,9 @@ struct ComponentView : public ComponentViewT<
   facebook::react::BorderMetrics focusBorderMetrics(bool inner, const facebook::react::LayoutMetrics &layoutMetrics)
       const noexcept;
 
+  facebook::react::LayoutMetrics outlineLayoutMetrics() const noexcept;
+  facebook::react::BorderMetrics outlineBorderMetrics() const noexcept;
+
   virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual visualToHostFocus() noexcept;
   virtual winrt::com_ptr<ComponentView> focusVisualRoot(const facebook::react::Rect &focusRect) noexcept;
 
@@ -168,6 +177,7 @@ struct ComponentView : public ComponentViewT<
   winrt::com_ptr<ComponentView>
       m_componentHostingFocusVisual; // The component that we are showing our focus visuals within
   std::shared_ptr<BorderPrimitive> m_borderPrimitive;
+  std::shared_ptr<BorderPrimitive> m_outlinePrimitive;
   std::unique_ptr<FocusPrimitive> m_focusPrimitive{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_outerVisual{nullptr};
   winrt::event<winrt::Windows::Foundation::EventHandler<winrt::IInspectable>> m_themeChangedEvent;

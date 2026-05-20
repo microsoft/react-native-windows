@@ -13,3 +13,4 @@ steps:
 
   - script: yarn install --immutable
     displayName: Strict yarn install ${{ parameters.workspace }}
+    retryCountOnTaskFailure: 2

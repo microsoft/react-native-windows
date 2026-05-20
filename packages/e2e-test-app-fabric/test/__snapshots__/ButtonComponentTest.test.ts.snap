@@ -48,14 +48,19 @@ exports[`Button Tests Buttons can be disabled 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(249, 249, 249, 77)",
-            },
             "Offset": "0, 0, 0",
             "Size": "916, 37",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(249, 249, 249, 77)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
@@ -196,14 +201,19 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 122, 255, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "916, 37",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 122, 255, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
@@ -330,15 +340,20 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 179)",
-    },
     "Comment": "accessibility_props",
     "Offset": "0, 0, 0",
     "Size": "916, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 255, 255, 179)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
@@ -476,14 +491,19 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(249, 249, 249, 77)",
-            },
             "Offset": "0, 0, 0",
             "Size": "916, 37",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(249, 249, 249, 77)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
@@ -624,14 +644,19 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 59, 48, 255)",
-            },
             "Offset": "0, 0, 0",
             "Size": "916, 37",
             "Visual Type": "SpriteVisual",
             "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 59, 48, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
               {
                 "Brush": {
                   "Brush Type": "ColorBrush",
@@ -742,15 +767,20 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 179)",
-    },
     "Comment": "accessible_false_button",
     "Offset": "0, 0, 0",
     "Size": "916, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 255, 255, 179)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
@@ -872,15 +902,20 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 179)",
-    },
     "Comment": "focusable_false_button",
     "Offset": "0, 0, 0",
     "Size": "916, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 255, 255, 179)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
@@ -987,15 +1022,20 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 179)",
-    },
     "Comment": "accessible_focusable_false_button",
     "Offset": "0, 0, 0",
     "Size": "916, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 255, 255, 179)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Brush": {
           "Brush Type": "ColorBrush",
@@ -1191,14 +1231,19 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
-                    "Brush": {
-                      "Brush Type": "ColorBrush",
-                      "Color": "rgba(255, 59, 48, 255)",
-                    },
                     "Offset": "0, 0, 0",
                     "Size": "59, 37",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(255, 59, 48, 255)",
+                        },
+                        "Offset": "0, 0, 0",
+                        "Size": "0, 0",
+                        "Visual Type": "SpriteVisual",
+                      },
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
@@ -1308,14 +1353,19 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
-                    "Brush": {
-                      "Brush Type": "ColorBrush",
-                      "Color": "rgba(52, 199, 89, 255)",
-                    },
                     "Offset": "0, 0, 0",
                     "Size": "62, 37",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(52, 199, 89, 255)",
+                        },
+                        "Offset": "0, 0, 0",
+                        "Size": "0, 0",
+                        "Visual Type": "SpriteVisual",
+                      },
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
@@ -1552,14 +1602,19 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
-                    "Brush": {
-                      "Brush Type": "ColorBrush",
-                      "Color": "rgba(255, 59, 48, 255)",
-                    },
                     "Offset": "0, 0, 0",
                     "Size": "59, 37",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(255, 59, 48, 255)",
+                        },
+                        "Offset": "0, 0, 0",
+                        "Size": "0, 0",
+                        "Visual Type": "SpriteVisual",
+                      },
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
@@ -1669,14 +1724,19 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
-                    "Brush": {
-                      "Brush Type": "ColorBrush",
-                      "Color": "rgba(0, 122, 255, 255)",
-                    },
                     "Offset": "0, 0, 0",
                     "Size": "105, 37",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 122, 255, 255)",
+                        },
+                        "Offset": "0, 0, 0",
+                        "Size": "0, 0",
+                        "Visual Type": "SpriteVisual",
+                      },
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
@@ -1786,14 +1846,19 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
-                    "Brush": {
-                      "Brush Type": "ColorBrush",
-                      "Color": "rgba(52, 199, 89, 255)",
-                    },
                     "Offset": "0, 0, 0",
                     "Size": "62, 37",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(52, 199, 89, 255)",
+                        },
+                        "Offset": "0, 0, 0",
+                        "Size": "0, 0",
+                        "Visual Type": "SpriteVisual",
+                      },
                       {
                         "Brush": {
                           "Brush Type": "ColorBrush",
@@ -1923,15 +1988,20 @@ exports[`Button Tests Buttons have default styling 1`] = `
     ],
   },
   "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 179)",
-    },
     "Comment": "button_default_styling",
     "Offset": "0, 0, 0",
     "Size": "916, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(255, 255, 255, 179)",
+        },
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
       {
         "Brush": {
           "Brush Type": "ColorBrush",

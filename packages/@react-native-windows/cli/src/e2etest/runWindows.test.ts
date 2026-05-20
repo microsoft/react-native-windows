@@ -38,6 +38,7 @@ function validateOptionName(
     case 'msbuildprops':
     case 'buildLogDirectory':
     case 'info':
+    case 'port':
     case 'directDebugging':
     case 'telemetry':
       return true;
@@ -76,4 +77,13 @@ test('runWindowsOptions - validate options', () => {
       ),
     ).toBe(true);
   }
+});
+
+test('runWindowsOptions - parses packager port', () => {
+  const portOption = runWindowsOptions.find(option =>
+    option.name.startsWith('--port'),
+  );
+
+  expect(portOption).toBeDefined();
+  expect(portOption!.parse!('9000')).toBe(9000);
 });

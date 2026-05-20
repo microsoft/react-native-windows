@@ -3,9 +3,7 @@
 
 #pragma once
 
-#ifndef CORE_ABI
 #include <IReactInstance.h>
-#endif
 
 #include <functional/functor.h>
 #include <string>

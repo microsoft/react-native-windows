@@ -41,13 +41,7 @@ export type PublicModalInstance = HostInstance;
 const ModalEventEmitter =
   (Platform.OS === 'ios' || Platform.OS === 'windows') && // [Windows]
   NativeModalManager != null
-    ? new NativeEventEmitter<ModalEventDefinitions>(
-        // T88715063: NativeEventEmitter only used this parameter on iOS. Now it uses it on all platforms, so this code was modified automatically to preserve its behavior
-        // If you want to use the native module on other platforms, please remove this condition and test its behavior
-        Platform.OS !== 'ios' && Platform.OS !== 'windows' // [Windows]
-          ? null
-          : NativeModalManager,
-      )
+    ? new NativeEventEmitter<ModalEventDefinitions>(NativeModalManager)
     : null;
 
 /**
@@ -180,6 +174,8 @@ export type ModalPropsWindows = {
    * [Windows] The `title` prop sets the title of the modal window.
    */
   title?: ?string,
+  hideTitleBar?: ?boolean,
+  hideBorder?: ?boolean,
 };
 
 export type ModalProps = {
@@ -358,6 +354,8 @@ class Modal extends React.Component<ModalProps, ModalState> {
         onOrientationChange={this.props.onOrientationChange}
         allowSwipeDismissal={this.props.allowSwipeDismissal}
         testID={this.props.testID}
+        hideTitleBar={this.props.hideTitleBar} // [Windows]
+        hideBorder={this.props.hideBorder} // [Windows]
         title={this.props.title}>
         <VirtualizedListContextResetter>
           <ScrollView.Context.Provider value={null}>

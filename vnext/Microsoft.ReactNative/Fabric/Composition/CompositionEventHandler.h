@@ -14,6 +14,7 @@
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
 #include <set>
+#include <unordered_set>
 
 namespace winrt {
 using namespace Windows::UI;
@@ -65,6 +66,9 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   void onPointerCaptureLost(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
+  void onPointerRoutedAway(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
   void onKeyDown(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
   void onKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
   void onCharacterReceived(
@@ -79,7 +83,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   bool releasePointerCapture(PointerId pointerId, facebook::react::Tag tag) noexcept;
 
   facebook::react::SurfaceId SurfaceId() const noexcept;
-  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView &RootComponentView() const noexcept;
+  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *RootComponentView() const noexcept;
 
   enum class UITouchType {
     Mouse,
@@ -141,7 +145,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
     ReactTaggedView initialComponentView{nullptr};
   };
 
-  static bool IsPointerWithinInitialTree(const ActiveTouch &activeTouch) noexcept;
+  bool IsPointerWithinInitialTree(const ActiveTouch &activeTouch) noexcept;
   static bool IsEndishEventType(TouchEventType eventType) noexcept;
   static const char *PointerTypeCStringFromUITouchType(UITouchType type) noexcept;
   static facebook::react::PointerEvent CreatePointerEventFromActiveTouch(
@@ -150,18 +154,38 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   static void
   UpdateActiveTouch(ActiveTouch &activeTouch, facebook::react::Point ptScaled, facebook::react::Point ptLocal) noexcept;
 
+  void DispatchSynthesizedTouchCancelForActiveTouch(
+      const ActiveTouch &cancelledTouch,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers);
+
+  // Look up the active touch for pointerId, erase it, and dispatch cancel events.
+  // Returns true iff a touch was found and cancel events were dispatched.
+  bool CancelActiveTouchForPointerInternal(
+      PointerId pointerId,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
+
+  std::vector<winrt::Microsoft::ReactNative::ComponentView> GetTouchableViewsInPathToRoot(
+      const winrt::Microsoft::ReactNative::ComponentView &componentView);
+
   void UpdateCursor() noexcept;
   void SetCursor(facebook::react::Cursor cursor, HCURSOR hcur) noexcept;
 
+  // Allocates a small touch identifier (0–19) that is safe to use as a JS array index.
+  // Windows pointer IDs can be arbitrarily large, which causes React Native to warn and
+  // back-fill huge arrays, corrupting touch state after scrolling.
+  int AllocateTouchIdentifier() noexcept;
+
   std::map<PointerId, ActiveTouch> m_activeTouches; // iOS is map of touch event args to ActiveTouch..?
-  PointerId m_touchId = 0;
+  int m_touchId = 0; // cycling base used by AllocateTouchIdentifier
 
   std::map<PointerId, std::vector<ReactTaggedView>> m_currentlyHoveredViewsPerPointer;
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView;
   winrt::Microsoft::ReactNative::ReactContext m_context;
 
   facebook::react::Tag m_pointerCapturingComponentTag{-1}; // Component that has captured input
-  std::vector<PointerId> m_capturedPointers;
+  std::unordered_set<PointerId> m_capturedPointers;
   HCURSOR m_hcursor{nullptr};
   bool m_hcursorOwned{false}; // If we create the cursor, so we need to destroy it
   facebook::react::Cursor m_currentCursor{facebook::react::Cursor::Auto};
@@ -172,6 +196,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   winrt::event_token m_pointerMovedToken;
   winrt::event_token m_pointerWheelChangedToken;
   winrt::event_token m_pointerCaptureLostToken;
+  winrt::event_token m_pointerRoutedAwayToken;
   winrt::event_token m_pointerExitedToken;
   winrt::event_token m_keyDownToken;
   winrt::event_token m_keyUpToken;

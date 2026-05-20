@@ -39,19 +39,11 @@
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
     <CppWinRTParameters>-lib $(MSBuildProjectName)</CppWinRTParameters>
-    <!--
-    Cppwinrt.exe derives the names of the source files it generates from the $(RootNamespace)
-    property. Currently, the value of this property differs between the 'Microsoft.ReactNative' and
-    this project which - through mismatching include file names - would prevent sharing ABI
-    implementations between the two projects. The $(CppWinRTRootNamespace) property and the
-    associated 'CppWinRTSetRootNamespace' and 'CppWinRTRestoreRootNamespace' targets below
-    homogenize the root namespace for C++/WinRT code generation.
-    -->
     <CppWinRTRootNamespace>Microsoft.ReactNative</CppWinRTRootNamespace>
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</ProjectGuid>
     <ProjectName>React.Windows.Desktop</ProjectName>
-    <RootNamespace>facebook.react</RootNamespace>
+    <RootNamespace>Microsoft.ReactNative</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <CppWinRTProjectLanguage>C++/WinRT</CppWinRTProjectLanguage>
@@ -61,12 +53,7 @@
     <V8AppPlatform>win32</V8AppPlatform>
     <HermesCompileRtti>false</HermesCompileRtti>
     <DisableWindowsAppSDKMLAutoInitialize>true</DisableWindowsAppSDKMLAutoInitialize>
-    <!-- Default include the Fabric interface. -->
-    <IncludeFabricInterface Condition="'$(IncludeFabricInterface)'==''">true</IncludeFabricInterface>
-    <!-- Default enable WinUI3, if unset but also check for IncludeFabricInterface as it requires WinUI3 now to compile. -->
-    <UseWinUI3 Condition="'$(IncludeFabricInterface)'=='true' or '$(UseWinUI3)'==''">true</UseWinUI3>
-    <!-- Desktop can use WinUI3 in Old Arch so disable the check. -->
-    <ForcePaperUseWinUI3 Condition="'$(UseWinUI3)'=='true'">true</ForcePaperUseWinUI3>
+    <UseWinUI3>true</UseWinUI3>
     <!-- Prevents Microsoft.Web.WebView2.Core.dll from being added to ReferenceCopyLocalPaths -->
     <WebView2EnableCsWinRTProjectionExcludeCoreRef>true</WebView2EnableCsWinRTProjectionExcludeCoreRef>
   </PropertyGroup>
@@ -104,14 +91,12 @@
     <ClCompile>
       <!--
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
-        CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
       -->
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
         _WINSOCK_DEPRECATED_NO_WARNINGS;
         _WIN32_WINNT=$(WinVer);
         WIN32;
-        CORE_ABI;
         _WINDOWS;
         FOLLY_CFG_NO_COROUTINES;
         FOLLY_NO_CONFIG;
@@ -143,31 +128,10 @@
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
-      <!--
-        CORE_ABI - marks ABI elements that are shared between UWP and Win32 DLLs.
-      -->
-      <PreprocessorDefinitions>CORE_ABI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <Midl Include="ABI\MessageQueue.idl" />
-    <Midl Include="ABI\NativeLogging.idl" />
-    <Midl Include="ABI\TestController.idl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="ABI\MessageQueueShim.cpp">
-      <DependentUpon>ABI\MessageQueue.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="ABI\NativeLogEventSource.cpp">
-      <DependentUpon>ABI\NativeLogging.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="ABI\TestController.cpp">
-      <DependentUpon>ABI\TestController.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
     <ClCompile Include="pch.cpp">
@@ -176,41 +140,6 @@
     <ClCompile Include="WebSocketResourceFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AdditionAnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AnimatedPlatformConfig.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\AnimationDriver.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\CalculatedAnimationDriver.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\DecayAnimationDriver.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\DiffClampAnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\DivisionAnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\EventAnimationDriver.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\FrameAnimationDriver.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\InterpolationAnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\ModulusAnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\MultiplicationAnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\NativeAnimatedModule.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\NativeAnimatedNodeManager.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\PropsAnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\SpringAnimationDriver.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\StyleAnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\SubtractionAnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\TrackingAnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\TransformAnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\Animated\ValueAnimatedNode.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\ImageViewManagerModule.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Utils\KeyboardUtils.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ABI\MessageQueueShim.h">
-      <DependentUpon>ABI\MessageQueue.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="ABI\NativeLogEventSource.h">
-      <DependentUpon>ABI\NativeLogging.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="ABI\TestController.h">
-      <DependentUpon>ABI\TestController.idl</DependentUpon>
-    </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\DynamicReader.h">
       <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
     </ClInclude>
@@ -276,18 +205,4 @@
     </When>
   </Choose>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <!-- See $(CppWinRTRootNamespace) comments above. -->
-  <Target Name="CppWinRTSetRootNamespace" BeforeTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
-    <PropertyGroup>
-      <_CppWinRTOriginalRootNamespace>$(RootNamespace)</_CppWinRTOriginalRootNamespace>
-      <RootNamespace>$(CppWinRTRootNamespace)</RootNamespace>
-    </PropertyGroup>
-  </Target>
-  <!-- See $(CppWinRTRootNamespace) comments above. -->
-  <Target Name="CppWinRTRestoreRootNamespace" AfterTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
-    <PropertyGroup>
-      <RootNamespace>$(_CppWinRTOriginalRootNamespace)</RootNamespace>
-      <_CppWinRTOriginalRootNamespace />
-    </PropertyGroup>
-  </Target>
 </Project>
