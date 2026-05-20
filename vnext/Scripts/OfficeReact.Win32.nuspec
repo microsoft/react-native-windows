@@ -56,7 +56,6 @@
 
     <!-- Required for win32 -->
     <file src="$nugetroot$\inc\Shared\DevServerHelper.h" target="inc"/>
-    <file src="$nugetroot$\inc\ReactWin32\JSBigStringResourceDll.h" target="inc"/>
     <file src="$nugetroot$\inc\react-native-win32.x64.def" target="inc"/>
     <file src="$nugetroot$\inc\react-native-win32.x86.def" target="inc"/>
 

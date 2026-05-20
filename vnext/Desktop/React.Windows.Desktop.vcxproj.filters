@@ -41,9 +41,6 @@
     <ClCompile Include="ABI\TestController.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
-    <ClCompile Include="JSBigStringResourceDll.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="module.g.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
@@ -66,9 +63,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="JSBigStringResourceDll.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Modules\TimingModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
