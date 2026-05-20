@@ -15,9 +15,7 @@
 
 #include <cxxreact/MessageQueueThread.h>
 
-#if (defined(_MSC_VER) && (defined(WINRT)))
 #include <Utils/LocalBundleReader.h>
-#endif
 
 #if _MSC_VER
 #pragma warning(push)
@@ -235,11 +233,6 @@ FileMappingBigString::FileMappingBigString(const std::wstring &filename, uint32_
       m_data{nullptr, nullptr},
       m_size{0},
       m_fileSize{0} {
-#if (defined(WINRT))
-  std::unique_ptr<void, decltype(&CloseHandle)> fileHandle{
-      CreateFile2(filename.c_str(), GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, nullptr /* pCreateExParams */),
-      &CloseHandle};
-#else
   std::unique_ptr<void, decltype(&CloseHandle)> fileHandle{
       CreateFileW(
           filename.c_str(),
@@ -250,7 +243,6 @@ FileMappingBigString::FileMappingBigString(const std::wstring &filename, uint32_
           FILE_ATTRIBUTE_NORMAL,
           nullptr /* hTemplateFile */),
       &CloseHandle};
-#endif
 
   if (fileHandle.get() == INVALID_HANDLE_VALUE) {
     return;
@@ -271,10 +263,6 @@ FileMappingBigString::FileMappingBigString(const std::wstring &filename, uint32_
   }
   m_size = m_fileSize - offset;
 
-#if (defined(WINRT))
-  m_fileMapping.reset(CreateFileMappingFromApp(
-      fileHandle.get(), nullptr /* SecurityAttributes */, PAGE_READONLY, m_fileSize, nullptr /* Name */));
-#else
   m_fileMapping.reset(CreateFileMapping(
       fileHandle.get(),
       nullptr /* lpAttributes */,
@@ -282,24 +270,18 @@ FileMappingBigString::FileMappingBigString(const std::wstring &filename, uint32_
       0 /* dwMaximumSizeHigh */,
       m_fileSize,
       nullptr /* lpName */));
-#endif
 
   if (!m_fileMapping) {
     m_size = 0;
     return;
   }
 
-#if (defined(WINRT))
-  m_fileData.reset(
-      MapViewOfFileFromApp(m_fileMapping.get(), FILE_MAP_READ, 0 /* FileOffset */, 0 /* NumberOfBytesToMap */));
-#else
   m_fileData.reset(MapViewOfFile(
       m_fileMapping.get(),
       FILE_MAP_READ,
       0 /* dwFileOffsetHigh */,
       0 /* dwFileOffsetLow */,
       0 /* dwNumberOfBytesToMap */));
-#endif
 
   if (!m_fileData) {
     m_size = 0;
@@ -331,21 +313,16 @@ std::unique_ptr<const FileMappingBigString> FileMappingBigString::fromPath(const
 std::unique_ptr<const facebook::react::JSBigString> JsBigStringFromPath(
     std::shared_ptr<facebook::react::DevSettings> devSettings,
     const std::string &jsBundleRelativePath) noexcept {
-#if (defined(_MSC_VER) && !defined(WINRT))
-  std::wstring bundlePath = (fs::u8path(devSettings->bundleRootPath) / jsBundleRelativePath).wstring();
-  return FileMappingBigString::fromPath(bundlePath);
-#else
   std::wstring bundlePath;
   if (devSettings->bundleRootPath.starts_with("resource://")) {
     auto uri = winrt::Windows::Foundation::Uri(
         winrt::to_hstring(devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
     bundlePath = uri.ToString();
+    return std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
   } else {
     bundlePath = (fs::u8path(devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).wstring();
+    return FileMappingBigString::fromPath(bundlePath);
   }
-
-  return std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
-#endif
 }
 
 } // namespace Microsoft::ReactNative

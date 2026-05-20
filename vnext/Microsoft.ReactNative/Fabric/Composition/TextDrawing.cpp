@@ -7,7 +7,6 @@
 #include "TextDrawing.h"
 
 #include <AutoDraw.h>
-#include <Utils/ValueUtils.h>
 #include <unicode.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>

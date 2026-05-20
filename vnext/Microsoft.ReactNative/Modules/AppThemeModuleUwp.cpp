@@ -10,7 +10,6 @@
 #include <ReactPropertyBag.h>
 #include <Utils/Helpers.h>
 #include <Utils/ThemeUtils.h>
-#include <Utils/ValueUtils.h>
 #include <XamlUtils.h>
 #include <functional>
 #include <memory>
