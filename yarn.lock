@@ -3498,17 +3498,10 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*":
-  version "19.2.7"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.2.7.tgz#84e62c0f23e8e4e5ac2cadcea1ffeacccae7f62f"
-  integrity sha512-MWtvHrGZLFttgeEj28VXHxpmwYbor/ATPYbBfSFZEIRK0ecCFLl2Qo55z52Hss+UV9CRN7trSeq1zbgx7YDWWg==
-  dependencies:
-    csstype "^3.2.2"
-
-"@types/react@^19.0.0", "@types/react@^19.1.1", "@types/react@^19.2.3":
-  version "19.2.14"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.2.14.tgz#39604929b5e3957e3a6fa0001dafb17c7af70bad"
-  integrity sha512-ilcTH/UniCkMdtexkoCN0bI7pMcJDvmQFPvuPvmEaYA/NSfFTAgdUSLAoVjaRJm7+6PvcM+q1zYOwS4wTYMF9w==
+"@types/react@*", "@types/react@^19.0.0", "@types/react@^19.1.1", "@types/react@^19.2.3":
+  version "19.2.15"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.2.15.tgz#9e2c6a4251a290f5c525c3143caa872fa6e01e0d"
+  integrity sha512-eRwcGNHve+E8qtEQSSRl6urh+rFop4v8gm6O8rGv25CodbvFdLjA1vVQ1KkiFE0w0UPOnb8tDiFKL5lp0rtY5Q==
   dependencies:
     csstype "^3.2.2"
 
@@ -11614,7 +11607,7 @@ semver@^6.1.0, semver@^6.2.0, semver@^6.3.0, semver@^6.3.1:
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
 
-semver@^7.0.0, semver@^7.1.3, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5, semver@^7.3.7, semver@^7.5.2, semver@^7.5.3, semver@^7.5.4, semver@^7.6.0, semver@^7.6.3, semver@^7.7.3, semver@^7.7.4:
+semver@^7.0.0, semver@^7.1.3, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5, semver@^7.3.7, semver@^7.5.2, semver@^7.5.3, semver@^7.5.4, semver@^7.6.0, semver@^7.6.3, semver@^7.7.3, semver@^7.7.4, semver@^7.8.0:
   version "7.8.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.8.0.tgz#ed0661039fcbcda2ce71f01fa6adbefaa77040df"
   integrity sha512-AcM7dV/5ul4EekoQ29Agm5vri8JNqRyj39o0qpX6vDF2GZrtutZl5RwgD1XnZjiTAfncsJhMI48QQH3sN87YNA==
@@ -12483,9 +12476,9 @@ ts-api-utils@^2.1.0:
   integrity sha512-CUgTZL1irw8u29bzrOD/nH85jqyc74D6SshFgujOIA7osm2Rz7dYH77agkx7H4FBNxDq7Cjf+IjaX/8zwFW+ZQ==
 
 ts-jest@^29.0.3:
-  version "29.4.9"
-  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.4.9.tgz#47dc33d0f5c36bddcedd16afefae285e0b049d2d"
-  integrity sha512-LTb9496gYPMCqjeDLdPrKuXtncudeV1yRZnF4Wo5l3SFi0RYEnYRNgMrFIdg+FHvfzjCyQk1cLncWVqiSX+EvQ==
+  version "29.4.10"
+  resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-29.4.10.tgz#f881f87aa7a8b1f506130f8d4aeb0759ec49d710"
+  integrity sha512-vMTlTTtvz5aKZgzOoc7DQ5TzAL2fCzl8JnG1+ZpwjQa/g0xLlwE44yQ+1Cao9ZP1xVv9y5g34IFXEiqGOGFBUA==
   dependencies:
     bs-logger "^0.2.6"
     fast-json-stable-stringify "^2.1.0"
@@ -12493,7 +12486,7 @@ ts-jest@^29.0.3:
     json5 "^2.2.3"
     lodash.memoize "^4.1.2"
     make-error "^1.3.6"
-    semver "^7.7.4"
+    semver "^7.8.0"
     type-fest "^4.41.0"
     yargs-parser "^21.1.1"
 
