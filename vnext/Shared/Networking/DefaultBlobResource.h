@@ -51,10 +51,22 @@ class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHa
 
 #pragma region IWebSocketModuleContentHandler
 
+  bool Supports(int64_t socketId) noexcept override;
+
   void ProcessMessage(std::string &&message, winrt::Microsoft::ReactNative::JSValueObject &params) noexcept override;
 
   void ProcessMessage(std::vector<uint8_t> &&message, winrt::Microsoft::ReactNative::JSValueObject &params) noexcept
       override;
+
+  bool TryProcessMessage(
+      int64_t socketId,
+      std::string &&message,
+      winrt::Microsoft::ReactNative::JSValueObject &params) noexcept override;
+
+  bool TryProcessMessage(
+      int64_t socketId,
+      std::vector<uint8_t> &&message,
+      winrt::Microsoft::ReactNative::JSValueObject &params) noexcept override;
 
 #pragma endregion IWebSocketModuleContentHandler
 
