@@ -54,7 +54,9 @@ std::string GetBundleFromEmbeddedResource(const winrt::Windows::Foundation::Uri 
   return std::string(start, start + size);
 }
 
-std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::wstring bundleUri) {
+winrt::Windows::Foundation::IAsyncAction LocalBundleReader::LoadBundleAsync(
+    const std::wstring bundleUri,
+    std::string &result) {
   try {
     co_await winrt::resume_background();
 
@@ -66,7 +68,8 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::wstring b
       file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
     } else if (bundleUri.starts_with(L"resource://")) {
       winrt::Windows::Foundation::Uri uri(bundleUri);
-      co_return GetBundleFromEmbeddedResource(uri);
+      result = GetBundleFromEmbeddedResource(uri);
+      co_return;
     } else {
       file = co_await winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(bundleUri);
     }
@@ -87,7 +90,7 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::wstring b
         reinterpret_cast<uint8_t *>(&script[0]), reinterpret_cast<uint8_t *>(&script[script.length()])});
     dataReader.Close();
 
-    co_return script;
+    result = std::move(script);
   }
   // RuntimeScheduler only handles std::exception or jsi::JSError
   catch (winrt::hresult_error const &e) {
@@ -96,11 +99,13 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::wstring b
 }
 
 std::string LocalBundleReader::LoadBundle(const std::wstring &bundlePath) {
-  return LoadBundleAsync(bundlePath).get();
+  std::string result;
+  LoadBundleAsync(bundlePath, result).get();
+  return result;
 }
 
 StorageFileBigString::StorageFileBigString(const std::wstring &path) {
-  m_futureBuffer = LocalBundleReader::LoadBundleAsync(path);
+  m_pendingLoad = LocalBundleReader::LoadBundleAsync(path, m_string);
 }
 
 bool StorageFileBigString::isAscii() const {
@@ -118,8 +123,9 @@ size_t StorageFileBigString::size() const {
 }
 
 void StorageFileBigString::ensure() const {
-  if (m_string.empty()) {
-    m_string = m_futureBuffer.get();
+  if (m_pendingLoad) {
+    m_pendingLoad.get();
+    m_pendingLoad = nullptr;
   }
 }
 

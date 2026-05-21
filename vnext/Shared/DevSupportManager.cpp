@@ -33,7 +33,6 @@
 #include <cxxreact/MessageQueueThread.h>
 #pragma warning(pop)
 
-#include <future>
 #include <mutex>
 
 #include <AppModel.h>
@@ -47,7 +46,9 @@ using namespace facebook::react;
 
 namespace Microsoft::ReactNative {
 
-std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std::string &url) {
+winrt::Windows::Foundation::IAsyncAction GetJavaScriptFromServerAsync(
+    const std::string &url,
+    std::pair<std::string, bool> &result) {
   winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
   filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
   winrt::Windows::Web::Http::HttpClient httpClient(filter);
@@ -61,8 +62,9 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
   try {
     winrt::Windows::Web::Http::HttpResponseMessage response = co_await asyncRequest;
   } catch (winrt::hresult_error const &e) {
-    co_return std::make_pair(
+    result = std::make_pair(
         Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()).c_str(), false);
+    co_return;
   }
 #else
   co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncOperationWithProgress<
@@ -77,7 +79,8 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
     } else {
       error = fmt::format("Error 0x{:x} downloading {}.", static_cast<int>(asyncRequest.ErrorCode()), url);
     }
-    co_return std::make_pair(error, false);
+    result = std::make_pair(error, false);
+    co_return;
   }
 
   winrt::Windows::Web::Http::HttpResponseMessage response = asyncRequest.GetResults();
@@ -88,7 +91,7 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
 
   reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
   uint32_t len = reader.UnconsumedBufferLength();
-  std::string result;
+  std::string resultStr;
   if (len > 0 || response.IsSuccessStatusCode()) {
     std::string data;
     data.resize(len);
@@ -96,12 +99,12 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
     static_assert(
         sizeof(buf[0]) == sizeof(data[0]), "perf optimization relies on uint8_t and char being the same size");
     reader.ReadBytes(winrt::array_view(buf, buf + len));
-    result = std::move(data);
+    resultStr = std::move(data);
   } else {
-    result = fmt::format("HTTP Error {} downloading {}.", static_cast<int>(response.StatusCode()), url);
+    resultStr = fmt::format("HTTP Error {} downloading {}.", static_cast<int>(response.StatusCode()), url);
   }
 
-  co_return std::make_pair(std::move(result), response.IsSuccessStatusCode());
+  result = std::make_pair(std::move(resultStr), response.IsSuccessStatusCode());
 }
 
 void LaunchDevTools(const facebook::react::DevSettings &settings) {
@@ -185,7 +188,8 @@ std::string GetPackageName(const std::string &bundleAppId) {
   return packageName;
 }
 
-std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(const std::string &url) {
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(
+    const std::string &url) {
   winrt::Windows::Web::Http::HttpClient httpClient;
   winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(url));
   httpClient.DefaultRequestHeaders().Connection().TryParseAdd(L"keep-alive");
@@ -299,7 +303,9 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
       inlineSourceMap,
       hermesBytecodeVersion);
   try {
-    return GetJavaScriptFromServerAsync(bundleUrl).get();
+    std::pair<std::string, bool> result;
+    GetJavaScriptFromServerAsync(bundleUrl, result).get();
+    return result;
   } catch (winrt::hresult_error const &e) {
     return std::make_pair(
         "Error: " + Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()), false);
