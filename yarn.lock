@@ -4354,7 +4354,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     ts-jest: "npm:^29.0.3"
     typescript: "npm:5.0.4"
-    ws: "npm:^6.2.2"
+    ws: "npm:^7.5.10"
   languageName: unknown
   linkType: soft
 
@@ -18812,7 +18812,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^6.2.2, ws@npm:^6.2.3":
+"ws@npm:^6.2.3":
   version: 6.2.3
   resolution: "ws@npm:6.2.3"
   dependencies:
