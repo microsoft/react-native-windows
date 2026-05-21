@@ -62,8 +62,8 @@ winrt::Windows::Foundation::IAsyncAction GetJavaScriptFromServerAsync(
   try {
     winrt::Windows::Web::Http::HttpResponseMessage response = co_await asyncRequest;
   } catch (winrt::hresult_error const &e) {
-    result = std::make_pair(
-        Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()).c_str(), false);
+    result =
+        std::make_pair(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()).c_str(), false);
     co_return;
   }
 #else
