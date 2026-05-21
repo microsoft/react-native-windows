@@ -7458,8 +7458,8 @@ __metadata:
   linkType: hard
 
 "beachball@npm:^2.20.0":
-  version: 2.65.4
-  resolution: "beachball@npm:2.65.4"
+  version: 2.65.5
+  resolution: "beachball@npm:2.65.5"
   dependencies:
     "@vercel/detect-agent": "npm:^1.2.1"
     cosmiconfig: "npm:^9.0.1"
@@ -7473,7 +7473,7 @@ __metadata:
     yargs-parser: "npm:^21.1.1"
   bin:
     beachball: bin/beachball.js
-  checksum: 10c0/cae3c036d5829d0ed7b360286112e18794f2203cf0f10819553d990946432cac041f4941416c9f38772801afc5308676712060efedecc3760b56ced7be843c72
+  checksum: 10c0/198a5acb78a7f675fb22e6283b0e2f79fd82eaf8e49331b4fa1f8fb7fcc2bd25bc430973c0675a769c7a794b3cedb35343fc0f881a538f9b6f9432b6b23aadbd
   languageName: node
   linkType: hard
 
