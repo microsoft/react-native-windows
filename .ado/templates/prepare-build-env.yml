@@ -37,6 +37,13 @@ steps:
     inputs:
       versionSpec: ">=5.8.0"
 
+  - task: UseDotNet@2
+    displayName: 'Install .NET 10 SDK'
+    inputs:
+      packageType: 'sdk'
+      version: '10.x'
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
   - template: set-appx-platforms.yml
     parameters:
       platform: ${{ parameters.platform }}
