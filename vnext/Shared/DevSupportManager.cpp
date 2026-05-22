@@ -112,9 +112,8 @@ void LaunchDevTools(const facebook::react::DevSettings &settings) {
   filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
   winrt::Windows::Web::Http::HttpClient httpClient(filter);
   winrt::Windows::Foundation::Uri uri(
-      Microsoft::Common::Unicode::Utf8ToUtf16(
-          facebook::react::DevServerHelper::get_LaunchDevToolsCommandUrl(
-              settings.sourceBundleHost, settings.sourceBundlePort)));
+      Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_LaunchDevToolsCommandUrl(
+          settings.sourceBundleHost, settings.sourceBundlePort)));
 
   winrt::Windows::Web::Http::HttpRequestMessage request(winrt::Windows::Web::Http::HttpMethod::Get(), uri);
   httpClient.SendRequestAsync(request);
