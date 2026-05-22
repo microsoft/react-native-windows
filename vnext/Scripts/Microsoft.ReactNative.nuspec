@@ -21,12 +21,12 @@
 
     <file src="$nugetroot$\ReactWindows\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\uap10.0"/>
 
-    <file src="$nugetroot$\ReactWindows\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.CsWinRT\Microsoft.ReactNative.Projection.*" target="lib\net10.0-windows10.0.26100.0" exclude="**\*.exp;**\*.lib;**\*.winmd" />
+    <file src="$nugetroot$\ReactWindows\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative.CsWinRT\Microsoft.ReactNative.Projection.*" target="lib\net6.0-windows10.0.22621.0" exclude="**\*.exp;**\*.lib;**\*.winmd" />
 
-    <!--
+    <!-- 
     Uncomment once we are producing doc xml file
-    <file src="$nugetroot$\ReactWindows\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.xml" target="lib\uap10.0-old"/>
-    <file src="$nugetroot$\ReactWindows\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.xml" target="lib\uap10.0"/>
+    <file src="$nugetroot$\ReactWindows\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.xml" target="lib\uap10.0-old"/> 
+    <file src="$nugetroot$\ReactWindows\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.xml" target="lib\uap10.0"/> 
     -->
 
     <!-- Included in Microsoft.ReactNative -->

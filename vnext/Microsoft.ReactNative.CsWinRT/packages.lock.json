@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    "net10.0-windows10.0.26100": {
+    "net6.0-windows10.0.22621": {
       "Microsoft.Windows.CsWinRT": {
         "type": "Direct",
         "requested": "[2.2.0, )",
@@ -118,8 +118,7 @@
         "contentHash": "l7ZptLbvOWHEJgxZtCQhUzDNCakNcqSJyAa7DNXBLKxGIUMDqq9LnWyYRZZFNQwN7hRfDAR8fEAblP1UHYHGgw==",
         "dependencies": {
           "Microsoft.WindowsAppSDK.Base": "1.8.251216001",
-          "Microsoft.WindowsAppSDK.Foundation": "1.8.260126001",
-          "System.Numerics.Tensors": "9.0.0"
+          "Microsoft.WindowsAppSDK.Foundation": "1.8.260126001"
         }
       },
       "Microsoft.WindowsAppSDK.Runtime": {
@@ -148,11 +147,6 @@
           "Microsoft.WindowsAppSDK.Foundation": "1.8.260203002",
           "Microsoft.WindowsAppSDK.InteractiveExperiences": "1.8.260125001"
         }
-      },
-      "System.Numerics.Tensors": {
-        "type": "Transitive",
-        "resolved": "9.0.0",
-        "contentHash": "hyJB4UlpAi19Xr9AXzu2NuagKC4lPfHObNMEAA0HmqFz2rX7wKgzeYzO/jM/eBHDhnUGFFEjk5cOoJaxqg5J4A=="
       },
       "common": {
         "type": "Project",
