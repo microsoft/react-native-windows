@@ -94,7 +94,7 @@ $vsComponents = @('Microsoft.Component.MSBuild',
     $vcToolsComponent,
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
     'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core',
-    'Microsoft.VisualStudio.Component.Windows11SDK.22621');
+    'Microsoft.VisualStudio.Component.Windows11SDK.26100');
 
 # UWP.VC is not needed to build the projects with msbuild, but the VS IDE requires it.
 if (!($tagsToInclude.Contains('buildLab'))) {
