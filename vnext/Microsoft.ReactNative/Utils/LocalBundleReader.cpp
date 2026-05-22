@@ -29,34 +29,39 @@ std::string GetBundleFromEmbeddedResource(const winrt::Windows::Foundation::Uri 
 
   auto resource = FindResourceW(hmodule, resourceName, RT_RCDATA);
   if (!resource) {
-    throw std::invalid_argument(fmt::format(
-        "Couldn't find resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+    throw std::invalid_argument(
+        fmt::format(
+            "Couldn't find resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
   }
 
   auto hglobal = LoadResource(hmodule, resource);
   if (!hglobal) {
-    throw std::invalid_argument(fmt::format(
-        "Couldn't load resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+    throw std::invalid_argument(
+        fmt::format(
+            "Couldn't load resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
   }
 
   auto start = static_cast<char *>(LockResource(hglobal));
   if (!start) {
-    throw std::invalid_argument(fmt::format(
-        "Couldn't lock resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+    throw std::invalid_argument(
+        fmt::format(
+            "Couldn't lock resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
   }
 
   auto size = SizeofResource(hmodule, resource);
   if (!size) {
-    throw std::invalid_argument(fmt::format(
-        "Couldn't get size of resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+    throw std::invalid_argument(
+        fmt::format(
+            "Couldn't get size of resource {} in module {}",
+            winrt::to_string(resourceName),
+            winrt::to_string(moduleName)));
   }
 
   return std::string(start, start + size);
 }
 
-winrt::Windows::Foundation::IAsyncAction LocalBundleReader::LoadBundleAsync(
-    const std::wstring bundleUri,
-    std::string &result) {
+winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> LocalBundleReader::LoadBundleAsync(
+    const std::wstring &bundleUri) {
   try {
     co_await winrt::resume_background();
 
@@ -68,8 +73,7 @@ winrt::Windows::Foundation::IAsyncAction LocalBundleReader::LoadBundleAsync(
       file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
     } else if (bundleUri.starts_with(L"resource://")) {
       winrt::Windows::Foundation::Uri uri(bundleUri);
-      result = GetBundleFromEmbeddedResource(uri);
-      co_return;
+      co_return winrt::to_hstring(GetBundleFromEmbeddedResource(uri));
     } else {
       file = co_await winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(bundleUri);
     }
@@ -86,26 +90,25 @@ winrt::Windows::Foundation::IAsyncAction LocalBundleReader::LoadBundleAsync(
     // DataReader.ReadBytes will read as many bytes as are present in the
     // array_view. The backing string has fileBuffer.Length() + 1 bytes, without
     // an explicit end it will read 1 byte to many and throw.
-    dataReader.ReadBytes(winrt::array_view<uint8_t>{
-        reinterpret_cast<uint8_t *>(&script[0]), reinterpret_cast<uint8_t *>(&script[script.length()])});
+    dataReader.ReadBytes(
+        winrt::array_view<uint8_t>{
+            reinterpret_cast<uint8_t *>(&script[0]), reinterpret_cast<uint8_t *>(&script[script.length()])});
     dataReader.Close();
 
-    result = std::move(script);
+    co_return winrt::to_hstring(script);
   }
   // RuntimeScheduler only handles std::exception or jsi::JSError
   catch (winrt::hresult_error const &e) {
-    throw std::exception(winrt::to_string(e.message()).c_str());
+    throw std::runtime_error(winrt::to_string(e.message()));
   }
 }
 
 std::string LocalBundleReader::LoadBundle(const std::wstring &bundlePath) {
-  std::string result;
-  LoadBundleAsync(bundlePath, result).get();
-  return result;
+  return winrt::to_string(LoadBundleAsync(bundlePath).get());
 }
 
 StorageFileBigString::StorageFileBigString(const std::wstring &path) {
-  m_pendingLoad = LocalBundleReader::LoadBundleAsync(path, m_string);
+  m_pendingLoad = LocalBundleReader::LoadBundleAsync(path);
 }
 
 bool StorageFileBigString::isAscii() const {
@@ -124,7 +127,7 @@ size_t StorageFileBigString::size() const {
 
 void StorageFileBigString::ensure() const {
   if (m_pendingLoad) {
-    m_pendingLoad.get();
+    m_string = winrt::to_string(m_pendingLoad.get());
     m_pendingLoad = nullptr;
   }
 }

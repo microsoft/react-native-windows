@@ -10,7 +10,7 @@ namespace Microsoft::ReactNative {
 
 class LocalBundleReader {
  public:
-  static winrt::Windows::Foundation::IAsyncAction LoadBundleAsync(const std::wstring bundlePath, std::string &result);
+  static winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> LoadBundleAsync(const std::wstring &bundlePath);
   static std::string LoadBundle(const std::wstring &bundlePath);
 };
 
@@ -24,7 +24,7 @@ class StorageFileBigString : public facebook::react::JSBigString {
   void ensure() const;
 
  private:
-  mutable winrt::Windows::Foundation::IAsyncAction m_pendingLoad;
+  mutable winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> m_pendingLoad;
   mutable std::string m_string;
 };
 
