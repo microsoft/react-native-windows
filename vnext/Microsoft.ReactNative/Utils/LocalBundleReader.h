@@ -10,7 +10,7 @@ namespace Microsoft::ReactNative {
 
 class LocalBundleReader {
  public:
-  static winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> LoadBundleAsync(const std::wstring &bundlePath);
+  static winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> LoadBundleAsync(const std::wstring bundlePath);
   static std::string LoadBundle(const std::wstring &bundlePath);
 };
 

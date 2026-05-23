@@ -55,7 +55,7 @@ std::string GetBundleFromEmbeddedResource(const winrt::Windows::Foundation::Uri 
 }
 
 winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> LocalBundleReader::LoadBundleAsync(
-    const std::wstring &bundleUri) {
+    const std::wstring bundleUri) {
   try {
     co_await winrt::resume_background();
 
