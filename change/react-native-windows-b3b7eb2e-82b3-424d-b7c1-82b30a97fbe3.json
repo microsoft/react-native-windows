@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Some fixes for rounded borders",
+  "comment": "Update template to have more consistent config between ship/debug",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

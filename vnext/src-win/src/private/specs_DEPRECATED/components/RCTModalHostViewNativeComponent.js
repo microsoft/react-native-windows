@@ -152,6 +152,10 @@ type RCTModalHostViewNativeProps = Readonly<{|
     */
   // [Windows
   title?: WithDefault<string, null>,
+
+  hideTitleBar?: WithDefault<boolean, false>,
+
+  hideBorder?: WithDefault<boolean, false>,
   // Windows]
 |}>;
 

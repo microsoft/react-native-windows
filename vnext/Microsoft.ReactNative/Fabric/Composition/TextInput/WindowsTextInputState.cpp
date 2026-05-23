@@ -7,7 +7,7 @@
 
 #include "WindowsTextInputState.h"
 
-#include <react/renderer/components/text/platform/android/react/renderer/components/text/ParagraphState.h> // [windows]
+#include <react/renderer/components/text/platform/cxx/react/renderer/components/text/ParagraphState.h> // [windows]
 
 namespace facebook::react {
 

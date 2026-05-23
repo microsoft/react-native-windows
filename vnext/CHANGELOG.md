@@ -1,8 +1,49 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 22 Apr 2026 16:40:25 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 13 May 2026 18:22:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1055
+
+Wed, 13 May 2026 18:22:07 GMT
+
+### Changes
+
+- Show tooltip on keyboard focus, enforce single visible tooltip (74712637+iamAbhi-916@users.noreply.github.com)
+- Fix #16047: Pressables inside ScrollView remained stuck in the pressed state after a touch-driven scroll, and on non-100% Windows display scales the next tap on a row would not register `press`. Two underlying causes were addressed: (1) VisualInteractionSource::TryRedirectForManipulation does not deliver PointerCaptureLost for the redirected pointer, leaving a zombie entry in CompositionEventHandler::m_activeTouches — now resolved by synthesizing a touchcancel from the InputPointerSource.PointerRoutedAway event, which fires reliably on the redirect path; and (2) ScrollViewComponentView::updateStateWithContentOffset wrote the raw physical-pixel ScrollPosition into ScrollViewShadowNode state's contentOffset, which Fabric layout treats as DIPs, so JS UIManager.measure() over-subtracted the offset by pointScaleFactor after any scroll on a >100% display, causing Pressability to fire LEAVE_PRESS_RECT synchronously and suppress press — now divides by pointScaleFactor to match the JS event-emitter paths in the same file. (gordomacmaster@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.290
+
+## 0.0.0-canary.1054
+
+Mon, 11 May 2026 14:34:27 GMT
+
+### Changes
+
+- Add hideTitleBar and hideBorder to Modal (30809111+acoates-ms@users.noreply.github.com)
+- fix: use IsPrimary() for touch pointer isPrimary instead of hardcoded pointer ID check (gordomacmaster@gmail.com)
+
+## 0.0.0-canary.1053
+
+Sun, 10 May 2026 18:20:42 GMT
+
+### Changes
+
+- Fix touch event handling, improve reliability, and optimize performance (gordomacmaster@gmail.com)
+- fix: cancel active touches in onPointerCaptureLost to prevent zombie touch state (gordomacmaster@gmail.com)
+- Upgrade to PowerShell 7 (julio.rocha@microsoft.com)
+- Image does not consistently rerender on image source change (30809111+acoates-ms@users.noreply.github.com)
+- fix: null dereference in get_SelectionContainer when no container found (66076509+vineethkuttan@users.noreply.github.com)
+- Use hermes-windows 0.0.0-2605.6002-2279da22 (vmorozov@microsoft.com)
+- Implement outline properties on view (30809111+acoates-ms@users.noreply.github.com)
+- fix: map Windows touch pointer IDs to small JS-safe identifiers in CompositionEventHandler (gordomacmaster@gmail.com)
+- Add ability to register modules as eager init (30809111+acoates-ms@users.noreply.github.com)
+- Some fixes for rounded borders (30809111+acoates-ms@users.noreply.github.com)
+- Minor text rendering perf improvement (30809111+acoates-ms@users.noreply.github.com)
+- Remove CORE_ABI and bring rnwin32 and MS.RN much closer in functionality (30809111+acoates-ms@users.noreply.github.com)
+- fix: cancel zombie touch state when ScrollView redirects pointer for manipulation, scope per-pointer events to the changed pointer, and remove always-true IsPointerWithinInitialTree fallback (gordomacmaster@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.289
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.2
 
 ## 0.0.0-canary.1052
 

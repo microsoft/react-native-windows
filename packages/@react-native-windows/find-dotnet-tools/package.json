@@ -1,0 +1,52 @@
+{
+  "name": "@react-native-windows/find-dotnet-tools",
+  "description": "Helpers to locate .NET-based tools (e.g. pwsh) restored via NuGet or available on PATH.",
+  "version": "0.0.0-canary.2",
+  "license": "MIT",
+  "scripts": {
+    "build": "rnw-scripts build",
+    "clean": "rnw-scripts clean",
+    "lint": "rnw-scripts lint",
+    "lint:fix": "rnw-scripts lint:fix",
+    "watch": "rnw-scripts watch"
+  },
+  "main": "lib-commonjs/findDotnetTools.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows",
+    "directory": "packages/@react-native-windows/find-dotnet-tools"
+  },
+  "dependencies": {
+    "@react-native-windows/fs": "^0.0.0-canary.72"
+  },
+  "devDependencies": {
+    "@rnw-scripts/eslint-config": "1.2.38",
+    "@rnw-scripts/just-task": "2.3.58",
+    "@rnw-scripts/ts-config": "2.0.6",
+    "@types/node": "^22.14.0",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
+    "eslint": "^8.19.0",
+    "prettier": "^3.6.2",
+    "typescript": "5.0.4"
+  },
+  "beachball": {
+    "defaultNpmTag": "canary",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch",
+      "premajor",
+      "preminor",
+      "prepatch"
+    ]
+  },
+  "promoteRelease": true,
+  "files": [
+    "lib-commonjs",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">= 22"
+  }
+}

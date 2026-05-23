@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Minor text rendering perf improvement",
+  "comment": "Enable RCT_REMOVE_LEGACY_ARCH",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
