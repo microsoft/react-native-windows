@@ -262,7 +262,7 @@ void WindowsTextLayoutManager::GetTextLayout(
       attachments.push_back(attachment);
       position += 1;
     } else {
-      unsigned int length = static_cast<UINT32>(fragment.string.length());
+      unsigned int length = static_cast<UINT32>(Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string).length());
       DWRITE_TEXT_RANGE range = {position, length};
       TextAttributes attributes = fragment.textAttributes;
       DWRITE_FONT_STYLE fragmentStyle = DWRITE_FONT_STYLE_NORMAL;
