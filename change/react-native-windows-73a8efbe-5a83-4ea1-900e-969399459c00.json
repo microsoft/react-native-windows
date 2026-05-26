@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Race condition can cause the callinvoker to get a null runtime during shutdown.  Which should just skip the invoke.",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
