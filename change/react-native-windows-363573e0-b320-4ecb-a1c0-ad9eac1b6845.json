@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix Unicode length Calculation in Text Component",
+  "packageName": "react-native-windows",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
