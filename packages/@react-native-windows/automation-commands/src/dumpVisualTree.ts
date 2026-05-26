@@ -5,7 +5,7 @@
  * @format
  */
 
-import {AutomationClient} from '@react-native-windows/automation-channel';
+import { AutomationClient } from '@react-native-windows/automation-channel';
 
 /**
  * Schema of tree dumped node
@@ -45,7 +45,7 @@ export type ComponentNode = {
   Type: string;
   _Props?: {
     TestId?: string;
-    Sources?: [{Uri?: string}];
+    Sources?: [{ Uri?: string }];
   };
   __Children?: [ComponentNode];
 };
@@ -137,23 +137,23 @@ function removeGuidsFromImageSourcesHelper(node: ComponentNode) {
         } else {
           // When getting files from a prebuilt bundle the uri is going to include a local path, which would make snapshots inconsistent,
           // This logic replaces the local path so that we get consistent results.
-          // file://E:\\repos\\react-native-windows\\packages\\e2e-test-app-fabric\\windows\\RNTesterApp-Fabric.Package\\bin\\x64\\Release\\AppX\\RNTesterApp-Fabric\\Bundle\\@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png
+          // E:\\repos\\react-native-windows\\packages\\e2e-test-app-fabric\\windows\\RNTesterApp-Fabric.Package\\bin\\x64\\Release\\AppX\\RNTesterApp-Fabric\\Bundle\\@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png
           // becomes
           // <localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png
           const packagesPath = require('path')
             .resolve(__dirname, '../../..')
             .replace(/\\/g, '\\\\');
           source.Uri = source.Uri.replace(
-            new RegExp(`file://${packagesPath}.*\\\\Bundle\\\\assets/_+`),
+            new RegExp(`${packagesPath}.*\\\\Bundle\\\\assets/_+`),
             '<localOrBundlerUri>',
           );
 
           // When using rnx-kit's asset monorepo plugin assets outside the project root become something like:
-          // file://D:\\a\\_work\\1\\s\\packages\\e2e-test-app-fabric\\windows\\RNTesterApp-Fabric.Package\\bin\\x64\\Release\\AppX\\RNTesterApp-Fabric\\Bundle\\assets?unstable_path=_@react-native-windows/tester/js/assets/dislike.png
+          // D:\\a\\_work\\1\\s\\packages\\e2e-test-app-fabric\\windows\\RNTesterApp-Fabric.Package\\bin\\x64\\Release\\AppX\\RNTesterApp-Fabric\\Bundle\\assets?unstable_path=_@react-native-windows/tester/js/assets/dislike.png
           // becomes
           // <localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png
           source.Uri = source.Uri.replace(
-            new RegExp(`file://${packagesPath}.*\\\\Bundle\\\\assets?`),
+            new RegExp(`${packagesPath}.*\\\\Bundle\\\\assets?`),
             '<localOrBundlerUri>',
           );
 
