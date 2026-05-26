@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 26 May 2026 22:08:38 GMT",
+      "version": "0.81.24",
+      "tag": "react-native-windows_v0.81.24",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4e9017a484c3cba57081dfef12c4d96edae2ebe4",
+            "comment": "Race condition can cause the callinvoker to get a null runtime during shutdown.  Which should just skip the invoke."
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 16:45:59 GMT",
       "version": "0.81.23",
       "tag": "react-native-windows_v0.81.23",
