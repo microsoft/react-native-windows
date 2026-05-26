@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bump @xmldom/xmldom from 0.7.13 to 0.8.13",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "AzureDevOps@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

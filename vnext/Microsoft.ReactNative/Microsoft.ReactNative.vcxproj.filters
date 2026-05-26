@@ -137,9 +137,6 @@
     <ClCompile Include="Utils\LocalBundleReader.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\CreateModules.cpp">
-      <Filter>Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\ReactViewInstance.cpp" />
   </ItemGroup>
