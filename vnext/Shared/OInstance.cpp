@@ -314,13 +314,17 @@ std::unique_ptr<const facebook::react::JSBigString> JsBigStringFromPath(
     std::shared_ptr<facebook::react::DevSettings> devSettings,
     const std::string &jsBundleRelativePath) noexcept {
   std::wstring bundlePath;
-  if (devSettings->bundleRootPath.starts_with("resource://")) {
+  if (devSettings->bundleRootPath.starts_with("resource://" || devSettings->bundleRootPath.starts_with("ms-app"))) {
     auto uri = winrt::Windows::Foundation::Uri(
         winrt::to_hstring(devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
     bundlePath = uri.ToString();
     return std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
   } else {
-    bundlePath = (fs::u8path(devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).wstring();
+    bundlePath = (fs::u8path(
+                      devSettings->bundleRootPath.starts_with("file://") ? devSettings->bundleRootPath.substr(7)
+                                                                         : devSettings->bundleRootPath) /
+                  (jsBundleRelativePath + devSettings->bundleSuffix))
+                     .wstring();
     return FileMappingBigString::fromPath(bundlePath);
   }
 }

@@ -52,6 +52,8 @@ struct DevSettings {
   /// Enables the user to set a custom root path for bundle resolution
   std::string bundleRootPath;
 
+  std::string bundleSuffix;
+
   /// Enables debugging directly in the JavaScript engine.
   bool useDirectDebugger{false};
 

@@ -105,7 +105,7 @@ namespace Microsoft.ReactNative
 
     DOC_STRING(
       "The name of the JavaScript bundle file to load. This should be a relative path from @.BundleRootPath. "
-      "The `.bundle` extension will be appended to the end, when looking for the bundle file.\n"
+      "The value of @.JavaScriptBundleSuffix will be appended to the end, when looking for the bundle file.\n"
       "If using an embedded RCDATA resource, this identifies the resource ID that stores the bundle. See @.BundleRootPath.")
     DOC_DEFAULT("index.windows")
     String JavaScriptBundleFile { get; set; };
@@ -194,6 +194,10 @@ namespace Microsoft.ReactNative
     )
     DOC_DEFAULT("ms-appx:///Bundle/")
     String BundleRootPath { get; set; };
+
+    DOC_STRING("Appended to the end of @.JavaScriptBundleFile when locating a bundle file to load")
+    DOC_DEFAULT(".bundle")
+    String JavaScriptBundleSuffix { get; set; };
 
     DOC_STRING(
       "When @.UseDirectDebugger is enabled, this controls the port that the JavaScript engine debugger will run on.")

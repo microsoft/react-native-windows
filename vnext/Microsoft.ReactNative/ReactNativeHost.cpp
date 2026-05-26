@@ -121,6 +121,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.SetUseLiveReload(m_instanceSettings.UseLiveReload());
   reactOptions.EnableJITCompilation = m_instanceSettings.EnableJITCompilation();
   reactOptions.BundleRootPath = to_string(m_instanceSettings.BundleRootPath());
+  reactOptions.BundleSuffix = to_string(m_instanceSettings.JavaScriptBundleSuffix());
   reactOptions.DeveloperSettings.DebuggerPort = m_instanceSettings.DebuggerPort();
   reactOptions.DeveloperSettings.DebuggerRuntimeName = to_string(m_instanceSettings.DebuggerRuntimeName());
   if (m_instanceSettings.RedBoxHandler()) {
