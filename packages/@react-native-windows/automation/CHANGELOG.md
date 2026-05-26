@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Thu, 14 May 2026 11:15:24 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 26 May 2026 07:09:57 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.8
+
+Tue, 26 May 2026 07:09:57 GMT
+
+### Patches
+
+- Promote 0.82 to legacy (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.82.8
+- Bump @react-native-windows/fs to v0.82.1
 
 ## 0.82.7
 
