@@ -19,13 +19,23 @@ CallInvoker::CallInvoker(
     : m_callInvoker(callInvoker), m_context(&reactContext) {}
 
 void CallInvoker::InvokeAsync(CallFunc func) noexcept {
-  m_callInvoker->invokeAsync(
-      [reactContext = m_context, func](facebook::jsi::Runtime & /*runtime*/) { func(reactContext->JsiRuntime()); });
+  m_callInvoker->invokeAsync([reactContext = m_context, func](facebook::jsi::Runtime & /*runtime*/) {
+    auto runtime = reactContext->JsiRuntime();
+    if (!runtime)
+      return;
+
+    func(runtime);
+  });
 }
 
 void CallInvoker::InvokeSync(CallFunc func) noexcept {
-  m_callInvoker->invokeSync(
-      [reactContext = m_context, func](facebook::jsi::Runtime & /*runtime*/) { func(reactContext->JsiRuntime()); });
+  m_callInvoker->invokeSync([reactContext = m_context, func](facebook::jsi::Runtime & /*runtime*/) {
+    auto runtime = reactContext->JsiRuntime();
+    if (!runtime)
+      return;
+
+    func(runtime);
+  });
 }
 
 winrt::Microsoft::ReactNative::CallInvoker CallInvoker::FromProperties(
