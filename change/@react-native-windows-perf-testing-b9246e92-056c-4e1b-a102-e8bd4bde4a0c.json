@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Promote 0.83 to latest",
+  "packageName": "@react-native-windows/perf-testing",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
