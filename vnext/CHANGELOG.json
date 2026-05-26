@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 26 May 2026 08:35:27 GMT",
+      "version": "0.83.0",
+      "tag": "react-native-windows_v0.83.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0fc74b3bd7d368b133e5633b387a79b4df844a96",
+            "comment": "Promote 0.83 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.83.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.83.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.83.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 May 2026 06:58:54 GMT",
       "version": "0.83.0-preview.5",
       "tag": "react-native-windows_v0.83.0-preview.5",
