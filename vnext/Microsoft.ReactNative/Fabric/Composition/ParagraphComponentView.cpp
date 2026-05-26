@@ -149,11 +149,13 @@ facebook::react::SharedViewEventEmitter ParagraphComponentView::eventEmitterAtPo
       uint32_t textPosition = metrics.textPosition;
 
       for (auto fragment : m_attributedStringBox.getValue().getFragments()) {
-        if (textPosition < fragment.string.length()) {
+        uint32_t utf16Length =
+            static_cast<uint32_t>(::Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string).length());
+        if (textPosition < utf16Length) {
           return std::static_pointer_cast<const facebook::react::ViewEventEmitter>(
               fragment.parentShadowView.eventEmitter);
         }
-        textPosition -= static_cast<uint32_t>(fragment.string.length());
+        textPosition -= utf16Length;
       }
     }
   }
@@ -206,10 +208,12 @@ bool ParagraphComponentView::IsTextSelectableAtPoint(facebook::react::Point pt) 
 
       // Finds which fragment contains this text position
       for (auto fragment : m_attributedStringBox.getValue().getFragments()) {
-        if (textPosition < fragment.string.length()) {
+        uint32_t utf16Length =
+            static_cast<uint32_t>(::Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string).length());
+        if (textPosition < utf16Length) {
           return true;
         }
-        textPosition -= static_cast<uint32_t>(fragment.string.length());
+        textPosition -= utf16Length;
       }
     }
   }
