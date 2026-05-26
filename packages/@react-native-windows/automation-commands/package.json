@@ -38,7 +38,7 @@
     "README.md"
   ],
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.82-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",
