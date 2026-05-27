@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 26 May 2026 20:10:44 GMT",
+      "version": "0.0.0-canary.291",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.291",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "AzureDevOps@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Bump @xmldom/xmldom from 0.7.13 to 0.8.13"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.134",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 May 2026 18:22:07 GMT",
       "version": "0.0.0-canary.290",
       "tag": "@react-native-windows/cli_v0.0.0-canary.290",
