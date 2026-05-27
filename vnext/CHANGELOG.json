@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 26 May 2026 20:10:43 GMT",
+      "version": "0.0.0-canary.1056",
+      "tag": "react-native-windows_v0.0.0-canary.1056",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Template should import Microsoft.Cpp.Default.props before setting  ReactNativeWindowsDir"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Race condition can cause the callinvoker to get a null runtime during shutdown.  Which should just skip the invoke."
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Update template to have more consistent config between ship/debug"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Defer findPowershell to layoutMSRNCxx"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Enable RCT_REMOVE_LEGACY_ARCH"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Fix assert in x86 when using custom align"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Remove JSBigStringResourceDll, and unify WebsocketResource"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.291",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 May 2026 18:22:07 GMT",
       "version": "0.0.0-canary.1055",
       "tag": "react-native-windows_v0.0.0-canary.1055",
