@@ -46,7 +46,8 @@ using namespace facebook::react;
 
 namespace Microsoft::ReactNative {
 
-winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> GetJavaScriptFromServerAsync(const std::string &url) {
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IBuffer> GetJavaScriptFromServerAsync(
+    const std::string &url) {
   try {
     winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
     filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
@@ -80,28 +81,21 @@ winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> GetJavaScriptFromSer
 #endif
 
     winrt::Windows::Storage::Streams::IBuffer buffer = co_await response.Content().ReadAsBufferAsync();
-    auto reader = winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
-
-    reader.UnicodeEncoding(winrt::Windows::Storage::Streams::UnicodeEncoding::Utf8);
-    uint32_t len = reader.UnconsumedBufferLength();
-    std::string resultStr;
-    if (len > 0 || response.IsSuccessStatusCode()) {
-      std::string data;
-      data.resize(len);
-      auto buf = reinterpret_cast<uint8_t *>(data.data());
-      static_assert(
-          sizeof(buf[0]) == sizeof(data[0]), "perf optimization relies on uint8_t and char being the same size");
-      reader.ReadBytes(winrt::array_view(buf, buf + len));
-      resultStr = std::move(data);
-    } else {
-      resultStr = fmt::format("HTTP Error {} downloading {}.", static_cast<int>(response.StatusCode()), url);
-    }
 
     if (!response.IsSuccessStatusCode()) {
-      throw std::runtime_error(resultStr);
+      std::string error;
+      if (buffer.Length() > 0) {
+        auto reader = winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
+        error.resize(buffer.Length());
+        auto buf = reinterpret_cast<uint8_t *>(error.data());
+        reader.ReadBytes(winrt::array_view(buf, buf + buffer.Length()));
+      } else {
+        error = fmt::format("HTTP Error {} downloading {}.", static_cast<int>(response.StatusCode()), url);
+      }
+      throw std::runtime_error(error);
     }
 
-    co_return winrt::to_hstring(resultStr);
+    co_return buffer;
   } catch (winrt::hresult_error const &e) {
     throw std::runtime_error(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()));
   }
@@ -303,7 +297,14 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
       inlineSourceMap,
       hermesBytecodeVersion);
   try {
-    return std::make_pair(winrt::to_string(GetJavaScriptFromServerAsync(bundleUrl).get()), true);
+    auto buffer = GetJavaScriptFromServerAsync(bundleUrl).get();
+    std::string result(buffer.Length(), '\0');
+    if (!result.empty()) {
+      auto reader = winrt::Windows::Storage::Streams::DataReader::FromBuffer(buffer);
+      reader.ReadBytes(winrt::array_view<uint8_t>{
+          reinterpret_cast<uint8_t *>(&result[0]), reinterpret_cast<uint8_t *>(&result[result.length()])});
+    }
+    return std::make_pair(std::move(result), true);
   } catch (std::exception const &e) {
     return std::make_pair(std::string{"Error: "} + e.what(), false);
   } catch (winrt::hresult_error const &e) {
