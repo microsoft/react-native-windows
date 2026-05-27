@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 26 May 2026 16:45:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 26 May 2026 22:08:38 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.24
+
+Tue, 26 May 2026 22:08:38 GMT
+
+### Patches
+
+- Race condition can cause the callinvoker to get a null runtime during shutdown.  Which should just skip the invoke. (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.23
 
