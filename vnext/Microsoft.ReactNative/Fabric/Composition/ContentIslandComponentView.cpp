@@ -8,7 +8,6 @@
 
 #include <Fabric/FabricUIManagerModule.h>
 #include <IReactContext.h>
-#include <Utils/ValueUtils.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.UI.Composition.h>

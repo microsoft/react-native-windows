@@ -6,8 +6,6 @@
 
 #include "ImageComponentView.h"
 
-#include <Utils/ValueUtils.h>
-
 #include <IReactContext.h>
 
 #include <react/renderer/components/image/ImageEventEmitter.h>

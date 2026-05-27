@@ -7,7 +7,6 @@
 #include "Timing.h"
 
 #include <InstanceManager.h>
-#include <Utils/ValueUtils.h>
 #include <XamlUtils.h>
 
 #include <unknwnbase.h>

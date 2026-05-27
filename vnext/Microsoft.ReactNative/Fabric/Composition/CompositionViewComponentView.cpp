@@ -14,7 +14,6 @@
 #include <Fabric/Composition/ReactNativeIsland.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Utils/KeyboardUtils.h>
-#include <Utils/ValueUtils.h>
 #include <atlcomcli.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Microsoft.UI.Input.h>

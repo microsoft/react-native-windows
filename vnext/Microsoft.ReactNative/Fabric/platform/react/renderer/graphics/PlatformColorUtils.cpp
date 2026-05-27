@@ -3,7 +3,6 @@
 
 #include "PlatformColorUtils.h"
 #include <Utils/ThemeUtils.h>
-#include <Utils/ValueUtils.h>
 #include <react/renderer/graphics/Color.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "HostPlatformColor.h"

@@ -65,6 +65,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   hstring JavaScriptBundleFile() noexcept;
   void JavaScriptBundleFile(hstring const &value) noexcept;
 
+  hstring JavaScriptBundleSuffix() noexcept;
+  void JavaScriptBundleSuffix(hstring const &value) noexcept;
+
   hstring BundleAppId() noexcept;
   void BundleAppId(hstring const &value) noexcept;
 
@@ -179,6 +182,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool m_enableByteCodeCaching{false};
   hstring m_byteCodeFileUri{};
   hstring m_debugBundlePath{};
+  hstring m_bundleSuffix{L".bundle"};
   hstring m_bundleRootPath{};
   uint16_t m_debuggerPort{9229};
   IRedBoxHandler m_redBoxHandler{nullptr};
@@ -223,6 +227,14 @@ inline hstring ReactInstanceSettings::JavaScriptBundleFile() noexcept {
 
 inline void ReactInstanceSettings::JavaScriptBundleFile(hstring const &value) noexcept {
   m_javaScriptBundleFile = value;
+}
+
+inline hstring ReactInstanceSettings::JavaScriptBundleSuffix() noexcept {
+  return m_bundleSuffix;
+}
+
+inline void ReactInstanceSettings::JavaScriptBundleSuffix(hstring const &value) noexcept {
+  m_bundleSuffix = value;
 }
 
 inline hstring ReactInstanceSettings::BundleAppId() noexcept {

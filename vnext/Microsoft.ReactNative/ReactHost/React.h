@@ -187,6 +187,8 @@ struct ReactOptions {
   //! Base path of the SDX. The absolute path of the SDX can be constructed from this and the Identity.
   std::string BundleRootPath;
 
+  std::string BundleSuffix;
+
   //! JavaScript Bundles
   //! This List includes both Platform and User JavaScript Bundles
   //! Bundles are loaded into JavaScript engine in the same order

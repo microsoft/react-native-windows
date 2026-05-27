@@ -7,7 +7,6 @@
 #include "ScrollViewComponentView.h"
 
 #include <Fabric/ComponentView.h>
-#include <Utils/ValueUtils.h>
 
 #pragma warning(push)
 #pragma warning(disable : 4305)

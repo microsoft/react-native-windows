@@ -5,7 +5,6 @@
 #pragma once
 
 #include "CompositionHelpers.h"
-#include <Utils/ValueUtils.h>
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
 #include <d2d1_1.h>
 #include <d3d11.h>

@@ -372,6 +372,7 @@ std::shared_ptr<facebook::react::DevSettings> ReactInstanceWin::CreateDevSetting
   devSettings->debuggerRuntimeName = m_options.DeveloperSettings.DebuggerRuntimeName;
   devSettings->useFastRefresh = m_isFastReloadEnabled;
   devSettings->bundleRootPath = BundleRootPath();
+  devSettings->bundleSuffix = m_options.BundleSuffix;
   devSettings->platformName =
       winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetPlatformName(m_reactContext->Properties());
   devSettings->enableDefaultCrashHandler = m_options.EnableDefaultCrashHandler();

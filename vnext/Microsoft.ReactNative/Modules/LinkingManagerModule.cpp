@@ -3,7 +3,6 @@
 
 #include "pch.h"
 
-#include <Utils/ValueUtils.h>
 #include <winrt/Windows.System.h>
 #include "LinkingManagerModule.h"
 #include "Unicode.h"

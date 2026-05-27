@@ -67,7 +67,7 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
   host.PackageProviders().Append(winrt::SampleCustomComponent::ReactPackageProvider());
   host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
-  host.InstanceSettings().BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
+  host.InstanceSettings().BundleRootPath(std::wstring(appDirectory).append(L"\\Bundle\\").c_str());
   host.InstanceSettings().DebugBundlePath(L"index");
 
 #if BUNDLE
