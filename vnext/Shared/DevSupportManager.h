@@ -10,7 +10,6 @@
 #include <winrt/Windows.Networking.Sockets.h>
 #include <atomic>
 #include <functional>
-#include <future>
 #include <memory>
 #include <string>
 

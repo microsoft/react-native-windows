@@ -88,7 +88,8 @@
         /bigobj -
         /FS     - Force Synchronous PDB writes. Useful when setting MultiProcCL.
       -->
-      <AdditionalOptions>/await %(AdditionalOptions) /bigobj /FS</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj /FS</AdditionalOptions>
+      <AdditionalOptions Condition="$(PlatformToolsetVersion)&lt;145">%(AdditionalOptions) /await</AdditionalOptions>
       <ConformanceMode>true</ConformanceMode>
       <CallingConvention>Cdecl</CallingConvention>
       <!-- We need RuntimeTypeInfo for JSI tests -->

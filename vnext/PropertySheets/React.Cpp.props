@@ -138,7 +138,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions) /await</AdditionalOptions>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="$(PlatformToolsetVersion)&lt;145">%(AdditionalOptions) /await</AdditionalOptions>
       <ControlFlowGuard>Guard</ControlFlowGuard>
       <SpectreMitigation>Spectre</SpectreMitigation>
 
