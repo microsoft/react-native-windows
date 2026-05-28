@@ -96,8 +96,8 @@ LocalBundleReader::LoadBundleAsync(const std::wstring bundleUri) {
 
     co_return co_await winrt::Windows::Storage::FileIO::ReadBufferAsync(file);
   }
-  catch (winrt::hresult_error const &e) {
-    throw winrt::hresult_error(e.code(), e.message());
+  catch (winrt::hresult_error const &) {
+    throw;
   }
 }
 
