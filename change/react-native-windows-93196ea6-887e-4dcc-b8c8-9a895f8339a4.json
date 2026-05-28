@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Use ConformanceMode property instead of raw /permissive- in Warnings.props to avoid LTCG C1007 in newer VS 2022 toolsets",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
