@@ -123,7 +123,7 @@
         ShCore.lib;
         Uiautomationcore.lib
       </AdditionalDependencies>
-      <DelayLoadDLLs>Chakra.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>Chakra.dll;icu.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <Link Condition="'$(UseFabric)' == 'true'">
       <AdditionalDependencies>windowscodecs.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>
