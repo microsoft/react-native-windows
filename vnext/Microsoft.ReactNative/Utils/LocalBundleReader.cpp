@@ -97,8 +97,8 @@ LocalBundleReader::LoadBundleAsync(const std::wstring bundleUri) {
     co_return co_await winrt::Windows::Storage::FileIO::ReadBufferAsync(file);
   }
   // RuntimeScheduler only handles std::exception or jsi::JSError
-  catch (winrt::hresult_error const &e) {
-    throw std::runtime_error(winrt::to_string(e.message()));
+  catch (winrt::hresult_error const &) {
+    throw;
   }
 }
 

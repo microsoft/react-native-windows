@@ -74,7 +74,7 @@ winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IB
       } else {
         error = fmt::format("Error 0x{:x} downloading {}.", static_cast<int>(asyncRequest.ErrorCode()), url);
       }
-      throw std::runtime_error(error);
+      throw winrt::hresult_error(E_FAIL, winrt::to_hstring(error));
     }
 
     winrt::Windows::Web::Http::HttpResponseMessage response = asyncRequest.GetResults();
@@ -92,12 +92,12 @@ winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IB
       } else {
         error = fmt::format("HTTP Error {} downloading {}.", static_cast<int>(response.StatusCode()), url);
       }
-      throw std::runtime_error(error);
+      throw winrt::hresult_error(E_FAIL, winrt::to_hstring(error));
     }
 
     co_return buffer;
-  } catch (winrt::hresult_error const &e) {
-    throw std::runtime_error(Microsoft::Common::Unicode::Utf16ToUtf8(e.message().c_str(), e.message().size()));
+  } catch (winrt::hresult_error const &) {
+    throw;
   }
 }
 
