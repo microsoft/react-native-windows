@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 26 May 2026 20:10:44 GMT",
+      "version": "0.0.0-canary.134",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.134",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "AzureDevOps@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Bump @xmldom/xmldom from 0.7.13 to 0.8.13"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2026 23:42:38 GMT",
       "version": "0.0.0-canary.133",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.133",

@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 13 May 2026 18:22:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 26 May 2026 20:10:43 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1056
+
+Tue, 26 May 2026 20:10:43 GMT
+
+### Changes
+
+- Template should import Microsoft.Cpp.Default.props before setting  ReactNativeWindowsDir (30809111+acoates-ms@users.noreply.github.com)
+- Race condition can cause the callinvoker to get a null runtime during shutdown.  Which should just skip the invoke. (30809111+acoates-ms@users.noreply.github.com)
+- Update template to have more consistent config between ship/debug (30809111+acoates-ms@users.noreply.github.com)
+- Defer findPowershell to layoutMSRNCxx (julio.rocha@microsoft.com)
+- Enable RCT_REMOVE_LEGACY_ARCH (30809111+acoates-ms@users.noreply.github.com)
+- Fix assert in x86 when using custom align (30809111+acoates-ms@users.noreply.github.com)
+- Remove JSBigStringResourceDll, and unify WebsocketResource (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.291
 
 ## 0.0.0-canary.1055
 
