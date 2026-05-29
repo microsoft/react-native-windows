@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 29 May 2026 14:55:59 GMT",
+      "version": "0.81.25",
+      "tag": "react-native-windows_v0.81.25",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "add8cef8a9c2f2487a2838e0f8660018435e59c2",
+            "comment": "Delay-load icu.dll in react-native-win32 and fall back to WinRT WordsSegmenter when ICU is unavailable, restoring Windows 10 1809 compatibility for the selectable Text feature"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "add8cef8a9c2f2487a2838e0f8660018435e59c2",
+            "comment": "Use HybridCRT for react-native-win32"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "add8cef8a9c2f2487a2838e0f8660018435e59c2",
+            "comment": "Use ConformanceMode property instead of raw /permissive- in Warnings.props to avoid LTCG C1007 in newer VS 2022 toolsets"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 22:08:38 GMT",
       "version": "0.81.24",
       "tag": "react-native-windows_v0.81.24",

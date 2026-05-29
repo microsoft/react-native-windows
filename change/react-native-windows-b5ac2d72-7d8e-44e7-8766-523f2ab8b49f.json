@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Delay-load icu.dll in react-native-win32 and fall back to WinRT WordsSegmenter when ICU is unavailable, restoring Windows 10 1809 compatibility for the selectable Text feature",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
