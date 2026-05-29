@@ -44,6 +44,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\HybridCRT.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Generated\PackageVersion.g.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -122,7 +123,7 @@
         ShCore.lib;
         Uiautomationcore.lib
       </AdditionalDependencies>
-      <DelayLoadDLLs>Chakra.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>Chakra.dll;icu.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <Link Condition="'$(UseFabric)' == 'true'">
       <AdditionalDependencies>windowscodecs.lib;dxguid.lib;%(AdditionalDependencies)</AdditionalDependencies>

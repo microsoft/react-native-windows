@@ -5,6 +5,8 @@
 
 #include <cstdint>
 #include <memory>
+#include <utility>
+#include <vector>
 
 // ICU utilities wrapped in a namespace to avoid UChar naming conflicts with Folly's FBString.
 // Folly has a template parameter named 'UChar' which conflicts with ICU's global UChar typedef.
@@ -31,6 +33,9 @@ class WordBreakIterator {
 
  private:
   std::unique_ptr<void, UBreakIteratorDeleter> m_breakIterator{nullptr};
+  // Populated when icu.dll is unavailable (Windows < 1903); produced by
+  // Windows.Data.Text.WordsSegmenter, sorted as [start, end) ranges.
+  std::vector<std::pair<int32_t, int32_t>> m_winrtBoundaries;
   int32_t m_length = 0;
 };
 

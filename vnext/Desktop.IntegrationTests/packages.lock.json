@@ -155,38 +155,38 @@
           "Microsoft.WindowsAppSDK.InteractiveExperiences": "1.8.251104001"
         }
       },
-      "common": {
+      "common.win32": {
         "type": "Project",
         "dependencies": {
           "boost": "[1.84.0, )"
         }
       },
-      "fmt": {
+      "fmt.win32": {
         "type": "Project"
       },
-      "folly": {
+      "folly.win32": {
         "type": "Project",
         "dependencies": {
           "boost": "[1.84.0, )",
-          "fmt": "[1.0.0, )"
+          "fmt.win32": "[1.0.0, )"
         }
       },
       "follywin32": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )"
+          "Folly.win32": "[1.0.0, )"
         }
       },
       "react.windows.desktop": {
         "type": "Project",
         "dependencies": {
-          "Common": "[1.0.0, )",
-          "Folly": "[1.0.0, )",
+          "Common.win32": "[1.0.0, )",
+          "Folly.win32": "[1.0.0, )",
           "FollyWin32": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.0.0-2511.7001-d7ca19b3, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.WindowsAppSDK": "[1.8.251106002, )",
-          "ReactCommon": "[1.0.0, )",
+          "ReactCommon.win32": "[1.0.0, )",
           "ReactNative.V8Jsi.Windows": "[0.71.8, )",
           "boost": "[1.84.0, )"
         }
@@ -204,15 +204,15 @@
       "react.windows.integrationtests": {
         "type": "Project",
         "dependencies": {
-          "Common": "[1.0.0, )",
-          "Folly": "[1.0.0, )",
+          "Common.win32": "[1.0.0, )",
+          "Folly.win32": "[1.0.0, )",
           "boost": "[1.84.0, )"
         }
       },
-      "reactcommon": {
+      "reactcommon.win32": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
+          "Folly.win32": "[1.0.0, )",
           "boost": "[1.84.0, )"
         }
       }

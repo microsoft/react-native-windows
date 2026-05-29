@@ -65,8 +65,11 @@
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <!-- /permissive- by default to enforce standards conformance, unless ENABLEPermissive has been set -->
-      <AdditionalOptions Condition="'$(ENABLEPermissive)' == ''">/permissive- %(AdditionalOptions)</AdditionalOptions>
+      <!-- /permissive- by default to enforce standards conformance, unless ENABLEPermissive has been set.
+           Set via ConformanceMode rather than AdditionalOptions so MSBuild's cl task handles it
+           structurally; passing /permissive- through AdditionalOptions embeds the raw flag in .obj
+           metadata, which the LTCG p2 back-end in newer VS 2022 toolsets rejects with C1007. -->
+      <ConformanceMode Condition="'$(ENABLEPermissive)' == ''">true</ConformanceMode>
       <DisableSpecificWarnings>$(OfficePreDisabledWarnings);$(ExtraWarningsToDisable);$(DisableSpecificWarnings)</DisableSpecificWarnings>
       
       <!-- SDL REQUIREMENT: Treat warnings as errors -->
