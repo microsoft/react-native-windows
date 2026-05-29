@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 26 May 2026 22:08:38 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 29 May 2026 14:55:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.25
+
+Fri, 29 May 2026 14:55:59 GMT
+
+### Patches
+
+- Delay-load icu.dll in react-native-win32 and fall back to WinRT WordsSegmenter when ICU is unavailable, restoring Windows 10 1809 compatibility for the selectable Text feature (vmorozov@microsoft.com)
+- Use HybridCRT for react-native-win32 (vmorozov@microsoft.com)
+- Use ConformanceMode property instead of raw /permissive- in Warnings.props to avoid LTCG C1007 in newer VS 2022 toolsets (vmorozov@microsoft.com)
 
 ## 0.81.24
 
