@@ -26,9 +26,7 @@ bool IsIcuDllAvailable() noexcept {
   return s_available;
 }
 
-std::vector<std::pair<int32_t, int32_t>> ComputeBoundariesWithWinrt(
-    const wchar_t *text,
-    int32_t length) noexcept {
+std::vector<std::pair<int32_t, int32_t>> ComputeBoundariesWithWinrt(const wchar_t *text, int32_t length) noexcept {
   std::vector<std::pair<int32_t, int32_t>> boundaries;
   try {
     winrt::Windows::Data::Text::WordsSegmenter segmenter{L""};
