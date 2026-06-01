@@ -221,7 +221,7 @@ BlobWebSocketModuleContentHandler::BlobWebSocketModuleContentHandler(shared_ptr<
 
 #pragma region IWebSocketModuleContentHandler
 
-bool BlobWebSocketModuleContentHandler::Supports(int64_t socketId) noexcept /*override*/ {
+bool BlobWebSocketModuleContentHandler::CanHandleSocket(int64_t socketId) noexcept /*override*/ {
   scoped_lock lock{m_mutex};
   return m_socketIds.find(socketId) != m_socketIds.end();
 }

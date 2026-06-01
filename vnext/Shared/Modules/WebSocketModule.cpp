@@ -96,6 +96,9 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
         handled = contentHandler->TryProcessMessage(id, string{message}, args);
       }
     }
+    // When the content handler processes the message, it takes ownership of the
+    // payload and populates args itself (e.g. as a blob reference), so we only
+    // fall back to setting args["data"] when no handler claimed the message.
     if (!handled) {
       args["data"] = message;
     }
