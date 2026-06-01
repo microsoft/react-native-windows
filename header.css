@@ -1,0 +1,191 @@
+.fixedHeaderContainer {
+  padding: 0;
+  background-color: $deepdark;
+  height: 60px;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.19);
+}
+
+.fixedHeaderContainer header img {
+  height: 90%;
+}
+
+.fixedHeaderContainer header a {
+  margin: 13px 0;
+}
+
+/* .fixedHeaderContainer header > a:first-child {
+  width: 160px;
+} */
+
+.fixedHeaderContainer header h3 {
+  font-size: 14px;
+  margin-left: 8px;
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.15s ease-out;
+  color: black;
+}
+
+.fixedHeaderContainer header h3:hover {
+  color: $brand;
+  transition: none;
+}
+
+li.navSearchWrapper {
+  font-size: 16px;
+}
+
+.fixedHeaderContainer header .headerTitleWithLogo {
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: black;
+  width: 328px;
+}
+
+@media only screen and (max-width: 480px) {
+  .headerWrapper.wrapper {
+    padding: 0 10px;
+  }
+
+  .fixedHeaderContainer header > a:first-child {
+    width: 180px;
+  }
+  .fixedHeaderContainer header .headerTitleWithLogo {
+    display: initial !important;
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 1023px) {
+  .navPusher {
+    padding-top: 110px;
+  }
+
+  ul.nav-site.nav-site-internal {
+    margin-top: 60px;
+    color: black;
+  }
+
+  .navigationSlider .slidingNav ul {
+    background-color: $dark;
+    color: black;
+  }
+
+  .navigationSlider .slidingNav ul li a {
+    background-color: transparent;
+    transition: none;
+    color: black;
+  }
+
+  .navigationSlider .slidingNav ul li > a:hover {
+    background-color: transparent;
+    color: $brand;
+  }
+
+  .navigationSlider .slidingNav ul li > a:focus {
+    background-color: transparent;
+  }
+
+  .navigationSlider .slidingNav ul li:not(.reactNavSearchWrapper) {
+    position: relative;
+  }
+
+  .navigationSlider .slidingNav ul li.siteNavItemActive a,
+  .navigationSlider .slidingNav ul li.siteNavGroupActive a {
+    color: $brand;
+    background-color: transparent;
+  }
+
+  .navigationSlider .slidingNav ul li.siteNavItemActive::after,
+  .navigationSlider .slidingNav ul li.siteNavGroupActive::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.25rem;
+    background-color: $brand;
+  }
+
+  .navigationSlider .slidingNav ul li:not(.reactNavSearchWrapper):focus-within {
+    background-color: $light;
+  }
+}
+
+/* the media queries for docusaurus default have an overlap
+ * (i.e. using 1024 as both the min-width and max-width for separate queries)
+ */
+@media only screen and (max-width: 1024px) {
+  .reactNavSearchWrapper input#search_input_react {
+    border-radius: 0.25rem;
+    background-color: $dark;
+    height: 30px;
+  }
+
+  .reactNavSearchWrapper input#search_input_react:focus {
+    background-color: $light;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .navPusher {
+    padding-top: 60px;
+  }
+
+  .navigationSlider .slidingNav ul li:not(.reactNavSearchWrapper) {
+    position: relative;
+    padding: 0;
+    height: 60px;
+  }
+
+  .navigationSlider .slidingNav ul li:not(.reactNavSearchWrapper):focus-within {
+    background-color: white;
+  }
+
+  .navigationSlider .slidingNav ul li.siteNavItemActive::after,
+  .navigationSlider .slidingNav ul li.siteNavGroupActive::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.25rem;
+    background-color: $brand;
+  }
+
+  .navigationSlider .slidingNav ul li a {
+    color: black;
+    background-color: transparent !important;
+    transition: color 0.15s ease-out;
+    height: 60px;
+    padding: 0 1.5rem;
+    font-size: .9em;
+  }
+
+  .navigationSlider .slidingNav ul li a:hover {
+    color: $brand;
+    transition: none;
+  }
+
+  .navigationSlider .slidingNav ul li.siteNavItemActive a,
+  .navigationSlider .slidingNav ul li.siteNavGroupActive a {
+    color: $brand;
+  }
+}
+
+/* Get the search icon to display correctly with box-sizing */
+.reactNavSearchWrapper {
+  box-sizing: initial;
+}
+
+input#search_input_react {
+  /* Make as wide as the expanded state in the docusaurus default */
+  width: 220px;
+  background-color: $dark;
+  border-radius: 0.25rem;
+  transition: background-color 150ms ease-in-out;
+}
+
+input#search_input_react:focus {
+  background-color: $light;
+}

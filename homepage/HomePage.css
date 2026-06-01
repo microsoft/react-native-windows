@@ -1,0 +1,10 @@
+/* Prevent overflowing elements from causing a scroll on safari */
+.HomePage {
+  width: 100%;
+  overflow-x: hidden;
+}
+@media only screen and (max-width: 600px) {
+  .HomePageImage {
+    display: none;
+  }
+}

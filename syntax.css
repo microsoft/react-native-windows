@@ -1,0 +1,50 @@
+/* Syntax highlighting */
+
+/*
+ * These styles are taken from the custom styles of reactjs.org:
+ * https://github.com/reactjs/reactjs.org/blob/master/src/prism-styles.js
+ */
+
+.hljs {
+  line-height: 20px;
+  background-color: #012456;
+  color: white;
+}
+
+.hljs + .hljs {
+  margin-top: 10px;
+}
+
+.token.keyword,
+.token.attr-name {
+  color: #c5a5c5;
+}
+
+.token.string,
+.token.regex,
+.token.attr-value {
+  color: #8dc891;
+}
+
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #5a9bcf;
+}
+
+.token.boolean {
+  color: #ff8b50;
+}
+
+.token.class-name {
+  color: #fac863;
+}
+
+.token.function {
+  color: #79b6f2;
+}
+
+.token.operator,
+.token.tag {
+  color: #fc929e;
+}

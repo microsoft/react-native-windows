@@ -1,0 +1,103 @@
+.docsNavContainer .toc .navBreadcrumb {
+  /* Prevent overlap when scrolling up */
+  z-index: 9999;
+  background-color: $tintColor;
+  border-bottom: 2px solid $divider;
+}
+
+.toc .toggleNav .navBreadcrumb h2 {
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.toc .toggleNav .navBreadcrumb i {
+  display: none;
+}
+
+.navBreadcrumb a,
+.navBreadcrumb span {
+  color: $subtle;
+}
+
+.collapsible .arrow {
+  transform: rotate(180deg);
+}
+
+.collapsible .arrow.rotate {
+  transform: rotate(0);
+}
+
+@media only screen and (min-width: 736px) {
+  .docsNavContainer {
+    width: 100%;
+  }
+}
+
+.docsNavContainer {
+  overflow: visible;
+  flex: 0 0 280px;
+  margin-right: 0;
+}
+
+.toc {
+  height: 100%;
+  border-right: 1px solid $divider;
+  margin-left: -9999px;
+  padding-left: 9999px;
+  overflow-y: auto;
+  background-color: $tintColor;
+}
+
+.toc .toggleNav .navGroup .navGroupCategoryTitle {
+  color: $subtle;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.toc .toggleNav .navGroup .navGroupCategoryTitle.collapsible:hover {
+  color: $text;
+}
+
+.toc .toggleNav ul {
+  padding: 0px;
+  padding-right: 10px;
+}
+
+.toc .toggleNav ul li a {
+  color: $text;
+  background-color: transparent;
+  font-size: 14px;
+}
+
+.toc .toggleNav ul li a:hover {
+  color: $subtle;
+  transition: none;
+}
+
+.toc .toggleNav ul li.navListItemActive a {
+  font-weight: 700;
+}
+
+.toc .toggleNav ul li {
+  position: relative;
+}
+
+.toc .toggleNav ul li.navListItemActive::before {
+  content: "";
+  background-color: $brand;
+  position: absolute;
+  width: 5px;
+  top: 2px;
+  left: -20px;
+  bottom: 2px;
+}
+
+@media only screen and (min-width: 1024px) {
+  .toc {
+    padding-top: 2rem;
+  }
+}

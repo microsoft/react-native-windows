@@ -1,0 +1,257 @@
+* :focus:not(.focus-visible) {
+  outline: none;
+}
+
+body,
+.mainContainer {
+  background-color: $backgroundColor;
+}
+
+@media only screen and (max-width: 1023px) {
+  .mainContainer {
+    padding-top: 3rem;
+    padding-bottom: 0;
+  }
+
+  .docMainWrapper {
+    overflow-x: hidden;
+  }
+
+  .mainContainer .post {
+    margin-bottom: 2rem;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .mainContainer {
+    margin: 0;
+    padding: 0;
+  }
+
+  .mainContainer .wrapper {
+    margin-left: 3rem;
+  }
+
+  .mainContainer .post {
+    margin: 3rem 0;
+  }
+
+  .docsNavContainer {
+    width: 240px;
+  }
+
+  .container {
+    max-width: 900px;
+  }
+  .docMainWrapper > *:last-child {
+    margin-right: 20px;
+  }
+}
+
+.mainContainer h1,
+.mainContainer h2,
+.mainContainer h3,
+.mainContainer h4,
+.mainContainer h5,
+.mainContainer h6 {
+  color: $text;
+}
+
+.mainContainer h1 {
+  color: $light;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 65px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 960px) {
+  .mainContainer h1.postHeaderTitle {
+    font-size: 40px;
+    margin-bottom: 1rem;
+    line-height: 1.25;
+  }
+}
+
+p a,
+li a {
+  background-color: rgba(187, 239, 253, 0.3);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+p a:hover,
+li a:hover {
+  background-color: #bbeffd;
+  border-bottom-color: $text;
+}
+
+/* Code in links should have just the link background, not the gray code bg */
+a code {
+  background: none;
+}
+
+.button {
+  border: none;
+  font-size: 1.5rem;
+  text-transform: none;
+  transition: all 0s;
+  padding: 0;
+  color: white;
+}
+
+.button.edit-page-link {
+  color: $subtle;
+  font-size: 1.25rem;
+  margin-top: 1rem;
+}
+
+.arrow-next,
+.arrow-prev {
+  display: none;
+}
+
+.hash-link:focus {
+  opacity: 1;
+  transition: none;
+}
+
+.mainContainer .component-grid {
+  max-width: 800px;
+}
+
+.mainContainer .component {
+  border: 1px solid #05a5d1;
+  border-radius: 3px;
+  margin: 0 auto 10px;
+  width: 100%;
+  display: inline-block;
+  background-color: white;
+  transition: all 0.2s ease-in-out;
+}
+
+.mainContainer .component:hover {
+  transform: scale(1.03);
+}
+
+.mainContainer .component-grid .component h3 {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0 10px;
+  background-color: #05a5d1;
+  color: white;
+  line-height: 40px;
+}
+
+.mainContainer .component h3 a {
+  color: white;
+}
+
+.mainContainer .component p {
+  padding: 10px;
+  margin: 2px;
+}
+
+@supports (display: grid) {
+  .mainContainer .component-grid {
+    display: grid;
+    grid-gap: 22px;
+  }
+}
+
+@media only screen and (min-width: 2048px) {
+  .separateOnPageNav .headerWrapper.wrapper, .separateOnPageNav .wrapper {
+    max-width: 2048px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .mainContainer .component-grid.component-grid-border {
+    border-bottom: 1px solid #f1eff0;
+  }
+  .mainContainer .component {
+    width: 30%;
+    height: 150px;
+    margin: 0 22px 22px auto;
+    vertical-align: top;
+  }
+
+  @supports (display: grid) {
+    .mainContainer .component-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media only screen and (min-width: 1440px) {
+      .mainContainer .component-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .mainContainer .component {
+      width: auto;
+      height: auto;
+      margin: 0;
+    }
+  }
+}
+
+.wrapper {
+  max-width: 1200px;
+}
+
+.container .wrapper h2 {
+  font-size: 35px;
+  font-weight: 700;
+}
+
+.container .wrapper h3 {
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.container .wrapper .hljs {
+  margin: 14px 0;
+  border-radius: 10px;
+}
+
+.pageContainer .container {
+  margin: 40px auto;
+}
+
+p {
+  font-size: 17px;
+  color: $text;
+  line-height: 1.7;
+}
+
+li {
+  font-size: 18px;
+}
+
+.prose h1 {
+  padding: 0 0;
+}
+
+.prose {
+  max-width: 800px;
+}
+
+article iframe {
+  max-width: 120%;
+}
+
+.codepen {
+  width: 1000px;
+  padding: 20px 0;
+  margin-left: -100px;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .codepen {
+    width: 100%;
+    margin-left: auto;
+  }
+
+  article iframe {
+    max-width: 100%;
+  }
+}

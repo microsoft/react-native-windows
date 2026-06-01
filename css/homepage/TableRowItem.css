@@ -1,0 +1,25 @@
+.TableRowItem {
+  overflow: hidden;
+  padding: 4;
+  padding-left: 8;
+}
+
+.TableRowItem.dark {
+  background-color: #f7f7f7;
+}
+
+.TableRowItem.light {
+  background-color: #ffffff;
+}
+
+.TableRowItem.text {
+  float: left;
+  width: 33%;
+  text-decoration: underline;
+}
+
+.TableRowItem.versiontext {
+  font-weight: bold;
+  float: left;
+  width: 33%;
+}

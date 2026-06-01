@@ -1,0 +1,14 @@
+/* Custom styles */
+
+.warning   {
+    background: #cc2020;
+    padding: 4pt;
+    border-radius: 6pt;
+    color: #fff;
+}
+
+div.warning > h3, 
+div.warning > h4   {
+    color: #fff;
+    font-weight: normal;
+}

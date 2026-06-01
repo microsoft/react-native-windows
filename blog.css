@@ -1,0 +1,52 @@
+/* Reset blog width to be the same as the width for other pages */
+.blog .wrapper {
+  max-width: 1200px;
+}
+
+.blog h1 a {
+  transition: color 0.25s ease-in-out;
+}
+.blog h1 a:hover {
+  color: $subtle;
+  transition: none;
+}
+
+.blog .button {
+  color: $subtle;
+  border: 1px solid $subtle;
+  border-radius: 3px;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.2em;
+  padding: 10px;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  transition: background 0.3s, color 0.3s;
+}
+
+.blog .button:hover {
+  color: white;
+  border: 1px solid $subtle;
+  background-color: $subtle;
+}
+
+/* Put the image on the left of the block */
+.blogContainer .postHeader .authorBlock {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.blogContainer .postHeader .post-authorName {
+  color: $subtle;
+  font-size: 16px;
+  margin-left: 10px;
+  margin-right: 0px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.blogContainer .postHeader .post-authorName a {
+  color: $text;
+  width: fit-content;
+}

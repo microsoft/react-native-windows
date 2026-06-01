@@ -1,0 +1,26 @@
+/* Support Page */
+
+h1 {
+  font-size: 60px;
+  margin-top: -20px;
+  font-weight: bold;
+}
+
+table tr th, table tr td {
+  text-align: center;
+}
+
+table td a {
+  text-decoration: underline;
+}
+
+table td a:hover {
+  text-decoration: none;
+}
+
+.footnote p {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-left: 20px;
+  margin-right: 20px;
+}

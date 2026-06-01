@@ -1,0 +1,59 @@
+.TwoColumns {
+  display: grid;
+}
+
+.TwoColumns .column {
+  width: 100%;
+}
+
+.TwoColumns .column.first {
+  grid-area: first;
+}
+
+.TwoColumns .column.last {
+  grid-area: last;
+}
+
+@media only screen and (min-width: 961px) {
+  .TwoColumns {
+    max-width: 900px;
+    margin: 0 auto;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: "first last";
+  }
+
+  .TwoColumns.reverse {
+    grid-template-areas: "last first";
+  }
+
+  .TwoColumns .column {
+    max-width: 450px;
+  }
+
+  .TwoColumns .column.left {
+    padding-right: 50px;
+  }
+
+  .TwoColumns .column.right {
+    padding-left: 50px;
+    min-width: 400px;
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .TwoColumns,
+  .TwoColumns.reverse {
+    grid-template-columns: 1fr;
+    grid-template-areas: "first" "last";
+  }
+
+  .TwoColumns .column {
+    padding: 0 4rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .TwoColumns .column {
+    padding: 0 1.25rem;
+  }
+}

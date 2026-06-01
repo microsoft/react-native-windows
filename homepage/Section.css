@@ -1,0 +1,90 @@
+.Section {
+  width: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.Section + .Section {
+  border-top: 1px solid $divider;
+}
+
+.Section.light {
+  background-color: $backgroundColor;
+}
+
+.Section.tint {
+  background-color: $tintColor;
+}
+
+.Section.dark {
+  background-color: $dark;
+}
+
+.SmallSection {
+  width: 100%;
+  margin-top: -80px;
+  padding-top: 0px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid $divider;
+}
+
+.resourcesSideNavLink:hover {
+  color: #0e53bd;
+  cursor: pointer;
+}
+
+.resourcesSideNavLink.selected {
+  color: #0e53bd;
+  font-weight: 700;
+  border-left: 5px solid #0e53bd;
+  padding-left: 25px;
+  margin-left: -30px;
+}
+
+.resourcesSideNavLink: {
+  color: #0e53bd;
+  cursor: pointer;
+}
+
+.resourcesPageSideNavTitle {
+    color: #0e53bd;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.resourcesPageSideNavOptions {
+  color: #1a1a1a;
+  background-color: transparent;
+  font-size: 14px;
+  margin-top: 10px;
+  min-width: 100px;
+}
+
+.resourcesPageSideNav {
+  margin-top: -10px;
+  margin-left: -10px;
+  margin-right: -10px;
+  float: left;
+  width: 25%;
+  border-right: 1px solid $divider;
+  overflow: visible;
+  flex: 0 0 280px;
+  height: 2010px;
+  display: flex;
+}
+
+.Section .content {
+  max-width: 1100px;
+  padding: 10px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 960px) {
+  .Section .content {
+    width: 80%;
+  }
+}

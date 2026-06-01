@@ -1,0 +1,161 @@
+.props {
+  background-color: #ebf9ff;
+}
+
+.compactProps {
+  border-left: 2px solid #e0f6ff;
+  margin-left: 20px;
+  padding-left: 5px;
+}
+
+.props > .prop:nth-child(2n) {
+  background-color: #e0f6ff;
+}
+
+.propTitle {
+  font-weight: bold !important;
+  font-size: 16px !important;
+}
+
+.compactProps .propTitle {
+  font-size: 14px;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.compactProps .propTitle div {
+  font-weight: normal;
+  margin-left: 20px;
+}
+
+.methodTitle {
+  font-weight: bold !important;
+  font-size: 24px !important;
+  color: #025268 !important;
+}
+
+.compactProps .methodTitle {
+  font-size: 14px;
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+.compactProps .methodTitle div {
+  font-weight: normal;
+  margin-left: 20px;
+}
+
+.prop {
+  word-wrap: break-word;
+  padding: 5px 10px;
+}
+
+.compactProps .prop {
+  padding: 3px 10px;
+}
+
+.propType {
+  font-family: "source-code-pro", Menlo, "Courier New", Consolas, monospace;
+  font-weight: normal;
+  font-size: 15px;
+  white-space: pre-wrap;
+}
+
+.compactProps .propType {
+  font-weight: normal;
+  font-size: 13px;
+}
+
+.methodType {
+  font-weight: normal;
+  font-size: 24px;
+}
+
+.compactProps .methodType {
+  font-weight: normal;
+  font-size: 13px;
+}
+
+.botActions {
+  background-color: #ebf9ff;
+}
+
+.botActions > .botAction:nth-child(2n) {
+  background-color: #e0f6ff;
+}
+
+.botCommand {
+  font-family: "source-code-pro", Menlo, "Courier New", Consolas, monospace;
+  font-weight: bold;
+  color: #025268;
+}
+
+.botAction {
+  padding: 5px 10px;
+}
+
+.botMentionName {
+  font-weight: normal;
+}
+
+/* API Docs */
+
+hr {
+  height: 1px;
+  margin-bottom: -1px;
+  border: none;
+  border-bottom: 1px solid $divider;
+  margin-top: 40px;
+}
+
+table {
+  border: 1px solid #b0b0b0;
+  border-collapse: collapse;
+  display: table;
+  margin: 20px 0;
+  width: 100%;
+}
+table thead tr {
+  /* display: table-header-group; */
+  background: #dddddd;
+}
+
+table tbody {
+  display: table-row-group;
+}
+table tr {
+  display: table-row;
+}
+table tbody tr:nth-of-type(odd) {
+  background: $backgroundColor;
+}
+table tbody tr:nth-of-type(even) {
+  background: $tintColor;
+}
+table tr th,
+table tr td {
+  border-right: 1px dotted #b0b0b0;
+  display: table-cell;
+  font-size: 14px;
+  line-height: 1.3em;
+  padding: 10px;
+  text-align: left;
+}
+table tr th:last-of-type,
+table tr td:last-of-type {
+  border-right: 0;
+}
+table tr th code,
+table tr td code {
+  display: inline-block;
+  font-size: 12px;
+}
+table tr th {
+  color: #000000;
+  font-weight: bold;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  text-transform: uppercase;
+}
+table td li {
+  font-size: 100%;
+}

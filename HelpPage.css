@@ -1,0 +1,11 @@
+/* Help page doesn't have a navbar, so remove padding */
+.HelpPage .mainContainer {
+  padding-top: 0;
+}
+
+/* Make youtube video fit on mobile */
+@media only screen and (max-width: 480px) {
+  .HelpPage iframe {
+    max-width: 100%;
+  }
+}

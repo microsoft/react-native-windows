@@ -1,0 +1,75 @@
+.docs-prevnext {
+  background-color: $light;
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (min-width: 1024px) {
+  .docs-prevnext {
+    margin: 0 -9999px 0 -3rem;
+    padding: 2rem 9999px 2rem 3rem;
+  }
+}
+
+@media only screen and (max-width: 1023px) {
+  .docs-prevnext {
+    margin: 0 -2rem 0;
+    padding: 3rem 2rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .docs-prevnext {
+    padding: 1rem 2rem;
+    display: flex;
+  }
+
+  .button.docs-prev,
+  .button.docs-next {
+    font-size: 14px;
+  }
+}
+
+.button.docs-prev,
+.button.docs-next {
+  display: flex;
+  align-items: center;
+  line-height: 1.5;
+  max-width: 45%;
+  font-size: 1.25rem;
+}
+
+.button.docs-prev:hover,
+.button.docs-next:hover {
+  color: $brand;
+}
+
+.button.docs-prev {
+  margin-right: auto;
+}
+
+.button.docs-next {
+  margin-left: auto;
+}
+
+.docs-next span:first-child {
+  text-align: right;
+}
+
+.docs-prev::before {
+  content: "‹";
+  font-size: 150%;
+  margin-right: 8px;
+  margin-bottom: 4px;
+}
+
+.docs-next::after {
+  content: "›";
+  font-size: 150%;
+  margin-left: 8px;
+  margin-bottom: 4px;
+}
+
+.button:hover {
+  background: transparent;
+}
