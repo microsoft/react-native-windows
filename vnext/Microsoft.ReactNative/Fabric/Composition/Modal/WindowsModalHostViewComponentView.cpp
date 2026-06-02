@@ -309,18 +309,17 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       m_rnWindow.AppWindow().Title(L""); // Empty title if not provided
     }
 
-      // Handle close request ('X' button)
-      m_appWindowClosingToken =
-          m_rnWindow.AppWindow().Closing([wkThis = get_weak()](
-                                  const winrt::Microsoft::UI::Windowing::AppWindow & /*sender*/,
-                                  const winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs &args) {
-            args.Cancel(true); // Prevent default close
-            if (auto strongThis = wkThis.get()) {
-              // Dispatch onRequestClose event
-              if (auto eventEmitter = strongThis->EventEmitter()) {
-                ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnRequestClose eventArgs;
-                eventEmitter->onRequestClose(eventArgs);
-              }
+    // Handle close request ('X' button)
+    m_appWindowClosingToken =
+        m_rnWindow.AppWindow().Closing([wkThis = get_weak()](
+                                           const winrt::Microsoft::UI::Windowing::AppWindow & /*sender*/,
+                                           const winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs &args) {
+          args.Cancel(true); // Prevent default close
+          if (auto strongThis = wkThis.get()) {
+            // Dispatch onRequestClose event
+            if (auto eventEmitter = strongThis->EventEmitter()) {
+              ::Microsoft::ReactNativeSpecs::ModalHostViewEventEmitter::OnRequestClose eventArgs;
+              eventEmitter->onRequestClose(eventArgs);
             }
           }
         });
