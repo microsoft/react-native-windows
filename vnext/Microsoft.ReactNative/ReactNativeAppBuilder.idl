@@ -1,6 +1,7 @@
 
 import "ReactNativeHost.idl";
 import "ReactNativeIsland.idl";
+import "ReactNativeWindow.idl";
 import "ReactInstanceSettings.idl";
 import "IReactPackageProvider.idl";
 
