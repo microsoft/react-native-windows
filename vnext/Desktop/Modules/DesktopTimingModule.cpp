@@ -81,10 +81,15 @@ void Timing::Initialize(winrt::Microsoft::ReactNative::ReactContext const &react
 }
 
 void Timing::OnTimerRaised() noexcept {
-  // Make sure we execute it on native thread for native modules
-  // Capture weak_ptr "this" because callback will be executed on native
-  // thread even if "this" is destroyed.
-  m_reactContext.JSDispatcher().Post([weakThis = std::weak_ptr<Timing>(shared_from_this())]() {
+  // Hop to the native thread before touching module state.
+  //
+  // This callback can race with the last shared_ptr to this Timing being
+  // released, so use weak_from_this() rather than shared_from_this(): once the
+  // use-count hits zero shared_from_this() throws bad_weak_ptr, which would
+  // escape this noexcept callback and crash. weak_from_this() instead yields an
+  // expired weak_ptr and the lock() below bails out. Touching "this" is safe
+  // because ~Timing() blocks in WaitForThreadpoolTimerCallbacks until we return.
+  m_reactContext.JSDispatcher().Post([weakThis = weak_from_this()]() {
     auto strongThis = weakThis.lock();
     if (!strongThis) {
       return;
