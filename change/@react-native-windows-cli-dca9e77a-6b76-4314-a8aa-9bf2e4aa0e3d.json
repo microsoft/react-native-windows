@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Upgrade build agents to Windows Server 2026, Visual Studio 2026",
+  "comment": "Upgrade build agents to Windows Server 2025, Visual Studio 2026",
   "packageName": "@react-native-windows/cli",
   "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"
