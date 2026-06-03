@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 03 Jun 2026 20:09:05 GMT",
+      "version": "0.81.26",
+      "tag": "react-native-windows_v0.81.26",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e5e21719bbe67d60a8cbef9ddfe7cadb6596f338",
+            "comment": "Fix crash in Timing module on shutdown"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 29 May 2026 14:55:59 GMT",
       "version": "0.81.25",
       "tag": "react-native-windows_v0.81.25",

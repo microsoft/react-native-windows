@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix crash in Timing module on shutdown",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
