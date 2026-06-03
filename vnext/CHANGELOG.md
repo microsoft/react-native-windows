@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 29 May 2026 14:55:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 03 Jun 2026 20:09:05 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.26
+
+Wed, 03 Jun 2026 20:09:05 GMT
+
+### Patches
+
+- Fix crash in Timing module on shutdown (vmorozov@microsoft.com)
 
 ## 0.81.25
 
