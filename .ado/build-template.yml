@@ -161,6 +161,13 @@ extends:
               version: '24.x'
             displayName: Use Node.js 24.x
 
+          # TODO: REMOVE. Should be included in image.
+          # Install yarn globally
+          - task: CmdLine@2
+            inputs:
+              script: |
+                npm install --global yarn
+
           - template: .ado/templates/compute-beachball-branch-name.yml@self
 
           # 4. Beachball tooling (developer builds only)
