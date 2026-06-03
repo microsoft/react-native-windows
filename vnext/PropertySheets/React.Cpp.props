@@ -43,7 +43,7 @@
 
   <PropertyGroup Label="ExternalDependencies">
     <!-- Google Test Adapter -->
-    <!-- Property sheets in the adapter's NuGet doesn't consider PlatformToolset=v143 -->
+    <!-- Property sheets in the adapter's NuGet doesn't consider PlatformToolset=v145 -->
     <Force-Enable-Microsoft-googletest-v140-windesktop-msvcstl-static-rt-dyn>false</Force-Enable-Microsoft-googletest-v140-windesktop-msvcstl-static-rt-dyn>
   </PropertyGroup>
 
