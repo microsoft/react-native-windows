@@ -3543,9 +3543,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^19.0.0", "@types/react@^19.1.1", "@types/react@^19.2.3":
-  version "19.2.15"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.2.15.tgz#9e2c6a4251a290f5c525c3143caa872fa6e01e0d"
-  integrity sha512-eRwcGNHve+E8qtEQSSRl6urh+rFop4v8gm6O8rGv25CodbvFdLjA1vVQ1KkiFE0w0UPOnb8tDiFKL5lp0rtY5Q==
+  version "19.2.16"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-19.2.16.tgz#9868b153fd9e34e0117afcd5d7e372b8179337e1"
+  integrity sha512-esJiCAnl0kfpNdE69f3So4WJUXy95dLZydX0KwK46riIHDzHM7O9Vtf9xCHW0PXIqvgqNrswl522kA/5yx+F4w==
   dependencies:
     csstype "^3.2.2"
 
@@ -12449,9 +12449,9 @@ tinybench@^4.1.0:
   integrity sha512-8JZoQRJgWWEIIeAmpiNmMHIREmUY3oGX8GRmlmNapLr/qtgMe+K76vM2qabh85hNScnE2lqTVTajVETjuD9Ixg==
 
 tinyglobby@^0.2.15:
-  version "0.2.16"
-  resolved "https://registry.yarnpkg.com/tinyglobby/-/tinyglobby-0.2.16.tgz#1c3b7eb953fce42b226bc5a1ee06428281aff3d6"
-  integrity sha512-pn99VhoACYR8nFHhxqix+uvsbXineAasWm5ojXoN8xEwK5Kd3/TrhNn1wByuD52UxWRLy8pu+kRMniEi6Eq9Zg==
+  version "0.2.17"
+  resolved "https://registry.yarnpkg.com/tinyglobby/-/tinyglobby-0.2.17.tgz#562a9a6c9eb2b3b123d39719f9af5bb44fcd7631"
+  integrity sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==
   dependencies:
     fdir "^6.5.0"
     picomatch "^4.0.4"
