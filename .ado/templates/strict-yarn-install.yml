@@ -18,7 +18,7 @@ steps:
       Write-Host "PATH:"
       $env:PATH -split [System.IO.Path]::PathSeparator
 
-      Write-Host "Yarn location: $(Get-Command yarn)"
+      Write-Host "Yarn location: $(Get-Command yarn -ErrorAction SilentlyContinue)"
 
   # TODO: REMOVE. Should be included in image.
   # Install yarn globally
@@ -35,7 +35,7 @@ steps:
       Write-Host "PATH:"
       $env:PATH -split [System.IO.Path]::PathSeparator
 
-      Write-Host "Yarn location: $(Get-Command yarn)"
+      Write-Host "Yarn location: $(Get-Command yarn -ErrorAction SilentlyContinue)"
 
   - script: yarn install --immutable
     displayName: Strict yarn install ${{ parameters.workspace }}

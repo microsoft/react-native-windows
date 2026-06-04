@@ -168,7 +168,7 @@ extends:
               Write-Host "PATH:"
               $env:PATH -split [System.IO.Path]::PathSeparator
 
-              Write-Host "Yarn location: $(Get-Command yarn)"
+              Write-Host "Yarn location: $(Get-Command yarn -ErrorAction SilentlyContinue)"
 
           # TODO: REMOVE. Should be included in image.
           # Install yarn globally
@@ -185,7 +185,7 @@ extends:
               Write-Host "PATH:"
               $env:PATH -split [System.IO.Path]::PathSeparator
 
-              Write-Host "Yarn location: $(Get-Command yarn)"
+              Write-Host "Yarn location: $(Get-Command yarn -ErrorAction SilentlyContinue)"
 
           - template: .ado/templates/compute-beachball-branch-name.yml@self
 
