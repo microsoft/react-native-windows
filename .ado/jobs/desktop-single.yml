@@ -89,7 +89,7 @@ steps:
   - template: ../templates/discover-google-test-adapter.yml
 
   - ${{ if ne(parameters.buildPlatform, 'ARM64EC') }}:
-    - task: VSTest@2
+    - task: VSTest@3
       displayName: Run Desktop Unit Tests
       timeoutInMinutes: 5 # Set smaller timeout, due to hangs
       inputs:
@@ -203,7 +203,7 @@ steps:
           Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true"
       continueOnError: true
 
-    - task: VSTest@2
+    - task: VSTest@3
       displayName: Run Desktop Integration Tests
       inputs:
         testSelector: testAssemblies

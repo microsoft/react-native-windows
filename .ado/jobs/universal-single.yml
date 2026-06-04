@@ -50,7 +50,7 @@ steps:
   # --- Tests (run against the just-built binaries, no download/restore needed) ---
   - template: ../templates/discover-google-test-adapter.yml
 
-  - task: VSTest@2
+  - task: VSTest@3
     displayName: Run Universal Unit Tests (Native)
     timeoutInMinutes: 5 # Set smaller timeout, due to hangs
     inputs:
