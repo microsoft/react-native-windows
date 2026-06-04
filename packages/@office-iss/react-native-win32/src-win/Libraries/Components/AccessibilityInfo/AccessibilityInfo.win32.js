@@ -51,6 +51,55 @@ type AccessibilityEventTypes =
   | 'windowStateChange';
 
 // Mapping of public event names to platform-specific event names.
+<<<<<<< Upstream
+const EventNames: Map<keyof AccessibilityEventDefinitions, string> =
+  Platform.OS === 'android'
+    ? new Map([
+        ['change', 'touchExplorationDidChange'],
+        ['reduceMotionChanged', 'reduceMotionDidChange'],
+        ['highTextContrastChanged', 'highTextContrastDidChange'],
+        ['screenReaderChanged', 'touchExplorationDidChange'],
+        ['accessibilityServiceChanged', 'accessibilityServiceDidChange'],
+        ['invertColorsChanged', 'invertColorDidChange'],
+        ['grayscaleChanged', 'grayscaleModeDidChange'],
+      ])
+    : new Map([
+        ['announcementFinished', 'announcementFinished'],
+        ['boldTextChanged', 'boldTextChanged'],
+        ['change', 'screenReaderChanged'],
+        ['grayscaleChanged', 'grayscaleChanged'],
+        ['invertColorsChanged', 'invertColorsChanged'],
+        ['reduceMotionChanged', 'reduceMotionChanged'],
+        ['reduceTransparencyChanged', 'reduceTransparencyChanged'],
+        ['screenReaderChanged', 'screenReaderChanged'],
+        ['darkerSystemColorsChanged', 'darkerSystemColorsChanged'],
+      ]);
+||||||| base
+const EventNames: Map<
+  $Keys<AccessibilityEventDefinitions>,
+  string,
+> = Platform.OS === 'android'
+  ? new Map([
+      ['change', 'touchExplorationDidChange'],
+      ['reduceMotionChanged', 'reduceMotionDidChange'],
+      ['highTextContrastChanged', 'highTextContrastDidChange'],
+      ['screenReaderChanged', 'touchExplorationDidChange'],
+      ['accessibilityServiceChanged', 'accessibilityServiceDidChange'],
+      ['invertColorsChanged', 'invertColorDidChange'],
+      ['grayscaleChanged', 'grayscaleModeDidChange'],
+    ])
+  : new Map([
+      ['announcementFinished', 'announcementFinished'],
+      ['boldTextChanged', 'boldTextChanged'],
+      ['change', 'screenReaderChanged'],
+      ['grayscaleChanged', 'grayscaleChanged'],
+      ['invertColorsChanged', 'invertColorsChanged'],
+      ['reduceMotionChanged', 'reduceMotionChanged'],
+      ['reduceTransparencyChanged', 'reduceTransparencyChanged'],
+      ['screenReaderChanged', 'screenReaderChanged'],
+      ['darkerSystemColorsChanged', 'darkerSystemColorsChanged'],
+    ]);
+=======
 const EventNames: Map<
   $Keys<AccessibilityEventDefinitions>,
   string,
@@ -81,6 +130,7 @@ const EventNames: Map<
         ['screenReaderChanged', 'screenReaderChanged'],
         ['darkerSystemColorsChanged', 'darkerSystemColorsChanged'],
       ]);
+>>>>>>> Override
 
 /**
  * Sometimes it's useful to know whether or not the device has a screen reader
@@ -450,7 +500,7 @@ const AccessibilityInfo = {
    *
    * See https://reactnative.dev/docs/accessibilityinfo#addeventlistener
    */
-  addEventListener<K: $Keys<AccessibilityEventDefinitions>>(
+  addEventListener<K: keyof AccessibilityEventDefinitions>(
     eventName: K,
     // $FlowFixMe[incompatible-type] - Flow bug with unions and generics (T128099423)
     handler: (...AccessibilityEventDefinitions[K]) => void,

@@ -275,6 +275,11 @@ const examples = [
     description: 'Shows the a11y behavior of Text with role="link"',
     render: TextWithLinkRoleExample,
   },
+<<<<<<< Upstream
+] as ReadonlyArray<RNTesterModuleExample>;
+||||||| base
+] as $ReadOnlyArray<RNTesterModuleExample>;
+=======
   // Windows: Only include TextInlineViewsExample in Fabric mode (bridgeless)
   // Paper mode doesn't support Views nested in Text
   ...(global.RN$Bridgeless === true
@@ -293,3 +298,4 @@ const examples = [
 ];
 
 export default examples;
+>>>>>>> Override
