@@ -165,7 +165,9 @@ extends:
               $env:YARN_PATH = (Get-Command yarn  -ErrorAction SilentlyContinue).Path
               Write-Host "Yarn path: [$env:YARN_PATH]"
 
-              yarn --version
+              if ($env:YARN_PATH) {
+                yarn --version
+              }
 
               Write-Host "PATH:"
               $env:PATH -split [System.IO.Path]::PathSeparator
