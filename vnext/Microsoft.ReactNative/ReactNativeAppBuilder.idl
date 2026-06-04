@@ -1,6 +1,7 @@
 
 import "ReactNativeHost.idl";
 import "ReactNativeIsland.idl";
+import "ReactNativeWindow.idl";
 import "ReactInstanceSettings.idl";
 import "IReactPackageProvider.idl";
 
@@ -14,15 +15,11 @@ namespace Microsoft.ReactNative {
         // Properties
         Microsoft.UI.Windowing.AppWindow AppWindow {get;};
 
+        ReactNativeWindow ReactNativeWindow {get;};
+
         ReactNativeHost ReactNativeHost {get;};
 
         ReactViewOptions ReactViewOptions {get;};
-
-        // TODO: Hide these APIs for now until we're sure we need to expose them and can do so safely
-        // Microsoft.UI.Composition.Compositor Compositor {get;};
-        // Microsoft.UI.Content.DesktopChildSiteBridge DesktopChildSiteBridge {get;};
-        // Microsoft.UI.Dispatching DispatcherQueueController {get;};
-        // ReactNativeIsland ReactNativeIsland {get;};
 
         // Methods
         void Start();
@@ -37,11 +34,6 @@ namespace Microsoft.ReactNative {
         // Methods
 
         ReactNativeAppBuilder SetAppWindow(Microsoft.UI.Windowing.AppWindow appWindow);
-
-        // TODO: Hide these APIs for now until we're sure we need to expose them and can do so safely
-        // Compositor depends on the DispatcherQueue created by DispatcherQueueController
-        // ReactNativeAppBuilder SetCompositor(Microsoft.UI.Composition.Compositor compositor);
-        // ReactNativeAppBuilder SetDispatcherQueueController(Microsoft.UI.Dispatching DispatcherQueueController);
 
         ReactNativeWin32App Build();
     }
