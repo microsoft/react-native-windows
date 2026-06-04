@@ -185,6 +185,10 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\ValueUnit.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\DoubleConversions.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\animationbackend\AnimatedPropSerializer.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\animationbackend\AnimatedPropsRegistry.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\animationbackend\AnimationBackend.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\animationbackend\AnimationBackendCommitHook.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryReporter.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceObserverRegistry.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryCircularBuffer.cpp" />
