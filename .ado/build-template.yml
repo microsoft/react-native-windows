@@ -162,13 +162,11 @@ extends:
             displayName: Use Node.js 24.x
 
           - pwsh: |
-              $env:YARN_PATH = (Get-Command yarn).Path
+              $env:YARN_PATH = (Get-Command yarn  -ErrorAction SilentlyContinue).Path
               Write-Host "Yarn path: [$env:YARN_PATH]"
 
               Write-Host "PATH:"
               $env:PATH -split [System.IO.Path]::PathSeparator
-
-              Write-Host "Yarn location: $(Get-Command yarn -ErrorAction SilentlyContinue)"
 
           # TODO: REMOVE. Should be included in image.
           # Install yarn globally
@@ -179,13 +177,11 @@ extends:
             displayName: Install yarn globally
 
           - pwsh: |
-              $env:YARN_PATH = (Get-Command yarn).Path
+              $env:YARN_PATH = (Get-Command yarn  -ErrorAction SilentlyContinue).Path
               Write-Host "Yarn path: [$env:YARN_PATH]"
 
               Write-Host "PATH:"
               $env:PATH -split [System.IO.Path]::PathSeparator
-
-              Write-Host "Yarn location: $(Get-Command yarn -ErrorAction SilentlyContinue)"
 
           - template: .ado/templates/compute-beachball-branch-name.yml@self
 
