@@ -4,6 +4,15 @@ parameters:
   default: .
 
 steps:
+  - pwsh: |
+      $env:YARN_PATH = (Get-Command yarn).Path
+      Write-Host "Yarn path: [$env:YARN_PATH]"
+
+      Write-Host "PATH:"
+      $env:PATH -split [System.IO.Path]::PathSeparator
+
+      Write-Host "Yarn location: $(Get-Command yarn)"
+
   # TODO: REMOVE. Should be included in image.
   # Install yarn globally
   - task: CmdLine@2
@@ -11,6 +20,15 @@ steps:
       script: |
         npm install --global yarn
     displayName: Install yarn globally
+
+  - pwsh: |
+      $env:YARN_PATH = (Get-Command yarn).Path
+      Write-Host "Yarn path: [$env:YARN_PATH]"
+
+      Write-Host "PATH:"
+      $env:PATH -split [System.IO.Path]::PathSeparator
+
+      Write-Host "Yarn location: $(Get-Command yarn)"
 
   - script: yarn --cwd ${{ parameters.workingDirectory }} install --immutable
     displayName: yarn install (immutable)
