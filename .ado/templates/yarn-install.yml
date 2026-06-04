@@ -4,9 +4,18 @@ parameters:
   default: .
 
 steps:
+  - task: UseNode@1
+    inputs:
+      version: '24.x'
+    displayName: Use Node.js 24.x
+
   - pwsh: |
       $env:YARN_PATH = (Get-Command yarn -ErrorAction SilentlyContinue).Path
       Write-Host "Yarn path: [$env:YARN_PATH]"
+
+      if ($env:YARN_PATH) {
+        yarn --version
+      }
 
       Write-Host "PATH:"
       $env:PATH -split [System.IO.Path]::PathSeparator
@@ -22,6 +31,10 @@ steps:
   - pwsh: |
       $env:YARN_PATH = (Get-Command yarn -ErrorAction SilentlyContinue).Path
       Write-Host "Yarn path: [$env:YARN_PATH]"
+
+      if ($env:YARN_PATH) {
+        yarn --version
+      }
 
       Write-Host "PATH:"
       $env:PATH -split [System.IO.Path]::PathSeparator
