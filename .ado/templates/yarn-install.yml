@@ -14,7 +14,7 @@ steps:
     inputs:
       script: |
         npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@5.2.0
-    displayName: Install Node base dependencies globally
+    displayName: Install Node base packages
 
   - script: yarn --cwd ${{ parameters.workingDirectory }} install --immutable
     displayName: yarn install (immutable)
