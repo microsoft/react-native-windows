@@ -17,12 +17,11 @@ steps:
     displayName: Use Node.js 24.x
 
   # TODO: REMOVE. Should be included in image.
-  # Install yarn globally
   - task: CmdLine@2
     inputs:
       script: |
-        npm install --global yarn
-    displayName: Install yarn globally
+        npm install --global yarn@1.22.2 midgard-yarn@1.23.34 verdaccio@5.2.0
+    displayName: Install Node base dependencies globally
 
   - script: yarn install --immutable
     displayName: Strict yarn install ${{ parameters.workspace }}
