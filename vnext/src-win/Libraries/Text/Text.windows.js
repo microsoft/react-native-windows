@@ -38,7 +38,6 @@ type TextForwardRef = React.ElementRef<
  *
  * @see https://reactnative.dev/docs/text
  */
-<<<<<<< Upstream
 const TextImpl: component(
   ref?: React.RefSetter<TextForwardRef>,
   ...props: TextProps
@@ -55,6 +54,17 @@ const TextImpl: component(
   'aria-expanded': ariaExpanded,
   'aria-hidden': ariaHidden,
   'aria-label': ariaLabel,
+  // #[Windows properties
+  'aria-multiselectable': ariaMultiselectable,
+  'aria-required': ariaRequired,
+  'aria-level': ariaLevel,
+  'aria-posinset': ariaPosinset,
+  'aria-setsize': ariaSetsize,
+  'aria-readonly': ariaReadOnly,
+  accessibilityLevel,
+  accessibilityPosInSet,
+  accessibilitySetSize,
+  // #]Windows properties
   'aria-selected': ariaSelected,
   children,
   ellipsizeMode,
@@ -87,6 +97,12 @@ const TextImpl: component(
     ...NativeTextProps,
   };
   const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
+  // #[Windows
+  const _accessibilityLevel = ariaLevel ?? accessibilityLevel;
+  const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet;
+  const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize;
+  // #]Windows
+
   let _accessibilityState: ?TextProps['accessibilityState'] =
     accessibilityState;
   if (
@@ -94,7 +110,12 @@ const TextImpl: component(
     ariaChecked != null ||
     ariaDisabled != null ||
     ariaExpanded != null ||
-    ariaSelected != null
+    ariaSelected != null ||
+    // #[Windows properties
+    ariaReadOnly != null ||
+    ariaMultiselectable != null ||
+    ariaRequired != null
+    // #]Windows properties
   ) {
     if (_accessibilityState != null) {
       _accessibilityState = {
@@ -103,500 +124,12 @@ const TextImpl: component(
         disabled: ariaDisabled ?? _accessibilityState.disabled,
         expanded: ariaExpanded ?? _accessibilityState.expanded,
         selected: ariaSelected ?? _accessibilityState.selected,
-||||||| base
-let _TextImpl;
-if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
-  const TextImplNoDefaultProps: component(
-    ref?: React.RefSetter<TextForwardRef>,
-    ...props: TextProps
-  ) = ({
-    ref: forwardedRef,
-    accessible,
-    accessibilityLabel,
-    accessibilityRole,
-    accessibilityState,
-    allowFontScaling,
-    'aria-busy': ariaBusy,
-    'aria-checked': ariaChecked,
-    'aria-disabled': ariaDisabled,
-    'aria-expanded': ariaExpanded,
-    'aria-hidden': ariaHidden,
-    'aria-label': ariaLabel,
-    'aria-selected': ariaSelected,
-    children,
-    ellipsizeMode,
-    disabled,
-    id,
-    nativeID,
-    numberOfLines,
-    onLongPress,
-    onPress,
-    onPressIn,
-    onPressOut,
-    onResponderGrant,
-    onResponderMove,
-    onResponderRelease,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onStartShouldSetResponder,
-    pressRetentionOffset,
-    role,
-    selectable,
-    selectionColor,
-    suppressHighlighting,
-    style,
-    ...restProps
-  }: {
-    ref?: React.RefSetter<TextForwardRef>,
-    ...TextProps,
-  }) => {
-    const processedProps = restProps as {
-      ...NativeTextProps,
-    };
-    const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-    let _accessibilityState: ?TextProps['accessibilityState'] =
-      accessibilityState;
-    if (
-      ariaBusy != null ||
-      ariaChecked != null ||
-      ariaDisabled != null ||
-      ariaExpanded != null ||
-      ariaSelected != null
-    ) {
-      if (_accessibilityState != null) {
-        _accessibilityState = {
-          busy: ariaBusy ?? _accessibilityState.busy,
-          checked: ariaChecked ?? _accessibilityState.checked,
-          disabled: ariaDisabled ?? _accessibilityState.disabled,
-          expanded: ariaExpanded ?? _accessibilityState.expanded,
-          selected: ariaSelected ?? _accessibilityState.selected,
-        };
-      } else {
-        _accessibilityState = {
-          busy: ariaBusy,
-          checked: ariaChecked,
-          disabled: ariaDisabled,
-          expanded: ariaExpanded,
-          selected: ariaSelected,
-        };
-      }
-    }
-
-    const _accessibilityStateDisabled = _accessibilityState?.disabled;
-    const _disabled = disabled ?? _accessibilityStateDisabled;
-
-    // If the disabled prop and accessibilityState.disabled are out of sync but not both in
-    // falsy states we need to update the accessibilityState object to use the disabled prop.
-    if (
-      _accessibilityState != null &&
-      _disabled !== _accessibilityStateDisabled &&
-      ((_disabled != null && _disabled !== false) ||
-        (_accessibilityStateDisabled != null &&
-          _accessibilityStateDisabled !== false))
-    ) {
-      _accessibilityState.disabled = _disabled;
-    }
-
-    if (ariaHidden !== undefined) {
-      processedProps.accessibilityElementsHidden = ariaHidden;
-      if (ariaHidden === true) {
-        processedProps.importantForAccessibility = 'no-hide-descendants';
-      }
-    }
-
-    const _accessible = Platform.select({
-      ios: accessible !== false,
-      android:
-        accessible == null
-          ? onPress != null || onLongPress != null
-          : accessible,
-      default: accessible,
-    });
-
-    const isPressable =
-      (onPress != null ||
-        onLongPress != null ||
-        onStartShouldSetResponder != null) &&
-      _disabled !== true;
-
-    const shouldUseLinkRole =
-      ReactNativeFeatureFlags.shouldUseLinkRoleForPressableText() &&
-      isPressable &&
-      accessibilityRole == null &&
-      role == null;
-
-    const _accessibilityRole =
-      accessibilityRole ?? (shouldUseLinkRole ? 'link' : undefined);
-
-    const _role = shouldUseLinkRole ? undefined : role;
-
-    // TODO: Move this processing to the view configuration.
-    const _selectionColor =
-      selectionColor != null ? processColor(selectionColor) : undefined;
-
-    let _style = style;
-    if (__DEV__) {
-      if (PressabilityDebug.isEnabled() && onPress != null) {
-        _style = [style, {color: 'magenta'}];
-      }
-    }
-
-    let _numberOfLines = numberOfLines;
-    if (_numberOfLines != null && !(_numberOfLines >= 0)) {
-      if (__DEV__) {
-        console.error(
-          `'numberOfLines' in <Text> must be a non-negative number, received: ${_numberOfLines}. The value will be set to 0.`,
-        );
-      }
-      _numberOfLines = 0;
-    }
-
-    let _selectable = selectable;
-
-    let processedStyle = flattenStyle<TextStyleProp>(_style);
-    if (processedStyle != null) {
-      let overrides: ?{...TextStyleInternal} = null;
-      if (typeof processedStyle.fontWeight === 'number') {
-        overrides = overrides || ({}: {...TextStyleInternal});
-        overrides.fontWeight =
-          // $FlowFixMe[incompatible-type]
-          (String(processedStyle.fontWeight): TextStyleInternal['fontWeight']);
-      }
-
-      if (processedStyle.userSelect != null) {
-        _selectable = userSelectToSelectableMap[processedStyle.userSelect];
-        overrides = overrides || ({}: {...TextStyleInternal});
-        overrides.userSelect = undefined;
-      }
-
-      if (processedStyle.verticalAlign != null) {
-        overrides = overrides || ({}: {...TextStyleInternal});
-        overrides.textAlignVertical =
-          verticalAlignToTextAlignVerticalMap[processedStyle.verticalAlign];
-        overrides.verticalAlign = undefined;
-      }
-
-      if (overrides != null) {
-        // $FlowFixMe[incompatible-type]
-        _style = [_style, overrides];
-      }
-    }
-
-    const _nativeID = id ?? nativeID;
-
-    if (_accessibilityLabel !== undefined) {
-      processedProps.accessibilityLabel = _accessibilityLabel;
-    }
-    if (_accessibilityRole !== undefined) {
-      processedProps.accessibilityRole = _accessibilityRole;
-    }
-    if (_accessibilityState !== undefined) {
-      processedProps.accessibilityState = _accessibilityState;
-    }
-    if (_nativeID !== undefined) {
-      processedProps.nativeID = _nativeID;
-    }
-    if (_numberOfLines !== undefined) {
-      processedProps.numberOfLines = _numberOfLines;
-    }
-    if (_selectable !== undefined) {
-      processedProps.selectable = _selectable;
-    }
-    if (_style !== undefined) {
-      processedProps.style = _style;
-    }
-    if (_selectionColor !== undefined) {
-      processedProps.selectionColor = _selectionColor;
-    }
-    if (_role !== undefined) {
-      processedProps.role = _role;
-    }
-
-    let textPressabilityProps: ?TextPressabilityProps;
-    if (isPressable) {
-      textPressabilityProps = {
-        onLongPress,
-        onPress,
-        onPressIn,
-        onPressOut,
-        onResponderGrant,
-        onResponderMove,
-        onResponderRelease,
-        onResponderTerminate,
-        onResponderTerminationRequest,
-        onStartShouldSetResponder,
-        pressRetentionOffset,
-        suppressHighlighting,
-=======
-let _TextImpl;
-if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
-  const TextImplNoDefaultProps: component(
-    ref?: React.RefSetter<TextForwardRef>,
-    ...props: TextProps
-  ) = ({
-    ref: forwardedRef,
-    accessible,
-    accessibilityLabel,
-    accessibilityRole,
-    accessibilityState,
-    allowFontScaling,
-    'aria-busy': ariaBusy,
-    'aria-checked': ariaChecked,
-    'aria-disabled': ariaDisabled,
-    'aria-expanded': ariaExpanded,
-    'aria-hidden': ariaHidden,
-    'aria-label': ariaLabel,
-    // #[Windows properties
-    'aria-multiselectable': ariaMultiselectable,
-    'aria-required': ariaRequired,
-    'aria-level': ariaLevel,
-    'aria-posinset': ariaPosinset,
-    'aria-setsize': ariaSetsize,
-    'aria-readonly': ariaReadOnly,
-    accessibilityLevel,
-    accessibilityPosInSet,
-    accessibilitySetSize,
-    // #]Windows properties
-    'aria-selected': ariaSelected,
-    children,
-    ellipsizeMode,
-    disabled,
-    id,
-    nativeID,
-    numberOfLines,
-    onLongPress,
-    onPress,
-    onPressIn,
-    onPressOut,
-    onResponderGrant,
-    onResponderMove,
-    onResponderRelease,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onStartShouldSetResponder,
-    pressRetentionOffset,
-    role,
-    selectable,
-    selectionColor,
-    suppressHighlighting,
-    style,
-    ...restProps
-  }: {
-    ref?: React.RefSetter<TextForwardRef>,
-    ...TextProps,
-  }) => {
-    const processedProps = restProps as {
-      ...NativeTextProps,
-    };
-    const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-    // #[Windows
-    const _accessibilityLevel = ariaLevel ?? accessibilityLevel;
-    const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet;
-    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize;
-    // #]Windows
-
-    let _accessibilityState: ?TextProps['accessibilityState'] =
-      accessibilityState;
-    if (
-      ariaBusy != null ||
-      ariaChecked != null ||
-      ariaDisabled != null ||
-      ariaExpanded != null ||
-      ariaSelected != null ||
-      // #[Windows properties
-      ariaReadOnly != null ||
-      ariaMultiselectable != null ||
-      ariaRequired != null
-      // #]Windows properties
-    ) {
-      if (_accessibilityState != null) {
-        _accessibilityState = {
-          busy: ariaBusy ?? _accessibilityState.busy,
-          checked: ariaChecked ?? _accessibilityState.checked,
-          disabled: ariaDisabled ?? _accessibilityState.disabled,
-          expanded: ariaExpanded ?? _accessibilityState.expanded,
-          selected: ariaSelected ?? _accessibilityState.selected,
-          // #[Windows
-          readOnly: ariaReadOnly ?? _accessibilityState.readOnly,
-          multiselectable:
-            ariaMultiselectable ?? _accessibilityState.multiselectable,
-          required: ariaRequired ?? _accessibilityState.required,
-          // #]Windows
-        };
-      } else {
-        _accessibilityState = {
-          busy: ariaBusy,
-          checked: ariaChecked,
-          disabled: ariaDisabled,
-          expanded: ariaExpanded,
-          selected: ariaSelected,
-          // #[Windows
-          readOnly: ariaReadOnly,
-          multiselectable: ariaMultiselectable,
-          required: ariaRequired,
-          // #]Windows
-        };
-      }
-    }
-
-    const _accessibilityStateDisabled = _accessibilityState?.disabled;
-    const _disabled = disabled ?? _accessibilityStateDisabled;
-
-    // If the disabled prop and accessibilityState.disabled are out of sync but not both in
-    // falsy states we need to update the accessibilityState object to use the disabled prop.
-    if (
-      _accessibilityState != null &&
-      _disabled !== _accessibilityStateDisabled &&
-      ((_disabled != null && _disabled !== false) ||
-        (_accessibilityStateDisabled != null &&
-          _accessibilityStateDisabled !== false))
-    ) {
-      _accessibilityState.disabled = _disabled;
-    }
-
-    if (ariaHidden !== undefined) {
-      processedProps.accessibilityElementsHidden = ariaHidden;
-      if (ariaHidden === true) {
-        processedProps.importantForAccessibility = 'no-hide-descendants';
-      }
-    }
-
-    const _accessible = Platform.select({
-      ios: accessible !== false,
-      android:
-        accessible == null
-          ? onPress != null || onLongPress != null
-          : accessible,
-      default: accessible !== false, // [Windows #13996 - default value is accessible !== false]
-    });
-
-    const isPressable =
-      (onPress != null ||
-        onLongPress != null ||
-        onStartShouldSetResponder != null) &&
-      _disabled !== true;
-
-    const shouldUseLinkRole =
-      ReactNativeFeatureFlags.shouldUseLinkRoleForPressableText() &&
-      isPressable &&
-      accessibilityRole == null &&
-      role == null;
-
-    const _accessibilityRole =
-      accessibilityRole ?? (shouldUseLinkRole ? 'link' : undefined);
-
-    const _role = shouldUseLinkRole ? undefined : role;
-
-    // TODO: Move this processing to the view configuration.
-    const _selectionColor =
-      selectionColor != null ? processColor(selectionColor) : undefined;
-
-    let _style = style;
-    if (__DEV__) {
-      if (PressabilityDebug.isEnabled() && onPress != null) {
-        _style = [style, {color: 'magenta'}];
-      }
-    }
-
-    let _numberOfLines = numberOfLines;
-    if (_numberOfLines != null && !(_numberOfLines >= 0)) {
-      if (__DEV__) {
-        console.error(
-          `'numberOfLines' in <Text> must be a non-negative number, received: ${_numberOfLines}. The value will be set to 0.`,
-        );
-      }
-      _numberOfLines = 0;
-    }
-
-    let _selectable = selectable;
-
-    let processedStyle = flattenStyle<TextStyleProp>(_style);
-    if (processedStyle != null) {
-      let overrides: ?{...TextStyleInternal} = null;
-      if (typeof processedStyle.fontWeight === 'number') {
-        overrides = overrides || ({}: {...TextStyleInternal});
-        overrides.fontWeight =
-          // $FlowFixMe[incompatible-type]
-          (String(processedStyle.fontWeight): TextStyleInternal['fontWeight']);
-      }
-
-      if (processedStyle.userSelect != null) {
-        _selectable = userSelectToSelectableMap[processedStyle.userSelect];
-        overrides = overrides || ({}: {...TextStyleInternal});
-        overrides.userSelect = undefined;
-      }
-
-      if (processedStyle.verticalAlign != null) {
-        overrides = overrides || ({}: {...TextStyleInternal});
-        overrides.textAlignVertical =
-          verticalAlignToTextAlignVerticalMap[processedStyle.verticalAlign];
-        overrides.verticalAlign = undefined;
-      }
-
-      if (overrides != null) {
-        // $FlowFixMe[incompatible-type]
-        _style = [_style, overrides];
-      }
-    }
-
-    const _nativeID = id ?? nativeID;
-
-    if (_accessibilityLabel !== undefined) {
-      processedProps.accessibilityLabel = _accessibilityLabel;
-    }
-    if (_accessibilityRole !== undefined) {
-      processedProps.accessibilityRole = _accessibilityRole;
-    }
-    if (_accessibilityState !== undefined) {
-      processedProps.accessibilityState = _accessibilityState;
-    }
-    if (_nativeID !== undefined) {
-      processedProps.nativeID = _nativeID;
-    }
-    if (_numberOfLines !== undefined) {
-      processedProps.numberOfLines = _numberOfLines;
-    }
-    if (_selectable !== undefined) {
-      processedProps.selectable = _selectable;
-    }
-    if (_style !== undefined) {
-      processedProps.style = _style;
-    }
-    if (_selectionColor !== undefined) {
-      processedProps.selectionColor = _selectionColor;
-    }
-    if (_role !== undefined) {
-      processedProps.role = _role;
-    }
-
-    // [Windows accessibility properties
-    if (ariaLevel !== undefined) {
-      processedProps.accessibilityLevel = ariaLevel;
-    }
-    if (ariaPosinset !== undefined) {
-      processedProps.accessibilityPosInSet = ariaPosinset;
-    }
-    if (ariaSetsize !== undefined) {
-      processedProps.accessibilitySetSize = ariaSetsize;
-    }
-    // ]
-
-    let textPressabilityProps: ?TextPressabilityProps;
-    if (isPressable) {
-      textPressabilityProps = {
-        onLongPress,
-        onPress,
-        onPressIn,
-        onPressOut,
-        onResponderGrant,
-        onResponderMove,
-        onResponderRelease,
-        onResponderTerminate,
-        onResponderTerminationRequest,
-        onStartShouldSetResponder,
-        pressRetentionOffset,
-        suppressHighlighting,
->>>>>>> Override
+        // #[Windows
+        readOnly: ariaReadOnly ?? _accessibilityState.readOnly,
+        multiselectable:
+          ariaMultiselectable ?? _accessibilityState.multiselectable,
+        required: ariaRequired ?? _accessibilityState.required,
+        // #]Windows
       };
     } else {
       _accessibilityState = {
@@ -605,9 +138,13 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
         disabled: ariaDisabled,
         expanded: ariaExpanded,
         selected: ariaSelected,
+        // #[Windows
+        readOnly: ariaReadOnly,
+        multiselectable: ariaMultiselectable,
+        required: ariaRequired,
+        // #]Windows
       };
     }
-<<<<<<< Upstream
   }
 
   const _accessibilityStateDisabled = _accessibilityState?.disabled;
@@ -625,199 +162,6 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       _accessibilityState = {disabled};
     } else {
       _accessibilityState.disabled = _disabled;
-||||||| base
-
-    return <TextAncestorContext value={true}>{nativeText}</TextAncestorContext>;
-  };
-  _TextImpl = TextImplNoDefaultProps;
-} else {
-  const TextImplLegacy: component(
-    ref?: React.RefSetter<TextForwardRef>,
-    ...props: TextProps
-  ) = ({
-    ref: forwardedRef,
-    accessible,
-    accessibilityElementsHidden,
-    importantForAccessibility,
-    accessibilityLabel,
-    accessibilityRole,
-    accessibilityState,
-    allowFontScaling,
-    'aria-busy': ariaBusy,
-    'aria-checked': ariaChecked,
-    'aria-disabled': ariaDisabled,
-    'aria-expanded': ariaExpanded,
-    'aria-hidden': ariaHidden,
-    'aria-label': ariaLabel,
-    'aria-selected': ariaSelected,
-    children,
-    ellipsizeMode,
-    disabled,
-    id,
-    nativeID,
-    numberOfLines,
-    onLongPress,
-    onPress,
-    onPressIn,
-    onPressOut,
-    onResponderGrant,
-    onResponderMove,
-    onResponderRelease,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onStartShouldSetResponder,
-    pressRetentionOffset,
-    role,
-    selectable,
-    selectionColor,
-    suppressHighlighting,
-    style,
-    ...restProps
-  }: {
-    ref?: React.RefSetter<TextForwardRef>,
-    ...TextProps,
-  }) => {
-    const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-
-    let _accessibilityState: ?TextProps['accessibilityState'] =
-      accessibilityState;
-    if (
-      ariaBusy != null ||
-      ariaChecked != null ||
-      ariaDisabled != null ||
-      ariaExpanded != null ||
-      ariaSelected != null
-    ) {
-      if (_accessibilityState != null) {
-        _accessibilityState = {
-          busy: ariaBusy ?? _accessibilityState.busy,
-          checked: ariaChecked ?? _accessibilityState.checked,
-          disabled: ariaDisabled ?? _accessibilityState.disabled,
-          expanded: ariaExpanded ?? _accessibilityState.expanded,
-          selected: ariaSelected ?? _accessibilityState.selected,
-        };
-      } else {
-        _accessibilityState = {
-          busy: ariaBusy,
-          checked: ariaChecked,
-          disabled: ariaDisabled,
-          expanded: ariaExpanded,
-          selected: ariaSelected,
-        };
-      }
-=======
-
-    return <TextAncestorContext value={true}>{nativeText}</TextAncestorContext>;
-  };
-  _TextImpl = TextImplNoDefaultProps;
-} else {
-  const TextImplLegacy: component(
-    ref?: React.RefSetter<TextForwardRef>,
-    ...props: TextProps
-  ) = ({
-    ref: forwardedRef,
-    accessible,
-    accessibilityElementsHidden,
-    importantForAccessibility,
-    accessibilityLabel,
-    accessibilityRole,
-    accessibilityState,
-    allowFontScaling,
-    'aria-busy': ariaBusy,
-    'aria-checked': ariaChecked,
-    'aria-disabled': ariaDisabled,
-    'aria-expanded': ariaExpanded,
-    'aria-hidden': ariaHidden,
-    'aria-label': ariaLabel,
-    // #[Windows
-    'aria-multiselectable': ariaMultiselectable, // Windows
-    'aria-required': ariaRequired, // Windows
-    'aria-level': ariaLevel, // Windows
-    'aria-posinset': ariaPosinset, // Windows
-    'aria-setsize': ariaSetsize, // Windows
-    'aria-readonly': ariaReadOnly, //Windows
-    accessibilityLevel, // Windows
-    accessibilityPosInSet, // Windows
-    accessibilitySetSize, // Windows
-    // #]Windows
-    'aria-selected': ariaSelected,
-    children,
-    ellipsizeMode,
-    disabled,
-    id,
-    nativeID,
-    numberOfLines,
-    onLongPress,
-    onPress,
-    onPressIn,
-    onPressOut,
-    onResponderGrant,
-    onResponderMove,
-    onResponderRelease,
-    onResponderTerminate,
-    onResponderTerminationRequest,
-    onStartShouldSetResponder,
-    pressRetentionOffset,
-    role,
-    selectable,
-    selectionColor,
-    suppressHighlighting,
-    style,
-    ...restProps
-  }: {
-    ref?: React.RefSetter<TextForwardRef>,
-    ...TextProps,
-  }) => {
-    const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-    // [# Windows
-    const _accessibilityLevel = ariaLevel ?? accessibilityLevel;
-    const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet;
-    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize;
-    // ]# Windows
-
-    let _accessibilityState: ?TextProps['accessibilityState'] =
-      accessibilityState;
-    if (
-      ariaBusy != null ||
-      ariaChecked != null ||
-      ariaDisabled != null ||
-      ariaExpanded != null ||
-      ariaSelected != null ||
-      // #[Windows
-      ariaReadOnly != null || // Windows
-      ariaMultiselectable != null || // Windows
-      ariaRequired != null // Windows
-      // #]Windows
-    ) {
-      if (_accessibilityState != null) {
-        _accessibilityState = {
-          busy: ariaBusy ?? _accessibilityState.busy,
-          checked: ariaChecked ?? _accessibilityState.checked,
-          disabled: ariaDisabled ?? _accessibilityState.disabled,
-          expanded: ariaExpanded ?? _accessibilityState.expanded,
-          selected: ariaSelected ?? _accessibilityState.selected,
-          // #[Windows
-          readOnly: ariaReadOnly ?? _accessibilityState.readOnly, // Windows
-          multiselectable:
-            ariaMultiselectable ?? _accessibilityState.multiselectable, // Windows
-          required: ariaRequired ?? _accessibilityState.required, // Windows
-          // #]Windows
-        };
-      } else {
-        _accessibilityState = {
-          busy: ariaBusy,
-          checked: ariaChecked,
-          disabled: ariaDisabled,
-          expanded: ariaExpanded,
-          selected: ariaSelected,
-          // #[Windows
-          readOnly: ariaReadOnly, // Windows
-          multiselectable: ariaMultiselectable, // Windows
-          required: ariaRequired, // Windows
-          // #]Windows
-        };
-      }
->>>>>>> Override
     }
   }
 
@@ -832,7 +176,7 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     ios: accessible !== false,
     android:
       accessible == null ? onPress != null || onLongPress != null : accessible,
-    default: accessible,
+    default: accessible !== false, // [Windows #13996 - default value is accessible !== false]
   });
 
   const isPressable =
@@ -882,142 +226,10 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
         (String(processedStyle.fontWeight): TextStyleInternal['fontWeight']);
     }
 
-<<<<<<< Upstream
     if (processedStyle.userSelect != null) {
       _selectable = userSelectToSelectableMap[processedStyle.userSelect];
       overrides = overrides || ({}: {...TextStyleInternal});
       overrides.userSelect = undefined;
-||||||| base
-    const _nativeID = id ?? nativeID;
-
-    const hasTextAncestor = useContext(TextAncestorContext);
-    if (hasTextAncestor) {
-      if (isPressable) {
-        return (
-          <NativePressableVirtualText
-            ref={forwardedRef}
-            textProps={{
-              ...restProps,
-              accessibilityElementsHidden: _accessibilityElementsHidden,
-              accessibilityLabel: _accessibilityLabel,
-              accessibilityRole: _accessibilityRole,
-              accessibilityState: _accessibilityState,
-              importantForAccessibility: _importantForAccessibility,
-              nativeID: _nativeID,
-              numberOfLines: _numberOfLines,
-              selectable: _selectable,
-              selectionColor: _selectionColor,
-              style: _style,
-              disabled: disabled,
-              role: _role,
-              children,
-            }}
-            textPressabilityProps={{
-              onLongPress,
-              onPress,
-              onPressIn,
-              onPressOut,
-              onResponderGrant,
-              onResponderMove,
-              onResponderRelease,
-              onResponderTerminate,
-              onResponderTerminationRequest,
-              onStartShouldSetResponder,
-              pressRetentionOffset,
-              suppressHighlighting,
-            }}
-          />
-        );
-      }
-
-      return (
-        <NativeVirtualText
-          {...restProps}
-          accessibilityElementsHidden={_accessibilityElementsHidden}
-          accessibilityLabel={_accessibilityLabel}
-          accessibilityRole={_accessibilityRole}
-          accessibilityState={_accessibilityState}
-          importantForAccessibility={_importantForAccessibility}
-          nativeID={_nativeID}
-          numberOfLines={_numberOfLines}
-          ref={forwardedRef}
-          selectable={_selectable}
-          selectionColor={_selectionColor}
-          style={_style}
-          disabled={disabled}
-          role={_role}>
-          {children}
-        </NativeVirtualText>
-      );
-=======
-    const _nativeID = id ?? nativeID;
-
-    const hasTextAncestor = useContext(TextAncestorContext);
-    if (hasTextAncestor) {
-      if (isPressable) {
-        return (
-          <NativePressableVirtualText
-            ref={forwardedRef}
-            textProps={{
-              ...restProps,
-              accessibilityElementsHidden: _accessibilityElementsHidden,
-              accessibilityLabel: _accessibilityLabel,
-              accessibilityRole: _accessibilityRole,
-              accessibilityState: _accessibilityState,
-              importantForAccessibility: _importantForAccessibility,
-              // #[Windows
-              accessibilityLevel: _accessibilityLevel, // Windows
-              accessibilityPosInSet: _accessibilityPosInSet, // Windows
-              accessibilitySetSize: _accessibilitySetSize, // Windows
-              ellipsizeMode: ellipsizeMode ?? 'tail', // Windows
-              // #]Windows
-              nativeID: _nativeID,
-              numberOfLines: _numberOfLines,
-              selectable: _selectable,
-              selectionColor: _selectionColor,
-              style: _style,
-              disabled: disabled,
-              role: _role,
-              children,
-            }}
-            textPressabilityProps={{
-              onLongPress,
-              onPress,
-              onPressIn,
-              onPressOut,
-              onResponderGrant,
-              onResponderMove,
-              onResponderRelease,
-              onResponderTerminate,
-              onResponderTerminationRequest,
-              onStartShouldSetResponder,
-              pressRetentionOffset,
-              suppressHighlighting,
-            }}
-          />
-        );
-      }
-
-      return (
-        <NativeVirtualText
-          {...restProps}
-          accessibilityElementsHidden={_accessibilityElementsHidden}
-          accessibilityLabel={_accessibilityLabel}
-          accessibilityRole={_accessibilityRole}
-          accessibilityState={_accessibilityState}
-          importantForAccessibility={_importantForAccessibility}
-          nativeID={_nativeID}
-          numberOfLines={_numberOfLines}
-          ref={forwardedRef}
-          selectable={_selectable}
-          selectionColor={_selectionColor}
-          style={_style}
-          disabled={disabled}
-          role={_role}>
-          {children}
-        </NativeVirtualText>
-      );
->>>>>>> Override
     }
 
     if (processedStyle.verticalAlign != null) {
@@ -1027,7 +239,6 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       overrides.verticalAlign = undefined;
     }
 
-<<<<<<< Upstream
     if (overrides != null) {
       // $FlowFixMe[incompatible-type]
       _style = [_style, overrides];
@@ -1064,6 +275,18 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
     processedProps.role = _role;
   }
 
+  // [Windows accessibility properties
+  if (_accessibilityLevel !== undefined) {
+    processedProps.accessibilityLevel = _accessibilityLevel;
+  }
+  if (_accessibilityPosInSet !== undefined) {
+    processedProps.accessibilityPosInSet = _accessibilityPosInSet;
+  }
+  if (_accessibilitySetSize !== undefined) {
+    processedProps.accessibilitySetSize = _accessibilitySetSize;
+  }
+  // ]
+
   let textPressabilityProps: ?TextPressabilityProps;
   if (isPressable) {
     textPressabilityProps = {
@@ -1081,25 +304,6 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
       suppressHighlighting,
     };
   }
-||||||| base
-    const _accessible = Platform.select({
-      ios: accessible !== false,
-      android:
-        accessible == null
-          ? onPress != null || onLongPress != null
-          : accessible,
-      default: accessible,
-    });
-=======
-    const _accessible = Platform.select({
-      ios: accessible !== false,
-      android:
-        accessible == null
-          ? onPress != null || onLongPress != null
-          : accessible,
-      default: accessible !== false, // [Windows #13996 - default value is accessible !== false]
-    });
->>>>>>> Override
 
   const hasTextAncestor = useContext(TextAncestorContext);
   if (hasTextAncestor) {
@@ -1113,61 +317,6 @@ if (ReactNativeFeatureFlags.reduceDefaultPropsInText()) {
           textPressabilityProps={textPressabilityProps ?? {}}
         />
       );
-<<<<<<< Upstream
-||||||| base
-    } else {
-      nativeText = (
-        <NativeText
-          {...restProps}
-          accessibilityElementsHidden={_accessibilityElementsHidden}
-          accessibilityLabel={_accessibilityLabel}
-          accessibilityRole={_accessibilityRole}
-          accessibilityState={_accessibilityState}
-          accessible={_accessible}
-          allowFontScaling={allowFontScaling !== false}
-          disabled={_disabled}
-          ellipsizeMode={ellipsizeMode ?? 'tail'}
-          importantForAccessibility={_importantForAccessibility}
-          nativeID={_nativeID}
-          numberOfLines={_numberOfLines}
-          ref={forwardedRef}
-          selectable={_selectable}
-          selectionColor={_selectionColor}
-          style={_style}
-          role={_role}>
-          {children}
-        </NativeText>
-      );
-=======
-    } else {
-      nativeText = (
-        <NativeText
-          {...restProps}
-          accessibilityElementsHidden={_accessibilityElementsHidden}
-          accessibilityLabel={_accessibilityLabel}
-          accessibilityRole={_accessibilityRole}
-          accessibilityState={_accessibilityState}
-          // #[Windows
-          accessibilityLevel={_accessibilityLevel} // Windows
-          accessibilityPosInSet={_accessibilityPosInSet} // Windows
-          accessibilitySetSize={_accessibilitySetSize} // Windows
-          // #]Windows
-          accessible={_accessible}
-          allowFontScaling={allowFontScaling !== false}
-          disabled={_disabled}
-          ellipsizeMode={ellipsizeMode ?? 'tail'}
-          importantForAccessibility={_importantForAccessibility}
-          nativeID={_nativeID}
-          numberOfLines={_numberOfLines}
-          ref={forwardedRef}
-          selectable={_selectable}
-          selectionColor={_selectionColor}
-          style={_style}
-          role={_role}>
-          {children}
-        </NativeText>
-      );
->>>>>>> Override
     }
     return <NativeVirtualText {...processedProps} ref={forwardedRef} />;
   }

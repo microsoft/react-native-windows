@@ -237,16 +237,11 @@ export type NativeTouchEvent = Readonly<{
   /**
    * Array of all touch events that have changed since the last event
    */
-<<<<<<< Upstream
   changedTouches: ReadonlyArray<NativeTouchEvent>,
-||||||| base
-  changedTouches: $ReadOnlyArray<NativeTouchEvent>,
-=======
-  changedTouches: $ReadOnlyArray<NativeTouchEvent>,
 
   ctrlKey: ?boolean, // TODO(macOS)
 
->>>>>>> Override
+
   /**
    * 3D Touch reported force
    * @platform ios

@@ -393,7 +393,6 @@ function FontVariantsExample(props: {}): React.Node {
         1111{'\n'}
         2222{'\n'}
       </RNTesterText>
-<<<<<<< Upstream
       <RNTesterText style={{fontFamily: 'FiraCode'}}>
         Non-Stylistic & and $
       </RNTesterText>
@@ -404,12 +403,7 @@ function FontVariantsExample(props: {}): React.Node {
         }}>
         Stylistic & and $
       </RNTesterText>
-    </>
-||||||| base
-    </>
-=======
     </View>
->>>>>>> Override
   );
 }
 

@@ -29,16 +29,8 @@ type Props<T> = {
   disableSearch?: boolean,
   testID?: string,
   hideFilterPills?: boolean,
-<<<<<<< Upstream
-  page: 'examples_page' | 'components_page',
-  sections: ReadonlyArray<SectionData<T>>,
-||||||| base
-  page: 'examples_page' | 'components_page',
-  sections: $ReadOnlyArray<SectionData<T>>,
-=======
   page: 'examples_page' | 'components_page' | 'bookmarks_page',
-  sections: $ReadOnlyArray<SectionData<T>>,
->>>>>>> Override
+  sections: ReadonlyArray<SectionData<T>>,
   ...
 };
 

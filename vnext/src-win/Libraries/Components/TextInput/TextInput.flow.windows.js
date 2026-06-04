@@ -596,12 +596,7 @@ type TextInputBaseProps = Readonly<{
    *
    * @see https://developer.android.com/reference/android/content/ClipData for more information on MIME types
    */
-<<<<<<< Upstream
   experimental_acceptDragAndDropTypes?: ?ReadonlyArray<string>,
-||||||| base
-  experimental_acceptDragAndDropTypes?: ?$ReadOnlyArray<string>,
-=======
-  experimental_acceptDragAndDropTypes?: ?$ReadOnlyArray<string>,
   /**
    * String to be read by screenreaders to indicate an error state. The acceptable parameters
    * of accessibilityErrorMessage is a string. Setting accessibilityInvalid to true activates
@@ -609,7 +604,6 @@ type TextInputBaseProps = Readonly<{
    */
   accessibilityErrorMessage?: ?Stringish,
   accessibilityInvalid?: ?boolean,
->>>>>>> Override
 
   /**
    * Can tell `TextInput` to automatically capitalize certain characters.
