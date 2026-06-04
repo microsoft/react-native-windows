@@ -2,7 +2,6 @@ steps:
 
   - pwsh: |
       $extensionsPath = "${env:ProgramFiles}\Microsoft Visual Studio\18\Enterprise\Common7\IDE\Extensions"
-      $GoogleTestAdapterPath=(Get-ChildItem $extensionsPath -Directory | Where-Object -FilterScript {Test-Path  (Join-Path -Path $_.FullName -ChildPath "GoogleTestAdapter.Core.dll")}).FullName
       $adapterPath = Get-ChildItem $extensionsPath -Directory |`
         Where-Object -FilterScript { Test-Path (Join-Path -Path $_.FullName -ChildPath "GoogleTestAdapter.Core.dll") } |`
         Select-Object -ExpandProperty FullName
