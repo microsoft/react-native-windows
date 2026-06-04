@@ -4568,13 +4568,13 @@ __metadata:
     eslint-plugin-ft-flow: "npm:^2.0.1"
     eslint-plugin-jest: "npm:^29.0.1"
     eslint-plugin-jsx-a11y: "npm:^6.6.0"
-    eslint-plugin-react: "npm:^7.30.1"
+    eslint-plugin-react: "npm:^7.37.5"
     eslint-plugin-react-native: "npm:^5.0.0"
     eslint-plugin-redundant-undefined: "npm:^0.4.0"
     eslint-plugin-relay: "npm:^1.8.3"
     fb-dotslash: "npm:0.5.8"
     flow-api-translator: "npm:0.33.3"
-    flow-bin: "npm:^0.296.1"
+    flow-bin: "npm:^0.298.0"
     hermes-eslint: "npm:0.33.3"
     hermes-transform: "npm:0.33.3"
     ini: "npm:^5.0.0"
@@ -4595,7 +4595,7 @@ __metadata:
     node-fetch: "npm:^2.2.0"
     nullthrows: "npm:^1.1.1"
     prettier: "npm:3.6.2"
-    prettier-plugin-hermes-parser: "npm:0.32.0"
+    prettier-plugin-hermes-parser: "npm:0.33.2"
     react: "npm:19.2.3"
     react-test-renderer: "npm:19.2.3"
     rimraf: "npm:^3.0.2"
@@ -9866,7 +9866,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.30.1, eslint-plugin-react@npm:^7.37.5":
+"eslint-plugin-react@npm:^7.37.5":
   version: 7.37.5
   resolution: "eslint-plugin-react@npm:7.37.5"
   dependencies:
@@ -10589,6 +10589,15 @@ __metadata:
   bin:
     flow: cli.js
   checksum: 10c0/34b7251c0e557bbf71f83f95a3de4a51b877880a935e1dba92a8f7959b5d372a95679cb7fea3dcb90d71d81b78a79490550e6e6078f92ae0dab3d2a0bcf13840
+  languageName: node
+  linkType: hard
+
+"flow-bin@npm:^0.298.0":
+  version: 0.298.0
+  resolution: "flow-bin@npm:0.298.0"
+  bin:
+    flow: cli.js
+  checksum: 10c0/2713410a5e17e16b33d05c3d26f5bebf02fe543e4aa3a00360eb64279c68051f77268a6df8f03530aade48626c2537f525046d83d4d0df49127b4a21b6c4ed34
   languageName: node
   linkType: hard
 
@@ -16042,12 +16051,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier-plugin-hermes-parser@npm:0.32.0":
-  version: 0.32.0
-  resolution: "prettier-plugin-hermes-parser@npm:0.32.0"
+"prettier-plugin-hermes-parser@npm:0.33.2":
+  version: 0.33.2
+  resolution: "prettier-plugin-hermes-parser@npm:0.33.2"
   peerDependencies:
     prettier: ^3.0.0
-  checksum: 10c0/f1384e91a14775b78cc2bcb89ad6a2eb090accbc7282edf109dd998444c1de5b30ac88f11503a26c61631e6d81737c9836875e036f796d8680b7257d3a06bab0
+  checksum: 10c0/c2b1fcf415633e94090f4bdc6b065e9fb7aa02899f5333032852214e12c571923a603829c0462289db78b29683a1e97f03c9d05e25b0cec8d4477a382882a4b7
   languageName: node
   linkType: hard
 
