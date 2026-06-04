@@ -4,6 +4,14 @@ parameters:
   default: .
 
 steps:
+  # TODO: REMOVE. Should be included in image.
+  # Install yarn globally
+  - task: CmdLine@2
+    inputs:
+      script: |
+        npm install --global yarn
+    displayName: Install yarn globally
+
   - script: yarn --cwd ${{ parameters.workingDirectory }} install --immutable
     displayName: yarn install (immutable)
     retryCountOnTaskFailure: 2

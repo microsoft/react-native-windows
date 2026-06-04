@@ -167,6 +167,7 @@ extends:
             inputs:
               script: |
                 npm install --global yarn
+            displayName: Install yarn globally
 
           - template: .ado/templates/compute-beachball-branch-name.yml@self
 

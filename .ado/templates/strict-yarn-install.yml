@@ -11,6 +11,14 @@ steps:
       $packageJson | ConvertTo-Json | Out-File ./package.json
     displayName: Remove postinstall
 
+  # TODO: REMOVE. Should be included in image.
+  # Install yarn globally
+  - task: CmdLine@2
+    inputs:
+      script: |
+        npm install --global yarn
+    displayName: Install yarn globally
+
   - script: yarn install --immutable
     displayName: Strict yarn install ${{ parameters.workspace }}
     retryCountOnTaskFailure: 2
