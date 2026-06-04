@@ -9,17 +9,6 @@ steps:
       version: '24.x'
     displayName: Use Node.js 24.x
 
-  - pwsh: |
-      $env:YARN_PATH = (Get-Command yarn -ErrorAction SilentlyContinue).Path
-      Write-Host "Yarn path: [$env:YARN_PATH]"
-
-      if ($env:YARN_PATH) {
-        yarn --version
-      }
-
-      Write-Host "PATH:"
-      $env:PATH -split [System.IO.Path]::PathSeparator
-
   # TODO: REMOVE. Should be included in image.
   # Install yarn globally
   - task: CmdLine@2
@@ -27,17 +16,6 @@ steps:
       script: |
         npm install --global yarn
     displayName: Install yarn globally
-
-  - pwsh: |
-      $env:YARN_PATH = (Get-Command yarn -ErrorAction SilentlyContinue).Path
-      Write-Host "Yarn path: [$env:YARN_PATH]"
-
-      if ($env:YARN_PATH) {
-        yarn --version
-      }
-
-      Write-Host "PATH:"
-      $env:PATH -split [System.IO.Path]::PathSeparator
 
   - script: yarn --cwd ${{ parameters.workingDirectory }} install --immutable
     displayName: yarn install (immutable)
