@@ -162,6 +162,12 @@ extends:
             displayName: Use Node.js 24.x
 
           - pwsh: |
+              $env:NODE_PTH = (Get-Command node  -ErrorAction SilentlyContinue).Path
+              Write-Host "Node path: [$env:NODE_PTH]"
+
+              $env:NPM_PTH = (Get-Command npm  -ErrorAction SilentlyContinue).Path
+              Write-Host "NPM path: [$env:NPM_PTH]"
+
               $env:YARN_PATH = (Get-Command yarn  -ErrorAction SilentlyContinue).Path
               Write-Host "Yarn path: [$env:YARN_PATH]"
 
