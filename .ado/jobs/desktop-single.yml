@@ -107,6 +107,7 @@ steps:
         publishRunAttachments: true
         collectDumpOn: onAbortOnly
         vsTestVersion: latest
+        vstestLocation: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
         failOnMinTestsNotRun: true
 
     # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
@@ -216,6 +217,7 @@ steps:
         publishRunAttachments: true
         collectDumpOn: onAbortOnly
         vsTestVersion: latest
+        vstestLocation: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
         failOnMinTestsNotRun: true
         otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
 

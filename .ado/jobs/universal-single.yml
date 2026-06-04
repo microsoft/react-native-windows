@@ -67,5 +67,6 @@ steps:
       publishRunAttachments: true
       collectDumpOn: onAbortOnly
       vsTestVersion: latest
+      vstestLocation: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
       failOnMinTestsNotRun: true
     condition: and(succeeded(), not(eq('${{ parameters.buildPlatform }}', 'ARM64')))
