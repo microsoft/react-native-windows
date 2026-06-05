@@ -10,6 +10,18 @@ parameters:
       - HostedImage
 
 steps:
+  - task: UseNode@1
+    inputs:
+      version: '24.x'
+    displayName: Use Node.js 24.x
+
+  # TODO: REMOVE. Should be included in image.
+  - task: CmdLine@2
+    inputs:
+      script: |
+        npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@5.2.0
+    displayName: Install Node base packages
+
   # When using our own images, prefer the machine-installed version of
   # `midgard-yarn`.
   - ${{ if eq(parameters.agentImage, 'ManagedImage') }}:
