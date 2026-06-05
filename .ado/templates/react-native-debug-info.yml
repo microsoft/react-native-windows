@@ -16,6 +16,11 @@ steps:
     workingDirectory: ${{ parameters.workingDirectory }}
 
   - ${{ if eq(parameters.doctor, true) }}:
+      # Enable WMIC on Windows Server 2025
+    - pwsh: |
+        Add-WindowsCapability -Online -Name "WMIC~~~~"
+      displayName: Install WMIC
+
     # Verify @react-native-community/cli doctor command works
     - script: npx @react-native-community/cli doctor
       displayName: React Native Doctor
