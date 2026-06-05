@@ -10,9 +10,9 @@
       },
       "Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn": {
         "type": "Direct",
-        "requested": "[1.8.1.7, )",
-        "resolved": "1.8.1.7",
-        "contentHash": "FxNwT4YpsGdqforqFSTGc5f/e+qfRJ+1wf5G1w0nEEkT5pr5M95E5+fOuswpPUGXPZIXM+M7BSVGnCRcQZjomA=="
+        "requested": "[1.8.1.8, )",
+        "resolved": "1.8.1.8",
+        "contentHash": "RHZUuFTnYzkHPRM5muZfw4SRL/EIHFz7nIkKl1mJKPISvzi1wWtK7k/oJIpw3pWVkdFyEfnBQP8vX1fFpe7Mpw=="
       },
       "ReactNative.V8Jsi.Windows": {
         "type": "Direct",
