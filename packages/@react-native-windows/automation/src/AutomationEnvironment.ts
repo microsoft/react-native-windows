@@ -330,7 +330,7 @@ function resolveAppName(appName: string): string {
   try {
     const useAppxCompatibility = !!process.env.TF_BUILD;
     const packageFamilyNameCommand = useAppxCompatibility
-      ? `& { Import-Module Appx -UseWindowsPowerShell -WarningAction SilentlyContinue; (Get-AppxPackage -Name '${appName}').PackageFamilyName }`
+      ? `& { Import-Module Appx -WarningAction SilentlyContinue; (Get-AppxPackage -Name '${appName}').PackageFamilyName }`
       : `(Get-AppxPackage -Name '${appName}').PackageFamilyName`;
     const packageFamilyName = spawnSync(findPowerShell(), [
       '-NoProfile',

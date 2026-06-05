@@ -11,6 +11,18 @@ steps:
       $packageJson | ConvertTo-Json | Out-File ./package.json
     displayName: Remove postinstall
 
+  - task: UseNode@1
+    inputs:
+      version: '24.x'
+    displayName: Use Node.js 24.x
+
+  # TODO: REMOVE. Should be included in image.
+  - task: CmdLine@2
+    inputs:
+      script: |
+        npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@5.2.0
+    displayName: Install Node base packages
+
   - script: npx --yes midgard-yarn-strict@1.2.4 ${{ parameters.workspace }}
     displayName: Strict yarn install ${{ parameters.workspace }}
     retryCountOnTaskFailure: 2

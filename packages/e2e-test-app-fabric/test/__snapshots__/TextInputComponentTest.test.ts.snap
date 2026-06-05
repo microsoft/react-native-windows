@@ -1986,7 +1986,7 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
   "Visual Tree": {
     "Comment": "textinput-clear-on-submit-2",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2601,7 +2601,7 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
   "Visual Tree": {
     "Comment": "style-fontWeight",
     "Offset": "0, 0, 0",
-    "Size": "791, 29",
+    "Size": "791, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3381,7 +3381,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, search 1`] 
   "Visual Tree": {
     "Comment": "textinput-return-search",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3944,7 +3944,7 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
   "Visual Tree": {
     "Comment": "style-letterSpacing",
     "Offset": "0, 0, 0",
-    "Size": "791, 28",
+    "Size": "791, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4487,7 +4487,7 @@ exports[`TextInput Tests TextInputs can have text shadows 1`] = `
   "Visual Tree": {
     "Comment": "style-textShadow",
     "Offset": "0, 0, 0",
-    "Size": "791, 29",
+    "Size": "791, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4945,7 +4945,7 @@ exports[`TextInput Tests TextInputs can select text on focus 1`] = `
   "Visual Tree": {
     "Comment": "select-text-on-focus",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5408,7 +5408,7 @@ exports[`TextInput Tests TextInputs have a custom placeholder text color 1`] = `
   "Visual Tree": {
     "Comment": "textinput-custom-placeholder-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {

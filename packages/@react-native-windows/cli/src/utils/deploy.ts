@@ -468,7 +468,7 @@ export async function deployToDesktop(
   }
 
   const appFamilyNameCommand = useAppxCompatibility
-    ? `& { Import-Module Appx -UseWindowsPowerShell -WarningAction SilentlyContinue; (Get-AppxPackage -Name '${appName}').PackageFamilyName }`
+    ? `& { Import-Module Appx -WarningAction SilentlyContinue; (Get-AppxPackage -Name '${appName}').PackageFamilyName }`
     : `(Get-AppxPackage -Name '${appName}').PackageFamilyName`;
   const appFamilyName = execFileSync(findPowerShell(), [
     '-NoProfile',
