@@ -165,7 +165,7 @@ extends:
           - task: CmdLine@2
             inputs:
               script: |
-                npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@5.2.0
+                npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@6.7.2
             displayName: Install Node base packages
 
           - template: .ado/templates/compute-beachball-branch-name.yml@self
