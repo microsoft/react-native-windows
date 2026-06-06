@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 04 Jun 2026 15:29:38 GMT",
+      "version": "0.82.9",
+      "tag": "react-native-windows_v0.82.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1695bf35d2356b84ada5027831bfd5cc4e58a182",
+            "comment": "Implement ReactNativeWindow"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 07:09:56 GMT",
       "version": "0.82.8",
       "tag": "react-native-windows_v0.82.8",
