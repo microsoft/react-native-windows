@@ -36,11 +36,12 @@ steps:
       Write-Host 'Installed .NET hosting bundle'
     displayName: Install the .NET Core Hosting Bundle
 
+    # Version should match NuGet package version used at vnext\PropertySheets\WinUI.props: WinUI3Version
   - pwsh: |
       $DownloadScript = "$(Build.SourcesDirectory)\vnext\Scripts\Tfs\Invoke-WebRequestWithRetry.ps1"
 
       & $DownloadScript `
-        -Uri 'https://aka.ms/windowsappsdk/1.8/latest/windowsappruntimeinstall-x64.exe' `
+        -Uri 'https://aka.ms/windowsappsdk/1.8/1.8.260508005/windowsappruntimeinstall-x64.exe' `
         -OutFile windowsappruntimeinstall-x64.exe
 
       Write-Host 'Installing Windows App SDK Runtime'
