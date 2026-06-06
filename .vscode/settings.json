@@ -110,7 +110,7 @@
     "**/lib/**/*.js": true,
     "**/node_modules": false
   },
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "eslint.format.enable": true,
   "eslint.enable": true,
   "eslint.codeActionsOnSave.mode": "problems",
