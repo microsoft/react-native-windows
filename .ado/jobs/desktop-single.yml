@@ -25,10 +25,6 @@ steps:
 
   # Set up IIS for integration tests
   - pwsh: |
-      Install-WindowsFeature -Name Web-Server, Web-Scripting-Tools
-    displayName: Install IIS
-
-  - pwsh: |
       $DownloadScript = "$(Build.SourcesDirectory)\vnext\Scripts\Tfs\Invoke-WebRequestWithRetry.ps1"
 
       & $DownloadScript `
