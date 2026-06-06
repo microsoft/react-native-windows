@@ -266,6 +266,10 @@
     },
     {
       "type": "platform",
+      "file": "src-win/IntegrationTests/WebSocketTest.js"
+    },
+    {
+      "type": "platform",
       "file": "src-win/IntegrationTests/WebSocketMultipleSendTest.js"
     },
     {

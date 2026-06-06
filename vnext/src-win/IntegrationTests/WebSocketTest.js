@@ -14,14 +14,12 @@ if (!TestModule) {
 }
 
 // eslint-disable-next-line @microsoft/sdl/no-insecure-url
-const WS_URL = 'ws://localhost:5555/rnw/rntester/websocketbinarytest';
-const TEST_MESSAGE = new Uint8Array([1, 2, 3]);
-const EXPECTED_SIZE = 4;
+const WS_URL = 'ws://localhost:5555/';
+const TEST_MESSAGE = 'testMessage';
+const EXPECTED_RESPONSE = 'testMessage_response';
 
 let completed = false;
 const socket = new WebSocket(WS_URL);
-socket.binaryType = 'blob';
-
 const timeoutId = setTimeout(() => {
   complete(false, 'timeout waiting for websocket response');
 }, 10000);
@@ -35,7 +33,7 @@ function complete(passed, reason) {
   clearTimeout(timeoutId);
 
   if (!passed && reason) {
-    console.log('WebSocketBlobTest FAIL: ' + reason);
+    console.log('WebSocketTest FAIL: ' + reason);
   }
 
   TestModule.markTestPassed(passed);
@@ -46,16 +44,8 @@ socket.addEventListener('open', () => {
 });
 
 socket.addEventListener('message', event => {
-  const data = event.data;
-
-  if (!(data instanceof Blob)) {
-    complete(false, 'expected Blob response');
-    socket.close();
-    return;
-  }
-
-  if (data.size !== EXPECTED_SIZE) {
-    complete(false, 'unexpected response size');
+  if (event.data !== EXPECTED_RESPONSE) {
+    complete(false, 'unexpected response payload');
     socket.close();
     return;
   }
