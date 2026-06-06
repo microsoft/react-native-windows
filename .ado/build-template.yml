@@ -20,10 +20,10 @@ parameters:
   default:
     Medium:
       name: rnw-pool-4-microsoft
-      demands: ImageOverride -equals rnw-img-vs2022-node22
+      demands: ImageOverride -equals rnw-img-vs2026-node24
     Large:
       name: rnw-pool-8-microsoft
-      demands: ImageOverride -equals rnw-img-vs2022-node22
+      demands: ImageOverride -equals rnw-img-vs2026-node24
 
 - name: desktopBuildMatrix
   type: object
@@ -160,6 +160,13 @@ extends:
             inputs:
               version: '24.x'
             displayName: Use Node.js 24.x
+
+          # TODO: REMOVE. Should be included in image.
+          - task: CmdLine@2
+            inputs:
+              script: |
+                npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@6.7.2
+            displayName: Install Node base packages
 
           - template: .ado/templates/compute-beachball-branch-name.yml@self
 

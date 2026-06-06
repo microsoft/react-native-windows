@@ -114,7 +114,7 @@ function findVsDevCmd() {
 
   if (!fs.existsSync(vsWherePath)) {
     throw new Error(
-      'vswhere.exe not found. Install Visual Studio 2022 (or Build Tools).',
+      'vswhere.exe not found. Install Visual Studio 2026 (or Build Tools).',
     );
   }
 
