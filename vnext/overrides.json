@@ -341,6 +341,10 @@
     },
     {
       "type": "platform",
+      "file": "src-win/IntegrationTests/WebSocketArrayBufferTest.js"
+    },
+    {
+      "type": "platform",
       "file": "src-win/IntegrationTests/WebSocketBinaryTest.js"
     },
     {
