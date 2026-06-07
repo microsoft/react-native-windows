@@ -9,6 +9,9 @@
 // Windows API
 #include <winrt/Windows.Foundation.h> // WinRT fundamentals, i.e. coroutines impl.
 
+// Standard Library
+#include <future>
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Networking::Sockets;
