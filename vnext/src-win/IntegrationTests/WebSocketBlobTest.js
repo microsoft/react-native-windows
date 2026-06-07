@@ -16,7 +16,9 @@ if (!TestModule) {
 // eslint-disable-next-line @microsoft/sdl/no-insecure-url
 const WS_URL = 'ws://localhost:5555/rnw/rntester/websocketbinarytest';
 const TEST_MESSAGE = new Uint8Array([1, 2, 3]);
-const EXPECTED_SIZE = 4;
+// Expected bytes come from RNTesterIntegrationTests.WebSocketBinaryTest outgoingBytes.
+const EXPECTED_BYTES = new Uint8Array([4, 5, 6, 7]);
+const EXPECTED_SIZE = EXPECTED_BYTES.length;
 
 let completed = false;
 const socket = new WebSocket(WS_URL);
@@ -41,6 +43,25 @@ function complete(passed, reason) {
   TestModule.markTestPassed(passed);
 }
 
+function decodeBlobToBytes(blob, onSuccess, onError) {
+  if (typeof blob.arrayBuffer === 'function') {
+    blob
+      .arrayBuffer()
+      .then(buffer => onSuccess(new Uint8Array(buffer)))
+      .catch(onError);
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    onSuccess(new Uint8Array(reader.result));
+  };
+  reader.onerror = () => {
+    onError(reader.error || new Error('failed to read blob'));
+  };
+  reader.readAsArrayBuffer(blob);
+}
+
 socket.addEventListener('open', () => {
   socket.send(TEST_MESSAGE);
 });
@@ -60,8 +81,33 @@ socket.addEventListener('message', event => {
     return;
   }
 
-  complete(true);
-  socket.close();
+  decodeBlobToBytes(
+    data,
+    bytes => {
+      for (let i = 0; i < EXPECTED_BYTES.length; i++) {
+        if (bytes[i] !== EXPECTED_BYTES[i]) {
+          complete(
+            false,
+            'unexpected response byte at index ' +
+              i +
+              ': expected ' +
+              EXPECTED_BYTES[i] +
+              ', got ' +
+              bytes[i],
+          );
+          socket.close();
+          return;
+        }
+      }
+
+      complete(true);
+      socket.close();
+    },
+    error => {
+      complete(false, 'failed to decode blob: ' + String(error));
+      socket.close();
+    },
+  );
 });
 
 socket.addEventListener('error', () => {
