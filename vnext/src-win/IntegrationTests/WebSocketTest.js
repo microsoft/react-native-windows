@@ -17,12 +17,23 @@ if (!TestModule) {
 const WS_URL = 'ws://localhost:5555/';
 const TEST_MESSAGE = 'testMessage';
 const EXPECTED_RESPONSE = 'testMessage_response';
+const INITIAL_SERVER_GREETING = 'hello';
 
 let completed = false;
+let messageSent = false;
 const socket = new WebSocket(WS_URL);
 const timeoutId = setTimeout(() => {
   complete(false, 'timeout waiting for websocket response');
 }, 10000);
+
+function sendTestMessageIfNeeded() {
+  if (messageSent || socket.readyState !== WebSocket.OPEN) {
+    return;
+  }
+
+  messageSent = true;
+  socket.send(TEST_MESSAGE);
+}
 
 function complete(passed, reason) {
   if (completed) {
@@ -40,10 +51,14 @@ function complete(passed, reason) {
 }
 
 socket.addEventListener('open', () => {
-  socket.send(TEST_MESSAGE);
+  sendTestMessageIfNeeded();
 });
 
 socket.addEventListener('message', event => {
+  if (event.data === INITIAL_SERVER_GREETING) {
+    return;
+  }
+
   if (event.data !== EXPECTED_RESPONSE) {
     complete(false, 'unexpected response payload');
     socket.close();
@@ -63,3 +78,5 @@ socket.addEventListener('close', () => {
     complete(false, 'socket closed before completing test');
   }
 });
+
+sendTestMessageIfNeeded();
