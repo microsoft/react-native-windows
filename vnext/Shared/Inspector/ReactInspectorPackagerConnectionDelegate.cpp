@@ -21,7 +21,7 @@ class ReactInspectorWebSocket : public facebook::react::jsinspector_modern::IWeb
   ~ReactInspectorWebSocket() override;
 
  private:
-    std::shared_ptr<Microsoft::React::Networking::WinRTWebSocketResource> m_packagerWebSocketConnection;
+  std::shared_ptr<Microsoft::React::Networking::WinRTWebSocketResource> m_packagerWebSocketConnection;
   std::weak_ptr<facebook::react::jsinspector_modern::IWebSocketDelegate> m_weakDelegate;
   std::atomic<bool> m_didConnect{false};
 };
