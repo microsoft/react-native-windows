@@ -19,7 +19,7 @@ namespace msrn = winrt::Microsoft::ReactNative;
 namespace Microsoft::React::Test {
 
 namespace {
-void RunHeadlessJsTest(std::wstring_view jsBundle) {
+void RunTest(std::wstring_view jsBundle) {
   TestModule::Reset();
 
   winrt::handle instanceLoadedEvent{CreateEvent(nullptr, TRUE, FALSE, nullptr)};
@@ -69,19 +69,19 @@ TEST_CLASS (RNTesterHeadlessTests) {
   }
 
   TEST_METHOD(Dummy) {
-    RunHeadlessJsTest(L"IntegrationTests/DummyTest");
+    RunTest(L"IntegrationTests/DummyTest");
   }
 
   TEST_METHOD(WebSocket) {
-    RunHeadlessJsTest(L"IntegrationTests/WebSocketTest");
+    RunTest(L"IntegrationTests/WebSocketTest");
   }
 
   TEST_METHOD(WebSocketBlob) {
-    RunHeadlessJsTest(L"IntegrationTests/WebSocketBlobTest");
+    RunTest(L"IntegrationTests/WebSocketBlobTest");
   }
 
   TEST_METHOD(WebSocketArrayBuffer) {
-    RunHeadlessJsTest(L"IntegrationTests/WebSocketArrayBufferTest");
+    RunTest(L"IntegrationTests/WebSocketArrayBufferTest");
   }
 };
 
