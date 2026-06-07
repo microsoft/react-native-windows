@@ -83,6 +83,7 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
     if (auto prop = propBag.Get(BlobModuleContentHandlerPropertyId()))
       contentHandler = prop.Value().lock();
 
+    bool handled = false;
     if (contentHandler) {
       if (isBinary) {
         auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(message));
@@ -90,11 +91,15 @@ shared_ptr<IWebSocketResource> WebSocketTurboModule::CreateResource(int64_t id, 
         CryptographicBuffer::CopyToByteArray(buffer, arr);
         auto data = vector<uint8_t>(arr.begin(), arr.end());
 
-        contentHandler->ProcessMessage(std::move(data), args);
+        handled = contentHandler->TryProcessMessage(id, std::move(data), args);
       } else {
-        contentHandler->ProcessMessage(string{message}, args);
+        handled = contentHandler->TryProcessMessage(id, string{message}, args);
       }
-    } else {
+    }
+    // When the content handler processes the message, it takes ownership of the
+    // payload and populates args itself (e.g. as a blob reference), so we only
+    // fall back to setting args["data"] when no handler claimed the message.
+    if (!handled) {
       args["data"] = message;
     }
 
