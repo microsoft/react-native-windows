@@ -63,6 +63,36 @@ TEST_CLASS (RNTesterHeadlessTests) {
     auto status = TestModule::AwaitCompletion();
     Assert::IsTrue(status == TestStatus::Passed, L"Test did not pass (JS did not call markTestPassed within timeout)");
   }
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(WebSocketArrayBuffer)
+  TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(WebSocketArrayBuffer) {
+    TestModule::Reset();
+
+    winrt::handle instanceLoadedEvent{CreateEvent(nullptr, TRUE, FALSE, nullptr)};
+    bool instanceFailed{false};
+
+    auto holder = TestReactNativeHostHolder(
+        L"IntegrationTests/WebSocketArrayBufferTest",
+        [&instanceLoadedEvent, &instanceFailed](msrn::ReactNativeHost const &host) noexcept {
+          host.InstanceSettings().InstanceLoaded(
+              [&instanceLoadedEvent, &instanceFailed](auto const &, msrn::InstanceLoadedEventArgs args) noexcept {
+                instanceFailed = args.Failed();
+                SetEvent(instanceLoadedEvent.get());
+              });
+        });
+
+    WaitForSingleObject(instanceLoadedEvent.get(), INFINITE);
+    if (instanceFailed) {
+      auto err = holder.GetLastError();
+      auto msg = L"InstanceLoaded reported failure: " + (err.empty() ? L"(no error captured)" : err);
+      Assert::Fail(msg.c_str());
+    }
+
+    auto status = TestModule::AwaitCompletion();
+    Assert::IsTrue(status == TestStatus::Passed, L"Test did not pass (JS did not call markTestPassed within timeout)");
+  }
 };
 
 } // namespace Microsoft::React::Test
