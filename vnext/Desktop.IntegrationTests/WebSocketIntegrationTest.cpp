@@ -449,7 +449,7 @@ TEST_CLASS (WebSocketIntegrationTest)
 
     closedPromise.get_future().wait();
 
-    //NOTE: This message is implementation-specific (WinRTWebSocketResource)
+    //NOTE: This message is implementation-specific (WinRTWebSocketResource2)
     Assert::AreEqual({"[0x80072EFE] Underlying TCP connection suddenly terminated"}, error.Message);
     Assert::AreEqual(static_cast<size_t>(IWebSocketResource::ErrorType::Connection), static_cast<size_t>(error.Type));
     Assert::AreEqual(static_cast<size_t>(CloseCode::BadPayload), static_cast<size_t>(closeCode));

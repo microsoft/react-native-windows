@@ -14,7 +14,6 @@ using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Networking::Sockets;
 
 using Microsoft::React::Networking::IWebSocketResource;
-using Microsoft::React::Networking::WinRTWebSocketResource;
 using Microsoft::React::Networking::WinRTWebSocketResource2;
 using std::make_shared;
 using std::promise;
