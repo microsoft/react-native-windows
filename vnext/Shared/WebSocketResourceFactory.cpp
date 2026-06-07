@@ -21,7 +21,7 @@ shared_ptr<IWebSocketResource> IWebSocketResource::Make() {
     certExceptions.emplace_back(ChainValidationResult::InvalidName);
   }
 
-  return std::make_shared<WinRTWebSocketResource2>(std::move(certExceptions));
+  return std::make_shared<WinRTWebSocketResource>(std::move(certExceptions));
 }
 
 #pragma endregion IWebSocketResource static members

@@ -21,7 +21,7 @@ class ReactInspectorWebSocket : public facebook::react::jsinspector_modern::IWeb
   ~ReactInspectorWebSocket() override;
 
  private:
-    std::shared_ptr<Microsoft::React::Networking::WinRTWebSocketResource2> m_packagerWebSocketConnection;
+    std::shared_ptr<Microsoft::React::Networking::WinRTWebSocketResource> m_packagerWebSocketConnection;
   std::weak_ptr<facebook::react::jsinspector_modern::IWebSocketDelegate> m_weakDelegate;
   std::atomic<bool> m_didConnect{false};
 };
@@ -33,7 +33,7 @@ ReactInspectorWebSocket::ReactInspectorWebSocket(
   std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
 
   m_packagerWebSocketConnection =
-      std::make_shared<Microsoft::React::Networking::WinRTWebSocketResource2>(std::move(certExceptions));
+      std::make_shared<Microsoft::React::Networking::WinRTWebSocketResource>(std::move(certExceptions));
 
   m_packagerWebSocketConnection->SetOnConnect([this, delegate]() {
     ReactInspectorThread::Instance().InvokeElsePost([this, delegate]() {

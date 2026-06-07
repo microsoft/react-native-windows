@@ -11,8 +11,8 @@
 
 namespace Microsoft::React::Networking {
 
-class WinRTWebSocketResource2 : public IWebSocketResource,
-                                public std::enable_shared_from_this<WinRTWebSocketResource2> {
+class WinRTWebSocketResource : public IWebSocketResource,
+                                public std::enable_shared_from_this<WinRTWebSocketResource> {
   ///
   // See https://devblogs.microsoft.com/oldnewthing/20250328-00/?p=111016
   ///
@@ -139,21 +139,21 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
   winrt::Windows::Foundation::IAsyncAction PerformWrite(std::string &&message, bool isBinary) noexcept;
   winrt::fire_and_forget PerformClose() noexcept;
 
-  WinRTWebSocketResource2(
+  WinRTWebSocketResource(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
 
  public:
-  WinRTWebSocketResource2(
+  WinRTWebSocketResource(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
       winrt::Windows::Storage::Streams::IDataWriter &&writer,
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions,
       Mso::DispatchQueue callingQueue);
 
-  WinRTWebSocketResource2(
+  WinRTWebSocketResource(
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
 
-  ~WinRTWebSocketResource2() noexcept override;
+  ~WinRTWebSocketResource() noexcept override;
 
 #pragma region IWebSocketResource
 
