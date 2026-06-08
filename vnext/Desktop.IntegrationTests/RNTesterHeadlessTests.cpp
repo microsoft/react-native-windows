@@ -72,6 +72,14 @@ TEST_CLASS (RNTesterHeadlessTests) {
     RunTest(L"IntegrationTests/DummyTest");
   }
 
+  TEST_METHOD(Fetch) {
+    RunTest(L"IntegrationTests/FetchTest");
+  }
+
+  TEST_METHOD(XHR) {
+    RunTest(L"IntegrationTests/XHRTest");
+  }
+
   TEST_METHOD(WebSocket) {
     RunTest(L"IntegrationTests/WebSocketTest");
   }
@@ -82,10 +90,6 @@ TEST_CLASS (RNTesterHeadlessTests) {
 
   TEST_METHOD(WebSocketArrayBuffer) {
     RunTest(L"IntegrationTests/WebSocketArrayBufferTest");
-  }
-
-  TEST_METHOD(XHR) {
-    RunTest(L"IntegrationTests/XHRTest");
   }
 };
 
