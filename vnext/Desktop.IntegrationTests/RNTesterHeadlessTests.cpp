@@ -60,8 +60,6 @@ TEST_CLASS (RNTesterHeadlessTests) {
             MddBootstrapInitializeOptions::MddBootstrapInitializeOptions_None))) {
       throw std::exception("Could not initialize Windows App runtime");
     }
-
-    SetRuntimeOptionBool("WebSocket.ResourceV2", true);
   }
 
   TEST_CLASS_CLEANUP(Cleanup) {
