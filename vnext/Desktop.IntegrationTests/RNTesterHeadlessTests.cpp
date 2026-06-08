@@ -83,6 +83,10 @@ TEST_CLASS (RNTesterHeadlessTests) {
   TEST_METHOD(WebSocketArrayBuffer) {
     RunTest(L"IntegrationTests/WebSocketArrayBufferTest");
   }
+
+  TEST_METHOD(XHR) {
+    RunTest(L"IntegrationTests/XHRTest");
+  }
 };
 
 } // namespace Microsoft::React::Test
