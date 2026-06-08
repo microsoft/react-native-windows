@@ -92,6 +92,10 @@ TEST_CLASS (RNTesterHeadlessTests) {
     RunTest(L"IntegrationTests/WebSocketArrayBufferTest");
   }
 
+  TEST_METHOD(WebSocketMultipleSend) {
+    RunTest(L"IntegrationTests/WebSocketMultipleSendTest");
+  }
+
   TEST_METHOD(Blob) {
     RunTest(L"IntegrationTests/BlobTest");
   }
