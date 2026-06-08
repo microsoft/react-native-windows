@@ -250,14 +250,6 @@
     },
     {
       "type": "platform",
-      "file": "src-win/IntegrationTests/websocket_integration_test_server_binary.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/IntegrationTests/websocket_integration_test_server_blob.js"
-    },
-    {
-      "type": "platform",
       "file": "src-win/IntegrationTests/WebSocketArrayBufferTest.js"
     },
     {
