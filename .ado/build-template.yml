@@ -281,7 +281,7 @@ extends:
               #12714 - Disable for first deployment of test website.
               - name: Desktop.IntegrationTests.Filter
                 value: >
-                  (FullyQualifiedName!=Microsoft::React::Test::RNTesterHeadlessTests)&
+                  (FullyQualifiedName!~Microsoft::React::Test::RNTesterHeadlessTests)&
                   (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectClose)&
                   (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectNoClose)&
                   (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveClose)&
