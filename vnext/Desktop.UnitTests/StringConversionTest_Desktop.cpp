@@ -37,7 +37,7 @@ TEST_CLASS (StringConversionTest_Desktop) {
   }
 
   TEST_METHOD(StringConversionTest_WIN32Test) {
-    JsValueRef value;
+    JsValueRef value{};
     string str;
     for (size_t i = 0; i < g_utf8TestStrings.size(); i++) {
       JsPointerToStringUtf8(g_utf8TestStrings[i].c_str(), g_utf8TestStrings[i].length(), &value);

@@ -33,9 +33,7 @@ auto resume_in_dispatcher(const IReactDispatcher &dispatcher) noexcept {
     void await_resume() const noexcept {}
 
     void await_suspend(std::coroutine_handle<> resume) noexcept {
-      callback_ = [context = resume.address()]() noexcept {
-        std::coroutine_handle<>::from_address(context)();
-      };
+      callback_ = [context = resume.address()]() noexcept { std::coroutine_handle<>::from_address(context)(); };
       dispatcher_.Post(std::move(callback_));
     }
 
