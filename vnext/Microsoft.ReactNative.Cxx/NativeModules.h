@@ -527,7 +527,8 @@ struct ModuleJsiInitMethodInfo<void (TModule::*)(ReactContext const &, facebook:
     return
         [module = static_cast<ModuleType *>(module), method](
             ReactContext const &reactContext, winrt::Windows::Foundation::IInspectable const &runtimeHandle) noexcept {
-          (module->*method)(reactContext, GetOrCreateContextRuntime(reactContext, runtimeHandle));
+          if (runtimeHandle)
+            (module->*method)(reactContext, GetOrCreateContextRuntime(reactContext, runtimeHandle));
         };
   }
 };
