@@ -166,10 +166,10 @@ TEST_CLASS (DynamicReaderWriterTests) {
   }
 
  private:
-  template <class TWriterValue, class TReaderValue = TWriterValue>
+  template <class TWriterValue, class TReaderValue = TWriterValue, class WriterMethod, class ReaderMethod>
   void TestScalar(
-      void(IJSValueWriter::*writerMethod)(TWriterValue) const,
-      TReaderValue (IJSValueReader::*readerMethod)() const,
+      WriterMethod writerMethod,
+      ReaderMethod readerMethod,
       JSValueType runtimeType,
       TWriterValue value) {
     IJSValueWriter writer = Microsoft::Internal::TestController::CreateDynamicWriter();
