@@ -95,7 +95,7 @@ export function commandWithProgress(
   errorCategory: CodedErrorType,
 ) {
   return new Promise<void>((resolve, reject) => {
-    const spawnOptions: SpawnOptions = verbose ? { stdio: 'inherit' } : {};
+    const spawnOptions: SpawnOptions = verbose ? {stdio: 'inherit'} : {};
 
     if (verbose) {
       spinner.stop();
