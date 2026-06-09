@@ -24,7 +24,5 @@ steps:
     displayName: Install Node base packages
 
   - script: npx --yes midgard-yarn-strict@1.2.4 ${{ parameters.workspace }}
-
-  - script: yarn install --immutable
     displayName: Strict yarn install ${{ parameters.workspace }}
     retryCountOnTaskFailure: 2
