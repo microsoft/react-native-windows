@@ -59,12 +59,6 @@ steps:
 
   - template: ../templates/apply-published-version-vars.yml
 
-  - ${{ if eq(variables['Desktop.IntegrationTests.SkipRNTester'], true) }}:
-    - pwsh: |
-        $newValue = '(FullyQualifiedName!~Microsoft::React::Test::RNTesterHeadlessTests::)&' + "$(Desktop.IntegrationTests.Filter)"
-        Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
-      displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
-
   - template: ../templates/msbuild-sln.yml
     parameters:
       solutionDir: vnext
