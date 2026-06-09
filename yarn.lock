@@ -2069,6 +2069,13 @@
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.11.4.tgz#7fb09506ee00a82989125cc03e8495204c8afc01"
   integrity sha512-Kf8h1AMnBo54b1fdiVylP2P/iFcZqzpMYcglC28EEFB1DEnOjsNr6Ucqc+3R9e91vHxEDnhZFbYDmAe79P2gjA==
 
+"@react-native-windows/find-dotnet-tools@0.0.0-canary.2":
+  version "0.0.0-canary.2"
+  resolved "https://registry.yarnpkg.com/@react-native-windows/find-dotnet-tools/-/find-dotnet-tools-0.0.0-canary.2.tgz#8d30dca7169c65d36cd46359a66db1808614c5ad"
+  integrity sha512-WLQ9kF84IYU66u9+PeixRN1ynparsbBQ7DROiuOpUXXisP09dotYO/6s9TwFePxpcqBkH4qtl27Z/VU3t8mKSQ==
+  dependencies:
+    "@react-native-windows/fs" "^0.0.0-canary.72"
+
 "@react-native-windows/find-repo-root@^0.0.0-canary.100":
   version "0.0.0-canary.100"
   resolved "https://registry.yarnpkg.com/@react-native-windows/find-repo-root/-/find-repo-root-0.0.0-canary.100.tgz#28638f6bda2ba2a34242d453316b314ca8a04afd"
