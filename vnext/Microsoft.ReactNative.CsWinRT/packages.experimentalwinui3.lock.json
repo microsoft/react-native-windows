@@ -118,7 +118,8 @@
         "contentHash": "gfsSXBJrlsfnl1IID3AEasUvZXFFZk6n4iD2JP5BfheySaoWr/1JJVbqKYyRr7APe2kRzyztVW3eaj7KMfgR5A==",
         "dependencies": {
           "Microsoft.WindowsAppSDK.Base": "1.8.250831001",
-          "Microsoft.WindowsAppSDK.Foundation": "1.8.251104000"
+          "Microsoft.WindowsAppSDK.Foundation": "1.8.251104000",
+          "System.Numerics.Tensors": "9.0.0"
         }
       },
       "Microsoft.WindowsAppSDK.Runtime": {
