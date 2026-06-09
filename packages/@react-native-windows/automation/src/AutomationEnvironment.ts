@@ -251,7 +251,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
     if (this.breakOnStart) {
       readlineSync.question(
         chalk.bold.yellow('Breaking before tests start\n') +
-        'Press Enter to resume...',
+          'Press Enter to resume...',
       );
     }
 
