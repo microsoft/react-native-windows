@@ -22,9 +22,6 @@ require('@rnw-scripts/just-task/flow-tasks');
 
 const {execSync} = require('child_process');
 const fs = require('fs');
-const {
-  registerNuGetRestoreTask,
-} = require('@rnw-scripts/just-task/nuget-restore-task');
 const {findPowerShell} = require('@react-native-windows/find-dotnet-tools');
 
 option('production');
@@ -74,16 +71,6 @@ task('copyReadmeAndLicenseFromRoot', () => {
 });
 
 task('compileTsPlatformOverrides', tscTask());
-
-registerNuGetRestoreTask({
-  taskName: 'restoreNuGetPackages',
-  scriptPath: path.resolve(
-    __dirname,
-    'Scripts/NuGetRestoreForceEvaluateAllSolutions.ps1',
-  ),
-  logDirectory: path.resolve(__dirname, 'logs'),
-  scriptArguments: ['-SkipLockDeletion'],
-});
 
 function installDotnetToolsTask() {
   execSync(
