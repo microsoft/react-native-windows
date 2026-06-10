@@ -9,6 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const {execSync, spawnSync} = require('child_process');
 const {task} = require('just-scripts');
+const {findPowerShell} = require('@react-native-windows/find-dotnet-tools');
 
 function registerNuGetRestoreTask(options) {
   const config = normalizeOptions(options);
@@ -51,12 +52,14 @@ function executeNuGetRestore(config) {
     `Restoring NuGet packages (log: ${path.relative(process.cwd(), logPath)})`,
   );
 
+  const powershell = findPowerShell();
+
   const scriptArgs = config.scriptArguments.length
     ? ` ${config.scriptArguments.join(' ')}`
     : '';
   const restoreCommand = `call ${quote(
     vsDevCmd,
-  )} && powershell -NoProfile -ExecutionPolicy Bypass -File ${quote(
+  )} && "${powershell}" -NoProfile -ExecutionPolicy Bypass -File ${quote(
     config.scriptPath,
   )}${scriptArgs}`;
   const wrappedCommand = `${restoreCommand}`;
@@ -111,7 +114,7 @@ function findVsDevCmd() {
 
   if (!fs.existsSync(vsWherePath)) {
     throw new Error(
-      'vswhere.exe not found. Install Visual Studio 2022 (or Build Tools).',
+      'vswhere.exe not found. Install Visual Studio 2026 (or Build Tools).',
     );
   }
 

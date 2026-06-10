@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Upgrade to GoogleTest adapter 1.8.1.8",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}

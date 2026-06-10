@@ -8,6 +8,7 @@
 import chalk from 'chalk';
 import {spawnSync, spawn, ChildProcess} from 'child_process';
 import fs from '@react-native-windows/fs';
+import {findPowerShell} from '@react-native-windows/find-dotnet-tools';
 import path from 'path';
 import readlineSync from 'readline-sync';
 
@@ -250,7 +251,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
     if (this.breakOnStart) {
       readlineSync.question(
         chalk.bold.yellow('Breaking before tests start\n') +
-          'Press Enter to resume...',
+        'Press Enter to resume...',
       );
     }
 
@@ -335,8 +336,14 @@ function resolveAppName(appName: string): string {
   }
 
   try {
-    const packageFamilyName = spawnSync('powershell', [
-      `(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+    const useAppxCompatibility = !!process.env.TF_BUILD;
+    const packageFamilyNameCommand = useAppxCompatibility
+      ? `& { Import-Module Appx -WarningAction SilentlyContinue; (Get-AppxPackage -Name '${appName}').PackageFamilyName }`
+      : `(Get-AppxPackage -Name '${appName}').PackageFamilyName`;
+    const packageFamilyName = spawnSync(findPowerShell(), [
+      '-NoProfile',
+      '-Command',
+      packageFamilyNameCommand,
     ])
       .stdout.toString()
       .trim();

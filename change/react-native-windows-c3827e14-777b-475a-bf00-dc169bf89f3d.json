@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix WebSocket binaryType handling — stop unconditional Blob interception of binary messages",
+  "packageName": "react-native-windows",
+  "email": "gordomacmaster@gmail.com",
+  "dependentChangeType": "patch"
+}

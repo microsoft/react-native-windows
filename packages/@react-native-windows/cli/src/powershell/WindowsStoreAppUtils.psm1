@@ -74,12 +74,12 @@ function Validate-PackageIdentifier {
         [Parameter(Mandatory=$true)]
         [string]$PackageId
     )
-    
+
     # Valid format: alphanumeric, dots, hyphens, underscores only
     if ($PackageId -notmatch '^[a-zA-Z0-9\.\-_]+$') {
         throw "Invalid package identifier format. Only alphanumeric characters, dots, hyphens, and underscores are allowed."
     }
-    
+
     # Prevent common injection patterns
     $dangerousPatterns = @(';', '|', '&', '$', '`', '<', '>', "`n", "`r", '(', ')', '{', '}')
     foreach ($pattern in $dangerousPatterns) {
@@ -87,7 +87,7 @@ function Validate-PackageIdentifier {
             throw "Package identifier contains forbidden characters: $pattern"
         }
     }
-    
+
     return $true
 }
 
@@ -103,20 +103,20 @@ function Validate-ScriptPath {
         [Parameter(Mandatory=$true)]
         [string]$Path
     )
-    
+
     # Check file exists
     if (!(Test-Path $Path -PathType Leaf)) {
         throw "Script path does not exist: $Path"
     }
-    
+
     # Check .ps1 extension
     if ([System.IO.Path]::GetExtension($Path) -ne '.ps1') {
         throw "Path must reference a PowerShell script (.ps1)"
     }
-    
+
     # Get canonical path (prevents ../ traversal)
     $canonicalPath = [System.IO.Path]::GetFullPath($Path)
-    
+
     return $canonicalPath
 }
 
@@ -131,23 +131,23 @@ function Invoke-ElevatedScriptBlock {
     param(
         [Parameter(Mandatory=$true)]
         [ScriptBlock]$ScriptBlock,
-        
+
         [Parameter(Mandatory=$false)]
         [object[]]$ArgumentList = @()
     )
-    
+
     if (!(IsElevated)) {
         # Serialize ScriptBlock and arguments for elevated execution
         $encodedCommand = [Convert]::ToBase64String(
             [System.Text.Encoding]::Unicode.GetBytes($ScriptBlock.ToString())
         )
-        
+
         $encodedArgs = [Convert]::ToBase64String(
             [System.Text.Encoding]::Unicode.GetBytes(
                 ($ArgumentList | ConvertTo-Json -Compress -Depth 10)
             )
         )
-        
+
         # Create secure argument list (no string interpolation)
         $startArgs = @(
             '-NoProfile',
@@ -155,10 +155,10 @@ function Invoke-ElevatedScriptBlock {
             '-Command',
             "& ([ScriptBlock]::Create([System.Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('$encodedCommand')))) @(ConvertFrom-Json ([System.Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('$encodedArgs'))))"
         )
-        
-        $process = Start-Process PowerShell -ArgumentList $startArgs `
+
+        $process = Start-Process -FilePath "$PSHOME\pwsh.exe" -ArgumentList $startArgs `
             -Verb RunAs -Wait -PassThru -WindowStyle Hidden -ErrorAction Stop
-        
+
         if ($process.ExitCode -ne 0) {
             throw "Elevated command failed with exit code $($process.ExitCode)"
         }
@@ -193,7 +193,7 @@ function Uninstall-App {
 
     if($package) {
         $pfn = $package.PackageFullName
-        
+
         # SDL FIX: Direct cmdlet invocation instead of Invoke-Expression
         try {
             Remove-AppxPackage $pfn -ErrorAction Stop
@@ -236,7 +236,7 @@ function IsElevated {
 #>
 function EnableDevmode {
     $RegistryKeyPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock"
-    
+
     # Create registry key if it doesn't exist
     if (-not(Test-Path -Path $RegistryKeyPath)) {
         if (!(IsElevated)) {
@@ -266,7 +266,7 @@ function EnableDevmode {
             Set-ItemProperty -Path $RegistryKeyPath -Name AllowDevelopmentWithoutDevLicense -Value 1 -ErrorAction Stop
         }
     }
-    
+
     # SDL FIX: Direct cmdlet invocation for AllowAllTrustedApps
     $value = Get-ItemProperty -Path $RegistryKeyPath -Name AllowAllTrustedApps -ErrorAction SilentlyContinue
     if (($value -eq $null) -or ($value.AllowAllTrustedApps -ne 1)) {
@@ -339,12 +339,12 @@ function Install-App {
         [string] $Path, <# Full path to Add-AppDevPackage.ps1 #>
         [switch] $Force = $false
     )
-    
+
     # SDL FIX: Validate script path
     $Path = Validate-ScriptPath -Path $Path
-    
+
     $needInstallCertificate = CheckIfNeedInstallCertificate (Join-Path $Path "..")
-    
+
     if (!$Force -and ((CheckIfNeedDeveloperLicense) -or ($needInstallCertificate)))
     {
         # SDL FIX: Use call operator (&) instead of Invoke-Expression
@@ -434,15 +434,15 @@ function Install-AppDependencies {
     param(
         [Parameter(Mandatory=$true)] [string]$AppxManifestPath,
         [Parameter(Mandatory=$true)] [string]$AppPackagePath,
-        [Parameter(Mandatory=$true)] [string]$Architecture        
+        [Parameter(Mandatory=$true)] [string]$Architecture
     )
 
     $xml=[xml] (gc $AppxManifestPath);
-    $packageNamesToInstall = $xml.Package.Dependencies.PackageDependency | 
-        Where-Object { 
+    $packageNamesToInstall = $xml.Package.Dependencies.PackageDependency |
+        Where-Object {
             $installed = Get-AppxPackage $_.Name | Where-Object -Property Architecture -EQ -Value $Architecture;
-            $installed -eq $null -or $installed.Version -lt $_.MinVersion 
-        } | 
+            $installed -eq $null -or $installed.Version -lt $_.MinVersion
+        } |
         % { $_.Name };
     $map = Map-PackageNameToPackage $AppPackagePath\Dependencies\$Architecture
     $packagePaths = $packageNamesToInstall | % { $map[$_] }
