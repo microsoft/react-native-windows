@@ -77,7 +77,7 @@ steps:
     condition: and(succeeded(), not(eq('${{ parameters.buildPlatform }}', 'ARM64')))
 
   # Component tests — Debug/x64 only
-  - task: VSTest@2
+  - task: VSTest@3
     displayName: Run Universal Unit Tests (Native - ComponentTests)
     timeoutInMinutes: 5
     inputs:
@@ -97,7 +97,7 @@ steps:
 
   # Managed UWP unit tests — non-Fabric only, skip ARM64
   - ${{ if ne(parameters.useFabric, true) }}:
-    - task: VSTest@2
+    - task: VSTest@3
       displayName: Run Universal Unit Tests (UWP)
       timeoutInMinutes: 5
       inputs:
@@ -117,7 +117,7 @@ steps:
 
   # Managed CodeGen unit tests — non-Fabric only, x64 only
   - ${{ if ne(parameters.useFabric, true) }}:
-    - task: VSTest@2
+    - task: VSTest@3
       displayName: Run Universal Unit Tests (NetCore)
       timeoutInMinutes: 5
       inputs:
