@@ -19,8 +19,7 @@ const EXPECTED_CONTENT = 'Sample Static Text File';
 const xhr = new XMLHttpRequest();
 xhr.onloadend = () => {
   const responseText = xhr.responseText || '';
-  const passed =
-    xhr.status === 200 && responseText === EXPECTED_CONTENT;
+  const passed = xhr.status === 200 && responseText === EXPECTED_CONTENT;
   TestModule.markTestPassed(passed);
 };
 xhr.onerror = () => {
