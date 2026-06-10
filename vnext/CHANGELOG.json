@@ -2,6 +2,81 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 10 Jun 2026 06:12:02 GMT",
+      "version": "0.0.0-canary.1057",
+      "tag": "react-native-windows_v0.0.0-canary.1057",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b50c94d435c80f84894478864702bebf9aba4dc5",
+            "comment": "Upgrade to Visual Studio 2026"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b50c94d435c80f84894478864702bebf9aba4dc5",
+            "comment": "Upgrade projects to .NET 10"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b50c94d435c80f84894478864702bebf9aba4dc5",
+            "comment": "Drop old WinRTWebSocketResource implementation"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b50c94d435c80f84894478864702bebf9aba4dc5",
+            "comment": "Re-introduce WebSocket JS integration tests"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b50c94d435c80f84894478864702bebf9aba4dc5",
+            "comment": "Expose ReactNativeWindow from ReactNativeWin32App"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "b50c94d435c80f84894478864702bebf9aba4dc5",
+            "comment": "Fix WebSocket binaryType handling — stop unconditional Blob interception of binary messages"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b50c94d435c80f84894478864702bebf9aba4dc5",
+            "comment": "fix: Unicode Text length Calculation"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b50c94d435c80f84894478864702bebf9aba4dc5",
+            "comment": "Upgrade to Microsoft.WindowsAppSDK 1.8.260508005"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b50c94d435c80f84894478864702bebf9aba4dc5",
+            "comment": "Upgrade to GoogleTest adapter 1.8.1.8"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b50c94d435c80f84894478864702bebf9aba4dc5",
+            "comment": "Upgrade build agents to Windows Server 2025, Visual Studio 2026"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.292",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 20:10:43 GMT",
       "version": "0.0.0-canary.1056",
       "tag": "react-native-windows_v0.0.0-canary.1056",
