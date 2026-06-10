@@ -18,5 +18,6 @@ jobs:
       - script: yarn test
         displayName: yarn test
 
-      - script: yarn validate-overrides
-        displayName: yarn validate-overrides
+      # Disable while facebook/react-native -> react/react-native migration breaks CI
+      # - script: yarn validate-overrides
+      #   displayName: yarn validate-overrides
