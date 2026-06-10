@@ -1108,7 +1108,8 @@ void NativeUIManager::findSubviewIn(
   xaml::FrameworkElement foundElement = nullptr;
 
   for (const auto &elem : hitTestElements) {
-    if (foundElement = elem.try_as<xaml::FrameworkElement>()) {
+    if (const auto candidate = elem.try_as<xaml::FrameworkElement>()) {
+      foundElement = candidate;
       auto tag = GetTag(foundElement);
       if (tag != InvalidTag) {
         foundTag = tag;

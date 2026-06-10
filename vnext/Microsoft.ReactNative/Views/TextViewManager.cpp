@@ -166,7 +166,7 @@ class TextShadowNode final : public ShadowNodeBase {
 
       m_selectionChangedRevoker = xamlView.as<xaml::Controls::TextBlock>().SelectionChanged(
           winrt::auto_revoke, [selectionChanged = this->selectionChanged](const auto &sender, auto &&) {
-            const auto textBlock = sender.as<xaml::Controls::TextBlock>();
+            const auto textBlock = sender.template as<xaml::Controls::TextBlock>();
             *selectionChanged =
                 *selectionChanged || textBlock.SelectionStart().Offset() != textBlock.SelectionEnd().Offset();
           });
