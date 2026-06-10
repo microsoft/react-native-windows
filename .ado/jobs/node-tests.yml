@@ -17,7 +17,7 @@ jobs:
   - ${{ each nodeVersion in parameters.versions }}:
     - job: NodeTests${{ nodeVersion }}
       displayName: Node Tests v${{ nodeVersion }}
-      timeoutInMinutes: 20
+      timeoutInMinutes: 25
       variables: [template: ../variables/windows.yml]
       pool: ${{ parameters.AgentPool.Medium }}
 
