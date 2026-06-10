@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Tue, 26 May 2026 20:10:44 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 10 Jun 2026 06:12:02 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.292
+
+Wed, 10 Jun 2026 06:12:02 GMT
+
+### Changes
+
+- Upgrade build agents to Windows Server 2025, Visual Studio 2026 (julio.rocha@microsoft.com)
+- Upgrade to Visual Studio 2026 (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.291
 

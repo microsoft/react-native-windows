@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Tue, 26 May 2026 20:10:44 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 10 Jun 2026 06:12:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1057
+
+Wed, 10 Jun 2026 06:12:03 GMT
+
+### Changes
+
+- Upgrade to Microsoft.WindowsAppSDK 1.8.260508005 (julio.rocha@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.1057
 
 ## 0.0.0-canary.1056
 
