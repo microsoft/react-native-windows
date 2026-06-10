@@ -93,6 +93,42 @@ std::wstring Utf8ToUtf16(const std::string &utf8) {
   return Utf8ToUtf16(utf8.c_str(), utf8.length());
 }
 
+size_t Utf8ToUtf16Length(const char *utf8, size_t utf8Len) {
+  if (utf8Len == 0) {
+    return 0;
+  }
+
+  if (utf8Len > static_cast<size_t>((std::numeric_limits<int>::max)())) {
+    throw std::overflow_error("Length of input string to Utf8ToUtf16Length() must fit into an int.");
+  }
+
+  const int utf8Length = static_cast<int>(utf8Len);
+
+  constexpr DWORD flags = 0;
+
+  const int utf16Length = ::MultiByteToWideChar(
+      CP_UTF8, // Source string is in UTF-8.
+      flags, // Conversion flags.
+      utf8, // Source UTF-8 string pointer.
+      utf8Length, // Length of the source UTF-8 string, in chars.
+      nullptr, // Do not convert, just request the size.
+      0 // Request size of destination buffer, in wchar_ts.
+  );
+
+  if (utf16Length == 0) {
+    throw UnicodeConversionException(
+        "Cannot get result string length when converting from UTF-8 to UTF-16 "
+        "(MultiByteToWideChar failed).",
+        GetLastError());
+  }
+
+  return static_cast<size_t>(utf16Length);
+}
+
+size_t Utf8ToUtf16Length(const std::string &utf8) {
+  return Utf8ToUtf16Length(utf8.c_str(), utf8.length());
+}
+
 #if _HAS_CXX17
 std::wstring Utf8ToUtf16(const std::string_view &utf8) {
   return Utf8ToUtf16(utf8.data(), utf8.length());

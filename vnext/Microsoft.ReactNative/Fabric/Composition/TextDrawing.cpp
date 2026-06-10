@@ -66,7 +66,7 @@ void RenderText(
   unsigned int position = 0;
   unsigned int length = 0;
   for (auto fragment : attributedString.getFragments()) {
-    length = static_cast<UINT32>(fragment.string.length());
+    length = static_cast<UINT32>(::Microsoft::Common::Unicode::Utf8ToUtf16Length(fragment.string));
     DWRITE_TEXT_RANGE range = {position, length};
     if (fragment.textAttributes.foregroundColor &&
             (fragment.textAttributes.foregroundColor != textAttributes.foregroundColor) ||
