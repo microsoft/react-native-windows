@@ -420,7 +420,7 @@ exports[`XamlTest Layout 1`] = `
       "Clip": null,
       "CornerRadius": "0,0,0,0",
       "FlowDirection": "LeftToRight",
-      "Foreground": "#FF005A9E",
+      "Foreground": "#FF0067C0",
       "Height": 32,
       "HorizontalAlignment": "Center",
       "Left": 0,

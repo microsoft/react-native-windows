@@ -1109,7 +1109,7 @@ exports[`ViewTests Views can have padding and margins 1`] = `
               "Top": 60,
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
-              "Width": 134,
+              "Width": 139,
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
@@ -1125,7 +1125,7 @@ exports[`ViewTests Views can have padding and margins 1`] = `
                   "Top": 6,
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
-                  "Width": 122,
+                  "Width": 127,
                   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
                 },
                 {
@@ -1141,7 +1141,7 @@ exports[`ViewTests Views can have padding and margins 1`] = `
                   "Top": 21,
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
-                  "Width": 122,
+                  "Width": 127,
                   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
                 },
               ],
