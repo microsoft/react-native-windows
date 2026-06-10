@@ -390,6 +390,9 @@ extends:
               # Keep NuGet cache independent from the user directory.
               - name: NUGET_PACKAGES
                 value: $(Agent.TempDirectory)/NuGetPackages
+              - name: Universal.IntegrationTests.Filter
+                value: >
+                  (FullyQualifiedName!=ReactNativeHostTests.LoadBundleWithError_FiresInstanceLoaded_Failed)
             steps:
             # Build and test
             - template: .ado/jobs/universal-single.yml@self

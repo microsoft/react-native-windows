@@ -19,11 +19,6 @@ parameters:
     type: boolean
     default: true
 
-variables:
-  - name: Universal.IntegrationTests.Filter
-    value: >
-      (FullyQualifiedName!=ReactNativeHostTests.LoadBundleWithError_FiresInstanceLoaded_Failed)
-
 steps:
   - template: ../templates/checkout-shallow.yml
 
