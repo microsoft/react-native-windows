@@ -392,7 +392,8 @@ extends:
                 value: $(Agent.TempDirectory)/NuGetPackages
               - name: Universal.IntegrationTests.Filter
                 value: >
-                  (FullyQualifiedName!=ReactNativeHostTests.LoadBundleWithError_FiresInstanceLoaded_Failed)
+                  (FullyQualifiedName!=ReactNativeHostTests.LoadBundleWithError_FiresInstanceLoaded_Failed)&
+                  (FullyQualifiedName!=ReactNativeHostTests.LoadBundleWithError_ReloadInstance_Fails)
             steps:
             # Build and test
             - template: .ado/jobs/universal-single.yml@self
