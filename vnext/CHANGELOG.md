@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 03 Jun 2026 20:09:05 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 11 Jun 2026 13:13:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.27
+
+Thu, 11 Jun 2026 13:13:20 GMT
+
+### Patches
+
+- Expose ReactNativeWindow from ReactNativeWin32App (30809111+acoates-ms@users.noreply.github.com)
+- Use hermes-windows version 0.0.0-2604.21001-94aa5e1d (#16019) (vmorozov@microsoft.com)
 
 ## 0.81.26
 
