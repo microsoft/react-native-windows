@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 11 Jun 2026 13:13:20 GMT",
+      "version": "0.81.27",
+      "tag": "react-native-windows_v0.81.27",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "98591d47a011b211e78db7b88d10db7447b2c558",
+            "comment": "Expose ReactNativeWindow from ReactNativeWin32App"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "98591d47a011b211e78db7b88d10db7447b2c558",
+            "comment": "Use hermes-windows version 0.0.0-2604.21001-94aa5e1d (#16019)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 03 Jun 2026 20:09:05 GMT",
       "version": "0.81.26",
       "tag": "react-native-windows_v0.81.26",
