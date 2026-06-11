@@ -116,6 +116,8 @@ struct DevSettings {
   // Enable concurrent mode by installing runtimeScheduler
   bool useRuntimeScheduler{false};
 
+  bool hermesSetExplicitMicrotasks{true};
+
   // The HostTarget instance for Fusebox
   facebook::react::jsinspector_modern::HostTarget *inspectorHostTarget;
 };
