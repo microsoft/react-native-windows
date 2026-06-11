@@ -54,14 +54,7 @@ describe('visitAllPages', () => {
     }
 
     console.log('Testing: ' + component);
-    test(component, async () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const fs = require('fs');
-      const progressLog = 'C:\\Dev\\rnw\\bak\\83\\packages\\e2e-test-app-fabric\\visit-progress.log';
-      fs.appendFileSync(progressLog, `START ${component}\n`);
-      await goToComponentExample(component);
-      fs.appendFileSync(progressLog, `OK    ${component}\n`);
-    });
+    test(component, async () => await goToComponentExample(component));
   }
 
   // Disable Temporarily Until Stable
