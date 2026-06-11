@@ -101,7 +101,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
   "Visual Tree": {
     "Comment": "flatlist-basic",
     "Offset": "0, 0, 0",
-    "Size": "998, 422",
+    "Size": "998, 734",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -110,7 +110,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 422",
+        "Size": "998, 734",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -119,12 +119,12 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
               "Color": "rgba(0, 0, 0, 0)",
             },
             "Offset": "0, 0, 0",
-            "Size": "998, 422",
+            "Size": "998, 734",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "998, 422",
+                "Size": "998, 734",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
@@ -133,7 +133,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
                       "Color": "rgba(255, 255, 255, 255)",
                     },
                     "Offset": "0, 0, 0",
-                    "Size": "998, 422",
+                    "Size": "998, 734",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -425,7 +425,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 416",
+            "Size": "12, 728",
             "Visual Type": "Visual",
           },
           {
@@ -442,7 +442,7 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 390",
+            "Size": "6, 702",
             "Visual Type": "Visual",
           },
         ],
@@ -1573,7 +1573,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 588",
+    "Size": "998, 900",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1582,7 +1582,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 588",
+        "Size": "998, 900",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -1961,7 +1961,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 582",
+            "Size": "12, 894",
             "Visual Type": "Visual",
           },
           {
@@ -1978,7 +1978,7 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 346",
+            "Size": "6, 826",
             "Visual Type": "Visual",
           },
         ],
@@ -5930,7 +5930,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 588",
+    "Size": "998, 900",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5939,7 +5939,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 588",
+        "Size": "998, 900",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -6318,7 +6318,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 582",
+            "Size": "12, 894",
             "Visual Type": "Visual",
           },
           {
@@ -6335,7 +6335,7 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
           },
           {
             "Offset": "-5, 16, 0",
-            "Size": "6, 346",
+            "Size": "6, 826",
             "Visual Type": "Visual",
           },
         ],
@@ -6698,7 +6698,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
   "Visual Tree": {
     "Comment": "flat_list",
     "Offset": "0, 0, 0",
-    "Size": "998, 588",
+    "Size": "998, 900",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6707,7 +6707,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
           "Color": "rgba(0, 0, 0, 0)",
         },
         "Offset": "0, 0, 0",
-        "Size": "998, 588",
+        "Size": "998, 900",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -7086,7 +7086,7 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
           {
             "Offset": "-12, 3, 0",
             "Opacity": 0,
-            "Size": "12, 582",
+            "Size": "12, 894",
             "Visual Type": "Visual",
           },
           {
@@ -7102,8 +7102,8 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
             "Visual Type": "SpriteVisual",
           },
           {
-            "Offset": "-5, 226, 0",
-            "Size": "6, 346",
+            "Offset": "-5, 58, 0",
+            "Size": "6, 826",
             "Visual Type": "Visual",
           },
         ],
