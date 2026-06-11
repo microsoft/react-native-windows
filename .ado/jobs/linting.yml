@@ -48,11 +48,12 @@ jobs:
       - script: yarn lint
         displayName: yarn lint
 
-      - script: yarn validate-overrides
-        displayName: yarn validate-overrides
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          env:
-            PLATFORM_OVERRIDE_GITHUB_TOKEN: $(GitHubOAuthToken)
+      # Disable while facebook/react-native -> react/react-native migration breaks CI
+      # - script: yarn validate-overrides
+      #  displayName: yarn validate-overrides
+      #  ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+      #    env:
+      #      PLATFORM_OVERRIDE_GITHUB_TOKEN: $(GitHubOAuthToken)
 
       - script: npx unbroken -q --local-only --allow-local-line-sections
         displayName: check local links in .md files
