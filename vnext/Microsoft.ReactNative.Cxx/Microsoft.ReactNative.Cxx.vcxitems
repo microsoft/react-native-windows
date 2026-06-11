@@ -158,22 +158,6 @@
     </ClCompile>
     <ClCompile Include="$(NodeApiJsiSrcDir)NodeApiJsiRuntime.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <!--
-        Workaround for a Visual Studio 2026 (v145) C++ optimizer bug. With
-        optimizations on, this translation unit is miscompiled such that the
-        pointer-value-scope teardown in NodeApiJsiRuntime hands Hermes a stale
-        napi_value, crashing in hermes!JSProxy::defineOwnProperty (via
-        napi_create_reference) during rapid UI updates - e.g. the
-        e2e-test-app-fabric visitAllPages test. Building this file without
-        optimization (verified equivalent to `#pragma optimize("", off)`)
-        avoids it. We must also opt out of /GL here so the disabled
-        optimization survives link-time code generation. NodeApiJsiRuntime.cpp
-        is externally provided, so the workaround lives here rather than in the
-        source. Scoped to v145+ (the bug does not reproduce on v143); remove
-        when the compiler bug is fixed.
-      -->
-      <Optimization Condition="$(PlatformToolsetVersion)&gt;=145">Disabled</Optimization>
-      <WholeProgramOptimization Condition="$(PlatformToolsetVersion)&gt;=145">false</WholeProgramOptimization>
     </ClCompile>
   </ItemGroup>
   <ItemGroup Condition="'$(BuildMSRNCxxNodeApiJsiLoader)' != 'false'">
