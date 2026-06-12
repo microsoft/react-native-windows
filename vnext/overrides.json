@@ -202,6 +202,12 @@
       "issue": 15782
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBuffer.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/mapbuffer/MapBuffer.cpp",
+      "baseHash": "6d91921f18e3e79984a6a368de9b5ab90d47db3b"
+    },
+    {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManager.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/UIManager.cpp",
@@ -262,11 +268,11 @@
     },
     {
       "type": "platform",
-      "file": "src-win/IntegrationTests/WebSocketTest.js"
+      "file": "src-win/IntegrationTests/WebSocketMultipleSendTest.js"
     },
     {
       "type": "platform",
-      "file": "src-win/IntegrationTests/WebSocketMultipleSendTest.js"
+      "file": "src-win/IntegrationTests/WebSocketTest.js"
     },
     {
       "type": "platform",
