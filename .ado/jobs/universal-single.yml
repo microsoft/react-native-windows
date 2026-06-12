@@ -61,6 +61,7 @@ steps:
         Mso.UnitTests/Mso.UnitTests.exe
       pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
       searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+      testFiltercriteria: $(Universal.IntegrationTests.Filter)
       runTestsInIsolation: true
       platform: ${{ parameters.buildPlatform }}
       configuration: ${{ parameters.buildConfiguration }}
