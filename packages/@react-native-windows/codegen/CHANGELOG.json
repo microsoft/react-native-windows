@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 12 Jun 2026 04:17:47 GMT",
+      "version": "0.81.6",
+      "tag": "@react-native-windows/codegen_v0.81.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "d58e4482057a5e9e6395793b5f7d4c626cf04046",
+            "comment": "forking GenerateModuleCpp"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Mar 2026 02:43:22 GMT",
       "version": "0.81.5",
       "tag": "@react-native-windows/codegen_v0.81.5",
