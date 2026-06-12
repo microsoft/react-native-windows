@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
+  "baseVersion": "0.85.0-nightly-20260128-36f07a1b2",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,8 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "27e5502f255969e9673a33ef148376599cdd89aa",
+      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
+      "baseHash": "7146ccc87cc1717af98926b22b98abb9e6d6fad0",
       "issue": 4054
     },
     {
@@ -145,7 +146,8 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "a38a123969846516bcbfe4296faf29dac21323e9",
+      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
+      "baseHash": "62842257c1fcc1631c3da4ea26d409df19d32ea4",
       "issue": 4054
     },
     {
@@ -166,7 +168,8 @@
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "fbc5250b75d3bf4354d68862a1b83e69cb1f8e03",
+      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
+      "baseHash": "a45944f905e495fb1faeee03f9eef8c6565296d1",
       "issue": 4054
     },
     {
@@ -187,21 +190,21 @@
       "type": "copy",
       "file": "js/examples/IntersectionObserver/IntersectionObserverClippingParent.js",
       "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverClippingParent.js",
-      "baseHash": "c50b11c459c2765dc673b3bf00abcf47a7102941",
+      "baseHash": "957315ad808886e486f18c0bdc79b97ec6a94faa",
       "issue": 4054
     },
     {
       "type": "copy",
       "file": "js/examples/IntersectionObserver/IntersectionObserverClippingRoot.js",
       "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverClippingRoot.js",
-      "baseHash": "8f29a603b37b8d160ddf4b0bef35a09144a5cd00",
+      "baseHash": "c378bf70f31da56b111a186259bd2bf2ea3ad879",
       "issue": 4054
     },
     {
       "type": "copy",
       "file": "js/examples/IntersectionObserver/IntersectionObserverExplicitRoot.js",
       "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverExplicitRoot.js",
-      "baseHash": "f37841cbd7012643cb85970976e8b57a8ee48b68",
+      "baseHash": "72802b474256b249af36343e015040c691319553",
       "issue": 4054
     },
     {
@@ -334,7 +337,8 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseHash": "cb99357f53c7f0d09d3562faee2dfcb7db2ea4e1"
+      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
+      "baseHash": "9fd5ab235654a781d25dff55cd28366db9132053"
     },
     {
       "type": "copy",
@@ -396,7 +400,8 @@
       "type": "copy",
       "directory": "js/examples/RefreshControl",
       "baseDirectory": "packages/rn-tester/js/examples/RefreshControl",
-      "baseHash": "3b5a3a8eb3b415fbf91038e92d623788d38d3f09",
+      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
+      "baseHash": "781e6c4fbdc1fe5f618476c1cb16cc411cdca786",
       "issue": 4054
     },
     {
@@ -424,7 +429,8 @@
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseHash": "363a47cce6463accf6beef87f07dd080088801e1",
+      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
+      "baseHash": "97015cbbdb838c78dfb2f0bf9a7509bfea4b31c8",
       "issue": 4054
     },
     {
@@ -480,7 +486,8 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "20d8327eb59a094bf19502343460823327b222e0",
+      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
+      "baseHash": "0e16875ccf63c259b076c6a5b6c8f2f4b4949a96",
       "issue": 4054
     },
     {
@@ -522,7 +529,7 @@
       "type": "copy",
       "file": "js/examples/TextInput/TextInputSharedExamples.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputSharedExamples.js",
-      "baseHash": "326c4f65d2c61578d8bd1589b51c9b5d0ec55e10",
+      "baseHash": "cbe35008a352f65e23beddcaebc319147dc6b6fc",
       "issue": 14291
     },
     {
@@ -626,7 +633,8 @@
       "type": "copy",
       "directory": "js/types",
       "baseDirectory": "packages/rn-tester/js/types",
-      "baseHash": "b79ddd3aca7843e2193edf9375aa480e01cc4c8d",
+      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
+      "baseHash": "4bf00d2f79d60f5d296804b461cca3242fad9648",
       "issue": 4054
     },
     {
@@ -668,7 +676,7 @@
       "type": "copy",
       "file": "js/utils/RNTesterNavigationReducer.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterNavigationReducer.js",
-      "baseHash": "0eb1fcb680e43a38cf929a6a4a60b3c50286e238",
+      "baseHash": "ce42b41f19686add12ac21bb608bcd52e1f97e5b",
       "issue": 4054
     },
     {
@@ -696,7 +704,7 @@
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeViewNativeComponent.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeViewNativeComponent.js",
-      "baseHash": "9911277e1decdb44463ccc5751a17e8a1c15dd86",
+      "baseHash": "7c811f32320d228eff8cabdd76fa8c07484ab3d9",
       "issue": 4054
     },
     {
@@ -717,7 +725,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "e7e82fe7462b49dc0e839245c6bdeb8fcca7ef67",
+      "baseHash": "94b8a92c13f2b1a3fa497686ad71d9489a619e8f",
       "issue": 13228
     },
     {

@@ -73658,6 +73658,38 @@ exports[`snapshotAllPages Text 33`] = `
     
 
   </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontFamily": "FiraCode",
+        },
+      ]
+    }
+  >
+    Non-Stylistic & and $
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontFamily": "FiraCode",
+          "fontVariant": [
+            "stylistic-three",
+            "stylistic-four",
+          ],
+        },
+      ]
+    }
+  >
+    Stylistic & and $
+  </Text>
 </View>
 `;
 

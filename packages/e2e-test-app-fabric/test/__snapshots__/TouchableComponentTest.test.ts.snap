@@ -125,6 +125,8 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
         "LiveSetting": "Assertive",
         "LocalizedControlType": "link",
         "Name": "TouchableWithoutFeedback (Control 3 in Set of 3)",
+        "PositionInSet": 3,
+        "SizeofSet": 3,
         "TextRangePattern.GetText": "TouchableWithoutFeedback (Control 3 in Set of 3)",
       },
     ],
