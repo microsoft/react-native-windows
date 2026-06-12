@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Wed, 22 Apr 2026 14:35:53 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 12 Jun 2026 05:55:49 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0-preview.4
+
+Fri, 12 Jun 2026 05:55:49 GMT
+
+### Changes
+
+- Upgrade to Visual Studio 2026 (julio.rocha@microsoft.com)
+- Upgrade to PowerShell 7 (julio.rocha@microsoft.com)
+- Upgrade build agents to Windows Server 2025, Visual Studio 2026 (julio.rocha@microsoft.com)
+- Bump @react-native-windows/find-dotnet-tools to v0.84.0-preview.2
 
 ## 0.84.0-preview.3
 

@@ -2,6 +2,39 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 12 Jun 2026 05:55:49 GMT",
+      "version": "0.84.0-preview.4",
+      "tag": "@react-native-windows/cli_v0.84.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "6ccb276ee538b6d0cecf97674f28c95575b117c6",
+            "comment": "Upgrade to Visual Studio 2026"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "6ccb276ee538b6d0cecf97674f28c95575b117c6",
+            "comment": "Upgrade to PowerShell 7"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "6ccb276ee538b6d0cecf97674f28c95575b117c6",
+            "comment": "Upgrade build agents to Windows Server 2025, Visual Studio 2026"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/find-dotnet-tools to v0.84.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Apr 2026 14:35:53 GMT",
       "version": "0.84.0-preview.3",
       "tag": "@react-native-windows/cli_v0.84.0-preview.3",
