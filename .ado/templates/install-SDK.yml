@@ -7,5 +7,6 @@ steps:
       targetType: filePath
       filePath: vnext\Scripts\Install-WindowsSdkISO.ps1
       arguments: ${{ parameters.sdkVersion }}
+      pwsh: true
     displayName: 'Install Insider SDK (${{ parameters.sdkVersion }})'
     condition: ne('', '${{ parameters.sdkVersion }}')

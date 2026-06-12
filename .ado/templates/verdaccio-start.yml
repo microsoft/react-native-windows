@@ -31,7 +31,7 @@ steps:
     - script: |
         for %%f in (npm-pkgs\*.tgz) do (
           echo Publishing %%f to verdaccio...
-          npm publish "%%f" --registry http://localhost:4873 --access public
+          npm publish "%%f" --registry http://localhost:4873 --access public --tag canary
         )
       displayName: Publish packages to verdaccio
     
