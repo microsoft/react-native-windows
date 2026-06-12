@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Fri, 12 Jun 2026 00:57:14 GMT",
+      "version": "0.82.10",
+      "tag": "@react-native-windows/automation-channel_v0.82.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "edda65eeae8dcb6527546ec4d21e5ded8c6196d3",
+            "comment": "Upgrade to Microsoft.WindowsAppSDK 1.8.260508005"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.82.10",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Jun 2026 15:29:38 GMT",
       "version": "0.82.9",
       "tag": "@react-native-windows/automation-channel_v0.82.9",
