@@ -2,6 +2,33 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 12 Jun 2026 00:57:14 GMT",
+      "version": "0.82.2",
+      "tag": "@react-native-windows/cli_v0.82.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "edda65eeae8dcb6527546ec4d21e5ded8c6196d3",
+            "comment": "Upgrade to Visual Studio 2026"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "edda65eeae8dcb6527546ec4d21e5ded8c6196d3",
+            "comment": "Upgrade to PowerShell 7"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "edda65eeae8dcb6527546ec4d21e5ded8c6196d3",
+            "comment": "Upgrade build agents to Windows Server 2025, Visual Studio 2026"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 07:09:57 GMT",
       "version": "0.82.1",
       "tag": "@react-native-windows/cli_v0.82.1",

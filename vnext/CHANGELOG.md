@@ -1,8 +1,25 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 04 Jun 2026 15:29:38 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 12 Jun 2026 00:57:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.10
+
+Fri, 12 Jun 2026 00:57:14 GMT
+
+### Patches
+
+- Upgrade to GoogleTest adapter 1.8.1.8 (julio.rocha@microsoft.com)
+- Upgrade build agents to Windows Server 2025, Visual Studio 2026 (julio.rocha@microsoft.com)
+- Upgrade to Microsoft.WindowsAppSDK 1.8.260508005 (julio.rocha@microsoft.com)
+- Defer findPowershell to layoutMSRNCxx (julio.rocha@microsoft.com)
+- Upgrade to PowerShell 7 (julio.rocha@microsoft.com)
+- Upgrade to Visual Studio 2026 (julio.rocha@microsoft.com)
+- Upgrade projects to .NET 10 (julio.rocha@microsoft.com)
+- Re-introduce WebSocket JS integration tests (julio.rocha@microsoft.com)
+- Fix WebSocket binaryType handling — stop unconditional Blob interception of binary messages (gordomacmaster@gmail.com)
+- Bump @react-native-windows/cli to v0.82.2
 
 ## 0.82.9
 

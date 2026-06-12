@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Tue, 26 May 2026 07:09:57 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 12 Jun 2026 00:57:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.82.2
+
+Fri, 12 Jun 2026 00:57:14 GMT
+
+### Patches
+
+- Upgrade to Visual Studio 2026 (julio.rocha@microsoft.com)
+- Upgrade to PowerShell 7 (julio.rocha@microsoft.com)
+- Upgrade build agents to Windows Server 2025, Visual Studio 2026 (julio.rocha@microsoft.com)
 
 ## 0.82.1
 
