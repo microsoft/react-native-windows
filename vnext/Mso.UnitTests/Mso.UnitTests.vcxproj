@@ -96,7 +96,8 @@
         /bigobj -
         /FS     - Force Synchronous PDB writes. Useful when setting MultiProcCL.
       -->
-      <AdditionalOptions>/await %(AdditionalOptions) /bigobj /FS</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj /FS</AdditionalOptions>
+      <AdditionalOptions Condition="$(PlatformToolsetVersion)&lt;145">%(AdditionalOptions) /await</AdditionalOptions>
       <ConformanceMode>true</ConformanceMode>
       <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
@@ -184,7 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn"
-      Version="1.8.1.7" />
+      Version="1.8.1.8" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)"
       PrivateAssets="all" />
   </ItemGroup>

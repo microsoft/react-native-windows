@@ -12,7 +12,7 @@ module.exports = {
     'jest/no-disabled-tests': 'off',
     'react-native/no-inline-styles': 'off',
     'no-void': 'off',
-    'no-undef': 'off'
+    'no-undef': 'off',
   },
   env: {
     node: true,
@@ -24,7 +24,7 @@ module.exports = {
       parserOptions: {
         parser: '@babel/eslint-parser',
         requireConfigFile: false,
-      }
+      },
     },
     {
       files: ['*.js', '*.js.flow', '*.jsx'],
@@ -48,20 +48,11 @@ module.exports = {
       rules: {
         '@typescript-eslint/await-thenable': 'error',
         '@typescript-eslint/ban-tslint-comment': 'error',
-        '@typescript-eslint/ban-types': [
-          'error', {
-            'extendDefaults': true,
-            'types': {
-              // See https://github.com/typescript-eslint/typescript-eslint/issues/2063
-              '{}': false
-            }
-          }
-        ],
         '@typescript-eslint/no-confusing-non-null-assertion': 'error',
         '@typescript-eslint/no-extra-non-null-assertion': 'error',
         '@typescript-eslint/no-floating-promises': [
           'error',
-          { ignoreIIFE: true },
+          {ignoreIIFE: true},
         ],
         '@typescript-eslint/no-for-in-array': 'error',
         '@typescript-eslint/no-misused-new': 'error',
@@ -71,7 +62,7 @@ module.exports = {
         '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
         '@typescript-eslint/no-unnecessary-condition': [
           'error',
-          { allowConstantLoopConditions: true },
+          {allowConstantLoopConditions: true},
         ],
         '@typescript-eslint/prefer-for-of': 'error',
         '@typescript-eslint/prefer-includes': 'error',
@@ -79,28 +70,30 @@ module.exports = {
         '@typescript-eslint/prefer-string-starts-ends-with': 'error',
         '@typescript-eslint/switch-exhaustiveness-check': 'error',
         'no-restricted-syntax': [
-          'error', {
+          'error',
+          {
             selector: 'TSEnumDeclaration',
-            message: `Prefer union types (e.g. type Foo = 'bar' | 'baz') to TypeScript enums`
-          }
+            message: `Prefer union types (e.g. type Foo = 'bar' | 'baz') to TypeScript enums`,
+          },
         ],
         'block-scoped-var': 'error',
-        'complexity': 'warn',
-        'eqeqeq': [ 'error', 'allow-null' ],
+        complexity: 'warn',
+        eqeqeq: ['error', 'allow-null'],
         'guard-for-in': 'error',
         'no-constructor-return': 'error',
         'no-useless-concat': 'error',
         'no-restricted-imports': [
-          'error', {
+          'error',
+          {
             name: 'fs',
-            message: 'Please use `@react-native-windows/fs` instead of `fs`'
-          }
+            message: 'Please use `@react-native-windows/fs` instead of `fs`',
+          },
         ],
         'no-var': 'error',
         'prefer-arrow-callback': 'error',
         'prefer-const': 'error',
         'prefer-rest-params': 'error',
-        'radix': 'error',
+        radix: 'error',
       },
     },
     {
@@ -109,13 +102,32 @@ module.exports = {
       rules: {
         '@typescript-eslint/naming-convention': [
           'error',
-          { 'selector': 'typeLike', 'format': ['PascalCase'] },
-          { 'selector': 'variable', 'format': ['camelCase', 'PascalCase', 'UPPER_CASE'] },
-          { 'selector': 'method', 'format': ['camelCase'], leadingUnderscore: 'allow' },
-          { 'selector': 'accessor', 'format': ['camelCase'], leadingUnderscore: 'allow' },
+          {selector: 'typeLike', format: ['PascalCase']},
+          {
+            selector: 'variable',
+            format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+          },
+          {
+            selector: 'method',
+            format: ['camelCase'],
+            leadingUnderscore: 'allow',
+          },
+          {
+            selector: 'accessor',
+            format: ['camelCase'],
+            leadingUnderscore: 'allow',
+          },
           // Don't allow PascalCase functions or params in normal TS files
-          { 'selector': 'parameter', 'format': ['camelCase'], leadingUnderscore: 'allow' },
-          { 'selector': 'function', 'format': ['camelCase'], leadingUnderscore: 'allow' },
+          {
+            selector: 'parameter',
+            format: ['camelCase'],
+            leadingUnderscore: 'allow',
+          },
+          {
+            selector: 'function',
+            format: ['camelCase'],
+            leadingUnderscore: 'allow',
+          },
         ],
       },
     },
@@ -124,13 +136,32 @@ module.exports = {
       rules: {
         '@typescript-eslint/naming-convention': [
           'error',
-          { 'selector': 'typeLike', 'format': ['PascalCase'] },
-          { 'selector': 'variable', 'format': ['camelCase', 'PascalCase', 'UPPER_CASE'] },
-          { 'selector': 'method', 'format': ['camelCase'], leadingUnderscore: 'allow' },
-          { 'selector': 'accessor', 'format': ['camelCase'], leadingUnderscore: 'allow' },
+          {selector: 'typeLike', format: ['PascalCase']},
+          {
+            selector: 'variable',
+            format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+          },
+          {
+            selector: 'method',
+            format: ['camelCase'],
+            leadingUnderscore: 'allow',
+          },
+          {
+            selector: 'accessor',
+            format: ['camelCase'],
+            leadingUnderscore: 'allow',
+          },
           // Allow PascalCase functions and params in TSX files for function components
-          { 'selector': 'parameter', 'format': ['camelCase', 'PascalCase'], leadingUnderscore: 'allow' },
-          { 'selector': 'function', 'format': ['camelCase', 'PascalCase'], leadingUnderscore: 'allow' },
+          {
+            selector: 'parameter',
+            format: ['camelCase', 'PascalCase'],
+            leadingUnderscore: 'allow',
+          },
+          {
+            selector: 'function',
+            format: ['camelCase', 'PascalCase'],
+            leadingUnderscore: 'allow',
+          },
         ],
       },
     },

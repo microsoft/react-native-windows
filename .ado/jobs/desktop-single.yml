@@ -25,34 +25,23 @@ steps:
 
   # Set up IIS for integration tests
   - pwsh: |
-      Install-WindowsFeature -Name Web-Server, Web-Scripting-Tools
-    displayName: Install IIS
-
-  - pwsh: |
       $DownloadScript = "$(Build.SourcesDirectory)\vnext\Scripts\Tfs\Invoke-WebRequestWithRetry.ps1"
 
       & $DownloadScript `
-        -Uri 'https://download.visualstudio.microsoft.com/download/pr/20598243-c38f-4538-b2aa-af33bc232f80/ea9b2ca232f59a6fdc84b7a31da88464/dotnet-hosting-8.0.3-win.exe' `
-        -OutFile dotnet-hosting-8.0.3-win.exe
+        -Uri 'https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/10.0.8/dotnet-hosting-10.0.8-win.exe' `
+        -OutFile dotnet-hosting-10.0.8-win.exe
 
       Write-Host 'Installing .NET hosting bundle'
-      Start-Process -Wait -FilePath .\dotnet-hosting-8.0.3-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
+      Start-Process -Wait -FilePath .\dotnet-hosting-10.0.8-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
       Write-Host 'Installed .NET hosting bundle'
-
-      & $DownloadScript `
-        -Uri 'https://download.visualstudio.microsoft.com/download/pr/f2ec926e-0d98-4a8b-8c70-722ccc2ca0e5/b59941b0c60f16421679baafdb7e9338/dotnet-sdk-7.0.407-win-x64.exe' `
-        -OutFile dotnet-sdk-7.0.407-win-x64.exe
-
-      Write-Host 'Installing .NET 7 SDK'
-      Start-Process -Wait -FilePath .\dotnet-sdk-7.0.407-win-x64.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
-      Write-Host 'Installed .NET 7 SDK'
     displayName: Install the .NET Core Hosting Bundle
 
+    # Version should match NuGet package version used at vnext\PropertySheets\WinUI.props: WinUI3Version
   - pwsh: |
       $DownloadScript = "$(Build.SourcesDirectory)\vnext\Scripts\Tfs\Invoke-WebRequestWithRetry.ps1"
 
       & $DownloadScript `
-        -Uri 'https://aka.ms/windowsappsdk/1.8/latest/windowsappruntimeinstall-x64.exe' `
+        -Uri 'https://aka.ms/windowsappsdk/1.8/1.8.260508005/windowsappruntimeinstall-x64.exe' `
         -OutFile windowsappruntimeinstall-x64.exe
 
       Write-Host 'Installing Windows App SDK Runtime'
@@ -69,12 +58,6 @@ steps:
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
   - template: ../templates/apply-published-version-vars.yml
-
-  - ${{ if eq(variables['Desktop.IntegrationTests.SkipRNTester'], true) }}:
-    - pwsh: |
-        $newValue = '(FullyQualifiedName!~Microsoft::React::Test::RNTesterHeadlessTests::)&' + "$(Desktop.IntegrationTests.Filter)"
-        Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
-      displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
 
   - template: ../templates/msbuild-sln.yml
     parameters:
@@ -96,7 +79,7 @@ steps:
   - template: ../templates/discover-google-test-adapter.yml
 
   - ${{ if ne(parameters.buildPlatform, 'ARM64EC') }}:
-    - task: VSTest@2
+    - task: VSTest@3
       displayName: Run Desktop Unit Tests
       timeoutInMinutes: 5 # Set smaller timeout, due to hangs
       inputs:
@@ -114,6 +97,7 @@ steps:
         publishRunAttachments: true
         collectDumpOn: onAbortOnly
         vsTestVersion: latest
+        vstestLocation: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
         failOnMinTestsNotRun: true
 
     # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
@@ -210,7 +194,7 @@ steps:
           Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true"
       continueOnError: true
 
-    - task: VSTest@2
+    - task: VSTest@3
       displayName: Run Desktop Integration Tests
       inputs:
         testSelector: testAssemblies
@@ -223,6 +207,7 @@ steps:
         publishRunAttachments: true
         collectDumpOn: onAbortOnly
         vsTestVersion: latest
+        vstestLocation: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
         failOnMinTestsNotRun: true
         otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
 

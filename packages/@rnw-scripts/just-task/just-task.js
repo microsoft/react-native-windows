@@ -69,8 +69,20 @@ task('depcheck', async () => {
   }
 });
 
-task('prettier', prettierCheckTask({ files: path.resolve(process.cwd(), '**', '*.{ts,tsx,js,jsx}'), ignorePath: findUp.sync('.prettierignore', {cwd: __dirname}) }));
-task('prettier:fix', prettierTask({ files: path.resolve(process.cwd(), '**', '*.{ts,tsx,js,jsx}'), ignorePath: findUp.sync('.prettierignore', {cwd: __dirname}) }));
+task(
+  'prettier',
+  prettierCheckTask({
+    files: path.resolve(process.cwd(), '**', '*.{ts,tsx,js,jsx}'),
+    ignorePath: findUp.sync('.prettierignore', {cwd: __dirname}),
+  }),
+);
+task(
+  'prettier:fix',
+  prettierTask({
+    files: path.resolve(process.cwd(), '**', '*.{ts,tsx,js,jsx}'),
+    ignorePath: findUp.sync('.prettierignore', {cwd: __dirname}),
+  }),
+);
 
 task('eslint', eslintTask());
 task('eslint:fix', eslintTask({fix: true}));

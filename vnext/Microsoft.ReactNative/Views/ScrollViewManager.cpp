@@ -115,7 +115,7 @@ void ScrollViewShadowNode::createView(const winrt::Microsoft::ReactNative::JSVal
 
   m_scrollViewerViewChangedRevoker = scrollViewer.ViewChanged(
       winrt::auto_revoke, [this, scrollViewUWPImplementation](const auto &sender, const auto & /*args*/) {
-        const auto scrollViewerNotNull{sender.as<winrt::ScrollViewer>()};
+        const auto scrollViewerNotNull{sender.template as<winrt::ScrollViewer>()};
         const auto zoomFactor{scrollViewerNotNull.ZoomFactor()};
         if (m_zoomFactor != zoomFactor) {
           m_zoomFactor = zoomFactor;
@@ -238,7 +238,7 @@ void ScrollViewShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSVal
 void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) {
   m_scrollViewerViewChangingRevoker =
       scrollViewer.ViewChanging(winrt::auto_revoke, [this](const auto &sender, const auto &args) {
-        const auto scrollViewerNotNull = sender.as<winrt::ScrollViewer>();
+        const auto scrollViewerNotNull = sender.template as<winrt::ScrollViewer>();
 
         // If we are transitioning to inertial scrolling.
         if (m_isScrolling && !m_isScrollingFromInertia && args.IsInertial()) {
@@ -281,7 +281,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
           m_SIPEventHandler->TryHide();
         }
 
-        const auto scrollViewer = sender.as<winrt::ScrollViewer>();
+        const auto scrollViewer = sender.template as<winrt::ScrollViewer>();
         EmitScrollEvent(
             scrollViewer,
             m_tag,
@@ -294,7 +294,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
 
   m_scrollViewerDirectManipulationCompletedRevoker =
       scrollViewer.DirectManipulationCompleted(winrt::auto_revoke, [this](const auto &sender, const auto &) {
-        const auto scrollViewer = sender.as<winrt::ScrollViewer>();
+        const auto scrollViewer = sender.template as<winrt::ScrollViewer>();
         if (m_isScrollingFromInertia) {
           EmitScrollEvent(
               scrollViewer,
@@ -320,7 +320,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
       });
   m_controlLoadedRevoker = scrollViewer.Loaded(winrt::auto_revoke, [this](const auto &sender, const auto &) {
     if (m_changeViewAfterLoaded) {
-      const auto scrollViewer = sender.as<winrt::ScrollViewer>();
+      const auto scrollViewer = sender.template as<winrt::ScrollViewer>();
       scrollViewer.ChangeView(nullptr, nullptr, static_cast<float>(m_zoomFactor));
       m_changeViewAfterLoaded = false;
     }
