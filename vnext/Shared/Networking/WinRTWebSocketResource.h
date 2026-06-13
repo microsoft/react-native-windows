@@ -27,8 +27,12 @@ class WinRTWebSocketResource2 : public IWebSocketResource,
     void operator=(const TaskSequencer &) = delete;
 
    private:
+// `experimental` is deprecated starting Visual Studio 2026
+#if _MSC_VER >= 1951
+    using CoroHandle = std::coroutine_handle<>;
+#else
     using CoroHandle = std::experimental::coroutine_handle<>;
-
+#endif
     struct Suspender {
       CoroHandle m_handle;
 

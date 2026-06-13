@@ -108,7 +108,7 @@ if "%R_VERSION%"=="" (
   for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% devDependencies.react') do @set R_VERSION=%%a
 )
 
-@echo creaternwlib.cmd Determining concrete versions for react@%R_VERSION%, react-native@%RN_VERSION%, and react-native-windows@%RNW_VERSION% 
+@echo creaternwlib.cmd Determining concrete versions for react@%R_VERSION%, react-native@%RN_VERSION%, and react-native-windows@%RNW_VERSION%
 for /f "delims=" %%a in ('npm show react-native-windows@%RNW_VERSION% version') do @set RNW_VERSION=%%a
 for /f "delims=" %%a in ('npm show react-native@%RN_VERSION% version') do @set RN_VERSION=%%a
 for /f "delims=" %%a in ('npm show @react-native-community/cli@%RNCLI_VERSION% version') do @set RNCLI_VERSION=%%a
@@ -166,6 +166,16 @@ call git commit -m "chore: add rnw dependency"
 
 @echo creaternwlib.cmd Running init-windows with: yarn react-native init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
 call yarn react-native init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
+
+if %ERRORLEVEL% neq 0 (
+  @echo creaternwlib.cmd init-windows command not available from react-native CLI, falling back to react-native-windows-init
+  call npx --yes react-native-windows-init@%RNW_VERSION% --template %RNW_TEMPLATE_TYPE% --overwrite --logging
+)
+
+if %ERRORLEVEL% neq 0 (
+  @echo creaternwlib.cmd: Unable to initialize Windows project
+  exit /b %ERRORLEVEL%
+)
 
 @echo creaternwlib.cmd Done, see new %RNW_TEMPLATE_TYPE% project in %CD% with react@%R_VERSION%, react-native@%RN_VERSION%, and react-native-windows@%RNW_VERSION%
 

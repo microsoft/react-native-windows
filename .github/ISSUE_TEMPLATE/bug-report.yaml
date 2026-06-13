@@ -8,7 +8,7 @@ body:
     attributes:
       value: |
         This form is for reporting bugs found in React Native for Windows.
-        
+
         If the issue is that an existing React Native API is simply missing in React Native for Windows, please use the [this form](https://github.com/microsoft/react-native-windows/issues/new?template=missing-api.yaml) instead.
 
         If you just have a question, please post on [Discussions](https://github.com/microsoft/react-native-windows/discussions) instead.
@@ -21,7 +21,7 @@ body:
       label: Problem Description
       description: |
         Please enter a description of the issue and any output and/or error logging.
-        
+
         If you're seeing a failure when using a RNW CLI command (i.e. `run-windows`, `autolink-windows`, `codegen-windows`) please try again with `--logging` and provide that output.
     id: description
   - type: textarea
@@ -63,7 +63,7 @@ body:
       label: Community Modules
       description: |
         Describe what you community modules you have added to your project.
-        
+
         Not sure? Look at your app's `package.json` and share what's in the "dependencies" section.
     id: modules
   - type: dropdown
@@ -71,9 +71,9 @@ body:
       label: Target React Native Architecture
       description: |
         For which React Native architecture(s) did this issue repro for you?
-        
+
         Not sure? Which template did you use when creating your project? For RNW <= 0.79.0, the default for new app projects is "Old Architecture".
-        
+
         See [New vs. Old Architecture](https://microsoft.github.io/react-native-windows/docs/new-architecture) for more details.
       options:
         - "Both Architectures"
@@ -98,8 +98,8 @@ body:
       label: Visual Studio Version
       description: Which version of Visual Studio are you using?
       options:
-        - "Visual Studio 2022"
-        - "Visual Studio 2022 Preview"
+        - "Visual Studio 2026"
+        - "Visual Studio 2026 Preview"
     id: vs
   - type: dropdown
     attributes:

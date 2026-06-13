@@ -4,7 +4,7 @@ parameters:
     type: string
   - name: doctor
     type: boolean
-    default: true
+    default: false
   - name: config
     type: boolean
     default: true
