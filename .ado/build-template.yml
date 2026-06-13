@@ -25,6 +25,14 @@ parameters:
       name: rnw-pool-8-microsoft
       demands: ImageOverride -equals rnw-img-vs2026-node24
 
+- name: runE2ETestAppJobs
+  type: boolean
+  default: false
+
+- name: runVerifyCliInitWindowsJobs
+  type: boolean
+  default: false
+
 - name: desktopBuildMatrix
   type: object
   default:
@@ -525,10 +533,11 @@ extends:
             buildEnvironment: ${{ parameters.buildEnvironment }}
             AgentPool: ${{ parameters.AgentPool }}
 
-        - template: .ado/jobs/e2e-test.yml@self
-          parameters:
-            buildEnvironment: ${{ parameters.buildEnvironment }}
-            AgentPool: ${{ parameters.AgentPool }}
+        - ${{ if eq(parameters.runE2ETestAppJobs, true) }}:
+          - template: .ado/jobs/e2e-test.yml@self
+            parameters:
+              buildEnvironment: ${{ parameters.buildEnvironment }}
+              AgentPool: ${{ parameters.AgentPool }}
 
     #=================================================================
     # Stage: CLI
@@ -539,8 +548,9 @@ extends:
       displayName: CLI
       dependsOn: Build
       jobs:
-        - template: .ado/jobs/cli-init-windows.yml@self
-          parameters:
-            buildEnvironment: ${{ parameters.buildEnvironment }}
-            AgentPool: ${{ parameters.AgentPool }}
+        - ${{ if eq(parameters.runVerifyCliInitWindowsJobs, true) }}:
+          - template: .ado/jobs/cli-init-windows.yml@self
+            parameters:
+              buildEnvironment: ${{ parameters.buildEnvironment }}
+              AgentPool: ${{ parameters.AgentPool }}
 
