@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Migrate to PowerShell 7",
-  "packageName": "@react-native-windows/find-dotnet-tools",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
