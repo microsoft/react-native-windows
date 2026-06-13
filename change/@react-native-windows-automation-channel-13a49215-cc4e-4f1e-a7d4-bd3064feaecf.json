@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade to Microsoft.WindowsAppSDK 1.8.260508005",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
