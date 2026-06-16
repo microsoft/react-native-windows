@@ -36,9 +36,6 @@
     <ClCompile Include="Modules\TestDeviceInfo.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="HttpOriginPolicyIntegrationTest.cpp">
-      <Filter>Integration Tests</Filter>
-    </ClCompile>
     <ClCompile Include="RNTesterHeadlessTests.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>
@@ -95,5 +92,8 @@
     <ClInclude Include="Modules\TestModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TestTypeDependencies.dgml" />
   </ItemGroup>
 </Project>
