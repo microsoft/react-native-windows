@@ -262,12 +262,14 @@ class Stream : public NetworkRequestListener,
 };
 // } // namespace [Windows #13587]
 
+// [Windows #16263
 NetworkIOAgent::~NetworkIOAgent() {
   if (networkAgentId_) {
     NetworkHandler::getInstance().disableAgent(*networkAgentId_);
     networkAgentId_ = std::nullopt;
   }
 }
+// Windows]
 
 bool NetworkIOAgent::handleRequest(
     const cdp::PreparsedRequest& req,
@@ -288,7 +290,7 @@ bool NetworkIOAgent::handleRequest(
 
     // @cdp Network.enable support is experimental.
     if (req.method == "Network.enable") {
-      networkAgentId_ = networkHandler.enableAgent(frontendChannel_);
+      networkAgentId_ = networkHandler.enableAgent(frontendChannel_); // [Windows #16263]
       // NOTE: Domain enable/disable responses are sent by HostAgent.
       return false;
     }
@@ -296,7 +298,7 @@ bool NetworkIOAgent::handleRequest(
     // @cdp Network.disable support is experimental.
     if (req.method == "Network.disable") {
       if (networkAgentId_) {
-        networkHandler.disableAgent(*networkAgentId_);
+        networkHandler.disableAgent(*networkAgentId_); // [Windows #16263]
         networkAgentId_ = std::nullopt;
       }
       // NOTE: Domain enable/disable responses are sent by HostAgent.

@@ -131,6 +131,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/animationbackend/AnimatedPropSerializer.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/animationbackend/AnimatedPropSerializer.cpp",
+      "baseHash": "642804afa87c3c65f8a6606abdb5fc67145d8064",
+      "issue": 16262
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/attributedstring/TextAttributes.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/attributedstring/TextAttributes.cpp",
       "baseHash": "1fc7b68dff2d3a875737659af4a90efe3aa6dcfa"
@@ -205,7 +212,8 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBuffer.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mapbuffer/MapBuffer.cpp",
-      "baseHash": "6d91921f18e3e79984a6a368de9b5ab90d47db3b"
+      "baseHash": "6d91921f18e3e79984a6a368de9b5ab90d47db3b",
+      "issue": 16261
     },
     {
       "type": "derived",

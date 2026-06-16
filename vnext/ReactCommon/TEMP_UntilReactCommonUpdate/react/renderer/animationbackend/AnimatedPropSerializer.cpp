@@ -13,12 +13,12 @@ namespace facebook::react {
 
 namespace {
 
-// [Windows] Helper to convert platform Color to int32_t ARGB format
+// [Windows #16262] Helper to convert platform Color to int32_t ARGB format
 // On other platforms Color is already int32_t, but on Windows it's a struct.
 inline int32_t colorToInt32(const Color& color) {
   auto c = color.AsWindowsColor();
   return static_cast<int32_t>((c.A << 24) | (c.R << 16) | (c.G << 8) | c.B);
-}
+} // Windows]
 
 
 void packBorderRadiusCorner(

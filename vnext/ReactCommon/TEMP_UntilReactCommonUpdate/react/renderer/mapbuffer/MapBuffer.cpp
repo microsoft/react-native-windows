@@ -24,7 +24,7 @@ MapBuffer::MapBuffer(std::vector<uint8_t> data) : bytes_(std::move(data)) {
   auto header = reinterpret_cast<const Header*>(bytes_.data());
   count_ = header->count;
 
-  if (static_cast<size_t>(header->bufferSize) != bytes_.size()) {
+  if (static_cast<size_t>(header->bufferSize) != bytes_.size()) { // [Windows #16261]
     LOG(ERROR) << "Error: Data size does not match, expected "
                << header->bufferSize << " found: " << bytes_.size();
     abort();
@@ -124,7 +124,7 @@ MapBuffer MapBuffer::getMapBuffer(Key key) const {
   int32_t offset = getDynamicDataOffset() + getIntAtBucket(bucketIndex);
   int32_t mapBufferLength =
       *reinterpret_cast<const int32_t*>(bytes_.data() + offset);
-  int32_t maxLength = static_cast<int32_t>(bytes_.size() - offset - sizeof(int32_t));
+  int32_t maxLength = static_cast<int32_t>(bytes_.size() - offset - sizeof(int32_t)); // [Windows #16261]
   if (mapBufferLength > maxLength) {
     mapBufferLength = maxLength;
   }
