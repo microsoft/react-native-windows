@@ -14,13 +14,10 @@
 // Standard Library
 #include <future>
 
-#include "WebSocketServer.h"
-
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::chrono::milliseconds;
-using std::make_shared;
 using std::once_flag;
 using std::promise;
 using std::string;
@@ -52,8 +49,6 @@ namespace Microsoft::React::Test {
 
 TEST_CLASS (WebSocketIntegrationTest)
 {
-  static uint16_t s_port;
-
   void SendReceiveCloseBase(bool isSecure)
   {
     string scheme = "ws";
@@ -91,13 +86,6 @@ TEST_CLASS (WebSocketIntegrationTest)
 
     Assert::AreEqual({}, clientError);
     Assert::AreEqual({"prefix_response"}, received);
-  }
-
-  TEST_METHOD_CLEANUP(MethodCleanup)
-  {
-    // Bug in WebSocketServer does not correctly release TCP port between test methods.
-    // Using a different por per test for now.
-    s_port++;
   }
 
   TEST_METHOD(ConnectClose)
@@ -246,49 +234,34 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::AreEqual(static_cast<size_t>(LEN + string("_response").length()), result.length());
   }
 
-  /*
-    Currently, this test requires a modified websocket test server.
-    TODO: Write an in-place werver with this behavior:
-
-   server.on('connection', (ws) => {
-     ws.on('message', (message) => {
-       for (var propName in ws.upgradeReq.headers) {
-         console.log(`${propName}: [${ws.upgradeReq.headers[propName]}]`);
-       }
-
-       // Send the cookie back to the client.
-       ws.send(ws.upgradeReq.headers.cookie);
-     });
-   });
-
-    Test passes, otherwise.
-   */
-  BEGIN_TEST_METHOD_ATTRIBUTE(AdditionalHeaders)
-  TEST_IGNORE()
-  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(AdditionalHeaders) {
-    string cookie;
-    auto server = make_shared<Test::WebSocketServer>(s_port);
-    server->SetOnHandshake([server](boost::beast::websocket::response_type &response) {
-      auto cookie = string{response[boost::beast::http::field::cookie]};
-      server->SetMessageFactory([cookie](string &&) { return cookie; });
-    });
     auto ws = IWebSocketResource::Make();
-    promise<string> response;
-    ws->SetOnMessage([&response](size_t size, const string &message, bool isBinary) { response.set_value(message); });
+    once_flag responseFlag;
+    promise<string> responsePromise;
+    ws->SetOnMessage([&responseFlag, &responsePromise](size_t size, const string &message, bool isBinary) {
+      SetPromise(responseFlag, responsePromise, message);
+    });
+    string errorMessage;
+    ws->SetOnError([&errorMessage, &responseFlag, &responsePromise](Error error) {
+      errorMessage = error.Message;
+      SetPromise(responseFlag, responsePromise, "");
+    });
 
-    server->Start();
-    ws->Connect("ws://localhost:" + std::to_string(s_port), {}, {{L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906"}});
-    ws->Send("");
+    ws->Connect(
+      "ws://localhost:5555/rnw/websockets/echocookie",
+      {},
+      {{L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906"}}
+    );
+    ws->Send("request");
 
-    auto future = response.get_future();
+    auto future = responsePromise.get_future();
     future.wait();
     string result = future.get();
 
+    Assert::AreEqual({}, errorMessage);
     Assert::AreEqual({"JSESSIONID=AD9A320CC4034641997FF903F1D10906"}, result);
 
     ws->Close(CloseCode::Normal, "No reason");
-    server->Stop();
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(SendReceiveSsl)
@@ -328,17 +301,6 @@ TEST_CLASS (WebSocketIntegrationTest)
   BEGIN_TEST_METHOD_ATTRIBUTE(SendBinary)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SendBinary) {
-
-    auto server = make_shared<Test::WebSocketServer>(s_port);
-
-    // The result should be the message "grown" by one element which value is the result's size.
-    server->SetMessageFactory([](vector<uint8_t>&& message)
-    {
-      message.push_back(static_cast<uint8_t>(message.size() + 1));
-
-      return message;
-    });
-
     auto ws = IWebSocketResource::Make();
 
     std::vector<string> messages{
@@ -360,8 +322,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       errorMessage = error.Message;
     });
 
-    server->Start();
-    ws->Connect("ws://localhost:" + std::to_string(s_port));
+    ws->Connect("ws://localhost:5555/rnw/websockets/echobinarygrow");
 
     // Send all but the last message.
     // Compare result with the next message in the sequence.
@@ -378,7 +339,6 @@ TEST_CLASS (WebSocketIntegrationTest)
     }
 
     ws->Close(CloseCode::Normal, "Closing after reading");
-    server->Stop();
 
     Assert::AreEqual({}, errorMessage);
   }
@@ -427,7 +387,7 @@ TEST_CLASS (WebSocketIntegrationTest)
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(AbruptDisconnectFailsWithSpecificMessage)
-  TEST_IGNORE() //TODO: Find a way to emulate abrupt disconnection using Test::WebSocketServer
+  TEST_IGNORE() //TODO: Find a way to emulate abrupt disconnection using TestWebsite.
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(AbruptDisconnectFailsWithSpecificMessage)
   {
@@ -455,7 +415,5 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::AreEqual(static_cast<size_t>(CloseCode::BadPayload), static_cast<size_t>(closeCode));
   }
 };
-
-uint16_t WebSocketIntegrationTest::s_port = 6666;
 
 } // namespace Microsoft::React::Test

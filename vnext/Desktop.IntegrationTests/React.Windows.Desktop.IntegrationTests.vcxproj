@@ -118,7 +118,6 @@
     <ClCompile Include="TestReactPackageProvider.cpp" />
     <ClCompile Include="TestUIDispatcher.cpp" />
     <ClCompile Include="WebSocketIntegrationTest.cpp" />
-    <ClCompile Include="WebSocketServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Desktop.DLL\React.Windows.Desktop.DLL.vcxproj">
@@ -145,7 +144,6 @@
     <ClInclude Include="TestReactNativeHostHolder.h" />
     <ClInclude Include="TestReactPackageProvider.h" />
     <ClInclude Include="TestUIDispatcher.h" />
-    <ClInclude Include="WebSocketServer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="TestTypeDependencies.dgml" />

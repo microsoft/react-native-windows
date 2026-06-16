@@ -39,9 +39,6 @@
     <ClCompile Include="RNTesterHeadlessTests.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>
-    <ClCompile Include="WebSocketServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TestReactNativeHostHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,9 +66,6 @@
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
     <ClInclude Include="TestCompositionContext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WebSocketServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TestReactNativeHostHolder.h">

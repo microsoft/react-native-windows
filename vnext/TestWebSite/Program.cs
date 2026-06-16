@@ -81,6 +81,16 @@ app.Map(
   );
 
 app.Map(
+  "/rnw/websockets/echocookie",
+  Microsoft.React.Test.WebSocketTests.EchoCookie
+  );
+
+app.Map(
+  "/rnw/websockets/echobinarygrow",
+  Microsoft.React.Test.WebSocketTests.EchoBinaryGrow
+  );
+
+app.Map(
   "/rnw/websockets/pong",
   Microsoft.React.Test.WebSocketTests.Pong
   );
