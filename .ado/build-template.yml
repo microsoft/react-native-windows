@@ -287,8 +287,7 @@ extends:
                   (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveClose)&
                   (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendConsecutive)&
                   (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveLargeMessage)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveSsl)&
-                  (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)
+                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveSsl)
               #6799 - HostFunctionTest, HostObjectProtoTest crash under JSI/V8;
               #        PreparedJavaScriptSourceTest asserts/fails under JSI/ChakraCore
               - name: Desktop.UnitTests.Filter
