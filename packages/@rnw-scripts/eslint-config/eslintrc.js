@@ -48,15 +48,6 @@ module.exports = {
       rules: {
         '@typescript-eslint/await-thenable': 'error',
         '@typescript-eslint/ban-tslint-comment': 'error',
-        '@typescript-eslint/ban-types': [
-          'error', {
-            'extendDefaults': true,
-            'types': {
-              // See https://github.com/typescript-eslint/typescript-eslint/issues/2063
-              '{}': false
-            }
-          }
-        ],
         '@typescript-eslint/no-confusing-non-null-assertion': 'error',
         '@typescript-eslint/no-extra-non-null-assertion': 'error',
         '@typescript-eslint/no-floating-promises': [

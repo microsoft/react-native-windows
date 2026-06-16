@@ -101,7 +101,7 @@ function ensureNuGet(toolsPath) {
   ensureDir(toolsPath);
   console.log(`Downloading nuget.exe to: ${localNuGet}`);
   execSync(
-    `powershell.exe -NoLogo -NoProfile -Command ` +
+    `pwsh.exe -NoLogo -NoProfile -Command ` +
       `"[Net.ServicePointManager]::SecurityProtocol = ` +
       `[Net.SecurityProtocolType]::Tls12; ` +
       `Invoke-WebRequest -Uri 'https://dist.nuget.org/win-x86-commandline/latest/nuget.exe' ` +
