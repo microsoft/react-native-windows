@@ -44,10 +44,10 @@ using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 namespace {
 // Clearly fake endpoint host names. These never reach the network (all requests are served by a
 // mock filter), so they intentionally avoid "localhost" to prevent confusion with a real service.
-constexpr wchar_t s_mockServerHost[]{L"mockserver.rnw"};      // Primary endpoint.
+constexpr wchar_t s_mockServerHost[]{L"mockserver.rnw"}; // Primary endpoint.
 constexpr wchar_t s_redirectServerHost[]{L"redirserver.rnw"}; // Secondary endpoint (redirect target).
 
-constexpr char s_crossOriginUrl[]{"http://example.rnw"};    // Narrow form, for runtime options.
+constexpr char s_crossOriginUrl[]{"http://example.rnw"}; // Narrow form, for runtime options.
 constexpr wchar_t s_crossOriginUrlW[]{L"http://example.rnw"}; // Wide form, for header values.
 
 // Common header field names (mirror the boost::beast::http::field values used by the original integration test).
