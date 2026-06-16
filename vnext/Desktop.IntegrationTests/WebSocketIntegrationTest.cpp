@@ -234,6 +234,22 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::AreEqual(static_cast<size_t>(LEN + string("_response").length()), result.length());
   }
 
+  /*
+   Example:
+
+   server.on('connection', (ws) => {
+     ws.on('message', (message) => {
+       for (var propName in ws.upgradeReq.headers) {
+         console.log(`${propName}: [${ws.upgradeReq.headers[propName]}]`);
+       }
+
+       // Send the cookie back to the client.
+       ws.send(ws.upgradeReq.headers.cookie);
+     });
+   });
+
+    Test passes, otherwise.
+   */
   TEST_METHOD(AdditionalHeaders) {
     auto ws = IWebSocketResource::Make();
     once_flag responseFlag;
