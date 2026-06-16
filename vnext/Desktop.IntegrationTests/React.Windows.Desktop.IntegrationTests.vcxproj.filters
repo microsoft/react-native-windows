@@ -39,9 +39,6 @@
     <ClCompile Include="RNTesterHeadlessTests.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>
-    <ClCompile Include="HttpServer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="WebSocketServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,9 +67,6 @@
     </ClInclude>
     <ClInclude Include="Modules\TestDeviceInfo.h">
       <Filter>Header Files\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="HttpServer.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TestCompositionContext.h">
       <Filter>Header Files</Filter>
