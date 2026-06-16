@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.84.0-preview.2",
+  "version": "0.84.0",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "repository": {
     "type": "git",
@@ -92,7 +92,7 @@
     "prettier": "^3.6.2",
     "react": "19.2.3",
     "react-native": "0.84.1",
-    "react-native-platform-override": "0.84.0-preview.1",
+    "react-native-platform-override": "0.84.0",
     "typescript": "5.0.4"
   },
   "peerDependencies": {

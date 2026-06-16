@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-<!-- This log was last generated on Mon, 06 Apr 2026 06:35:45 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 16 Jun 2026 10:29:39 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.0
+
+Tue, 16 Jun 2026 10:29:39 GMT
+
+### Patches
+
+- Promote 0.84 to latest (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.84.0-preview.1
 
