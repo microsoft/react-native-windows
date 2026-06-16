@@ -1,7 +1,7 @@
 {
   "name": "@react-native-windows/find-dotnet-tools",
   "description": "Helpers to locate .NET-based tools (e.g. pwsh) restored via NuGet or available on PATH.",
-  "version": "0.84.0-preview.1",
+  "version": "0.84.0-preview.2",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
