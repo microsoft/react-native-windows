@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/find-repo-root
 
-<!-- This log was last generated on Tue, 26 May 2026 08:35:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 16 Jun 2026 09:54:41 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.83.1
+
+Tue, 16 Jun 2026 09:54:41 GMT
+
+### Patches
+
+- Promote 0.83 to legacy (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.83.1
 
 ## 0.83.0
 

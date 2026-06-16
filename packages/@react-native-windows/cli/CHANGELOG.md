@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Sat, 13 Jun 2026 06:44:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 16 Jun 2026 09:54:41 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.83.2
+
+Tue, 16 Jun 2026 09:54:41 GMT
+
+### Patches
+
+- Promote 0.83 to legacy (66076509+vineethkuttan@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.83.1
+- Bump @react-native-windows/fs to v0.83.1
+- Bump @react-native-windows/package-utils to v0.83.1
+- Bump @react-native-windows/telemetry to v0.83.1
 
 ## 0.83.1
 
