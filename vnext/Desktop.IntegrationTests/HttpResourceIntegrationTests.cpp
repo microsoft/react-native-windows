@@ -38,13 +38,9 @@ string MakeCacheUrl(const string &requestId) {
 } // namespace
 
 TEST_CLASS (HttpResourceIntegrationTest) {
-  static uint16_t s_requestId;
-
   TEST_METHOD_CLEANUP(MethodCleanup) {
     // Clear any runtime options that may be used by tests in this class.
     MicrosoftReactSetRuntimeOptionString("Http.UserAgent", nullptr);
-
-    s_requestId++;
   }
   TEST_METHOD(RequestGetSucceeds) {
     string url = MakeHttpResourceUrl("/get");
@@ -526,8 +522,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(GetDisableThenReenableCacheSucceeds) {
-    const auto uniqueId =
-        std::to_string(s_requestId) + "-" + std::to_string(std::chrono::steady_clock::now().time_since_epoch().count());
+    const auto uniqueId = std::to_string(std::chrono::steady_clock::now().time_since_epoch().count());
     string url = MakeCacheUrl(uniqueId);
 
     std::vector<promise<void>> promises;
@@ -580,7 +575,5 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({"123444"}, result);
   }
 };
-
-/*static*/ uint16_t HttpResourceIntegrationTest::s_requestId = 1;
 
 } // namespace Microsoft::React::Test
