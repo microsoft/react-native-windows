@@ -31,11 +31,11 @@
     "typescript": "5.0.4"
   },
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "v0.83-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch",
+      "prerelease",
       "premajor",
       "preminor",
       "prepatch"
