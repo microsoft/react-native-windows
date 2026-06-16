@@ -1,7 +1,7 @@
 {
   "name": "@react-native-windows/find-dotnet-tools",
   "description": "Helpers to locate .NET-based tools (e.g. pwsh) restored via NuGet or available on PATH.",
-  "version": "0.0.0-canary.2",
+  "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -17,7 +17,7 @@
     "directory": "packages/@react-native-windows/find-dotnet-tools"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.72"
+    "@react-native-windows/fs": "^0.83.1"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.38",

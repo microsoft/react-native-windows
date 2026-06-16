@@ -2,6 +2,33 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Tue, 16 Jun 2026 09:54:41 GMT",
+      "version": "0.83.1",
+      "tag": "react-native-platform-override_v0.83.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "83f78a8cf0b1226d7a9b78a1b18538e91cfd82c2",
+            "comment": "Promote 0.83 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/fs to v0.83.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/package-utils to v0.83.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 08:35:27 GMT",
       "version": "0.83.0",
       "tag": "react-native-platform-override_v0.83.0",
