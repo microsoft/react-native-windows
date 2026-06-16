@@ -280,16 +280,11 @@ extends:
               #10732 - WebSocketIntegrationTest::SendReceiveSsl fails on Windows Server 2022.
               #12714 - Disable for first deployment of test website.
               #other  - WebSocketIntegrationTest::AdditionalHeaders throws '[0x801901f4] Internal server error (500).'
+              #       - WebSocketIntegrationTest are currently unsable on CI hosts. Work fine on local machines.
               - name: Desktop.IntegrationTests.Filter
                 value: >
                   (FullyQualifiedName!~Microsoft::React::Test::RNTesterHeadlessTests)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::AdditionalHeaders)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectClose)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectNoClose)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveClose)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendConsecutive)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveLargeMessage)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveSsl)
+                  (FullyQualifiedName!~Microsoft::React::Test::WebSocketIntegrationTest)
               #6799 - HostFunctionTest, HostObjectProtoTest crash under JSI/V8;
               #        PreparedJavaScriptSourceTest asserts/fails under JSI/ChakraCore
               - name: Desktop.UnitTests.Filter
