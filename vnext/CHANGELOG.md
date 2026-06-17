@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 11 Jun 2026 13:13:20 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 17 Jun 2026 16:56:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.28
+
+Wed, 17 Jun 2026 16:56:40 GMT
+
+### Patches
+
+- Fix crash attempting to get runtime when shutting down instance (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.27
 

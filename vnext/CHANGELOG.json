@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 17 Jun 2026 16:56:40 GMT",
+      "version": "0.81.28",
+      "tag": "react-native-windows_v0.81.28",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bbbbba09be6513369a6bdf79e46a6e91f12c9975",
+            "comment": "Fix crash attempting to get runtime when shutting down instance"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Jun 2026 13:13:20 GMT",
       "version": "0.81.27",
       "tag": "react-native-windows_v0.81.27",
