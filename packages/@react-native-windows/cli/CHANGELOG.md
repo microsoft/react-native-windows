@@ -1,19 +1,8 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Fri, 12 Jun 2026 04:17:47 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 21 Mar 2026 02:43:22 GMT and should not be manually modified. -->
 
 <!-- Start content -->
-
-## 0.81.6
-
-Fri, 12 Jun 2026 04:17:47 GMT
-
-### Patches
-
-- Upgrade to Visual Studio 2026 (julio.rocha@microsoft.com)
-- Upgrade to PowerShell 7 (julio.rocha@microsoft.com)
-- Upgrade build agents to Windows Server 2025, Visual Studio 2026 (julio.rocha@microsoft.com)
-- Bump @react-native-windows/codegen to v0.81.6
 
 ## 0.81.5
 

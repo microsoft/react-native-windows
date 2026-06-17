@@ -2182,14 +2182,6 @@
     graceful-fs "^4.2.8"
     minimatch "^10.0.3"
 
-"@react-native-windows/fs@^0.0.0-canary.72":
-  version "0.0.0-canary.72"
-  resolved "https://registry.yarnpkg.com/@react-native-windows/fs/-/fs-0.0.0-canary.72.tgz#36f877226a14c86c95739c5ca69b132ba8b819ff"
-  integrity sha512-zM+VUo/hS0ckQ5RNcce2YDIMawEbcyxU8dZTBOTfUrURS5olkIR8ALldNsNP10IL8mU7VVNexH03+A06I+wA3g==
-  dependencies:
-    graceful-fs "^4.2.8"
-    minimatch "^10.0.3"
-
 "@react-native/assets-registry@0.81.6":
   version "0.81.6"
   resolved "https://registry.yarnpkg.com/@react-native/assets-registry/-/assets-registry-0.81.6.tgz#4a9edfa209e4ef43adb372cbf481a7c4ff2e7342"
@@ -10223,11 +10215,6 @@ prettier@^3.0.0:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.8.1.tgz#edf48977cf991558f4fcbd8a3ba6015ba2a3a173"
   integrity sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==
-
-prettier@^3.6.2:
-  version "3.8.3"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.8.3.tgz#560f2de55bf01b4c0503bc629d5df99b9a1d09b0"
-  integrity sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==
 
 pretty-format@^24.9.0:
   version "24.9.0"

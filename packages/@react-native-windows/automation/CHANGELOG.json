@@ -2,33 +2,6 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
-      "date": "Fri, 12 Jun 2026 04:17:47 GMT",
-      "version": "0.81.28",
-      "tag": "@react-native-windows/automation_v0.81.28",
-      "comments": {
-        "patch": [
-          {
-            "author": "julio.rocha@microsoft.com",
-            "package": "@react-native-windows/automation",
-            "commit": "d58e4482057a5e9e6395793b5f7d4c626cf04046",
-            "comment": "Upgrade build agents to Windows Server 2025, Visual Studio 2026"
-          },
-          {
-            "author": "julio.rocha@microsoft.com",
-            "package": "@react-native-windows/automation",
-            "commit": "d58e4482057a5e9e6395793b5f7d4c626cf04046",
-            "comment": "Migrate to PowerShell 7"
-          },
-          {
-            "author": "beachball",
-            "package": "@react-native-windows/automation",
-            "comment": "Bump @react-native-windows/automation-channel to v0.81.28",
-            "commit": "not available"
-          }
-        ]
-      }
-    },
-    {
       "date": "Thu, 11 Jun 2026 13:13:20 GMT",
       "version": "0.81.27",
       "tag": "@react-native-windows/automation_v0.81.27",

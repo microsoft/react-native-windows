@@ -1,6 +1,6 @@
 #pragma once
 #include <JSI/ScriptStore.h>
-#include <winrt/Windows.Foundation.h>
+#include <future>
 
 namespace Microsoft::ReactNative {
 
@@ -16,8 +16,7 @@ class UwpScriptStore : public facebook::jsi::ScriptStore {
   static facebook::jsi::ScriptVersion_t GetFileVersion(const std::wstring &filePath);
 
  private:
-  winrt::Windows::Foundation::IAsyncOperation<facebook::jsi::ScriptVersion_t> getScriptVersionAsync(
-      const std::string &bundleUri);
+  std::future<facebook::jsi::ScriptVersion_t> getScriptVersionAsync(const std::string &bundleUri);
 };
 
 } // namespace Microsoft::ReactNative

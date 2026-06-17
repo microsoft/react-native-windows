@@ -1,18 +1,8 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Fri, 12 Jun 2026 04:17:47 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 11 Jun 2026 13:13:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
-
-## 0.81.28
-
-Fri, 12 Jun 2026 04:17:47 GMT
-
-### Patches
-
-- Upgrade build agents to Windows Server 2025, Visual Studio 2026 (julio.rocha@microsoft.com)
-- Migrate to PowerShell 7 (julio.rocha@microsoft.com)
-- Bump @react-native-windows/automation-channel to v0.81.28
 
 ## 0.81.27
 

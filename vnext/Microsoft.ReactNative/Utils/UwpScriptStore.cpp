@@ -4,6 +4,7 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Storage.FileProperties.h>
 #include <winrt/Windows.Storage.h>
+#include <future>
 #include "Unicode.h"
 
 namespace winrt {
@@ -42,8 +43,7 @@ facebook::jsi::ScriptVersion_t UwpScriptStore::getScriptVersion(const std::strin
   return version;
 }
 
-winrt::Windows::Foundation::IAsyncOperation<facebook::jsi::ScriptVersion_t> UwpScriptStore::getScriptVersionAsync(
-    const std::string &bundleUri) {
+std::future<facebook::jsi::ScriptVersion_t> UwpScriptStore::getScriptVersionAsync(const std::string &bundleUri) {
   co_await winrt::resume_background();
 
   const winrt::hstring fileUrl(Microsoft::Common::Unicode::Utf8ToUtf16("ms-appx:///Bundle/" + bundleUri + ".bundle"));

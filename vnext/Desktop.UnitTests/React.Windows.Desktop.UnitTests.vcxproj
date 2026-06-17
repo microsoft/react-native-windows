@@ -80,7 +80,7 @@
         $(VCInstallDir)UnitTest\include;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
-      <AdditionalOptions Condition="$(PlatformToolsetVersion)&lt;145">%(AdditionalOptions) /await</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /await</AdditionalOptions>
     </ClCompile>
     <Link>
       <!--

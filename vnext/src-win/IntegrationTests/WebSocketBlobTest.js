@@ -1,121 +1,159 @@
 /**
- * Copyright (c) Microsoft Corporation.
- * Licensed under the MIT License.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * @format
+ * @flow
  */
 
 'use strict';
 
-const {TurboModuleRegistry} = require('react-native');
-const TestModule = TurboModuleRegistry.get('TestModule');
-
-if (!TestModule) {
-  throw new Error('TestModule is not available');
-}
+const React = require('react');
+const ReactNative = require('react-native');
+const {AppRegistry, View} = ReactNative;
+const {TestModule} = ReactNative.NativeModules;
 
 // eslint-disable-next-line @microsoft/sdl/no-insecure-url
-const WS_URL = 'ws://localhost:5555/rnw/rntester/websocketbinarytest';
-const TEST_MESSAGE = new Uint8Array([1, 2, 3]);
-// Expected bytes come from RNTesterIntegrationTests.WebSocketBinaryTest outgoingBytes.
-const EXPECTED_BYTES = new Uint8Array([4, 5, 6, 7]);
-const EXPECTED_SIZE = EXPECTED_BYTES.length;
+const DEFAULT_WS_URL = 'ws://localhost:5555/rnw/rntester/websocketbinarytest';
 
-let completed = false;
-const socket = new WebSocket(WS_URL);
-socket.binaryType = 'blob';
+const WS_EVENTS = ['close', 'error', 'message', 'open'];
 
-const timeoutId = setTimeout(() => {
-  complete(false, 'timeout waiting for websocket response');
-}, 10000);
+type State = {
+  url: string,
+  fetchStatus: ?string,
+  socket: ?WebSocket,
+  socketState: ?number,
+  lastSocketEvent: ?string,
+  lastMessage: ?Blob,
+  testMessage: Uint8Array,
+  testExpectedResponse: Uint8Array,
+  ...
+};
 
-function complete(passed, reason) {
-  if (completed) {
-    return;
-  }
-
-  completed = true;
-  clearTimeout(timeoutId);
-
-  if (!passed && reason) {
-    console.log('WebSocketBlobTest FAIL: ' + reason);
-  }
-
-  TestModule.markTestPassed(passed);
-}
-
-function decodeBlobToBytes(blob, onSuccess, onError) {
-  if (typeof blob.arrayBuffer === 'function') {
-    blob
-      .arrayBuffer()
-      .then(buffer => onSuccess(new Uint8Array(buffer)))
-      .catch(onError);
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = () => {
-    onSuccess(new Uint8Array(reader.result));
+class WebSocketBlobTest extends React.Component<{}, State> {
+  state: State = {
+    url: DEFAULT_WS_URL,
+    fetchStatus: null,
+    socket: null,
+    socketState: null,
+    lastSocketEvent: null,
+    lastMessage: null,
+    testMessage: new Uint8Array([1, 2, 3]),
+    testExpectedResponse: new Uint8Array([4, 5, 6, 7]),
   };
-  reader.onerror = () => {
-    onError(reader.error || new Error('failed to read blob'));
-  };
-  reader.readAsArrayBuffer(blob);
-}
 
-socket.addEventListener('open', () => {
-  socket.send(TEST_MESSAGE);
-});
-
-socket.addEventListener('message', event => {
-  const data = event.data;
-
-  if (!(data instanceof Blob)) {
-    complete(false, 'expected Blob response');
-    socket.close();
-    return;
-  }
-
-  if (data.size !== EXPECTED_SIZE) {
-    complete(false, 'unexpected response size');
-    socket.close();
-    return;
-  }
-
-  decodeBlobToBytes(
-    data,
-    bytes => {
-      for (let i = 0; i < EXPECTED_BYTES.length; i++) {
-        if (bytes[i] !== EXPECTED_BYTES[i]) {
-          complete(
-            false,
-            'unexpected response byte at index ' +
-              i +
-              ': expected ' +
-              EXPECTED_BYTES[i] +
-              ', got ' +
-              bytes[i],
-          );
-          socket.close();
-          return;
-        }
+  _waitFor = (condition: any, timeout: any, callback: any) => {
+    let remaining = timeout;
+    const timeoutFunction = function () {
+      if (condition()) {
+        callback(true);
+        return;
       }
+      remaining--;
+      if (remaining === 0) {
+        callback(false);
+      } else {
+        setTimeout(timeoutFunction, 1000);
+      }
+    };
+    setTimeout(timeoutFunction, 1000);
+  };
 
-      complete(true);
-      socket.close();
-    },
-    error => {
-      complete(false, 'failed to decode blob: ' + String(error));
-      socket.close();
-    },
-  );
-});
+  _connect = () => {
+    const socket = new WebSocket(this.state.url);
+    socket.binaryType = 'blob';
+    WS_EVENTS.forEach(ev => socket.addEventListener(ev, this._onSocketEvent));
+    this.setState({
+      socket,
+      socketState: socket.readyState,
+    });
+  };
 
-socket.addEventListener('error', () => {
-  complete(false, 'websocket error');
-});
+  _socketIsConnected = (): boolean => {
+    return this.state.socketState === 1; //'OPEN'
+  };
 
-socket.addEventListener('close', () => {
-  if (!completed) {
-    complete(false, 'socket closed before completing test');
+  _socketIsDisconnected = (): boolean => {
+    return this.state.socketState === 3; //'CLOSED'
+  };
+
+  _disconnect = () => {
+    if (!this.state.socket) {
+      return;
+    }
+    this.state.socket.close();
+  };
+
+  _onSocketEvent = (event: any) => {
+    const state: any = {
+      socketState: event.target.readyState,
+      lastSocketEvent: event.type,
+    };
+    if (event.type === 'message') {
+      state.lastMessage = event.data;
+    }
+    this.setState(state);
+  };
+
+  _sendBinary = (message: Uint8Array) => {
+    if (!this.state.socket) {
+      return;
+    }
+    this.state.socket.send(message);
+  };
+
+  _sendTestMessage = () => {
+    this._sendBinary(this.state.testMessage);
+  };
+
+  _receivedTestExpectedResponse = (): boolean => {
+    // Can't iterate through Blob response. Blob.arrayBuffer() not supported.
+    return (
+      this.state.lastMessage?.size === this.state.testExpectedResponse.length
+    );
+  };
+
+  componentDidMount() {
+    this.testConnect();
   }
-});
+
+  testConnect: () => void = () => {
+    this._connect();
+    this._waitFor(this._socketIsConnected, 5, connectSucceeded => {
+      if (!connectSucceeded) {
+        TestModule.markTestPassed(false);
+        return;
+      }
+      this.testSendAndReceive();
+    });
+  };
+
+  testSendAndReceive: () => void = () => {
+    this._sendTestMessage();
+    this._waitFor(this._receivedTestExpectedResponse, 5, messageReceived => {
+      if (!messageReceived) {
+        TestModule.markTestPassed(false);
+        return;
+      }
+      this.testDisconnect();
+    });
+  };
+
+  testDisconnect: () => void = () => {
+    this._disconnect();
+    this._waitFor(this._socketIsDisconnected, 5, disconnectSucceeded => {
+      TestModule.markTestPassed(disconnectSucceeded);
+    });
+  };
+  render(): React.Node {
+    return <View />;
+  }
+} // class WebSocketBlobTest
+
+WebSocketBlobTest.displayName = 'WebSocketBlobTest';
+
+AppRegistry.registerComponent('WebSocketBlobTest', () => WebSocketBlobTest);
+
+module.exports = WebSocketBlobTest;

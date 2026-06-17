@@ -55,7 +55,7 @@ exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsEdgeCasePressable 1`
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 100,
+  "Width": 103,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -95,7 +95,7 @@ exports[`LegacyTextHitTestTest InsertedVirtualTextPressable 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 100,
+  "Width": 103,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -115,7 +115,7 @@ exports[`LegacyTextHitTestTest LTRTextInRTLFlowPressable 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 100,
+  "Width": 103,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -175,7 +175,7 @@ exports[`LegacyTextHitTestTest MultilineTextPressable 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 100,
+  "Width": 103,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -195,7 +195,7 @@ exports[`LegacyTextHitTestTest RTLTextInRTLFlowPressable 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 100,
+  "Width": 103,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -215,7 +215,7 @@ exports[`LegacyTextHitTestTest RTLTextPressable 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 100,
+  "Width": 103,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -235,7 +235,7 @@ exports[`LegacyTextHitTestTest TextPressableWithVirtualText 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 100,
+  "Width": 103,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -255,7 +255,7 @@ exports[`LegacyTextHitTestTest ToggleVirtualTextPressable 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 100,
+  "Width": 103,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -275,7 +275,7 @@ exports[`LegacyTextHitTestTest VirtualTextPressable 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 100,
+  "Width": 103,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;

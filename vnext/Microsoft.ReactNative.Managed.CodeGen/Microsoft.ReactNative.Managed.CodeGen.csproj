@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
 
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Platforms>x64;x86;ARM64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
 
@@ -30,9 +30,19 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.1" />
     <PackageReference Include="RuntimeContracts" Version="0.3.0" />
+
+    <!-- 
+      NuGet decides to pull in packages with issues. There is no seeming way to diagnose why NuGet is pulling in those versions. 
+      Running restore with -Verbosity Detailed and environment variables:
+       * NUGET_RESTORE_MSBUILD_ARGS=/bl:c:\temp\nuget.binlog
+       * NUGET_RESTORE_MSBUILD_VERBOSITY=diag
+      resulted in no mention of version 4.3.0 anywhere until NuGet just starts downloading it.
+      Therefore manually overriding the version so NuGet uses the latest.
+    -->
+     <PackageReference Include="System.Private.Uri" Version="4.3.2" />
   </ItemGroup>
 
-  <!--
+  <!-- 
     This target is used to ensure the tool is deployed and can be used from source.
     It will return all deployed files so the caller can implement incrementality properly
    -->
@@ -43,7 +53,7 @@
     </ItemGroup>
   </Target>
 
-  <!--
+  <!-- 
     This target returns the location of the deployed executable.
   -->
   <Target Name="GetPublishedToolPath" DependsOnTargets="PublishTool" Returns="@(_PublishedToolExecutable)">
@@ -52,13 +62,13 @@
     </ItemGroup>
   </Target>
 
-  <!--
+  <!-- 
     This is used during the PR build to ensure we have the artifacts published during the build.
   -->
-  <Target
-    Name="PublishToolDuringBuild"
-    DependsOnTargets="Publish"
-    AfterTargets="Build"
+  <Target 
+    Name="PublishToolDuringBuild" 
+    DependsOnTargets="Publish" 
+    AfterTargets="Build" 
     Condition="'$(PublishToolDuringBuild)' == 'true'">
   </Target>
 

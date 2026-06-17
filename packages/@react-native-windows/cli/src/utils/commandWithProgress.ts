@@ -14,7 +14,6 @@ import {
   CodedErrors,
   CodedErrorType,
 } from '@react-native-windows/telemetry';
-import {findPowerShell} from '@react-native-windows/find-dotnet-tools';
 
 function setSpinnerText(spinner: ora.Ora, prefix: string, text: string) {
   text = prefix + spinnerString(text);
@@ -48,7 +47,7 @@ export function newSpinner(text: string) {
   return ora(options).start();
 }
 
-const powershell = findPowerShell();
+export const powershell = `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
 
 export async function runPowerShellScriptFunction(
   taskDescription: string,
@@ -56,15 +55,10 @@ export async function runPowerShellScriptFunction(
   funcName: string,
   verbose: boolean,
   errorCategory: CodedErrorType,
-  useAppxCompatibility = false,
 ) {
   try {
     const printException = verbose ? '$_;' : '';
-    const importAppx = useAppxCompatibility
-      ? 'Import-Module Appx -WarningAction SilentlyContinue; '
-      : '';
-    const importScript = script ? `Import-Module '${script}'; ` : '';
-    const powershellCommand = `${importAppx}${importScript}try { ${funcName} -ErrorAction Stop; $lec = $LASTEXITCODE; } catch { $lec = 1; ${printException} }; exit $lec`;
+    const importScript = script ? `Import-Module "${script}"; ` : '';
     await commandWithProgress(
       newSpinner(taskDescription),
       taskDescription,
@@ -73,8 +67,7 @@ export async function runPowerShellScriptFunction(
         '-NoProfile',
         '-ExecutionPolicy',
         'RemoteSigned',
-        '-Command',
-        `&{${powershellCommand}}`,
+        `${importScript}try { ${funcName} -ErrorAction Stop; $lec = $LASTEXITCODE; } catch { $lec = 1; ${printException} }; exit $lec`,
       ],
       verbose,
       errorCategory,

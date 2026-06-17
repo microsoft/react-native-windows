@@ -10,6 +10,7 @@
  * LICENSE file in the root directory of this source tree.
  *
  * @format
+ * @flow
  */
 
 /*
@@ -24,13 +25,10 @@ Array.from('abcdef').forEach( e => { ws.send(e.repeat(1025)) });
 
 'use strict';
 
-const {TurboModuleRegistry} = require('react-native');
-
-const TestModule = TurboModuleRegistry.get('TestModule');
-
-if (!TestModule) {
-  throw new Error('TestModule is not available');
-}
+const React = require('react');
+const ReactNative = require('react-native');
+const {AppRegistry, View} = ReactNative;
+const {TestModule} = ReactNative.NativeModules;
 
 // eslint-disable-next-line @microsoft/sdl/no-insecure-url
 const URL_BASE = 'ws://localhost:5555/rnw/rntester/websocketmultiplesendtest';
@@ -43,90 +41,131 @@ const EXPECTED = 'abcdef';
 
 const ID = Math.floor(Math.random() * 1000000);
 
-const sendUrl = `${URL_BASE}/send/${ID}`;
-const receiveUrl = `${URL_BASE}/receive/${ID}`;
+type State = {
+  sendUrl: string,
+  receiveUrl: string,
+  sendSocket: ?WebSocket,
+  receiveSocket: ?WebSocket,
+  result: ?string,
+};
 
-let sendSocket = null;
-let receiveSocket = null;
-let result = '';
+class WebSocketMultipleSendTest extends React.Component<{}, State> {
+  state: State = {
+    sendUrl: `${URL_BASE}/send/${ID}`,
+    receiveUrl: `${URL_BASE}/receive/${ID}`,
+    sendSocket: null,
+    receiveSocket: null,
+    result: '',
+  };
 
-const waitFor = (condition, timeout, callback) => {
-  let remaining = timeout;
-  const timeoutFunction = function () {
-    if (condition()) {
-      callback(true);
-      return;
-    }
-    remaining--;
-    if (remaining === 0) {
-      callback(false);
-    } else {
-      setTimeout(timeoutFunction, 1000);
+  _waitFor = (condition: any, timeout: any, callback: any) => {
+    let remaining = timeout;
+    const timeoutFunction = function () {
+      if (condition()) {
+        callback(true);
+        return;
+      }
+      remaining--;
+      if (remaining === 0) {
+        callback(false);
+      } else {
+        setTimeout(timeoutFunction, 1000);
+      }
+    };
+    setTimeout(timeoutFunction, 1000);
+  };
+
+  _socketsAreConnected = (): boolean => {
+    return (
+      this.state.sendSocket?.readyState === 1 &&
+      this.state.sendSocket?.readyState === 1
+    ); // OPEN
+  };
+
+  _socketsAreDisconnected = (): boolean => {
+    return (
+      this.state.sendSocket?.readyState === 3 &&
+      this.state.sendSocket?.readyState === 3
+    ); // CLOSED
+  };
+
+  _resultIsComplete = (): boolean => {
+    return this.state.result === EXPECTED;
+  };
+
+  _disconnect = () => {
+    if (this.state.receiveSocket) {
+      this.state.receiveSocket.close();
     }
   };
-  setTimeout(timeoutFunction, 1000);
-};
 
-const socketsAreConnected = () => {
-  return sendSocket?.readyState === 1 && sendSocket?.readyState === 1; // OPEN
-};
+  testDisconnect: () => void = () => {
+    this._disconnect();
+    this._waitFor(this._socketsAreDisconnected, 5, disconnectSucceeded => {
+      TestModule.markTestPassed(disconnectSucceeded);
+    });
+  };
 
-const socketsAreDisconnected = () => {
-  return sendSocket?.readyState === 3 && sendSocket?.readyState === 3; // CLOSED
-};
+  testSendMultipleAndClose: () => void = () => {
+    this.state.sendSocket?.send('a'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket?.send('b'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket?.send('c'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket?.send('d'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket?.send('e'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket?.send('f'.repeat(MESSAGE_SIZE));
+    this.state.sendSocket?.close();
 
-const resultIsComplete = () => {
-  return result === EXPECTED;
-};
+    this._waitFor(this._resultIsComplete, 5, resultComplete => {
+      if (!resultComplete) {
+        TestModule.markTestPassed(false);
+        return;
+      }
+      this.testDisconnect();
+    });
+  };
 
-const disconnect = () => {
-  if (receiveSocket) {
-    receiveSocket.close();
-  }
-};
-
-const testDisconnect = () => {
-  disconnect();
-  waitFor(socketsAreDisconnected, 5, disconnectSucceeded => {
-    TestModule.markTestPassed(disconnectSucceeded);
-  });
-};
-
-const testSendMultipleAndClose = () => {
-  sendSocket?.send('a'.repeat(MESSAGE_SIZE));
-  sendSocket?.send('b'.repeat(MESSAGE_SIZE));
-  sendSocket?.send('c'.repeat(MESSAGE_SIZE));
-  sendSocket?.send('d'.repeat(MESSAGE_SIZE));
-  sendSocket?.send('e'.repeat(MESSAGE_SIZE));
-  sendSocket?.send('f'.repeat(MESSAGE_SIZE));
-  sendSocket?.close();
-
-  waitFor(resultIsComplete, 5, resultComplete => {
-    if (!resultComplete) {
-      TestModule.markTestPassed(false);
-      return;
+  _onSocketEvent = (event: any) => {
+    if (event.type === 'message' && event.data.length) {
+      var message = this.state.result + event.data[0];
+      this.setState({
+        result: message,
+      });
     }
-    testDisconnect();
-  });
-};
+  };
 
-const onSocketEvent = event => {
-  if (event.type === 'message' && event.data.length) {
-    result += event.data[0];
+  _connect = () => {
+    const sendSocket = new WebSocket(this.state.sendUrl);
+    const receiveSocket = new WebSocket(this.state.receiveUrl);
+    WS_EVENTS.forEach(ev =>
+      receiveSocket.addEventListener(ev, this._onSocketEvent),
+    );
+    this.setState({
+      sendSocket,
+      receiveSocket,
+    });
+  };
+
+  componentDidMount() {
+    this._connect();
+    this._waitFor(this._socketsAreConnected, 5, connectSucceeded => {
+      if (!connectSucceeded) {
+        TestModule.markTestPassed(false);
+        return;
+      }
+      this.testSendMultipleAndClose();
+    });
   }
-};
 
-const connect = () => {
-  sendSocket = new WebSocket(sendUrl);
-  receiveSocket = new WebSocket(receiveUrl);
-  WS_EVENTS.forEach(ev => receiveSocket.addEventListener(ev, onSocketEvent));
-};
-
-connect();
-waitFor(socketsAreConnected, 5, connectSucceeded => {
-  if (!connectSucceeded) {
-    TestModule.markTestPassed(false);
-    return;
+  render(): React.Node {
+    return <View />;
   }
-  testSendMultipleAndClose();
-});
+} // class WebSocketMultipleSendTest
+
+WebSocketMultipleSendTest.displayName = 'WebSocketMultipleSendTest';
+
+AppRegistry.registerComponent(
+  'WebSocketMultipleSendTest',
+  () => WebSocketMultipleSendTest,
+);
+
+module.exports = WebSocketMultipleSendTest;

@@ -4,7 +4,7 @@
  * @format
  */
 
-import {spawn, execFileSync, SpawnOptions} from 'child_process';
+import {spawn, execSync, SpawnOptions} from 'child_process';
 import fs from '@react-native-windows/fs';
 import http from 'http';
 import path from 'path';
@@ -19,8 +19,8 @@ import {
   newSpinner,
   commandWithProgress,
   runPowerShellScriptFunction,
+  powershell,
 } from './commandWithProgress';
-import {findPowerShell} from '@react-native-windows/find-dotnet-tools';
 import * as build from './build';
 import {
   BuildConfig,
@@ -183,12 +183,9 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
     'powershell',
     'WindowsStoreAppUtils.psm1',
   );
-  const powershell = findPowerShell();
-  execFileSync(powershell, [
-    '-NoProfile',
-    '-Command',
-    `& { Unblock-File '${windowsStoreAppUtilsPath}' }`,
-  ]);
+  execSync(
+    `${powershell} -NoProfile Unblock-File '${windowsStoreAppUtilsPath}'`,
+  );
   popd();
   return windowsStoreAppUtilsPath;
 }
@@ -362,7 +359,6 @@ export async function deployToDesktop(
   config: Config,
   buildTools: MSBuildTools,
 ) {
-  const useAppxCompatibility = !!process.env.TF_BUILD;
   const windowsConfig: Partial<WindowsProjectConfig> | undefined =
     config.project.windows;
   const slnFile =
@@ -398,7 +394,6 @@ export async function deployToDesktop(
     'EnableDevMode',
     verbose,
     'EnableDevModeFailure',
-    useAppxCompatibility,
   );
 
   const appPackageFolder = getAppPackage(options, projectName);
@@ -411,7 +406,6 @@ export async function deployToDesktop(
       `Uninstall-App ${appName}`,
       verbose,
       'RemoveOldAppVersionFailure',
-      useAppxCompatibility,
     );
 
     const script = glob.sync(
@@ -424,7 +418,6 @@ export async function deployToDesktop(
       `Install-App "${script}" -Force`,
       verbose,
       'InstallAppFailure',
-      useAppxCompatibility,
     );
   } else {
     // Deploy from layout
@@ -452,7 +445,6 @@ export async function deployToDesktop(
         `Install-AppDependencies ${appxManifestPath} ${appPackageFolder} ${options.arch}`,
         verbose,
         'InstallAppDependenciesFailure',
-        useAppxCompatibility,
       );
       await build.buildSolution(
         buildTools,
@@ -467,14 +459,9 @@ export async function deployToDesktop(
     }
   }
 
-  const appFamilyNameCommand = useAppxCompatibility
-    ? `& { Import-Module Appx -WarningAction SilentlyContinue; (Get-AppxPackage -Name '${appName}').PackageFamilyName }`
-    : `(Get-AppxPackage -Name '${appName}').PackageFamilyName`;
-  const appFamilyName = execFileSync(findPowerShell(), [
-    '-NoProfile',
-    '-Command',
-    appFamilyNameCommand,
-  ])
+  const appFamilyName = execSync(
+    `${powershell} -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+  )
     .toString()
     .trim();
 
@@ -504,7 +491,6 @@ export async function deployToDesktop(
       `Start-Locally ${appName} ${args}`,
       verbose,
       'AppStartupFailure',
-      useAppxCompatibility,
     );
   } else {
     newInfo('Skip the step to start the app');

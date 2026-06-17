@@ -18,24 +18,9 @@ namespace Microsoft::React {
 struct IWebSocketModuleContentHandler {
   virtual ~IWebSocketModuleContentHandler() noexcept {}
 
-  /// Returns true if this handler should process messages for the given socket.
-  virtual bool CanHandleSocket(int64_t socketId) noexcept = 0;
-
   virtual void ProcessMessage(std::string &&message, winrt::Microsoft::ReactNative::JSValueObject &params) noexcept = 0;
 
   virtual void ProcessMessage(
-      std::vector<uint8_t> &&message,
-      winrt::Microsoft::ReactNative::JSValueObject &params) noexcept = 0;
-
-  /// Check CanHandleSocket() then ProcessMessage() in one call.
-  /// Returns true if the message was handled.
-  virtual bool TryProcessMessage(
-      int64_t socketId,
-      std::string &&message,
-      winrt::Microsoft::ReactNative::JSValueObject &params) noexcept = 0;
-
-  virtual bool TryProcessMessage(
-      int64_t socketId,
       std::vector<uint8_t> &&message,
       winrt::Microsoft::ReactNative::JSValueObject &params) noexcept = 0;
 };

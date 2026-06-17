@@ -8,7 +8,7 @@ param(
     [string]$Check = [CheckId]::All,
 
     [Parameter(ValueFromRemainingArguments)]
-    [ValidateSet('appDev', 'rnwDev', 'buildLab', 'vs2026', 'clone')]
+    [ValidateSet('appDev', 'rnwDev', 'buildLab', 'vs2022', 'clone')]
     [String[]]$Tags = @('appDev'),
     [switch]$Enterprise = $false
 )
@@ -94,6 +94,7 @@ $vsComponents = @('Microsoft.Component.MSBuild',
     $vcToolsComponent,
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
     'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core',
+    'Microsoft.VisualStudio.Component.Windows10SDK.19041',
     'Microsoft.VisualStudio.Component.Windows11SDK.22621');
 
 # UWP.VC is not needed to build the projects with msbuild, but the VS IDE requires it.
@@ -112,12 +113,12 @@ $wingetver = "1.7.11261";
 
 # The minimum VS version to check for
 # Note: For install to work, whatever min version you specify here must be met by the current package available on winget.
-$vsver = "18.6.1";
+$vsver = "17.11.0";
 
 # The exact .NET SDK version to check for
-$dotnetver = "10.0";
+$dotnetver = "8.0";
 # Version name of the winget package
-$wingetDotNetVer = "10";
+$wingetDotNetVer = "8";
 
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
@@ -241,9 +242,9 @@ function InstallVS {
 
         if ($Enterprise) {
             # The CI machines need the enterprise version of VS as that is what is hardcoded in all the scripts
-            WinGetInstall Microsoft.VisualStudio.Enterprise
+            WinGetInstall Microsoft.VisualStudio.2022.Enterprise
         } else {
-            WinGetInstall Microsoft.VisualStudio.Community
+            WinGetInstall Microsoft.VisualStudio.2022.Community
         }
 
         $vsWhere = Get-VSWhere;
@@ -457,8 +458,8 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::VSUWP;
-        Name = "Visual Studio 2026 (>= $vsver) & req. components";
-        Tags = @('appDev', 'vs2026');
+        Name = "Visual Studio 2022 (>= $vsver) & req. components";
+        Tags = @('appDev', 'vs2022');
         Valid = { CheckVS; }
         Install = { InstallVS };
         HasVerboseOutput = $true;
@@ -468,7 +469,7 @@ $requirements = @(
         Name = 'Node.js (LTS, >= 22.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
-        Install = { WinGetInstall OpenJS.NodeJS.22  "22.22.0"};
+        Install = { WinGetInstall OpenJS.NodeJS.LTS "22.14.0" };
         HasVerboseOutput = $true;
     },
     @{
@@ -490,7 +491,7 @@ $requirements = @(
             $downloadPath = "$env:TEMP\WindowsApplicationDriver.msi"
             Write-Verbose "Downloading WinAppDriver from $url";
             Invoke-WebRequest -UseBasicParsing $url -OutFile $downloadPath
-
+            
             # SDL Compliance: Verify signature (Work Item 58386093)
             $signature = Get-AuthenticodeSignature $downloadPath
             if ($signature.Status -ne "Valid") {
@@ -498,10 +499,10 @@ $requirements = @(
                 throw "WinAppDriver signature verification failed"
             }
             if ($signature.SignerCertificate.Subject -notlike "*Microsoft*") {
-                Remove-Item $downloadPath -ErrorAction SilentlyContinue
+                Remove-Item $downloadPath -ErrorAction SilentlyContinue  
                 throw "WinAppDriver not signed by Microsoft"
             }
-
+            
             & $downloadPath /q
             Remove-Item $downloadPath -ErrorAction SilentlyContinue
         };
@@ -599,9 +600,6 @@ function WinGetInstall {
         Write-Verbose "Executing `winget install `"$wingetPackage`"";
         & winget install "$wingetPackage" --accept-source-agreements --accept-package-agreements
     }
-
-    # Refresh PATH environment variable to pick up newly installed tools
-    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
  }
 
 function IsElevated {
@@ -686,17 +684,6 @@ foreach ($req in $filteredRequirements)
                 try {
                     $LASTEXITCODE = 0;
                     $outputFromInstall = Invoke-Command $req.Install -ErrorAction Stop;
-
-                    # Re-validate after install attempt - winget may return non-zero for "already installed"
-                    $validAfterInstall = $false;
-                    try {
-                        $validAfterInstall = Invoke-Command $req.Valid;
-                    } catch { }
-
-                    if ($validAfterInstall) {
-                        $Installed++;
-                        continue; # go to the next item
-                    }
 
                     if ($LASTEXITCODE -ne 0) {
                         throw "Last exit code was non-zero: $LASTEXITCODE - $outputFromInstall";

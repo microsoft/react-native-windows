@@ -2,27 +2,52 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  * @format
+ * @flow
  */
 
 'use strict';
 
-const {TurboModuleRegistry} = require('react-native');
+const React = require('react');
+const ReactNative = require('react-native');
 
-const TestModule = TurboModuleRegistry.get('TestModule');
+const {AppRegistry, View} = ReactNative;
 
-if (!TestModule) {
-  throw new Error('TestModule is not available');
+const {TestModule} = ReactNative.NativeModules;
+
+const uri =
+  'https://raw.githubusercontent.com/microsoft/react-native-windows/main/.yarnrc.yml';
+const expectedContent = 'enableScripts: false';
+
+type State = {
+  uri: string,
+  expected: string,
+  content: string,
+};
+
+class FetchTest extends React.Component<{...}, State> {
+  state: State = {
+    uri: 'https://raw.githubusercontent.com/microsoft/react-native-windows/main/.yarnrc.yml',
+    expected: 'enableScripts: false',
+    content: '',
+  };
+
+  async componentDidMount() {
+    const response = await fetch(uri);
+    const text = await response.text();
+    this.setState({content: text});
+
+    if (this.state.content === expectedContent) {
+      TestModule.markTestPassed(true);
+    } else {
+      TestModule.markTestPassed(false);
+    }
+  }
+
+  render(): React.Node {
+    return <View />;
+  }
 }
 
-const URL = 'http://localhost:5555/static/sample.txt';
-const EXPECTED_CONTENT = 'Sample Static Text File';
+AppRegistry.registerComponent('FetchTest', () => FetchTest);
 
-fetch(URL)
-  .then(response => response.text())
-  .then(text => {
-    const passed = text === EXPECTED_CONTENT;
-    TestModule.markTestPassed(passed);
-  })
-  .catch(() => {
-    TestModule.markTestPassed(false);
-  });
+module.exports = FetchTest;

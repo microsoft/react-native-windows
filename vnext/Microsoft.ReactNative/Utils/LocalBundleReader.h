@@ -3,16 +3,14 @@
 
 #pragma once
 #include <cxxreact/JSBigString.h>
-#include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.Storage.Streams.h>
+#include <future>
 #include <string>
 
 namespace Microsoft::ReactNative {
 
 class LocalBundleReader {
  public:
-  static winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IBuffer> LoadBundleAsync(
-      const std::wstring bundlePath);
+  static std::future<std::string> LoadBundleAsync(const std::wstring bundlePath);
   static std::string LoadBundle(const std::wstring &bundlePath);
 };
 
@@ -26,7 +24,7 @@ class StorageFileBigString : public facebook::react::JSBigString {
   void ensure() const;
 
  private:
-  mutable winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IBuffer> m_pendingLoad;
+  mutable std::future<std::string> m_futureBuffer;
   mutable std::string m_string;
 };
 

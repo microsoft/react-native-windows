@@ -14,10 +14,8 @@ import type {
   HealthCheckCategory,
   HealthCheckInterface,
 } from '@react-native-community/cli-doctor/build/types';
-import {findPowerShell} from '@react-native-windows/find-dotnet-tools';
+import {powershell} from '../../utils/commandWithProgress';
 import {HealthCheckList} from './healthCheckList';
-
-const powershell = findPowerShell();
 
 export function getHealthChecks(): HealthCheckCategory[] | undefined {
   // #8471: There are known cases where the dependencies script will error out.
@@ -78,7 +76,7 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
             };
           },
           runAutomaticFix: async ({loader, logManualInstallation}) => {
-            const command = `"${powershell}" -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -Check ${id}`;
+            const command = `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -Check ${id}`;
             try {
               const {exitCode} = await execa(command, {stdio: 'inherit'});
               if (exitCode) {

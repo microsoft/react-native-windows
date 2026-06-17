@@ -6,10 +6,8 @@
 
 import {execSync} from 'child_process';
 import path from 'path';
-import {findPowerShell} from '@react-native-windows/find-dotnet-tools';
+import {powershell} from '../utils/commandWithProgress';
 import {HealthCheckList} from '../commands/healthCheck/healthCheckList';
-
-const powershell = findPowerShell();
 
 test('Verify list of health checks aligns with rnw-dependencies', async () => {
   const rnwDepScriptPath = path.join(
@@ -22,7 +20,7 @@ test('Verify list of health checks aligns with rnw-dependencies', async () => {
   );
 
   const rnwDeps = execSync(
-    `"${powershell}" -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -ListChecks`,
+    `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -ListChecks`,
     {stdio: 'pipe'},
   );
   const deps = rnwDeps.toString().trim().split('\n');

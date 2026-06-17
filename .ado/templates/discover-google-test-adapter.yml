@@ -1,14 +1,12 @@
 steps:
 
   - pwsh: |
-      $extensionsPath = "${env:ProgramFiles}\Microsoft Visual Studio\18\Enterprise\Common7\IDE\Extensions"
-      $adapterPath = Get-ChildItem $extensionsPath -Directory |`
-        Where-Object -FilterScript { Test-Path (Join-Path -Path $_.FullName -ChildPath "GoogleTestAdapter.Core.dll") } |`
-        Select-Object -ExpandProperty FullName
+      $vsExtensionPath="${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\Extensions\";
+      $GoogleTestAdapterPath=(Get-ChildItem $vsExtensionPath -Directory | Where-Object -FilterScript {Test-Path  (Join-Path -Path $_.FullName -ChildPath "GoogleTestAdapter.Core.dll")}).FullName
 
       # Test the path to the google test adapter
-      Test-Path -Path $adapterPath
+      Test-Path -Path $GoogleTestAdapterPath
 
-      Write-Debug "Setting Google Test Adapter Path to '$adapterPath' found in '$extensionsPath'"
-      Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$adapterPath"
+      Write-Debug "Setting Google Test Adapter Path to '$GoogleTestAdapterPath' found in '$vsExtensionPath'"
+      Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$GoogleTestAdapterPath"
     displayName: Set GoogleTestAdapterPath
