@@ -813,6 +813,7 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
           };
 
           devSettings->useWebSocketTurboModule = getBoolProperty(nullptr, L"UseWebSocketTurboModule", false);
+          devSettings->hermesSetExplicitMicrotasks = false;
 
           std::vector<facebook::react::NativeModuleDescription> cxxModules;
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
