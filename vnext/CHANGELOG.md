@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 12 Jun 2026 04:17:47 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 17 Jun 2026 20:13:38 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.29
+
+Wed, 17 Jun 2026 20:13:38 GMT
+
+### Patches
+
+- Turn off explicit hermes microtasks in paper (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.81.28
 

@@ -1,8 +1,12 @@
 # Change Log - @react-native-windows/find-dotnet-tools
 
-<!-- This log was last generated on Fri, 12 Jun 2026 04:17:47 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 17 Jun 2026 20:13:38 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.2
+
+Wed, 17 Jun 2026 20:13:38 GMT
 
 ## 0.0.0-canary.2
 

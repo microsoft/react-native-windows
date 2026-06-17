@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 17 Jun 2026 20:13:38 GMT",
+      "version": "0.81.29",
+      "tag": "react-native-windows_v0.81.29",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "af7fbcfa2e123aa2149f9085348207d5a1e5ca99",
+            "comment": "Turn off explicit hermes microtasks in paper"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Jun 2026 04:17:47 GMT",
       "version": "0.81.28",
       "tag": "react-native-windows_v0.81.28",
