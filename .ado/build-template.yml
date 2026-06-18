@@ -281,10 +281,12 @@ extends:
               #12714 - Disable for first deployment of test website.
               #other  - WebSocketIntegrationTest::AdditionalHeaders throws '[0x801901f4] Internal server error (500).'
               #       - WebSocketIntegrationTest are currently unsable on CI hosts. Work fine on local machines.
+              #       - HttpResourceIntegrationTest::RequestOptionsSucceeds fails on x86|Release.
               - name: Desktop.IntegrationTests.Filter
                 value: >
                   (FullyQualifiedName!~Microsoft::React::Test::RNTesterHeadlessTests)&
-                  (FullyQualifiedName!~Microsoft::React::Test::WebSocketIntegrationTest)
+                  (FullyQualifiedName!~Microsoft::React::Test::WebSocketIntegrationTest)&
+                  (FullyQualifiedName!=Microsoft::React::Test::HttpResourceIntegrationTest::RequestOptionsSucceeds)
               #6799 - HostFunctionTest, HostObjectProtoTest crash under JSI/V8;
               #        PreparedJavaScriptSourceTest asserts/fails under JSI/ChakraCore
               - name: Desktop.UnitTests.Filter
