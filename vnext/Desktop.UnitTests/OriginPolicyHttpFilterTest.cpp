@@ -413,8 +413,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   /// Describes a mocked HTTP endpoint. A single mock filter routes requests to the matching endpoint
   /// by host and replies with the configured preflight (OPTIONS) or main response.
   /// </summary>
-  struct ServerParams
-  {
+  struct ServerParams {
     wstring Host; // Host name used to route requests to this endpoint (e.g. L"mockserver.rnw").
     wstring WideUrl; // Wide URL form, used as Location / Access-Control-Allow-Origin header values.
     string Url; // Narrow URL form, used for runtime options and request URLs.
@@ -426,30 +425,21 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     std::map<wstring, wstring> ResponseHeaders;
     wstring ResponseContent{L"RESPONSE_CONTENT"};
 
-    ServerParams(wstring host)
-      : Host{std::move(host)}
-      , WideUrl{L"http://" + Host}
-      , Url{winrt::to_string(WideUrl)}
-    {
+    ServerParams(wstring host) : Host{std::move(host)}, WideUrl{L"http://" + Host}, Url{winrt::to_string(WideUrl)} {
       PreflightHeaders[s_accessControlAllowMethods] = L"GET, POST, DELETE, PATCH";
     }
   };
 
-  struct ClientParams
-  {
+  struct ClientParams {
     wstring Method;
     std::vector<std::pair<wstring, wstring>> Headers;
     bool WithCredentials{false};
 
-    ClientParams(wstring&& method, std::vector<std::pair<wstring, wstring>>&& headers)
-      : Method{std::move(method)}
-      , Headers{std::move(headers)}
-    {
-    }
+    ClientParams(wstring &&method, std::vector<std::pair<wstring, wstring>> &&headers)
+        : Method{std::move(method)}, Headers{std::move(headers)} {}
   };
 
-  struct RequestResult
-  {
+  struct RequestResult {
     winrt::hstring Error;
     HttpStatusCode StatusCode{HttpStatusCode::None};
     winrt::hstring Content;
@@ -461,12 +451,11 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   /// (OriginPolicyHttpFilter -> RedirectHttpFilter -> inner filter), but terminates it with the
   /// supplied mock filter instead of the live network stack. Reads the same runtime options.
   /// </summary>
-  HttpClient MakeMockedClient(IHttpFilter const& innerMock)
-  {
-    auto redirFilter = winrt::make<RedirectHttpFilter>(IHttpFilter{innerMock}, IHttpFilter{innerMock}, winrt::hstring{});
+  HttpClient MakeMockedClient(IHttpFilter const &innerMock) {
+    auto redirFilter =
+        winrt::make<RedirectHttpFilter>(IHttpFilter{innerMock}, IHttpFilter{innerMock}, winrt::hstring{});
 
-    if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None)
-    {
+    if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {
       return HttpClient{redirFilter};
     }
 
@@ -483,8 +472,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   /// inputs: empty string body, Content-Type attached to the request content, all other headers
   /// attached to the request itself, and a RequestArgs property the OriginPolicyHttpFilter relies on.
   /// </summary>
-  HttpRequestMessage BuildRequest(ClientParams const& client, string const& url)
-  {
+  HttpRequestMessage BuildRequest(ClientParams const &client, string const &url) {
     HttpRequestMessage request{HttpMethod{winrt::hstring{client.Method}}, Uri{winrt::to_hstring(url)}};
 
     auto reqArgs = winrt::make<RequestArgs>();
@@ -492,14 +480,10 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     request.Properties().Insert(L"RequestArgs", reqArgs);
 
     HttpStringContent content{winrt::hstring{L""}};
-    for (auto const& header : client.Headers)
-    {
-      if (_wcsicmp(header.first.c_str(), L"Content-Type") == 0)
-      {
+    for (auto const &header : client.Headers) {
+      if (_wcsicmp(header.first.c_str(), L"Content-Type") == 0) {
         content.Headers().ContentType(HttpMediaTypeHeaderValue::Parse(header.second));
-      }
-      else
-      {
+      } else {
         // Use unvalidated append so that forbidden headers (e.g. Proxy-Authorization, Host) reach the
         // OriginPolicyHttpFilter, which is the component under test responsible for rejecting them.
         request.Headers().TryAppendWithoutValidation(header.first, header.second);
@@ -510,26 +494,22 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     return request;
   }
 
-  RequestResult RunRequest(std::vector<ServerParams*> const& servers, ClientParams const& client, string const& requestUrl)
-  {
+  RequestResult RunRequest(
+      std::vector<ServerParams *> const &servers, ClientParams const &client, string const &requestUrl) {
     auto mockFilter = winrt::make<MockHttpBaseFilter>();
     mockFilter.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
-        [&servers](HttpRequestMessage const& request) -> ResponseOperation
-    {
+        [&servers](HttpRequestMessage const &request) -> ResponseOperation {
       HttpResponseMessage response{};
 
-      ServerParams const* match = nullptr;
-      for (auto* server : servers)
-      {
-        if (request.RequestUri().Host() == server->Host)
-        {
+      ServerParams const *match = nullptr;
+      for (auto *server : servers) {
+        if (request.RequestUri().Host() == server->Host) {
           match = server;
           break;
         }
       }
 
-      if (!match)
-      {
+      if (!match) {
         response.StatusCode(HttpStatusCode::NotFound);
         response.Content(HttpStringContent{winrt::hstring{L""}});
         co_return response;
@@ -538,15 +518,11 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       bool isPreflight = request.Method().ToString() == L"OPTIONS";
       response.StatusCode(isPreflight ? match->PreflightStatus : match->ResponseStatus);
 
-      auto const& headers = isPreflight ? match->PreflightHeaders : match->ResponseHeaders;
-      for (auto const& header : headers)
-      {
-        if (_wcsicmp(header.first.c_str(), s_location) == 0)
-        {
+      auto const &headers = isPreflight ? match->PreflightHeaders : match->ResponseHeaders;
+      for (auto const &header : headers) {
+        if (_wcsicmp(header.first.c_str(), s_location) == 0) {
           response.Headers().Location(Uri{header.second});
-        }
-        else
-        {
+        } else {
           response.Headers().Insert(header.first, header.second);
         }
       }
@@ -559,47 +535,39 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     auto client_ = MakeMockedClient(mockFilter);
 
     RequestResult result;
-    try
-    {
+    try {
       auto request = BuildRequest(client, requestUrl);
       auto sendOp = client_.SendRequestAsync(request);
       sendOp.get();
 
       auto response = sendOp.GetResults();
       result.HasResponse = static_cast<bool>(response);
-      if (response)
-      {
+      if (response) {
         result.StatusCode = response.StatusCode();
-        if (response.Content())
-        {
+        if (response.Content()) {
           auto contentOp = response.Content().ReadAsStringAsync();
           contentOp.get();
           result.Content = contentOp.GetResults();
         }
       }
-    }
-    catch (winrt::hresult_error const& e)
-    {
+    } catch (winrt::hresult_error const &e) {
       result.Error = e.message();
     }
 
     return result;
   }
 
-  void AssertSucceeds(RequestResult const& result, HttpStatusCode expectedStatus)
-  {
+  void AssertSucceeds(RequestResult const &result, HttpStatusCode expectedStatus) {
     Assert::AreEqual(L"", result.Error.c_str());
     Assert::AreEqual(static_cast<int>(expectedStatus), static_cast<int>(result.StatusCode));
     Assert::AreEqual(L"RESPONSE_CONTENT", result.Content.c_str());
   }
 
-  void AssertFails(RequestResult const& result)
-  {
+  void AssertFails(RequestResult const &result) {
     Assert::AreNotEqual(L"", result.Error.c_str());
   }
 
-  void TestOriginPolicy(ServerParams& serverArgs, ClientParams& clientArgs, bool shouldSucceed)
-  {
+  void TestOriginPolicy(ServerParams & serverArgs, ClientParams & clientArgs, bool shouldSucceed) {
     auto result = RunRequest({&serverArgs}, clientArgs, serverArgs.Url);
 
     if (shouldSucceed)
@@ -609,11 +577,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   }
 
   void TestOriginPolicyWithRedirect(
-      ServerParams& server1Args,
-      ServerParams& server2Args,
-      ClientParams& clientArgs,
-      bool shouldSucceed)
-  {
+      ServerParams & server1Args, ServerParams & server2Args, ClientParams & clientArgs, bool shouldSucceed) {
     // We assume 2-server tests will always redirect so the final response will come from server 2.
     auto result = RunRequest({&server1Args, &server2Args}, clientArgs, server1Args.Url);
 
@@ -623,8 +587,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       AssertFails(result);
   }
 
-  TEST_METHOD_CLEANUP(MethodCleanup)
-  {
+  TEST_METHOD_CLEANUP(MethodCleanup) {
     // Clear any runtime options that may be used by tests in this class.
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
     SetRuntimeOptionString("Http.GlobalOrigin", {});
@@ -632,12 +595,11 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsForbiddenMethodSucceeds)
-    // CONNECT, TRACE, and TRACK methods not supported by Windows.Web.Http
-    // https://docs.microsoft.com/en-us/uwp/api/windows.web.http.httpmethod?view=winrt-22621#properties
-    TEST_IGNORE()
+  // CONNECT, TRACE, and TRACK methods not supported by Windows.Web.Http
+  // https://docs.microsoft.com/en-us/uwp/api/windows.web.http.httpmethod?view=winrt-22621#properties
+  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(NoCorsForbiddenMethodSucceeds)
-  {
+  TEST_METHOD(NoCorsForbiddenMethodSucceeds) {
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
     ServerParams serverArgs(s_mockServerHost);
@@ -655,8 +617,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsForbiddenMethodFails)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(SimpleCorsForbiddenMethodFails)
-  {
+  TEST_METHOD(SimpleCorsForbiddenMethodFails) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.PreflightHeaders[s_accessControlAllowOrigin] = serverArgs.WideUrl;
 
@@ -670,8 +631,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsCrossOriginFetchRequestSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(NoCorsCrossOriginFetchRequestSucceeds)
-  {
+  TEST_METHOD(NoCorsCrossOriginFetchRequestSucceeds) {
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
@@ -685,8 +645,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsCrossOriginPatchSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(NoCorsCrossOriginPatchSucceeds)
-  {
+  TEST_METHOD(NoCorsCrossOriginPatchSucceeds) {
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
@@ -702,8 +661,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   // and the headers from being anything other than simple headers (CORS safe listed headers).
   BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsSameOriginSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(SimpleCorsSameOriginSucceeds)
-  {
+  TEST_METHOD(SimpleCorsSameOriginSucceeds) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.ResponseStatus = HttpStatusCode::Ok;
 
@@ -717,8 +675,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsCrossOriginFetchFails)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(SimpleCorsCrossOriginFetchFails)
-  {
+  TEST_METHOD(SimpleCorsCrossOriginFetchFails) {
     ServerParams serverArgs(s_mockServerHost);
 
     ClientParams clientArgs(L"GET", {{L"Content-Type", L"text/html"}}); // text/html is a non-simple value
@@ -731,8 +688,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsSameOriginRequestSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsSameOriginRequestSucceeds)
-  {
+  TEST_METHOD(FullCorsSameOriginRequestSucceeds) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.ResponseStatus = HttpStatusCode::Ok;
 
@@ -746,8 +702,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginAllowOriginWildcardSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginAllowOriginWildcardSucceeds)
-  {
+  TEST_METHOD(FullCorsCrossOriginAllowOriginWildcardSucceeds) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.PreflightHeaders[s_accessControlAllowHeaders] = L"Content-Type";
     serverArgs.PreflightHeaders[s_accessControlAllowOrigin] = L"*";
@@ -768,8 +723,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   // Additionally, for non-simple requests, the client should preflight the request through HTTP OPTIONS.
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginMatchingOriginSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginMatchingOriginSucceeds)
-  {
+  TEST_METHOD(FullCorsCrossOriginMatchingOriginSucceeds) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.PreflightHeaders[s_accessControlAllowHeaders] = L"Content-Type";
     serverArgs.PreflightHeaders[s_accessControlAllowOrigin] = s_crossOriginUrlW;
@@ -788,8 +742,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsFails)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginWithCredentialsFails)
-  {
+  TEST_METHOD(FullCorsCrossOriginWithCredentialsFails) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.PreflightHeaders[s_accessControlRequestHeaders] = L"Content-Type";
     serverArgs.PreflightHeaders[s_accessControlAllowHeaders] = L"Content-Type";
@@ -797,7 +750,8 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     serverArgs.PreflightHeaders[s_accessControlAllowCredentials] = L"true";
     serverArgs.ResponseHeaders[s_accessControlAllowOrigin] = s_crossOriginUrlW;
 
-    ClientParams clientArgs(L"GET", {{L"Content-Type", L"application/text"}}); // application/text is a non-simple header
+    ClientParams clientArgs(
+        L"GET", {{L"Content-Type", L"application/text"}}); // application/text is a non-simple header
     clientArgs.WithCredentials = true;
 
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
@@ -809,13 +763,13 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginMissingCorsHeadersFails)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginMissingCorsHeadersFails)
-  {
+  TEST_METHOD(FullCorsCrossOriginMissingCorsHeadersFails) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.PreflightHeaders.erase(s_accessControlAllowMethods);
     serverArgs.PreflightStatus = HttpStatusCode::NotImplemented;
 
-    ClientParams clientArgs(L"GET", {{L"Content-Type", L"application/text"}}); // application/text is a non-simple header
+    ClientParams clientArgs(
+        L"GET", {{L"Content-Type", L"application/text"}}); // application/text is a non-simple header
 
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
@@ -825,8 +779,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginMismatchedCorsHeaderFails)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginMismatchedCorsHeaderFails)
-  {
+  TEST_METHOD(FullCorsCrossOriginMismatchedCorsHeaderFails) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.PreflightHeaders[s_accessControlRequestHeaders] = L"Content-Type";
     serverArgs.PreflightHeaders[s_accessControlAllowHeaders] = L"Content-Type";
@@ -834,7 +787,8 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     serverArgs.ResponseStatus = HttpStatusCode::Accepted;
     serverArgs.ResponseHeaders[s_accessControlAllowOrigin] = L"http://other.example.rnw";
 
-    ClientParams clientArgs(L"GET", {{L"Content-Type", L"application/text"}}); // application/text is a non-simple header
+    ClientParams clientArgs(
+        L"GET", {{L"Content-Type", L"application/text"}}); // application/text is a non-simple header
 
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
@@ -845,8 +799,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSExternalRedirectNotAllowed
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginCheckFailsOnPreflightRedirectFails)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginCheckFailsOnPreflightRedirectFails)
-  {
+  TEST_METHOD(FullCorsCrossOriginCheckFailsOnPreflightRedirectFails) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.PreflightHeaders[s_accessControlAllowOrigin] = s_crossOriginUrlW;
     serverArgs.PreflightHeaders[s_location] = L"http://any-host.extension";
@@ -862,8 +815,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCorsCheckFailsOnResponseRedirectFails)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCorsCheckFailsOnResponseRedirectFails)
-  {
+  TEST_METHOD(FullCorsCorsCheckFailsOnResponseRedirectFails) {
     ServerParams serverArgs(s_mockServerHost);
     ServerParams redirServerArgs(s_redirectServerHost);
 
@@ -892,8 +844,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsSameOriginToSameOriginRedirectSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsSameOriginToSameOriginRedirectSucceeds)
-  {
+  TEST_METHOD(FullCorsSameOriginToSameOriginRedirectSucceeds) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.PreflightHeaders[s_location] = serverArgs.WideUrl;
     serverArgs.ResponseStatus = HttpStatusCode::Accepted;
@@ -908,8 +859,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsSameOriginToCrossOriginRedirectSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsSameOriginToCrossOriginRedirectSucceeds)
-  {
+  TEST_METHOD(FullCorsSameOriginToCrossOriginRedirectSucceeds) {
     ServerParams serverArgs(s_mockServerHost);
     ServerParams redirServerArgs(s_redirectServerHost);
 
@@ -930,11 +880,10 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   // Redirects a cross origin request to a cross origin request on the same server.
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToCrossOriginRedirectSucceeds)
-    // Seems to redirect to exact same resource. Implement second resource in same server.
-    TEST_IGNORE()
+  // Seems to redirect to exact same resource. Implement second resource in same server.
+  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginToCrossOriginRedirectSucceeds)
-  {
+  TEST_METHOD(FullCorsCrossOriginToCrossOriginRedirectSucceeds) {
     ServerParams serverArgs(s_mockServerHost);
 
     serverArgs.PreflightHeaders[s_accessControlAllowOrigin] = serverArgs.WideUrl;
@@ -957,8 +906,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   // but it will lack the Access-Control-Allow-Origin header.
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToOriginalOriginRedirectFails)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginToOriginalOriginRedirectFails)
-  {
+  TEST_METHOD(FullCorsCrossOriginToOriginalOriginRedirectFails) {
     ServerParams serverArgs(s_mockServerHost);
     ServerParams redirServerArgs(s_redirectServerHost);
 
@@ -977,8 +925,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   // Redirects a cross origin request to server1 to a cross origin request to server2.
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds)
-  {
+  TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds) {
     ServerParams serverArgs(s_mockServerHost);
     ServerParams redirServerArgs(s_redirectServerHost);
 
@@ -999,8 +946,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds)
-  {
+  TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds) {
     ServerParams serverArgs(s_mockServerHost);
     ServerParams redirServerArgs(s_redirectServerHost);
 
@@ -1027,8 +973,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightFails)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightFails)
-  {
+  TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightFails) {
     ServerParams serverArgs(s_mockServerHost);
     ServerParams redirServerArgs(s_redirectServerHost);
 
@@ -1056,8 +1001,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCors304ForSimpleGetFails)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCors304ForSimpleGetFails)
-  {
+  TEST_METHOD(FullCors304ForSimpleGetFails) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.ResponseStatus = HttpStatusCode::NotModified;
 
@@ -1069,8 +1013,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
   } // FullCors304ForSimpleGetFails
 
-  TEST_METHOD(OfficeDev_OfficeJS_4144)
-  {
+  TEST_METHOD(OfficeDev_OfficeJS_4144) {
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
@@ -1087,8 +1030,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     Assert::AreEqual(L"", result.Error.c_str());
   } // OfficeDev_OfficeJS_4144
 
-  TEST_METHOD(FullCorsPreflightSucceeds)
-  {
+  TEST_METHOD(FullCorsPreflightSucceeds) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.PreflightHeaders[s_accessControlRequestHeaders] = L"ArbitraryHeader";
     serverArgs.PreflightHeaders[s_accessControlAllowHeaders] = L"ArbitraryHeader";
@@ -1107,8 +1049,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   // The current implementation omits the withCredentials flag from the request and always sets it to false.
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginWithCredentialsSucceeds)
-  {
+  TEST_METHOD(FullCorsCrossOriginWithCredentialsSucceeds) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.PreflightHeaders[s_accessControlRequestHeaders] = L"Content-Type";
     serverArgs.PreflightHeaders[s_accessControlAllowHeaders] = L"Content-Type";
@@ -1117,7 +1058,8 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     serverArgs.ResponseStatus = HttpStatusCode::Accepted;
     serverArgs.ResponseHeaders[s_accessControlAllowOrigin] = s_crossOriginUrlW;
 
-    ClientParams clientArgs(L"GET", {{L"Content-Type", L"application/text"}}); // application/text is a non-simple header
+    ClientParams clientArgs(
+        L"GET", {{L"Content-Type", L"application/text"}}); // application/text is a non-simple header
     clientArgs.WithCredentials = true;
 
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
@@ -1128,11 +1070,10 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   // "Host" is one of the forbidden headers for fetch
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsRequestWithHostHeaderFails)
-    // "Host" is not an accepted request header in WinRT.
-    TEST_IGNORE()
+  // "Host" is not an accepted request header in WinRT.
+  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsRequestWithHostHeaderFails)
-  {
+  TEST_METHOD(FullCorsRequestWithHostHeaderFails) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.PreflightHeaders[s_accessControlRequestHeaders] = L"Content-Type";
     serverArgs.PreflightHeaders[s_accessControlAllowHeaders] = L"Content-Type";
@@ -1150,8 +1091,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   BEGIN_TEST_METHOD_ATTRIBUTE(RequestWithProxyAuthorizationHeaderFails)
   END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(RequestWithProxyAuthorizationHeaderFails)
-  {
+  TEST_METHOD(RequestWithProxyAuthorizationHeaderFails) {
     ServerParams serverArgs(s_mockServerHost);
     serverArgs.PreflightHeaders[s_accessControlRequestHeaders] = L"Content-Type";
     serverArgs.PreflightHeaders[s_accessControlAllowHeaders] = L"Content-Type";
