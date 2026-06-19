@@ -402,9 +402,6 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     }
   }
 
-#pragma region Former Integration Tests
-  // clang-format off
-
   //
   // The tests below were migrated from the HttpOriginPolicyIntegrationTest, which exercised the
   // origin policy against an in-process HTTP server (Microsoft::React::Test::HttpServer). Here the
@@ -1171,6 +1168,5 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
   // clang-format on
 };
-#pragma endregion Former Integration Tests
 
 } // namespace Microsoft::React::Test
