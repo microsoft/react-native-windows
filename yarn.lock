@@ -4175,7 +4175,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/fs@npm:0.0.0-canary.72, @react-native-windows/fs@npm:^0.0.0-canary.70, @react-native-windows/fs@npm:^0.0.0-canary.72, @react-native-windows/fs@workspace:packages/@react-native-windows/fs":
+"@react-native-windows/fs@npm:0.0.0-canary.72, @react-native-windows/fs@npm:^0.0.0-canary.72, @react-native-windows/fs@workspace:packages/@react-native-windows/fs":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/fs@workspace:packages/@react-native-windows/fs"
   dependencies:
@@ -4194,7 +4194,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/package-utils@npm:0.0.0-canary.98, @react-native-windows/package-utils@npm:^0.0.0-canary.96, @react-native-windows/package-utils@npm:^0.0.0-canary.98, @react-native-windows/package-utils@workspace:packages/@react-native-windows/package-utils":
+"@react-native-windows/package-utils@npm:0.0.0-canary.98, @react-native-windows/package-utils@npm:^0.0.0-canary.98, @react-native-windows/package-utils@workspace:packages/@react-native-windows/package-utils":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/package-utils@workspace:packages/@react-native-windows/package-utils"
   dependencies:
@@ -16324,38 +16324,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-platform-override@npm:0.0.0-canary.1017":
-  version: 0.0.0-canary.1017
-  resolution: "react-native-platform-override@npm:0.0.0-canary.1017"
-  dependencies:
-    "@react-native-windows/fs": "npm:^0.0.0-canary.70"
-    "@react-native-windows/package-utils": "npm:^0.0.0-canary.96"
-    "@typescript-eslint/eslint-plugin": "npm:^7.1.1"
-    "@typescript-eslint/parser": "npm:^7.1.1"
-    async: "npm:^3.2.3"
-    chalk: "npm:^4.1.0"
-    fp-ts: "npm:^2.5.0"
-    globby: "npm:^11.1.0"
-    inquirer: "npm:^7.1.0"
-    io-ts: "npm:^2.1.1"
-    isutf8: "npm:^3.0.0"
-    lodash: "npm:^4.17.15"
-    node-fetch: "npm:^2.6.7"
-    ora: "npm:^3.4.0"
-    semver: "npm:^7.3.2"
-    simple-git: "npm:^3.3.0"
-    source-map-support: "npm:^0.5.19"
-    upath: "npm:^1.2.0"
-    yargs: "npm:^16.2.0"
-  peerDependencies:
-    react-native: "*"
-  bin:
-    react-native-platform-override: bin.js
-  checksum: 10c0/406b6e4ec9e1902d1fd1acb55f721bad779c30bbcddef9d64ca3cdb1efd833f28f763221c6beaa714ea53ae0a1dab3e393dc1ca2b62e3b3acdcefaf3f6844450
-  languageName: node
-  linkType: hard
-
-"react-native-platform-override@npm:0.0.0-canary.1022, react-native-platform-override@workspace:packages/react-native-platform-override":
+"react-native-platform-override@npm:0.0.0-canary.1022, react-native-platform-override@workspace:*, react-native-platform-override@workspace:packages/react-native-platform-override":
   version: 0.0.0-use.local
   resolution: "react-native-platform-override@workspace:packages/react-native-platform-override"
   dependencies:
@@ -16476,7 +16445,7 @@ __metadata:
     prettier-plugin-hermes-parser: "npm:0.21.1"
     react: "npm:19.2.3"
     react-native: "npm:0.85.0-nightly-20260128-36f07a1b2"
-    react-native-platform-override: "npm:0.0.0-canary.1017"
+    react-native-platform-override: "workspace:*"
     typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
