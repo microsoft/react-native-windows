@@ -97,7 +97,7 @@ async function fetchFullCommitHash(
   // We cannot get abbreviated hash directly from a remote, so query Github's
   // API for it.
   const commitInfo = await fetch(
-    `https://api.github.com/repos/facebook/react-native/commits/${abbrevHash}`,
+    `https://api.github.com/repos/react/react-native/commits/${abbrevHash}`,
     {
       headers: {
         'Content-Type': 'application/json',

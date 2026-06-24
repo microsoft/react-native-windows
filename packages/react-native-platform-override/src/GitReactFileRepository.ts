@@ -16,7 +16,7 @@ import {VersionedReactFileRepository} from './FileRepository';
 import {getNpmPackage} from './PackageUtils';
 import {fetchFullRef} from './refFromVersion';
 
-const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
+const RN_GITHUB_URL = 'https://github.com/react/react-native.git';
 
 /**
  * Retrieves React Native files using the React Native Github repo. Switching
