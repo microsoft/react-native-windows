@@ -100,7 +100,7 @@ void RootComponentView::SetFocusedComponent(
     m_focusedComponent = value;
     if (focusState == winrt::Microsoft::ReactNative::FocusState::Programmatic) {
       focusState =
-          (!m_useKeyboardForProgrammaticFocus || m_focusState == winrt::Microsoft::ReactNative::FocusState::Pointer)
+          (!m_useKeyboardForProgrammaticFocus || m_focusState != winrt::Microsoft::ReactNative::FocusState::Keyboard)
           ? winrt::Microsoft::ReactNative::FocusState::Pointer
           : winrt::Microsoft::ReactNative::FocusState::Keyboard;
     }
@@ -185,9 +185,10 @@ bool RootComponentView::TrySetFocusedComponent(
 
 bool RootComponentView::TryMoveFocus(bool next, winrt::Microsoft::ReactNative::FocusState focusState) noexcept {
   if (!m_focusedComponent) {
-    return NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
-        next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First
-             : winrt::Microsoft::ReactNative::FocusNavigationReason::Last));
+    return NavigateFocus(
+        winrt::Microsoft::ReactNative::FocusNavigationRequest(
+            next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First
+                 : winrt::Microsoft::ReactNative::FocusNavigationReason::Last));
   }
 
   Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
@@ -227,9 +228,10 @@ bool RootComponentView::TryMoveFocus(bool next, winrt::Microsoft::ReactNative::F
   }
 
   // Wrap focus around if nothing outside the island takes focus
-  return NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
-      next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First
-           : winrt::Microsoft::ReactNative::FocusNavigationReason::Last));
+  return NavigateFocus(
+      winrt::Microsoft::ReactNative::FocusNavigationRequest(
+          next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First
+               : winrt::Microsoft::ReactNative::FocusNavigationReason::Last));
 }
 
 HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept {
