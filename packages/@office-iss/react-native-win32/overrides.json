@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.85.0-nightly-20260128-36f07a1b2",
+  "baseVersion": "0.85.0-nightly-20260210-4535df4f6",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "66b23b57dc30a5834c9ee619d0381828b103a341"
+      "baseHash": "4fee2cd64a351324f27b4ce4a99586f7e47d5dc3"
     },
     {
       "type": "derived",
@@ -309,7 +309,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorReactFrames.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js",
-      "baseHash": "47de16261eb2a5397b4bab247153fbcd8d7a3076"
+      "baseHash": "b495dafadab54ad429e4bf9be28d4e7ae405df56"
     },
     {
       "type": "derived",

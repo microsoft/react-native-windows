@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.85.0-nightly-20260128-36f07a1b2",
+  "baseVersion": "0.85.0-nightly-20260210-4535df4f6",
   "overrides": [
     {
       "type": "copy",

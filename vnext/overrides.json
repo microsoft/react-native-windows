@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.85.0-nightly-20260128-36f07a1b2",
+  "baseVersion": "0.85.0-nightly-20260210-4535df4f6",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "66b23b57dc30a5834c9ee619d0381828b103a341"
+      "baseHash": "4fee2cd64a351324f27b4ce4a99586f7e47d5dc3"
     },
     {
       "type": "derived",
@@ -133,7 +133,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/animationbackend/AnimatedPropSerializer.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/animationbackend/AnimatedPropSerializer.cpp",
-      "baseHash": "642804afa87c3c65f8a6606abdb5fc67145d8064",
+      "baseHash": "2161919b3f0d40ea8e711698dbc77b4fdccfd8de",
       "issue": 16262
     },
     {
@@ -566,7 +566,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorReactFrames.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js",
-      "baseHash": "47de16261eb2a5397b4bab247153fbcd8d7a3076"
+      "baseHash": "b495dafadab54ad429e4bf9be28d4e7ae405df56"
     },
     {
       "type": "derived",
