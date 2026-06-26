@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Fri, 26 Jun 2026 20:25:24 GMT",
+      "version": "0.0.0-canary.1057",
+      "tag": "@react-native-windows/automation_v0.0.0-canary.1057",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/automation",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Upgrade build agents to Windows Server 2025, Visual Studio 2026"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1057",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 20:10:44 GMT",
       "version": "0.0.0-canary.1056",
       "tag": "@react-native-windows/automation_v0.0.0-canary.1056",

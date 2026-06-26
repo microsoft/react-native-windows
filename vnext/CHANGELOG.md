@@ -1,8 +1,31 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 26 May 2026 20:10:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 26 Jun 2026 20:25:22 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1057
+
+Fri, 26 Jun 2026 20:25:22 GMT
+
+### Changes
+
+- fix: Unicode Text length Calculation (66076509+vineethkuttan@users.noreply.github.com)
+- Upgrade to Microsoft.WindowsAppSDK 1.8.260508005 (julio.rocha@microsoft.com)
+- Integrate RN 0.85.0-nightly-20260210-4535df4f6 (email not defined)
+- Upgrade to GoogleTest adapter 1.8.1.8 (julio.rocha@microsoft.com)
+- Upgrade build agents to Windows Server 2025, Visual Studio 2026 (julio.rocha@microsoft.com)
+- Upgrade projects to .NET 10 (julio.rocha@microsoft.com)
+- Drop old WinRTWebSocketResource implementation (julio.rocha@microsoft.com)
+- Re-introduce WebSocket JS integration tests (julio.rocha@microsoft.com)
+- Expose ReactNativeWindow from ReactNativeWin32App (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash attempting to get runtime when shutting down instance (30809111+acoates-ms@users.noreply.github.com)
+- Drop in-process HTTP test server (julio.rocha@microsoft.com)
+- Fix WebSocket binaryType handling — stop unconditional Blob interception of binary messages (gordomacmaster@gmail.com)
+- Integrate RN 0.85.0-nightly-20260128-36f07a1b2 (email not defined)
+- Upgrade to Visual Studio 2026 (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.292
+- Bump react-native-platform-override to v0.0.0-canary.1023
 
 ## 0.0.0-canary.1056
 

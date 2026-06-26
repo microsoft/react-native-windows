@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.1056",
+  "version": "0.0.0-canary.1057",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "@react-native-community/cli": "20.0.0",
     "@react-native-community/cli-platform-android": "20.0.0",
     "@react-native-community/cli-platform-ios": "20.0.0",
-    "@react-native-windows/cli": "0.0.0-canary.291",
+    "@react-native-windows/cli": "0.0.0-canary.292",
     "@react-native/assets": "1.0.0",
     "@react-native/assets-registry": "0.85.0-nightly-20260210-4535df4f6",
     "@react-native/codegen": "0.85.0-nightly-20260210-4535df4f6",
@@ -90,7 +90,7 @@
     "prettier": "^3.6.2",
     "react": "19.2.3",
     "react-native": "0.85.0-nightly-20260210-4535df4f6",
-    "react-native-platform-override": "0.0.0-canary.1022",
+    "react-native-platform-override": "0.0.0-canary.1023",
     "react-refresh": "^0.14.0",
     "typescript": "5.0.4"
   },

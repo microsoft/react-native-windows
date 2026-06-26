@@ -2,6 +2,111 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Jun 2026 20:25:22 GMT",
+      "version": "0.0.0-canary.1057",
+      "tag": "react-native-windows_v0.0.0-canary.1057",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "fix: Unicode Text length Calculation"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Upgrade to Microsoft.WindowsAppSDK 1.8.260508005"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Integrate RN 0.85.0-nightly-20260210-4535df4f6"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Upgrade to GoogleTest adapter 1.8.1.8"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Upgrade build agents to Windows Server 2025, Visual Studio 2026"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Upgrade projects to .NET 10"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Drop old WinRTWebSocketResource implementation"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Re-introduce WebSocket JS integration tests"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Expose ReactNativeWindow from ReactNativeWin32App"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Fix crash attempting to get runtime when shutting down instance"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Drop in-process HTTP test server"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Fix WebSocket binaryType handling — stop unconditional Blob interception of binary messages"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Integrate RN 0.85.0-nightly-20260128-36f07a1b2"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Upgrade to Visual Studio 2026"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.292",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1023",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 20:10:43 GMT",
       "version": "0.0.0-canary.1056",
       "tag": "react-native-windows_v0.0.0-canary.1056",

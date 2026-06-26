@@ -2,6 +2,39 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 26 Jun 2026 20:25:23 GMT",
+      "version": "0.0.0-canary.292",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.292",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Upgrade build agents to Windows Server 2025, Visual Studio 2026"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Integrate RN 0.85.0-nightly-20260210-4535df4f6"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Upgrade to Visual Studio 2026"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Integrate RN 0.85.0-nightly-20260128-36f07a1b2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 20:10:44 GMT",
       "version": "0.0.0-canary.291",
       "tag": "@react-native-windows/cli_v0.0.0-canary.291",

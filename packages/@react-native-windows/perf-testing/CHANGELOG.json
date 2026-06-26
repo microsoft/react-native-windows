@@ -2,6 +2,27 @@
   "name": "@react-native-windows/perf-testing",
   "entries": [
     {
+      "date": "Fri, 26 Jun 2026 20:25:23 GMT",
+      "version": "0.0.0-canary.1039",
+      "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1039",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Integrate RN 0.85.0-nightly-20260128-36f07a1b2"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Integrate RN 0.85.0-nightly-20260210-4535df4f6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Apr 2026 02:54:29 GMT",
       "version": "0.0.0-canary.1038",
       "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1038",

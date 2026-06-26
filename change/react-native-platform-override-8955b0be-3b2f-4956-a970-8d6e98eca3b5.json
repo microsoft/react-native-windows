@@ -1,7 +1,0 @@
-{
-  "comment": "Update GitHub org from facebook/react-native to react/react-native",
-  "email": "anuagra@microsoft.com",
-  "dependentChangeType": "patch",
-  "type": "prerelease",
-  "packageName": "react-native-platform-override"
-}
