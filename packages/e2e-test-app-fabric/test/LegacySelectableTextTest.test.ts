@@ -54,11 +54,11 @@ describe('LegacySelectableTextTest', () => {
     await textExample.doubleClick();
     const dump = await dumpVisualTree('pressed-state');
     const automationTree = dump['Automation Tree'] as Record<string, unknown>;
-    if (automationTree['Name'] === 'Pressed: 1 times.') {
+    if (automationTree.Name === 'Pressed: 1 times.') {
       // Due to the hardcoded speed between clicks in WinAppDriver, this test
       // can be flaky. Detect and warn here rather than disabling the entire test.
       console.warn('DoubleClickWhenSelectable registered only one click.');
-      automationTree['Name'] = 'Pressed: 2 times.';
+      automationTree.Name = 'Pressed: 2 times.';
       automationTree['TextRangePattern.GetText'] = 'Pressed: 2 times.';
     }
     expect(dump).toMatchSnapshot();

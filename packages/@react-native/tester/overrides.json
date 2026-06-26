@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.85.0-nightly-20260128-36f07a1b2",
+  "baseVersion": "0.85.0-nightly-20260210-4535df4f6",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,6 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
       "baseHash": "7146ccc87cc1717af98926b22b98abb9e6d6fad0",
       "issue": 4054
     },
@@ -146,7 +145,6 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
       "baseHash": "62842257c1fcc1631c3da4ea26d409df19d32ea4",
       "issue": 4054
     },
@@ -168,7 +166,6 @@
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
       "baseHash": "a45944f905e495fb1faeee03f9eef8c6565296d1",
       "issue": 4054
     },
@@ -337,7 +334,6 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
       "baseHash": "9fd5ab235654a781d25dff55cd28366db9132053"
     },
     {
@@ -400,7 +396,6 @@
       "type": "copy",
       "directory": "js/examples/RefreshControl",
       "baseDirectory": "packages/rn-tester/js/examples/RefreshControl",
-      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
       "baseHash": "781e6c4fbdc1fe5f618476c1cb16cc411cdca786",
       "issue": 4054
     },
@@ -429,7 +424,6 @@
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
       "baseHash": "97015cbbdb838c78dfb2f0bf9a7509bfea4b31c8",
       "issue": 4054
     },
@@ -486,7 +480,6 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
       "baseHash": "0e16875ccf63c259b076c6a5b6c8f2f4b4949a96",
       "issue": 4054
     },
@@ -633,7 +626,6 @@
       "type": "copy",
       "directory": "js/types",
       "baseDirectory": "packages/rn-tester/js/types",
-      "baseVersion": "0.85.0-nightly-20260114-f15985f4f",
       "baseHash": "4bf00d2f79d60f5d296804b461cca3242fad9648",
       "issue": 4054
     },

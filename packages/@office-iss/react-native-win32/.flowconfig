@@ -68,9 +68,6 @@
 ; Ignore the codegen e2e tests
 <PROJECT_ROOT>/packages/react-native-codegen/e2e/__test_fixtures__/modules/NativeEnumTurboModule.js
 
-; Ignore the Dangerfile
-<PROJECT_ROOT>/private/react-native-bots/dangerfile.js
-
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
@@ -175,4 +172,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.298.0
+^0.299.0
