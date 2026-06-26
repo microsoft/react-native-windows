@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Fri, 26 Jun 2026 20:25:23 GMT",
+      "version": "0.0.0-canary.1023",
+      "tag": "react-native-platform-override_v0.0.0-canary.1023",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "bb9f3c4f1aeb4b44d39a0ef21ebb51b9bb97c12e",
+            "comment": "Update GitHub org from facebook/react-native to react/react-native"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2026 05:29:55 GMT",
       "version": "0.0.0-canary.1022",
       "tag": "react-native-platform-override_v0.0.0-canary.1022",

@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 26 Jun 2026 20:25:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1023
+
+Fri, 26 Jun 2026 20:25:23 GMT
+
+### Changes
+
+- Update GitHub org from facebook/react-native to react/react-native (anuagra@microsoft.com)
 
 ## 0.0.0-canary.1022
 
