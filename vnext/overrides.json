@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.85.0-nightly-20260210-4535df4f6",
+  "baseVersion": "0.85.0-nightly-20260224-42cd0f041",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "4fee2cd64a351324f27b4ce4a99586f7e47d5dc3"
+      "baseHash": "baf585dd3e43f5433a04cb6b912333a0dd68b16b"
     },
     {
       "type": "derived",
@@ -167,7 +167,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/text/ParagraphShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/text/ParagraphShadowNode.cpp",
-      "baseHash": "dd357c5df2214908bb4220d22d31ab1477f2b1e4",
+      "baseHash": "97a2c24a3d253c6d5c34dc79345b0915ab527e48",
       "issue": 15132
     },
     {
@@ -219,7 +219,7 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManager.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/UIManager.cpp",
-      "baseHash": "5d44547f4fa03a1745e05f2dff84fa2101dea24a"
+      "baseHash": "7c26d68e45890168703bb560351ac74d09e7d125"
     },
     {
       "type": "derived",
@@ -238,13 +238,13 @@
       "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "9007cd545c708aefc4ab3b9fb7418a210a6e879c"
+      "baseHash": "36c619cbe063dcd12ab4003886209d00e80ab249"
     },
     {
       "type": "derived",
       "file": "src-win/index.windows.js.flow",
       "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "62783de689e8711d7ea287966283974956d797d5"
+      "baseHash": "d1e1f6a15bd8659d03fb763a86a4de0c855f05c1"
     },
     {
       "type": "platform",
@@ -290,6 +290,7 @@
       "type": "copy",
       "file": "src-win/jest/setup.js",
       "baseFile": "packages/react-native/jest/setup.js",
+      "baseVersion": "0.85.0-nightly-20260210-4535df4f6",
       "baseHash": "f0a153e2fecbfa912ae0997e0bc98ea8a1791a52",
       "issue": 14929
     },
@@ -390,7 +391,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Pressable/Pressable.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.d.ts",
-      "baseHash": "d4dd8fc82436617bfeca9807be274aa5416d748c"
+      "baseHash": "eca0d20e6e8df0297268c683a5c0f939fc075fc5"
     },
     {
       "type": "patch",
@@ -432,7 +433,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "dd89cd7044a790007febaeb8ef6c40e4c9cbdf41"
+      "baseHash": "cedca6e0b5e98b29759cc1ca806313ffa7937eb2"
     },
     {
       "type": "patch",
@@ -554,7 +555,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js",
-      "baseHash": "c53eedb18ebef127f2306a42708b032ce03307c5"
+      "baseHash": "a40c0f275fe317de0aece23c7c26e923545c7ece"
     },
     {
       "type": "derived",
@@ -566,13 +567,13 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorReactFrames.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js",
-      "baseHash": "b495dafadab54ad429e4bf9be28d4e7ae405df56"
+      "baseHash": "12bd90c6572e19e7c23c0cc702d179f04dc8d7bc"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorStackFrame.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js",
-      "baseHash": "b498a05f1276dca29f4e44d0eb5fd80bcc8a4222"
+      "baseHash": "95e584184ae16ef23a57f7ebc3fba6b5c54a5268"
     },
     {
       "type": "patch",
@@ -655,7 +656,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "618b750401e9066b212477f3c5d5484e4d181e32"
+      "baseHash": "14e1085587ef8b8a506594599c1aea8cf40ef140"
     },
     {
       "type": "derived",
