@@ -22,19 +22,9 @@ import {useEffect, useState} from 'react';
 component LogBoxInspectorSourceMapStatus(
   onPress?: ?(event: GestureResponderEvent) => void,
   status: 'COMPLETE' | 'FAILED' | 'NONE' | 'PENDING',
-<<<<<<< Upstream
 ) {
-||||||| base
-}>;
-
-function LogBoxInspectorSourceMapStatus(props: Props): React.Node {
-=======
-}>;
-
-function LogBoxInspectorSourceMapStatus(props: Props): React.Node {
   // [Win32] Dont use Animated
   /*
->>>>>>> Override
   const [state, setState] = useState({
     animation: null,
     rotate: null,
@@ -95,13 +85,7 @@ function LogBoxInspectorSourceMapStatus(props: Props): React.Node {
       return null; // [Win32]
   }
 
-<<<<<<< Upstream
-  if (status === 'COMPLETE' || image == null) {
-||||||| base
-  if (props.status === 'COMPLETE' || image == null) {
-=======
-  if (props.status === 'COMPLETE' /* [Win32] || image == null */) {
->>>>>>> Override
+  if (status === 'COMPLETE' /* [Win32] || image == null */) {
     return null;
   }
 

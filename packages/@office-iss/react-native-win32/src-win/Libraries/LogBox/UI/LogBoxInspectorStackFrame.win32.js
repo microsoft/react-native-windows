@@ -87,22 +87,12 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     lineHeight: 18,
     fontWeight: '400',
-<<<<<<< Upstream
     fontFamily: Platform.select({
       android: 'monospace',
       ios: 'Menlo',
       macos: 'Menlo',
-      windows: 'Consolas',
-    }),
-||||||| base
-    fontFamily: Platform.select({android: 'monospace', ios: 'Menlo'}),
-=======
-    fontFamily: Platform.select({
-      android: 'monospace',
-      ios: 'Menlo',
       win32: 'Consolas',
     }),
->>>>>>> Override
   },
   location: {
     color: LogBoxStyle.getTextColor(0.8),

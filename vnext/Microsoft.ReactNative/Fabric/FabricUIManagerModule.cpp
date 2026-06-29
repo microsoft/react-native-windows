@@ -27,6 +27,7 @@
 #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
 #include <react/renderer/scheduler/Scheduler.h>
 #include <react/renderer/scheduler/SchedulerToolbox.h>
+#include <react/renderer/mounting/ShadowTree.h>
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <react/utils/ContextContainer.h>
 #include <winrt/Windows.Graphics.Display.h>
@@ -402,6 +403,17 @@ void FabricUIManager::schedulerShouldRenderTransactions(
     m_context.UIDispatcher().Post(
         [mountingCoordinator, self = shared_from_this()]() { self->initiateTransaction(mountingCoordinator); });
   }
+}
+
+void FabricUIManager::schedulerShouldMergeReactRevision(facebook::react::SurfaceId surfaceId) {
+  m_context.UIDispatcher().Post([surfaceId, self = shared_from_this()]() {
+    std::lock_guard lock(self->m_schedulerMutex);
+    if (self->m_scheduler) {
+      self->m_scheduler->getUIManager()->getShadowTreeRegistry().visit(
+          surfaceId,
+          [](const facebook::react::ShadowTree &shadowTree) { shadowTree.mergeReactRevision(); });
+    }
+  });
 }
 
 void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(const facebook::react::ShadowNode &shadowView) {

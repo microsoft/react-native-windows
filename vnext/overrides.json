@@ -287,14 +287,6 @@
       "file": "src-win/IntegrationTests/XHRTest.js"
     },
     {
-      "type": "copy",
-      "file": "src-win/jest/setup.js",
-      "baseFile": "packages/react-native/jest/setup.js",
-      "baseVersion": "0.85.0-nightly-20260210-4535df4f6",
-      "baseHash": "f0a153e2fecbfa912ae0997e0bc98ea8a1791a52",
-      "issue": 14929
-    },
-    {
       "type": "platform",
       "file": "src-win/Libraries/__tests__/ViewWindows-test.js"
     },
@@ -564,13 +556,13 @@
       "baseHash": "3d342d4c28ce5deafecf22682522fdb275ae41bf"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorReactFrames.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js",
       "baseHash": "12bd90c6572e19e7c23c0cc702d179f04dc8d7bc"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorStackFrame.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js",
       "baseHash": "95e584184ae16ef23a57f7ebc3fba6b5c54a5268"

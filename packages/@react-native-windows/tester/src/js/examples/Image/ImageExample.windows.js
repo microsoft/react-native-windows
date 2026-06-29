@@ -1516,22 +1516,8 @@ exports.examples = [
     title: 'Nesting content inside <Image> component',
     render: function (): React.Node {
       return (
-<<<<<<< Upstream
-        <View style={styles.base}>
-          <Image style={{...StyleSheet.absoluteFill}} source={fullImage} />
-||||||| base
-        <View style={styles.base}>
-          <Image
-            style={{...StyleSheet.absoluteFillObject}}
-            source={fullImage}
-          />
-=======
         <View style={styles.base} testID="image-nested" accessible>
-          <Image
-            style={{...StyleSheet.absoluteFillObject}}
-            source={fullImage}
-          />
->>>>>>> Override
+          <Image style={{...StyleSheet.absoluteFill}} source={fullImage} />
           <Text style={styles.nestedText}>React</Text>
         </View>
       );

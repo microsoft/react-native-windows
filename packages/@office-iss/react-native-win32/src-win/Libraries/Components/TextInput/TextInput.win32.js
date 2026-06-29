@@ -490,23 +490,12 @@ function InternalTextInput(props: TextInputProps): React.Node {
             return inputRef.current;
           },
           isFocused(): boolean {
-<<<<<<< Upstream
             const currentlyFocusedInput =
               TextInputState.currentlyFocusedInput();
             return (
               currentlyFocusedInput != null &&
               currentlyFocusedInput === inputRef.current
             );
-||||||| base
-            return TextInputState.currentlyFocusedInput() === inputRef.current;
-=======
-            const currentlyFocusedInput =
-              TextInputState.currentlyFocusedInput();
-            return (
-              currentlyFocusedInput !== null &&
-              currentlyFocusedInput === inputRef.current
-            );
->>>>>>> Override
           },
           setSelection(start: number, end: number): void {
             if (inputRef.current != null) {

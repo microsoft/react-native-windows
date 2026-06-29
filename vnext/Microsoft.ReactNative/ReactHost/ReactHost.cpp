@@ -614,7 +614,6 @@ void ReactHost::AddInspectorPage() noexcept {
 
   jsinspector_modern::InspectorTargetCapabilities capabilities;
   capabilities.nativePageReloads = true;
-  capabilities.prefersFuseboxFrontend = true;
 
   auto metadata = m_inspectorHostTargetDelegate->getMetadata();
   std::string pageName;

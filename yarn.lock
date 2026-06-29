@@ -4536,7 +4536,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/eslint-parser": "npm:^7.25.1"
-    "@babel/generator": "npm:^7.25.0"
+    "@babel/generator": "npm:^7.29.1"
     "@babel/plugin-syntax-typescript": "npm:^7.25.4"
     "@babel/plugin-transform-regenerator": "npm:^7.24.7"
     "@babel/preset-env": "npm:^7.25.3"
@@ -4574,7 +4574,7 @@ __metadata:
     eslint-plugin-relay: "npm:^1.8.3"
     fb-dotslash: "npm:0.5.8"
     flow-api-translator: "npm:0.33.3"
-    flow-bin: "npm:^0.299.0"
+    flow-bin: "npm:^0.302.0"
     hermes-eslint: "npm:0.33.3"
     hermes-transform: "npm:0.33.3"
     ini: "npm:^5.0.0"
@@ -10589,6 +10589,15 @@ __metadata:
   bin:
     flow: cli.js
   checksum: 10c0/2bb6ba037c55583263aaedf39375ff990fb7962b8e4f94eb520033921c32809cb5e08f2e7d3625301422f8c2717a130cf70f3e20e649c88e9226b90ec92ee280
+  languageName: node
+  linkType: hard
+
+"flow-bin@npm:^0.302.0":
+  version: 0.302.0
+  resolution: "flow-bin@npm:0.302.0"
+  bin:
+    flow: cli.js
+  checksum: 10c0/55fd528b56c9b51a1b2fec1af6f4c0bfadc0449aa14353fa0669ec1635022d0b00696b9920a3c497cd5056ce7f8fe97ee32bd7aac99efb7f27d1adda8b54686e
   languageName: node
   linkType: hard
 
