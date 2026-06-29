@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixes misalginment with TextInput on different display scales",
+  "packageName": "react-native-windows",
+  "email": "dlucas@seabird.com",
+  "dependentChangeType": "patch"
+}
