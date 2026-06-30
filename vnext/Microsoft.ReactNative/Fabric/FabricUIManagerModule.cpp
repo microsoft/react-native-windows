@@ -24,10 +24,10 @@
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/core/DynamicPropsUtilities.h>
 #include <react/renderer/core/EventBeat.h>
+#include <react/renderer/mounting/ShadowTree.h>
 #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
 #include <react/renderer/scheduler/Scheduler.h>
 #include <react/renderer/scheduler/SchedulerToolbox.h>
-#include <react/renderer/mounting/ShadowTree.h>
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include <react/utils/ContextContainer.h>
 #include <winrt/Windows.Graphics.Display.h>
@@ -410,8 +410,7 @@ void FabricUIManager::schedulerShouldMergeReactRevision(facebook::react::Surface
     std::lock_guard lock(self->m_schedulerMutex);
     if (self->m_scheduler) {
       self->m_scheduler->getUIManager()->getShadowTreeRegistry().visit(
-          surfaceId,
-          [](const facebook::react::ShadowTree &shadowTree) { shadowTree.mergeReactRevision(); });
+          surfaceId, [](const facebook::react::ShadowTree &shadowTree) { shadowTree.mergeReactRevision(); });
     }
   });
 }
