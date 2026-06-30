@@ -8,6 +8,7 @@
 
 const crypto = require('crypto');
 const existsSync = require('fs').existsSync;
+const readFileSync = require('fs').readFileSync;
 const path = require('path');
 const username = require('username');
 const util = require('util');
@@ -15,6 +16,23 @@ const util = require('util');
 const glob = util.promisify(require('glob'));
 
 const templateUtils = require('../templateUtils');
+
+function getCodegenProjectName(projectRoot, fallbackName) {
+  try {
+    const packageJson = JSON.parse(
+      readFileSync(path.join(projectRoot, 'package.json'), 'utf8'),
+    );
+    const codegenName = packageJson?.codegenConfig?.name;
+    if (typeof codegenName === 'string' && codegenName.length > 0) {
+      return codegenName.replace(/[^a-zA-Z]/g, '');
+    }
+  } catch (e) {
+    // Fall back to the existing project-name behavior if package.json is missing
+    // or malformed. Other template paths still handle package.json validation.
+  }
+
+  return fallbackName;
+}
 
 function resolveArgs(config = {}, options = {}) {
   const projectRoot = config?.root ?? process.cwd();
@@ -85,6 +103,10 @@ async function getFileMappings(config = {}, options = {}) {
     libConfig?.project?.windows?.projects[0]?.projectName ??
     libOptions?.name ??
     'MyLib';
+  const codegenProjectName = getCodegenProjectName(
+    projectRoot,
+    `${templateUtils.pascalCase(projectName)}Spec`,
+  );
   const namespace = libOptions?.namespace ?? projectName;
   const namespaceCpp = namespace.replace(/\./g, '::');
   const projectGuid =
@@ -92,24 +114,6 @@ async function getFileMappings(config = {}, options = {}) {
       ?.replace('{', '')
       .replace('}', '') ?? crypto.randomUUID();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
-
-  // Check for existing codegen spec files
-  const codegenPath = path.join(projectRoot, 'windows', projectName, 'codegen');
-  let existingSpecFiles = [];
-  let firstSpecName = null;
-  if (existsSync(codegenPath)) {
-    try {
-      const specFiles = await glob('*Spec.g.h', {cwd: codegenPath});
-      existingSpecFiles = specFiles;
-      if (specFiles.length > 0) {
-        // Extract the spec name from filename (e.g., "NativeMyModuleSpec.g.h" -> "MyModuleSpec")
-        const firstFile = specFiles[0];
-        firstSpecName = firstFile.replace(/^Native/, '').replace(/\.g\.h$/, '');
-      }
-    } catch (e) {
-      // If we can't read the codegen directory, continue with empty array
-    }
-  }
 
   const cppNugetPackages = [];
 
@@ -119,14 +123,13 @@ async function getFileMappings(config = {}, options = {}) {
 
     name: projectName,
     pascalName: templateUtils.pascalCase(projectName),
+    codegenProjectName,
     namespace: namespace,
     namespaceCpp: namespaceCpp,
 
     // Codegen spec files information
-    existingSpecFiles: existingSpecFiles,
-    hasExistingSpecFiles: existingSpecFiles.length > 0,
-    firstSpecFile: existingSpecFiles.length > 0 ? existingSpecFiles[0] : null,
-    firstSpecName: firstSpecName,
+    codegenSpecFile: `Native${codegenProjectName}.g.h`,
+    codegenDataTypesFile: `Native${codegenProjectName}DataTypes.g.h`,
 
     rnwVersion: rnwVersion,
     rnwPathFromProjectRoot: path
