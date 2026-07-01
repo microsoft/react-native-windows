@@ -3437,7 +3437,7 @@ exports[`snapshotAllPages Animated 2`] = `
     collapsable={false}
     source={
       {
-        "testUri": "../../packages/@react-native-windows/tester/js/assets/bunny.png",
+        "testUri": "../../../packages/@react-native-windows/tester/js/assets/bunny.png",
       }
     }
     style={
@@ -6157,7 +6157,7 @@ exports[`snapshotAllPages Animated 7`] = `
     collapsable={false}
     source={
       {
-        "testUri": "../../packages/@react-native-windows/tester/js/assets/bunny.png",
+        "testUri": "../../../packages/@react-native-windows/tester/js/assets/bunny.png",
       }
     }
     style={
@@ -8352,7 +8352,7 @@ exports[`snapshotAllPages Border 20`] = `
   <Image
     source={
       {
-        "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
       }
     }
     style={
@@ -8384,7 +8384,7 @@ exports[`snapshotAllPages Border 21`] = `
   <Image
     source={
       {
-        "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
       }
     }
     style={
@@ -8417,7 +8417,7 @@ exports[`snapshotAllPages Border 22`] = `
   <Image
     source={
       {
-        "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
       }
     }
     style={
@@ -12531,7 +12531,7 @@ exports[`snapshotAllPages Filter 1`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -12597,7 +12597,7 @@ exports[`snapshotAllPages Filter 1`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -12675,7 +12675,7 @@ exports[`snapshotAllPages Filter 2`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -12741,7 +12741,7 @@ exports[`snapshotAllPages Filter 2`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -12819,7 +12819,7 @@ exports[`snapshotAllPages Filter 3`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -12885,7 +12885,7 @@ exports[`snapshotAllPages Filter 3`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -12963,7 +12963,7 @@ exports[`snapshotAllPages Filter 4`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -13029,7 +13029,7 @@ exports[`snapshotAllPages Filter 4`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -13107,7 +13107,7 @@ exports[`snapshotAllPages Filter 5`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -13173,7 +13173,7 @@ exports[`snapshotAllPages Filter 5`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -13251,7 +13251,7 @@ exports[`snapshotAllPages Filter 6`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -13317,7 +13317,7 @@ exports[`snapshotAllPages Filter 6`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -13395,7 +13395,7 @@ exports[`snapshotAllPages Filter 7`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -13461,7 +13461,7 @@ exports[`snapshotAllPages Filter 7`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -13539,7 +13539,7 @@ exports[`snapshotAllPages Filter 8`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -13605,7 +13605,7 @@ exports[`snapshotAllPages Filter 8`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -13684,7 +13684,7 @@ exports[`snapshotAllPages Filter 9`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -13750,7 +13750,7 @@ exports[`snapshotAllPages Filter 9`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -13961,7 +13961,7 @@ exports[`snapshotAllPages Filter 12`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
         }
       }
       style={
@@ -14027,7 +14027,7 @@ exports[`snapshotAllPages Filter 12`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
         }
       }
       style={
@@ -14109,7 +14109,7 @@ exports[`snapshotAllPages Filter 13`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -14178,7 +14178,7 @@ exports[`snapshotAllPages Filter 13`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -14258,7 +14258,7 @@ exports[`snapshotAllPages Filter 14`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -14326,7 +14326,7 @@ exports[`snapshotAllPages Filter 14`] = `
       resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
         }
       }
       style={
@@ -14402,7 +14402,7 @@ exports[`snapshotAllPages Filter 15`] = `
     resizeMode="contain"
     source={
       {
-        "testUri": "../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
+        "testUri": "../../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
       }
     }
     style={
@@ -41881,7 +41881,7 @@ exports[`snapshotAllPages RTLExample 2`] = `
         <Image
           source={
             {
-              "testUri": "../../packages/@react-native-windows/tester/js/assets/like.png",
+              "testUri": "../../../packages/@react-native-windows/tester/js/assets/like.png",
             }
           }
           style={
@@ -41976,7 +41976,7 @@ exports[`snapshotAllPages RTLExample 2`] = `
         <Image
           source={
             {
-              "testUri": "../../packages/@react-native-windows/tester/js/assets/poke.png",
+              "testUri": "../../../packages/@react-native-windows/tester/js/assets/poke.png",
             }
           }
           style={
@@ -42771,7 +42771,7 @@ exports[`snapshotAllPages RTLExample 7`] = `
       <Image
         source={
           {
-            "testUri": "../../packages/@react-native-windows/tester/js/assets/like.png",
+            "testUri": "../../../packages/@react-native-windows/tester/js/assets/like.png",
           }
         }
         style={
@@ -42808,7 +42808,7 @@ exports[`snapshotAllPages RTLExample 7`] = `
       <Image
         source={
           {
-            "testUri": "../../packages/@react-native-windows/tester/js/assets/poke.png",
+            "testUri": "../../../packages/@react-native-windows/tester/js/assets/poke.png",
           }
         }
         style={
@@ -42987,7 +42987,7 @@ exports[`snapshotAllPages RTLExample 8`] = `
         onStartShouldSetResponder={[Function]}
         source={
           {
-            "testUri": "../../packages/@react-native-windows/tester/js/assets/poke.png",
+            "testUri": "../../../packages/@react-native-windows/tester/js/assets/poke.png",
           }
         }
         style={
