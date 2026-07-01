@@ -67,6 +67,7 @@ function getFileName(file: ?string) {
   );
 }
 
+// eslint-disable-next-line no-unreachable
 const styles = StyleSheet.create({
   frameContainer: {
     flexDirection: 'row',

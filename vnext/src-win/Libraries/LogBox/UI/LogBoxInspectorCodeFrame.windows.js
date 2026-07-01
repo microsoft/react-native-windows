@@ -72,6 +72,7 @@ component CodeFrameDisplay(codeFrame: CodeFrame) {
   );
 }
 
+/* eslint-disable no-unreachable -- Flow `component` syntax is not understood by no-unreachable's code path analysis (hermes-eslint), causing false positives on the declarations below. */
 component LogBoxInspectorCodeFrame(
   componentCodeFrame: ?CodeFrame,
   codeFrame: ?CodeFrame,
@@ -122,6 +123,7 @@ component AppInfo() {
     </LogBoxButton>
   );
 }
+/* eslint-enable no-unreachable */
 
 const appInfoStyles = StyleSheet.create({
   text: {
