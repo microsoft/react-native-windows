@@ -7,25 +7,25 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.85.0-nightly-20260210-4535df4f6",
+  "baseVersion": "0.85.0-nightly-20260224-42cd0f041",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "4fee2cd64a351324f27b4ce4a99586f7e47d5dc3"
+      "baseHash": "baf585dd3e43f5433a04cb6b912333a0dd68b16b"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "9007cd545c708aefc4ab3b9fb7418a210a6e879c"
+      "baseHash": "36c619cbe063dcd12ab4003886209d00e80ab249"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js.flow",
       "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "62783de689e8711d7ea287966283974956d797d5"
+      "baseHash": "d1e1f6a15bd8659d03fb763a86a4de0c855f05c1"
     },
     {
       "type": "platform",
@@ -120,7 +120,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "dd89cd7044a790007febaeb8ef6c40e4c9cbdf41"
+      "baseHash": "cedca6e0b5e98b29759cc1ca806313ffa7937eb2"
     },
     {
       "type": "patch",
@@ -296,7 +296,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js",
-      "baseHash": "c53eedb18ebef127f2306a42708b032ce03307c5"
+      "baseHash": "a40c0f275fe317de0aece23c7c26e923545c7ece"
     },
     {
       "type": "patch",
@@ -309,19 +309,19 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorReactFrames.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js",
-      "baseHash": "b495dafadab54ad429e4bf9be28d4e7ae405df56"
+      "baseHash": "12bd90c6572e19e7c23c0cc702d179f04dc8d7bc"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorSourceMapStatus.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorSourceMapStatus.js",
-      "baseHash": "cebcc81fbc845286a04ffa5c1585155b058fd0b0"
+      "baseHash": "245082e81b6274f96a8da37d1e9a21fcd0ff0e18"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorStackFrame.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js",
-      "baseHash": "b498a05f1276dca29f4e44d0eb5fd80bcc8a4222",
+      "baseHash": "95e584184ae16ef23a57f7ebc3fba6b5c54a5268",
       "issue": 5885
     },
     {
@@ -431,7 +431,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "618b750401e9066b212477f3c5d5484e4d181e32"
+      "baseHash": "14e1085587ef8b8a506594599c1aea8cf40ef140"
     },
     {
       "type": "derived",

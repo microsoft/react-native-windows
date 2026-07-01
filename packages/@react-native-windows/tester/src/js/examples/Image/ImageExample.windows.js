@@ -1517,10 +1517,7 @@ exports.examples = [
     render: function (): React.Node {
       return (
         <View style={styles.base} testID="image-nested" accessible>
-          <Image
-            style={{...StyleSheet.absoluteFillObject}}
-            source={fullImage}
-          />
+          <Image style={{...StyleSheet.absoluteFill}} source={fullImage} />
           <Text style={styles.nestedText}>React</Text>
         </View>
       );

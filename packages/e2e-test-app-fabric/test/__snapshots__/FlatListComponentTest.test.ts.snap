@@ -311,6 +311,13 @@ exports[`FlatList Tests A FlatList can be filtered by a key word 1`] = `
                                             "Offset": "0, 0, 0",
                                             "Size": "928, 52",
                                             "Visual Type": "SpriteVisual",
+                                            "__Children": [
+                                              {
+                                                "Offset": "0, 0, 0",
+                                                "Size": "0, 0",
+                                                "Visual Type": "SpriteVisual",
+                                              },
+                                            ],
                                           },
                                         ],
                                       },
@@ -877,6 +884,13 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -913,6 +927,13 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -949,6 +970,13 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -985,6 +1013,13 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1021,6 +1056,13 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1057,6 +1099,13 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1093,6 +1142,13 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1129,6 +1185,13 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1165,6 +1228,13 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1201,6 +1271,13 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1237,6 +1314,13 @@ exports[`FlatList Tests A FlatList can be inverted 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1700,6 +1784,13 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1736,6 +1827,13 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1772,6 +1870,13 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1808,6 +1913,13 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1844,6 +1956,13 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1880,6 +1999,13 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1916,6 +2042,13 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1952,6 +2085,13 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -1988,6 +2128,13 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -2024,6 +2171,13 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -2060,6 +2214,13 @@ exports[`FlatList Tests A FlatList can have a content inset 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -2693,6 +2854,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -2733,6 +2901,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "998, 14",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -2765,6 +2940,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -2805,6 +2987,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "998, 14",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -2837,6 +3026,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -2877,6 +3073,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "998, 14",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -2909,6 +3112,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -2949,6 +3159,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "998, 14",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -2981,6 +3198,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -3021,6 +3245,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "998, 14",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3053,6 +3284,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -3093,6 +3331,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "998, 14",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3125,6 +3370,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -3165,6 +3417,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "998, 14",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3197,6 +3456,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -3237,6 +3503,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "998, 14",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3269,6 +3542,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -3309,6 +3589,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "998, 14",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3341,6 +3628,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -3381,6 +3675,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "998, 14",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3413,6 +3714,13 @@ exports[`FlatList Tests A FlatList can have separators 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -3765,6 +4073,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "958, 33",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3800,6 +4115,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "958, 33",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3835,6 +4157,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "958, 33",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3870,6 +4199,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "958, 33",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3905,6 +4241,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "958, 33",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3940,6 +4283,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "958, 33",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -3975,6 +4325,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "958, 33",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -4010,6 +4367,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "958, 33",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -4055,6 +4419,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -4104,6 +4475,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 33",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -4153,6 +4531,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 33",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -4638,6 +5023,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "46, 19",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -4736,6 +5128,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "16, 19",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -4811,6 +5210,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "16, 19",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -4886,6 +5292,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "16, 19",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -4961,6 +5374,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "16, 19",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -5036,6 +5456,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "16, 19",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -5134,6 +5561,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "16, 19",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -5209,6 +5643,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "16, 19",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -5284,6 +5725,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "16, 19",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -5359,6 +5807,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "16, 19",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -5434,6 +5889,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                             "Offset": "0, 0, 0",
                             "Size": "16, 19",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -5570,6 +6032,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                     "Offset": "0, 0, 0",
                                                     "Size": "16, 19",
                                                     "Visual Type": "SpriteVisual",
+                                                    "__Children": [
+                                                      {
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                    ],
                                                   },
                                                 ],
                                               },
@@ -5645,6 +6114,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                     "Offset": "0, 0, 0",
                                                     "Size": "16, 19",
                                                     "Visual Type": "SpriteVisual",
+                                                    "__Children": [
+                                                      {
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                    ],
                                                   },
                                                 ],
                                               },
@@ -5720,6 +6196,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                     "Offset": "0, 0, 0",
                                                     "Size": "16, 19",
                                                     "Visual Type": "SpriteVisual",
+                                                    "__Children": [
+                                                      {
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                    ],
                                                   },
                                                 ],
                                               },
@@ -5795,6 +6278,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                     "Offset": "0, 0, 0",
                                                     "Size": "16, 19",
                                                     "Visual Type": "SpriteVisual",
+                                                    "__Children": [
+                                                      {
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                    ],
                                                   },
                                                 ],
                                               },
@@ -5870,6 +6360,13 @@ exports[`FlatList Tests A FlatList can nest other Flatlists 1`] = `
                                                     "Offset": "0, 0, 0",
                                                     "Size": "16, 19",
                                                     "Visual Type": "SpriteVisual",
+                                                    "__Children": [
+                                                      {
+                                                        "Offset": "0, 0, 0",
+                                                        "Size": "0, 0",
+                                                        "Visual Type": "SpriteVisual",
+                                                      },
+                                                    ],
                                                   },
                                                 ],
                                               },
@@ -6424,6 +6921,13 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -6460,6 +6964,13 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -6496,6 +7007,13 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -6532,6 +7050,13 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -6568,6 +7093,13 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -6604,6 +7136,13 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -6640,6 +7179,13 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -6676,6 +7222,13 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -6712,6 +7265,13 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -6748,6 +7308,13 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -6784,6 +7351,13 @@ exports[`FlatList Tests A FlatList has an onEndReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -7247,6 +7821,13 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -7283,6 +7864,13 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -7319,6 +7907,13 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -7355,6 +7950,13 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -7391,6 +7993,13 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -7427,6 +8036,13 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -7463,6 +8079,13 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -7499,6 +8122,13 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -7535,6 +8165,13 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -7571,6 +8208,13 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },
@@ -7607,6 +8251,13 @@ exports[`FlatList Tests A FlatList has an onStartReached event 1`] = `
                                     "Offset": "0, 0, 0",
                                     "Size": "958, 32",
                                     "Visual Type": "SpriteVisual",
+                                    "__Children": [
+                                      {
+                                        "Offset": "0, 0, 0",
+                                        "Size": "0, 0",
+                                        "Visual Type": "SpriteVisual",
+                                      },
+                                    ],
                                   },
                                 ],
                               },

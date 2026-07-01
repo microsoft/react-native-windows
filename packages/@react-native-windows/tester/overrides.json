@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.85.0-nightly-20260210-4535df4f6",
+  "baseVersion": "0.85.0-nightly-20260224-42cd0f041",
   "overrides": [
     {
       "type": "copy",
@@ -57,21 +57,21 @@
       "type": "copy",
       "file": "src/js/examples/FlatList/FlatList-multiColumn.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-multiColumn.js",
-      "baseHash": "9d960f7a85d0b5b40e2b5a511c05364f7d952c53",
+      "baseHash": "13f7c3f3ddfc847cadbafa7c4137b1150f87e053",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-nested.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-nested.js",
-      "baseHash": "58f95a964352c4ee884af4b027010fb54e4c1e39",
+      "baseHash": "45f9ec2ee31f7d7d1fada2709bc2ac6b54564bdf",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-stickyHeaders.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-stickyHeaders.js",
-      "baseHash": "cfa86dc07ee3a2f17e589939a4fef982ff2c1b72"
+      "baseHash": "1b4aa52a4c1779607b5bd74c475dd23db152900c"
     },
     {
       "type": "platform",
@@ -85,7 +85,7 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "c8ce9454827962d202cda42bd6bcd0aaceb8cf74",
+      "baseHash": "b119f46dbe33a567e7649f7197874d5b066403aa",
       "issue": 12869
     },
     {
@@ -156,7 +156,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "21f111f08b53ae5d60a7c03044ae64d867d93dbb"
+      "baseHash": "d0b6e7eccdc020d76d263b3e88becfb565b4671d"
     }
   ]
 }
