@@ -8,10 +8,6 @@
  * @format
  */
 
-// Flow `component` syntax is misparsed by ESLint's code-path analysis (hermes-eslint),
-// producing false-positive no-unreachable errors after `return` inside a component body.
-/* eslint-disable no-unreachable */
-
 'use strict';
 
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';

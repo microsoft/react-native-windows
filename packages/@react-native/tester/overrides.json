@@ -59,6 +59,13 @@
     },
     {
       "type": "copy",
+      "directory": "js/examples/AnimationBackend",
+      "baseDirectory": "packages/rn-tester/js/examples/AnimationBackend",
+      "baseHash": "737428f9c93dd9b72b6433206c0a4860a50adaa3",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "directory": "js/examples/Appearance",
       "baseDirectory": "packages/rn-tester/js/examples/Appearance",
       "baseHash": "2f8b7443fee23e06736f638575fcace2e31dffad",

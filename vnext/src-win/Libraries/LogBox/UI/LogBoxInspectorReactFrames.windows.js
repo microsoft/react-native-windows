@@ -129,7 +129,6 @@ component LogBoxInspectorReactFrames(log: LogBoxLog) {
   );
 }
 
-// eslint-disable-next-line no-unreachable
 const componentStyles = StyleSheet.create({
   collapseContainer: {
     marginLeft: 15,
