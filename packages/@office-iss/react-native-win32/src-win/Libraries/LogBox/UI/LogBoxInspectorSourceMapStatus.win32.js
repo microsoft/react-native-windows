@@ -85,10 +85,10 @@ component LogBoxInspectorSourceMapStatus(
       return null; // [Win32]
   }
 
-  if (status === 'COMPLETE' /* [Win32] || image == null */) {
-    return null;
-  }
-
+  // [Win32] 'COMPLETE' and 'NONE' are already handled by the switch default
+  // above (which returns null), so status is narrowed to 'FAILED' | 'PENDING'
+  // here. The upstream `if (status === 'COMPLETE' || image == null)` check is
+  // therefore dead code on Win32 and is omitted.
   return (
     <LogBoxButton
       backgroundColor={{
