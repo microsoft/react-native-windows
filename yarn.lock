@@ -3573,6 +3573,7 @@ __metadata:
     "@react-native/codegen": "npm:0.85.0-nightly-20260224-42cd0f041"
     "@react-native/community-cli-plugin": "npm:0.85.0-nightly-20260224-42cd0f041"
     "@react-native/gradle-plugin": "npm:0.85.0-nightly-20260224-42cd0f041"
+    "@react-native/jest-preset": "npm:0.85.0-nightly-20260224-42cd0f041"
     "@react-native/js-polyfills": "npm:0.85.0-nightly-20260224-42cd0f041"
     "@react-native/metro-config": "npm:0.85.0-nightly-20260224-42cd0f041"
     "@react-native/normalize-colors": "npm:0.85.0-nightly-20260224-42cd0f041"
@@ -4494,6 +4495,21 @@ __metadata:
   version: 0.85.0-nightly-20260224-42cd0f041
   resolution: "@react-native/gradle-plugin@npm:0.85.0-nightly-20260224-42cd0f041"
   checksum: 10c0/e968f294613863845924d4027a0a7a5ac1f9fa96987b0db2d9153a72e8a9f29fe5a1cd9be5ae7a1145ff282635ff47da78b7270e609d3fe3a0350f40efa7336d
+  languageName: node
+  linkType: hard
+
+"@react-native/jest-preset@npm:0.85.0-nightly-20260224-42cd0f041":
+  version: 0.85.0-nightly-20260224-42cd0f041
+  resolution: "@react-native/jest-preset@npm:0.85.0-nightly-20260224-42cd0f041"
+  dependencies:
+    "@jest/create-cache-key-function": "npm:^29.7.0"
+    "@react-native/js-polyfills": "npm:0.85.0-nightly-20260224-42cd0f041"
+    babel-jest: "npm:^29.7.0"
+    jest-environment-node: "npm:^29.7.0"
+    regenerator-runtime: "npm:^0.13.2"
+  peerDependencies:
+    react: ^19.2.3
+  checksum: 10c0/735452f429d68e5d97282143b602b665c2c621f6ac530ce7466776554185d52b74a44b91bbc63b4c5745398f77c3de2d589ef37313939776065ec81bce135d0e
   languageName: node
   linkType: hard
 
@@ -16460,6 +16476,7 @@ __metadata:
     "@react-native/codegen": "npm:0.85.0-nightly-20260224-42cd0f041"
     "@react-native/community-cli-plugin": "npm:0.85.0-nightly-20260224-42cd0f041"
     "@react-native/gradle-plugin": "npm:0.85.0-nightly-20260224-42cd0f041"
+    "@react-native/jest-preset": "npm:0.85.0-nightly-20260224-42cd0f041"
     "@react-native/js-polyfills": "npm:0.85.0-nightly-20260224-42cd0f041"
     "@react-native/metro-config": "npm:0.85.0-nightly-20260224-42cd0f041"
     "@react-native/new-app-screen": "npm:0.85.0-nightly-20260224-42cd0f041"
