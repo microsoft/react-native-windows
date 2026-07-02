@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove Focus Outline for Programmatical Focus",
+  "packageName": "react-native-windows",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
