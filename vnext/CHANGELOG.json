@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 03 Jul 2026 06:17:57 GMT",
+      "version": "0.81.30",
+      "tag": "react-native-windows_v0.81.30",
+      "comments": {
+        "patch": [
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5e245a0eb7507ba3c64baa86124322dfe65b3553",
+            "comment": "Remove Focus Outline for Programmatical Focus"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Jun 2026 20:13:38 GMT",
       "version": "0.81.29",
       "tag": "react-native-windows_v0.81.29",
