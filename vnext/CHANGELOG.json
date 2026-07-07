@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 07 Jul 2026 17:42:31 GMT",
+      "version": "0.84.1",
+      "tag": "react-native-windows_v0.84.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "dlucas@seabird.com",
+            "package": "react-native-windows",
+            "commit": "bd4bf78635660112bf8b3395ef89f93e7141e0d1",
+            "comment": "Fixes misalignment with TextInput on different display scales"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Jun 2026 10:29:39 GMT",
       "version": "0.84.0",
       "tag": "react-native-windows_v0.84.0",
