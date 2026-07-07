@@ -1276,7 +1276,7 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
 
-  if ((layoutMetrics.pointScaleFactor != m_layoutMetrics.pointScaleFactor)) {
+  if (m_textServices && layoutMetrics.pointScaleFactor > 0) {
     LRESULT res;
     winrt::check_hresult(m_textServices->TxSendMessage(
         (WM_USER + 328), // EM_SETDPI
