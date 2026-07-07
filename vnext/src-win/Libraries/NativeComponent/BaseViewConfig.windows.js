@@ -10,9 +10,25 @@
 
 import type {PartialViewConfigWithoutName} from './PlatformBaseViewConfig';
 
-import * as ReactNativeFeatureFlags from '../../src/private/featureflags/ReactNativeFeatureFlags';
 import ReactNativeStyleAttributes from '../Components/View/ReactNativeStyleAttributes';
+<<<<<<< Upstream
+import {
+  boxShadowAttribute,
+  colorAttribute,
+  filterAttribute,
+} from '../Components/View/ReactNativeStyleAttributes';
+import {
+  ConditionallyIgnoredEventHandlers,
+  DynamicallyInjectedByGestureHandler,
+} from './ViewConfigIgnore';
+||||||| base
+import {
+  ConditionallyIgnoredEventHandlers,
+  DynamicallyInjectedByGestureHandler,
+} from './ViewConfigIgnore';
+=======
 import {DynamicallyInjectedByGestureHandler} from './ViewConfigIgnore';
+>>>>>>> Override
 
 const bubblingEventTypes = {
   // Generic Events
@@ -226,10 +242,10 @@ const validAttributesForNonEventProps = {
   accessibilityLargeContentTitle: true,
   experimental_accessibilityOrder: true,
   testID: true,
-  backgroundColor: {process: require('../StyleSheet/processColor').default},
+  backgroundColor: colorAttribute,
   backfaceVisibility: true,
   opacity: true,
-  shadowColor: {process: require('../StyleSheet/processColor').default},
+  shadowColor: colorAttribute,
   shadowOffset: {diff: require('../Utilities/differ/sizesDiffer').default},
   shadowOpacity: true,
   shadowRadius: true,
@@ -245,34 +261,76 @@ const validAttributesForNonEventProps = {
   removeClippedSubviews: true,
   role: true,
   borderRadius: true,
+<<<<<<< Upstream
+  borderColor: colorAttribute,
+  borderBlockColor: colorAttribute,
+||||||| base
   borderColor: {process: require('../StyleSheet/processColor').default},
+  borderBlockColor: {process: require('../StyleSheet/processColor').default},
+=======
+  borderColor: {process: require('../StyleSheet/processColor').default},
+>>>>>>> Override
   borderCurve: true,
   borderWidth: true,
   borderStyle: true,
   hitSlop: {diff: require('../Utilities/differ/insetsDiffer').default},
   collapsable: true,
   collapsableChildren: true,
+<<<<<<< Upstream
+  filter: filterAttribute,
+  boxShadow: boxShadowAttribute,
+||||||| base
+  filter: ReactNativeFeatureFlags.enableNativeCSSParsing()
+    ? (true as const)
+    : {process: require('../StyleSheet/processFilter').default},
+  boxShadow: ReactNativeFeatureFlags.enableNativeCSSParsing()
+    ? (true as const)
+    : {process: require('../StyleSheet/processBoxShadow').default},
+=======
   experimental_filter: ReactNativeFeatureFlags.enableNativeCSSParsing()
     ? (true as const)
     : {process: require('../StyleSheet/processFilter').default},
   boxShadow: ReactNativeFeatureFlags.enableNativeCSSParsing()
     ? (true as const)
     : {process: require('../StyleSheet/processBoxShadow').default},
+>>>>>>> Override
   mixBlendMode: true,
   isolation: true,
 
   borderTopWidth: true,
-  borderTopColor: {process: require('../StyleSheet/processColor').default},
+  borderTopColor: colorAttribute,
   borderRightWidth: true,
-  borderRightColor: {process: require('../StyleSheet/processColor').default},
+  borderRightColor: colorAttribute,
   borderBottomWidth: true,
-  borderBottomColor: {process: require('../StyleSheet/processColor').default},
+  borderBottomColor: colorAttribute,
   borderLeftWidth: true,
-  borderLeftColor: {process: require('../StyleSheet/processColor').default},
+  borderLeftColor: colorAttribute,
   borderStartWidth: true,
+<<<<<<< Upstream
+  borderBlockStartWidth: true,
+  borderStartColor: colorAttribute,
+  borderBlockStartColor: colorAttribute,
+||||||| base
+  borderBlockStartWidth: true,
   borderStartColor: {process: require('../StyleSheet/processColor').default},
+  borderBlockStartColor: {
+    process: require('../StyleSheet/processColor').default,
+  },
+=======
+  borderStartColor: {process: require('../StyleSheet/processColor').default},
+>>>>>>> Override
   borderEndWidth: true,
+<<<<<<< Upstream
+  borderBlockEndWidth: true,
+  borderEndColor: colorAttribute,
+  borderBlockEndColor: colorAttribute,
+||||||| base
+  borderBlockEndWidth: true,
   borderEndColor: {process: require('../StyleSheet/processColor').default},
+  borderBlockEndColor: {process: require('../StyleSheet/processColor').default},
+=======
+  borderEndColor: {process: require('../StyleSheet/processColor').default},
+>>>>>>> Override
 
   borderTopLeftRadius: true,
   borderTopRightRadius: true,

@@ -56,31 +56,28 @@ inline static bool operator==(const AccessibilityAction &lhs, const Accessibilit
   return lhs.name == rhs.name && lhs.label == rhs.label;
 }
 
-inline static bool operator!=(const AccessibilityAction &lhs, const AccessibilityAction &rhs)
-{
-  return !(rhs == lhs);
-}
-
 struct AccessibilityState {
   bool disabled{false};
   std::optional<bool> selected{std::nullopt}; // [Windows] - Do not remove; required for Windows ISelectionItemProvider Implementation
   bool busy{false};
   std::optional<bool> expanded{std::nullopt};
+<<<<<<< Upstream
+  enum CheckedState { Unchecked, Checked, Mixed, None };
+  CheckedState checked{CheckedState::None};
+||||||| base
+  enum CheckedState { Unchecked, Checked, Mixed, None } checked{None};
+=======
   enum CheckedState { Unchecked, Checked, Mixed, None } checked{None};
   std::optional<bool> readOnly{std::nullopt}; // [Windows] - Do not remove; required for Windows IRangeValueProvider and IValueProvider Implementation
   std::optional<bool> multiselectable{std::nullopt}; // [Windows] - Do not remove; required for Windows ISelectionProvider Implementation
   std::optional<bool> required{std::nullopt}; // [Windows] - Do not remove; required for Windows ISelectionProvider Implementation
+>>>>>>> Override
 };
 
 constexpr bool operator==(const AccessibilityState &lhs, const AccessibilityState &rhs)
 {
   return lhs.disabled == rhs.disabled && lhs.selected == rhs.selected && lhs.checked == rhs.checked &&
       lhs.busy == rhs.busy && lhs.expanded == rhs.expanded;
-}
-
-constexpr bool operator!=(const AccessibilityState &lhs, const AccessibilityState &rhs)
-{
-  return !(rhs == lhs);
 }
 
 struct AccessibilityLabelledBy {
@@ -90,11 +87,6 @@ struct AccessibilityLabelledBy {
 inline static bool operator==(const AccessibilityLabelledBy &lhs, const AccessibilityLabelledBy &rhs)
 {
   return lhs.value == rhs.value;
-}
-
-inline static bool operator!=(const AccessibilityLabelledBy &lhs, const AccessibilityLabelledBy &rhs)
-{
-  return !(lhs == rhs);
 }
 
 struct AccessibilityValue {
@@ -107,11 +99,6 @@ struct AccessibilityValue {
 constexpr bool operator==(const AccessibilityValue &lhs, const AccessibilityValue &rhs)
 {
   return lhs.min == rhs.min && lhs.max == rhs.max && lhs.now == rhs.now && lhs.text == rhs.text;
-}
-
-constexpr bool operator!=(const AccessibilityValue &lhs, const AccessibilityValue &rhs)
-{
-  return !(rhs == lhs);
 }
 
 enum class ImportantForAccessibility : uint8_t {

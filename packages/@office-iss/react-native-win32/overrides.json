@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.85.0-nightly-20260224-42cd0f041",
+  "baseVersion": "0.85.0-nightly-20260303-c26dbe286",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "baf585dd3e43f5433a04cb6b912333a0dd68b16b"
+      "baseHash": "56a63445d9d20e6c25fea831d9d0d41b9c5b6463"
     },
     {
       "type": "derived",
@@ -177,6 +177,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/ReactNativeViewAttributes.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ReactNativeViewAttributes.js",
+      "baseVersion": "0.85.0-nightly-20260224-42cd0f041",
       "baseHash": "096d430d02315c4017c5971daaee5790db6787f6"
     },
     {
@@ -335,7 +336,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "a54d194cd731380ec0f2ff86b8b1f5ff072ec0ba"
+      "baseHash": "5b9617aa1bedd5c70b30dac1f3b35aa535976b54"
     },
     {
       "type": "copy",
@@ -431,13 +432,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "14e1085587ef8b8a506594599c1aea8cf40ef140"
+      "baseHash": "9e33c80b41f230349924379625a39c9cf68b9d3b"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextNativeComponent.js",
-      "baseHash": "48d3dec45a0737147f7dbaa53b81bd4514ec3773",
+      "baseHash": "508e687d6346c5c99bef39d56a6e8230754ba0ef",
       "issue": 7074
     },
     {

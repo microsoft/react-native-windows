@@ -22,7 +22,11 @@ import processColor from '../StyleSheet/processColor';
 import StyleSheet from '../StyleSheet/StyleSheet';
 import Platform from '../Utilities/Platform';
 import TextAncestorContext from './TextAncestorContext';
-import {NativeText, NativeVirtualText} from './TextNativeComponent';
+import {
+  NativeSelectableText,
+  NativeText,
+  NativeVirtualText,
+} from './TextNativeComponent';
 import * as React from 'react';
 import {useContext, useMemo, useState} from 'react';
 
@@ -32,7 +36,7 @@ const View = require('../Components/View/View').default; // [Windows]
 import {type ViewStyleProp} from '../StyleSheet/StyleSheet'; // [Windows]
 
 type TextForwardRef = React.ElementRef<
-  typeof NativeText | typeof NativeVirtualText,
+  typeof NativeText | typeof NativeVirtualText | typeof NativeSelectableText,
 >;
 
 /**
@@ -317,7 +321,7 @@ const TextImpl: component(
     processedProps.children = children;
     if (isPressable) {
       return (
-        <NativePressableVirtualText
+        <PressableVirtualText
           ref={forwardedRef}
           textProps={processedProps}
           textPressabilityProps={textPressabilityProps ?? {}}
@@ -337,14 +341,20 @@ const TextImpl: component(
 
   if (isPressable) {
     nativeText = (
-      <NativePressableText
+      <PressableText
         ref={forwardedRef}
+        selectable={_selectable}
         textProps={processedProps}
         textPressabilityProps={textPressabilityProps ?? {}}
       />
     );
   } else {
-    nativeText = <NativeText {...processedProps} ref={forwardedRef} />;
+    nativeText =
+      _selectable === true ? (
+        <NativeSelectableText {...processedProps} ref={forwardedRef} />
+      ) : (
+        <NativeText {...processedProps} ref={forwardedRef} />
+      );
   }
 
   if (children == null) {
@@ -511,28 +521,17 @@ function useTextPressability({
   );
 }
 
-type NativePressableTextProps = Readonly<{
-  textProps: NativeTextProps,
-  textPressabilityProps: TextPressabilityProps,
-}>;
-
 /**
  * Wrap the NativeVirtualText component and initialize pressability.
  *
  * This logic is split out from the main Text component to enable the more
  * expensive pressability logic to be only initialized when needed.
  */
-const NativePressableVirtualText: component(
-  ref: React.RefSetter<TextForwardRef>,
-  ...props: NativePressableTextProps
-) = ({
-  ref: forwardedRef,
-  textProps,
-  textPressabilityProps,
-}: {
+component PressableVirtualText(
   ref?: React.RefSetter<TextForwardRef>,
-  ...NativePressableTextProps,
-}) => {
+  textProps: NativeTextProps,
+  textPressabilityProps: TextPressabilityProps,
+) {
   const [isHighlighted, eventHandlersForText] = useTextPressability(
     textPressabilityProps,
   );
@@ -543,42 +542,40 @@ const NativePressableVirtualText: component(
       {...eventHandlersForText}
       isHighlighted={isHighlighted}
       isPressable={true}
-      ref={forwardedRef}
+      ref={ref}
     />
   );
-};
+}
 
 /**
- * Wrap the NativeText component and initialize pressability.
+ * Wrap a NativeText component and initialize pressability.
  *
  * This logic is split out from the main Text component to enable the more
  * expensive pressability logic to be only initialized when needed.
  */
-const NativePressableText: component(
-  ref: React.RefSetter<TextForwardRef>,
-  ...props: NativePressableTextProps
-) = ({
-  ref: forwardedRef,
-  textProps,
-  textPressabilityProps,
-}: {
+component PressableText(
   ref?: React.RefSetter<TextForwardRef>,
-  ...NativePressableTextProps,
-}) => {
+  selectable?: ?boolean,
+  textProps: NativeTextProps,
+  textPressabilityProps: TextPressabilityProps,
+) {
   const [isHighlighted, eventHandlersForText] = useTextPressability(
     textPressabilityProps,
   );
 
+  const NativeComponent =
+    selectable === true ? NativeSelectableText : NativeText;
+
   return (
-    <NativeText
+    <NativeComponent
       {...textProps}
       {...eventHandlersForText}
       isHighlighted={isHighlighted}
       isPressable={true}
-      ref={forwardedRef}
+      ref={ref}
     />
   );
-};
+}
 
 const userSelectToSelectableMap = {
   auto: true,

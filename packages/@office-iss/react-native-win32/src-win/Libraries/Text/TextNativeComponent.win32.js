@@ -13,6 +13,7 @@ import type {ProcessedColorValue} from '../StyleSheet/processColor';
 import type {GestureResponderEvent} from '../Types/CoreEventTypes';
 import type {TextProps} from './TextProps';
 
+import {enablePreparedTextLayout} from '../../src/private/featureflags/ReactNativeFeatureFlags';
 import {createViewConfig} from '../NativeComponent/ViewConfig';
 import UIManager from '../ReactNative/UIManager';
 import createReactNativeComponentClass from '../Renderer/shims/createReactNativeComponentClass';
@@ -88,7 +89,7 @@ const textViewConfig = {
     },
   },
   uiViewClassName: 'RCTText',
-};
+} as const;
 
 const virtualTextViewConfig = {
   validAttributes: {
@@ -97,7 +98,7 @@ const virtualTextViewConfig = {
     maxFontSizeMultiplier: true,
   },
   uiViewClassName: 'RCTVirtualText',
-};
+} as const;
 
 /**
  * `NativeText` is an internal React Native host component, and is exported to
@@ -111,8 +112,6 @@ const virtualTextViewConfig = {
 // and <View> wrappers so that we no longer have any reason to export these APIs.
 export const NativeText: HostComponent<NativeTextProps> =
   (createReactNativeComponentClass('RCTText', () =>
-    /* $FlowFixMe[incompatible-type] Natural Inference rollout. See
-     * https://fburl.com/workplace/6291gfvu */
     createViewConfig(textViewConfig),
   ): any);
 
@@ -121,7 +120,15 @@ export const NativeVirtualText: HostComponent<NativeTextProps> =
   UIManager.getViewManagerConfig('RCTVirtualText') == null
     ? NativeText
     : (createReactNativeComponentClass('RCTVirtualText', () =>
-        /* $FlowFixMe[incompatible-type] Natural Inference rollout. See
-         * https://fburl.com/workplace/6291gfvu */
         createViewConfig(virtualTextViewConfig),
       ): any);
+
+export const NativeSelectableText: HostComponent<NativeTextProps> =
+  enablePreparedTextLayout()
+    ? (createReactNativeComponentClass('RCTSelectableText', () =>
+        createViewConfig({
+          ...textViewConfig,
+          uiViewClassName: 'RCTSelectableText',
+        }),
+      ): any)
+    : NativeText;
