@@ -477,14 +477,6 @@
     },
     {
       "type": "patch",
-      "file": "src-win/Libraries/Components/View/ReactNativeViewAttributes.windows.js",
-      "baseFile": "packages/react-native/Libraries/Components/View/ReactNativeViewAttributes.js",
-      "baseVersion": "0.85.0-nightly-20260224-42cd0f041",
-      "baseHash": "096d430d02315c4017c5971daaee5790db6787f6",
-      "issue": 9053
-    },
-    {
-      "type": "patch",
       "file": "src-win/Libraries/Components/View/View.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
       "baseHash": "60eab5df574b43200494005fc3f00d11576d515b"

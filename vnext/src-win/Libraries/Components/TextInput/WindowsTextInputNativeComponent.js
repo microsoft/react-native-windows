@@ -752,18 +752,12 @@ export const __INTERNAL_VIEW_CONFIG: PartialViewConfig = {
     borderBottomLeftRadius: true,
     borderLeftColor: colorAttribute,
     borderTopLeftRadius: true,
-<<<<<<< Upstream
     borderTopColor: colorAttribute,
-||||||| base
-    borderTopColor: {process: require('../../StyleSheet/processColor').default},
-=======
-    borderTopColor: {process: require('../../StyleSheet/processColor').default},
     clearTextOnFocus: true, // [Windows]
     clearTextOnSubmit: true, // [Windows]
     scrollEnabled: true, // [Windows]
     spellCheck: true, // [Windows]
     submitKeyEvents: true, // [Windows]
->>>>>>> Override
   },
 };
 

@@ -11,24 +11,12 @@
 import type {PartialViewConfigWithoutName} from './PlatformBaseViewConfig';
 
 import ReactNativeStyleAttributes from '../Components/View/ReactNativeStyleAttributes';
-<<<<<<< Upstream
 import {
   boxShadowAttribute,
   colorAttribute,
   filterAttribute,
 } from '../Components/View/ReactNativeStyleAttributes';
-import {
-  ConditionallyIgnoredEventHandlers,
-  DynamicallyInjectedByGestureHandler,
-} from './ViewConfigIgnore';
-||||||| base
-import {
-  ConditionallyIgnoredEventHandlers,
-  DynamicallyInjectedByGestureHandler,
-} from './ViewConfigIgnore';
-=======
 import {DynamicallyInjectedByGestureHandler} from './ViewConfigIgnore';
->>>>>>> Override
 
 const bubblingEventTypes = {
   // Generic Events
@@ -261,39 +249,15 @@ const validAttributesForNonEventProps = {
   removeClippedSubviews: true,
   role: true,
   borderRadius: true,
-<<<<<<< Upstream
   borderColor: colorAttribute,
-  borderBlockColor: colorAttribute,
-||||||| base
-  borderColor: {process: require('../StyleSheet/processColor').default},
-  borderBlockColor: {process: require('../StyleSheet/processColor').default},
-=======
-  borderColor: {process: require('../StyleSheet/processColor').default},
->>>>>>> Override
   borderCurve: true,
   borderWidth: true,
   borderStyle: true,
   hitSlop: {diff: require('../Utilities/differ/insetsDiffer').default},
   collapsable: true,
   collapsableChildren: true,
-<<<<<<< Upstream
-  filter: filterAttribute,
+  experimental_filter: filterAttribute,
   boxShadow: boxShadowAttribute,
-||||||| base
-  filter: ReactNativeFeatureFlags.enableNativeCSSParsing()
-    ? (true as const)
-    : {process: require('../StyleSheet/processFilter').default},
-  boxShadow: ReactNativeFeatureFlags.enableNativeCSSParsing()
-    ? (true as const)
-    : {process: require('../StyleSheet/processBoxShadow').default},
-=======
-  experimental_filter: ReactNativeFeatureFlags.enableNativeCSSParsing()
-    ? (true as const)
-    : {process: require('../StyleSheet/processFilter').default},
-  boxShadow: ReactNativeFeatureFlags.enableNativeCSSParsing()
-    ? (true as const)
-    : {process: require('../StyleSheet/processBoxShadow').default},
->>>>>>> Override
   mixBlendMode: true,
   isolation: true,
 
@@ -306,31 +270,9 @@ const validAttributesForNonEventProps = {
   borderLeftWidth: true,
   borderLeftColor: colorAttribute,
   borderStartWidth: true,
-<<<<<<< Upstream
-  borderBlockStartWidth: true,
   borderStartColor: colorAttribute,
-  borderBlockStartColor: colorAttribute,
-||||||| base
-  borderBlockStartWidth: true,
-  borderStartColor: {process: require('../StyleSheet/processColor').default},
-  borderBlockStartColor: {
-    process: require('../StyleSheet/processColor').default,
-  },
-=======
-  borderStartColor: {process: require('../StyleSheet/processColor').default},
->>>>>>> Override
   borderEndWidth: true,
-<<<<<<< Upstream
-  borderBlockEndWidth: true,
   borderEndColor: colorAttribute,
-  borderBlockEndColor: colorAttribute,
-||||||| base
-  borderBlockEndWidth: true,
-  borderEndColor: {process: require('../StyleSheet/processColor').default},
-  borderBlockEndColor: {process: require('../StyleSheet/processColor').default},
-=======
-  borderEndColor: {process: require('../StyleSheet/processColor').default},
->>>>>>> Override
 
   borderTopLeftRadius: true,
   borderTopRightRadius: true,
