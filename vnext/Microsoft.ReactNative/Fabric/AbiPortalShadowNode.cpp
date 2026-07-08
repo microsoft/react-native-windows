@@ -25,7 +25,7 @@ void AbiPortalShadowNode::layout(facebook::react::LayoutContext layoutContext) {
   ensureUnsealed();
   auto layoutMetrics = getLayoutMetrics();
 
-  auto portalOwningShadowNode = ShadowNode::Unshared{};
+  auto portalOwningShadowNode = std::shared_ptr<facebook::react::ShadowNode>{};
 
   if (getChildren().empty()) {
     return;
@@ -36,7 +36,7 @@ void AbiPortalShadowNode::layout(facebook::react::LayoutContext layoutContext) {
 
   const auto &childNode = getChildren()[0];
 
-  auto clonedShadowNode = ShadowNode::Unshared{};
+  auto clonedShadowNode = std::shared_ptr<facebook::react::ShadowNode>{};
 
   portalOwningShadowNode = cloneTree(childNode->getFamily(), [&](const ShadowNode &oldShadowNode) {
     clonedShadowNode = oldShadowNode.clone({});

@@ -88,13 +88,13 @@ facebook::react::SharedEventEmitter EventEmitterForComponent(
   auto viewComponent = descriptor.view.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
   auto emitter = viewComponent->GetEventEmitter();
   if (emitter)
-    return emitter;
+    return std::const_pointer_cast<facebook::react::ViewEventEmitter>(emitter);
 
   for (auto it = view.Parent(); it; it = it.Parent()) {
     auto emitter =
         it.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()->GetEventEmitter();
     if (emitter)
-      return emitter;
+      return std::const_pointer_cast<facebook::react::ViewEventEmitter>(emitter);
   }
 
   return nullptr;
