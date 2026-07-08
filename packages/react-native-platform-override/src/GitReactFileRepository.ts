@@ -60,6 +60,13 @@ export default class GitReactFileRepository
       await gitClient.addConfig('core.ignorecase', 'true');
     }
 
+    // Ensure long paths are supported. Newer React Native versions include
+    // deeply-nested upstream files whose paths exceed the historic
+    // 260-character MAX_PATH limit on Windows, causing `git checkout` to fail
+    // with "Filename too long". Applied unconditionally so pre-existing scratch
+    // repos pick it up as well.
+    await gitClient.addConfig('core.longpaths', 'true');
+
     return new GitReactFileRepository(dir, gitClient);
   }
 
