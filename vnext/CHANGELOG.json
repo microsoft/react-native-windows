@@ -2,6 +2,81 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Jul 2026 05:00:51 GMT",
+      "version": "0.82.10",
+      "tag": "react-native-windows_v0.82.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7c84e5e0dec4cbd34a732a68e5c65bc87d1f3c6f",
+            "comment": "Re-introduce WebSocket JS integration tests"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "7c84e5e0dec4cbd34a732a68e5c65bc87d1f3c6f",
+            "comment": "Fix WebSocket binaryType handling — stop unconditional Blob interception of binary messages"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7c84e5e0dec4cbd34a732a68e5c65bc87d1f3c6f",
+            "comment": "Upgrade to Microsoft.WindowsAppSDK 1.8.260508005"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7c84e5e0dec4cbd34a732a68e5c65bc87d1f3c6f",
+            "comment": "Defer findPowershell to layoutMSRNCxx"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7c84e5e0dec4cbd34a732a68e5c65bc87d1f3c6f",
+            "comment": "Upgrade to PowerShell 7"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7c84e5e0dec4cbd34a732a68e5c65bc87d1f3c6f",
+            "comment": "Upgrade to GoogleTest adapter 1.8.1.8"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7c84e5e0dec4cbd34a732a68e5c65bc87d1f3c6f",
+            "comment": "Upgrade build agents to Windows Server 2025, Visual Studio 2026"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7c84e5e0dec4cbd34a732a68e5c65bc87d1f3c6f",
+            "comment": "Upgrade to Visual Studio 2026"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7c84e5e0dec4cbd34a732a68e5c65bc87d1f3c6f",
+            "comment": "Upgrade projects to .NET 10"
+          },
+          {
+            "author": "dlucas@seabird.com",
+            "package": "react-native-windows",
+            "commit": "7c84e5e0dec4cbd34a732a68e5c65bc87d1f3c6f",
+            "comment": "Fixes misalignment with TextInput on different display scales"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.82.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Jun 2026 15:29:38 GMT",
       "version": "0.82.9",
       "tag": "react-native-windows_v0.82.9",

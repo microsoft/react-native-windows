@@ -1,0 +1,20 @@
+{
+  "name": "@react-native-windows/find-dotnet-tools",
+  "entries": [
+    {
+      "date": "Wed, 08 Jul 2026 05:00:52 GMT",
+      "version": "0.0.0-canary.2",
+      "tag": "@react-native-windows/find-dotnet-tools_v0.0.0-canary.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/find-dotnet-tools",
+            "commit": "7c84e5e0dec4cbd34a732a68e5c65bc87d1f3c6f",
+            "comment": "Migrate to PowerShell 7"
+          }
+        ]
+      }
+    }
+  ]
+}
