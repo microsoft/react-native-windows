@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable core.longpaths in override scratch repo to fix validate-overrides on Windows for deeply-nested upstream paths",
+  "packageName": "react-native-platform-override",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
