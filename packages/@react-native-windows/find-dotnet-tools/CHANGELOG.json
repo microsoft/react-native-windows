@@ -2,6 +2,33 @@
   "name": "@react-native-windows/find-dotnet-tools",
   "entries": [
     {
+      "date": "Wed, 08 Jul 2026 10:28:11 GMT",
+      "version": "0.0.0-canary.2",
+      "tag": "@react-native-windows/find-dotnet-tools_v0.0.0-canary.2",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-dotnet-tools",
+            "comment": "Bump @react-native-windows/fs to v0.81.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-dotnet-tools",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.37",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-dotnet-tools",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.56",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Jul 2026 06:17:57 GMT",
       "version": "0.0.0-canary.2",
       "tag": "@react-native-windows/find-dotnet-tools_v0.0.0-canary.2",
