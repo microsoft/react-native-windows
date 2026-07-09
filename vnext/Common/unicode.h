@@ -55,6 +55,14 @@ class UnicodeConversionException : public std::runtime_error {
 /* (4) */ std::wstring Utf8ToUtf16(const std::string_view &utf8);
 #endif
 
+// The following functions return the length of the UTF-16 string that would
+// result from converting the input UTF-8 string, without actually performing
+// the conversion or allocating a temporary std::wstring. This is useful in
+// hot paths where only the length is needed (e.g. DirectWrite text ranges).
+//
+size_t Utf8ToUtf16Length(const char *utf8, size_t utf8Len);
+size_t Utf8ToUtf16Length(const std::string &utf8);
+
 // The following functions convert UTF-16BE strings to UTF-8 strings. Their
 // behaviors mirror those of the above Utf8ToUtf16 functions.
 //
