@@ -1690,7 +1690,7 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
   const auto &props = windowsTextInputProps();
   facebook::react::TextAttributes textAttributes = props.textAttributes;
   if (std::isnan(props.textAttributes.fontSize)) {
-    facebook::react::TextAttributes::defaultTextAttributes().fontSize;
+    textAttributes.fontSize = facebook::react::TextAttributes::defaultTextAttributes().fontSize;
   }
   textAttributes.fontSizeMultiplier = m_fontSizeMultiplier;
   fragment1.string = props.placeholder;
@@ -1698,8 +1698,13 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
   attributedString.appendFragment(std::move(fragment1));
 
   facebook::react::LayoutConstraints constraints;
-  constraints.maximumSize.width = static_cast<FLOAT>(m_imgWidth);
-  constraints.maximumSize.height = static_cast<FLOAT>(m_imgHeight);
+  // m_imgWidth/m_imgHeight are physical pixels (frame * pointScaleFactor), but
+  // LayoutConstraints are expressed in DIPs. Feeding physical px laid the
+  // placeholder out in a box pointScaleFactor x too large, so the placeholder was
+  // measured/positioned at a different height than the typed text. Convert to DIPs.
+  const float scale = m_layoutMetrics.pointScaleFactor != 0.0f ? m_layoutMetrics.pointScaleFactor : 1.0f;
+  constraints.maximumSize.width = static_cast<FLOAT>(m_imgWidth) / scale;
+  constraints.maximumSize.height = static_cast<FLOAT>(m_imgHeight) / scale;
 
   facebook::react::WindowsTextLayoutManager::GetTextLayout(
       facebook::react::AttributedStringBox(attributedString), {} /*TODO*/, constraints, textLayout);
