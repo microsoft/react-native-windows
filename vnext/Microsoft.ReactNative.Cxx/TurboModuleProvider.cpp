@@ -15,7 +15,7 @@ struct AbiCallInvoker final : facebook::react::CallInvoker {
   void invokeAsync(facebook::react::CallFunc &&func) noexcept override {
     auto callInvoker = m_context.CallInvoker();
     if (callInvoker) {
-      callInvoker->InvokeAsync(
+      callInvoker.InvokeAsync(
           [context = m_context, func = std::move(func)](const winrt::Windows::Foundation::IInspectable &runtimeHandle) {
             func(GetOrCreateContextRuntime(context, runtimeHandle));
           });
@@ -25,7 +25,7 @@ struct AbiCallInvoker final : facebook::react::CallInvoker {
   void invokeSync(facebook::react::CallFunc &&func) override {
     auto callInvoker = m_context.CallInvoker();
     if (callInvoker) {
-      callInvoker->InvokeSync(
+      callInvoker.InvokeSync(
           [context = m_context, func = std::move(func)](const winrt::Windows::Foundation::IInspectable &runtimeHandle) {
             func(GetOrCreateContextRuntime(context, runtimeHandle));
           });
