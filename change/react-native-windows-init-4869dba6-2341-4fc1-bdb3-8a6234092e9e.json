@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Integrate RN 0.85.0-nightly-20260303-c26dbe286",
+  "comment": "Integrate RN 0.85.3",
   "packageName": "react-native-windows-init",
   "email": "email not defined",
   "dependentChangeType": "patch"

@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.85.0-nightly-20260303-c26dbe286",
+  "baseVersion": "0.85.3",
   "overrides": [
     {
       "type": "derived",
@@ -84,7 +84,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/NetworkIOAgent.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/NetworkIOAgent.cpp",
-      "baseHash": "fc90bdc60cc964118c6b7affde52b4645ee35053",
+      "baseHash": "259fccd72144e07a42048fa8700ff0348fa6557c",
       "issue": 13587
     },
     {
@@ -114,6 +114,13 @@
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModule.h",
       "baseHash": "38ab1c28ebdee19c3e003135ee760083977f1f88",
       "issue": 14128
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/defaults/DefaultTurboModules.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/defaults/DefaultTurboModules.cpp",
+      "baseHash": "ae5fd645c22d3405df7685dc1ba2451959d96b1a",
+      "issue": 13587
     },
     {
       "type": "patch",
