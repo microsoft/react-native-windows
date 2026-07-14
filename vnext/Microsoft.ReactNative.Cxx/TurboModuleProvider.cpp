@@ -13,17 +13,23 @@ struct AbiCallInvoker final : facebook::react::CallInvoker {
   AbiCallInvoker(IReactContext const &context) : m_context(context) {}
 
   void invokeAsync(facebook::react::CallFunc &&func) noexcept override {
-    m_context.CallInvoker().InvokeAsync(
-        [context = m_context, func = std::move(func)](const winrt::Windows::Foundation::IInspectable &runtimeHandle) {
-          func(GetOrCreateContextRuntime(context, runtimeHandle));
-        });
+    auto callInvoker = m_context.CallInvoker();
+    if (callInvoker) {
+      callInvoker.InvokeAsync(
+          [context = m_context, func = std::move(func)](const winrt::Windows::Foundation::IInspectable &runtimeHandle) {
+            func(GetOrCreateContextRuntime(context, runtimeHandle));
+          });
+    }
   }
 
   void invokeSync(facebook::react::CallFunc &&func) override {
-    m_context.CallInvoker().InvokeSync(
-        [context = m_context, func = std::move(func)](const winrt::Windows::Foundation::IInspectable &runtimeHandle) {
-          func(GetOrCreateContextRuntime(context, runtimeHandle));
-        });
+    auto callInvoker = m_context.CallInvoker();
+    if (callInvoker) {
+      callInvoker.InvokeSync(
+          [context = m_context, func = std::move(func)](const winrt::Windows::Foundation::IInspectable &runtimeHandle) {
+            func(GetOrCreateContextRuntime(context, runtimeHandle));
+          });
+    }
   }
 
  private:
