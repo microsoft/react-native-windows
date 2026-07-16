@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.85.0-nightly-20260303-c26dbe286",
+  "baseVersion": "0.85.3",
   "overrides": [
     {
       "type": "copy",
@@ -724,7 +724,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "94b8a92c13f2b1a3fa497686ad71d9489a619e8f",
+      "baseHash": "0dd53ee046dbb801d756eed8594d697cd4cbd857",
       "issue": 13228
     },
     {
