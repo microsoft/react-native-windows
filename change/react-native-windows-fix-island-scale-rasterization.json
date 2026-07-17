@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Prefer ContentIsland.RasterizationScale over GetDpiForWindow for island scale factor, and re-sync scale on window move/resize",
+  "packageName": "react-native-windows",
+  "email": "collindanielschneide@gmail.com",
+  "dependentChangeType": "patch"
+}

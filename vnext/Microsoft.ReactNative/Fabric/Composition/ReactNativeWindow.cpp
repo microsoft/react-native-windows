@@ -116,6 +116,13 @@ void ReactNativeWindow::AppWindow(const winrt::Microsoft::UI::Windowing::AppWind
 void ReactNativeWindow::AppWindow_Changed(
     winrt::Microsoft::UI::Windowing::AppWindow const &window,
     winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) noexcept {
+  // Re-sync the island scale factor on moves/resizes. The scale was previously
+  // set only once (island attach / bridge creation), so dragging the window to
+  // a monitor with a different scale factor left the island rendering at the
+  // launch monitor's scale.
+  if (args.DidPositionChange() || args.DidSizeChange()) {
+    UpdateIslandScaleFactor();
+  }
   if (args.DidSizeChange() || args.DidVisibilityChange()) {
     UpdateRootViewSizeToAppWindow(m_island, m_appWindow);
   }
@@ -179,8 +186,21 @@ winrt::Microsoft::UI::Content::IContentSiteBridge ReactNativeWindow::ContentSite
 
 void ReactNativeWindow::UpdateIslandScaleFactor() noexcept {
   if (m_island) {
-    auto scaleFactor = GetDpiForWindow(winrt::Microsoft::UI::GetWindowFromWindowId(m_appWindow.Id())) /
-        static_cast<float>(USER_DEFAULT_SCREEN_DPI);
+    // Prefer the ContentIsland's RasterizationScale - the compositor's ground
+    // truth for how this content is actually rasterized. GetDpiForWindow can
+    // return a stale or wrong DPI on virtual/remote displays (measured: a
+    // screen-share display reporting 96 while the monitor's effective scale is
+    // 1.25x under PerMonitorV2 awareness), which mis-scales the island so text
+    // rasterizes into a larger canvas than the visible box. Fall back to
+    // GetDpiForWindow when no ContentIsland is attached yet.
+    float scaleFactor = 0.0f;
+    if (auto contentIsland = m_island.Island()) {
+      scaleFactor = contentIsland.RasterizationScale();
+    }
+    if (scaleFactor <= 0.0f) {
+      scaleFactor = GetDpiForWindow(winrt::Microsoft::UI::GetWindowFromWindowId(m_appWindow.Id())) /
+          static_cast<float>(USER_DEFAULT_SCREEN_DPI);
+    }
     m_island.ScaleFactor(scaleFactor);
   }
 }
