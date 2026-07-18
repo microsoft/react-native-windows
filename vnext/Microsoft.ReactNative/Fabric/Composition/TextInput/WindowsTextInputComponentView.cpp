@@ -1702,9 +1702,8 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
   // LayoutConstraints are expressed in DIPs. Feeding physical px laid the
   // placeholder out in a box pointScaleFactor x too large, so the placeholder was
   // measured/positioned at a different height than the typed text. Convert to DIPs.
-  const float scale = m_layoutMetrics.pointScaleFactor != 0.0f ? m_layoutMetrics.pointScaleFactor : 1.0f;
-  constraints.maximumSize.width = static_cast<FLOAT>(m_imgWidth) / scale;
-  constraints.maximumSize.height = static_cast<FLOAT>(m_imgHeight) / scale;
+  constraints.maximumSize.width = static_cast<FLOAT>(m_imgWidth) / m_layoutMetrics.pointScaleFactor;
+  constraints.maximumSize.height = static_cast<FLOAT>(m_imgHeight) / m_layoutMetrics.pointScaleFactor;
 
   facebook::react::WindowsTextLayoutManager::GetTextLayout(
       facebook::react::AttributedStringBox(attributedString), {} /*TODO*/, constraints, textLayout);
