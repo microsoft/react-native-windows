@@ -39,6 +39,7 @@ resources:
         - '0.82-stable'
         - '0.83-stable'
         - '0.84-stable'
+        - '0.85-stable'
   repositories:
   - repository: 1ESPipelineTemplates
     type: git
