@@ -2,6 +2,51 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 20 Jul 2026 21:19:50 GMT",
+      "version": "0.0.0-canary.292",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.292",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Integrate RN 0.85.0-nightly-20260303-c26dbe286"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Integrate RN 0.85.0-nightly-20260128-36f07a1b2"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Upgrade build agents to Windows Server 2025, Visual Studio 2026"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Integrate RN 0.85.0-nightly-20260210-4535df4f6"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Integrate RN 0.85.0-nightly-20260224-42cd0f041"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Upgrade to Visual Studio 2026"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 20:10:44 GMT",
       "version": "0.0.0-canary.291",
       "tag": "@react-native-windows/cli_v0.0.0-canary.291",

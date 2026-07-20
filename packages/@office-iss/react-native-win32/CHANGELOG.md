@@ -1,8 +1,20 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Tue, 07 Apr 2026 05:29:56 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 20 Jul 2026 21:19:51 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.312
+
+Mon, 20 Jul 2026 21:19:51 GMT
+
+### Changes
+
+- Integrate RN 0.85.0-nightly-20260224-42cd0f041 (email not defined)
+- Integrate RN 0.85.0-nightly-20260128-36f07a1b2 (email not defined)
+- Integrate RN 0.85.0-nightly-20260303-c26dbe286 (email not defined)
+- Integrate RN 0.85.0-nightly-20260210-4535df4f6 (email not defined)
+- Bump react-native-platform-override to v0.0.0-canary.1023
 
 ## 0.0.0-canary.311
 

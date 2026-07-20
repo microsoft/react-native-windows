@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/perf-testing
 
-<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 20 Jul 2026 21:19:50 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1039
+
+Mon, 20 Jul 2026 21:19:50 GMT
+
+### Changes
+
+- Integrate RN 0.85.0-nightly-20260128-36f07a1b2 (email not defined)
+- Integrate RN 0.85.0-nightly-20260224-42cd0f041 (email not defined)
+- Integrate RN 0.85.0-nightly-20260210-4535df4f6 (email not defined)
+- Integrate RN 0.85.0-nightly-20260303-c26dbe286 (email not defined)
 
 ## 0.0.0-canary.1038
 
