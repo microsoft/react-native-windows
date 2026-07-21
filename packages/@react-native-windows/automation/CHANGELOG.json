@@ -2,6 +2,45 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Tue, 21 Jul 2026 18:52:12 GMT",
+      "version": "0.85.0-preview.1",
+      "tag": "@react-native-windows/automation_v0.85.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/automation",
+            "commit": "e4ec8fe57ee86faa8c79d87f7083ce2457cc9fb3",
+            "comment": "Promote 0.85 to preview"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/automation",
+            "commit": "e4ec8fe57ee86faa8c79d87f7083ce2457cc9fb3",
+            "comment": "Upgrade build agents to Windows Server 2025, Visual Studio 2026"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.85.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/find-dotnet-tools to v0.85.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/fs to v0.85.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 20:10:44 GMT",
       "version": "0.0.0-canary.1056",
       "tag": "@react-native-windows/automation_v0.0.0-canary.1056",

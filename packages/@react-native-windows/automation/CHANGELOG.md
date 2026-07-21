@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Tue, 26 May 2026 20:10:44 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 21 Jul 2026 18:52:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.85.0-preview.1
+
+Tue, 21 Jul 2026 18:52:12 GMT
+
+### Changes
+
+- Promote 0.85 to preview (email not defined)
+- Upgrade build agents to Windows Server 2025, Visual Studio 2026 (julio.rocha@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.85.0-preview.1
+- Bump @react-native-windows/find-dotnet-tools to v0.85.0-preview.1
+- Bump @react-native-windows/fs to v0.85.0-preview.1
 
 ## 0.0.0-canary.1056
 

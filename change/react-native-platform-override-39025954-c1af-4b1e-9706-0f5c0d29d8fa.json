@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Promote 0.85 to preview",
-  "packageName": "react-native-platform-override",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

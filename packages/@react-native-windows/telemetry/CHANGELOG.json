@@ -2,6 +2,27 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 21 Jul 2026 18:52:11 GMT",
+      "version": "0.85.0-preview.1",
+      "tag": "@react-native-windows/telemetry_v0.85.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/telemetry",
+            "commit": "e4ec8fe57ee86faa8c79d87f7083ce2457cc9fb3",
+            "comment": "Promote 0.85 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.85.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 20:10:44 GMT",
       "version": "0.0.0-canary.134",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.134",

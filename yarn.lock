@@ -3532,7 +3532,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@office-iss/react-native-win32-tester@workspace:packages/@office-iss/react-native-win32-tester"
   dependencies:
-    "@office-iss/react-native-win32": "npm:0.85.0-preview.0"
+    "@office-iss/react-native-win32": "npm:0.85.0-preview.1"
     "@react-native/tester": "npm:0.85.3"
     "@rnw-scripts/babel-react-native-config": "npm:0.0.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
@@ -3547,16 +3547,16 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:19.2.3"
     react-native: "npm:0.85.3"
-    react-native-platform-override: "npm:0.85.0-preview.0"
+    react-native-platform-override: "npm:0.85.0-preview.1"
     typescript: "npm:5.0.4"
   peerDependencies:
-    "@office-iss/react-native-win32": 0.85.0-preview.0
+    "@office-iss/react-native-win32": 0.85.0-preview.1
     react: 19.2.3
     react-native: ^0.85.0
   languageName: unknown
   linkType: soft
 
-"@office-iss/react-native-win32@npm:0.85.0-preview.0, @office-iss/react-native-win32@workspace:packages/@office-iss/react-native-win32":
+"@office-iss/react-native-win32@npm:0.85.0-preview.1, @office-iss/react-native-win32@workspace:packages/@office-iss/react-native-win32":
   version: 0.0.0-use.local
   resolution: "@office-iss/react-native-win32@workspace:packages/@office-iss/react-native-win32"
   dependencies:
@@ -3619,7 +3619,7 @@ __metadata:
     react-clone-referenced-element: "npm:^1.0.1"
     react-devtools-core: "npm:^6.1.5"
     react-native: "npm:0.85.3"
-    react-native-platform-override: "npm:0.85.0-preview.0"
+    react-native-platform-override: "npm:0.85.0-preview.1"
     react-refresh: "npm:^0.14.0"
     regenerator-runtime: "npm:^0.13.2"
     scheduler: "npm:0.27.0"
@@ -3975,7 +3975,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-windows/automation-channel@npm:0.85.0-preview.0, @react-native-windows/automation-channel@workspace:packages/@react-native-windows/automation-channel":
+"@react-native-windows/automation-channel@npm:0.85.0-preview.1, @react-native-windows/automation-channel@workspace:packages/@react-native-windows/automation-channel":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation-channel@workspace:packages/@react-native-windows/automation-channel"
   dependencies:
@@ -3994,17 +3994,17 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:19.2.3"
     react-native: "npm:0.85.3"
-    react-native-windows: "npm:0.85.0-preview.0"
+    react-native-windows: "npm:0.85.0-preview.1"
     typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/automation-commands@npm:0.85.0-preview.0, @react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands":
+"@react-native-windows/automation-commands@npm:0.85.0-preview.1, @react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands"
   dependencies:
     "@jest/types": "npm:^29.2.1"
-    "@react-native-windows/automation-channel": "npm:0.85.0-preview.0"
+    "@react-native-windows/automation-channel": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4018,16 +4018,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/automation@npm:0.85.0-preview.0, @react-native-windows/automation@workspace:packages/@react-native-windows/automation":
+"@react-native-windows/automation@npm:0.85.0-preview.1, @react-native-windows/automation@workspace:packages/@react-native-windows/automation":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation@workspace:packages/@react-native-windows/automation"
   dependencies:
     "@jest/create-cache-key-function": "npm:^29.2.1"
     "@jest/environment": "npm:^29.3.0"
     "@jest/types": "npm:^29.2.1"
-    "@react-native-windows/automation-channel": "npm:0.85.0-preview.0"
-    "@react-native-windows/find-dotnet-tools": "npm:0.85.0-preview.0"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
+    "@react-native-windows/automation-channel": "npm:0.85.0-preview.1"
+    "@react-native-windows/find-dotnet-tools": "npm:0.85.0-preview.1"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4048,18 +4048,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/cli@npm:0.85.0-preview.0, @react-native-windows/cli@workspace:packages/@react-native-windows/cli":
+"@react-native-windows/cli@npm:0.85.0-preview.1, @react-native-windows/cli@workspace:packages/@react-native-windows/cli":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/cli@workspace:packages/@react-native-windows/cli"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@react-native-community/cli-doctor": "npm:20.0.0"
     "@react-native-community/cli-types": "npm:20.0.0"
-    "@react-native-windows/codegen": "npm:0.85.0-preview.0"
-    "@react-native-windows/find-dotnet-tools": "npm:0.85.0-preview.0"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
-    "@react-native-windows/package-utils": "npm:0.85.0-preview.0"
-    "@react-native-windows/telemetry": "npm:0.85.0-preview.0"
+    "@react-native-windows/codegen": "npm:0.85.0-preview.1"
+    "@react-native-windows/find-dotnet-tools": "npm:0.85.0-preview.1"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
+    "@react-native-windows/package-utils": "npm:0.85.0-preview.1"
+    "@react-native-windows/telemetry": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4106,12 +4106,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/codegen@npm:0.85.0-preview.0, @react-native-windows/codegen@workspace:packages/@react-native-windows/codegen":
+"@react-native-windows/codegen@npm:0.85.0-preview.1, @react-native-windows/codegen@workspace:packages/@react-native-windows/codegen":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/codegen@workspace:packages/@react-native-windows/codegen"
   dependencies:
     "@babel/core": "npm:^7.25.2"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4140,11 +4140,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/find-dotnet-tools@npm:0.85.0-preview.0, @react-native-windows/find-dotnet-tools@workspace:packages/@react-native-windows/find-dotnet-tools":
+"@react-native-windows/find-dotnet-tools@npm:0.85.0-preview.1, @react-native-windows/find-dotnet-tools@workspace:packages/@react-native-windows/find-dotnet-tools":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/find-dotnet-tools@workspace:packages/@react-native-windows/find-dotnet-tools"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4157,11 +4157,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/find-repo-root@npm:0.85.0-preview.0, @react-native-windows/find-repo-root@workspace:packages/@react-native-windows/find-repo-root":
+"@react-native-windows/find-repo-root@npm:0.85.0-preview.1, @react-native-windows/find-repo-root@workspace:packages/@react-native-windows/find-repo-root":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/find-repo-root@workspace:packages/@react-native-windows/find-repo-root"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4177,7 +4177,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/fs@npm:0.85.0-preview.0, @react-native-windows/fs@workspace:packages/@react-native-windows/fs":
+"@react-native-windows/fs@npm:0.85.0-preview.1, @react-native-windows/fs@workspace:packages/@react-native-windows/fs":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/fs@workspace:packages/@react-native-windows/fs"
   dependencies:
@@ -4196,12 +4196,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/package-utils@npm:0.85.0-preview.0, @react-native-windows/package-utils@workspace:packages/@react-native-windows/package-utils":
+"@react-native-windows/package-utils@npm:0.85.0-preview.1, @react-native-windows/package-utils@workspace:packages/@react-native-windows/package-utils":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/package-utils@workspace:packages/@react-native-windows/package-utils"
   dependencies:
-    "@react-native-windows/find-repo-root": "npm:0.85.0-preview.0"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
+    "@react-native-windows/find-repo-root": "npm:0.85.0-preview.1"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4218,11 +4218,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/perf-testing@npm:0.85.0-preview.0, @react-native-windows/perf-testing@workspace:packages/@react-native-windows/perf-testing":
+"@react-native-windows/perf-testing@npm:0.85.0-preview.1, @react-native-windows/perf-testing@workspace:packages/@react-native-windows/perf-testing":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/perf-testing@workspace:packages/@react-native-windows/perf-testing"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4245,14 +4245,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/telemetry@npm:0.85.0-preview.0, @react-native-windows/telemetry@workspace:packages/@react-native-windows/telemetry":
+"@react-native-windows/telemetry@npm:0.85.0-preview.1, @react-native-windows/telemetry@workspace:packages/@react-native-windows/telemetry":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/telemetry@workspace:packages/@react-native-windows/telemetry"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@microsoft/1ds-core-js": "npm:^4.3.0"
     "@microsoft/1ds-post-js": "npm:^4.3.0"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4301,14 +4301,14 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:19.2.3"
     react-native: "npm:0.85.3"
-    react-native-platform-override: "npm:0.85.0-preview.0"
-    react-native-windows: "npm:0.85.0-preview.0"
+    react-native-platform-override: "npm:0.85.0-preview.1"
+    react-native-windows: "npm:0.85.0-preview.1"
     typescript: "npm:5.0.4"
   peerDependencies:
     "@react-native-picker/picker": 2.11.0
     react: 19.2.3
     react-native: ^0.85.0
-    react-native-windows: 0.85.0-preview.0
+    react-native-windows: 0.85.0-preview.1
     react-native-xaml: ^0.0.80
   peerDependenciesMeta:
     "@react-native-picker/picker":
@@ -4756,7 +4756,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/beachball-config@workspace:packages/@rnw-scripts/beachball-config"
   dependencies:
-    "@react-native-windows/package-utils": "npm:0.85.0-preview.0"
+    "@react-native-windows/package-utils": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/generated-beachball-config": "npm:0.0.0"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4778,8 +4778,8 @@ __metadata:
   resolution: "@rnw-scripts/create-github-releases@workspace:packages/@rnw-scripts/create-github-releases"
   dependencies:
     "@octokit/rest": "npm:^18.5.3"
-    "@react-native-windows/find-repo-root": "npm:0.85.0-preview.0"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
+    "@react-native-windows/find-repo-root": "npm:0.85.0-preview.1"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4811,8 +4811,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/debug-test@workspace:packages/debug-test"
   dependencies:
-    "@react-native-windows/automation": "npm:0.85.0-preview.0"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
+    "@react-native-windows/automation": "npm:0.85.0-preview.1"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/ts-config": "npm:2.0.6"
     "@types/jest": "npm:^29.2.2"
@@ -4836,7 +4836,7 @@ __metadata:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/preset-typescript": "npm:^7.8.3"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4877,11 +4877,11 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.8.3"
     "@babel/runtime": "npm:^7.20.0"
     "@react-native-community/cli": "npm:20.0.0"
-    "@react-native-windows/automation": "npm:0.85.0-preview.0"
-    "@react-native-windows/automation-channel": "npm:0.85.0-preview.0"
-    "@react-native-windows/automation-commands": "npm:0.85.0-preview.0"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
-    "@react-native-windows/perf-testing": "npm:0.85.0-preview.0"
+    "@react-native-windows/automation": "npm:0.85.0-preview.1"
+    "@react-native-windows/automation-channel": "npm:0.85.0-preview.1"
+    "@react-native-windows/automation-commands": "npm:0.85.0-preview.1"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
+    "@react-native-windows/perf-testing": "npm:0.85.0-preview.1"
     "@react-native-windows/tester": "npm:0.0.1"
     "@react-native/jest-preset": "npm:0.85.3"
     "@react-native/metro-config": "npm:0.85.3"
@@ -4906,7 +4906,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.85.3"
-    react-native-windows: "npm:0.85.0-preview.0"
+    react-native-windows: "npm:0.85.0-preview.1"
     react-test-renderer: "npm:19.1.0"
     sanitize-filename: "npm:^1.6.3"
     typescript: "npm:5.0.4"
@@ -5000,9 +5000,9 @@ __metadata:
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/preset-typescript": "npm:^7.8.3"
     "@react-native-community/template": "npm:0.84.1"
-    "@react-native-windows/find-repo-root": "npm:0.85.0-preview.0"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
-    "@react-native-windows/package-utils": "npm:0.85.0-preview.0"
+    "@react-native-windows/find-repo-root": "npm:0.85.0-preview.1"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
+    "@react-native-windows/package-utils": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -5025,7 +5025,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:19.2.3"
     react-native: "npm:0.85.3"
-    react-native-platform-override: "npm:0.85.0-preview.0"
+    react-native-platform-override: "npm:0.85.0-preview.1"
     semver: "npm:^7.6.3"
     source-map-support: "npm:^0.5.19"
     typescript: "npm:5.0.4"
@@ -5191,7 +5191,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.85.3"
-    react-native-windows: "npm:0.85.0-preview.0"
+    react-native-windows: "npm:0.85.0-preview.1"
     react-test-renderer: "npm:19.1.0"
     typescript: "npm:5.0.4"
   languageName: unknown
@@ -5201,9 +5201,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/prepare-release@workspace:packages/@rnw-scripts/prepare-release"
   dependencies:
-    "@react-native-windows/find-repo-root": "npm:0.85.0-preview.0"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
-    "@react-native-windows/package-utils": "npm:0.85.0-preview.0"
+    "@react-native-windows/find-repo-root": "npm:0.85.0-preview.1"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
+    "@react-native-windows/package-utils": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -5223,9 +5223,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/promote-release@workspace:packages/@rnw-scripts/promote-release"
   dependencies:
-    "@react-native-windows/find-repo-root": "npm:0.85.0-preview.0"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
-    "@react-native-windows/package-utils": "npm:0.85.0-preview.0"
+    "@react-native-windows/find-repo-root": "npm:0.85.0-preview.1"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
+    "@react-native-windows/package-utils": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -5279,7 +5279,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.85.3"
-    react-native-windows: "npm:0.85.0-preview.0"
+    react-native-windows: "npm:0.85.0-preview.1"
     react-test-renderer: "npm:19.1.0"
     typescript: "npm:5.0.4"
   languageName: unknown
@@ -5315,7 +5315,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.85.3"
-    react-native-windows: "npm:0.85.0-preview.0"
+    react-native-windows: "npm:0.85.0-preview.1"
     typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
@@ -5324,8 +5324,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/stamp-version@workspace:packages/@rnw-scripts/stamp-version"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
-    "@react-native-windows/package-utils": "npm:0.85.0-preview.0"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
+    "@react-native-windows/package-utils": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -5355,7 +5355,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/take-screenshot@workspace:packages/@rnw-scripts/take-screenshot"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -5385,7 +5385,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/unbroken@workspace:packages/@rnw-scripts/unbroken"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -16239,15 +16239,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-platform-override@npm:0.85.0-preview.0, react-native-platform-override@workspace:*, react-native-platform-override@workspace:packages/react-native-platform-override":
+"react-native-platform-override@npm:0.85.0-preview.1, react-native-platform-override@workspace:*, react-native-platform-override@workspace:packages/react-native-platform-override":
   version: 0.0.0-use.local
   resolution: "react-native-platform-override@workspace:packages/react-native-platform-override"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/preset-typescript": "npm:^7.8.3"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
-    "@react-native-windows/package-utils": "npm:0.85.0-preview.0"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
+    "@react-native-windows/package-utils": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -16299,9 +16299,9 @@ __metadata:
   resolution: "react-native-windows-init@workspace:packages/react-native-windows-init"
   dependencies:
     "@babel/core": "npm:^7.25.2"
-    "@react-native-windows/cli": "npm:0.85.0-preview.0"
-    "@react-native-windows/fs": "npm:0.85.0-preview.0"
-    "@react-native-windows/telemetry": "npm:0.85.0-preview.0"
+    "@react-native-windows/cli": "npm:0.85.0-preview.1"
+    "@react-native-windows/fs": "npm:0.85.0-preview.1"
+    "@react-native-windows/telemetry": "npm:0.85.0-preview.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -16365,7 +16365,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"react-native-windows@npm:0.85.0-preview.0, react-native-windows@workspace:vnext":
+"react-native-windows@npm:0.85.0-preview.1, react-native-windows@workspace:vnext":
   version: 0.0.0-use.local
   resolution: "react-native-windows@workspace:vnext"
   dependencies:
@@ -16376,9 +16376,9 @@ __metadata:
     "@react-native-community/cli": "npm:20.0.0"
     "@react-native-community/cli-platform-android": "npm:20.0.0"
     "@react-native-community/cli-platform-ios": "npm:20.0.0"
-    "@react-native-windows/cli": "npm:0.85.0-preview.0"
-    "@react-native-windows/codegen": "npm:0.85.0-preview.0"
-    "@react-native-windows/find-dotnet-tools": "npm:0.85.0-preview.0"
+    "@react-native-windows/cli": "npm:0.85.0-preview.1"
+    "@react-native-windows/codegen": "npm:0.85.0-preview.1"
+    "@react-native-windows/find-dotnet-tools": "npm:0.85.0-preview.1"
     "@react-native/assets": "npm:1.0.0"
     "@react-native/assets-registry": "npm:0.85.3"
     "@react-native/codegen": "npm:0.85.3"
@@ -16427,7 +16427,7 @@ __metadata:
     react: "npm:19.2.3"
     react-devtools-core: "npm:^6.1.5"
     react-native: "npm:0.85.3"
-    react-native-platform-override: "npm:0.85.0-preview.0"
+    react-native-platform-override: "npm:0.85.0-preview.1"
     react-refresh: "npm:^0.14.0"
     regenerator-runtime: "npm:^0.13.2"
     scheduler: "npm:0.27.0"

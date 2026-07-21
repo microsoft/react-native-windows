@@ -1,8 +1,28 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Tue, 26 May 2026 20:10:44 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 21 Jul 2026 18:52:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.85.0-preview.1
+
+Tue, 21 Jul 2026 18:52:11 GMT
+
+### Changes
+
+- Upgrade to Visual Studio 2026 (julio.rocha@microsoft.com)
+- Integrate RN 0.85.3 (email not defined)
+- Integrate RN 0.85.3 (email not defined)
+- Integrate RN 0.85.0-nightly-20260128-36f07a1b2 (email not defined)
+- Upgrade build agents to Windows Server 2025, Visual Studio 2026 (julio.rocha@microsoft.com)
+- Promote 0.85 to preview (email not defined)
+- Integrate RN 0.85.0-nightly-20260210-4535df4f6 (email not defined)
+- Integrate RN 0.85.0-nightly-20260224-42cd0f041 (email not defined)
+- Bump @react-native-windows/codegen to v0.85.0-preview.1
+- Bump @react-native-windows/find-dotnet-tools to v0.85.0-preview.1
+- Bump @react-native-windows/fs to v0.85.0-preview.1
+- Bump @react-native-windows/package-utils to v0.85.0-preview.1
+- Bump @react-native-windows/telemetry to v0.85.0-preview.1
 
 ## 0.0.0-canary.291
 

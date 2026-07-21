@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Drop in-process HTTP test server",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
