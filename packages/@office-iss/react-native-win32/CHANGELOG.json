@@ -2,6 +2,57 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 21 Jul 2026 18:52:12 GMT",
+      "version": "0.85.0-preview.1",
+      "tag": "@office-iss/react-native-win32_v0.85.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e4ec8fe57ee86faa8c79d87f7083ce2457cc9fb3",
+            "comment": "Promote 0.85 to preview"
+          },
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e4ec8fe57ee86faa8c79d87f7083ce2457cc9fb3",
+            "comment": "Integrate RN 0.85.0-nightly-20260224-42cd0f041"
+          },
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e4ec8fe57ee86faa8c79d87f7083ce2457cc9fb3",
+            "comment": "Integrate RN 0.85.0-nightly-20260128-36f07a1b2"
+          },
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e4ec8fe57ee86faa8c79d87f7083ce2457cc9fb3",
+            "comment": "Integrate RN 0.85.3"
+          },
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e4ec8fe57ee86faa8c79d87f7083ce2457cc9fb3",
+            "comment": "Integrate RN 0.85.3"
+          },
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e4ec8fe57ee86faa8c79d87f7083ce2457cc9fb3",
+            "comment": "Integrate RN 0.85.0-nightly-20260210-4535df4f6"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v0.85.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Apr 2026 02:54:29 GMT",
       "version": "0.0.0-canary.311",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.311",

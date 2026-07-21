@@ -1,8 +1,22 @@
 # Change Log - @react-native-windows/perf-testing
 
-<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 21 Jul 2026 18:52:10 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.85.0-preview.1
+
+Tue, 21 Jul 2026 18:52:10 GMT
+
+### Changes
+
+- Integrate RN 0.85.3 (email not defined)
+- Integrate RN 0.85.3 (email not defined)
+- Integrate RN 0.85.0-nightly-20260128-36f07a1b2 (email not defined)
+- Integrate RN 0.85.0-nightly-20260224-42cd0f041 (email not defined)
+- Integrate RN 0.85.0-nightly-20260210-4535df4f6 (email not defined)
+- Promote 0.85 to preview (email not defined)
+- Bump @react-native-windows/fs to v0.85.0-preview.1
 
 ## 0.0.0-canary.1038
 

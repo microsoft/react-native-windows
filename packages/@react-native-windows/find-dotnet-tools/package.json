@@ -1,7 +1,7 @@
 {
   "name": "@react-native-windows/find-dotnet-tools",
   "description": "Helpers to locate .NET-based tools (e.g. pwsh) restored via NuGet or available on PATH.",
-  "version": "0.85.0-preview.0",
+  "version": "0.85.0-preview.1",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -17,7 +17,7 @@
     "directory": "packages/@react-native-windows/find-dotnet-tools"
   },
   "dependencies": {
-    "@react-native-windows/fs": "0.85.0-preview.0"
+    "@react-native-windows/fs": "0.85.0-preview.1"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.38",
