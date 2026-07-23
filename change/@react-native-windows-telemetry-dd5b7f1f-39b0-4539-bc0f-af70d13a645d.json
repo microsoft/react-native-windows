@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump @xmldom/xmldom from 0.7.13 to 0.8.13",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "223556219+Copilot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
