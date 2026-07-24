@@ -1064,6 +1064,25 @@ void CompositionEventHandler::onPointerCaptureLost(
 
     m_pointerCapturingComponentTag = -1;
   }
+
+  // A capture loss mid-press (finger slides off a control, a popup surface
+  // opens under the finger, focus shifts) means the matching PointerReleased
+  // may never arrive. Previously the active-touch entry was left behind: a
+  // phantom "finger down" included in every subsequent touch dispatch, so the
+  // JS gesture responder treated each new tap as a multi-touch gesture and
+  // cancelled press recognition. Dispatch a touch CANCEL for every active
+  // touch and clear them so the responder is properly reset.
+  if (!m_activeTouches.empty()) {
+    std::vector<PointerId> activeIds;
+    activeIds.reserve(m_activeTouches.size());
+    for (auto const &entry : m_activeTouches) {
+      activeIds.push_back(entry.first);
+    }
+    for (auto activeId : activeIds) {
+      DispatchTouchEvent(TouchEventType::Cancel, activeId, pointerPoint, keyModifiers);
+      m_activeTouches.erase(activeId);
+    }
+  }
 }
 
 void CompositionEventHandler::onPointerMoved(
@@ -1186,14 +1205,69 @@ void CompositionEventHandler::onPointerPressed(
 
   PointerId pointerId = pointerPoint.PointerId();
 
+  // Self-heal: a new touch contact marked PRIMARY means the system considers it
+  // the first finger of a fresh gesture — anything still in m_activeTouches is a
+  // leaked entry from a release/cancel that never reached this island (e.g. a
+  // popup surface or direct-manipulation consumed the pointer mid-press). Left
+  // in place, the leaked entry is included in every subsequent touch dispatch as
+  // a phantom extra finger, so the JS responder treats each new tap as a
+  // corrupted multi-touch gesture and press recognition stops firing app-wide.
+  // Cancel the leftovers so the tap being processed lands on a clean responder.
+  // A genuine second finger arrives with IsPrimary()=false and skips this purge.
+  if (pointerPoint.PointerDeviceType() ==
+      winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Touch) {
+    try {
+      auto inner = winrt::get_self<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+                       pointerPoint)
+                       ->Inner();
+      if (inner && inner.Properties().IsPrimary() && !m_activeTouches.empty()) {
+        std::vector<PointerId> leftoverIds;
+        leftoverIds.reserve(m_activeTouches.size());
+        for (auto const &entry : m_activeTouches) {
+          if (entry.second.touch.identifier != pointerId) {
+            leftoverIds.push_back(entry.first);
+          }
+        }
+        for (auto leftoverId : leftoverIds) {
+          DispatchTouchEvent(TouchEventType::Cancel, leftoverId, pointerPoint, keyModifiers);
+          m_activeTouches.erase(leftoverId);
+        }
+      }
+    } catch (...) {
+    }
+  }
+
+  // Time-based backstop for non-touch pointers and any leak the primary-contact
+  // purge cannot see: no real contact stays down for 30+ seconds without
+  // updates, but a leaked one lives forever and wedges input.
+  {
+    constexpr double kStaleTouchMs = 30000.0;
+    const double nowMs = static_cast<double>(
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())
+            .count());
+    std::vector<PointerId> agedIds;
+    for (auto const &entry : m_activeTouches) {
+      if (entry.second.touch.identifier != pointerId &&
+          nowMs - static_cast<double>(entry.second.touch.timestamp) > kStaleTouchMs) {
+        agedIds.push_back(entry.first);
+      }
+    }
+    for (auto agedId : agedIds) {
+      DispatchTouchEvent(TouchEventType::Cancel, agedId, pointerPoint, keyModifiers);
+      m_activeTouches.erase(agedId);
+    }
+  }
+
   auto staleTouch = std::find_if(m_activeTouches.begin(), m_activeTouches.end(), [pointerId](const auto &pair) {
     return pair.second.touch.identifier == pointerId;
   });
 
   if (staleTouch != m_activeTouches.end()) {
-    // A pointer with this ID already exists - Should we fire a button cancel or something?
-    // assert(false);
-    return;
+    // A pointer id is never legitimately pressed twice without an intervening
+    // release, so an existing entry is always a leaked one — drop it and
+    // continue (returning here silently discarded the new press and wedged the
+    // reused pointer id forever).
+    m_activeTouches.erase(staleTouch);
   }
 
   const auto eventType = TouchEventType::Start;
@@ -1238,6 +1312,18 @@ void CompositionEventHandler::onPointerPressed(
       default:
         activeTouch.button = -1;
         break;
+    }
+
+    // A touch (or pen) contact has no mouse PointerUpdateKind, so it fell
+    // through to button = -1 — and the derived W3C buttons bitmask became 0.
+    // The dispatched pointerdown therefore told JS "no button is pressed", so
+    // press machinery driven by pointer events ignored finger taps while
+    // identical mouse clicks (button 0 / buttons 1) worked. Per W3C
+    // pointer-event semantics a touch/pen contact IS the primary button.
+    if (pointerPoint.PointerDeviceType() !=
+            winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse &&
+        activeTouch.button < 0) {
+      activeTouch.button = 0;
     }
 
     while (targetComponentView) {
@@ -1291,15 +1377,20 @@ void CompositionEventHandler::onPointerReleased(
     facebook::react::Point ptLocal, ptScaled;
     getTargetPointerArgs(fabricuiManager, pointerPoint, tag, ptScaled, ptLocal);
 
-    if (tag == -1)
-      return;
+    // Even when the pointer-up lands on no component (tag == -1 — common for
+    // touch when the finger drifts slightly or the layout changed under it),
+    // the touch END must still be dispatched and the active-touch entry
+    // erased. Returning early leaked the entry, which then poisoned every
+    // later dispatch as a phantom extra finger. Only the target-specific
+    // OnPointerReleased needs a valid tag.
+    if (tag != -1) {
+      auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
+      auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
+          m_context, tag, pointerPoint, keyModifiers);
 
-    auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
-    auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
-        m_context, tag, pointerPoint, keyModifiers);
-
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
-        ->OnPointerReleased(args);
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
+          ->OnPointerReleased(args);
+    }
 
     UpdateActiveTouch(activeTouch->second, ptScaled, ptLocal);
     DispatchTouchEvent(TouchEventType::End, pointerId, pointerPoint, keyModifiers);
