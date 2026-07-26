@@ -1267,6 +1267,12 @@ void CompositionEventHandler::onPointerPressed(
     // release, so an existing entry is always a leaked one — drop it and
     // continue (returning here silently discarded the new press and wedged the
     // reused pointer id forever).
+    // Cancel before erasing: the leaked entry's touchStart may already have
+    // reached JS, so erasing it silently leaves the JS responder convinced that
+    // finger is still down — a wedge no later native cleanup can undo once the
+    // entry is gone. The cancel releases the responder, then the new press
+    // proceeds cleanly.
+    DispatchTouchEvent(TouchEventType::Cancel, staleTouch->first, pointerPoint, keyModifiers);
     m_activeTouches.erase(staleTouch);
   }
 
