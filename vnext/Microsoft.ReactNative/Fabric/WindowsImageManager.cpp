@@ -186,6 +186,16 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
   auto weakObserverCoordinator = (std::weak_ptr<const facebook::react::ImageResponseObserverCoordinator>)
                                      imageRequest.getSharedObserverCoordinator();
 
+  // ImageResponseObserverCoordinator copies its observer list under a lock but dereferences the raw
+  // observer pointers after releasing it. Observers are added and removed on the UI thread (from
+  // ImageComponentView::setStateAndResubscribeImageResponseObserver), and that is also where the
+  // owning ImageComponentView - and with it the WindowsImageResponseObserver - is destroyed. Notifying
+  // the coordinator from the download/completion threads therefore races that teardown and can call
+  // into a freed observer. Marshal every notification onto the UI thread so subscription and
+  // notification are serialized on the same thread. Image decoding deliberately stays off the UI
+  // thread; only the notification itself is posted.
+  auto uiDispatcher = m_reactContext.UIDispatcher();
+
   auto rnImageSource = winrt::Microsoft::ReactNative::Composition::implementation::MakeImageSource(imageSource);
   auto provider = m_uriImageManager->TryGetUriImageProvider(m_reactContext.Handle(), rnImageSource);
 
@@ -202,20 +212,38 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
     source.sourceType = ImageSourceType::Download;
     source.body = imageSource.body;
 
-    auto progressCallback = [weakObserverCoordinator](int64_t loaded, int64_t total) {
-      if (auto observerCoordinator = weakObserverCoordinator.lock()) {
-        float progress = total > 0 ? static_cast<float>(loaded) / static_cast<float>(total) : 1.0f;
-        observerCoordinator->nativeImageResponseProgress(progress, loaded, total);
-      }
+    auto progressCallback = [weakObserverCoordinator, uiDispatcher](int64_t loaded, int64_t total) {
+      float progress = total > 0 ? static_cast<float>(loaded) / static_cast<float>(total) : 1.0f;
+      uiDispatcher.Post([weakObserverCoordinator, progress, loaded, total]() {
+        if (auto observerCoordinator = weakObserverCoordinator.lock()) {
+          observerCoordinator->nativeImageResponseProgress(progress, loaded, total);
+        }
+      });
     };
     imageResponseTask = GetImageRandomAccessStreamAsync(source, progressCallback);
   }
 
-  imageResponseTask.Completed([weakObserverCoordinator](auto asyncOp, auto status) {
-    auto observerCoordinator = weakObserverCoordinator.lock();
-    if (!observerCoordinator) {
+  imageResponseTask.Completed([weakObserverCoordinator, uiDispatcher](auto asyncOp, auto status) {
+    if (weakObserverCoordinator.expired()) {
       return;
     }
+
+    auto postComplete = [weakObserverCoordinator, uiDispatcher](auto image) {
+      uiDispatcher.Post([weakObserverCoordinator, image = std::move(image)]() {
+        if (auto observerCoordinator = weakObserverCoordinator.lock()) {
+          observerCoordinator->nativeImageResponseComplete(facebook::react::ImageResponse(image, nullptr /*metadata*/));
+        }
+      });
+    };
+
+    auto postFailure = [weakObserverCoordinator,
+                        uiDispatcher](std::shared_ptr<facebook::react::ImageErrorInfo> errorInfo) {
+      uiDispatcher.Post([weakObserverCoordinator, errorInfo = std::move(errorInfo)]() {
+        if (auto observerCoordinator = weakObserverCoordinator.lock()) {
+          observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(errorInfo));
+        }
+      });
+    };
 
     switch (status) {
       case winrt::Windows::Foundation::AsyncStatus::Completed: {
@@ -224,23 +252,22 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
             winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponse>(imageResponse);
         auto imageResultOrError = selfImageResponse->ResolveImage();
         if (imageResultOrError.image) {
-          observerCoordinator->nativeImageResponseComplete(
-              facebook::react::ImageResponse(imageResultOrError.image, nullptr /*metadata*/));
+          postComplete(std::move(imageResultOrError.image));
         } else {
-          observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(imageResultOrError.errorInfo));
+          postFailure(std::move(imageResultOrError.errorInfo));
         }
         break;
       }
       case winrt::Windows::Foundation::AsyncStatus::Canceled: {
         auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
         errorInfo->error = FormatHResultError(winrt::hresult_error(asyncOp.ErrorCode()));
-        observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(errorInfo));
+        postFailure(std::move(errorInfo));
         break;
       }
       case winrt::Windows::Foundation::AsyncStatus::Error: {
         auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
         errorInfo->error = FormatHResultError(winrt::hresult_error(asyncOp.ErrorCode()));
-        observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(errorInfo));
+        postFailure(std::move(errorInfo));
         break;
       }
     }
