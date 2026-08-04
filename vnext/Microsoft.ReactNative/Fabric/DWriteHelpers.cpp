@@ -113,11 +113,21 @@ winrt::com_ptr<::IDWriteFontCollection> CreateAppFontCollection() noexcept {
 
 } // namespace
 
-winrt::com_ptr<::IDWriteFontCollection> DWriteAppFontCollection() noexcept {
-  // Thread-safe (magic static) one-time initialization. Bundled font assets cannot
-  // change for the lifetime of the process, so the collection never needs rebuilding.
+::IDWriteFontCollection *DWriteAppFontCollection() noexcept {
+  // One-time initialization, thread-safe by construction: a function-local static
+  // with a dynamic initializer is initialized exactly once, and concurrent callers
+  // that arrive during that window wait for it to complete rather than racing or
+  // repeating it ([stmt.dcl]/4). So the directory enumeration and the font-file
+  // references behind CreateAppFontCollection() happen on the first call only,
+  // whichever thread gets there first - subsequent calls never touch the file
+  // system. Bundled font assets cannot change while the process runs, so the
+  // collection never needs rebuilding.
+  //
+  // Held by value for the lifetime of the process and handed out as a non-owning
+  // raw pointer: GetTextLayout() calls this on every text measure, and returning a
+  // com_ptr by value would add an AddRef/Release pair to that path for no benefit.
   static const winrt::com_ptr<::IDWriteFontCollection> s_appFontCollection = CreateAppFontCollection();
-  return s_appFontCollection;
+  return s_appFontCollection.get();
 }
 
 } // namespace Microsoft::ReactNative
