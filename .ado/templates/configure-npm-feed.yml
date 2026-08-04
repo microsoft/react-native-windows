@@ -1,0 +1,65 @@
+#
+# Routes all npm/npx/Yarn package restores through the Azure Artifacts (CFS) feed
+# instead of pulling straight from the public registry.npmjs.org.
+#
+# The feed is an upstream-caching proxy for npmjs.org, so package resolution is
+# unchanged -- packages are simply served from (and cached in) Azure Artifacts.
+#
+# IMPORTANT: this configuration is applied at build time only and must NOT be
+# committed to the repo (e.g. as a checked-in .npmrc or .yarnrc.yml). This repo is
+# public and its GitHub Actions workflows build fork pull requests, which have no
+# credentials for the ADO feed -- a committed registry would break all public CI.
+#
+# Outputs the pipeline variable `npmFeedAuthToken` (secret) for steps that need to
+# authenticate Yarn Berry or Verdaccio against the feed.
+#
+parameters:
+  - name: registry
+    type: string
+    default: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
+
+  - name: feedServiceConnection
+    type: string
+    default: ms/react-native-public npm Feed
+
+steps:
+  # Written to the user-level .npmrc rather than the repo so the working tree stays
+  # clean and every npm/npx invocation is covered regardless of its cwd.
+  - pwsh: |
+      $npmrc = Join-Path $env:USERPROFILE '.npmrc'
+      Set-Content -Path $npmrc -Encoding ascii -Value @(
+        'registry=${{ parameters.registry }}'
+        'always-auth=true'
+      )
+      Write-Host "Wrote $npmrc"
+      Write-Host "##vso[task.setvariable variable=npmUserConfig]$npmrc"
+      Write-Host "##vso[task.setvariable variable=npmFeedRegistry]${{ parameters.registry }}"
+    displayName: Point npm at the Azure Artifacts feed
+
+  - task: npmAuthenticate@0
+    displayName: Authenticate npm against the Azure Artifacts feed
+    inputs:
+      workingFile: $(npmUserConfig)
+      customEndpoint: ${{ parameters.feedServiceConnection }}
+
+  # Yarn Berry ignores .npmrc entirely, and Verdaccio needs the raw token for its
+  # uplink, so lift the credential npmAuthenticate just wrote into a secret variable.
+  - pwsh: |
+      $npmrc = Get-Content -Raw -Path $env:NPM_USER_CONFIG
+
+      $password = [regex]::Match($npmrc, '(?m)^\s*//\S+:_password\s*=\s*(\S+)\s*$')
+      $authToken = [regex]::Match($npmrc, '(?m)^\s*//\S+:_authToken\s*=\s*(\S+)\s*$')
+
+      if ($password.Success) {
+        $token = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($password.Groups[1].Value))
+      } elseif ($authToken.Success) {
+        $token = $authToken.Groups[1].Value
+      } else {
+        Write-Host "##vso[task.logissue type=error]npmAuthenticate did not write credentials into $env:NPM_USER_CONFIG. Verify the '${{ parameters.feedServiceConnection }}' service connection exists and is authorized for this pipeline."
+        exit 1
+      }
+
+      Write-Host "##vso[task.setvariable variable=npmFeedAuthToken;issecret=true]$token"
+    displayName: Capture Azure Artifacts feed credential
+    env:
+      NPM_USER_CONFIG: $(npmUserConfig)

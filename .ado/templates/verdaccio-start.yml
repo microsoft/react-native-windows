@@ -7,6 +7,9 @@ parameters:
 steps:
   - pwsh: start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.yaml')
     displayName: Launch test npm server (verdaccio)
+    env:
+      # Verdaccio's uplink is the Azure Artifacts feed, which requires authentication.
+      NPM_FEED_AUTH_TOKEN: $(npmFeedAuthToken)
 
   - script: node .ado/scripts/waitForVerdaccio.js
     displayName: Wait for verdaccio server to boot

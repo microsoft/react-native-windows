@@ -16,6 +16,9 @@ steps:
       version: '24.x'
     displayName: Use Node.js 24.x
 
+  # Must run before any package is fetched so nothing is pulled from npmjs.org directly.
+  - template: configure-npm-feed.yml
+
   # TODO: REMOVE. Should be included in image.
   - task: CmdLine@2
     inputs:
@@ -26,3 +29,7 @@ steps:
   - script: yarn install --immutable
     displayName: Strict yarn install ${{ parameters.workspace }}
     retryCountOnTaskFailure: 2
+    env:
+      YARN_NPM_REGISTRY_SERVER: $(npmFeedRegistry)
+      YARN_NPM_ALWAYS_AUTH: 'true'
+      YARN_NPM_AUTH_TOKEN: $(npmFeedAuthToken)

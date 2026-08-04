@@ -162,6 +162,8 @@ extends:
             displayName: Use Node.js 24.x
 
           # TODO: REMOVE. Should be included in image.
+          - template: .ado/templates/configure-npm-feed.yml@self
+
           - task: CmdLine@2
             inputs:
               script: |
@@ -184,6 +186,10 @@ extends:
             displayName: Strict yarn install @rnw-scripts/beachball-config
             condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
             retryCountOnTaskFailure: 2
+            env:
+              YARN_NPM_REGISTRY_SERVER: $(npmFeedRegistry)
+              YARN_NPM_ALWAYS_AUTH: 'true'
+              YARN_NPM_AUTH_TOKEN: $(npmFeedAuthToken)
 
           - script: npx lage build --scope @rnw-scripts/prepare-release --scope @rnw-scripts/beachball-config
             displayName: Build prepare-release and beachball-config

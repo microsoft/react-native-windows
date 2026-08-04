@@ -4,7 +4,12 @@ auth:
     file: ./htpasswd
 uplinks:
   npmjs:
-    url: https://registry.npmjs.org/
+    # Azure Artifacts (CFS) feed, which upstreams to npmjs.org. Verdaccio must not
+    # reach registry.npmjs.org directly. The token is injected by verdaccio-start.yml.
+    url: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
+    auth:
+      type: bearer
+      token_env: NPM_FEED_AUTH_TOKEN
     max_fails: 40
     maxage: 30m
     timeout: 60s

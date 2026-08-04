@@ -13,9 +13,12 @@ steps:
   # Verdaccio log artifact publishing moved to templateContext.outputs in cli-init-windows.yml (1ES compliance)
 
   - script: | 
-      call npm config delete registry
+      call npm config set registry %NPM_FEED_REGISTRY%
       call yarn config unset npmRegistryServer
       call yarn config unset unsafeHttpWhitelist
     displayName: Reset npm/yarn config to stop poiting at local verdaccio server
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
+      # Restore the Azure Artifacts feed rather than deleting the setting, which
+      # would silently fall back to the public registry.npmjs.org.
+      NPM_FEED_REGISTRY: $(npmFeedRegistry)

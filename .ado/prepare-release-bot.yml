@@ -60,9 +60,16 @@ jobs:
       - script: if not exist %APPDATA%\npm (mkdir %APPDATA%\npm)
         displayName: Ensure npm directory for npx commands
 
+      # Must run before any package is fetched so nothing is pulled from npmjs.org directly.
+      - template: templates/configure-npm-feed.yml
+
       - script: yarn install --immutable
         displayName: yarn install
         retryCountOnTaskFailure: 2
+        env:
+          YARN_NPM_REGISTRY_SERVER: $(npmFeedRegistry)
+          YARN_NPM_ALWAYS_AUTH: 'true'
+          YARN_NPM_AUTH_TOKEN: $(npmFeedAuthToken)
 
       - script: npx lage build --scope @rnw-scripts/prepare-release --scope @rnw-scripts/beachball-config
         displayName: Build prepare-release and dependencies
