@@ -118,7 +118,7 @@ void WindowsTextLayoutManager::GetTextLayout(
           : Microsoft::Common::Unicode::Utf8ToUtf16(outerFragment.textAttributes.fontFamily).c_str(),
       // Bundled app fonts merged over the system font set (nullptr when the app bundles
       // no fonts, which selects the system font collection as before).
-      Microsoft::ReactNative::DWriteAppFontCollection().get(),
+      Microsoft::ReactNative::DWriteAppFontCollection(),
       static_cast<DWRITE_FONT_WEIGHT>(outerFragment.textAttributes.fontWeight.value_or(
           static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
       style,
