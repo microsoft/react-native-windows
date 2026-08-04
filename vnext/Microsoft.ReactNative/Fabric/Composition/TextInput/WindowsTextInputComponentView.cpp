@@ -55,12 +55,6 @@ std::string BstrToStdString(BSTR bstr, int cp = CP_UTF8) {
   return str;
 }
 
-// GetDeviceCaps (used in GetContentSize to normalize RichEdit's device-pixel
-// measurements to DIPs) is exported from Gdi32. Microsoft.ReactNative does not
-// otherwise reference Gdi32, so link it explicitly to avoid an unresolved
-// external symbol (LNK2019) in builds that don't already pull it in transitively.
-#pragma comment(lib, "Gdi32.lib")
-
 MSO_CLASS_GUID(ITextHost, "13E670F4-1A5A-11cf-ABEB-00AA00B65EA1") // IID_ITextHost
 MSO_CLASS_GUID(ITextServices, "8D33F740-CF58-11CE-A89D-00AA006CADC5") // IID_ITextServices
 MSO_CLASS_GUID(ITextServices2, "8D33F741-CF58-11CE-A89D-00AA006CADC5") // IID_ITextServices2
@@ -1322,23 +1316,33 @@ std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const no
   float availableWidth = m_layoutMetrics.frame.size.width;
 
   // TxGetNaturalSize measures in the *device pixels of `hdc`*. GetDC(nullptr)
-  // returns a screen DC whose logical DPI (GetDeviceCaps LOGPIXELS) is the system
-  // DPI - typically 96 - and is unrelated to the per-monitor display scale carried
-  // in pointScaleFactor. The previous code conflated the two
-  // (dpi = pointScaleFactor * GetDpiForSystem()) and then divided the returned
-  // natural size by pointScaleFactor, so at any display scale > 100% the measured
-  // content height came back short by exactly that scale and
-  // calculateContentVerticalOffset() over-centered the text (parked low /
-  // bottom-clipped). Normalize both conversions by the DC's real DPI instead. DIPs
-  // are 1/96in by definition, so the DIP<->HIMETRIC leg always uses 96.
-  const int hdcDpiX = GetDeviceCaps(hdc, LOGPIXELSX);
-  const int hdcDpiY = GetDeviceCaps(hdc, LOGPIXELSY);
+  // returns a screen DC whose logical DPI is the system DPI - typically 96 - and
+  // is unrelated to the per-monitor display scale carried in pointScaleFactor.
+  // The previous code conflated the two (dpi = pointScaleFactor *
+  // GetDpiForSystem()) and then divided the returned natural size by
+  // pointScaleFactor, so at any display scale > 100% the measured content height
+  // came back short by exactly that scale and calculateContentVerticalOffset()
+  // over-centered the text (parked low / bottom-clipped). Normalize by the
+  // screen DC's real DPI instead. DIPs are 1/96in by definition, so the
+  // DIP<->HIMETRIC leg always uses 96.
+  //
+  // GetDpiForSystem() (user32) reports exactly what GetDeviceCaps(hdc,
+  // LOGPIXELSX/Y) reports for a GetDC(nullptr) screen DC - both return the
+  // system DPI for the caller's DPI-awareness context - so this avoids taking a
+  // Gdi32 dependency for the measurement. RNW already calls GetDpiForSystem
+  // elsewhere in this file. Windows reports square logical DPI for the screen
+  // (LOGPIXELSX == LOGPIXELSY), so one value covers both axes.
+  const UINT hdcDpi = GetDpiForSystem();
   constexpr float HIMETRIC_PER_INCH = 2540.0f;
   constexpr float DIPS_PER_INCH = 96.0f;
 
+  // Height is deliberately unconstrained. Do NOT scale LONG_MAX into HIMETRIC:
+  // LONG_MAX * 2540 / 96 is ~5.7e10, far outside LONG, and converting an
+  // out-of-range floating-point value back to an integer type is undefined
+  // behavior. LONG_MAX already means "unbounded" to RichEdit.
   SIZE extentHimetric = {
       static_cast<LONG>(availableWidth * HIMETRIC_PER_INCH / DIPS_PER_INCH),
-      static_cast<LONG>(std::numeric_limits<LONG>::max() * HIMETRIC_PER_INCH / DIPS_PER_INCH)};
+      std::numeric_limits<LONG>::max()};
 
   SIZE naturalSize = {0, 0};
 
@@ -1360,8 +1364,8 @@ std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const no
 
   // naturalSize is in the DC's device pixels; convert device px -> DIPs using the
   // DC's actual DPI (px * 96 / hdcDpi), not pointScaleFactor.
-  float contentWidth = static_cast<float>(naturalSize.cx) * DIPS_PER_INCH / hdcDpiX;
-  float contentHeight = static_cast<float>(naturalSize.cy) * DIPS_PER_INCH / hdcDpiY;
+  float contentWidth = static_cast<float>(naturalSize.cx) * DIPS_PER_INCH / hdcDpi;
+  float contentHeight = static_cast<float>(naturalSize.cy) * DIPS_PER_INCH / hdcDpi;
 
   return {contentWidth, contentHeight};
 }
