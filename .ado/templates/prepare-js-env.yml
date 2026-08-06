@@ -5,17 +5,27 @@ parameters:
     values:
         - ManagedImage
         - HostedImage
+  - name: buildEnvironment
+    type: string
+    default: PullRequest
+    values:
+      - PullRequest
+      - Continuous
 
 steps:
   - ${{ if eq(parameters.agentImage, 'HostedImage') }}:
-    - task: NodeTool@0
+    - task: UseNode@1
       displayName: Set Node Version
       inputs:
-        versionSpec: '24.x'
+        version: '24.x'
 
   - script: if not exist %APPDATA%\npm (mkdir %APPDATA%\npm)
     displayName: Ensure npm directory for npx commands
     condition: eq(variables['Agent.OS'], 'Windows_NT')
+
+  # CI is network-isolated; authenticate to the package feed before install.
+  - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+    - template: auth-npm-feed.yml
 
   - template: yarn-install.yml
 

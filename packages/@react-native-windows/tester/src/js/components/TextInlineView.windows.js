@@ -14,6 +14,11 @@ import RNTesterText from '../components/RNTesterText';
 import React from 'react';
 import {Image, TouchableHighlight, View} from 'react-native';
 
+const INLINE_IMAGE1 =
+  'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png';
+const INLINE_IMAGE2 =
+  'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png';
+
 function Basic(): React.Node {
   return (
     <RNTesterText testID={'text-view'}>
@@ -93,7 +98,7 @@ function ClippedByText(): React.Node {
         This is an inline image
         <Image
           source={{
-            uri: 'https://picsum.photos/100',
+            uri: INLINE_IMAGE1,
             width: 50,
             height: 100,
           }}
@@ -131,7 +136,7 @@ class ChangeImageSize extends React.Component<mixed, ChangeSizeState> {
           This is an
           <Image
             source={{
-              uri: 'https://picsum.photos/50',
+              uri: INLINE_IMAGE2,
               width: this.state.width,
               height: 50,
             }}

@@ -15,6 +15,14 @@ pr:
 variables:
   - group: platform-override-zero-permission-token
 
+resources:
+  repositories:
+  # PR runs in the public project, which can't reach OfficePipelineTemplates; use the general 1ES templates.
+  - repository: PipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+
 extends:
   template: build-template.yml@self
   parameters:
