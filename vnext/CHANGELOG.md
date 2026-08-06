@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 20 Jul 2026 21:19:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 06 Aug 2026 21:42:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1058
+
+Thu, 06 Aug 2026 21:42:42 GMT
+
+### Changes
+
+- Move CI pipeline to office/ISS ADO project (vmorozov@microsoft.com)
+- Fix placeholder layout constraints fed physical px instead of DIPs; fix no-op NaN fontSize guard in CreatePlaceholderLayout (collindanielschneide@gmail.com)
+- Honor programmatic scrollTo when scrollEnabled={false}, matching iOS/Android (collindanielschneide@gmail.com)
 
 ## 0.0.0-canary.1057
 
