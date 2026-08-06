@@ -476,7 +476,7 @@ exports[`Touchable Tests Touchables can contain an Image component 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },

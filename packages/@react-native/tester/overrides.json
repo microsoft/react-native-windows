@@ -52,9 +52,51 @@
     },
     {
       "type": "copy",
-      "directory": "js/examples/AnimatedGratuitousApp",
-      "baseDirectory": "packages/rn-tester/js/examples/AnimatedGratuitousApp",
-      "baseHash": "71ea06b945d36ebbd2cc6441131c8f064b90f032",
+      "file": "js/examples/AnimatedGratuitousApp/AnExApp.js",
+      "baseFile": "packages/rn-tester/js/examples/AnimatedGratuitousApp/AnExApp.js",
+      "baseHash": "db6e5dacd001cac2ffeb16c664cc82a884f2b9e4",
+      "issue": 4054
+    },
+    {
+      "type": "patch",
+      "file": "js/examples/AnimatedGratuitousApp/AnExBobble.js",
+      "baseFile": "packages/rn-tester/js/examples/AnimatedGratuitousApp/AnExBobble.js",
+      "baseHash": "c56116d9b9e840a48a3e51838fb7a89e5b416385",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/AnimatedGratuitousApp/AnExChained.js",
+      "baseFile": "packages/rn-tester/js/examples/AnimatedGratuitousApp/AnExChained.js",
+      "baseHash": "37784524fde1bcdf5c428862fe082a0ca17199dd",
+      "issue": 4054
+    },
+    {
+      "type": "patch",
+      "file": "js/examples/AnimatedGratuitousApp/AnExScroll.js",
+      "baseFile": "packages/rn-tester/js/examples/AnimatedGratuitousApp/AnExScroll.js",
+      "baseHash": "22edd2ff2d9f8af8a0c5c27cf7d62ad29b7e9f41",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/AnimatedGratuitousApp/AnExSet.js",
+      "baseFile": "packages/rn-tester/js/examples/AnimatedGratuitousApp/AnExSet.js",
+      "baseHash": "57a7fb533cd0ec058072828ff392c108e434f1ea",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/AnimatedGratuitousApp/AnExSlides.md",
+      "baseFile": "packages/rn-tester/js/examples/AnimatedGratuitousApp/AnExSlides.md",
+      "baseHash": "3e04ec5d3adba039575452edebb3ee91718d64f1",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/AnimatedGratuitousApp/AnExTilt.js",
+      "baseFile": "packages/rn-tester/js/examples/AnimatedGratuitousApp/AnExTilt.js",
+      "baseHash": "3f96bf66e0fcdfebcc8f23041753b2a5804fb8be",
       "issue": 4054
     },
     {

@@ -42,6 +42,15 @@ const config = {
   // We need to make sure that only one version is loaded for peerDependencies
   // So we block them at the root, and alias them to the versions in example's node_modules
   resolver: {
+    // The example imports the library by its package name, but the library is neither
+    // installed in the example's node_modules (no workspace junction) nor built, so metro
+    // can't resolve it. Redirect that bare import to the library's source at the lib root.
+    resolveRequest: (context, moduleName, platform) => {
+      if (moduleName === pack.name) {
+        return { type: 'sourceFile', filePath: path.resolve(root, pack.source) };
+      }
+      return context.resolveRequest(context, moduleName, platform);
+    },
     blocklist: 
       modules.map(
         (m) =>
