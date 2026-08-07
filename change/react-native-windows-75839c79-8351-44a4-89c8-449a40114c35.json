@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Move CI pipeline to office/ISS ADO project",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

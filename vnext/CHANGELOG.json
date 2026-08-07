@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 06 Aug 2026 21:42:42 GMT",
+      "version": "0.0.0-canary.1058",
+      "tag": "react-native-windows_v0.0.0-canary.1058",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2035179c29b5640c14ebc09c59e5f81ed5115ad3",
+            "comment": "Move CI pipeline to office/ISS ADO project"
+          },
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "2035179c29b5640c14ebc09c59e5f81ed5115ad3",
+            "comment": "Fix placeholder layout constraints fed physical px instead of DIPs; fix no-op NaN fontSize guard in CreatePlaceholderLayout"
+          },
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "2035179c29b5640c14ebc09c59e5f81ed5115ad3",
+            "comment": "Honor programmatic scrollTo when scrollEnabled={false}, matching iOS/Android"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Jul 2026 21:19:48 GMT",
       "version": "0.0.0-canary.1057",
       "tag": "react-native-windows_v0.0.0-canary.1057",
