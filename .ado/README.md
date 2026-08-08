@@ -10,9 +10,10 @@ setup and the network-isolation workarounds.
 
 | Pipeline | Entry file | ADO project | 1ES template | Notes |
 |----------|------------|-------------|--------------|-------|
-| CI | `ci-pipeline.yml` | `ISS` | `Office.Official` | signed Official build; `trigger`/`pr` are set in the ADO definition |
+| CI | `ci-pipeline.yml` | `ISS` | `Office.Official` | signed Official build; `trigger` branch filters and a weekly heartbeat `schedule` are defined in YAML |
 | PR | `pr-pipeline.yml` | public (`ms`) | `1ES.Unofficial` | validation build for GitHub PRs |
 | Release | `release-pipeline.yml` | `ISS` | `Office.Official` | triggered by CI completion; publishes packages and symbols |
+| Feed warm-up | `warm-feed-cache-pipeline.yml` | `ISS` | `Office.Unofficial` | scheduled; keeps `ms/react-native-public` populated for anonymous PR restores |
 
 CI and PR share all build/test/pack logic through `build-template.yml`; the
 `buildEnvironment` parameter (`Continuous` vs `PullRequest`) gates the
@@ -69,6 +70,11 @@ otherwise hide:
   CDN mid-build. This is an interim step; the durable fix is to bake it into the
   agent image.
 
+Public PR builds read this feed **anonymously**, so they can only restore versions
+an authenticated identity has already saved. `warm-feed-cache-pipeline.yml` (script:
+`vnext/Scripts/Warm-RnwFeedCache.ps1`) runs on a schedule to pre-populate the npm
+and NuGet dependency closures and keep those anonymous restores working.
+
 ## SDL and Component Governance
 
 The Office template runs SDL (CredScan, BinSkim, CodeQL, Component Governance,
@@ -86,6 +92,11 @@ root `package.json`), so nothing is suppressed.
 - NuGet → nuget.org (API key from `OGX-JSHost-KV`)
 - PDB symbols → Microsoft Symbol Server (`templates/publish-symbols.yml`)
 
-Two Release items are intentionally deferred to a follow-up change: the private-feed
-NuGet service connection (a placeholder `endpointId` remains in
-`release-pipeline.yml`) and a more authoritative publish-eligibility check.
+The nuget.org publish runs 1ES Network Isolation in report-only mode
+(`settings.networkIsolationMode: Audit`): `Enforce` blocks `api.nuget.org`, and the
+per-domain allow-list is not plumbed for release jobs, so mode is the only
+in-pipeline lever. Returning to `Enforce` requires adding nuget.org to the
+`CFSClean` isolation policy for this pipeline (follow-up).
+
+One item remains deferred: a more authoritative npm publish-eligibility check (the
+current check reads the feed anonymously and sees only cached versions).
