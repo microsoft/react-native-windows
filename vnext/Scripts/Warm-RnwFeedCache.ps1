@@ -70,6 +70,8 @@ param(
   [string]$WorkDir,
   [string]$ReactNativeVersion,
   [string]$CliVersion,
+  # CODESYNC: keep in step with vnext/Scripts/creaternwlib.cmd and creaternwapp.cmd,
+  # so the warm run reproduces the same generator/template versions the CLI-init tests use.
   [string]$CreateLibraryVersion = '0.48.9',
   [string]$TemplateVersion = '@react-native-community/template@0.84.1',
   [string]$NuGetIndex = 'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json',
@@ -139,8 +141,11 @@ Write-Host "cli:           $cliVersion" -ForegroundColor Cyan
 Write-Host "Work dir:      $WorkDir" -ForegroundColor Cyan
 
 # Point npm/npx and Yarn (classic + berry) at the feed with our token, via a
-# work-dir-local npm config so the caller's ~/.npmrc is untouched.
+# work-dir-local npm config so the caller's ~/.npmrc is untouched. $npmrc and
+# $savedEnv are declared before the try so the finally can always undo them.
 $npmrc = Join-Path $WorkDir '.npmrc'
+$savedEnv = @{}
+try {
 $registryKey = ($NpmRegistry -replace '^https?:', '')
 Set-Content -LiteralPath $npmrc -Encoding ascii -Value @(
   "registry=$NpmRegistry"
@@ -148,7 +153,6 @@ Set-Content -LiteralPath $npmrc -Encoding ascii -Value @(
   'always-auth=true'
 )
 
-$savedEnv = @{}
 foreach ($kv in @{
     NPM_CONFIG_USERCONFIG          = $npmrc
     NPM_CONFIG_REGISTRY            = $NpmRegistry
@@ -254,20 +258,27 @@ function Save-UpstreamNupkg {
   $idLower = $Id.ToLowerInvariant(); $verLower = $Version.ToLowerInvariant()
   $url = "$Flat2Base/$idLower/$verLower/$idLower.$verLower.nupkg"
   $tmp = Join-Path $WorkDir "nuget-$idLower.$verLower.nupkg"
+  $lastError = 'unknown error'
   for ($attempt = 1; $attempt -le $MaxAttempts; $attempt++) {
+    $retryable = $true
     try {
-      Invoke-WebRequest -Uri $url -Headers $Headers -OutFile $tmp -ErrorAction Stop | Out-Null
+      # -PassThru returns the response even with -OutFile, so a 202 is visible here
+      # (a 2xx never throws, so the old catch reported a still-pending 202 as saved).
+      $resp = Invoke-WebRequest -Uri $url -Headers $Headers -OutFile $tmp -PassThru -ErrorAction Stop
       Remove-Item $tmp -Force -ErrorAction SilentlyContinue
-      return
+      # 202 = Azure Artifacts is still saving the upstream package; not available yet, so retry.
+      if ([int]$resp.StatusCode -ne 202) { return }
+      $lastError = 'HTTP 202 (upstream save still pending)'
     }
     catch {
       $code = $null; try { $code = [int]$_.Exception.Response.StatusCode } catch { }
-      if ($attempt -lt $MaxAttempts -and ($null -eq $code -or $code -in 202, 404, 408, 429, 500, 502, 503, 504)) {
-        Start-Sleep -Seconds ([Math]::Min(2 * $attempt, 10)); continue
-      }
-      throw "$Id $Version ($(if ($code) { "HTTP $code" } else { $_.Exception.Message }))"
+      $lastError = if ($code) { "HTTP $code" } else { $_.Exception.Message }
+      $retryable = ($null -eq $code -or $code -in 404, 408, 429, 500, 502, 503, 504)
     }
+    if (-not $retryable) { break }
+    if ($attempt -lt $MaxAttempts) { Start-Sleep -Seconds ([Math]::Min(2 * $attempt, 10)) }
   }
+  throw "$Id $Version ($lastError)"
 }
 
 function Warm-NuGet {
@@ -298,15 +309,17 @@ $results = foreach ($name in $passes.Keys) {
 }
 
 # --- cleanup + summary --------------------------------------------------------
-
-foreach ($k in $savedEnv.Keys) {
-  if ($null -eq $savedEnv[$k]) { Remove-Item "env:$k" -ErrorAction SilentlyContinue }
-  else { Set-Item "env:$k" $savedEnv[$k] }
 }
-# Always remove the token-bearing .npmrc so -KeepWorkDir never leaves a credential on disk.
-Remove-Item -LiteralPath $npmrc -Force -ErrorAction SilentlyContinue
-if (-not $KeepWorkDir) { Remove-Item -Recurse -Force $WorkDir -ErrorAction SilentlyContinue }
-else { Write-Host "`nKept work dir: $WorkDir" -ForegroundColor Yellow }
+finally {
+  # Runs even on Ctrl+C or an uncaught error, so the token file and env overrides never linger.
+  foreach ($k in $savedEnv.Keys) {
+    if ($null -eq $savedEnv[$k]) { Remove-Item "env:$k" -ErrorAction SilentlyContinue }
+    else { Set-Item "env:$k" $savedEnv[$k] }
+  }
+  Remove-Item -LiteralPath $npmrc -Force -ErrorAction SilentlyContinue
+  if (-not $KeepWorkDir) { Remove-Item -Recurse -Force $WorkDir -ErrorAction SilentlyContinue }
+  else { Write-Host "`nKept work dir: $WorkDir" -ForegroundColor Yellow }
+}
 
 $results = @($results)
 Write-Host ''
