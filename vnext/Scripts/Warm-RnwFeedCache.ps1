@@ -41,9 +41,6 @@
 .PARAMETER ReactNativeVersion
   react-native version to generate against. Defaults to vnext/package.json.
 
-.PARAMETER ReactVersion
-  react version. Defaults to vnext/package.json.
-
 .PARAMETER CliVersion
   @react-native-community/cli version. Defaults to vnext/package.json.
 
@@ -72,7 +69,6 @@ param(
   [string]$Pat,
   [string]$WorkDir,
   [string]$ReactNativeVersion,
-  [string]$ReactVersion,
   [string]$CliVersion,
   [string]$CreateLibraryVersion = '0.48.9',
   [string]$TemplateVersion = '@react-native-community/template@0.84.1',
@@ -127,16 +123,19 @@ function Invoke-Checked {
 $token = Get-FeedToken -Pat $Pat
 $pkg = Get-Content (Join-Path $RepoRoot 'vnext\package.json') -Raw | ConvertFrom-Json
 $rnVersion = Get-RepoVersion -Pkg $pkg -Section 'devDependencies' -Name 'react-native' -Override $ReactNativeVersion
-$reactVersion = Get-RepoVersion -Pkg $pkg -Section 'devDependencies' -Name 'react' -Override $ReactVersion
 $cliVersion = Get-RepoVersion -Pkg $pkg -Section 'dependencies' -Name '@react-native-community/cli' -Override $CliVersion
 $isNightly = $rnVersion -match 'nightly'
 
 if (-not $WorkDir) { $WorkDir = Join-Path ([IO.Path]::GetTempPath()) "rnw-warm-$(Get-Random)" }
-New-Item -ItemType Directory -Force -Path $WorkDir | Out-Null
+# Refuse a pre-existing directory: cleanup deletes $WorkDir recursively, so it must be one we created.
+if (Test-Path -LiteralPath $WorkDir) {
+  throw "WorkDir '$WorkDir' already exists. Pass a path that does not exist so cleanup only deletes what this script creates."
+}
+New-Item -ItemType Directory -Path $WorkDir | Out-Null
 
 Write-Host "Feed:          $NpmRegistry" -ForegroundColor Cyan
 Write-Host "react-native:  $rnVersion" -ForegroundColor Cyan
-Write-Host "react:         $reactVersion  cli: $cliVersion" -ForegroundColor Cyan
+Write-Host "cli:           $cliVersion" -ForegroundColor Cyan
 Write-Host "Work dir:      $WorkDir" -ForegroundColor Cyan
 
 # Point npm/npx and Yarn (classic + berry) at the feed with our token, via a
@@ -304,6 +303,8 @@ foreach ($k in $savedEnv.Keys) {
   if ($null -eq $savedEnv[$k]) { Remove-Item "env:$k" -ErrorAction SilentlyContinue }
   else { Set-Item "env:$k" $savedEnv[$k] }
 }
+# Always remove the token-bearing .npmrc so -KeepWorkDir never leaves a credential on disk.
+Remove-Item -LiteralPath $npmrc -Force -ErrorAction SilentlyContinue
 if (-not $KeepWorkDir) { Remove-Item -Recurse -Force $WorkDir -ErrorAction SilentlyContinue }
 else { Write-Host "`nKept work dir: $WorkDir" -ForegroundColor Yellow }
 
