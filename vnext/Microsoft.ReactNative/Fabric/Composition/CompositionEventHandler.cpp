@@ -1520,8 +1520,16 @@ bool CompositionEventHandler::CapturePointer(
       auto targetComponentView =
           fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_pointerCapturingComponentTag).view;
 
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
-          ->OnPointerCaptureLost();
+      // Guard against a stale capturing tag. If the previously-capturing component
+      // was unmounted (e.g. list/ScrollView virtualization recycled it during a pan)
+      // without releasing capture, componentViewDescriptorWithTag returns a
+      // descriptor whose .view is null - and the unguarded get_self(...) call then
+      // dereferences null and crashes the process (0xc0000005). Skip the notify when
+      // the view is gone; the tag is overwritten just below.
+      if (targetComponentView) {
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
+            ->OnPointerCaptureLost();
+      }
     }
   }
 
@@ -1550,8 +1558,13 @@ bool CompositionEventHandler::releasePointerCapture(PointerId pointerId, faceboo
       auto targetComponentView =
           fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_pointerCapturingComponentTag).view;
 
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
-          ->OnPointerCaptureLost();
+      // Same stale-tag null-view guard as CapturePointer above: a pointer release
+      // after the capturing component was unmounted would otherwise dereference a
+      // null view and crash (0xc0000005).
+      if (targetComponentView) {
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
+            ->OnPointerCaptureLost();
+      }
     }
 
     if (m_capturedPointers.empty()) {
