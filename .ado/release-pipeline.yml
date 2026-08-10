@@ -38,12 +38,13 @@ resources:
       branches:
         include:
         - main
-        - '0.74-stable'
         - '0.81-stable'
         - '0.82-stable'
         - '0.83-stable'
         - '0.84-stable'
         - '0.85-stable'
+        - '0.86-stable'
+        - '0.87-stable'
   repositories:
   - repository: OfficePipelineTemplates
     type: git
@@ -65,6 +66,9 @@ extends:
         enableExclusions: true
       suppression:
         suppressionFile: $(Build.SourcesDirectory)\.ado\guardian\sdl\.gdnsuppress
+    settings:
+      # Report-only network isolation so nuget.org publishing can egress (Enforce blocks it).
+      networkIsolationMode: Audit
     stages:
     #
     # Gate stage — runs unconditionally for every trigger.
@@ -239,10 +243,7 @@ extends:
         steps:
         - template: .ado/templates/publish-nuget-to-ado-feed.yml@self
           parameters:
-            # TODO(ISS): create an external NuGet service connection in the ISS
-            # project for the ms/react-native feed, then set endpointId to that
-            # connection's endpoint GUID and publishFeedCredentials to its name.
-            endpointId: '00000000-0000-0000-0000-000000000000'
+            endpointId: 'cfe2ce40-0448-46a1-b36d-4205330ca275'
             nugetFeedUrl: 'https://pkgs.dev.azure.com/ms/_packaging/react-native/nuget/v3/index.json'
             packageParentPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
             packagesToPush: '$(Pipeline.Workspace)/ReactWindows-final-nuget/*.nupkg'

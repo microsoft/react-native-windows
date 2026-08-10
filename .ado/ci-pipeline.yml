@@ -5,8 +5,28 @@
 
 name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
-trigger: none
+trigger:
+  branches:
+    include:
+    - main
+    - '0.81-stable'
+    - '0.82-stable'
+    - '0.83-stable'
+    - '0.84-stable'
+    - '0.85-stable'
+    - '0.86-stable'
+    - '0.87-stable'
 pr: none
+
+schedules:
+# Weekly heartbeat: keeps the pipeline from being auto-disabled after long
+# inactivity. 10:00 UTC ~= 02:00 Pacific (cron is UTC-only: 02:00 PST / 03:00 PDT).
+- cron: '0 10 * * Mon'
+  displayName: Weekly heartbeat (Mondays ~02:00 Pacific)
+  branches:
+    include:
+    - main
+  always: true
 
 parameters:
   - name: isReleaseBuild
