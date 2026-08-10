@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix(fabric): dispatch touch/pen contacts with the W3C primary button (button 0, buttons 1) instead of button -1 / buttons 0, so pointer-event-driven press handling responds to finger taps the same as mouse left-clicks",
+  "packageName": "react-native-windows",
+  "email": "collindanielschneide@gmail.com",
+  "dependentChangeType": "patch"
+}
