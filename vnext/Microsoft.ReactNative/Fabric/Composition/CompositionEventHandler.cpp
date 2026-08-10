@@ -1419,6 +1419,16 @@ void CompositionEventHandler::onPointerPressed(
         break;
     }
 
+    // A touch (or pen) contact has no mouse PointerUpdateKind, so it fell
+    // through to button = -1 — and the derived W3C buttons bitmask became 0.
+    // The dispatched pointerdown therefore told JS "no button is pressed", so
+    // press machinery driven by pointer events ignored finger taps while
+    // identical mouse clicks (button 0 / buttons 1) worked. Per W3C
+    // pointer-event semantics a touch/pen contact IS the primary button.
+    if (pointerPoint.PointerDeviceType() != Composition::Input::PointerDeviceType::Mouse && activeTouch.button < 0) {
+      activeTouch.button = 0;
+    }
+
     while (targetComponentView) {
       if (auto eventEmitter =
               winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
