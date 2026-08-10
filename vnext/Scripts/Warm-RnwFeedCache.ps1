@@ -61,7 +61,7 @@
 
 .EXAMPLE
   # Warm against explicit versions and keep the generated projects to inspect:
-  ./Warm-RnwFeedCache.ps1 -ReactNativeVersion 0.85.0-nightly-20260303-c26dbe286 -KeepWorkDir
+  ./Warm-RnwFeedCache.ps1 -ReactNativeVersion 0.86.0-nightly-20260310-621592d1f -KeepWorkDir
 #>
 [CmdletBinding()]
 param(

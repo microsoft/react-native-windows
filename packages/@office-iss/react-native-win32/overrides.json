@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.85.0-nightly-20260303-c26dbe286",
+  "baseVersion": "0.86.0-nightly-20260310-621592d1f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "56a63445d9d20e6c25fea831d9d0d41b9c5b6463"
+      "baseHash": "007a05886f74a088134c955545ce174d75d8178a"
     },
     {
       "type": "derived",
@@ -47,7 +47,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "ee6f102be5d4b456d16900499a01abd0ca1ce1ba"
+      "baseHash": "decdc9e7b2af21254c017402ca81b45dbec5018f"
     },
     {
       "type": "copy",
@@ -177,7 +177,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/View.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "60eab5df574b43200494005fc3f00d11576d515b"
+      "baseHash": "194eebd6a94c61218461d08ef879e852e8503883"
     },
     {
       "type": "derived",
@@ -329,13 +329,13 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "5b9617aa1bedd5c70b30dac1f3b35aa535976b54"
+      "baseHash": "0e417b1f78fd687a14b84df695eb02e434db4262"
     },
     {
       "type": "copy",
       "file": "src-win/Libraries/Network/RCTNetworking.win32.js",
       "baseFile": "packages/react-native/Libraries/Network/RCTNetworking.ios.js",
-      "baseHash": "475b803e357811f6989d8d116bb040cfb1735b7c",
+      "baseHash": "0044e93421915bb8da461a5660141ae69dff17c7",
       "issue": 4318
     },
     {

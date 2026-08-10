@@ -13,7 +13,13 @@ const ignoredViewConfigProps = new WeakSet < { ...} > ();
  * Decorates ViewConfig values that are dynamically injected by the library,
  * react-native-gesture-handler. (T45765076)
  */
+<<<<<<< Upstream
+export function DynamicallyInjectedByGestureHandler<T extends {...}>(
+  object: T,
+): T {
+=======
 export function DynamicallyInjectedByGestureHandler<T: {... }> (object: T): T {
+>>>>>>> Override
   ignoredViewConfigProps.add(object);
   return object;
 }
@@ -32,9 +38,18 @@ export function DynamicallyInjectedByGestureHandler<T: {... }> (object: T): T {
  * TODO(T110872225): Remove this logic, after achieving platform-consistency
  */
 export function ConditionallyIgnoredEventHandlers<
+<<<<<<< Upstream
+  const T extends {+[name: string]: true},
+>(value: T): T | void {
+  if (Platform.OS === 'ios') {
+    return value;
+  }
+  return undefined;
+=======
   const T: { +[name: string]: true },
 > (value: T): T | void {
   return value;
+>>>>>>> Override
 }
 
 export function isIgnored(value: unknown): boolean {
