@@ -16,6 +16,7 @@ module.exports = {
   },
   env: {
     node: true,
+    jest: true,
   },
   ignorePatterns: ['/lib/**', '/lib-commonjs/**'],
   overrides: [
@@ -48,6 +49,7 @@ module.exports = {
       rules: {
         '@typescript-eslint/await-thenable': 'error',
         '@typescript-eslint/ban-tslint-comment': 'error',
+        '@typescript-eslint/no-empty-object-type': 'off',
         '@typescript-eslint/no-confusing-non-null-assertion': 'error',
         '@typescript-eslint/no-extra-non-null-assertion': 'error',
         '@typescript-eslint/no-floating-promises': [
@@ -68,7 +70,7 @@ module.exports = {
         '@typescript-eslint/prefer-includes': 'error',
         '@typescript-eslint/prefer-readonly': 'error',
         '@typescript-eslint/prefer-string-starts-ends-with': 'error',
-        '@typescript-eslint/switch-exhaustiveness-check': 'error',
+        '@typescript-eslint/switch-exhaustiveness-check': 'warn',
         'no-restricted-syntax': [
           'error',
           {

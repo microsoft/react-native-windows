@@ -143,7 +143,6 @@ call yarn install
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwlib.cmd: Setting yarn to use verdaccio at http://localhost:4873
-  call yarn config set registry http://localhost:4873
   call yarn config set npmRegistryServer http://localhost:4873
   call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
 )

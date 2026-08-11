@@ -16,16 +16,14 @@
     "test": "rnw-scripts test",
     "watch": "rnw-scripts watch"
   },
-  "bin": {
-    "integrate-rn": "./bin.js"
-  },
+  "bin": "./bin.js",
   "dependencies": {
     "@react-native-community/template": "0.81.0-nightly-202578-011c586",
     "@react-native-windows/find-repo-root": "0.81.1",
     "@react-native-windows/fs": "0.81.1",
     "@react-native-windows/package-utils": "0.81.1",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
     "async": "^3.2.3",
     "lodash": "^4.17.15",
     "ora": "^3.4.0",

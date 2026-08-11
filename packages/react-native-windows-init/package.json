@@ -17,14 +17,12 @@
     "test": "rnw-scripts test",
     "watch": "rnw-scripts watch"
   },
-  "bin": {
-    "react-native-windows-init": "./bin.js"
-  },
+  "bin": "./bin.js",
   "dependencies": {
     "@react-native-windows/fs": "0.81.1",
     "@react-native-windows/telemetry": "0.81.3",
-    "@typescript-eslint/eslint-plugin": "^7.1.1",
-    "@typescript-eslint/parser": "^7.1.1",
+    "@typescript-eslint/eslint-plugin": "^8.36.0",
+    "@typescript-eslint/parser": "^8.36.0",
     "chalk": "^4.1.0",
     "find-up": "^4.1.0",
     "mustache": "^4.0.1",
