@@ -21,13 +21,11 @@ jobs:
           parameters:
             persistCredentials: true
 
-        # Extract the GitHub OAuth token that ADO uses to clone the repo.
-        # Any authenticated token raises the GitHub API rate limit from 60 to
-        # 5,000 req/hr, which prevents validate-overrides from being throttled.
+        # Use the checkout OAuth token for authenticated GitHub API requests.
         - pwsh: |
             $headerLine = git config --get-regexp "http.*\.extraheader" 2>$null | Select-Object -First 1
             if (-not $headerLine) {
-              Write-Host "##vso[task.logissue type=warning]No HTTP extraheader found — validate-overrides will run without GitHub auth"
+              Write-Host "##vso[task.logissue type=warning]No HTTP extraheader found; GitHub API requests will run without authentication"
               exit 0
             }
             $encoded = ($headerLine.Split(' ')[-1]).Trim()
@@ -41,12 +39,17 @@ jobs:
         - template: ../templates/checkout-shallow.yml
 
       - template: ../templates/prepare-js-env.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
 
       - script: yarn format:verify
         displayName: yarn format:verify
 
       - script: yarn lint
         displayName: yarn lint
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          env:
+            PLATFORM_OVERRIDE_GITHUB_TOKEN: $(GitHubOAuthToken)
 
       # Disable while facebook/react-native -> react/react-native migration breaks CI
       # - script: yarn validate-overrides
@@ -55,11 +58,6 @@ jobs:
       #    env:
       #      PLATFORM_OVERRIDE_GITHUB_TOKEN: $(GitHubOAuthToken)
 
-      - script: npx unbroken -q --local-only --allow-local-line-sections
-        displayName: check local links in .md files
-
-      # This runs will check for web-links. If broken links are found, since external changes could affect this.
-      # It will report a warning if this step fails so we'll pay attention to fix quickly.
-      - script: npx unbroken -q --allow-local-line-sections
-        displayName: check web links in .md files
-        continueOnError: true
+      # Link verification (unbroken) is disabled: it cannot run under network isolation.
+      # - script: npx unbroken -q --local-only --allow-local-line-sections
+      #   displayName: check local links in .md files

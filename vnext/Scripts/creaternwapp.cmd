@@ -72,6 +72,9 @@ if not "%part%"=="" (
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwapp.cmd: Setting npm to use verdaccio at http://localhost:4873
+  set NPM_CONFIG_REGISTRY=http://localhost:4873
+  set YARN_NPM_REGISTRY_SERVER=http://localhost:4873
+  set YARN_UNSAFE_HTTP_WHITELIST=localhost
   call npm config set registry http://localhost:4873
 )
 
@@ -143,6 +146,8 @@ call yarn install
 
 @echo creaternwapp.cmd: Creating commit to save current state
 if not exist ".git\" call git init .
+call git config user.name "React-Native-Windows Bot"
+call git config user.email "53619745+rnbot@users.noreply.github.com"
 call git add .
 call git commit -m "npx --yes @react-native-community/cli@%RNCLI_VERSION% init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true"
 

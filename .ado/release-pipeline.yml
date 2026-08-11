@@ -1,12 +1,11 @@
 #
 # The Release pipeline entry point.
-# It publishes npm packages to npmjs.com, NuGet packages to the public
-# ms/react-native and ms/react-native-public ADO feeds and to nuget.org,
-# and PDB symbols to the Microsoft Symbol Server.
+# It publishes npm and NuGet packages to their public registries (npmjs.com and
+# nuget.org) and mirrors both into the ms/react-native-public and ms/react-native
+# ADO feeds, plus PDB symbols to the Microsoft Symbol Server.
 #
-# This file replaces release.yml and references the renamed "CI" pipeline
-# (formerly "Publish"). Once all branches use this file, release.yml can
-# be deleted.
+# This file supersedes the removed release.yml and consumes the CI pipeline
+# (project ISS, source microsoft.react-native-windows.ci).
 #
 # The pipeline completion trigger is defined below in the pipeline resource.
 # Do NOT add a build completion trigger in the ADO UI — UI triggers override
@@ -24,34 +23,57 @@ parameters:
     displayName: 'Force release (override CI flag — emergency use only)'
     type: boolean
     default: false
+  # Single source for the identity used to publish npm and NuGet to the ADO feeds.
+  - name: adoFeedServiceConnection
+    displayName: 'ADO feed publish identity (Azure service connection)'
+    type: string
+    default: 'Office-Hermes-Windows-Bot'
+
+variables:
+  # Only npm call is the publish-eligibility check (npm view) in PushNpm; keep it on the compliant feed.
+  - name: NPM_CONFIG_REGISTRY
+    value: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
 
 resources:
   pipelines:
   - pipeline: 'CI'
-    project: 'ReactNative'
-    source: 'CI'
+    project: 'ISS'
+    source: 'microsoft.react-native-windows.ci'
     trigger:
       branches:
         include:
         - main
-        - '0.74-stable'
         - '0.81-stable'
         - '0.82-stable'
         - '0.83-stable'
         - '0.84-stable'
+        - '0.85-stable'
+        - '0.86-stable'
+        - '0.87-stable'
   repositories:
-  - repository: 1ESPipelineTemplates
+  - repository: OfficePipelineTemplates
     type: git
-    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    name: 1ESPipelineTemplates/OfficePipelineTemplates
     ref: refs/tags/release
 
 extends:
-  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  template: v1/Office.Official.PipelineTemplate.yml@OfficePipelineTemplates
   parameters:
     pool:
       name: Azure-Pipelines-1ESPT-ExDShared
-      image: windows-latest
+      vmImage: windows-latest
       os: windows
+    sdl:
+      # Release only publishes artifacts; disable analyzers that would only see build scripts/tests.
+      bandit:
+        enabled: false
+      eslint:
+        enableExclusions: true
+      suppression:
+        suppressionFile: $(Build.SourcesDirectory)\.ado\guardian\sdl\.gdnsuppress
+    settings:
+      # Report-only network isolation so nuget.org publishing can egress (Enforce blocks it).
+      networkIsolationMode: Audit
     stages:
     #
     # Gate stage — runs unconditionally for every trigger.
@@ -71,45 +93,6 @@ extends:
             targetPath: '$(Pipeline.Workspace)/VersionEnvVars'
         steps:
         - checkout: none
-
-        - pwsh: |
-            Write-Host "== Build Variables =="
-            Write-Host "Build.Reason:               $env:BUILD_REASON"
-            Write-Host "Build.SourceBranch:         $env:BUILD_SOURCEBRANCH"
-            Write-Host "Build.SourceVersion:        $env:BUILD_SOURCEVERSION"
-            Write-Host "Build.SourceVersionMessage: $env:BUILD_SOURCEVERSIONMESSAGE"
-            Write-Host "Build.BuildNumber:          $env:BUILD_BUILDNUMBER"
-            Write-Host "Build.BuildId:              $env:BUILD_BUILDID"
-            Write-Host "Build.DefinitionName:       $env:BUILD_DEFINITIONNAME"
-            Write-Host "Build.Repository.Name:      $env:BUILD_REPOSITORY_NAME"
-            Write-Host "System.TeamProject:         $env:SYSTEM_TEAMPROJECT"
-            Write-Host ""
-            Write-Host "== Pipeline Resource: CI =="
-            Write-Host "CI.runName:            $env:CI_RUNNAME"
-            Write-Host "CI.runID:              $env:CI_RUNID"
-            Write-Host "CI.sourceBranch:       $env:CI_SOURCEBRANCH"
-            Write-Host "CI.sourceCommit:       $env:CI_SOURCECOMMIT"
-            Write-Host "CI.pipelineID:         $env:CI_PIPELINEID"
-            Write-Host "CI.requestedFor:       $env:CI_REQUESTEDFOR"
-            Write-Host "CI.requestedForID:     $env:CI_REQUESTEDFORID"
-          displayName: Log all pipeline variables
-          env:
-            BUILD_REASON: $(Build.Reason)
-            BUILD_SOURCEBRANCH: $(Build.SourceBranch)
-            BUILD_SOURCEVERSION: $(Build.SourceVersion)
-            BUILD_SOURCEVERSIONMESSAGE: $(Build.SourceVersionMessage)
-            BUILD_BUILDNUMBER: $(Build.BuildNumber)
-            BUILD_BUILDID: $(Build.BuildId)
-            BUILD_DEFINITIONNAME: $(Build.DefinitionName)
-            BUILD_REPOSITORY_NAME: $(Build.Repository.Name)
-            SYSTEM_TEAMPROJECT: $(System.TeamProject)
-            CI_RUNNAME: $(resources.pipeline.CI.runName)
-            CI_RUNID: $(resources.pipeline.CI.runID)
-            CI_SOURCEBRANCH: $(resources.pipeline.CI.sourceBranch)
-            CI_SOURCECOMMIT: $(resources.pipeline.CI.sourceCommit)
-            CI_PIPELINEID: $(resources.pipeline.CI.pipelineID)
-            CI_REQUESTEDFOR: $(resources.pipeline.CI.requestedFor)
-            CI_REQUESTEDFORID: $(resources.pipeline.CI.requestedForID)
 
         # Apply version variables from the CI artifact (sets IsReleaseBuild, npmVersion, etc.)
         - task: CmdLine@2
@@ -204,8 +187,6 @@ extends:
       jobs:
       - job: PushNpm
         displayName: npmjs.com - Publish npm packages
-        variables:
-        - group: RNW Secrets
         timeoutInMinutes: 30
         templateContext:
           type: releaseJob
@@ -240,7 +221,7 @@ extends:
           displayName: 'ESRP Release to npmjs.com'
           condition: and(succeeded(), ne(variables['NpmDistTag'], ''), eq(variables['HasPackagesToPublish'], 'true'))
           inputs:
-            connectedservicename: 'ESRP-CodeSigning-OGX-JSHost-RNW'
+            connectedservicename: 'ESRP-JSHost3'
             usemanagedidentity: false
             keyvaultname: 'OGX-JSHost-KV'
             authcertname: 'OGX-JSHost-Auth4'
@@ -252,6 +233,44 @@ extends:
             productstate: '$(NpmDistTag)'
             owners: 'vmorozov@microsoft.com'
             approvers: 'khosany@microsoft.com'
+
+      - job: PushNpmPublicAdo
+        displayName: ADO - npm - react-native-public
+        timeoutInMinutes: 30
+        templateContext:
+          type: releaseJob
+          isProduction: true
+          inputs:
+          - input: pipelineArtifact
+            pipeline: 'CI'
+            artifactName: 'NpmPackedTarballs'
+            targetPath: '$(Pipeline.Workspace)/npm-feed-packages'
+        steps:
+        - template: .ado/templates/publish-npm-to-ado-feed.yml@self
+          parameters:
+            azureSubscription: ${{ parameters.adoFeedServiceConnection }}
+            npmFeedRegistry: 'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/'
+            packagesPath: '$(Pipeline.Workspace)/npm-feed-packages'
+            feedDisplayName: 'ms/react-native-public'
+
+      - job: PushNpmPrivateAdo
+        displayName: ADO - npm - react-native
+        timeoutInMinutes: 30
+        templateContext:
+          type: releaseJob
+          isProduction: true
+          inputs:
+          - input: pipelineArtifact
+            pipeline: 'CI'
+            artifactName: 'NpmPackedTarballs'
+            targetPath: '$(Pipeline.Workspace)/npm-feed-packages'
+        steps:
+        - template: .ado/templates/publish-npm-to-ado-feed.yml@self
+          parameters:
+            azureSubscription: ${{ parameters.adoFeedServiceConnection }}
+            npmFeedRegistry: 'https://pkgs.dev.azure.com/ms/_packaging/react-native/npm/registry/'
+            packagesPath: '$(Pipeline.Workspace)/npm-feed-packages'
+            feedDisplayName: 'ms/react-native'
 
       - job: PushPrivateAdo
         displayName: ADO - nuget - react-native
@@ -267,11 +286,12 @@ extends:
         steps:
         - template: .ado/templates/publish-nuget-to-ado-feed.yml@self
           parameters:
-            endpointId: 'a7e33797-4804-4a1d-911d-5bd325e50a85'
+            azureSubscription: ${{ parameters.adoFeedServiceConnection }}
+            endpointId: 'cfe2ce40-0448-46a1-b36d-4205330ca275'
             nugetFeedUrl: 'https://pkgs.dev.azure.com/ms/_packaging/react-native/nuget/v3/index.json'
             packageParentPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
             packagesToPush: '$(Pipeline.Workspace)/ReactWindows-final-nuget/*.nupkg'
-            publishFeedCredentials: 'ms/react-native ADO Feed'
+            publishFeedCredentials: 'Nuget - ms/react-native'
             feedDisplayName: 'ms/react-native'
 
       - job: PushPublicAdo
@@ -288,17 +308,16 @@ extends:
         steps:
         - template: .ado/templates/publish-nuget-to-ado-feed.yml@self
           parameters:
-            endpointId: '9a2456d0-c163-405b-be24-c03fd74b155a'
+            azureSubscription: ${{ parameters.adoFeedServiceConnection }}
+            endpointId: '29e4c04c-ae69-4453-b9f3-bfef7a4c8d32'
             nugetFeedUrl: 'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json'
             packageParentPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
             packagesToPush: '$(Pipeline.Workspace)/ReactWindows-final-nuget/*.nupkg'
-            publishFeedCredentials: 'ms/react-native-public ADO Feed'
+            publishFeedCredentials: 'Nuget - ms/react-native-public'
             feedDisplayName: 'ms/react-native-public'
 
       - job: PushNuGetOrg
         displayName: nuget.org - Push nuget packages
-        variables:
-        - group: RNW Secrets
         timeoutInMinutes: 30
         templateContext:
           type: releaseJob
@@ -309,15 +328,27 @@ extends:
             artifactName: 'ReactWindows-final-nuget'
             targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
         steps:
-        - task: NuGetToolInstaller@1
-          displayName: 'Use NuGet'
+        # nuget.org API key comes from OGX-JSHost-KV;
+        - task: AzureKeyVault@2
+          displayName: Fetch nuget.org API key from OGX-JSHost-KV
+          inputs:
+            azureSubscription: 'ESRP-JSHost3'
+            KeyVaultName: 'OGX-JSHost-KV'
+            SecretsFilter: 'OGX-JSHost-Nuget-org-API-key-Microsoft-JavaScript-NodeApi'
+
+        # Pass the key through an env var into SetApiKey so it never appears on a
+        # command line; the push below then needs no key argument.
         - pwsh: nuget.exe SetApiKey "$env:NUGET_API_KEY"
           displayName: NuGet SetApiKey (nuget.org)
           workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
           env:
-            NUGET_API_KEY: $(nugetorg-apiKey-push)
+            NUGET_API_KEY: $(OGX-JSHost-Nuget-org-API-key-Microsoft-JavaScript-NodeApi)
+
         - script: dir /S "$(Pipeline.Workspace)\ReactWindows-final-nuget"
           displayName: Show directory contents
+
+        # -SkipDuplicate treats an existing version (HTTP 409) as success and
+        # fails on any other error, without reading package contents.
         - script: nuget.exe push .\Microsoft.ReactNative.*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -NoSymbol -NonInteractive -Verbosity Detailed
           displayName: NuGet push (nuget.org)
           workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
@@ -365,18 +396,6 @@ extends:
             }
           displayName: Extract PDBs from NuGet packages
 
-        - task: PublishSymbols@2
-          displayName: 'Publish Symbols to Microsoft Symbol Server'
-          continueOnError: true
-          inputs:
-            UseNetCoreClientTool: true
-            ConnectedServiceName: Office-React-Native-Windows-Bot
-            SymbolsFolder: '$(Pipeline.Workspace)/symbols'
-            SearchPattern: '**/*.pdb'
-            SymbolServerType: 'TeamServices'
-            IndexSources: false # SourceLink is already embedded in PDBs at compile time
-            SymbolsProduct: 'ReactNativeWindows'
-            SymbolsVersion: '$(Build.BuildNumber)'
-            SymbolsArtifactName: 'ReactNativeWindows-Symbols-$(Build.BuildId)'
-            DetailedLog: true
-            TreatNotIndexedAsWarning: false
+        - template: .ado/templates/publish-symbols.yml@self
+          parameters:
+            symbolsArtifactName: 'ReactNativeWindows-Symbols-$(Build.BuildId)'
