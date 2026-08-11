@@ -11,10 +11,10 @@
     "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
+    "@rnw-scripts/sample-custom-component": "0.0.1",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
-    "flow-enums-runtime": "^0.0.6",
-    "@rnw-scripts/sample-custom-component": "0.0.1"
+    "flow-enums-runtime": "^0.0.6"
   },
   "peerDependencies": {
     "@react-native-picker/picker": "2.11.0",
