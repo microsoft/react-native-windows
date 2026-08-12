@@ -197,15 +197,10 @@ function RtlAndInlineViewsExample(): React.Node {
   );
 }
 
-<<<<<<< Upstream
-component TextWithLinkRoleExample() {
+function TextWithLinkRoleExample(): React.Node {
   const [pressed, setPressed] = useState(false);
   const handlePress = () => setPressed(true);
   const linkColor = pressed ? 'red' : 'teal';
-=======
-function TextWithLinkRoleExample(): React.Node {
-  const handlePress = () => console.log('Link Press');
->>>>>>> Override
 
   return (
     <View testID="text-with-link-role">

@@ -3606,7 +3606,7 @@ __metadata:
     commander: "npm:^12.0.0"
     eslint: "npm:^8.19.0"
     event-target-shim: "npm:^5.0.1"
-    flow-bin: "npm:^0.303.0"
+    flow-bin: "npm:^0.304.0"
     flow-enums-runtime: "npm:^0.0.6"
     glob: "npm:^7.1.1"
     hermes-compiler: "npm:250829098.0.10"
@@ -4599,7 +4599,7 @@ __metadata:
     eslint-plugin-relay: "npm:^1.8.3"
     fb-dotslash: "npm:0.5.8"
     flow-api-translator: "npm:0.33.3"
-    flow-bin: "npm:^0.303.0"
+    flow-bin: "npm:^0.304.0"
     hermes-eslint: "npm:0.33.3"
     hermes-transform: "npm:0.33.3"
     ini: "npm:^5.0.0"
@@ -10596,12 +10596,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flow-bin@npm:^0.303.0":
-  version: 0.303.0
-  resolution: "flow-bin@npm:0.303.0"
+"flow-bin@npm:^0.304.0":
+  version: 0.304.0
+  resolution: "flow-bin@npm:0.304.0::__archiveUrl=https%3A%2F%2Fms-feed-2.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-bin%2F-%2Fflow-bin-0.304.0.tgz"
   bin:
     flow: cli.js
-  checksum: 10c0/0f3319f4ba62a8dc1b59a5f684d68249e8365cea32dd73c1430bdb82f47579852bc0ff91a153fa76fc9c1f93a9f166232ba14b2f45622b2457f5ea4bb4eb0380
+  checksum: 10c0/267a1b91600e29646d562600cbee6edf31a8a4634233fe1b207c4b1c70cc294339899bf22db42f253cfc784a6b784970bae2cb20af7b3d1cff8fe8f13fbb9863
   languageName: node
   linkType: hard
 
@@ -16407,7 +16407,7 @@ __metadata:
     commander: "npm:^12.0.0"
     eslint: "npm:^8.19.0"
     event-target-shim: "npm:^5.0.1"
-    flow-bin: "npm:^0.303.0"
+    flow-bin: "npm:^0.304.0"
     flow-enums-runtime: "npm:^0.0.6"
     glob: "npm:^7.1.1"
     hermes-compiler: "npm:250829098.0.10"

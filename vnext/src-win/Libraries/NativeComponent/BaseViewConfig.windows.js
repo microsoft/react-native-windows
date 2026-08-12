@@ -404,7 +404,6 @@ const validAttributesForNonEventProps = {
   focusable: true, // [Windows]
   keyDownEvents: true, // [Windows]
   keyUpEvents: true, // [Windows]
-  tabIndex: true, // [Windows]
   tooltip: true, // [Windows]
   enableFocusRing: true, // [Windows]
   importantForAccessibility: true, // [Windows]

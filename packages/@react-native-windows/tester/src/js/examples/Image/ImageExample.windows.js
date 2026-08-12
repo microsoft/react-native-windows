@@ -1216,11 +1216,7 @@ exports.examples = [
         'required in the same way as JavaScript modules.': string),
     render: function (): React.Node {
       return (
-<<<<<<< Upstream
-        <View testID="image-static" style={styles.horizontal}>
-=======
         <View style={styles.horizontal} testID="image-static" accessible>
->>>>>>> Override
           <Image
             source={require('../../assets/uie_thumb_normal.png')}
             style={styles.icon}
@@ -1507,11 +1503,7 @@ exports.examples = [
     name: 'opacity',
     render: function (): React.Node {
       return (
-<<<<<<< Upstream
-        <View testID="image-opacity" style={styles.horizontal}>
-=======
         <View style={styles.horizontal} testID="image-opacity" accessible>
->>>>>>> Override
           <Image style={[styles.base, styles.opacity1]} source={fullImage} />
           <Image style={[styles.base, styles.opacity2]} source={fullImage} />
           <Image style={[styles.base, styles.opacity3]} source={fullImage} />
@@ -1527,11 +1519,10 @@ exports.examples = [
     name: 'nesting-content',
     render: function (): React.Node {
       return (
-<<<<<<< Upstream
-        <View testID="image-nesting-content" style={styles.base}>
-=======
-        <View style={styles.base} testID="image-nested" accessible>
->>>>>>> Override
+        <View
+          style={styles.base}
+          testID="image-nesting-content"
+          accessible>
           <Image style={{...StyleSheet.absoluteFill}} source={fullImage} />
           <Text style={styles.nestedText}>React</Text>
         </View>
@@ -1559,11 +1550,7 @@ exports.examples = [
       'pixels to the tint color.': string),
     render: function (): React.Node {
       return (
-<<<<<<< Upstream
-        <View testID="image-tint-color">
-=======
         <View testID="image-tint-color" accessible>
->>>>>>> Override
           <View style={styles.horizontal}>
             <Image
               source={require('../../assets/uie_thumb_normal.png')}
@@ -1866,7 +1853,6 @@ exports.examples = [
     render: function (): React.Node {
       return (
         <Image
-          testID="image-animated-gif"
           style={styles.gif}
           source={require('../../assets/tumblr_mfqekpMktw1rn90umo1_500.gif')}
           testID="image-animated-gif"
@@ -1882,11 +1868,6 @@ exports.examples = [
     render: function (): React.Node {
       return (
         <Image
-<<<<<<< Upstream
-          testID="image-base64"
-          style={styles.base64}
-          source={{uri: base64Icon, scale: 3}}
-=======
           style={styles.base64}
           source={{uri: base64Icon, scale: 3}}
           testID="image-base64"
@@ -1904,7 +1885,6 @@ exports.examples = [
           source={{uri: dataImageSvg, width: 48, height: 48}}
           testID="image-datasvg"
           accessible
->>>>>>> Override
         />
       );
     },
@@ -1987,11 +1967,7 @@ exports.examples = [
     name: 'blur-radius',
     render: function (): React.Node {
       return (
-<<<<<<< Upstream
-        <View testID="image-blur-radius" style={styles.horizontal}>
-=======
         <View style={styles.horizontal} testID="image-blur-radius" accessible>
->>>>>>> Override
           <Image style={styles.base} source={fullImage} blurRadius={0} />
           <Image style={styles.base} source={fullImage} blurRadius={5} />
           <Image style={styles.base} source={fullImage} blurRadius={10} />
