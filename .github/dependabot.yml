@@ -244,3 +244,12 @@ updates:
   commit-message:
     prefix: "📦 [0.84]"
   open-pull-requests-limit: 1
+- package-ecosystem: "github-actions"
+  directory: "/"
+  groups:
+    github-actions:
+      patterns: ["*"]
+  schedule:
+    interval: "weekly"
+  cooldown:
+    default-days: 7
