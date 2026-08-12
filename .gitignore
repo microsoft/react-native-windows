@@ -170,6 +170,9 @@ ipch/
 # Build results
 [Dd]ebugPublic/
 [Rr]eleases/
+# Re-include Yarn 4's pinned release binary that [Rr]eleases/ above would otherwise drop.
+!.yarn/releases
+!.yarn/releases/*
 x64/
 x86/
 bld/
