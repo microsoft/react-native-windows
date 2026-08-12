@@ -18,21 +18,27 @@ parameters:
   - name: useFabric
     type: boolean
     default: true
+  # The Universal job builds Paper then Fabric in one job; the Fabric pass sets this true to
+  # reuse the Paper pass's checkout / JS env / build env / version vars.
+  - name: skipSetup
+    type: boolean
+    default: false
 
 steps:
-  - template: ../templates/checkout-shallow.yml
+  - ${{ if ne(parameters.skipSetup, true) }}:
+    - template: ../templates/checkout-shallow.yml
 
-  - template: ../templates/prepare-js-env.yml
-    parameters:
-      buildEnvironment: ${{ parameters.buildEnvironment }}
+    - template: ../templates/prepare-js-env.yml
+      parameters:
+        buildEnvironment: ${{ parameters.buildEnvironment }}
 
-  - template: ../templates/prepare-build-env.yml
-    parameters:
-      platform: ${{ parameters.buildPlatform }}
-      configuration: ${{ parameters.buildConfiguration }}
-      buildEnvironment: ${{ parameters.buildEnvironment }}
+    - template: ../templates/prepare-build-env.yml
+      parameters:
+        platform: ${{ parameters.buildPlatform }}
+        configuration: ${{ parameters.buildConfiguration }}
+        buildEnvironment: ${{ parameters.buildEnvironment }}
 
-  - template: ../templates/apply-published-version-vars.yml
+    - template: ../templates/apply-published-version-vars.yml
 
   - template: ../templates/msbuild-sln.yml
     parameters:

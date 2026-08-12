@@ -584,25 +584,27 @@ extends:
               buildEnvironment: ${{ parameters.buildEnvironment }}
               AgentPool: ${{ parameters.AgentPool }}
 
-          - template: .ado/jobs/e2e-test.yml@self
-            parameters:
-              buildEnvironment: ${{ parameters.buildEnvironment }}
-              AgentPool: ${{ parameters.AgentPool }}
+          # BISECT (1ES event budget): e2e-test removed to test whether it pushes CI over the limit.
+          # - template: .ado/jobs/e2e-test.yml@self
+          #   parameters:
+          #     buildEnvironment: ${{ parameters.buildEnvironment }}
+          #     AgentPool: ${{ parameters.AgentPool }}
 
     #=================================================================
     # Stage: CLI
     # CLI init verification — tests the final NuGet + npm packages.
     # Runs after Build stage completes (needs RNWNuget artifacts).
     #=================================================================
+    # BISECT (1ES event budget): CLI stage removed to test whether it pushes CI over the limit.
     # Continuous only: PR builds read the feed anonymously and can't pull new
     # packages, so the CLI init test runs only where the feed MI can warm them.
-    - ${{ if and(eq(parameters.buildEnvironment, 'Continuous'), eq(parameters.includeTestStages, true)) }}:
-      - stage: CLI
-        displayName: CLI
-        dependsOn: Build
-        jobs:
-          - template: .ado/jobs/cli-init-windows.yml@self
-            parameters:
-              buildEnvironment: ${{ parameters.buildEnvironment }}
-              AgentPool: ${{ parameters.AgentPool }}
+    # - ${{ if and(eq(parameters.buildEnvironment, 'Continuous'), eq(parameters.includeTestStages, true)) }}:
+    #   - stage: CLI
+    #     displayName: CLI
+    #     dependsOn: Build
+    #     jobs:
+    #       - template: .ado/jobs/cli-init-windows.yml@self
+    #         parameters:
+    #           buildEnvironment: ${{ parameters.buildEnvironment }}
+    #           AgentPool: ${{ parameters.AgentPool }}
 
