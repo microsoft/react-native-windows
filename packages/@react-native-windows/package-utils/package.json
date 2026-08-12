@@ -22,7 +22,7 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.37",
+    "@rnw-scripts/eslint-config": "1.2.38",
     "@rnw-scripts/just-task": "2.3.56",
     "@rnw-scripts/ts-config": "2.0.6",
     "@types/lodash": "^4.14.168",

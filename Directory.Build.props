@@ -32,6 +32,8 @@
     <RestoreLockedMode Condition="'$(RestoreLockedMode)' == ''">true</RestoreLockedMode>
     <RestorePackagesWithLockFile Condition="'$(RestorePackagesWithLockFile)' == ''">true</RestorePackagesWithLockFile>
     <RestoreForceEvaluate Condition="'$(RestoreForceEvaluate)' == ''">true</RestoreForceEvaluate>
+    <!-- RestoreForceEvaluate intentionally supersedes RestoreLockedMode here (lock drift is caught by a post-restore git diff), so silence NU1512 to keep it from being promoted by /warnaserror. -->
+    <NoWarn>$(NoWarn);NU1512</NoWarn>
   </PropertyGroup>
 
   <!-- User overrides -->
