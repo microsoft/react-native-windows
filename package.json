@@ -62,10 +62,25 @@
     "@react-native/monorepo/jest-junit": "^13.0.0",
     "@react-native/monorepo/ws": "^6.2.3",
     "@react-native/tester/ws": "^6.2.3",
-    "puppeteer-core/ws": "^8.17.1",
+    "puppeteer-core/ws": "^8.20.1",
     "detox/ws": "^5.2.4",
     "xml2js": "^0.5.0",
-    "z-schema": "^5.0.2"
+    "z-schema": "^5.0.2",
+    "launch-editor": "^2.14.0",
+    "qs": "^6.15.0",
+    "tmp": "^0.2.4",
+    "@tootallnate/once": "^2.0.0",
+    "ip-address": "10.3.1",
+    "diff": "^8.0.3",
+    "postcss": "^8.5.19",
+    "esbuild": "^0.25.0",
+    "@babel/core": "^7.29.6",
+    "brace-expansion@^1.1.7": "^1.1.14",
+    "brace-expansion@^2.0.1": "^2.1.0",
+    "brace-expansion@^2.0.2": "^2.1.0",
+    "brace-expansion@^5.0.5": "^5.0.7",
+    "fast-xml-parser@^4.4.1": "^5.0.0",
+    "string_decoder": "portal:./packages/@rnw-scripts/shims/string_decoder"
   },
   "resolutions.justification": {
     "z-schema": "CVE-2021-3765 in validator. z-schema is used by rush which is a dependency of lage so should not be executed in this repo"
