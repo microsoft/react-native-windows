@@ -4774,7 +4774,7 @@ __metadata:
     eslint: "npm:^8.19.0"
     find-up: "npm:^4.1.0"
     prettier: "npm:^3.6.2"
-    shell-quote: "npm:^1.8.1"
+    shell-quote: "npm:^1.9.0"
     typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
@@ -17351,7 +17351,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shell-quote@npm:^1.6.1, shell-quote@npm:^1.8.1":
+"shell-quote@npm:^1.6.1":
   version: 1.8.4
   resolution: "shell-quote@npm:1.8.4"
   checksum: 10c0/86c93678bc394cb81f5ddcdc87df9c95d279ef9652775cd1cd1eed361404169a8d8cbaacaeed232ab09919e36ee1e5363863570390d78571f8c22b7f6312fb40
@@ -17362,6 +17362,13 @@ __metadata:
   version: 1.10.0
   resolution: "shell-quote@npm:1.10.0"
   checksum: 10c0/46ee59bfd972ce6a45500c44ed130dff2d0a7d6fbac9841e59d548518cad8060a06393c9a5dcbc0cede294ad80b2a2cd8c904679e09265f53efc0a0879f30961
+  languageName: node
+  linkType: hard
+
+"shell-quote@npm:^1.9.0":
+  version: 1.9.0
+  resolution: "shell-quote@npm:1.9.0"
+  checksum: 10c0/a39960107eb086b02394cfceb3c732bd3bf567b568719ff47101448fc3f1bf4a59ecfdd8960ff7ea564d749ef8bda70f2c82a768f22d8c7aeeabf2b64f53b7e8
   languageName: node
   linkType: hard
 
