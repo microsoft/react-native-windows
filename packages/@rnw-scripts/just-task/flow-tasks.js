@@ -7,7 +7,9 @@
 
 const fs = require('fs');
 const https = require('https');
-const minimatch = require('minimatch');
+// minimatch v5+ exposes the matcher as a named export; v3 exported it directly.
+const minimatchModule = require('minimatch');
+const minimatch = minimatchModule.minimatch ?? minimatchModule;
 const path = require('path');
 const {pipeline} = require('stream');
 
