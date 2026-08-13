@@ -29,11 +29,11 @@
     <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' != ''">$(RootIntDir)\ProjectExtensions\$(ProjectName)\</MSBuildProjectExtensionsPath>
     <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' == ''">$(RootIntDir)\ProjectExtensions\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-    <RestoreLockedMode Condition="'$(RestoreLockedMode)' == ''">true</RestoreLockedMode>
     <RestorePackagesWithLockFile Condition="'$(RestorePackagesWithLockFile)' == ''">true</RestorePackagesWithLockFile>
+    <!-- RestoreLockedMode (enforce the committed lock) and RestoreForceEvaluate (regenerate it) are mutually exclusive; enabling both trips NU1512. Local builds default to force-evaluate so the lock stays fresh, and CI passes RestoreLockedMode=true to enforce it instead. -->
+    <RestoreLockedMode Condition="'$(RestoreLockedMode)' == ''">false</RestoreLockedMode>
+    <RestoreForceEvaluate Condition="'$(RestoreForceEvaluate)' == '' AND '$(RestoreLockedMode)' == 'true'">false</RestoreForceEvaluate>
     <RestoreForceEvaluate Condition="'$(RestoreForceEvaluate)' == ''">true</RestoreForceEvaluate>
-    <!-- RestoreForceEvaluate intentionally supersedes RestoreLockedMode here (lock drift is caught by a post-restore git diff), so silence NU1512 to keep it from being promoted by /warnaserror. -->
-    <NoWarn>$(NoWarn);NU1512</NoWarn>
   </PropertyGroup>
 
   <!-- User overrides -->
