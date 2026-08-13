@@ -50,6 +50,36 @@ steps:
     inputs:
       versionSpec: ">=5.8.0"
 
+  # Some third-party native modules (e.g. @react-native-picker/picker) ship a
+  # windows/NuGet.Config that lists api.nuget.org as a package source. Under network
+  # isolation that host is blocked, so their packages.config restore fails with NU1301.
+  # Rewrite any such node_modules config to use only the approved ADO feed (which
+  # proxies nuget.org upstream), matching this repo's single-feed policy.
+  - pwsh: |
+      $feed = 'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json'
+      $root = Join-Path '$(Build.SourcesDirectory)' 'node_modules'
+      $globs = @((Join-Path $root '*\windows\NuGet.Config'), (Join-Path $root '@*\*\windows\NuGet.Config'))
+      $configs = Get-ChildItem -Path $globs -File -ErrorAction SilentlyContinue |
+        Where-Object { Select-String -Path $_.FullName -Pattern 'api\.nuget\.org' -Quiet -ErrorAction SilentlyContinue }
+      if (-not $configs) {
+        Write-Host 'No non-compliant node_modules NuGet.Config files found.'
+        return
+      }
+      foreach ($file in $configs) {
+        [xml] $config = Get-Content -LiteralPath $file.FullName
+        $packageSources = $config.configuration.packageSources
+        if (-not $packageSources) { continue }
+        $packageSources.RemoveAll()
+        [void] $packageSources.AppendChild($config.CreateElement('clear'))
+        $add = $config.CreateElement('add')
+        $add.SetAttribute('key', 'react-native')
+        $add.SetAttribute('value', $feed)
+        [void] $packageSources.AppendChild($add)
+        $config.Save($file.FullName)
+        Write-Host "Rewrote $($file.FullName) to use the approved ADO feed."
+      }
+    displayName: Enforce compliant NuGet feed in node_modules
+
   - template: set-appx-platforms.yml
     parameters:
       platform: ${{ parameters.platform }}
