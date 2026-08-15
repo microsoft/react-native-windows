@@ -52,9 +52,15 @@ try {
     }
 
     # Re-run solutions that build with UseExperimentalWinUI3
-    $experimentalSolutions = @("playground-composition.sln", "Microsoft.ReactNative.NewArch.sln", "ReactWindows-Desktop.sln");
+    $experimentalSolutions = @("playground-composition.sln", "Microsoft.ReactNative.sln", "Microsoft.ReactNative.NewArch.sln", "ReactWindows-Desktop.sln");
     $($packagesSolutions; $vnextSolutions) | Where-Object { $experimentalSolutions -contains $_.Name } | Foreach-Object {
         Restore-Solution $_.FullName @('/p:UseExperimentalWinUI3=true')
+    }
+
+    # Re-run solutions that build with Chakra (UseHermes=false)
+    $chakraSolutions = @("ReactUWPTestApp.sln", "integrationtest.sln");
+    $($packagesSolutions; $vnextSolutions) | Where-Object { $chakraSolutions -contains $_.Name } | Foreach-Object {
+        Restore-Solution $_.FullName @('/p:UseHermes=false')
     }
 }
 finally {
