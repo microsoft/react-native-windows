@@ -29,6 +29,11 @@
     <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' != ''">$(RootIntDir)\ProjectExtensions\$(ProjectName)\</MSBuildProjectExtensionsPath>
     <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' == ''">$(RootIntDir)\ProjectExtensions\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
     <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+    <!-- Force Microsoft.NETCore.UniversalWindowsPlatform / runtime.win10-* to restore from the
+         feed by pointing the UWP fallback folder at an empty dir. The machine-local Windows SDK
+         copy is signed differently per SDK build, so its lock hashes never match across dev/CI
+         (NU1403). Build-time .NET Native injection is unaffected (it reads the SDK folder directly). -->
+    <UWPNugetRepo>$(MSBuildThisFileDirectory).nuget\empty-uwp-fallback</UWPNugetRepo>
     <RestorePackagesWithLockFile Condition="'$(RestorePackagesWithLockFile)' == ''">true</RestorePackagesWithLockFile>
     <!-- RestoreLockedMode (enforce the committed lock) and RestoreForceEvaluate (regenerate it) are mutually exclusive; enabling both trips NU1512. Local builds default to force-evaluate so the lock stays fresh, and CI passes RestoreLockedMode=true to enforce it instead. -->
     <RestoreLockedMode Condition="'$(RestoreLockedMode)' == ''">false</RestoreLockedMode>
