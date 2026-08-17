@@ -51,7 +51,7 @@ jobs:
           env:
             PLATFORM_OVERRIDE_GITHUB_TOKEN: $(GitHubOAuthToken)
 
-      # Disable while facebook/react-native -> react/react-native migration breaks CI
+      # validate-overrides needs the GitHub API, which CI network isolation blocks. Run it locally instead.
       # - script: yarn validate-overrides
       #  displayName: yarn validate-overrides
       #  ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
