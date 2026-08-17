@@ -135,7 +135,7 @@ LRESULT CALLBACK TooltipWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM l
   return DefWindowProc(hwnd, message, wparam, lparam);
 }
 
-POINT ClampTooltipPositionToMonitor(const POINT &anchorPt, int tooltipWidth, int tooltipHeight, int margin) noexcept {
+POINT ClampTooltipPositionToMonitor(const POINT &anchorPt, int &tooltipWidth, int &tooltipHeight, int margin) noexcept {
   POINT result = {anchorPt.x - tooltipWidth / 2, anchorPt.y - tooltipHeight - margin};
 
   HMONITOR hMonitor = MonitorFromPoint(anchorPt, MONITOR_DEFAULTTONEAREST);
@@ -147,10 +147,19 @@ POINT ClampTooltipPositionToMonitor(const POINT &anchorPt, int tooltipWidth, int
 
   const RECT &bounds = monitorInfo.rcWork;
 
+  // Cap the tooltip size to the work area so the position clamping below is guaranteed to keep
+  // the whole tooltip on-screen, even for unusually long tooltip text.
+  tooltipWidth = std::min(tooltipWidth, static_cast<int>(bounds.right - bounds.left));
+  tooltipHeight = std::min(tooltipHeight, static_cast<int>(bounds.bottom - bounds.top));
+
+  result = {anchorPt.x - tooltipWidth / 2, anchorPt.y - tooltipHeight - margin};
+
+  // Flip below the anchor if there isn't enough room above it within the work area.
   if (result.y < bounds.top) {
     result.y = anchorPt.y + margin;
   }
 
+  // Clamp vertically so the tooltip never extends past the work area.
   if (result.y + tooltipHeight > bounds.bottom) {
     result.y = bounds.bottom - tooltipHeight;
   }
@@ -158,6 +167,7 @@ POINT ClampTooltipPositionToMonitor(const POINT &anchorPt, int tooltipWidth, int
     result.y = bounds.top;
   }
 
+  // Clamp horizontally so the tooltip never extends past the work area.
   if (result.x + tooltipWidth > bounds.right) {
     result.x = bounds.right - tooltipWidth;
   }
