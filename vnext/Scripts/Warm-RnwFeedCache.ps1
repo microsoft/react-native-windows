@@ -10,7 +10,11 @@
   request). Any not-yet-saved transitive dependency therefore 404s on a PR build,
   e.g. the CLI lib job failing on 'is-unc-path'.
 
-  The script warms two ways, both with your credentials:
+  The script warms several ways, all with your credentials:
+  - repo: it runs an authenticated `yarn install` in this repo, pulling the repo's
+    own dev-dependency closure (including package.json resolutions, so freshly bumped
+    versions are saved) through the feed. This is the closure an anonymous PR build of
+    the repo restores.
   - npm: it reproduces the base project generations the CLI-init tests run (a
     create-react-native-library lib and a community-CLI app) and installs them, which
     pulls the whole toolchain closure into the feed.
@@ -21,10 +25,13 @@
 
   Auth (in order): -Pat / $env:ADO_PAT / $env:AZURE_DEVOPS_EXT_PAT, else an AAD token
   from `az account get-access-token` (requires `az login` locally, or an AzureCLI@2
-  task with a managed identity in a pipeline).
+  task with a managed identity in a pipeline). The token reaches npm and Yarn only
+  through environment variables and a throwaway work-dir npmrc; your ~/.npmrc and
+  ~/.yarnrc.yml are never modified.
 
-  Run it manually from a clone, or on a schedule from the ADO warm-up pipeline. It
-  does not touch your local checkout: all work happens in a throwaway work dir.
+  Run it manually from a clone, or on a schedule from the ADO warm-up pipeline. Only
+  the repo pass touches your checkout (it refreshes node_modules and yarn.lock in
+  place); every other pass works in a throwaway work dir.
 
 .PARAMETER NpmRegistry
   The feed npm registry to warm. Defaults to ms/react-native-public.
@@ -43,6 +50,10 @@
 
 .PARAMETER CliVersion
   @react-native-community/cli version. Defaults to vnext/package.json.
+
+.PARAMETER SkipRepo
+  Skip the repo warm pass (an authenticated `yarn install` in this repo). Unlike the
+  other passes it refreshes node_modules and yarn.lock in your checkout.
 
 .PARAMETER SkipLib
   Skip the create-react-native-library warm pass.
@@ -78,6 +89,7 @@ param(
   [string]$CreateLibraryVersion = '0.48.9',
   [string]$TemplateVersion = '@react-native-community/template@0.84.1',
   [string]$NuGetIndex = 'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json',
+  [switch]$SkipRepo,
   [switch]$SkipLib,
   [switch]$SkipApp,
   [switch]$SkipNuGet,
@@ -177,6 +189,16 @@ function Update-NightlyPackageJson {
 }
 
 # --- warm passes --------------------------------------------------------------
+
+function Warm-Repo {
+  # Authenticated install of the repo warms its whole dev closure (incl. resolutions)
+  # and refreshes yarn.lock; --mode=skip-build avoids the repo's postinstall build.
+  Push-Location $RepoRoot
+  try {
+    Invoke-Checked -What 'yarn install (repo)' -Script { & yarn install --mode=skip-build }
+  }
+  finally { Pop-Location }
+}
 
 function Warm-Lib {
   Push-Location $WorkDir
@@ -351,6 +373,7 @@ function Warm-RnwPackages {
 }
 
 $passes = [ordered]@{}
+if (-not $SkipRepo) { $passes['repo'] = ${function:Warm-Repo} }
 if (-not $SkipLib) { $passes['lib'] = ${function:Warm-Lib} }
 if (-not $SkipApp) { $passes['app'] = ${function:Warm-App} }
 if (-not $SkipNuGet) { $passes['nuget'] = ${function:Warm-NuGet} }
