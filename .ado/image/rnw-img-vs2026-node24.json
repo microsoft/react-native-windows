@@ -61,6 +61,24 @@
         },
         {
             "name": "Windows-AzureCLI"
+        },
+        {
+            "name": "windows-updateregistry",
+            "parameters": {
+                "RegistryPath": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\VisualStudio\\Setup",
+                "RegistryKey": "BackgroundDownload",
+                "DataType": "REG_DWORD",
+                "Value": "0"
+            }
+        },
+        {
+            "name": "windows-updateregistry",
+            "parameters": {
+                "RegistryPath": "HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Microsoft\\VisualStudio\\Setup",
+                "RegistryKey": "BackgroundDownload",
+                "DataType": "REG_DWORD",
+                "Value": "0"
+            }
         }
     ]
 }
