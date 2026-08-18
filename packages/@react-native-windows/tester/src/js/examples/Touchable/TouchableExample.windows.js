@@ -513,7 +513,7 @@ function CustomRippleRadius() {
 }
 
 const remoteImage = {
-  uri: 'https://www.facebook.com/favicon.ico',
+  uri: 'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png',
 };
 
 const TouchableHighlightUnderlayMethods = () => {

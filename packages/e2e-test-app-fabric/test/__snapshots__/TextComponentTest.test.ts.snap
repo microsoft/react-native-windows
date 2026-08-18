@@ -1232,7 +1232,7 @@ exports[`Text Tests Texts can clip inline View/Images 1`] = `
                 {
                   "Size": "50, 100",
                   "Type": "Remote",
-                  "Uri": "https://picsum.photos/100",
+                  "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
                 },
               ],
             },

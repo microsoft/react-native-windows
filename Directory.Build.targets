@@ -27,10 +27,10 @@
   >
 
     <Message Text="Running yarn install to fetch latest packages." Importance="High" />
-    <Message Text="yarn install --frozen-lockfile --mutex file:.yarn-mutex" Importance="High" />
+    <Message Text="yarn install --immutable" Importance="High" />
     <Exec
       ContinueOnError="True"
-      Command="yarn install --frozen-lockfile --mutex file:.yarn-mutex"
+      Command="yarn install --immutable"
       WorkingDirectory="$(MSBuildThisFileDirectory)"
     >
       <Output TaskParameter="ExitCode" ItemName="_ReactNativeYarnExitCode" />

@@ -40,16 +40,13 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Yarn
-        run: npm install -g yarn
-
       - name: Delete yarn.lock and reinstall dependencies (skip scripts)
         working-directory: ./repo
         run: |
           echo "🧹 Removing yarn.lock..."
           rm -f yarn.lock
           echo "📦 Running yarn install without lifecycle scripts..."
-          yarn install --ignore-scripts
+          yarn install --mode=skip-build
 
       - name: Commit and push changes via gh CLI
         working-directory: ./repo
