@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Move CI pipeline to office/ISS and address security",
+  "packageName": "react-native-platform-override",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

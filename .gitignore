@@ -27,6 +27,14 @@ build/Release
 # Dependency directory
 node_modules
 
+# Yarn v4
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+.pnp.*
+
 # Optional npm cache directory
 .npm
 
@@ -162,6 +170,9 @@ ipch/
 # Build results
 [Dd]ebugPublic/
 [Rr]eleases/
+# Re-include Yarn 4's pinned release binary that [Rr]eleases/ above would otherwise drop.
+!.yarn/releases
+!.yarn/releases/*
 x64/
 x86/
 bld/
@@ -191,9 +202,6 @@ nul
 /packages/@rnw-bots/*
 /packages/jest-environment-winappdriver/*
 /packages/node-rnw-rpc/*
-
-# midgard-yarn-strict
-.store*/*
 
 /npm-pkgs
 /.claude

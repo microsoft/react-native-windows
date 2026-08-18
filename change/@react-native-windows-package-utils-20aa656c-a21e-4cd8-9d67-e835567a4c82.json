@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Move CI pipeline to office/ISS and address security",
+  "packageName": "@react-native-windows/package-utils",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

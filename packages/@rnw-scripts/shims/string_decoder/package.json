@@ -1,0 +1,8 @@
+{
+  "name": "string_decoder",
+  "version": "99.99.99",
+  "description": "Local shim that re-exports Node's built-in string_decoder, used via a Yarn resolution to keep the unmaintained npm string_decoder mirror out of the dependency tree. The version is deliberately synthetic (not a real, advisory-flagged string_decoder release) so Component Governance doesn't match it to the no-fix MVS-2021-w6qm-jxf5 advisory.",
+  "private": true,
+  "license": "MIT",
+  "main": "index.js"
+}

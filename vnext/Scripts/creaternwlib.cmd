@@ -77,6 +77,9 @@ if not "%part%"=="" (
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwlib.cmd: Setting npm to use verdaccio at http://localhost:4873
+  set NPM_CONFIG_REGISTRY=http://localhost:4873
+  set YARN_NPM_REGISTRY_SERVER=http://localhost:4873
+  set YARN_UNSAFE_HTTP_WHITELIST=localhost
   call npm config set registry http://localhost:4873
 )
 
@@ -141,9 +144,11 @@ if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
 @echo creaternwlib.cmd: Calling yarn install
 call yarn install
 
+call git config user.name "React-Native-Windows Bot"
+call git config user.email "53619745+rnbot@users.noreply.github.com"
+
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwlib.cmd: Setting yarn to use verdaccio at http://localhost:4873
-  call yarn config set registry http://localhost:4873
   call yarn config set npmRegistryServer http://localhost:4873
   call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
 )
@@ -162,7 +167,8 @@ call yarn install
 
 @echo creaternwlib.cmd Creating commit to save current state
 call git add .
-call git commit -m "chore: add rnw dependency"
+rem --no-verify skips the generated project's lefthook hooks (run via bash, absent on Windows agents)
+call git commit --no-verify -m "chore: add rnw dependency"
 
 @echo creaternwlib.cmd Running init-windows with: yarn react-native init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
 call yarn react-native init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
