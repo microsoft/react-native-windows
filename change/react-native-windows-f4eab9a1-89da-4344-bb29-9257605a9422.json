@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "comment": "Clamp Tooltip Position To Monitor",
   "packageName": "react-native-windows",
   "email": "66076509+vineethkuttan@users.noreply.github.com",
