@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Prevent lazy TurboModules from being created without a runtime during shutdown",
+  "packageName": "react-native-windows",
+  "email": "khosany@microsoft.com",
+  "dependentChangeType": "patch"
+}
