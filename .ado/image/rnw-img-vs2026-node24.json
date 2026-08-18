@@ -90,18 +90,18 @@
             "name": "windows-updateregistry",
             "parameters": {
                 "RegistryPath": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\VisualStudio\\Setup",
-                "RegistryKey": "BackgroundDownload",
+                "RegistryKey": "BackgroundDownloadDisabled",
                 "DataType": "REG_DWORD",
-                "Value": "0"
+                "Value": "1"
             }
         },
         {
             "name": "windows-updateregistry",
             "parameters": {
-                "RegistryPath": "HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Microsoft\\VisualStudio\\Setup",
-                "RegistryKey": "BackgroundDownload",
+                "RegistryPath": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio\\Setup",
+                "RegistryKey": "BackgroundDownloadDisabled",
                 "DataType": "REG_DWORD",
-                "Value": "0"
+                "Value": "1"
             }
         }
     ]
