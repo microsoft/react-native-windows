@@ -38,8 +38,9 @@ extends:
   template: v1/Office.Unofficial.PipelineTemplate.yml@OfficePipelineTemplates
   parameters:
     pool:
-      name: fabric-internal-pool-large
-      demands: ImageOverride -equals rnw-img-vs2026-node24
+      name: Azure-Pipelines-1ESPT-ExDShared
+      vmImage: windows-latest
+      os: windows
     sdl:
       bandit:
         enabled: false
