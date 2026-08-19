@@ -1,8 +1,21 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Thu, 23 Jul 2026 23:58:53 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 19 Aug 2026 02:25:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.8
+
+Wed, 19 Aug 2026 02:25:42 GMT
+
+### Patches
+
+- Move CI pipeline to office/ISS and address security (vmorozov@microsoft.com)
+- Bump @react-native-windows/codegen to v0.81.7
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.3
+- Bump @react-native-windows/fs to v0.81.2
+- Bump @react-native-windows/package-utils to v0.81.2
+- Bump @react-native-windows/telemetry to v0.81.4
 
 ## 0.81.7
 
