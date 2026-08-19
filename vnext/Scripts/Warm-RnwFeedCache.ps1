@@ -10,7 +10,11 @@
   request). Any not-yet-saved transitive dependency therefore 404s on a PR build,
   e.g. the CLI lib job failing on 'is-unc-path'.
 
-  The script warms two ways, both with your credentials:
+  The script warms several ways, all with your credentials:
+  - repo: it runs an authenticated `yarn install` in this repo, pulling the repo's
+    own dev-dependency closure (including package.json resolutions, so freshly bumped
+    versions are saved) through the feed. This is the closure an anonymous PR build of
+    the repo restores.
   - npm: it reproduces the base project generations the CLI-init tests run (a
     create-react-native-library lib and a community-CLI app) and installs them, which
     pulls the whole toolchain closure into the feed.
@@ -21,10 +25,13 @@
 
   Auth (in order): -Pat / $env:ADO_PAT / $env:AZURE_DEVOPS_EXT_PAT, else an AAD token
   from `az account get-access-token` (requires `az login` locally, or an AzureCLI@2
-  task with a managed identity in a pipeline).
+  task with a managed identity in a pipeline). The token reaches npm and Yarn only
+  through environment variables and a throwaway work-dir npmrc; your ~/.npmrc and
+  ~/.yarnrc.yml are never modified.
 
-  Run it manually from a clone, or on a schedule from the ADO warm-up pipeline. It
-  does not touch your local checkout: all work happens in a throwaway work dir.
+  Run it manually from a clone, or on a schedule from the ADO warm-up pipeline. Only
+  the repo pass touches your checkout (it refreshes node_modules and yarn.lock in
+  place); every other pass works in a throwaway work dir.
 
 .PARAMETER NpmRegistry
   The feed npm registry to warm. Defaults to ms/react-native-public.
@@ -44,6 +51,10 @@
 .PARAMETER CliVersion
   @react-native-community/cli version. Defaults to vnext/package.json.
 
+.PARAMETER SkipRepo
+  Skip the repo warm pass (an authenticated `yarn install` in this repo). Unlike the
+  other passes it refreshes node_modules and yarn.lock in your checkout.
+
 .PARAMETER SkipLib
   Skip the create-react-native-library warm pass.
 
@@ -52,6 +63,9 @@
 
 .PARAMETER SkipNuGet
   Skip the NuGet warm pass.
+
+.PARAMETER SkipRnwPackages
+  Skip warming the repo's own already-published workspace packages into the feed.
 
 .PARAMETER KeepWorkDir
   Keep the work dir instead of deleting it (for debugging).
@@ -75,9 +89,11 @@ param(
   [string]$CreateLibraryVersion = '0.48.9',
   [string]$TemplateVersion = '@react-native-community/template@0.84.1',
   [string]$NuGetIndex = 'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json',
+  [switch]$SkipRepo,
   [switch]$SkipLib,
   [switch]$SkipApp,
   [switch]$SkipNuGet,
+  [switch]$SkipRnwPackages,
   [switch]$KeepWorkDir
 )
 
@@ -173,6 +189,16 @@ function Update-NightlyPackageJson {
 }
 
 # --- warm passes --------------------------------------------------------------
+
+function Warm-Repo {
+  # Authenticated install of the repo warms its whole dev closure (incl. resolutions)
+  # and refreshes yarn.lock; --mode=skip-build avoids the repo's postinstall build.
+  Push-Location $RepoRoot
+  try {
+    Invoke-Checked -What 'yarn install (repo)' -Script { & yarn install --mode=skip-build }
+  }
+  finally { Pop-Location }
+}
 
 function Warm-Lib {
   Push-Location $WorkDir
@@ -296,16 +322,69 @@ function Warm-NuGet {
   Write-Host "Saved $($refs.Count) NuGet package(s)." -ForegroundColor Green
 }
 
+# The CLI-init tests install react-native-windows, whose closure pulls the repo's own already-published
+# workspace packages (e.g. @react-native-windows/package-utils). Verdaccio publishes only the *changed*
+# packages locally and proxies the rest to the feed, so anonymous PR reads 404/500 unless those
+# published versions are cached. CODESYNC: enumerates the same workspaces npmPack.js packs; the subset
+# it strips with --check-npm (already on npmjs) is exactly what a PR build must read from the feed.
+function Warm-RnwPackages {
+  $dir = Join-Path $WorkDir 'rnwpkgs'
+  New-Item -ItemType Directory -Path $dir | Out-Null
+
+  $rootPkg = Get-Content (Join-Path $RepoRoot 'package.json') -Raw | ConvertFrom-Json
+  $seen = [System.Collections.Generic.HashSet[string]]::new()
+  $specs = [System.Collections.Generic.List[string]]::new()
+  foreach ($pattern in $rootPkg.workspaces.packages) {
+    $pkgDirs = @()
+    if ($pattern.EndsWith('/*')) {
+      $base = Join-Path $RepoRoot ($pattern.Substring(0, $pattern.Length - 2))
+      if (Test-Path -LiteralPath $base) { $pkgDirs = @((Get-ChildItem -LiteralPath $base -Directory).FullName) }
+    }
+    else { $pkgDirs = @(Join-Path $RepoRoot $pattern) }
+    foreach ($d in $pkgDirs) {
+      $pj = Join-Path $d 'package.json'
+      if (-not (Test-Path -LiteralPath $pj)) { continue }
+      $p = Get-Content -LiteralPath $pj -Raw | ConvertFrom-Json
+      $props = $p.PSObject.Properties
+      if (($props['private'] -and $p.private -eq $true) -or -not $props['name'] -or -not $props['version']) { continue }
+      $spec = "$($p.name)@$($p.version)"
+      if ($seen.Add($spec)) { $specs.Add($spec) }
+    }
+  }
+
+  Push-Location $dir
+  try {
+    # Skip versions not yet on the feed's upstream: the build's freshly bumped packages aren't published
+    # and the CLI test gets those from verdaccio locally, so a miss here is expected (not a failure).
+    $published = foreach ($spec in $specs) {
+      try { & npm view $spec version *> $null; if ($LASTEXITCODE -eq 0) { $spec } } catch { }
+    }
+    $published = @($published)
+    if ($published.Count -eq 0) {
+      Write-Host 'No already-published workspace packages to warm.' -ForegroundColor Yellow
+      return
+    }
+    Write-Host "Warming $($published.Count)/$($specs.Count) workspace package(s) into the feed." -ForegroundColor Cyan
+    Invoke-Checked -What 'warm RNW packages' -Script {
+      & npm install --ignore-scripts @published
+    }
+  }
+  finally { Pop-Location }
+}
+
 $passes = [ordered]@{}
+if (-not $SkipRepo) { $passes['repo'] = ${function:Warm-Repo} }
 if (-not $SkipLib) { $passes['lib'] = ${function:Warm-Lib} }
 if (-not $SkipApp) { $passes['app'] = ${function:Warm-App} }
 if (-not $SkipNuGet) { $passes['nuget'] = ${function:Warm-NuGet} }
+if (-not $SkipRnwPackages) { $passes['rnwpackages'] = ${function:Warm-RnwPackages} }
 
-$results = foreach ($name in $passes.Keys) {
+# Run each pass "bare" (no pipe/capture) so npm/yarn inherits the console: real TTY -> live progress, UTF-8 -> no mojibake.
+$results = [System.Collections.Generic.List[object]]::new()
+foreach ($name in $passes.Keys) {
   Write-Host "`n=== Warming '$name' ===" -ForegroundColor Green
-  # Route each pass's native stdout to the host so only the status object lands in $results.
-  try { & $passes[$name] | Out-Host; [pscustomobject]@{ Pass = $name; Status = 'OK' } }
-  catch { Write-Host "##[error]$($_.Exception.Message)" -ForegroundColor Red; [pscustomobject]@{ Pass = $name; Status = "FAILED: $($_.Exception.Message)" } }
+  try { & $passes[$name]; $results.Add([pscustomobject]@{ Pass = $name; Status = 'OK' }) }
+  catch { Write-Host "##[error]$($_.Exception.Message)" -ForegroundColor Red; $results.Add([pscustomobject]@{ Pass = $name; Status = "FAILED: $($_.Exception.Message)" }) }
 }
 
 # --- cleanup + summary --------------------------------------------------------
