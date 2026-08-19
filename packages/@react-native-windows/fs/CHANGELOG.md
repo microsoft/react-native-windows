@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-<!-- This log was last generated on Thu, 12 Mar 2026 08:48:51 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 19 Aug 2026 02:25:43 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.2
+
+Wed, 19 Aug 2026 02:25:43 GMT
+
+### Patches
+
+- Move CI pipeline to office/ISS and address security (vmorozov@microsoft.com)
 
 ## 0.81.1
 

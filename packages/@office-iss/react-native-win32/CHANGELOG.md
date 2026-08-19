@@ -1,8 +1,18 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Tue, 19 May 2026 23:38:50 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 19 Aug 2026 02:25:43 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.9
+
+Wed, 19 Aug 2026 02:25:43 GMT
+
+### Patches
+
+- Move CI pipeline to office/ISS and address security (vmorozov@microsoft.com)
+- Fix saveAssetPlugin (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-platform-override to v0.81.3
 
 ## 0.81.8
 

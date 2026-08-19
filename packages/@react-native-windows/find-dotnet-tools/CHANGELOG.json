@@ -2,6 +2,27 @@
   "name": "@react-native-windows/find-dotnet-tools",
   "entries": [
     {
+      "date": "Wed, 19 Aug 2026 02:25:43 GMT",
+      "version": "0.0.0-canary.3",
+      "tag": "@react-native-windows/find-dotnet-tools_v0.0.0-canary.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-dotnet-tools",
+            "comment": "Bump @react-native-windows/fs to v0.81.2",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-dotnet-tools",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.56",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jul 2026 23:58:53 GMT",
       "version": "0.0.0-canary.2",
       "tag": "@react-native-windows/find-dotnet-tools_v0.0.0-canary.2",
