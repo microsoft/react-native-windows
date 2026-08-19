@@ -1,20 +1,26 @@
+# Scheduled feed-warming pipeline (office/ISS).
 #
-# Scheduled feed-warming pipeline (office/ISS, non-production).
+# Enumerates the ms/react-native-public feed and re-pulls, with the pipeline's
+# managed identity, the latest patch of every npm/NuGet major.minor line already
+# in use, so anonymous network-isolated PR/CI builds can restore them.
 #
-# Runs Warm-RnwFeedCache.ps1 to save the CLI-init toolchain closure into the
-# ms/react-native-public feed with an authenticated identity, so anonymous PR
-# builds restore cleanly instead of 404ing on a not-yet-cached transitive package.
-#
-# Runs every 6 hours; drop to hourly later if it stays light.
-#
+# Runs out of band (never in a PR build) because saving into the feed needs the
+# managed identity. A maintainer can also queue it with the `packages` parameter
+# to warm a specific set of versions on demand.
 
-name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
+name: $(Date:yyyyMMdd).$(Rev:r)
 
 trigger: none
 pr: none
 
+parameters:
+  - name: packages
+    displayName: 'One-off warm (space-separated): npm:foo@1.2.3 nuget:Bar@4.0.0'
+    type: string
+    default: ' '
+
 schedules:
-  - cron: "0 0,6,12,18 * * *"
+  - cron: '0 0,6,12,18 * * *'
     displayName: Every 6 hours
     branches:
       include:
@@ -23,10 +29,10 @@ schedules:
 
 resources:
   repositories:
-  - repository: OfficePipelineTemplates
-    type: git
-    name: 1ESPipelineTemplates/OfficePipelineTemplates
-    ref: refs/tags/release
+    - repository: OfficePipelineTemplates
+      type: git
+      name: 1ESPipelineTemplates/OfficePipelineTemplates
+      ref: refs/tags/release
 
 extends:
   template: v1/Office.Unofficial.PipelineTemplate.yml@OfficePipelineTemplates
@@ -42,40 +48,43 @@ extends:
       suppression:
         suppressionFile: $(Build.SourcesDirectory)\.ado\guardian\sdl\.gdnsuppress
     stages:
-    - stage: Warm
-      displayName: Warm feed cache
-      jobs:
-      - job: WarmFeed
-        displayName: Warm npm and NuGet feed cache
-        timeoutInMinutes: 60
-        steps:
-        - checkout: self
-          fetchDepth: 1
+      - stage: Warm
+        displayName: Warm feed cache
+        jobs:
+          - job: WarmFeed
+            displayName: Warm npm and NuGet feed cache
+            timeoutInMinutes: 60
+            steps:
+              - checkout: self
+                fetchDepth: 1
 
-        - task: UseNode@1
-          displayName: Use Node.js 24.x
-          inputs:
-            version: '24.x'
+              - task: UseNode@1
+                displayName: Use Node.js 24.x
+                inputs:
+                  version: '24.x'
 
-        # The agent image does not guarantee Yarn (build-template.yml installs it
-        # explicitly), and the warm script runs `yarn install`. Authenticate npm to
-        # the feed, then install the same pinned Yarn from it.
-        - template: .ado/templates/auth-npm-feed.yml@self
+              - script: yarn install --immutable
+                displayName: yarn install
+                retryCountOnTaskFailure: 2
 
-        - task: CmdLine@2
-          displayName: Install pinned Yarn from the feed
-          inputs:
-            script: npm install --global yarn@1.22.22 --registry https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
+              - script: npx lage build --scope @rnw-scripts/warm-feed
+                displayName: Build warm-feed
+                retryCountOnTaskFailure: 2
 
-        # Interim identity (shared with auth-npm-feed.yml); swap to the RNW managed
-        # identity once it is provisioned. AzureCLI@2 logs in az as this identity, so
-        # the script's `az account get-access-token` authenticates to the feed.
-        - task: AzureCLI@2
-          displayName: Warm ms/react-native-public feed
-          inputs:
-            azureSubscription: Office-Hermes-Windows-Bot
-            scriptType: pscore
-            scriptLocation: inlineScript
-            inlineScript: |
-              $ErrorActionPreference = 'Stop'
-              & "$(Build.SourcesDirectory)/vnext/Scripts/Warm-RnwFeedCache.ps1"
+              # AzureCLI logs `az` in as the managed identity, so
+              # `az account get-access-token` mints the feed token the tool reads
+              # from WARM_FEED_TOKEN.
+              - task: AzureCLI@2
+                displayName: Warm ms/react-native-public feed
+                inputs:
+                  azureSubscription: Office-Hermes-Windows-Bot
+                  scriptType: pscore
+                  scriptLocation: inlineScript
+                  inlineScript: |
+                    $ErrorActionPreference = 'Stop'
+                    $env:WARM_FEED_TOKEN = az account get-access-token `
+                      --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken -o tsv
+                    $pkgs = '${{ parameters.packages }}'.Trim()
+                    $warmArgs = @()
+                    if ($pkgs) { foreach ($p in ($pkgs -split '\s+')) { $warmArgs += @('--packages', $p) } }
+                    npx warm-feed @warmArgs
