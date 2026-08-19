@@ -42,12 +42,10 @@ function comparePrerelease(a: string[], b: string[]): number {
   if (a.length === 0 && b.length === 0) return 0;
   if (a.length === 0) return 1;
   if (b.length === 0) return -1;
-  const n = Math.max(a.length, b.length);
+  const n = Math.min(a.length, b.length);
   for (let i = 0; i < n; i++) {
     const x = a[i];
     const y = b[i];
-    if (x === undefined) return -1;
-    if (y === undefined) return 1;
     const xn = /^\d+$/.test(x);
     const yn = /^\d+$/.test(y);
     if (xn && yn) {
@@ -61,7 +59,9 @@ function comparePrerelease(a: string[], b: string[]): number {
       return x < y ? -1 : 1;
     }
   }
-  return 0;
+  // A larger set of prerelease fields has higher precedence when all shared
+  // identifiers are equal (semver spec).
+  return a.length - b.length;
 }
 
 export function compareSemver(a: SemVer, b: SemVer): number {
@@ -79,7 +79,8 @@ export interface NuGetVersion {
   raw: string;
 }
 
-const NUGET_RE = /^(\d+(?:\.\d+){0,3})(?:-([0-9A-Za-z-.]+))?(?:\+[0-9A-Za-z-.]+)?$/;
+const NUGET_RE =
+  /^(\d+(?:\.\d+){0,3})(?:-([0-9A-Za-z-.]+))?(?:\+[0-9A-Za-z-.]+)?$/;
 
 export function parseNuGet(v: string): NuGetVersion | null {
   const s = v.trim();

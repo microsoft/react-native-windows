@@ -23,7 +23,7 @@ function azToken(log: Logger): string | undefined {
     {encoding: 'utf8', shell: true},
   );
   if (res.status === 0 && res.stdout) return res.stdout.trim();
-  log.debug(`az token acquisition failed: ${res.stderr?.trim() ?? res.error}`);
+  log.debug(`az token acquisition failed: ${res.stderr.trim() || res.error}`);
   return undefined;
 }
 

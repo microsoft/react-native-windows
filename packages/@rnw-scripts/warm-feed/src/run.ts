@@ -173,10 +173,11 @@ export async function run(options: RunOptions, pat?: string): Promise<number> {
     registries.nuget = createNuGetRegistry(config.feeds.nuget.index, auth, log);
   }
 
-  let only = options.only;
-  if (only && only !== 'npm' && only !== 'nuget') {
-    log.warn(`ignoring invalid --only '${only}'`);
-    only = undefined;
+  let only: Ecosystem | undefined;
+  if (options.only === 'npm' || options.only === 'nuget') {
+    only = options.only;
+  } else if (options.only) {
+    log.warn(`ignoring invalid --only '${options.only}'`);
   }
 
   const ignoreRules = config.ignore

@@ -61,7 +61,8 @@ async function expandNpm(
 
   const out = new Map<string, WarmTarget>();
   const add = (v: SemVer | undefined, source: string) => {
-    if (v) out.set(v.raw, {ecosystem: 'npm', id: pkg.id, version: v.raw, source});
+    if (v)
+      out.set(v.raw, {ecosystem: 'npm', id: pkg.id, version: v.raw, source});
   };
 
   for (const [maj, min] of inUseLines(
@@ -71,14 +72,17 @@ async function expandNpm(
     let best: SemVer | undefined;
     for (const v of pool) {
       const match =
-        min === undefined ? v.major === maj : v.major === maj && v.minor === min;
+        min === undefined
+          ? v.major === maj
+          : v.major === maj && v.minor === min;
       if (match && (!best || compareSemver(v, best) > 0)) best = v;
     }
     add(best, 'expand:line');
   }
   if (cfg.includeLatest) {
     let latest: SemVer | undefined;
-    for (const v of pool) if (!latest || compareSemver(v, latest) > 0) latest = v;
+    for (const v of pool)
+      if (!latest || compareSemver(v, latest) > 0) latest = v;
     add(latest, 'expand:latest');
   }
   return [...out.values()];
@@ -103,7 +107,8 @@ async function expandNuGet(
 
   const out = new Map<string, WarmTarget>();
   const add = (v: NuGetVersion | undefined, source: string) => {
-    if (v) out.set(v.raw, {ecosystem: 'nuget', id: pkg.id, version: v.raw, source});
+    if (v)
+      out.set(v.raw, {ecosystem: 'nuget', id: pkg.id, version: v.raw, source});
   };
 
   for (const [maj, min] of inUseLines(
@@ -122,7 +127,8 @@ async function expandNuGet(
   }
   if (cfg.includeLatest) {
     let latest: NuGetVersion | undefined;
-    for (const v of pool) if (!latest || compareNuGet(v, latest) > 0) latest = v;
+    for (const v of pool)
+      if (!latest || compareNuGet(v, latest) > 0) latest = v;
     add(latest, 'expand:latest');
   }
   return [...out.values()];

@@ -11,7 +11,7 @@
 
 import {parseArgs} from 'node:util';
 import path from 'node:path';
-import type {Ecosystem, RunOptions} from './types';
+import type {RunOptions} from './types';
 import {run} from './run';
 
 const HELP = `warm-feed — warm an Azure DevOps upstream feed by enumerating the
@@ -58,7 +58,7 @@ if (values.help) {
 
 const options: RunOptions = {
   configPath: values.config ?? defaultConfigPath(),
-  only: values.only as Ecosystem | undefined,
+  only: values.only,
   dryRun: Boolean(values['dry-run']),
   verify: Boolean(values.verify),
   concurrency: values.concurrency ? Number(values.concurrency) : undefined,
@@ -70,7 +70,7 @@ run(options, values.pat)
   .then(code => process.exit(code))
   .catch(err => {
     process.stderr.write(
-      `${err instanceof Error ? err.stack ?? err.message : String(err)}\n`,
+      `${err instanceof Error ? (err.stack ?? err.message) : String(err)}\n`,
     );
     process.exit(1);
   });

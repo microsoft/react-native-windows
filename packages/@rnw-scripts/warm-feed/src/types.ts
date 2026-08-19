@@ -65,7 +65,8 @@ export interface WarmerConfig {
 
 export interface RunOptions {
   configPath: string;
-  only?: Ecosystem;
+  /** Raw --only value; validated to an Ecosystem in run(). */
+  only?: string;
   dryRun: boolean;
   /** Warm every target, ignoring the feed's already-cached skip. */
   verify: boolean;

@@ -13,6 +13,7 @@
     "clean": "rnw-scripts clean",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
+    "warm-feed": "rnw-scripts build && node bin.js",
     "watch": "rnw-scripts watch"
   },
   "main": "lib-commonjs/warmFeed.js",

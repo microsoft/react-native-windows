@@ -58,7 +58,7 @@ export function createNpmRegistry(
     const versions = Object.keys(body.versions);
     const tarballs: Record<string, string> = {};
     for (const v of versions) {
-      const url = body.versions[v]?.dist?.tarball;
+      const url = body.versions[v].dist?.tarball;
       if (url) tarballs[v] = url;
     }
     const info: NpmInfo = {versions, tarballs};
@@ -105,11 +105,13 @@ export function createNuGetRegistry(
       baseP = (async () => {
         const headers = await auth.header();
         const {status, body} = await fetchJson<ServiceIndex>(indexUrl, headers);
-        if (!body) throw new Error(`NuGet service index ${indexUrl} -> ${status}`);
+        if (!body)
+          throw new Error(`NuGet service index ${indexUrl} -> ${status}`);
         const base =
           pickResource(body, 'PackageBaseAddress/3.0.0') ??
           pickResource(body, 'PackageBaseAddress/3.0.0-beta');
-        if (!base) throw new Error('NuGet feed has no PackageBaseAddress resource');
+        if (!base)
+          throw new Error('NuGet feed has no PackageBaseAddress resource');
         return base.endsWith('/') ? base : `${base}/`;
       })();
     }

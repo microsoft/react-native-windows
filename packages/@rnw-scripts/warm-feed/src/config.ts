@@ -6,7 +6,20 @@
  */
 
 import {readFileSync} from 'node:fs';
-import type {ExpandConfig, WarmerConfig} from './types';
+import type {
+  EnumerateConfig,
+  ExpandConfig,
+  FeedConfig,
+  WarmerConfig,
+} from './types';
+
+interface RawConfig {
+  feeds?: FeedConfig;
+  enumerate?: Partial<EnumerateConfig>;
+  expand?: Partial<ExpandConfig>;
+  concurrency?: number;
+  ignore?: string[];
+}
 
 const DEFAULT_EXPAND: ExpandConfig = {
   scope: 'in-use-lines',
@@ -16,9 +29,9 @@ const DEFAULT_EXPAND: ExpandConfig = {
 };
 
 export function loadConfig(configPath: string): WarmerConfig {
-  let raw: Partial<WarmerConfig>;
+  let raw: RawConfig;
   try {
-    raw = JSON.parse(readFileSync(configPath, 'utf8')) as Partial<WarmerConfig>;
+    raw = JSON.parse(readFileSync(configPath, 'utf8')) as RawConfig;
   } catch (err) {
     throw new Error(
       `failed to read config '${configPath}': ${(err as Error).message}`,
