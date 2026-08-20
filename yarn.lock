@@ -5407,6 +5407,25 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@rnw-scripts/warm-feed@workspace:packages/@rnw-scripts/warm-feed":
+  version: 0.0.0-use.local
+  resolution: "@rnw-scripts/warm-feed@workspace:packages/@rnw-scripts/warm-feed"
+  dependencies:
+    "@rnw-scripts/eslint-config": "npm:1.2.38"
+    "@rnw-scripts/just-task": "npm:2.3.58"
+    "@rnw-scripts/ts-config": "npm:2.0.6"
+    "@types/node": "npm:^22.14.0"
+    "@typescript-eslint/eslint-plugin": "npm:^8.36.0"
+    "@typescript-eslint/parser": "npm:^8.36.0"
+    eslint: "npm:^8.19.0"
+    prettier: "npm:^3.6.2"
+    source-map-support: "npm:^0.5.19"
+    typescript: "npm:5.0.4"
+  bin:
+    warm-feed: ./bin.js
+  languageName: unknown
+  linkType: soft
+
 "@rnx-kit/align-deps@npm:^3.4.7":
   version: 3.4.7
   resolution: "@rnx-kit/align-deps@npm:3.4.7"

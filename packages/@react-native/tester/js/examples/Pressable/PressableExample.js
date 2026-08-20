@@ -501,7 +501,7 @@ const examples = [
               }}>
               <Image
                 source={{
-                  uri: 'https://www.facebook.com/ads/pics/successstories.png',
+                  uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR4nGNgAAIAAAUAAen63NgAAAAASUVORK5CYII=',
                 }}
                 style={styles.image}
               />
