@@ -213,9 +213,16 @@
     },
     {
       "type": "copy",
-      "directory": "js/examples/Image",
-      "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "ef91fd1f837dc2f279e52bd2d5f596281405110c",
+      "file": "js/examples/Image/ImageCapInsetsExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Image/ImageCapInsetsExample.js",
+      "baseHash": "c235d907cf0a4e7e97d075f2ae345041cec4b996",
+      "issue": 4054
+    },
+    {
+      "type": "derived",
+      "file": "js/examples/Image/ImageExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
+      "baseHash": "b119f46dbe33a567e7649f7197874d5b066403aa",
       "issue": 4054
     },
     {
@@ -311,9 +318,23 @@
     },
     {
       "type": "copy",
-      "directory": "js/examples/Layout",
-      "baseDirectory": "packages/rn-tester/js/examples/Layout",
-      "baseHash": "3a1e2a4b049757a4ed61f0165f68bb8d5dfc9009",
+      "file": "js/examples/Layout/LayoutAnimationExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Layout/LayoutAnimationExample.js",
+      "baseHash": "8210e366376f81b41e01768b79a693ef4134cf9e",
+      "issue": 4054
+    },
+    {
+      "type": "derived",
+      "file": "js/examples/Layout/LayoutEventsExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Layout/LayoutEventsExample.js",
+      "baseHash": "64af33fbeedf54b4a29497169d8df0e6a65bbc71",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/Layout/LayoutExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Layout/LayoutExample.js",
+      "baseHash": "bf0579020e975ba35a45533efc085f4f5656979e",
       "issue": 4054
     },
     {
@@ -428,10 +449,17 @@
       "issue": 4054
     },
     {
+      "type": "derived",
+      "file": "js/examples/Pressable/PressableExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
+      "baseHash": "93996033b79921b0572adbbbe84d2422cf8f6ea7",
+      "issue": 4054
+    },
+    {
       "type": "copy",
-      "directory": "js/examples/Pressable",
-      "baseDirectory": "packages/rn-tester/js/examples/Pressable",
-      "baseHash": "197888ec54b06ef92de24e64912061f743f27c39",
+      "file": "js/examples/Pressable/PressableExampleFbInternal.js",
+      "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExampleFbInternal.js",
+      "baseHash": "a0299704c6e87c6365a67bf2f29d3d336de6bb43",
       "issue": 4054
     },
     {
@@ -589,10 +617,10 @@
       "issue": 4054
     },
     {
-      "type": "copy",
-      "directory": "js/examples/Touchable",
-      "baseDirectory": "packages/rn-tester/js/examples/Touchable",
-      "baseHash": "eba111cf46fca7fd70eacb629681a2284231e271",
+      "type": "derived",
+      "file": "js/examples/Touchable/TouchableExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Touchable/TouchableExample.js",
+      "baseHash": "03b4d8b4c97e998cf488bfc889dcdc047378c306",
       "issue": 4054
     },
     {
