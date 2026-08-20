@@ -48,8 +48,10 @@ extends:
     sdl:
       bandit:
         enabled: false
+      # Skip ESLint SDL on this utility pipeline (CI/Release run it on the code); the Unofficial
+      # template's --exit-on-fatal-error trips on repo-wide Guardian ES5-parser parse noise.
       eslint:
-        enableExclusions: true
+        enabled: false
       suppression:
         suppressionFile: $(Build.SourcesDirectory)\.ado\guardian\sdl\.gdnsuppress
     stages:
