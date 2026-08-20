@@ -27,6 +27,10 @@ schedules:
         - main
     always: true
 
+# Route npm/Yarn/NuGet through the ms/react-native-public feed (matches CI) under network isolation.
+variables:
+  - template: variables/shared.yml
+
 resources:
   repositories:
     - repository: OfficePipelineTemplates
@@ -38,8 +42,9 @@ extends:
   template: v1/Office.Unofficial.PipelineTemplate.yml@OfficePipelineTemplates
   parameters:
     pool:
-      name: fabric-internal-pool-large
-      demands: ImageOverride -equals rnw-img-vs2026-node24
+      name: Azure-Pipelines-1ESPT-ExDShared
+      vmImage: windows-latest
+      os: windows
     sdl:
       bandit:
         enabled: false
@@ -62,6 +67,9 @@ extends:
                 displayName: Use Node.js 24.x
                 inputs:
                   version: '24.x'
+
+              # Authenticate npm/Yarn to the feed before install (same MI as CI).
+              - template: .ado/templates/auth-npm-feed.yml@self
 
               - script: yarn install --immutable
                 displayName: yarn install
