@@ -4,12 +4,17 @@
     "rootDir": "src",
     "outDir": ".",
     "paths": {
-      "react-native": ["../react-native-win32"] // this mapping is relative to "baseUrl"
+      "react-native": [
+        "../react-native-win32"
+      ] // this mapping is relative to "baseUrl"
     },
     // Some code copied from react-native-win32 is not strict clean
     "noImplicitAny": false,
-    "strictNullChecks": false,
   },
-  "include": ["src"],
-  "exclude": ["node_modules"],
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
 }

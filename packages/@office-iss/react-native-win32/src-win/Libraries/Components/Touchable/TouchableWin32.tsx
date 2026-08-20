@@ -192,7 +192,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   private _positionOnActivate: IPosition;
   private _dimensionsOnActivate: IDimensions;
 
-  private readonly _internalRef: React.RefObject<ViewWin32>
+  private readonly _internalRef: React.RefObject<ViewWin32|null>
 
   constructor(props) {
     super(props);
@@ -268,7 +268,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   }
 
   public focus = () => {
-    this._internalRef.current.focus();
+    this._internalRef.current?.focus();
   }
 
   /**
@@ -298,7 +298,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     e.persist();
 
     this._pressOutDelayTimeout && clearTimeout(this._pressOutDelayTimeout);
-    this._pressOutDelayTimeout = null;
+    this._pressOutDelayTimeout = null as unknown as NodeJS.Timeout;
 
     this._touchState = 'NOT_RESPONDER';
     this._responderID = dispatchID;
@@ -326,7 +326,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
    * Handle responder release
    */
   private readonly _touchableHandleResponderRelease = (e: IPressEvent) => {
-    this._pressInLocation = null;
+    this._pressInLocation = null as unknown as IPressInLocation;
     this._receiveSignal('RESPONDER_RELEASE', e);
   };
 
@@ -334,7 +334,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
    * Handle responder terminate
    */
   private readonly _touchableHandleResponderTerminate = (e: IPressEvent) => {
-    this._pressInLocation = null;
+    this._pressInLocation = null as unknown as IPressInLocation;
     this._receiveSignal('RESPONDER_TERMINATED', e);
   };
 
@@ -357,10 +357,10 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
         bottom: PRESS_EXPAND_DIPS,
       };
 
-    let pressExpandLeft = pressRectOffset.left;
-    let pressExpandTop = pressRectOffset.top;
-    let pressExpandRight = pressRectOffset.right;
-    let pressExpandBottom = pressRectOffset.bottom;
+    let pressExpandLeft = pressRectOffset.left!;
+    let pressExpandTop = pressRectOffset.top!;
+    let pressExpandRight = pressRectOffset.right!;
+    let pressExpandBottom = pressRectOffset.bottom!;
 
     // TODO implement touchableGetHitSlop natively
     const hitSlop = this.props.touchableGetHitSlop ? this.props.touchableGetHitSlop() : null;
@@ -427,12 +427,12 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   };
 
   private readonly _handleDelay = (e: IPressEvent) => {
-    this._touchableDelayTimeout = null;
+    this._touchableDelayTimeout = null as unknown as NodeJS.Timeout;
     this._receiveSignal('DELAY', e);
   };
 
   private readonly _handleLongDelay = (e: IPressEvent) => {
-    this._longPressDelayTimeout = null;
+    this._longPressDelayTimeout = null as unknown as NodeJS.Timeout;
     const currState = this._touchState;
 
     if (currState !== 'RESPONDER_ACTIVE_PRESS_IN' && currState !== 'RESPONDER_ACTIVE_LONG_PRESS_IN') {
@@ -455,7 +455,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
   private readonly _receiveSignal = (signal: ISignal, e: IPressEvent) => {
     const responderID = this._responderID;
     const currState = this._touchState;
-    const nextState: IState = transitions[currState] ? transitions[currState][signal] : null;
+    const nextState: IState | null = transitions[currState] ? transitions[currState][signal] : null;
 
     if (!nextState) {
       const errorMessage = 'Unrecognized signal ' + signal + ' or state ' + currState + ' for Touchable responder ' + responderID + '.';
@@ -474,7 +474,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
 
   private readonly _cancelLongPressDelayTimeout = () => {
     this._longPressDelayTimeout && clearTimeout(this._longPressDelayTimeout);
-    this._longPressDelayTimeout = null;
+    this._longPressDelayTimeout = null as unknown as NodeJS.Timeout;
   };
 
   private readonly _isHighlight = (state: IState) => {
@@ -546,7 +546,7 @@ export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInter
     }
 
     this._touchableDelayTimeout && clearTimeout(this._touchableDelayTimeout);
-    this._touchableDelayTimeout = null;
+    this._touchableDelayTimeout = null as unknown as NodeJS.Timeout;
   };
 
   private readonly _startHighlight = (e: IPressEvent) => {

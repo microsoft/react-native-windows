@@ -1,0 +1,4 @@
+# Intentionally empty. Used as a benign, existing NuGet fallback folder so that
+# UWP projects resolve Microsoft.NETCore.UniversalWindowsPlatform / runtime.win10-*
+# from the shared feed instead of the machine-local Windows SDK copy (see the
+# UWPNugetRepo override in the repo-root Directory.Build.props).

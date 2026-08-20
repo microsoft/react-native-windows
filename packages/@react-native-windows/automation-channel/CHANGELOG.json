@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Wed, 19 Aug 2026 02:25:43 GMT",
+      "version": "0.81.34",
+      "tag": "@react-native-windows/automation-channel_v0.81.34",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "35af7762b027b96d59fced454b92f7fd10dee6fe",
+            "comment": "Move CI pipeline to office/ISS and address security"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.81.34",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Jul 2026 23:58:53 GMT",
       "version": "0.81.33",
       "tag": "@react-native-windows/automation-channel_v0.81.33",

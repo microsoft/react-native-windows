@@ -2,6 +2,27 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Wed, 19 Aug 2026 02:25:42 GMT",
+      "version": "0.81.7",
+      "tag": "@react-native-windows/codegen_v0.81.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "35af7762b027b96d59fced454b92f7fd10dee6fe",
+            "comment": "Move CI pipeline to office/ISS and address security"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.81.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Jun 2026 04:17:47 GMT",
       "version": "0.81.6",
       "tag": "@react-native-windows/codegen_v0.81.6",

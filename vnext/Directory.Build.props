@@ -15,7 +15,7 @@
 
     <!--
       SourceLink is disabled by default since customer projects are still building our projects and therefore we don't want to force customers to use this.
-      The PR (windows-vs-pr.yml) and CI (publish.yml() turn it back on.
+      In-repo builds (BuildingInRnwRepo=true) turn it back on below.
     -->
     <EnableSourceLink Condition="'$(EnableSourceLink)' == '' AND '$(BuildingInRnwRepo)' == 'true'">true</EnableSourceLink>
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">false</EnableSourceLink>
