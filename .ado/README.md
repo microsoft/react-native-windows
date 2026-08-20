@@ -13,7 +13,7 @@ setup and the network-isolation workarounds.
 | CI | `ci-pipeline.yml` | `ISS` | `Office.Official` | signed Official build; `trigger` branch filters and a weekly heartbeat `schedule` are defined in YAML |
 | PR | `pr-pipeline.yml` | public (`ms`) | `1ES.Unofficial` | validation build for GitHub PRs |
 | Release | `release-pipeline.yml` | `ISS` | `Office.Official` | triggered by CI completion; publishes packages and symbols |
-| Feed warm-up | `warm-feed-cache-pipeline.yml` | `ISS` | `Office.Unofficial` | scheduled; keeps `ms/react-native-public` populated for anonymous PR restores |
+| Feed warm-up | `warm-feed-pipeline.yml` | `ISS` | `Office.Unofficial` | scheduled; keeps `ms/react-native-public` populated for anonymous PR restores |
 
 CI and PR share all build/test/pack logic through `build-template.yml`; the
 `buildEnvironment` parameter (`Continuous` vs `PullRequest`) gates the
@@ -65,15 +65,16 @@ otherwise hide:
 - **React Native DevTools:** `RNDT_DEV: 1` stops DevTools from fetching its
   standalone shell binary from a Facebook CDN when Metro starts. The debugger is
   never opened in CI, so this has no effect on tests.
-- **VS Installer:** `templates/prepare-build-env.yml` disables the VS Installer
-  background auto-update, which would otherwise download updates from the Microsoft
-  CDN mid-build. This is an interim step; the durable fix is to bake it into the
-  agent image.
+- **VS Installer:** the `rnw-img-vs2026-node24` agent image sets the
+  `BackgroundDownloadDisabled` policy so the VS Installer's background auto-update
+  never contacts the Microsoft CDN mid-build. `templates/prepare-build-env.yml`
+  reapplies the same policy per job as an interim belt until the updated image
+  ships; it can be dropped once a rebuilt image is confirmed clean.
 
 Public PR builds read this feed **anonymously**, so they can only restore versions
-an authenticated identity has already saved. `warm-feed-cache-pipeline.yml` (script:
-`vnext/Scripts/Warm-RnwFeedCache.ps1`) runs on a schedule to pre-populate the npm
-and NuGet dependency closures and keep those anonymous restores working.
+an authenticated identity has already saved. `warm-feed-pipeline.yml` (the
+`@rnw-scripts/warm-feed` tool) runs on a schedule to re-pull the latest patch of
+every npm/NuGet line already in the feed and keep those anonymous restores working.
 
 ## SDL and Component Governance
 

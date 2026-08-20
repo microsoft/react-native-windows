@@ -50,10 +50,17 @@ export function createNpmRegistry(
     if (status === 401 || status === 403) {
       throw new Error(`npm registry auth failed (${status}) for ${id}`);
     }
-    if (!body || !body.versions) {
-      log.debug(`npm packument ${id} -> ${status}`);
+    if (status === 404) {
+      log.debug(`npm packument ${id} -> 404 (not in feed)`);
       cache.set(id, null);
       return null;
+    }
+    // A 5xx or malformed packument must not be cached as "not found": that would
+    // silently drop the package from the warm plan and still exit successfully.
+    if (status < 200 || status >= 300 || !body || !body.versions) {
+      throw new Error(
+        `npm packument fetch failed (status ${status}) for ${id}`,
+      );
     }
     const versions = Object.keys(body.versions);
     const tarballs: Record<string, string> = {};
@@ -132,7 +139,17 @@ export function createNuGetRegistry(
       if (status === 401 || status === 403) {
         throw new Error(`NuGet feed auth failed (${status}) for ${id}`);
       }
-      const versions = body?.versions ?? [];
+      if (status === 404) {
+        versionCache.set(key, []);
+        return [];
+      }
+      // A 5xx or malformed index must not be cached as an empty version list.
+      if (status < 200 || status >= 300 || !body) {
+        throw new Error(
+          `NuGet version fetch failed (status ${status}) for ${id}`,
+        );
+      }
+      const versions = body.versions ?? [];
       versionCache.set(key, versions);
       return versions;
     },

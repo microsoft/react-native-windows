@@ -86,6 +86,11 @@ extends:
               # from WARM_FEED_TOKEN.
               - task: AzureCLI@2
                 displayName: Warm ms/react-native-public feed
+                # Pass the queue-time value as data via the environment, never
+                # interpolated into the script body (would allow command injection
+                # under the feed managed identity).
+                env:
+                  WARM_FEED_PACKAGES: ${{ parameters.packages }}
                 inputs:
                   azureSubscription: Office-Hermes-Windows-Bot
                   scriptType: pscore
@@ -94,7 +99,7 @@ extends:
                     $ErrorActionPreference = 'Stop'
                     $env:WARM_FEED_TOKEN = az account get-access-token `
                       --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken -o tsv
-                    $pkgs = '${{ parameters.packages }}'.Trim()
+                    $pkgs = "$env:WARM_FEED_PACKAGES".Trim()
                     $warmArgs = @()
                     if ($pkgs) { foreach ($p in ($pkgs -split '\s+')) { $warmArgs += @('--packages', $p) } }
                     npx warm-feed @warmArgs
