@@ -1,0 +1,23 @@
+{
+  "feeds": {
+    "npm": {
+      "registry": "https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/"
+    },
+    "nuget": {
+      "index": "https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json"
+    }
+  },
+  "enumerate": {
+    "feedManagementBase": "https://feeds.dev.azure.com/ms/react-native/_apis/packaging/Feeds/react-native-public",
+    "apiVersion": "7.1",
+    "pageSize": 1000
+  },
+  "expand": {
+    "scope": "in-use-lines",
+    "includeLatest": true,
+    "includePrerelease": false,
+    "maxMajorsBack": 0
+  },
+  "concurrency": 8,
+  "ignore": []
+}

@@ -229,6 +229,42 @@ extends:
             owners: 'vmorozov@microsoft.com'
             approvers: 'khosany@microsoft.com'
 
+      - job: PushNpmPublicAdo
+        displayName: ADO - npm - react-native-public
+        timeoutInMinutes: 30
+        templateContext:
+          type: releaseJob
+          isProduction: true
+          inputs:
+          - input: pipelineArtifact
+            pipeline: 'CI'
+            artifactName: 'NpmPackedTarballs'
+            targetPath: '$(Pipeline.Workspace)/npm-feed-packages'
+        steps:
+        - template: .ado/templates/publish-npm-to-ado-feed.yml@self
+          parameters:
+            npmFeedRegistry: 'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/'
+            packagesPath: '$(Pipeline.Workspace)/npm-feed-packages'
+            feedDisplayName: 'ms/react-native-public'
+
+      - job: PushNpmPrivateAdo
+        displayName: ADO - npm - react-native
+        timeoutInMinutes: 30
+        templateContext:
+          type: releaseJob
+          isProduction: true
+          inputs:
+          - input: pipelineArtifact
+            pipeline: 'CI'
+            artifactName: 'NpmPackedTarballs'
+            targetPath: '$(Pipeline.Workspace)/npm-feed-packages'
+        steps:
+        - template: .ado/templates/publish-npm-to-ado-feed.yml@self
+          parameters:
+            npmFeedRegistry: 'https://pkgs.dev.azure.com/ms/_packaging/react-native/npm/registry/'
+            packagesPath: '$(Pipeline.Workspace)/npm-feed-packages'
+            feedDisplayName: 'ms/react-native'
+
       - job: PushPrivateAdo
         displayName: ADO - nuget - react-native
         timeoutInMinutes: 30

@@ -490,7 +490,7 @@ function CustomRippleRadius() {
 }
 
 const remoteImage = {
-  uri: 'https://www.facebook.com/favicon.ico',
+  uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR4nGNgAAIAAAUAAen63NgAAAAASUVORK5CYII=',
 };
 
 const TouchableHighlightUnderlayMethods = () => {
