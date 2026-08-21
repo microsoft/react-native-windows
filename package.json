@@ -1,5 +1,5 @@
 {
-  "name": "react-native-windows-repo",
+  "name": "@rnw-scripts/react-native-windows-repo",
   "version": "0.0.1",
   "private": true,
   "scripts": {
