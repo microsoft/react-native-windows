@@ -1193,7 +1193,7 @@ exports.examples = [
     name: 'nesting-content',
     render: function (): React.Node {
       return (
-        <View testID="image-nesting-content" style={styles.base}>
+        <View testID="image-nested" style={styles.base}>
           <Image style={{...StyleSheet.absoluteFill}} source={fullImage} />
           <Text style={styles.nestedText}>React</Text>
         </View>
