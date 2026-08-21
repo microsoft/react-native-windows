@@ -514,7 +514,9 @@ constexpr std::size_t aligned_storage_default_align(std::size_t len) {
     len |= len >> 16;
   }
   if constexpr (sizeof(std::size_t) > 4) {
-    len |= len >> 32;
+    // Split as >>16>>16: this non-template function still compiles the
+    // discarded branch, so a bare >>32 trips MSVC C4293 (/WX) on 32-bit.
+    len |= len >> 16 >> 16;
   }
   return len - (len >> 1);
 }
