@@ -1,0 +1,7 @@
+# Intentionally-empty NuGet fallback folder.
+#
+# Directory.Build.props points UWPNugetRepo here so that
+# Microsoft.NETCore.UniversalWindowsPlatform / runtime.win10-* resolve from the
+# ADO feed instead of the machine-local, SDK-versioned Windows SDK copy (whose
+# per-machine signature makes committed lock hashes mismatch across dev/CI -> NU1403).
+# Build-time .NET Native injection is unaffected; it reads the SDK folder directly.
