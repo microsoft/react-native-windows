@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 21 Aug 2026 16:35:17 GMT",
+      "version": "0.0.0-canary.293",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.293",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "fd74665176d81b33411ad6c79df5a9b2d82514a2",
+            "comment": "Fix CI pipeline and add warm-feed"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Jul 2026 21:19:50 GMT",
       "version": "0.0.0-canary.292",
       "tag": "@react-native-windows/cli_v0.0.0-canary.292",

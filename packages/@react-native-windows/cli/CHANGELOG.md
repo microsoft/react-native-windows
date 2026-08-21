@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Mon, 20 Jul 2026 21:19:50 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 21 Aug 2026 16:35:17 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.293
+
+Fri, 21 Aug 2026 16:35:17 GMT
+
+### Changes
+
+- Fix CI pipeline and add warm-feed (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.292
 
