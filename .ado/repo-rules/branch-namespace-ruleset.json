@@ -1,0 +1,38 @@
+{
+  "name": "Require namespaced branches",
+  "target": "branch",
+  "enforcement": "active",
+  "bypass_actors": [],
+  "conditions": {
+    "ref_name": {
+      "include": ["~ALL"],
+      "exclude": [
+        "refs/heads/user/**/*",
+
+        "refs/heads/users/merlinbot/**/*",
+        "refs/heads/dependabot/**/*",
+        "refs/heads/copilot/**/*",
+        "refs/heads/chore/weekly-lock-refresh-*",
+
+        "refs/heads/*-stable",
+        "refs/heads/preview-*-test",
+        "refs/heads/prepare-release/**/*",
+        "refs/heads/release/**/*",
+        "refs/heads/hotfix/**/*",
+
+        "refs/heads/integrate/**/*",
+        "refs/heads/cherry-pick/**/*",
+        "refs/heads/archive/**/*",
+
+        "refs/heads/revert-*",
+        "refs/heads/revert-*/**/*",
+        "refs/heads/gh-readonly-queue/**/*",
+
+        "refs/heads/gh-pages"
+      ]
+    }
+  },
+  "rules": [
+    { "type": "creation" }
+  ]
+}

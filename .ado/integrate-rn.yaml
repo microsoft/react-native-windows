@@ -26,7 +26,7 @@ jobs:
 
       - template: templates/prepare-js-env.yml
 
-      - script: git checkout -b integrate-${{ parameters.reactNativeVersion }} origin/main
+      - script: git checkout -b integrate/${{ parameters.reactNativeVersion }} origin/main
         displayName: Create a new branch
 
       - script: yarn integrate-rn ${{ parameters.reactNativeVersion }} --reportPath "$(Agent.TempDirectory)\integration-report.md"
@@ -90,11 +90,11 @@ jobs:
           git commit --amend -F "$(Agent.TempDirectory)\commit-message.md"
         displayName: Slip changefiles into original commit
 
-      - script: git push origin integrate-${{ parameters.reactNativeVersion }}
+      - script: git push origin integrate/${{ parameters.reactNativeVersion }}
         displayName: Push changes
 
       - pwsh: |
           $headers = @{'Accept'='application/vnd.github.v3+json'; 'Authorization'='Token $(githubAuthToken)'}
-          $body = '{"head": "integrate-${{ parameters.reactNativeVersion }}", "base": "main", "title": "${{ parameters.commitTitle}}"}'
+          $body = '{"head": "integrate/${{ parameters.reactNativeVersion }}", "base": "main", "title": "${{ parameters.commitTitle}}"}'
           Invoke-WebRequest -Method Post -Headers $headers -Body $body https://api.github.com/repos/microsoft/react-native-windows/pulls
         displayName: Create PR
