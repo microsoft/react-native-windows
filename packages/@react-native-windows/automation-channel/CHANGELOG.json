@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Fri, 21 Aug 2026 16:35:17 GMT",
+      "version": "0.0.0-canary.1059",
+      "tag": "@react-native-windows/automation-channel_v0.0.0-canary.1059",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "fd74665176d81b33411ad6c79df5a9b2d82514a2",
+            "comment": "Fix CI pipeline and add warm-feed"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.1059",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Aug 2026 21:42:42 GMT",
       "version": "0.0.0-canary.1058",
       "tag": "@react-native-windows/automation-channel_v0.0.0-canary.1058",
