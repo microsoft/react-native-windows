@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Do fork-sync for folly, fast-float, and fmt",
+  "comment": "Make the vendored Folly headers C++23-ready and update fmt to 11.0.2 (now managed via fork-sync)",
   "packageName": "@react-native-windows/automation-channel",
   "email": "vmorozov@microsoft.com",
   "dependentChangeType": "patch"
