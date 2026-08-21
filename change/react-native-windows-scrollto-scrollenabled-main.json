@@ -1,0 +1,1 @@
+{"type":"prerelease","dependentChangeType":"patch","email":"collindanielschneide@gmail.com","packageName":"react-native-windows","comment":"Honor programmatic scrollTo when scrollEnabled={false}, matching iOS/Android"}
