@@ -177,6 +177,13 @@ exports[`Accessibility Tests Components can store range data by setting the min,
             "Offset": "0, 0, 0",
             "Size": "916, 19",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -239,6 +246,13 @@ exports[`Accessibility Tests Components can store value data by setting the text
             "Offset": "0, 0, 0",
             "Size": "916, 20",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -302,6 +316,13 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to fal
             "Offset": "0, 0, 0",
             "Size": "100, 20",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -366,6 +387,13 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to tru
             "Offset": "0, 0, 0",
             "Size": "100, 20",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -577,6 +605,13 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                                             "Offset": "0, 0, 0",
                                             "Size": "100, 20",
                                             "Visual Type": "SpriteVisual",
+                                            "__Children": [
+                                              {
+                                                "Offset": "0, 0, 0",
+                                                "Size": "0, 0",
+                                                "Visual Type": "SpriteVisual",
+                                              },
+                                            ],
                                           },
                                         ],
                                       },
@@ -613,6 +648,13 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                                             "Offset": "0, 0, 0",
                                             "Size": "100, 20",
                                             "Visual Type": "SpriteVisual",
+                                            "__Children": [
+                                              {
+                                                "Offset": "0, 0, 0",
+                                                "Size": "0, 0",
+                                                "Visual Type": "SpriteVisual",
+                                              },
+                                            ],
                                           },
                                         ],
                                       },
@@ -649,6 +691,13 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                                             "Offset": "0, 0, 0",
                                             "Size": "100, 20",
                                             "Visual Type": "SpriteVisual",
+                                            "__Children": [
+                                              {
+                                                "Offset": "0, 0, 0",
+                                                "Size": "0, 0",
+                                                "Visual Type": "SpriteVisual",
+                                              },
+                                            ],
                                           },
                                         ],
                                       },

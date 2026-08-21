@@ -25,7 +25,7 @@ import Position from './Position';
 import * as React from 'react';
 
 const extractSingleTouch = (nativeEvent: {
-  +changedTouches: $ReadOnlyArray<GestureResponderEvent['nativeEvent']>,
+  +changedTouches: ReadonlyArray<GestureResponderEvent['nativeEvent']>,
   +altKey: ?boolean,
   +button: ?number,
   +ctrlKey: ?boolean,
@@ -39,7 +39,7 @@ const extractSingleTouch = (nativeEvent: {
   +shiftKey: ?boolean,
   +target: ?number,
   +timestamp: number,
-  +touches: $ReadOnlyArray<GestureResponderEvent['nativeEvent']>,
+  +touches: ReadonlyArray<GestureResponderEvent['nativeEvent']>,
 }) => {
   const touches = nativeEvent.touches;
   const changedTouches = nativeEvent.changedTouches;

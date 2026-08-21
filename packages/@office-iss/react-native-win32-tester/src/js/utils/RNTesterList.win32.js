@@ -187,6 +187,12 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/Animated/AnimatedIndex').default,
   },
   {
+    key: 'AnimationBackendIndex',
+    category: 'UI',
+    module: require('../examples/AnimationBackend/AnimationBackendIndex')
+      .default,
+  },
+  {
     key: 'Animation - GratuitousAnimation',
     category: 'UI',
     module: require('../examples/AnimatedGratuitousApp/AnExApp'),

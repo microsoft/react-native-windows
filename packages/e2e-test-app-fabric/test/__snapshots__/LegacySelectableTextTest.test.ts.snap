@@ -20,6 +20,13 @@ exports[`LegacySelectableTextTest DoubleClickWhenNotSelectable 1`] = `
     "Offset": "0, 0, 0",
     "Size": "103, 19",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
   },
 }
 `;
@@ -44,6 +51,13 @@ exports[`LegacySelectableTextTest DoubleClickWhenSelectable 1`] = `
     "Offset": "0, 0, 0",
     "Size": "103, 19",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
   },
 }
 `;
@@ -68,6 +82,13 @@ exports[`LegacySelectableTextTest PressableWhenNotSelectable 1`] = `
     "Offset": "0, 0, 0",
     "Size": "103, 19",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
   },
 }
 `;
@@ -92,6 +113,13 @@ exports[`LegacySelectableTextTest PressableWhenSelectable 1`] = `
     "Offset": "0, 0, 0",
     "Size": "103, 19",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
   },
 }
 `;

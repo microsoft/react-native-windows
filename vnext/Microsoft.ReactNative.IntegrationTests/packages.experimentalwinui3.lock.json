@@ -10,9 +10,9 @@
       },
       "Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn": {
         "type": "Direct",
-        "requested": "[1.8.1.7, )",
-        "resolved": "1.8.1.7",
-        "contentHash": "FxNwT4YpsGdqforqFSTGc5f/e+qfRJ+1wf5G1w0nEEkT5pr5M95E5+fOuswpPUGXPZIXM+M7BSVGnCRcQZjomA=="
+        "requested": "[1.8.1.8, )",
+        "resolved": "1.8.1.8",
+        "contentHash": "RHZUuFTnYzkHPRM5muZfw4SRL/EIHFz7nIkKl1mJKPISvzi1wWtK7k/oJIpw3pWVkdFyEfnBQP8vX1fFpe7Mpw=="
       },
       "Microsoft.VCRTForwarders.140": {
         "type": "Direct",
@@ -50,8 +50,8 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
-        "resolved": "0.0.0-2605.6002-2279da22",
-        "contentHash": "E59URq24UdJMpLMkMY92h3hs91EHelicbUsBRETn+FJ19uQbzU3gqkh2NPyBtMj4IVYK5K9FW+hIUTLg8SG25g=="
+        "resolved": "0.0.0-2608.12001-35d34796",
+        "contentHash": "6EirG0swfzCbfajtXtUUUFJJqi0yYzYOMRjkx0XcLB1a8qYjAhRcFdAfsNDvxPbs0ErI+6++EjBZquf3YFQZDA=="
       },
       "Microsoft.SourceLink.Common": {
         "type": "Transitive",
@@ -171,7 +171,7 @@
         "type": "Project",
         "dependencies": {
           "Common": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.0.0-2605.6002-2279da22, )",
+          "Microsoft.JavaScript.Hermes": "[0.0.0-2608.12001-35d34796, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.WindowsAppSDK": "[2.0.0-experimental3, )",
           "ReactCommon": "[1.0.0, )",

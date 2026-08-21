@@ -3,6 +3,7 @@ import "ReactNativeHost.idl";
 import "ReactNativeIsland.idl";
 import "ReactInstanceSettings.idl";
 import "IReactPackageProvider.idl";
+import "ReactNativeWindow.idl";
 
 #include "DocString.h"
 
@@ -13,6 +14,8 @@ namespace Microsoft.ReactNative {
      runtimeclass ReactNativeWin32App {
         // Properties
         Microsoft.UI.Windowing.AppWindow AppWindow {get;};
+
+        ReactNativeWindow ReactNativeWindow {get;};
 
         ReactNativeHost ReactNativeHost {get;};
 

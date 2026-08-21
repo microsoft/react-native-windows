@@ -36,6 +36,13 @@ module.exports = {
         'ft-flow/use-flow-type': 0,
         // flow handles this check for us, so it's not required
         'no-undef': 0,
+        // hermes-eslint emits ComponentDeclaration/HookDeclaration nodes that
+        // ESLint core's code-path analysis does not treat as function
+        // boundaries, so a `return` inside a Flow `component`/`hook` body leaks
+        // into module scope and produces false-positive no-unreachable errors.
+        // Flow performs its own unreachable-code analysis, so disable the
+        // broken ESLint rule for hermes-parsed files.
+        'no-unreachable': 0,
       },
     },
     {

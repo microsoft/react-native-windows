@@ -189,14 +189,14 @@ void ImageComponentView::setStateAndResubscribeImageResponseObserver(
     facebook::react::ImageShadowNode::ConcreteState::Shared const &state) noexcept {
   if (m_state) {
     auto &observerCoordinator = m_state->getData().getImageRequest().getObserverCoordinator();
-    observerCoordinator.removeObserver(*m_imageResponseObserver);
+    observerCoordinator.removeObserver(m_imageResponseObserver);
   }
 
   m_state = state;
 
   if (m_state) {
     auto &observerCoordinator = m_state->getData().getImageRequest().getObserverCoordinator();
-    observerCoordinator.addObserver(*m_imageResponseObserver);
+    observerCoordinator.addObserver(m_imageResponseObserver);
   }
 }
 

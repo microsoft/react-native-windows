@@ -1,8 +1,33 @@
 # Change Log - @react-native-windows/automation-commands
 
-<!-- This log was last generated on Wed, 13 May 2026 18:22:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 06 Aug 2026 21:42:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1059
+
+Thu, 06 Aug 2026 21:42:42 GMT
+
+### Changes
+
+- Move CI pipeline to office/ISS ADO project (vmorozov@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1058
+
+## 0.0.0-canary.1058
+
+Mon, 20 Jul 2026 21:19:52 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1057
+
+## 0.0.0-canary.1057
+
+Tue, 26 May 2026 20:10:44 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1056
 
 ## 0.0.0-canary.1056
 

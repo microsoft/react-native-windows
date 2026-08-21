@@ -2,6 +2,27 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Mon, 20 Jul 2026 21:19:50 GMT",
+      "version": "0.0.0-canary.1023",
+      "tag": "react-native-platform-override_v0.0.0-canary.1023",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Update GitHub org from facebook/react-native to react/react-native"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-platform-override",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Enable core.longpaths in override scratch repo to fix validate-overrides on Windows for deeply-nested upstream paths"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2026 05:29:55 GMT",
       "version": "0.0.0-canary.1022",
       "tag": "react-native-platform-override_v0.0.0-canary.1022",

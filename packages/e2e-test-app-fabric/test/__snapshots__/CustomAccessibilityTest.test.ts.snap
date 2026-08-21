@@ -58,6 +58,13 @@ exports[`Custom Accessibility Tests Verify custom native component has UIA label
             "Offset": "0, 0, 0",
             "Size": "998, 19",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },

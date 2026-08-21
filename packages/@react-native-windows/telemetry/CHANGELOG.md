@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 26 May 2026 20:10:44 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.134
+
+Tue, 26 May 2026 20:10:44 GMT
+
+### Changes
+
+- Bump @xmldom/xmldom from 0.7.13 to 0.8.13 (AzureDevOps@users.noreply.github.com)
 
 ## 0.0.0-canary.133
 

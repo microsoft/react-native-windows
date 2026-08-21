@@ -299,7 +299,12 @@ private:
         FOLLY_BUILTIN_MEMCPY(&out, buf + off, sizeof(out));
         return out;
       } else {
-        assert(0 == reinterpret_cast<uintptr_t>(buf) % sizeof(*buf));
+        // [Windows
+        // This assert is not correct for the x86 code where the allocated buffer can be aligned by 32-bits instead of 64-bits.
+        // Intel CPUs allow unaligned memory access without issues.
+        // ARM64 CPUs prohibit unaligned memory access, but if it happens, then we would have an immediate crash at this point. Thus, the assert is redundant.
+        // Windows]
+        // assert(0 == reinterpret_cast<uintptr_t>(buf) % sizeof(*buf));
         return buf[off];
       }
     }

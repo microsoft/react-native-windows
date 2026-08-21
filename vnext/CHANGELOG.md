@@ -1,8 +1,60 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 13 May 2026 18:22:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 06 Aug 2026 21:42:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1058
+
+Thu, 06 Aug 2026 21:42:42 GMT
+
+### Changes
+
+- Move CI pipeline to office/ISS ADO project (vmorozov@microsoft.com)
+- Fix placeholder layout constraints fed physical px instead of DIPs; fix no-op NaN fontSize guard in CreatePlaceholderLayout (collindanielschneide@gmail.com)
+- Honor programmatic scrollTo when scrollEnabled={false}, matching iOS/Android (collindanielschneide@gmail.com)
+
+## 0.0.0-canary.1057
+
+Mon, 20 Jul 2026 21:19:48 GMT
+
+### Changes
+
+- Upgrade build agents to Windows Server 2025, Visual Studio 2026 (julio.rocha@microsoft.com)
+- fix: Unicode Text length Calculation (66076509+vineethkuttan@users.noreply.github.com)
+- Upgrade to Microsoft.WindowsAppSDK 1.8.260508005 (julio.rocha@microsoft.com)
+- Integrate RN 0.85.0-nightly-20260210-4535df4f6 (email not defined)
+- Upgrade to GoogleTest adapter 1.8.1.8 (julio.rocha@microsoft.com)
+- Drop in-process HTTP test server (julio.rocha@microsoft.com)
+- Fixes misalginment with TextInput on different display scales (dlucas@seabird.com)
+- Fix WebSocket binaryType handling — stop unconditional Blob interception of binary messages (gordomacmaster@gmail.com)
+- Fix a crash calling CallInvoker during shutdown (30809111+acoates-ms@users.noreply.github.com)
+- Drop old WinRTWebSocketResource implementation (julio.rocha@microsoft.com)
+- Re-introduce WebSocket JS integration tests (julio.rocha@microsoft.com)
+- Expose ReactNativeWindow from ReactNativeWin32App (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash attempting to get runtime when shutting down instance (30809111+acoates-ms@users.noreply.github.com)
+- Upgrade projects to .NET 10 (julio.rocha@microsoft.com)
+- Integrate RN 0.85.0-nightly-20260224-42cd0f041 (email not defined)
+- Integrate RN 0.85.0-nightly-20260128-36f07a1b2 (email not defined)
+- Integrate RN 0.85.0-nightly-20260303-c26dbe286 (email not defined)
+- Upgrade to Visual Studio 2026 (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.292
+- Bump react-native-platform-override to v0.0.0-canary.1023
+
+## 0.0.0-canary.1056
+
+Tue, 26 May 2026 20:10:43 GMT
+
+### Changes
+
+- Template should import Microsoft.Cpp.Default.props before setting  ReactNativeWindowsDir (30809111+acoates-ms@users.noreply.github.com)
+- Race condition can cause the callinvoker to get a null runtime during shutdown.  Which should just skip the invoke. (30809111+acoates-ms@users.noreply.github.com)
+- Update template to have more consistent config between ship/debug (30809111+acoates-ms@users.noreply.github.com)
+- Defer findPowershell to layoutMSRNCxx (julio.rocha@microsoft.com)
+- Enable RCT_REMOVE_LEGACY_ARCH (30809111+acoates-ms@users.noreply.github.com)
+- Fix assert in x86 when using custom align (30809111+acoates-ms@users.noreply.github.com)
+- Remove JSBigStringResourceDll, and unify WebsocketResource (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.291
 
 ## 0.0.0-canary.1055
 

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Template should import Microsoft.Cpp.Default.props before setting  ReactNativeWindowsDir",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

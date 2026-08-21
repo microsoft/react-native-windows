@@ -2,6 +2,219 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 06 Aug 2026 21:42:42 GMT",
+      "version": "0.0.0-canary.1058",
+      "tag": "react-native-windows_v0.0.0-canary.1058",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2035179c29b5640c14ebc09c59e5f81ed5115ad3",
+            "comment": "Move CI pipeline to office/ISS ADO project"
+          },
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "2035179c29b5640c14ebc09c59e5f81ed5115ad3",
+            "comment": "Fix placeholder layout constraints fed physical px instead of DIPs; fix no-op NaN fontSize guard in CreatePlaceholderLayout"
+          },
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "2035179c29b5640c14ebc09c59e5f81ed5115ad3",
+            "comment": "Honor programmatic scrollTo when scrollEnabled={false}, matching iOS/Android"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 20 Jul 2026 21:19:48 GMT",
+      "version": "0.0.0-canary.1057",
+      "tag": "react-native-windows_v0.0.0-canary.1057",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Upgrade build agents to Windows Server 2025, Visual Studio 2026"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "fix: Unicode Text length Calculation"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Upgrade to Microsoft.WindowsAppSDK 1.8.260508005"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Integrate RN 0.85.0-nightly-20260210-4535df4f6"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Upgrade to GoogleTest adapter 1.8.1.8"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Drop in-process HTTP test server"
+          },
+          {
+            "author": "dlucas@seabird.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Fixes misalginment with TextInput on different display scales"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Fix WebSocket binaryType handling — stop unconditional Blob interception of binary messages"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Fix a crash calling CallInvoker during shutdown"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Drop old WinRTWebSocketResource implementation"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Re-introduce WebSocket JS integration tests"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Expose ReactNativeWindow from ReactNativeWin32App"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Fix crash attempting to get runtime when shutting down instance"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Upgrade projects to .NET 10"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Integrate RN 0.85.0-nightly-20260224-42cd0f041"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Integrate RN 0.85.0-nightly-20260128-36f07a1b2"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Integrate RN 0.85.0-nightly-20260303-c26dbe286"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cda341bada4bd0214732014bc7868133767b48a6",
+            "comment": "Upgrade to Visual Studio 2026"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.292",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1023",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 May 2026 20:10:43 GMT",
+      "version": "0.0.0-canary.1056",
+      "tag": "react-native-windows_v0.0.0-canary.1056",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Template should import Microsoft.Cpp.Default.props before setting  ReactNativeWindowsDir"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Race condition can cause the callinvoker to get a null runtime during shutdown.  Which should just skip the invoke."
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Update template to have more consistent config between ship/debug"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Defer findPowershell to layoutMSRNCxx"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Enable RCT_REMOVE_LEGACY_ARCH"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Fix assert in x86 when using custom align"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b70d8f85449a23f7af499c13c381534b40a4b9f9",
+            "comment": "Remove JSBigStringResourceDll, and unify WebsocketResource"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.291",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 May 2026 18:22:07 GMT",
       "version": "0.0.0-canary.1055",
       "tag": "react-native-windows_v0.0.0-canary.1055",

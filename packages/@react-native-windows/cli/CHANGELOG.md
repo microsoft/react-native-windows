@@ -1,8 +1,30 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Wed, 13 May 2026 18:22:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 20 Jul 2026 21:19:50 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.292
+
+Mon, 20 Jul 2026 21:19:50 GMT
+
+### Changes
+
+- Integrate RN 0.85.0-nightly-20260303-c26dbe286 (email not defined)
+- Integrate RN 0.85.0-nightly-20260128-36f07a1b2 (email not defined)
+- Upgrade build agents to Windows Server 2025, Visual Studio 2026 (julio.rocha@microsoft.com)
+- Integrate RN 0.85.0-nightly-20260210-4535df4f6 (email not defined)
+- Integrate RN 0.85.0-nightly-20260224-42cd0f041 (email not defined)
+- Upgrade to Visual Studio 2026 (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.291
+
+Tue, 26 May 2026 20:10:44 GMT
+
+### Changes
+
+- Bump @xmldom/xmldom from 0.7.13 to 0.8.13 (AzureDevOps@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.134
 
 ## 0.0.0-canary.290
 

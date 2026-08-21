@@ -58,6 +58,95 @@ namespace Microsoft.React.Test
       }
     }
 
+    public static async Task EchoCookie(HttpContext context)
+    {
+      using var ws = await context.WebSockets.AcceptWebSocketAsync();
+      wsConnections.Add(ws);
+
+      var cookie = context.Request.Headers.Cookie.ToString();
+
+      while (true)
+      {
+        if (ws.State == WebSocketState.Closed ||
+          ws.State == WebSocketState.CloseSent ||
+          ws.State == WebSocketState.CloseReceived ||
+          ws.State == WebSocketState.Aborted)
+          break;
+
+        if (ws.State != WebSocketState.Open)
+          continue;
+
+        try
+        {
+          await WebSocketUtils.ReceiveStringAsync(ws);
+        }
+        catch (WebSocketException)
+        {
+          break;
+        }
+
+        if (ws.State != WebSocketState.Open)
+          break;
+
+        var responseBytes = Encoding.UTF8.GetBytes(cookie);
+
+        try
+        {
+          await ws.SendAsync(responseBytes, WebSocketMessageType.Text, true, CancellationToken.None);
+        }
+        catch (WebSocketException)
+        {
+          break;
+        }
+      }
+    }
+
+    public static async Task EchoBinaryGrow(HttpContext context)
+    {
+      using var ws = await context.WebSockets.AcceptWebSocketAsync();
+      wsConnections.Add(ws);
+
+      while (true)
+      {
+        if (ws.State == WebSocketState.Closed ||
+          ws.State == WebSocketState.CloseSent ||
+          ws.State == WebSocketState.CloseReceived ||
+          ws.State == WebSocketState.Aborted)
+          break;
+
+        if (ws.State != WebSocketState.Open)
+          continue;
+
+        var inputBuffer = new byte[1024];
+        var payload = new List<byte>();
+
+        while (true)
+        {
+          var segment = new ArraySegment<byte>(inputBuffer);
+          var receiveResult = await ws.ReceiveAsync(segment, CancellationToken.None);
+
+          if (receiveResult.MessageType == WebSocketMessageType.Close)
+          {
+            await ws.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+            return;
+          }
+
+          for (var i = 0; i < receiveResult.Count; i++)
+          {
+            payload.Add(inputBuffer[i]);
+          }
+
+          if (receiveResult.EndOfMessage)
+            break;
+        }
+
+        payload.Add((byte)(payload.Count + 1));
+        var outputBytes = payload.ToArray();
+
+        await ws.SendAsync(outputBytes, WebSocketMessageType.Binary, true, CancellationToken.None);
+      }
+    }
+
     public static async Task EchoSuffix(HttpContext context)
     {
       var announcement = @"This will send each incoming message back, with the string '_response' appended.";

@@ -1,8 +1,17 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 20 Jul 2026 21:19:50 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1023
+
+Mon, 20 Jul 2026 21:19:50 GMT
+
+### Changes
+
+- Update GitHub org from facebook/react-native to react/react-native (anuagra@microsoft.com)
+- Enable core.longpaths in override scratch repo to fix validate-overrides on Windows for deeply-nested upstream paths (email not defined)
 
 ## 0.0.0-canary.1022
 

@@ -53,6 +53,13 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to bottom butto
             "Offset": "0, 0, 0",
             "Size": "102, 19",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -114,6 +121,13 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to end button 1
             "Offset": "0, 0, 0",
             "Size": "78, 19",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -175,6 +189,13 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to start button
             "Offset": "0, 0, 0",
             "Size": "82, 20",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -236,6 +257,13 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to top button 1
             "Offset": "0, 0, 0",
             "Size": "76, 20",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },
@@ -514,6 +542,13 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                             "Offset": "0, 0, 0",
                             "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -549,6 +584,13 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                             "Offset": "0, 0, 0",
                             "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -584,6 +626,13 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                             "Offset": "0, 0, 0",
                             "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -619,6 +668,13 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                             "Offset": "0, 0, 0",
                             "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -654,6 +710,13 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                             "Offset": "0, 0, 0",
                             "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -689,6 +752,13 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                             "Offset": "0, 0, 0",
                             "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -724,6 +794,13 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                             "Offset": "0, 0, 0",
                             "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -759,6 +836,13 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                             "Offset": "0, 0, 0",
                             "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -794,6 +878,13 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                             "Offset": "0, 0, 0",
                             "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -829,6 +920,13 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                             "Offset": "0, 0, 0",
                             "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -864,6 +962,13 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                             "Offset": "0, 0, 0",
                             "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -899,6 +1004,13 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
                             "Offset": "0, 0, 0",
                             "Size": "86, 20",
                             "Visual Type": "SpriteVisual",
+                            "__Children": [
+                              {
+                                "Offset": "0, 0, 0",
+                                "Size": "0, 0",
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
                           },
                         ],
                       },
@@ -1028,6 +1140,13 @@ exports[`ScrollView Tests ScrollViews has flash scroll indicators 1`] = `
             "Offset": "0, 0, 0",
             "Size": "132, 20",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
           },
         ],
       },

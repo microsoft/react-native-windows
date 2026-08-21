@@ -11,7 +11,7 @@ parameters:
 
   - name: versions
     type: object
-    default: [22]
+    default: [24]
 
 jobs:
   - ${{ each nodeVersion in parameters.versions }}:
@@ -25,11 +25,13 @@ jobs:
         - template: ../templates/checkout-shallow.yml
 
         - template: ../templates/prepare-js-env.yml
+          parameters:
+            buildEnvironment: ${{ parameters.buildEnvironment }}
 
-        - task: NodeTool@0
+        - task: UseNode@1
           displayName: Using Node ${{ nodeVersion }}.x
           inputs:
-            versionSpec: '${{ nodeVersion }}.x'
+            version: '${{ nodeVersion }}.x'
 
         - script: yarn test
           displayName: yarn test

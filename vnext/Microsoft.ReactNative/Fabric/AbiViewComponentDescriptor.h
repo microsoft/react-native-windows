@@ -161,7 +161,7 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
 
   facebook::react::ShadowNodeFamily::Shared createFamily(
       facebook::react::ShadowNodeFamilyFragment const &fragment) const override {
-    auto eventEmitter = std::make_shared<const ConcreteEventEmitter>(
+    auto eventEmitter = std::make_shared<ConcreteEventEmitter>(
         std::make_shared<facebook::react::EventTarget>(fragment.instanceHandle, fragment.surfaceId), eventDispatcher_);
     return std::make_shared<facebook::react::ShadowNodeFamily>(
         fragment, std::move(eventEmitter), eventDispatcher_, *this);

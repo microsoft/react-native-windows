@@ -29,6 +29,7 @@ type TextInputChangeEventData = Readonly<{
   eventCount: number,
   target: number,
   text: string,
+  selection?: Selection,
 }>;
 
 export type TextInputChangeEvent =
@@ -306,7 +307,7 @@ export type TextInputIOSProps = Readonly<{
    */
   dataDetectorTypes?:
     | ?DataDetectorTypesType
-    | $ReadOnlyArray<DataDetectorTypesType>,
+    | ReadonlyArray<DataDetectorTypesType>,
 
   /**
    * If `true`, the keyboard disables the return key when there is no text and
@@ -557,7 +558,7 @@ type TextInputBaseProps = Readonly<{
    *
    * @see https://developer.android.com/reference/android/content/ClipData for more information on MIME types
    */
-  experimental_acceptDragAndDropTypes?: ?$ReadOnlyArray<string>,
+  experimental_acceptDragAndDropTypes?: ?ReadonlyArray<string>,
   /**
    * String to be read by screenreaders to indicate an error state. The acceptable parameters
    * of accessibilityErrorMessage is a string. Setting accessibilityInvalid to true activates

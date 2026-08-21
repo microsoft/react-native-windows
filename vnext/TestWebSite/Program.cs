@@ -81,6 +81,16 @@ app.Map(
   );
 
 app.Map(
+  "/rnw/websockets/echocookie",
+  Microsoft.React.Test.WebSocketTests.EchoCookie
+  );
+
+app.Map(
+  "/rnw/websockets/echobinarygrow",
+  Microsoft.React.Test.WebSocketTests.EchoBinaryGrow
+  );
+
+app.Map(
   "/rnw/websockets/pong",
   Microsoft.React.Test.WebSocketTests.Pong
   );
@@ -93,6 +103,53 @@ app.MapGet(
 app.MapPost(
   "/officedev/office-js/issues/5869",
    Microsoft.Office.Test.OfficeJsTests.Issue5869);
+
+app.MapGet(
+  "/rnw/http/get",
+  Microsoft.React.Test.HttpTests.BasicGet);
+
+app.MapGet(
+  "/rnw/http/headers",
+  Microsoft.React.Test.HttpTests.Headers);
+
+app.MapGet(
+  "/rnw/http/useragent",
+  Microsoft.React.Test.HttpTests.UserAgent);
+
+app.MapMethods(
+  "/rnw/http/options",
+  ["OPTIONS"],
+  Microsoft.React.Test.HttpTests.Options);
+
+app.MapGet(
+  "/rnw/http/options",
+  Microsoft.React.Test.HttpTests.OptionsGet);
+
+app.MapGet(
+  "/rnw/http/redirect/get/start",
+  Microsoft.React.Test.HttpTests.RedirectGetStart);
+
+app.MapGet(
+  "/rnw/http/redirect/get/final",
+  Microsoft.React.Test.HttpTests.RedirectGetFinal);
+
+app.MapMethods(
+  "/rnw/http/redirect/patch/start",
+  ["PATCH"],
+  Microsoft.React.Test.HttpTests.RedirectPatchStart);
+
+app.MapMethods(
+  "/rnw/http/redirect/patch/final",
+  ["PATCH"],
+  Microsoft.React.Test.HttpTests.RedirectPatchFinal);
+
+app.MapGet(
+  "/rnw/http/delay/{milliseconds:int}",
+  Microsoft.React.Test.HttpTests.Delay);
+
+app.MapGet(
+  "/rnw/http/cache/{id}",
+  Microsoft.React.Test.HttpTests.Cache);
 
 #endregion Request Mappings
 

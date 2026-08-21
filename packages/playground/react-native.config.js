@@ -3,6 +3,10 @@
 const targetComposition = true;
 
 module.exports = {
+  dependencies: {
+    // Picker is a UWP/Paper component not compatible with the composition playground
+    ...(targetComposition && {'@react-native-picker/picker': {platforms: {windows: null}}}),
+  },
   project: {
     windows: {
       sourceDir: 'windows',

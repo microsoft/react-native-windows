@@ -20,10 +20,10 @@ parameters:
   default:
     Medium:
       name: rnw-pool-4-microsoft
-      demands: ImageOverride -equals rnw-img-vs2022-node22
+      demands: ImageOverride -equals rnw-img-vs2026-node24
     Large:
       name: rnw-pool-8-microsoft
-      demands: ImageOverride -equals rnw-img-vs2022-node22
+      demands: ImageOverride -equals rnw-img-vs2026-node24
 
 - name: desktopBuildMatrix
   type: object
@@ -69,32 +69,35 @@ parameters:
       BuildConfiguration: Release
       BuildPlatform: ARM64
 
-resources:
-  repositories:
-  - repository: 1ESPipelineTemplates
-    type: git
-    name: 1ESPipelineTemplates/1ESPipelineTemplates
-    ref: refs/tags/release
-
+# The PipelineTemplates repo is declared per entry pipeline (ADO forbids ${{ if }} on a repository); extends only picks the template path.
 extends:
   ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-    template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+    template: v1/Office.Official.PipelineTemplate.yml@PipelineTemplates
   ${{ else }}:
-    template: v1/1ES.Unofficial.PipelineTemplate.yml@1ESPipelineTemplates
+    template: v1/1ES.Unofficial.PipelineTemplate.yml@PipelineTemplates
   parameters:
     pool: ${{ parameters.AgentPool.Medium }}
     ${{ if ne(parameters.buildEnvironment, 'Continuous') }}:
       settings:
         skipBuildTagsForGitHubPullRequests: true
     featureFlags:
-      autoEnablePREfastWithNewRuleset: false # PREfast produces 0 actionable findings; auto-enable injects /analyze into every C++ TU, generating ~2656 SARIF files that Guardian uploads for ~19 min per native build
+      # Off: PREfast finds nothing actionable, but /analyze on every C++ TU adds ~19 min per native build.
+      autoEnablePREfastWithNewRuleset: false
     sdl:
       credscan:
-          suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
+        suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
       spotBugs:
-          enabled: false # We don't have any java, but random packages in node_modules do
+        enabled: false # We don't have any java, but random packages in node_modules do
       prefast:
+        enabled: false
+      # Office template enables extra Guardian analyzers by default; tune for Continuous.
+      ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+        bandit:
           enabled: false
+        eslint:
+          enableExclusions: true
+        suppression:
+          suppressionFile: $(Build.SourcesDirectory)\.ado\guardian\sdl\.gdnsuppress
     stages:
     #=================================================================
     # Stage: Setup
@@ -160,6 +163,17 @@ extends:
             inputs:
               version: '24.x'
             displayName: Use Node.js 24.x
+
+          # CI is network-isolated; authenticate to the package feed before any npm/Yarn use.
+          - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+            - template: .ado/templates/auth-npm-feed.yml@self
+
+          # TODO: REMOVE. Should be included in image.
+          - task: CmdLine@2
+            inputs:
+              script: |
+                npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@6.7.2
+            displayName: Install Node base packages
 
           - template: .ado/templates/compute-beachball-branch-name.yml@self
 
@@ -229,6 +243,7 @@ extends:
         # Create NPM packages
         - job: RnwNpmPack
           displayName: Create NPM packages
+          variables: [template: .ado/variables/shared.yml@self]
           pool: ${{ parameters.AgentPool.Medium }}
           timeoutInMinutes: 120 # CodeQL requires 3x usual build timeout
           cancelTimeoutInMinutes: 5
@@ -238,6 +253,7 @@ extends:
           - template: .ado/templates/prepare-js-env.yml@self
             parameters:
               agentImage: HostedImage
+              buildEnvironment: ${{ parameters.buildEnvironment }}
 
           - script: node .ado/scripts/npmPack.js --clean --no-color "$(Pipeline.Workspace)\published-packages"
             displayName: Pack npm packages
@@ -272,15 +288,14 @@ extends:
                 value: false
               #10732 - WebSocketIntegrationTest::SendReceiveSsl fails on Windows Server 2022.
               #12714 - Disable for first deployment of test website.
+              #other  - WebSocketIntegrationTest::AdditionalHeaders throws '[0x801901f4] Internal server error (500).'
+              #       - WebSocketIntegrationTest are currently unsable on CI hosts. Work fine on local machines.
+              #       - HttpResourceIntegrationTest::RequestOptionsSucceeds fails on x86|Release.
               - name: Desktop.IntegrationTests.Filter
                 value: >
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectClose)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::ConnectNoClose)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveClose)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendConsecutive)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveLargeMessage)&
-                  (FullyQualifiedName!=Microsoft::React::Test::WebSocketIntegrationTest::SendReceiveSsl)&
-                  (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)
+                  (FullyQualifiedName!~Microsoft::React::Test::RNTesterHeadlessTests)&
+                  (FullyQualifiedName!~Microsoft::React::Test::WebSocketIntegrationTest)&
+                  (FullyQualifiedName!=Microsoft::React::Test::HttpResourceIntegrationTest::RequestOptionsSucceeds)
               #6799 - HostFunctionTest, HostObjectProtoTest crash under JSI/V8;
               #        PreparedJavaScriptSourceTest asserts/fails under JSI/ChakraCore
               - name: Desktop.UnitTests.Filter
@@ -406,6 +421,7 @@ extends:
         # Create NuGet packages
         - job: RNWNuget
           displayName: Pack NuGet
+          variables: [template: .ado/variables/shared.yml@self]
           dependsOn:
             - RnwNpmPack
             - Linting
@@ -420,6 +436,8 @@ extends:
           - template: .ado/templates/checkout-shallow.yml@self
 
           - template: .ado/templates/prepare-js-env.yml@self
+            parameters:
+              buildEnvironment: ${{ parameters.buildEnvironment }}
 
           - template: .ado/templates/apply-published-version-vars.yml@self
 

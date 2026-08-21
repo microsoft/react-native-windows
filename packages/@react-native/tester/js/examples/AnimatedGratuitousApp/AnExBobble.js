@@ -162,11 +162,11 @@ function randColor(): string {
 }
 
 const BOBBLE_IMGS = [
-  'https://scontent-sea1-1.xx.fbcdn.net/hphotos-xpf1/t39.1997-6/10173489_272703316237267_1025826781_n.png',
-  'https://scontent-sea1-1.xx.fbcdn.net/hphotos-xaf1/l/t39.1997-6/p240x240/851578_631487400212668_2087073502_n.png',
-  'https://scontent-sea1-1.xx.fbcdn.net/hphotos-xaf1/t39.1997-6/p240x240/851583_654446917903722_178118452_n.png',
-  'https://scontent-sea1-1.xx.fbcdn.net/hphotos-xaf1/t39.1997-6/p240x240/851565_641023175913294_875343096_n.png',
-  'https://scontent-sea1-1.xx.fbcdn.net/hphotos-xaf1/t39.1997-6/851562_575284782557566_1188781517_n.png',
+  'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/like.png',
+  'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/heart.png',
+  'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/party.png',
+  'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/poke.png',
+  'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/superlike.png',
 ];
 
 export default AnExBobble;

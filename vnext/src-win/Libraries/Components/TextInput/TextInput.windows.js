@@ -500,12 +500,11 @@ function InternalTextInput(props: TextInputProps): React.Node {
           getNativeRef(): ?TextInputInstance {
             return inputRef.current;
           },
-          // TODO: Fix this returning true on null === null, when no input is focused
           isFocused(): boolean {
             const currentlyFocusedInput =
               TextInputState.currentlyFocusedInput();
             return (
-              currentlyFocusedInput !== null &&
+              currentlyFocusedInput != null &&
               currentlyFocusedInput === inputRef.current
             );
           },

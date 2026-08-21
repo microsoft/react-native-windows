@@ -11,6 +11,8 @@
   <PropertyGroup Label="WinUI3 for fabric" Condition="'$(SolutionName)'=='playground-composition'">
     <RnwNewArch>true</RnwNewArch>
     <UseExperimentalNuget>false</UseExperimentalNuget>
+    <!-- Disable locked restore for local dev; CI overrides via /p:RestoreLockedMode=true -->
+    <RestoreLockedMode>false</RestoreLockedMode>
   </PropertyGroup>
 
 </Project>

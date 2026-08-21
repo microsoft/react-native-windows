@@ -6,10 +6,10 @@ parameters:
   # NuGet & MSBuild
   solutionDir:
   solutionName:
-  msbuildVersion: 17.0
+  msbuildVersion: 18.0
   msBuildArchitecture: x64
   preferredToolArchitecture: x64
-  platformToolset: v143
+  platformToolset: v145
   buildPlatform: x64
   buildConfiguration: Debug
   msbuildArguments: ''
@@ -47,7 +47,6 @@ steps:
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:PublishToolDuringBuild=true
         /p:RestoreLockedMode=true
-        /p:RestoreForceEvaluate=true
         /bl:$(BuildLogDirectory)\MsBuild.binlog
         /flp1:errorsonly;logfile=$(BuildLogDirectory)\MsBuild.err.log
         /flp2:warningsonly;logfile=$(BuildLogDirectory)\MsBuild.wrn.log

@@ -126,7 +126,7 @@ function PrintMessageAndExit($ErrorMessage, $ReturnCode)
     {
         Pause
     }
-    
+
     exit $ReturnCode
 }
 
@@ -137,11 +137,11 @@ function PrintMessageAndExit($ErrorMessage, $ReturnCode)
 function ConfirmCertificateInstall
 {
     $Answer = $host.UI.PromptForChoice(
-                    "", 
-                    $UiStrings.WarningInstallCert, 
-                    [System.Management.Automation.Host.ChoiceDescription[]]@($UiStrings.PromptYesString, $UiStrings.PromptNoString), 
+                    "",
+                    $UiStrings.WarningInstallCert,
+                    [System.Management.Automation.Host.ChoiceDescription[]]@($UiStrings.PromptYesString, $UiStrings.PromptNoString),
                     1)
-    
+
     return $Answer -eq 0
 }
 
@@ -158,7 +158,7 @@ function ValidateCertificateFormat($FilePath)
     {
         PrintMessageAndExit ($UiStrings.ErrorBadCertificate -f $FilePath, $LastExitCode) $ErrorCodes.BadCertificate
     }
-    
+
     # Check if certificate is expired
     $cert = Get-PfxCertificate $FilePath
     if (($cert.NotBefore -gt (Get-Date)) -or ($cert.NotAfter -lt (Get-Date)))
@@ -343,7 +343,7 @@ function LaunchElevated
     # Launch the process and wait for it to finish
     try
     {
-        $AdminProcess = Start-Process "$PsHome\PowerShell.exe" -Verb RunAs -ArgumentList $RelaunchArgs -PassThru
+        $AdminProcess = Start-Process "$PsHome\pwsh.exe" -Verb RunAs -ArgumentList $RelaunchArgs -PassThru
     }
     catch
     {
@@ -539,7 +539,7 @@ function DoStandardOperations
         $DeveloperPackagePath = $EncryptedPackagePath
         Write-Host ($UiStrings.EncryptedPackageFound -f $DeveloperPackagePath.FullName)
     }
-    
+
     # The package must be signed
     $PackageSignature = Get-AuthenticodeSignature $DeveloperPackagePath
     $PackageCertificate = $PackageSignature.SignerCertificate

@@ -9,13 +9,15 @@
 // Windows API
 #include <winrt/Windows.Foundation.h> // WinRT fundamentals, i.e. coroutines impl.
 
+// Standard Library
+#include <future>
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Networking::Sockets;
 
 using Microsoft::React::Networking::IWebSocketResource;
 using Microsoft::React::Networking::WinRTWebSocketResource;
-using Microsoft::React::Networking::WinRTWebSocketResource2;
 using std::make_shared;
 using std::promise;
 using std::shared_ptr;
@@ -61,7 +63,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return DoNothingAsync(); };
 
     // Test APIs
-    auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{}, callingQueue);
+    auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{}, callingQueue);
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
@@ -88,7 +90,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return ThrowAsync(); };
 
     // Test APIs
-    auto rc = make_shared<WinRTWebSocketResource2>(
+    auto rc = make_shared<WinRTWebSocketResource>(
         std::move(imws), MockDataWriter{}, CertExceptions{}, Mso::DispatchQueue::MakeSerialQueue());
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage, &donePromise](Error &&error) {
@@ -121,7 +123,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
       throw winrt::hresult_error(winrt::hresult(0x80072EE1), L"Invalid CA");
     };
 
-    auto rc = make_shared<WinRTWebSocketResource2>(
+    auto rc = make_shared<WinRTWebSocketResource>(
         std::move(imws), MockDataWriter{}, CertExceptions{}, Mso::DispatchQueue::MakeSerialQueue());
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage, &donePromise](Error &&error) {
@@ -155,7 +157,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     std::promise<void> donePromise;
 
     // Test APIs
-    auto rc = make_shared<WinRTWebSocketResource2>(std::move(imws), MockDataWriter{}, CertExceptions{}, callingQueue);
+    auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{}, callingQueue);
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage, &donePromise](Error &&error) {
       errorMessage = error.Message;
@@ -172,10 +174,10 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
 
   TEST_METHOD(InternalSocketThrowsHResult) {
     Logger::WriteMessage("Microsoft::React::Test::WinRTWebSocketResourceUnitTest::InternalSocketThrowsHResult");
-    shared_ptr<WinRTWebSocketResource2> rc;
+    shared_ptr<WinRTWebSocketResource> rc;
 
     auto lambda = [&rc]() mutable {
-      rc = make_shared<WinRTWebSocketResource2>(
+      rc = make_shared<WinRTWebSocketResource>(
           winrt::make<ThrowingMessageWebSocket>(),
           MockDataWriter{},
           CertExceptions{},

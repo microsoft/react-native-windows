@@ -1,5 +1,5 @@
 {
-  "name": "react-native-windows-repo",
+  "name": "@rnw-scripts/react-native-windows-repo",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -13,6 +13,7 @@
     "format:verify": "format-files -i -style=file -verify",
     "postinstall": "yarn build",
     "release-notes": "yarn workspace @rnw-scripts/generate-release-notes release-notes",
+    "warm-feed": "yarn workspace @rnw-scripts/warm-feed warm-feed",
     "spellcheck": "npx cspell",
     "test": "lage test --verbose --passWithNoTests",
     "validate-overrides": "react-native-platform-override validate",
@@ -53,8 +54,8 @@
     "prettier": "^3.6.2",
     "prettier-plugin-hermes-parser": "0.21.1",
     "react": "19.2.3",
-    "react-native": "0.85.0-nightly-20260114-f15985f4f",
-    "react-native-platform-override": "0.0.0-canary.1017",
+    "react-native": "0.85.0-nightly-20260303-c26dbe286",
+    "react-native-platform-override": "workspace:*",
     "typescript": "5.0.4"
   },
   "resolutions": {
@@ -70,7 +71,29 @@
     "@react-native/monorepo/jest-junit": "^13.0.0",
     "@react-native/monorepo/ws": "^6.2.3",
     "@react-native/tester/ws": "^6.2.3",
-    "puppeteer-core/ws": "^8.17.1"
+    "puppeteer-core/ws": "^8.17.1",
+    "form-data": "^4.0.6",
+    "@xmldom/xmldom": "^0.8.13",
+    "tmp": "^0.2.4",
+    "linkify-it": "^5.0.2",
+    "uuid": "^11.0.0",
+    "launch-editor": "^2.14.0",
+    "qs": "^6.15.0",
+    "ip-address": "10.3.1",
+    "@tootallnate/once": "^2.0.0",
+    "brace-expansion@^1.1.7": "^1.1.14",
+    "brace-expansion@^2.0.1": "^2.1.0",
+    "brace-expansion@^2.0.2": "^2.1.0",
+    "brace-expansion@^5.0.2": "^5.0.7",
+    "brace-expansion@^5.0.5": "^5.0.7",
+    "js-yaml@4.1.0": "^4.2.0",
+    "js-yaml@^4.0.0": "^4.2.0",
+    "js-yaml@^4.1.0": "^4.2.0",
+    "js-yaml@^4.1.1": "^4.2.0",
+    "js-yaml@^3.13.1": "^3.15.0",
+    "fast-xml-parser@^4.4.1": "^5.0.0",
+    "tar@^7.5.4": "^7.5.14",
+    "string_decoder": "portal:./packages/@rnw-scripts/shims/string_decoder"
   },
   "packageManager": "yarn@4.13.0"
 }

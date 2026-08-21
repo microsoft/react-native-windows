@@ -11,6 +11,11 @@ const fs = require('fs');
 const {cleanTask, copyTask, series} = require('just-scripts');
 
 const rnDir = path.dirname(require.resolve('react-native/package.json'));
+// The Jest setup, mocks, and related helpers moved out of the react-native
+// package and into @react-native/jest-preset in newer React Native versions.
+const jestPresetDir = path.dirname(
+  require.resolve('@react-native/jest-preset/package.json'),
+);
 const rnCopiesDir = path.join(
   path.dirname(require.resolve('react-native-windows/package.json')),
   'ReactCopies',
@@ -18,6 +23,7 @@ const rnCopiesDir = path.join(
 
 exports.copyTask = baseDir => {
   const reactNative = (...files) => files.map(f => path.join(rnDir, f));
+  const jestPreset = (...files) => files.map(f => path.join(jestPresetDir, f));
   const reactCopies = (...files) => files.map(f => path.join(rnCopiesDir, f));
   const src = (...files) => files.map(f => path.join(baseDir, 'src-win', f));
   const base = file => path.join(baseDir, file);
@@ -36,7 +42,7 @@ exports.copyTask = baseDir => {
       dest: base('flow'),
     }),
     copyTask({
-      paths: reactNative('jest/**'),
+      paths: jestPreset('jest/**'),
       dest: base('jest'),
     }),
     copyTask({

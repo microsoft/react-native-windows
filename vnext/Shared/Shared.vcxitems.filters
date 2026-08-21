@@ -198,6 +198,7 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\Animated\TransformAnimatedNode.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\Animated\ValueAnimatedNode.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ImageViewManagerModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)WebSocketResourceFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\codegen\react\components\rnwcore\EventEmitters.h" />

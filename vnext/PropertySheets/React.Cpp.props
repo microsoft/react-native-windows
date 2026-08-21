@@ -43,8 +43,8 @@
 
   <PropertyGroup Label="ExternalDependencies">
     <!-- Google Test Adapter -->
-    <!-- Property sheets in the adapter's NuGet doesn't consider PlatformToolset=v143 -->
-    <Force-Enable-Microsoft-googletest-v140-windesktop-msvcstl-static-rt-dyn>false</Force-Enable-Microsoft-googletest-v140-windesktop-msvcstl-static-rt-dyn>
+    <!-- If ApplicationType is set, adapter include paths won't be set for MSVC 14.0 (v140) or later -->
+    <Force-Enable-Microsoft-googletest-v140-windesktop-msvcstl-static-rt-dyn>true</Force-Enable-Microsoft-googletest-v140-windesktop-msvcstl-static-rt-dyn>
   </PropertyGroup>
 
   <!--
@@ -64,7 +64,7 @@
       <PreprocessorDefinitions Condition="'$(UseHermes)'=='true'">USE_HERMES;REACT_NATIVE_DEBUGGER_ENABLED;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(EnableDevServerHBCBundles)'=='true'">ENABLE_DEVSERVER_HBCBUNDLES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions>USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RCT_REMOVE_LEGACY_ARCH;USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>JSI_VERSION=21;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         To address the crash on the first call to std::mutex::lock.
@@ -136,7 +136,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
-      <AdditionalOptions>/utf-8 %(AdditionalOptions) /await</AdditionalOptions>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="$(PlatformToolsetVersion)&lt;145">%(AdditionalOptions) /await</AdditionalOptions>
       <ControlFlowGuard>Guard</ControlFlowGuard>
       <SpectreMitigation>Spectre</SpectreMitigation>
 

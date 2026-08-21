@@ -30,19 +30,13 @@ EXPORTS
 ?Make@IWebSocketResource@Networking@React@Microsoft@@SA?AV?$shared_ptr@UIWebSocketResource@Networking@React@Microsoft@@@std@@XZ
 ?Make@JSBigAbiString@react@facebook@@SA?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QEAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 ?at@dynamic@folly@@QEGBAAEBU12@V?$Range@PEBD@2@@Z
-?getRuntimeExecutor@Instance@react@facebook@@QEAA?AV?$function@$$A6AX$$QEAV?$function@$$A6AXAEAVRuntime@jsi@facebook@@@Z@std@@@Z@std@@XZ
-?callJSFunction@Instance@react@facebook@@QEAAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QEAUdynamic@folly@@@Z
 ??$to_ascii_with_route@$09U?$to_ascii_alphabet@$0A@@folly@@$0BE@@detail@folly@@YA_KAEAY0BE@D_K@Z
 ??$to_ascii_with_route@$09U?$to_ascii_alphabet@$0A@@folly@@@detail@folly@@YA_KPEADPEBD_K@Z
 ??$to_ascii_size_route@$09@detail@folly@@YA_K_K@Z
-?getModuleRegistry@Instance@react@facebook@@QEAAAEAVModuleRegistry@23@XZ
 ?get_ptr@dynamic@folly@@QEGBAPEBU12@V?$Range@PEBD@2@@Z
 ?get_ptrImpl@dynamic@folly@@AEGBAPEBU12@AEBU12@@Z
-?loadScriptFromString@Instance@react@facebook@@QEAAXV?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@std@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@_N@Z
-?moduleNames@ModuleRegistry@react@facebook@@QEAA?AV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@XZ
 ?assertionFailure@detail@folly@@YAXPEBD00I0H@Z
 ?parseJson@folly@@YA?AUdynamic@1@V?$Range@PEBD@1@@Z
-?setGlobalVariable@Instance@react@facebook@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@5@@Z
 ?size@dynamic@folly@@QEBA_KXZ
 ?toJson@folly@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBUdynamic@1@@Z
 ?typeName@dynamic@folly@@QEBAPEBDXZ
@@ -56,10 +50,7 @@ EXPORTS
 ?Make@IHttpResource@Networking@React@Microsoft@@SA?AV?$shared_ptr@UIHttpResource@Networking@React@Microsoft@@@std@@XZ
 ?MakeJSQueueThread@ReactNative@Microsoft@@YA?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 ?Hash128@SpookyHashV2@hash@folly@@SAXPEBX_KPEA_K2@Z
-??1Instance@react@facebook@@UEAA@XZ
 ??1InstanceTargetDelegate@jsinspector_modern@react@facebook@@UEAA@XZ
-?invokeAsync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXAEAVRuntime@jsi@facebook@@@Z@std@@@Z
-?invokeSync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXAEAVRuntime@jsi@facebook@@@Z@std@@@Z
 
 MicrosoftReactSetRuntimeOptionBool
 MicrosoftReactSetRuntimeOptionInt

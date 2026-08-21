@@ -19,6 +19,8 @@ steps:
   - template: ../templates/checkout-shallow.yml
 
   - template: ../templates/prepare-js-env.yml
+    parameters:
+      buildEnvironment: ${{ parameters.buildEnvironment }}
 
   - template: ../templates/prepare-build-env.yml
     parameters:
@@ -50,7 +52,7 @@ steps:
   # --- Tests (run against the just-built binaries, no download/restore needed) ---
   - template: ../templates/discover-google-test-adapter.yml
 
-  - task: VSTest@2
+  - task: VSTest@3
     displayName: Run Universal Unit Tests (Native)
     timeoutInMinutes: 5 # Set smaller timeout, due to hangs
     inputs:
@@ -67,5 +69,6 @@ steps:
       publishRunAttachments: true
       collectDumpOn: onAbortOnly
       vsTestVersion: latest
+      vstestLocation: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
       failOnMinTestsNotRun: true
     condition: and(succeeded(), not(eq('${{ parameters.buildPlatform }}', 'ARM64')))
