@@ -4330,6 +4330,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@rnw-scripts/react-native-windows-repo@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@rnw-scripts/react-native-windows-repo@workspace:."
+  dependencies:
+    "@rnw-scripts/beachball-config": "npm:0.0.0"
+    "@rnw-scripts/format-files": "npm:1.1.59"
+    "@rnw-scripts/integrate-rn": "npm:1.4.65"
+    "@rnw-scripts/just-task": "npm:2.3.56"
+    "@rnw-scripts/prepare-release": "npm:*"
+    "@rnw-scripts/promote-release": "npm:2.1.63"
+    "@rnw-scripts/stamp-version": "npm:0.0.0"
+    "@rnw-scripts/take-screenshot": "npm:1.1.63"
+    "@rnw-scripts/unbroken": "npm:*"
+    beachball: "npm:^2.60.1"
+    fast-glob: "npm:^3.2.11"
+    husky: "npm:^4.2.5"
+    lage: "npm:^2.7.1"
+    lodash: "npm:^4.17.15"
+    prettier-plugin-hermes-parser: "npm:0.21.1"
+    react-native-platform-override: "npm:0.81.3"
+  languageName: unknown
+  linkType: soft
+
 "@rnw-scripts/sample-app-fabric@workspace:packages/sample-app-fabric":
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/sample-app-fabric@workspace:packages/sample-app-fabric"
@@ -15452,29 +15475,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"react-native-windows-repo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "react-native-windows-repo@workspace:."
-  dependencies:
-    "@rnw-scripts/beachball-config": "npm:0.0.0"
-    "@rnw-scripts/format-files": "npm:1.1.59"
-    "@rnw-scripts/integrate-rn": "npm:1.4.65"
-    "@rnw-scripts/just-task": "npm:2.3.56"
-    "@rnw-scripts/prepare-release": "npm:*"
-    "@rnw-scripts/promote-release": "npm:2.1.63"
-    "@rnw-scripts/stamp-version": "npm:0.0.0"
-    "@rnw-scripts/take-screenshot": "npm:1.1.63"
-    "@rnw-scripts/unbroken": "npm:*"
-    beachball: "npm:^2.60.1"
-    fast-glob: "npm:^3.2.11"
-    husky: "npm:^4.2.5"
-    lage: "npm:^2.7.1"
-    lodash: "npm:^4.17.15"
-    prettier-plugin-hermes-parser: "npm:0.21.1"
-    react-native-platform-override: "npm:0.81.3"
-  languageName: unknown
-  linkType: soft
-
 "react-native-windows@npm:0.81.34, react-native-windows@workspace:vnext":
   version: 0.0.0-use.local
   resolution: "react-native-windows@workspace:vnext"
@@ -16929,9 +16929,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string_decoder@portal:./packages/@rnw-scripts/shims/string_decoder::locator=react-native-windows-repo%40workspace%3A.":
+"string_decoder@portal:./packages/@rnw-scripts/shims/string_decoder::locator=%40rnw-scripts%2Freact-native-windows-repo%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "string_decoder@portal:./packages/@rnw-scripts/shims/string_decoder::locator=react-native-windows-repo%40workspace%3A."
+  resolution: "string_decoder@portal:./packages/@rnw-scripts/shims/string_decoder::locator=%40rnw-scripts%2Freact-native-windows-repo%40workspace%3A."
   languageName: node
   linkType: soft
 
