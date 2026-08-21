@@ -37,9 +37,9 @@ resources:
     trigger:
       branches:
         include:
+        # Supported branches — keep in sync with .ado/README.md
         - main
         - '0.81-stable'
-        - '0.82-stable'
         - '0.83-stable'
         - '0.84-stable'
         - '0.85-stable'
