@@ -163,26 +163,9 @@
           "boost": "[1.84.0, )"
         }
       },
-      "fmt.win32": {
-        "type": "Project"
-      },
-      "folly.win32": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "[1.84.0, )",
-          "fmt.win32": "[1.0.0, )"
-        }
-      },
-      "follywin32": {
-        "type": "Project",
-        "dependencies": {
-          "Folly.win32": "[1.0.0, )"
-        }
-      },
       "reactcommon.win32": {
         "type": "Project",
         "dependencies": {
-          "Folly.win32": "[1.0.0, )",
           "boost": "[1.84.0, )"
         }
       }

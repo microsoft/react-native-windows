@@ -171,21 +171,10 @@
           "boost": "[1.84.0, )"
         }
       },
-      "fmt": {
-        "type": "Project"
-      },
-      "folly": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "[1.84.0, )",
-          "fmt": "[1.0.0, )"
-        }
-      },
       "microsoft.reactnative": {
         "type": "Project",
         "dependencies": {
           "Common": "[1.0.0, )",
-          "Folly": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.0.0-2608.12001-35d34796, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.UI.Xaml": "[2.8.0, )",
@@ -203,7 +192,6 @@
       "reactcommon": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
           "boost": "[1.84.0, )"
         }
       },
