@@ -50,15 +50,33 @@ export function createNpmRegistry(
     if (status === 401 || status === 403) {
       throw new Error(`npm registry auth failed (${status}) for ${id}`);
     }
-    if (!body || !body.versions) {
-      log.debug(`npm packument ${id} -> ${status}`);
+    if (status === 404) {
+      log.debug(`npm packument ${id} -> 404 (not in feed)`);
       cache.set(id, null);
       return null;
     }
-    const versions = Object.keys(body.versions);
+    // Validate the parsed JSON's actual shape (it isn't really type-checked):
+    // npm's `versions` must be a non-array object map, else the package is dropped.
+    const versionMap: unknown = body?.versions;
+    if (
+      status < 200 ||
+      status >= 300 ||
+      typeof versionMap !== 'object' ||
+      versionMap === null ||
+      Array.isArray(versionMap)
+    ) {
+      throw new Error(
+        `npm packument fetch failed (status ${status}) for ${id}`,
+      );
+    }
+    const versionRecord = versionMap as Record<
+      string,
+      {dist?: {tarball?: string}}
+    >;
+    const versions = Object.keys(versionRecord);
     const tarballs: Record<string, string> = {};
     for (const v of versions) {
-      const url = body.versions[v].dist?.tarball;
+      const url = versionRecord[v].dist?.tarball;
       if (url) tarballs[v] = url;
     }
     const info: NpmInfo = {versions, tarballs};
@@ -132,7 +150,23 @@ export function createNuGetRegistry(
       if (status === 401 || status === 403) {
         throw new Error(`NuGet feed auth failed (${status}) for ${id}`);
       }
-      const versions = body?.versions ?? [];
+      if (status === 404) {
+        versionCache.set(key, []);
+        return [];
+      }
+      // A 5xx or a wrong-shape index (no `versions` array) must not be cached as
+      // an empty version list.
+      if (
+        status < 200 ||
+        status >= 300 ||
+        !body ||
+        !Array.isArray(body.versions)
+      ) {
+        throw new Error(
+          `NuGet version fetch failed (status ${status}) for ${id}`,
+        );
+      }
+      const versions = body.versions;
       versionCache.set(key, versions);
       return versions;
     },
