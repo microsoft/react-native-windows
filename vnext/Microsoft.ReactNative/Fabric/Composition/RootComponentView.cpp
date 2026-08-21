@@ -100,7 +100,7 @@ void RootComponentView::SetFocusedComponent(
     m_focusedComponent = value;
     if (focusState == winrt::Microsoft::ReactNative::FocusState::Programmatic) {
       focusState =
-          (!m_useKeyboardForProgrammaticFocus || m_focusState == winrt::Microsoft::ReactNative::FocusState::Pointer)
+          (!m_useKeyboardForProgrammaticFocus || m_focusState != winrt::Microsoft::ReactNative::FocusState::Keyboard)
           ? winrt::Microsoft::ReactNative::FocusState::Pointer
           : winrt::Microsoft::ReactNative::FocusState::Keyboard;
     }
