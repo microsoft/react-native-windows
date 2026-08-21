@@ -53,6 +53,13 @@ describe('npm registry', () => {
     mockFetchJson.mockResolvedValue({status: 200, body: null});
     await expect(reg().getVersions('left-pad')).rejects.toThrow(/fetch failed/);
   });
+
+  test('throws on a wrong-shape versions field (array or scalar)', async () => {
+    mockFetchJson.mockResolvedValue({status: 200, body: {versions: []}});
+    await expect(reg().getVersions('left-pad')).rejects.toThrow(/fetch failed/);
+    mockFetchJson.mockResolvedValue({status: 200, body: {versions: 1}});
+    await expect(reg().getVersions('other')).rejects.toThrow(/fetch failed/);
+  });
 });
 
 describe('nuget registry', () => {
@@ -92,5 +99,12 @@ describe('nuget registry', () => {
     await expect(
       createNuGetRegistry(INDEX, auth, log).getVersions('Foo'),
     ).rejects.toThrow(/500/);
+  });
+
+  test('throws on a wrong-shape versions field (not an array)', async () => {
+    mockNuget({status: 200, body: {versions: {}}});
+    await expect(
+      createNuGetRegistry(INDEX, auth, log).getVersions('Foo'),
+    ).rejects.toThrow(/fetch failed/);
   });
 });

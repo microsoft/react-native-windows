@@ -100,3 +100,10 @@ test('throws on a malformed (null) body', async () => {
     /Get Packages failed/,
   );
 });
+
+test('throws on a wrong-shape page (no value array)', async () => {
+  mockFetchJson.mockResolvedValue({status: 200, body: {}});
+  await expect(enumerateFeed(config, 'npm', auth, log)).rejects.toThrow(
+    /Get Packages failed/,
+  );
+});

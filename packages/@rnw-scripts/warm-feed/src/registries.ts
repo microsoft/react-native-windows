@@ -55,17 +55,28 @@ export function createNpmRegistry(
       cache.set(id, null);
       return null;
     }
-    // A 5xx or malformed packument must not be cached as "not found": that would
-    // silently drop the package from the warm plan and still exit successfully.
-    if (status < 200 || status >= 300 || !body || !body.versions) {
+    // Validate the parsed JSON's actual shape (it isn't really type-checked):
+    // npm's `versions` must be a non-array object map, else the package is dropped.
+    const versionMap: unknown = body?.versions;
+    if (
+      status < 200 ||
+      status >= 300 ||
+      typeof versionMap !== 'object' ||
+      versionMap === null ||
+      Array.isArray(versionMap)
+    ) {
       throw new Error(
         `npm packument fetch failed (status ${status}) for ${id}`,
       );
     }
-    const versions = Object.keys(body.versions);
+    const versionRecord = versionMap as Record<
+      string,
+      {dist?: {tarball?: string}}
+    >;
+    const versions = Object.keys(versionRecord);
     const tarballs: Record<string, string> = {};
     for (const v of versions) {
-      const url = body.versions[v].dist?.tarball;
+      const url = versionRecord[v].dist?.tarball;
       if (url) tarballs[v] = url;
     }
     const info: NpmInfo = {versions, tarballs};
@@ -143,13 +154,19 @@ export function createNuGetRegistry(
         versionCache.set(key, []);
         return [];
       }
-      // A 5xx or malformed index must not be cached as an empty version list.
-      if (status < 200 || status >= 300 || !body) {
+      // A 5xx or a wrong-shape index (no `versions` array) must not be cached as
+      // an empty version list.
+      if (
+        status < 200 ||
+        status >= 300 ||
+        !body ||
+        !Array.isArray(body.versions)
+      ) {
         throw new Error(
           `NuGet version fetch failed (status ${status}) for ${id}`,
         );
       }
-      const versions = body.versions ?? [];
+      const versions = body.versions;
       versionCache.set(key, versions);
       return versions;
     },
