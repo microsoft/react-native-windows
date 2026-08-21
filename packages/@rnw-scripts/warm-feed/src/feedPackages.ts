@@ -49,7 +49,14 @@ export async function enumerateFeed(
     if (status === 401 || status === 403) {
       throw new Error(`Get Packages auth failed (${status}) for ${ecosystem}`);
     }
-    const page = body?.value ?? [];
+    // A feed error or a wrong-shape page (no `value` array) must not be read as
+    // the end of enumeration: that would exit successfully having warmed nothing.
+    if (status < 200 || status >= 300 || !body || !Array.isArray(body.value)) {
+      throw new Error(
+        `Get Packages failed (status ${status}) for ${ecosystem}`,
+      );
+    }
+    const page = body.value;
     if (page.length === 0) break;
     for (const p of page) {
       if (!p.name) continue;

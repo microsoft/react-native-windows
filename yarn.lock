@@ -3982,7 +3982,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-windows/automation-channel@npm:0.0.0-canary.1058, @react-native-windows/automation-channel@workspace:packages/@react-native-windows/automation-channel":
+"@react-native-windows/automation-channel@npm:0.0.0-canary.1059, @react-native-windows/automation-channel@workspace:packages/@react-native-windows/automation-channel":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation-channel@workspace:packages/@react-native-windows/automation-channel"
   dependencies:
@@ -4001,17 +4001,17 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:19.2.3"
     react-native: "npm:0.86.0-nightly-20260310-621592d1f"
-    react-native-windows: "npm:^0.0.0-canary.1058"
+    react-native-windows: "npm:^0.0.0-canary.1059"
     typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/automation-commands@npm:0.0.0-canary.1059, @react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands":
+"@react-native-windows/automation-commands@npm:0.0.0-canary.1060, @react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands"
   dependencies:
     "@jest/types": "npm:^29.2.1"
-    "@react-native-windows/automation-channel": "npm:0.0.0-canary.1058"
+    "@react-native-windows/automation-channel": "npm:0.0.0-canary.1059"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4025,14 +4025,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/automation@npm:0.0.0-canary.1058, @react-native-windows/automation@workspace:packages/@react-native-windows/automation":
+"@react-native-windows/automation@npm:0.0.0-canary.1059, @react-native-windows/automation@workspace:packages/@react-native-windows/automation":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation@workspace:packages/@react-native-windows/automation"
   dependencies:
     "@jest/create-cache-key-function": "npm:^29.2.1"
     "@jest/environment": "npm:^29.3.0"
     "@jest/types": "npm:^29.2.1"
-    "@react-native-windows/automation-channel": "npm:0.0.0-canary.1058"
+    "@react-native-windows/automation-channel": "npm:0.0.0-canary.1059"
     "@react-native-windows/find-dotnet-tools": "npm:0.0.0-canary.2"
     "@react-native-windows/fs": "npm:^0.0.0-canary.72"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
@@ -4055,7 +4055,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/cli@npm:0.0.0-canary.292, @react-native-windows/cli@workspace:packages/@react-native-windows/cli":
+"@react-native-windows/cli@npm:0.0.0-canary.293, @react-native-windows/cli@workspace:packages/@react-native-windows/cli":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/cli@workspace:packages/@react-native-windows/cli"
   dependencies:
@@ -4309,13 +4309,13 @@ __metadata:
     react: "npm:19.2.3"
     react-native: "npm:0.86.0-nightly-20260310-621592d1f"
     react-native-platform-override: "npm:0.0.0-canary.1023"
-    react-native-windows: "npm:^0.0.0-canary.1058"
+    react-native-windows: "npm:^0.0.0-canary.1059"
     typescript: "npm:5.0.4"
   peerDependencies:
     "@react-native-picker/picker": 2.11.0
     react: 19.2.3
     react-native: 0.86.0-nightly-20260310-621592d1f
-    react-native-windows: ^0.0.0-canary.1058
+    react-native-windows: ^0.0.0-canary.1059
     react-native-xaml: ^0.0.80
   peerDependenciesMeta:
     "@react-native-picker/picker":
@@ -4818,7 +4818,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/debug-test@workspace:packages/debug-test"
   dependencies:
-    "@react-native-windows/automation": "npm:0.0.0-canary.1058"
+    "@react-native-windows/automation": "npm:0.0.0-canary.1059"
     "@react-native-windows/fs": "npm:^0.0.0-canary.72"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4884,9 +4884,9 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.8.3"
     "@babel/runtime": "npm:^7.20.0"
     "@react-native-community/cli": "npm:20.0.0"
-    "@react-native-windows/automation": "npm:0.0.0-canary.1058"
-    "@react-native-windows/automation-channel": "npm:0.0.0-canary.1058"
-    "@react-native-windows/automation-commands": "npm:0.0.0-canary.1059"
+    "@react-native-windows/automation": "npm:0.0.0-canary.1059"
+    "@react-native-windows/automation-channel": "npm:0.0.0-canary.1059"
+    "@react-native-windows/automation-commands": "npm:0.0.0-canary.1060"
     "@react-native-windows/fs": "npm:^0.0.0-canary.72"
     "@react-native-windows/perf-testing": "npm:0.0.0-canary.1039"
     "@react-native-windows/tester": "npm:0.0.1"
@@ -4913,7 +4913,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.86.0-nightly-20260310-621592d1f"
-    react-native-windows: "npm:^0.0.0-canary.1058"
+    react-native-windows: "npm:^0.0.0-canary.1059"
     react-test-renderer: "npm:19.1.0"
     sanitize-filename: "npm:^1.6.3"
     typescript: "npm:5.0.4"
@@ -5198,7 +5198,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.86.0-nightly-20260310-621592d1f"
-    react-native-windows: "npm:^0.0.0-canary.1058"
+    react-native-windows: "npm:^0.0.0-canary.1059"
     react-test-renderer: "npm:19.1.0"
     typescript: "npm:5.0.4"
   languageName: unknown
@@ -5254,6 +5254,34 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@rnw-scripts/react-native-windows-repo@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@rnw-scripts/react-native-windows-repo@workspace:."
+  dependencies:
+    "@rnw-scripts/beachball-config": "npm:0.0.0"
+    "@rnw-scripts/format-files": "npm:*"
+    "@rnw-scripts/integrate-rn": "npm:*"
+    "@rnw-scripts/just-task": "npm:*"
+    "@rnw-scripts/prepare-release": "npm:*"
+    "@rnw-scripts/promote-release": "npm:*"
+    "@rnw-scripts/stamp-version": "npm:0.0.0"
+    "@rnw-scripts/take-screenshot": "npm:*"
+    "@rnw-scripts/unbroken": "npm:*"
+    beachball: "npm:^2.20.0"
+    eslint: "npm:^8.19.0"
+    fast-glob: "npm:^3.2.11"
+    husky: "npm:^4.2.5"
+    lage: "npm:^2.7.1"
+    lodash: "npm:^4.17.15"
+    prettier: "npm:^3.6.2"
+    prettier-plugin-hermes-parser: "npm:0.21.1"
+    react: "npm:19.2.3"
+    react-native: "npm:0.86.0-nightly-20260310-621592d1f"
+    react-native-platform-override: "workspace:*"
+    typescript: "npm:5.0.4"
+  languageName: unknown
+  linkType: soft
+
 "@rnw-scripts/sample-app-fabric@workspace:packages/sample-app-fabric":
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/sample-app-fabric@workspace:packages/sample-app-fabric"
@@ -5286,7 +5314,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.86.0-nightly-20260310-621592d1f"
-    react-native-windows: "npm:^0.0.0-canary.1058"
+    react-native-windows: "npm:^0.0.0-canary.1059"
     react-test-renderer: "npm:19.1.0"
     typescript: "npm:5.0.4"
   languageName: unknown
@@ -5322,7 +5350,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.86.0-nightly-20260310-621592d1f"
-    react-native-windows: "npm:^0.0.0-canary.1058"
+    react-native-windows: "npm:^0.0.0-canary.1059"
     typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
@@ -5411,13 +5439,20 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/warm-feed@workspace:packages/@rnw-scripts/warm-feed"
   dependencies:
+    "@babel/core": "npm:^7.25.2"
+    "@babel/preset-env": "npm:^7.25.3"
+    "@babel/preset-typescript": "npm:^7.8.3"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
+    "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
+    "@types/jest": "npm:^29.2.2"
     "@types/node": "npm:^22.14.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.36.0"
     "@typescript-eslint/parser": "npm:^8.36.0"
+    babel-jest: "npm:^29.6.3"
     eslint: "npm:^8.19.0"
+    jest: "npm:^29.7.0"
     prettier: "npm:^3.6.2"
     source-map-support: "npm:^0.5.19"
     typescript: "npm:5.0.4"
@@ -16317,7 +16352,7 @@ __metadata:
   resolution: "react-native-windows-init@workspace:packages/react-native-windows-init"
   dependencies:
     "@babel/core": "npm:^7.25.2"
-    "@react-native-windows/cli": "npm:0.0.0-canary.292"
+    "@react-native-windows/cli": "npm:0.0.0-canary.293"
     "@react-native-windows/fs": "npm:0.0.0-canary.72"
     "@react-native-windows/telemetry": "npm:0.0.0-canary.134"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
@@ -16355,35 +16390,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"react-native-windows-repo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "react-native-windows-repo@workspace:."
-  dependencies:
-    "@rnw-scripts/beachball-config": "npm:0.0.0"
-    "@rnw-scripts/format-files": "npm:*"
-    "@rnw-scripts/integrate-rn": "npm:*"
-    "@rnw-scripts/just-task": "npm:*"
-    "@rnw-scripts/prepare-release": "npm:*"
-    "@rnw-scripts/promote-release": "npm:*"
-    "@rnw-scripts/stamp-version": "npm:0.0.0"
-    "@rnw-scripts/take-screenshot": "npm:*"
-    "@rnw-scripts/unbroken": "npm:*"
-    beachball: "npm:^2.20.0"
-    eslint: "npm:^8.19.0"
-    fast-glob: "npm:^3.2.11"
-    husky: "npm:^4.2.5"
-    lage: "npm:^2.7.1"
-    lodash: "npm:^4.17.15"
-    prettier: "npm:^3.6.2"
-    prettier-plugin-hermes-parser: "npm:0.21.1"
-    react: "npm:19.2.3"
-    react-native: "npm:0.86.0-nightly-20260310-621592d1f"
-    react-native-platform-override: "workspace:*"
-    typescript: "npm:5.0.4"
-  languageName: unknown
-  linkType: soft
-
-"react-native-windows@npm:^0.0.0-canary.1058, react-native-windows@workspace:vnext":
+"react-native-windows@npm:^0.0.0-canary.1059, react-native-windows@workspace:vnext":
   version: 0.0.0-use.local
   resolution: "react-native-windows@workspace:vnext"
   dependencies:
@@ -16394,7 +16401,7 @@ __metadata:
     "@react-native-community/cli": "npm:20.0.0"
     "@react-native-community/cli-platform-android": "npm:20.0.0"
     "@react-native-community/cli-platform-ios": "npm:20.0.0"
-    "@react-native-windows/cli": "npm:0.0.0-canary.292"
+    "@react-native-windows/cli": "npm:0.0.0-canary.293"
     "@react-native-windows/codegen": "npm:0.0.0-canary.133"
     "@react-native-windows/find-dotnet-tools": "npm:0.0.0-canary.2"
     "@react-native/assets": "npm:1.0.0"
@@ -17914,9 +17921,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string_decoder@portal:./packages/@rnw-scripts/shims/string_decoder::locator=react-native-windows-repo%40workspace%3A.":
+"string_decoder@portal:./packages/@rnw-scripts/shims/string_decoder::locator=%40rnw-scripts%2Freact-native-windows-repo%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "string_decoder@portal:./packages/@rnw-scripts/shims/string_decoder::locator=react-native-windows-repo%40workspace%3A."
+  resolution: "string_decoder@portal:./packages/@rnw-scripts/shims/string_decoder::locator=%40rnw-scripts%2Freact-native-windows-repo%40workspace%3A."
   languageName: node
   linkType: soft
 

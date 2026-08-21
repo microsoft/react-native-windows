@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Release/CI pipeline updates + feed warm-up",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

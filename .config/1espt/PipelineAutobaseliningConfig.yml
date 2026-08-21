@@ -27,11 +27,11 @@ pipelines:
     retail:
       source:
         eslint:
-          lastModifiedDate: 2026-03-26
+          lastModifiedDate: 2026-08-21
         armory:
-          lastModifiedDate: 2026-03-26
+          lastModifiedDate: 2026-08-21
         accessibilityinsights:
           lastModifiedDate: 2026-03-26
       binary:
         binskim:
-          lastModifiedDate: 2026-03-26
+          lastModifiedDate: 2026-08-21

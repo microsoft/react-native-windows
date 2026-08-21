@@ -77,7 +77,10 @@ function matchesIgnore(t: WarmTarget, rules: IgnoreRule[]): boolean {
   );
 }
 
-function parseSpec(spec: string, warn: (m: string) => void): WarmTarget | null {
+export function parseSpec(
+  spec: string,
+  warn: (m: string) => void,
+): WarmTarget | null {
   const s = spec.trim();
   if (!s) return null;
   const m = /^(npm|nuget):(.+)$/i.exec(s);
@@ -150,13 +153,15 @@ async function warmTargets(
   log.info(
     `done: warmed=${counts.warmed} missing=${counts.missing} failed=${counts.failed}`,
   );
-  const failures = results.filter(r => r.status === 'failed');
-  for (const f of failures.slice(0, 20)) {
+  // Treat every non-warmed result (missing or failed) as a failed run: a version
+  // that still 404s after all retries was not actually cached.
+  const notWarmed = results.filter(r => r.status !== 'warmed');
+  for (const f of notWarmed.slice(0, 20)) {
     log.error(
-      `FAILED ${f.target.ecosystem} ${f.target.id}@${f.target.version}: ${f.detail}`,
+      `${f.status.toUpperCase()} ${f.target.ecosystem} ${f.target.id}@${f.target.version}: ${f.detail}`,
     );
   }
-  return failures.length > 0 ? 1 : 0;
+  return notWarmed.length > 0 ? 1 : 0;
 }
 
 export async function run(options: RunOptions, pat?: string): Promise<number> {
@@ -177,7 +182,8 @@ export async function run(options: RunOptions, pat?: string): Promise<number> {
   if (options.only === 'npm' || options.only === 'nuget') {
     only = options.only;
   } else if (options.only) {
-    log.warn(`ignoring invalid --only '${options.only}'`);
+    log.error(`invalid --only '${options.only}': expected 'npm' or 'nuget'`);
+    return 2;
   }
 
   const ignoreRules = config.ignore
@@ -228,8 +234,11 @@ export async function run(options: RunOptions, pat?: string): Promise<number> {
         try {
           return await expandPackage(eco, p, registry, config.expand);
         } catch (err) {
-          log.warn(`expand ${eco} ${p.id} failed: ${(err as Error).message}`);
-          return [];
+          // Don't swallow: a systemic auth/feed failure would otherwise produce
+          // an empty plan and a green run that warmed nothing.
+          throw new Error(
+            `expand ${eco} ${p.id} failed: ${(err as Error).message}`,
+          );
         }
       },
     );
