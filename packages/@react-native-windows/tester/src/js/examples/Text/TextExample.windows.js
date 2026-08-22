@@ -365,7 +365,7 @@ function IncludeFontPaddingExample(props: {}): React.Node {
 
 function FontVariantsExample(props: {}): React.Node {
   return (
-    <View testID={'font-variants'}>
+    <View testID="text-font-variants">
       <RNTesterText style={{fontVariant: ['small-caps']}}>
         Small Caps{'\n'}
       </RNTesterText>
@@ -409,7 +409,7 @@ function FontVariantsExample(props: {}): React.Node {
 
 function EllipsizeModeExample(props: {}): React.Node {
   return (
-    <>
+    <View testID="text-ellipsize-mode">
       <RNTesterText numberOfLines={1} style={styles.wrappedText}>
         This very long text should be truncated with dots in the end.
       </RNTesterText>
@@ -431,13 +431,13 @@ function EllipsizeModeExample(props: {}): React.Node {
         style={styles.wrappedText}>
         This very long text should be clipped and this will not be visible.
       </RNTesterText>
-    </>
+    </View>
   );
 }
 
 function FontFamilyExample(props: {}): React.Node {
   return (
-    <>
+    <View testID="text-font-family">
       <RNTesterText style={{fontFamily: 'sans-serif'}}>Sans-Serif</RNTesterText>
       <RNTesterText
         style={{fontFamily: 'sans-serif', fontWeight: 'bold'}}
@@ -455,13 +455,13 @@ function FontFamilyExample(props: {}): React.Node {
       <RNTesterText style={{fontFamily: 'Unknown Font Family'}}>
         Unknown Font Family
       </RNTesterText>
-    </>
+    </View>
   );
 }
 
 function TextShadowExample(props: {}): React.Node {
   return (
-    <>
+    <View testID="text-text-shadow">
       <RNTesterText
         style={{
           fontSize: 20,
@@ -472,7 +472,7 @@ function TextShadowExample(props: {}): React.Node {
         testID={'text-shadow'}>
         Demo text shadow
       </RNTesterText>
-    </>
+    </View>
   );
 }
 
@@ -597,7 +597,7 @@ function HyphenationExample(props: {}): React.Node {
 
 function FontWeightExample(props: {}): React.Node {
   return (
-    <>
+    <View testID="text-font-weight">
       <RNTesterText style={{fontWeight: 'bold'}}>
         Move fast and be bold
       </RNTesterText>
@@ -622,13 +622,13 @@ function FontWeightExample(props: {}): React.Node {
       <RNTesterText style={{fontWeight: 300}}>FONT WEIGHT 300</RNTesterText>
       <RNTesterText style={{fontWeight: 200}}>FONT WEIGHT 200</RNTesterText>
       <RNTesterText style={{fontWeight: 100}}>FONT WEIGHT 100</RNTesterText>
-    </>
+    </View>
   );
 }
 
 function BackgroundColorExample(props: {}): React.Node {
   return (
-    <View testID={'text-background-color'}>
+    <View testID="text-bg-color-attr">
       <RNTesterText style={{backgroundColor: '#ffaaaa'}}>
         Red background,
         <RNTesterText style={{backgroundColor: '#aaaaff'}}>
@@ -680,10 +680,10 @@ function ContainerBackgroundColorExample(props: {}): React.Node {
 
 function TextDecorationExample(props: {}): React.Node {
   return (
-    <>
+    <View testID="text-text-decoration">
       <RNTesterText
         style={{textDecorationLine: 'underline'}}
-        testID={'text-decoration-underline'}>
+        testID="text-decoration-underline">
         Solid underline
       </RNTesterText>
       <RNTesterText style={{textDecorationLine: 'none'}}>
@@ -711,16 +711,16 @@ function TextDecorationExample(props: {}): React.Node {
         </RNTesterText>{' '}
         text nodes
       </RNTesterText>
-    </>
+    </View>
   );
 }
 
 function NestedExample(props: {}): React.Node {
   return (
-    <>
+    <View testID="text-test-nested">
       <RNTesterText
         onPress={() => console.log('1st')}
-        testID={'text-outer-color'}>
+        testID="text-outer-color">
         (Normal text,
         <Text style={{color: 'red', fontWeight: 'bold'}}>
           (R)red
@@ -821,7 +821,7 @@ function NestedExample(props: {}): React.Node {
         </RNTesterText>
         )
       </RNTesterText>
-    </>
+    </View>
   );
 }
 
@@ -1084,7 +1084,7 @@ function LineHeightExample(props: {}): React.Node {
 function LetterSpacingExample(props: {}): React.Node {
   return (
     <>
-      <View testID={'text-letter-spacing'}>
+      <View testID="text-letter-spacing">
         <RNTesterText style={{letterSpacing: 0}}>
           letterSpacing = 0
         </RNTesterText>
@@ -1507,7 +1507,7 @@ const examples = [
     name: 'wrap',
     render(): React.Node {
       return (
-        <RNTesterText style={styles.wrappedText} testID={'text-wrap'}>
+        <RNTesterText testID="text-wrap" style={styles.wrappedText}>
           The text should wrap if it goes on multiple lines. See, this is going
           to the next line.
         </RNTesterText>
@@ -1526,7 +1526,7 @@ const examples = [
     name: 'padding',
     render(): React.Node {
       return (
-        <RNTesterText style={{padding: 10}} testID={'text-padding'}>
+        <RNTesterText testID="text-padding" style={{padding: 10}}>
           This text is indented by 10px padding on all sides.
         </RNTesterText>
       );
@@ -1565,12 +1565,12 @@ const examples = [
     name: 'fontSize',
     render(): React.Node {
       return (
-        <>
-          <RNTesterText style={{fontSize: 23}} testID={'text-size'}>
+        <View testID="text-font-size">
+          <RNTesterText style={{fontSize: 23}} testID="text-size">
             Size 23
           </RNTesterText>
           <RNTesterText style={{fontSize: 8}}>Size 8</RNTesterText>
-        </>
+        </View>
       );
     },
   },
@@ -1579,12 +1579,12 @@ const examples = [
     name: 'color',
     render(): React.Node {
       return (
-        <>
-          <Text style={{color: 'red'}} testID={'text-color'}>
+        <View testID="text-test-color">
+          <Text style={{color: 'red'}} testID="text-color">
             Red color
           </Text>
           <Text style={{color: 'blue'}}>Blue color</Text>
-        </>
+        </View>
       );
     },
   },
@@ -1600,7 +1600,7 @@ const examples = [
     name: 'fontStyle',
     render(): React.Node {
       return (
-        <>
+        <View testID="text-font-style">
           <RNTesterText style={{fontStyle: 'italic'}}>
             Move fast and be italic
           </RNTesterText>
@@ -1611,7 +1611,7 @@ const examples = [
             Move fast and be italic, but just be longer so that you don't fit on
             a single line and make sure text is not truncated.
           </RNTesterText>
-        </>
+        </View>
       );
     },
   },
@@ -1659,7 +1659,7 @@ const examples = [
     name: 'spaces',
     render(): React.Node {
       return (
-        <RNTesterText>
+        <RNTesterText testID="text-spaces">
           A {'generated'} {'string'} and some &nbsp;&nbsp;&nbsp; spaces
         </RNTesterText>
       );
@@ -1686,7 +1686,7 @@ const examples = [
   },
   {
     title: 'backgroundColor attribute',
-    name: 'backgroundColorAttribute',
+    name: 'backgroundColorAttr',
     render(): React.Node {
       return <BackgroundColorExample />;
     },

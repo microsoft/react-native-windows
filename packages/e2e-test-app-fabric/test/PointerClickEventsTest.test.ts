@@ -46,7 +46,9 @@ describe('Pointer onClick Test', () => {
     const text = await stateText.getText();
     const nativeEvent = JSON.parse(text.split('onClick.nativeEvent: ')[1]);
     expect(typeof nativeEvent.target).toBe('number');
+    expect(typeof nativeEvent.timeStamp).toBe('number');
     nativeEvent.target = '<target>';
+    delete nativeEvent.timeStamp;
     expect(nativeEvent).toMatchSnapshot();
   });
   test('onAuxClick reports correct native event properties on middle click', async () => {
@@ -75,7 +77,9 @@ describe('Pointer onClick Test', () => {
     const text = await stateText.getText();
     const nativeEvent = JSON.parse(text.split('onAuxClick.nativeEvent: ')[1]);
     expect(typeof nativeEvent.target).toBe('number');
+    expect(typeof nativeEvent.timeStamp).toBe('number');
     nativeEvent.target = '<target>';
+    delete nativeEvent.timeStamp;
     expect(nativeEvent).toMatchSnapshot();
   });
   test('onAuxClick reports correct native event properties on right click', async () => {
@@ -104,7 +108,9 @@ describe('Pointer onClick Test', () => {
     const text = await stateText.getText();
     const nativeEvent = JSON.parse(text.split('onAuxClick.nativeEvent: ')[1]);
     expect(typeof nativeEvent.target).toBe('number');
+    expect(typeof nativeEvent.timeStamp).toBe('number');
     nativeEvent.target = '<target>';
+    delete nativeEvent.timeStamp;
     expect(nativeEvent).toMatchSnapshot();
   });
 });

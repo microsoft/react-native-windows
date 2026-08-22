@@ -1210,6 +1210,7 @@ exports.examples = [
   },
   {
     title: 'Plain Static Image',
+    name: 'static-image',
     description:
       ('Static assets should be placed in the source code tree, and ' +
         'required in the same way as JavaScript modules.': string),
@@ -1499,6 +1500,7 @@ exports.examples = [
   },
   {
     title: 'Opacity',
+    name: 'opacity',
     render: function (): React.Node {
       return (
         <View style={styles.horizontal} testID="image-opacity" accessible>
@@ -1514,9 +1516,13 @@ exports.examples = [
   },
   {
     title: 'Nesting content inside <Image> component',
+    name: 'nesting-content',
     render: function (): React.Node {
       return (
-        <View style={styles.base} testID="image-nested" accessible>
+        <View
+          style={styles.base}
+          testID="image-nesting-content"
+          accessible>
           <Image style={{...StyleSheet.absoluteFill}} source={fullImage} />
           <Text style={styles.nestedText}>React</Text>
         </View>
@@ -1525,9 +1531,11 @@ exports.examples = [
   },
   {
     title: 'Nesting content inside <ImageBackground> component',
+    name: 'nesting-image-background',
     render: function (): React.Node {
       return (
         <ImageBackground
+          testID="image-nesting-background"
           style={styles.transparentImageBackground}
           source={fullImage}>
           <Text style={styles.nestedText}>React</Text>
@@ -1537,6 +1545,7 @@ exports.examples = [
   },
   {
     title: 'Tint Color',
+    name: 'tint-color',
     description: ('The `tintColor` prop changes all the non-alpha ' +
       'pixels to the tint color.': string),
     render: function (): React.Node {
@@ -1840,6 +1849,7 @@ exports.examples = [
   },
   {
     title: 'Animated GIF',
+    name: 'animated-gif',
     render: function (): React.Node {
       return (
         <Image
@@ -1854,6 +1864,7 @@ exports.examples = [
   },
   {
     title: 'Base64 image',
+    name: 'base64-image',
     render: function (): React.Node {
       return (
         <Image
@@ -1953,6 +1964,7 @@ exports.examples = [
   },
   {
     title: 'Blur Radius',
+    name: 'blur-radius',
     render: function (): React.Node {
       return (
         <View style={styles.horizontal} testID="image-blur-radius" accessible>
