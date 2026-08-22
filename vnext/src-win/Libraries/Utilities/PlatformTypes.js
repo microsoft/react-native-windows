@@ -118,6 +118,7 @@ type WindowsPlatform = {
       patch: number,
     },
     osVersion: number,
+    Release: string,
   },
   // $FlowFixMe[unsafe-getters-setters]
   get isTesting(): boolean,

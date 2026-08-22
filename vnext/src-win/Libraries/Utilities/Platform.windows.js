@@ -35,6 +35,7 @@ const Platform: PlatformType = {
       patch: number,
     },
     osVersion: number,
+    Release: string,
   } {
     // $FlowFixMe[object-this-reference]
     if (this.__constants == null) {
