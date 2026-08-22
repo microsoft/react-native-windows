@@ -119,9 +119,9 @@ describe('Image Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('An Image can be nested inside of a component', async () => {
-    const component = await app.findElementByTestID('image-nested');
+    const component = await app.findElementByTestID('image-nesting-content');
     await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-nested');
+    const dump = await dumpVisualTree('image-nesting-content');
     expect(dump).toMatchSnapshot();
   });
   test('An Image can have a tint color', async () => {
