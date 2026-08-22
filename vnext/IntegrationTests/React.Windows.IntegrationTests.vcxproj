@@ -72,9 +72,6 @@
     <ProjectReference Include="..\Common\Common.win32.vcxproj">
       <Project>{07B21646-07A1-4C53-9D5C-FE7C8C9FA5C6}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Folly\Folly.win32.vcxproj">
-      <Project>{BFF1EAC8-4C70-4A55-9A88-3810052E8FBA}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ControllableMessageQueueThread.cpp" />

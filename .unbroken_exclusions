@@ -26,5 +26,6 @@ URL not found https://www.npmjs.com/package/mustache while parsing docs/react-na
 !packages/@rnw-scripts/doxysaurus/node_modules
 !packages/@rnw-scripts/format-files/node_modules
 !packages/@rnw-scripts/promote-release/node_modules
+!vnext/external
 !.github/ISSUE_TEMPLATE
 !.github/security.md

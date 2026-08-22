@@ -1,0 +1,15 @@
+{
+    "$schema": "https://json.schemastore.org/component-detection-manifest.json",
+    "Registrations": [
+        {
+            "Component": {
+                "Type": "git",
+                "Git": {
+                  "RepositoryUrl": "https://github.com/fmtlib/fmt",
+                  "CommitHash": "0c9fce2ffefecfdce794e1859584e25877b7b592"
+                }
+            },
+            "DevelopmentDependency": false
+        }
+    ]
+}
