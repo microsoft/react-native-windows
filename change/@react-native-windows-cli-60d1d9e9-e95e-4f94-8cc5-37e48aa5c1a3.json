@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "delete createRnwApp tests in 0.81 branch",
-  "packageName": "@react-native-windows/cli",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

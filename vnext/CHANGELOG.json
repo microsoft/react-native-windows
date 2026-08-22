@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 22 Aug 2026 01:38:28 GMT",
+      "version": "0.81.35",
+      "tag": "react-native-windows_v0.81.35",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "27b0fb61f5e8aa5ad0c662ea4475bee8b87c5b62",
+            "comment": "Make the vendored Folly headers C++23-ready and update fmt to 11.0.2 (now managed via fork-sync)"
+          },
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "27b0fb61f5e8aa5ad0c662ea4475bee8b87c5b62",
+            "comment": "Null-check the capturing component view before notifying OnPointerCaptureLost (crash when the capturing component was unmounted)"
+          },
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "27b0fb61f5e8aa5ad0c662ea4475bee8b87c5b62",
+            "comment": "Fix placeholder layout constraints fed physical px instead of DIPs; fix no-op NaN fontSize guard in CreatePlaceholderLayout"
+          },
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "27b0fb61f5e8aa5ad0c662ea4475bee8b87c5b62",
+            "comment": "Honor programmatic scrollTo when scrollEnabled={false}, matching iOS/Android"
+          },
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "27b0fb61f5e8aa5ad0c662ea4475bee8b87c5b62",
+            "comment": "Fix(fabric): dispatch touch/pen contacts with the W3C primary button (button 0, buttons 1) instead of button -1 / buttons 0, so pointer-event-driven press handling responds to finger taps the same as mouse left-clicks"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.81.9",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Aug 2026 02:25:43 GMT",
       "version": "0.81.34",
       "tag": "react-native-windows_v0.81.34",
