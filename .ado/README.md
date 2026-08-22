@@ -19,6 +19,30 @@ CI and PR share all build/test/pack logic through `build-template.yml`; the
 `buildEnvironment` parameter (`Continuous` vs `PullRequest`) gates the
 environment-specific steps.
 
+## Supported branches
+
+CI, PR, Release, and the prepare-release bot all run against the same set of
+branches, all driven from YAML. Keep the branch lists in `ci-pipeline.yml`,
+`pr-pipeline.yml`, `release-pipeline.yml`, and `prepare-release-bot.yml` (its
+`trigger` and the `targetBranch` dropdown) in sync with this table.
+
+| Branch | Status |
+|--------|--------|
+| `main` | Active development |
+| `0.81-stable` | LTS — last release supporting both Fabric and Paper UI |
+| `0.83-stable` | Latest release − 1 |
+| `0.84-stable` | Current release |
+| `0.85-stable` | Preview |
+| `0.86-stable` | In upstream React Native, not yet integrated |
+| `0.87-stable` | In upstream React Native, not yet integrated |
+
+`0.82-stable` is deprecated and removed from all pipelines. `0.80-stable` and
+earlier are not built.
+
+Feed warm-up (`warm-feed-pipeline.yml`) is branch-agnostic (scheduled on `main`).
+Branch *creation* is governed separately by the ruleset in
+[`repo-rules/`](./repo-rules/README.md).
+
 ## Template-repository wiring (per-entry `PipelineTemplates` alias)
 
 CI runs in the internal **ISS** project and extends the **Office** 1ES templates.

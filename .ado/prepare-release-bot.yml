@@ -1,10 +1,17 @@
 name: $(Date:yyyyMMdd).$(Rev:r)
 
-# Triggers are configured in the ADO pipeline UI:
-# - CI triggers on pushes to main and *-stable branches
-# - Scheduled triggers for daily runs
-# - Manual runs with optional branch override
-trigger: none
+# CI trigger on the supported branches; also queued manually (targetBranch parameter).
+trigger:
+  branches:
+    include:
+    # Supported branches — keep in sync with .ado/README.md
+    - main
+    - '0.81-stable'
+    - '0.83-stable'
+    - '0.84-stable'
+    - '0.85-stable'
+    - '0.86-stable'
+    - '0.87-stable'
 pr: none
 
 parameters:
@@ -13,12 +20,15 @@ parameters:
     type: string
     default: (source branch)
     values:
+      # Supported branches — keep in sync with .ado/README.md
       - (source branch)
       - main
-      - 0.82-stable
       - 0.81-stable
-      - 0.80-stable
-      - 0.74-stable
+      - 0.83-stable
+      - 0.84-stable
+      - 0.85-stable
+      - 0.86-stable
+      - 0.87-stable
 
 jobs:
   - job: PrepareRelease
