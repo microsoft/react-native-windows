@@ -2,6 +2,29 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 22 Aug 2026 01:38:28 GMT",
+      "version": "0.81.9",
+      "tag": "@react-native-windows/cli_v0.81.9",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "27b0fb61f5e8aa5ad0c662ea4475bee8b87c5b62",
+            "comment": "delete createRnwApp tests in 0.81 branch"
+          }
+        ],
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "27b0fb61f5e8aa5ad0c662ea4475bee8b87c5b62",
+            "comment": "Make the vendored Folly headers C++23-ready and update fmt to 11.0.2 (now managed via fork-sync)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Aug 2026 02:25:42 GMT",
       "version": "0.81.8",
       "tag": "@react-native-windows/cli_v0.81.8",

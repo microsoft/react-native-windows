@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Make the vendored Folly headers C++23-ready and update fmt to 11.0.2 (now managed via fork-sync)",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
