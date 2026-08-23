@@ -1,1 +1,0 @@
-{"type":"prerelease","dependentChangeType":"patch","email":"collindanielschneide@gmail.com","packageName":"react-native-windows","comment":"Null-check the capturing component view before notifying OnPointerCaptureLost (crash when the capturing component was unmounted)"}
