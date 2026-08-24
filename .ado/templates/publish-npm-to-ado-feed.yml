@@ -10,6 +10,9 @@ parameters:
   type: string
 - name: feedDisplayName
   type: string
+- name: npmPackScript
+  type: string
+  default: '$(Pipeline.Workspace)/VersionEnvVars/npmPack.js'
 
 steps:
 - task: AzureCLI@2
@@ -27,14 +30,36 @@ steps:
 
 - pwsh: |
     # The .npmrc holds only the ${NPM_FEED_TOKEN} placeholder; npm expands it from the masked env
-    # var at run time, so the raw token never lands in a file. A version already present in the feed
-    # (locally or via its npmjs upstream) returns 409, which we treat as success.
+    # var at run time, so the raw token never lands in a file. The feed registry is set as the
+    # default so the authenticated read below resolves locally published versions (an anonymous
+    # read only sees versions cached from the npmjs upstream).
     $registry = '${{ parameters.npmFeedRegistry }}'
     $key = ($registry -replace '^https?:', '')
     Set-Content -Path (Join-Path $env:USERPROFILE '.npmrc') -Encoding ascii -Value @(
       "registry=$registry"
       "${key}:_authToken=`${NPM_FEED_TOKEN}"
     )
+  displayName: Configure npm auth for ${{ parameters.feedDisplayName }}
+
+- pwsh: Get-ChildItem -Path '${{ parameters.packagesPath }}' -Filter *.tgz -Recurse | Select-Object Name, Length
+  displayName: Show npm packages before cleanup
+
+# Mirror the npmjs.com publish job: drop tarballs whose version already exists in the feed so the
+# publish step never tries to overwrite an immutable version. --registry targets this ADO feed
+# (authenticated via the .npmrc token) so the check sees locally published versions, not just the
+# ones cached from the npmjs upstream.
+- script: node "${{ parameters.npmPackScript }}" --no-pack --check-npm --no-color --registry "${{ parameters.npmFeedRegistry }}" "${{ parameters.packagesPath }}"
+  displayName: Remove already published packages
+  env:
+    NPM_FEED_TOKEN: $(AdoNpmFeedToken)
+
+- pwsh: Get-ChildItem -Path '${{ parameters.packagesPath }}' -Filter *.tgz -Recurse | Select-Object Name, Length
+  displayName: Show npm packages after cleanup
+
+- pwsh: |
+    # A version already present in the feed (locally or via its npmjs upstream) returns 409, which
+    # we treat as success as a safety net in case one slips past the cleanup step above.
+    $registry = '${{ parameters.npmFeedRegistry }}'
     $tgzs = @(Get-ChildItem -Path '${{ parameters.packagesPath }}' -Filter *.tgz -Recurse)
     Write-Host "Publishing $($tgzs.Count) package(s) to ${{ parameters.feedDisplayName }}"
     $failed = @()

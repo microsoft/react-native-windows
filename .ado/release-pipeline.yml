@@ -245,6 +245,10 @@ extends:
             pipeline: 'CI'
             artifactName: 'NpmPackedTarballs'
             targetPath: '$(Pipeline.Workspace)/npm-feed-packages'
+          - input: pipelineArtifact
+            pipeline: 'CI'
+            artifactName: 'VersionEnvVars'
+            targetPath: '$(Pipeline.Workspace)/VersionEnvVars'
         steps:
         - template: .ado/templates/publish-npm-to-ado-feed.yml@self
           parameters:
@@ -264,6 +268,10 @@ extends:
             pipeline: 'CI'
             artifactName: 'NpmPackedTarballs'
             targetPath: '$(Pipeline.Workspace)/npm-feed-packages'
+          - input: pipelineArtifact
+            pipeline: 'CI'
+            artifactName: 'VersionEnvVars'
+            targetPath: '$(Pipeline.Workspace)/VersionEnvVars'
         steps:
         - template: .ado/templates/publish-npm-to-ado-feed.yml@self
           parameters:
