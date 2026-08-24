@@ -56,6 +56,8 @@ steps:
       retryCountOnTaskFailure: 2
       env:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
+        # 0 = no age gate: this installs freshly built first-party packages from Verdaccio.
+        YARN_NPM_MINIMAL_AGE_GATE: 0
 
   - ${{ if endsWith(parameters.template, '-lib') }}:
     - script: |
@@ -67,6 +69,7 @@ steps:
       retryCountOnTaskFailure: 2
       env:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
+        YARN_NPM_MINIMAL_AGE_GATE: 0
 
   - ${{ if eq(parameters.useExperimentalWinUI3, true) }}:
     - template: ../templates/enable-experimental-winui3.yml
