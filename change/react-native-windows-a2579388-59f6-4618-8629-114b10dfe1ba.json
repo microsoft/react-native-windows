@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Upgrade to Microsoft.WindowsAppSDK 2.4.0 (and experimental 2.3.2-experimentalA); remove stale ARM64EC win10-x64 InteractiveExperiences path override which broke ARM64EC linking",
+  "packageName": "react-native-windows",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
