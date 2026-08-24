@@ -46,7 +46,7 @@ steps:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:PublishToolDuringBuild=true
-        /p:RestoreForceEvaluate=true
+        /p:RestoreLockedMode=true
         /bl:$(BuildLogDirectory)\MsBuild.binlog
         /flp1:errorsonly;logfile=$(BuildLogDirectory)\MsBuild.err.log
         /flp2:warningsonly;logfile=$(BuildLogDirectory)\MsBuild.wrn.log
