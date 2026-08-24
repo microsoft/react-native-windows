@@ -20,11 +20,11 @@
     }
   },
   "dependencies": {
-    "@react-native/jest-preset": "0.86.0-nightly-20260310-621592d1f",
+    "@react-native/jest-preset": "0.86.0-nightly-20260325-d1809f0aa",
     "@types/react": "^19.1.1",
     "minimatch": "^10.0.3",
     "react": "^19.2.3",
-    "react-native": "0.86.0-nightly-20260310-621592d1f",
+    "react-native": "0.86.0-nightly-20260325-d1809f0aa",
     "react-native-windows": "^0.0.0-canary.1060"
   },
   "devDependencies": {
@@ -34,7 +34,7 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "20.0.0",
-    "@react-native/metro-config": "0.86.0-nightly-20260310-621592d1f",
+    "@react-native/metro-config": "0.86.0-nightly-20260325-d1809f0aa",
     "@rnw-scripts/babel-node-config": "2.3.3",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",

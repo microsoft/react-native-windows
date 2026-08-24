@@ -224,10 +224,10 @@ const AccessibilityInfo = {
    * The result is `true` when high text contrast is enabled and `false` otherwise.
    */
   isHighTextContrastEnabled(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      if (Platform.OS === 'android') {
-        if (NativeAccessibilityInfo?.isHighTextContrastEnabled != null) {
-          NativeAccessibilityInfo.isHighTextContrastEnabled(resolve);
+    if (Platform.OS === 'android') {
+      return new Promise((resolve, reject) => {
+        if (NativeAccessibilityInfoAndroid?.isHighTextContrastEnabled != null) {
+          NativeAccessibilityInfoAndroid.isHighTextContrastEnabled(resolve);
         } else {
           reject(
             new Error(
@@ -235,10 +235,10 @@ const AccessibilityInfo = {
             ),
           );
         }
-      } else {
-        return Promise.resolve(false);
-      }
-    });
+      });
+    } else {
+      return Promise.resolve(false);
+    }
   },
 
   /**
@@ -248,10 +248,10 @@ const AccessibilityInfo = {
    * The result is `true` when dark system colors is enabled and `false` otherwise.
    */
   isDarkerSystemColorsEnabled(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      if (Platform.OS === 'android') {
-        return Promise.resolve(false);
-      } else {
+    if (Platform.OS === 'android') {
+      return Promise.resolve(false);
+    } else {
+      return new Promise((resolve, reject) => {
         if (
           NativeAccessibilityManagerIOS?.getCurrentDarkerSystemColorsState !=
           null
@@ -267,8 +267,8 @@ const AccessibilityInfo = {
             ),
           );
         }
-      }
-    });
+      });
+    }
   },
 
   /**
