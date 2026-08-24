@@ -53,3 +53,8 @@ pipelines:
           lastModifiedDate: 2026-08-21
         roslyn:
           lastModifiedDate: 2026-08-21
+  38770:
+    retail:
+      source:
+        armory:
+          lastModifiedDate: 2026-08-24
