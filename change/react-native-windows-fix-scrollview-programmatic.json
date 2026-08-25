@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Honor programmatic scrollTo when scrollEnabled=false (gestures remain blocked), matching iOS/Android semantics",
+  "packageName": "react-native-windows",
+  "email": "collindanielschneide@gmail.com",
+  "dependentChangeType": "patch"
+}
