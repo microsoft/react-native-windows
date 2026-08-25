@@ -70,6 +70,11 @@ IAsyncAction JsonRpcRequestProcessor::EmitError(
 
 IAsyncAction JsonRpcRequestProcessor::EmitResult(IJsonValue result, JsonValue id, IOutputStream output) noexcept {
   JsonObject res;
+  // A null result must still serialize as "result": null. SetNamedValue with a
+  // null value drops the key, producing a response the client rejects as invalid.
+  if (!result) {
+    result = JsonValue::CreateNullValue();
+  }
   res.SetNamedValue(L"result", result);
   co_await EmitResponse(res, id, output);
 }

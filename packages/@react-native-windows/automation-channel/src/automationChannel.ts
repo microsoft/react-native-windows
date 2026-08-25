@@ -71,20 +71,28 @@ export class AutomationClient {
 
   private onData(chunk: Buffer) {
     this.receiveBuffer = Buffer.concat([this.receiveBuffer, chunk]);
-    if (this.receiveBuffer.length >= 4) {
+
+    // Localhost TCP can coalesce responses into one chunk, so drain every
+    // complete frame and advance past it; stopping after one leaves later
+    // responses stuck behind it and wedges the channel.
+    while (this.receiveBuffer.length >= 4) {
       const messageLength = this.receiveBuffer.readUInt32LE();
       const totalLength = messageLength + 4;
+      if (this.receiveBuffer.length < totalLength) {
+        break;
+      }
 
-      if (this.receiveBuffer.length >= totalLength) {
-        const messageBuffer = this.receiveBuffer.slice(4, totalLength);
+      const messageBuffer = this.receiveBuffer.subarray(4, totalLength);
+      this.receiveBuffer = this.receiveBuffer.subarray(totalLength);
 
-        if (totalLength < this.receiveBuffer.length) {
-          this.receiveBuffer = Buffer.from(this.receiveBuffer, totalLength);
-        } else {
-          this.receiveBuffer = Buffer.alloc(0);
-        }
-
+      // A single bad message must not tear down the receive loop.
+      try {
         this.onMessage(messageBuffer);
+      } catch (err) {
+        console.error(
+          'Unexpected error handling automation-channel message: ' +
+            (err instanceof Error ? err.message : String(err)),
+        );
       }
     }
   }
@@ -102,41 +110,59 @@ export class AutomationClient {
   private onMessage(message: Buffer) {
     const response = jsonrpc.parseJsonRpcString(message.toString('utf8'));
     if (Array.isArray(response)) {
-      throw new Error('Expected single message');
+      console.error('Ignoring unexpected JSON-RPC batch response');
+      return;
     }
 
     switch (response.type) {
+      // The server only ever sends responses; ignore stray request/notification
+      // frames rather than throwing out of the socket handler.
       case RpcStatusType.request:
-        throw new Error('Received JSON-RPC request instead of response');
       case RpcStatusType.notification:
-        throw new Error('Unexpected JSON-RPC notification');
-      case RpcStatusType.invalid:
-        throw new Error(
-          'Invalid JSON-RPC2 response: ' +
-            JSON.stringify(response.payload, null, 2),
+        return;
+
+      case RpcStatusType.invalid: {
+        // jsonrpc-lite keeps the raw response under `data`; use its id to reject
+        // the matching request so its caller fails fast instead of hanging.
+        const rawId = (response.payload as any)?.data?.id;
+        this.rejectPendingRequest(
+          rawId,
+          new Error(
+            'Invalid JSON-RPC2 response: ' +
+              JSON.stringify(response.payload, null, 2),
+          ),
         );
+        return;
+      }
 
       case RpcStatusType.success: {
         const pendingReq = this.pendingRequests.get(response.payload.id);
-        if (!pendingReq) {
-          throw new Error('Could not find pending request from response ID');
+        if (pendingReq) {
+          this.pendingRequests.delete(response.payload.id);
+          pendingReq({type: 'success', result: response.payload.result}, null);
         }
-
-        this.pendingRequests.delete(response.payload.id);
-        pendingReq({type: 'success', result: response.payload.result}, null);
-        break;
+        return;
       }
 
       case RpcStatusType.error: {
         const pendingReq = this.pendingRequests.get(response.payload.id);
-        if (!pendingReq) {
-          throw new Error('Could not find pending request from response ID');
+        if (pendingReq) {
+          this.pendingRequests.delete(response.payload.id);
+          pendingReq({type: 'error', ...response.payload.error}, null);
         }
-
-        this.pendingRequests.delete(response.payload.id);
-        pendingReq({type: 'error', ...response.payload.error}, null);
-        break;
+        return;
       }
+    }
+  }
+
+  private rejectPendingRequest(id: any, err: Error) {
+    const pendingReq =
+      id === undefined ? undefined : this.pendingRequests.get(id);
+    if (pendingReq) {
+      this.pendingRequests.delete(id);
+      pendingReq(null, err);
+    } else {
+      console.error(err.message);
     }
   }
 }
