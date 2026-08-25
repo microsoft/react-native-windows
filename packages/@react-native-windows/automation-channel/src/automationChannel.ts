@@ -120,10 +120,14 @@ export class AutomationClient {
     }
 
     switch (response.type) {
-      // The server only ever sends responses; ignore stray request/notification
-      // frames rather than throwing out of the socket handler.
+      // The server only ever sends responses; a request/notification frame means
+      // the stream is out of sync, so fail all in-flight requests rather than
+      // silently ignore it (invoke has no timeout).
       case RpcStatusType.request:
       case RpcStatusType.notification:
+        this.failAllPendingRequests(
+          new Error('Unexpected JSON-RPC message from server'),
+        );
         return;
 
       case RpcStatusType.invalid: {
