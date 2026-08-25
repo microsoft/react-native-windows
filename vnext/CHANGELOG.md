@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 16 Jun 2026 10:29:39 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 25 Aug 2026 02:17:00 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.1
+
+Tue, 25 Aug 2026 02:17:00 GMT
+
+### Patches
+
+- Fixes misalignment with TextInput on different display scales (dlucas@seabird.com)
 
 ## 0.84.0
 
