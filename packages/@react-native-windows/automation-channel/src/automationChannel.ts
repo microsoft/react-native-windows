@@ -85,13 +85,16 @@ export class AutomationClient {
       const messageBuffer = this.receiveBuffer.subarray(4, totalLength);
       this.receiveBuffer = this.receiveBuffer.subarray(totalLength);
 
-      // A single bad message must not tear down the receive loop.
+      // One bad frame can't be tied to a specific request, so fail every
+      // in-flight request rather than let any hang forever (invoke has no timeout).
       try {
         this.onMessage(messageBuffer);
       } catch (err) {
-        console.error(
-          'Unexpected error handling automation-channel message: ' +
-            (err instanceof Error ? err.message : String(err)),
+        this.failAllPendingRequests(
+          new Error(
+            'Unexpected error handling automation-channel message: ' +
+              (err instanceof Error ? err.message : String(err)),
+          ),
         );
       }
     }
@@ -110,7 +113,9 @@ export class AutomationClient {
   private onMessage(message: Buffer) {
     const response = jsonrpc.parseJsonRpcString(message.toString('utf8'));
     if (Array.isArray(response)) {
-      console.error('Ignoring unexpected JSON-RPC batch response');
+      this.failAllPendingRequests(
+        new Error('Unexpected JSON-RPC batch response'),
+      );
       return;
     }
 
@@ -156,13 +161,28 @@ export class AutomationClient {
   }
 
   private rejectPendingRequest(id: any, err: Error) {
-    const pendingReq =
-      id === undefined ? undefined : this.pendingRequests.get(id);
+    if (id === undefined) {
+      // No id to attribute the failure to; fail every in-flight request so none
+      // hang (invoke has no timeout).
+      this.failAllPendingRequests(err);
+      return;
+    }
+
+    const pendingReq = this.pendingRequests.get(id);
     if (pendingReq) {
       this.pendingRequests.delete(id);
       pendingReq(null, err);
     } else {
+      // Recoverable id, but already settled (stale/duplicate) — ignore.
       console.error(err.message);
+    }
+  }
+
+  private failAllPendingRequests(err: Error) {
+    const pending = Array.from(this.pendingRequests.values());
+    this.pendingRequests.clear();
+    for (const req of pending) {
+      req(null, err);
     }
   }
 }
