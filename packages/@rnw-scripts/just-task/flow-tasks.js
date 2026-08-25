@@ -171,10 +171,11 @@ task(
         [flowPath, 'start', '--file-watcher', 'none'],
         {env, stdio: 'inherit'},
       );
-      childProcess.execFileSync(process.execPath, [flowPath, 'status'], {
-        env,
-        stdio: 'inherit',
-      });
+      childProcess.execFileSync(
+        process.execPath,
+        [flowPath, 'status', '--no-auto-start'],
+        {env, stdio: 'inherit'},
+      );
     } finally {
       const stopResult = childProcess.spawnSync(
         process.execPath,
