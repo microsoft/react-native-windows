@@ -68,10 +68,14 @@ IAsyncAction JsonRpcRequestProcessor::EmitError(
     winrt::hstring message,
     JsonValue id,
     IOutputStream output) noexcept {
-  JsonObject err;
-  err.SetNamedValue(L"code", JsonValue::CreateNumberValue(static_cast<int32_t>(code)));
-  err.SetNamedValue(L"message", JsonValue::CreateStringValue(message));
-  co_await EmitResponse(err, id, output);
+  JsonObject error;
+  error.SetNamedValue(L"code", JsonValue::CreateNumberValue(static_cast<int32_t>(code)));
+  error.SetNamedValue(L"message", JsonValue::CreateStringValue(message));
+
+  // JSON-RPC 2.0 requires code/message under an "error" member; at top level the client rejects it as invalid.
+  JsonObject res;
+  res.SetNamedValue(L"error", error);
+  co_await EmitResponse(res, id, output);
 }
 
 IAsyncAction JsonRpcRequestProcessor::EmitResult(IJsonValue result, JsonValue id, IOutputStream output) noexcept {
