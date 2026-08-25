@@ -1,0 +1,1 @@
+{"email":"collindanielschneide@gmail.com","comment":"Fix(text): resolve app-bundled font families by passing a DirectWrite font collection to CreateTextFormat instead of nullptr, so bundled icon fonts stop falling back to Segoe UI .notdef","dependentChangeType":"patch","type":"patch","packageName":"react-native-windows"}
