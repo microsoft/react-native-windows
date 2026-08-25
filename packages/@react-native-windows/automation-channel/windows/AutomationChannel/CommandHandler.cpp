@@ -89,8 +89,7 @@ IAsyncOperation<IJsonValue> CommandHandler::Invoke(const winrt::hstring &methodN
 
   // Falling through without co_return would yield a null result, which serializes
   // into a malformed response; surface a proper error instead.
-  throw winrt::hresult_invalid_argument(
-      L"No automation-channel handler registered for method '" + methodName + L"'");
+  throw winrt::hresult_invalid_argument(L"No automation-channel handler registered for method '" + methodName + L"'");
 }
 
 } // namespace winrt::AutomationChannel::implementation
