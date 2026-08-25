@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 25 Aug 2026 00:56:57 GMT",
+      "version": "0.83.3",
+      "tag": "react-native-windows_v0.83.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "d5c7bd37be46f6fe4e00345e7753fc1e552fde91",
+            "comment": "fix(pointer): null-check the capturing component view before notifying OnPointerCaptureLost (crash when the capturing component was unmounted)"
+          },
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "d5c7bd37be46f6fe4e00345e7753fc1e552fde91",
+            "comment": "Fix placeholder layout constraints fed physical px instead of DIPs; fix no-op NaN fontSize guard in CreatePlaceholderLayout"
+          },
+          {
+            "author": "dlucas@seabird.com",
+            "package": "react-native-windows",
+            "commit": "d5c7bd37be46f6fe4e00345e7753fc1e552fde91",
+            "comment": "Fixes misalignment with TextInput on different display scales"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Jun 2026 09:54:41 GMT",
       "version": "0.83.2",
       "tag": "react-native-windows_v0.83.2",
