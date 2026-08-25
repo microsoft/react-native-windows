@@ -29,7 +29,13 @@ winrt::fire_and_forget JsonRpcRequestProcessor::HandleRequest(
   winrt::hstring errorMessage;
 
   try {
-    auto result = co_await handler.Invoke(message.GetNamedString(L"method"), message.GetNamedValue(L"params"));
+    auto method = message.GetNamedString(L"method");
+    if (!handler.IsMethodRegistered(method)) {
+      co_await EmitError(
+          JsonRpcErrorCode::MethodNotFound, L"Method not found: " + method, message.GetNamedValue(L"id"), output);
+      co_return;
+    }
+    auto result = co_await handler.Invoke(method, message.GetNamedValue(L"params"));
     co_await EmitResult(result, message.GetNamedValue(L"id"), output);
     co_return;
   } catch (const winrt::hresult_error &ex) {
