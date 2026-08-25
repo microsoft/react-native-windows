@@ -45,12 +45,14 @@ steps:
   displayName: Show npm packages before cleanup
 
 # Mirror the npmjs.com publish job: drop tarballs whose version already exists in the feed so the
-# publish step never tries to overwrite an immutable version. --registry targets this ADO feed
-# (authenticated via the .npmrc token) so the check sees locally published versions, not just the
-# ones cached from the npmjs upstream.
-- script: node "${{ parameters.npmPackScript }}" --no-pack --check-npm --no-color --registry "${{ parameters.npmFeedRegistry }}" "${{ parameters.packagesPath }}"
+# publish step never overwrites an immutable version. NPM_CONFIG_REGISTRY points the check at this
+# ADO feed (authenticated via the .npmrc token) so it sees locally published versions, not just the
+# ones cached from the npmjs upstream. Set via env, not --registry, so an older npmPack.js bundled
+# in the CI artifact still honors it.
+- script: node "${{ parameters.npmPackScript }}" --no-pack --check-npm --no-color "${{ parameters.packagesPath }}"
   displayName: Remove already published packages
   env:
+    NPM_CONFIG_REGISTRY: ${{ parameters.npmFeedRegistry }}
     NPM_FEED_TOKEN: $(AdoNpmFeedToken)
 
 - pwsh: Get-ChildItem -Path '${{ parameters.packagesPath }}' -Filter *.tgz -Recurse | Select-Object Name, Length
