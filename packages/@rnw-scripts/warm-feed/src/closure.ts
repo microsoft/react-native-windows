@@ -99,6 +99,7 @@ function nameFromLockKey(key: string): string | null {
 }
 
 interface LockEntry {
+  name?: string;
   version?: string;
   resolved?: string;
   link?: boolean;
@@ -134,17 +135,20 @@ export function parseNpmLock(
   if (packages && typeof packages === 'object') {
     for (const [key, val] of Object.entries(packages)) {
       if (key === '' || !val || typeof val !== 'object') continue;
-      const id = nameFromLockKey(key);
       const e = val as LockEntry;
+      // Prefer the entry's real name: an alias install keeps the alias in the path
+      // key (e.g. node_modules/string-width-cjs) and the true package in `name`.
+      const id = e.name ?? nameFromLockKey(key);
       if (keepEntry(id, e)) add(id, e.version as string);
     }
   }
 
   // v1 fallback: a nested `dependencies` tree keyed by package name.
   const walk = (deps: Record<string, unknown>) => {
-    for (const [id, val] of Object.entries(deps)) {
+    for (const [key, val] of Object.entries(deps)) {
       if (!val || typeof val !== 'object') continue;
       const e = val as LockEntry & {dependencies?: unknown};
+      const id = e.name ?? key;
       if (keepEntry(id, e)) add(id, e.version as string);
       const nested = e.dependencies;
       if (nested && typeof nested === 'object') {

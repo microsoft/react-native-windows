@@ -5,7 +5,7 @@
  * @format
  */
 
-import {parseSpec} from '../run';
+import {groupRootSpecs, parseSpec} from '../run';
 
 describe('parseSpec (one-off --packages CLI input)', () => {
   test('parses an npm spec', () => {
@@ -52,5 +52,30 @@ describe('parseSpec (one-off --packages CLI input)', () => {
     const warn = jest.fn();
     expect(parseSpec('   ', warn)).toBeNull();
     expect(warn).not.toHaveBeenCalled();
+  });
+});
+
+describe('groupRootSpecs (--closure duplicate handling)', () => {
+  test('packs distinct names into a single layer', () => {
+    expect(
+      groupRootSpecs([
+        {id: 'foo', version: '1.0.0'},
+        {id: 'bar', version: '2.0.0'},
+      ]),
+    ).toEqual([{foo: '1.0.0', bar: '2.0.0'}]);
+  });
+
+  test('splits a repeated name with different versions into separate layers', () => {
+    expect(
+      groupRootSpecs([
+        {id: 'foo', version: '1.0.0'},
+        {id: 'foo', version: '2.0.0'},
+        {id: 'bar', version: '3.0.0'},
+      ]),
+    ).toEqual([{foo: '1.0.0', bar: '3.0.0'}, {foo: '2.0.0'}]);
+  });
+
+  test('an empty list yields no layers', () => {
+    expect(groupRootSpecs([])).toEqual([]);
   });
 });

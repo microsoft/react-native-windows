@@ -13,11 +13,13 @@
 
 import {readFileSync} from 'node:fs';
 
+// Ordered lowest -> highest precedence for the later-wins merge in manifestSpecs:
+// peerDependencies (a broad constraint) is weakest; a concrete dependency wins.
 const DEP_SECTIONS = [
-  'dependencies',
-  'devDependencies',
-  'optionalDependencies',
   'peerDependencies',
+  'optionalDependencies',
+  'devDependencies',
+  'dependencies',
 ] as const;
 
 /** True when `spec` is a range npm resolves from a registry (vs. local/VCS/URL). */
@@ -51,7 +53,8 @@ export function sanitizeSpecs(
 
 /**
  * Merge a parsed package.json's dependency sections into one sanitized spec map.
- * Later sections win on a name clash (a concrete dep beats a peer range).
+ * Later sections win on a name clash, so a concrete dependency/devDependency
+ * overrides a broad peerDependencies range for the same name (see DEP_SECTIONS).
  */
 export function manifestSpecs(pkg: unknown): Record<string, string> {
   const p = (pkg ?? {}) as Record<string, Record<string, unknown> | undefined>;

@@ -175,11 +175,11 @@ async function warmTargets(
   return notWarmed.length > 0 ? 1 : 0;
 }
 
-function specsFromRoots(
+function rootSpecsList(
   roots: string[],
   warn: (m: string) => void,
-): Record<string, string> {
-  const specs: Record<string, string> = {};
+): Array<{id: string; version: string}> {
+  const out: Array<{id: string; version: string}> = [];
   const flat = roots.flatMap(r => r.split(/\s+/)).filter(Boolean);
   for (const s of flat) {
     const t = parseSpec(s, warn);
@@ -188,9 +188,27 @@ function specsFromRoots(
       warn(`closure roots are npm-only, ignoring '${s}'`);
       continue;
     }
-    specs[t.id] = t.version;
+    out.push({id: t.id, version: t.version});
   }
-  return specs;
+  return out;
+}
+
+/**
+ * Pack root specs into layers where each package name appears at most once, so a
+ * synthetic manifest per layer resolves cleanly. Repeated names with different
+ * versions (`npm:foo@1 npm:foo@2`) land in separate layers instead of one
+ * silently overwriting the other.
+ */
+export function groupRootSpecs(
+  list: ReadonlyArray<{id: string; version: string}>,
+): Array<Record<string, string>> {
+  const layers: Array<Record<string, string>> = [];
+  for (const {id, version} of list) {
+    const layer = layers.find(l => !(id in l));
+    if (layer) layer[id] = version;
+    else layers.push({[id]: version});
+  }
+  return layers;
 }
 
 function enabledClosureModules(config: WarmerConfig): string[] {
@@ -205,11 +223,20 @@ function enabledClosureModules(config: WarmerConfig): string[] {
  * npm/npx subprocesses share one authenticated feed `.npmrc` in a temp dir that is
  * always cleaned up.
  */
+interface ClosureResult {
+  targets: WarmTarget[];
+  /**
+   * True when a requested closure could not be fully prepared (an unknown module,
+   * or a special module reporting a partial failure) — surfaces a non-zero exit.
+   */
+  hadFailure: boolean;
+}
+
 async function collectClosureTargets(
   ctx: Ctx,
   registries: Registries,
   moduleNames: string[],
-): Promise<WarmTarget[]> {
+): Promise<ClosureResult> {
   const {config, options, log} = ctx;
   const registryUrl = config.closure.registry ?? config.feeds.npm?.registry;
   if (!registryUrl) {
@@ -222,14 +249,19 @@ async function collectClosureTargets(
   }
 
   const targets: WarmTarget[] = [];
+  let hadFailure = false;
   const tmp = mkdtempSync(join(tmpdir(), 'warm-feed-npmrc-'));
   try {
     const npmrcPath = await writeFeedNpmrc(ctx.auth, registryUrl, tmp);
     const opt = (label: string) => ({registry: registryUrl, npmrcPath, label});
 
-    const rootSpecs = specsFromRoots(options.closureRoots, m => log.warn(m));
-    if (Object.keys(rootSpecs).length > 0) {
-      targets.push(...(await resolveClosureSpecs(ctx, rootSpecs, opt('roots'))));
+    // Roots: pack into layers so repeated names with different versions each resolve.
+    const layers = groupRootSpecs(
+      rootSpecsList(options.closureRoots, m => log.warn(m)),
+    );
+    for (let i = 0; i < layers.length; i++) {
+      const label = layers.length > 1 ? `roots#${i + 1}` : 'roots';
+      targets.push(...(await resolveClosureSpecs(ctx, layers[i], opt(label))));
     }
 
     for (const manifest of options.closureManifests) {
@@ -253,17 +285,25 @@ async function collectClosureTargets(
       for (const name of moduleNames) {
         const mod = getSpecialModule(name);
         if (!mod) {
+          // A typo'd module must fail the run, not warm nothing and report green.
           log.error(
             `unknown closure module '${name}' (known: ${
               specialModuleNames().join(', ') || 'none'
             })`,
           );
+          hadFailure = true;
           continue;
         }
-        const sets = await mod.collectDepSpecs(
+        const {sets, failures} = await mod.collectDepSpecs(
           mctx,
           config.closure.modules[name] ?? {},
         );
+        if (failures.length > 0) {
+          log.error(
+            `closure module '${name}' failed for: ${failures.join(', ')}`,
+          );
+          hadFailure = true;
+        }
         for (const set of sets) {
           targets.push(
             ...(await resolveClosureSpecs(ctx, set.specs, opt(set.label))),
@@ -271,7 +311,7 @@ async function collectClosureTargets(
         }
       }
     }
-    return dedupe(targets);
+    return {targets: dedupe(targets), hadFailure};
   } finally {
     rmSync(tmp, {recursive: true, force: true});
   }
@@ -279,52 +319,59 @@ async function collectClosureTargets(
 
 type KeepFn = (t: WarmTarget) => boolean;
 
-async function runOneOffPackages(
+/**
+ * One-off mode: warm the explicit `--packages` targets and/or the requested
+ * closures (`--closure`, `--closure-manifest`, `--closure-module`) together, so a
+ * command supplying both never silently drops one set.
+ */
+async function runOneOff(
   ctx: Ctx,
   registries: Registries,
   only: Ecosystem | undefined,
   keep: KeepFn,
 ): Promise<number> {
-  const {options, log} = ctx;
-  const specs = options.packages.flatMap(p => p.split(/\s+/)).filter(Boolean);
-  const targets = dedupe(
-    specs
-      .map(s => parseSpec(s, m => log.warn(m)))
-      .filter((t): t is WarmTarget => t !== null)
-      .filter(t => !only || t.ecosystem === only)
-      .filter(keep),
-  );
-  if (options.dryRun) {
-    log.info(`dry run (one-off): ${targets.length} target(s)`);
-    for (const t of targets) {
-      log.info(`  ${t.ecosystem} ${t.id}@${t.version} [${t.source}]`);
-    }
-    return 0;
-  }
-  log.info(`one-off warm: ${targets.length} target(s)`);
-  return warmTargets(ctx, registries, targets);
-}
-
-async function runOneOffClosure(
-  ctx: Ctx,
-  registries: Registries,
-): Promise<number> {
   const {options, config, log} = ctx;
-  const moduleNames = options.closureModules.includes('all')
-    ? enabledClosureModules(config)
-    : options.closureModules;
-  const targets = await collectClosureTargets(ctx, registries, moduleNames);
+  const targets: WarmTarget[] = [];
+
+  if (options.packages.length > 0) {
+    const specs = options.packages
+      .flatMap(p => p.split(/\s+/))
+      .filter(Boolean);
+    targets.push(
+      ...specs
+        .map(s => parseSpec(s, m => log.warn(m)))
+        .filter((t): t is WarmTarget => t !== null)
+        .filter(t => !only || t.ecosystem === only)
+        .filter(keep),
+    );
+  }
+
+  let hadFailure = false;
+  const closureRequested =
+    options.closureRoots.length > 0 ||
+    options.closureManifests.length > 0 ||
+    options.closureModules.length > 0;
+  if (closureRequested) {
+    const moduleNames = options.closureModules.includes('all')
+      ? enabledClosureModules(config)
+      : options.closureModules;
+    const closure = await collectClosureTargets(ctx, registries, moduleNames);
+    targets.push(...closure.targets.filter(keep));
+    hadFailure = closure.hadFailure;
+  }
+
+  const deduped = dedupe(targets);
   if (options.dryRun) {
-    log.info(`dry run (closure): ${targets.length} target(s)`);
-    for (const t of targets.slice(0, 40)) {
+    log.info(`dry run (one-off): ${deduped.length} target(s)`);
+    for (const t of deduped.slice(0, 40)) {
       log.info(`  ${t.ecosystem} ${t.id}@${t.version} [${t.source}]`);
     }
-    if (targets.length > 40) {
-      log.info(`  ... and ${targets.length - 40} more`);
-    }
-    return 0;
+    if (deduped.length > 40) log.info(`  ... and ${deduped.length - 40} more`);
+    return hadFailure ? 1 : 0;
   }
-  return warmTargets(ctx, registries, targets);
+  log.info(`one-off warm: ${deduped.length} target(s)`);
+  const code = await warmTargets(ctx, registries, deduped);
+  return code !== 0 ? code : hadFailure ? 1 : 0;
 }
 
 async function runScheduled(
@@ -373,12 +420,13 @@ async function runScheduled(
     only === 'nuget' ? [] : enabledClosureModules(config);
   if (scheduledModules.length > 0) {
     try {
-      const closureTargets = await collectClosureTargets(
+      const closure = await collectClosureTargets(
         ctx,
         registries,
         scheduledModules,
       );
-      for (const t of closureTargets) targets.push(t);
+      for (const t of closure.targets) targets.push(t);
+      closureFailed = closure.hadFailure;
     } catch (err) {
       log.error(`closure modules failed: ${(err as Error).message}`);
       closureFailed = true;
@@ -443,16 +491,12 @@ export async function run(options: RunOptions, pat?: string): Promise<number> {
   const keep: KeepFn = t =>
     ignoreRules.length === 0 || !matchesIgnore(t, ignoreRules);
 
-  if (options.packages.length) {
-    return runOneOffPackages(ctx, registries, only, keep);
-  }
-
   const closureRequested =
     options.closureRoots.length > 0 ||
     options.closureManifests.length > 0 ||
     options.closureModules.length > 0;
-  if (closureRequested) {
-    return runOneOffClosure(ctx, registries);
+  if (options.packages.length > 0 || closureRequested) {
+    return runOneOff(ctx, registries, only, keep);
   }
 
   return runScheduled(ctx, registries, only, keep);

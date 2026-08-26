@@ -26,12 +26,23 @@ export interface SpecialModuleContext {
   npmrcPath: string;
 }
 
+export interface CollectDepSpecsResult {
+  /** The dependency-spec sets to resolve and warm. */
+  sets: DepSpecSet[];
+  /**
+   * Labels of items (e.g. branches) that failed to prepare. Non-fatal — healthy
+   * items still warm — but the caller surfaces a non-zero exit so a partial
+   * failure isn't reported as a green run.
+   */
+  failures: string[];
+}
+
 export interface SpecialModule {
   /** Stable name used in config (`closure.modules.<name>`) and `--closure-module`. */
   name: string;
-  /** Produce the dependency-spec sets to resolve and warm. */
+  /** Produce the dependency-spec sets to resolve and warm, plus any per-item failures. */
   collectDepSpecs(
     mctx: SpecialModuleContext,
     config: Record<string, unknown>,
-  ): Promise<DepSpecSet[]>;
+  ): Promise<CollectDepSpecsResult>;
 }

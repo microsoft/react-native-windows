@@ -290,16 +290,23 @@ function scaffold(
     cfg.example,
     'warmlib',
   ];
-  runTool(
-    'npx',
-    args,
-    workDir,
-    {
-      npm_config_userconfig: mctx.npmrcPath,
-      npm_config_registry: mctx.npmRegistryUrl,
-    },
-    `scaffold cRNL ${branch.name} (react-native ${versions.reactNative})`,
-  );
+  try {
+    runTool(
+      'npx',
+      args,
+      workDir,
+      {
+        npm_config_userconfig: mctx.npmrcPath,
+        npm_config_registry: mctx.npmRegistryUrl,
+      },
+      `scaffold cRNL ${branch.name} (react-native ${versions.reactNative})`,
+    );
+  } catch (err) {
+    // npx failed before we returned workDir, so the caller's cleanup never runs;
+    // remove the temp tree here to avoid leaking warm-crnl-* on every failed run.
+    rmSync(workDir, {recursive: true, force: true});
+    throw err;
+  }
   return {workDir, projectDir: join(workDir, 'warmlib')};
 }
 
@@ -308,6 +315,7 @@ export const createReactNativeLibraryModule: SpecialModule = {
   async collectDepSpecs(mctx, config) {
     const cfg = parseCrnlConfig(config);
     const sets: DepSpecSet[] = [];
+    const failures: string[] = [];
     for (const branch of cfg.branches) {
       mctx.ctx.log.info(`cRNL: preparing closure for branch ${branch.name}`);
       try {
@@ -322,16 +330,14 @@ export const createReactNativeLibraryModule: SpecialModule = {
           rmSync(workDir, {recursive: true, force: true});
         }
       } catch (err) {
-        // One branch's scaffold/resolve failing must not drop the others; the
-        // feed-wide sync and the healthy branches still warm.
+        // One branch failing must not drop the others; record it so the caller can
+        // still surface a non-zero exit while the healthy branches are warmed.
         mctx.ctx.log.error(
           `cRNL: branch ${branch.name} failed: ${(err as Error).message}`,
         );
+        failures.push(branch.name);
       }
     }
-    if (sets.length === 0) {
-      throw new Error('create-react-native-library module produced no closures');
-    }
-    return sets;
+    return {sets, failures};
   },
 };

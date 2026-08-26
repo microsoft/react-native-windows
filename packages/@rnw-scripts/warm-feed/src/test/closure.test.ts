@@ -69,6 +69,19 @@ test('falls back to the v1 dependencies tree', () => {
   expect(got).toEqual(['bar@2.0.0', 'foo@1.0.0']);
 });
 
+test('prefers the lock entry name over the alias in the path key', () => {
+  const lock = {
+    packages: {
+      'node_modules/string-width-cjs': {
+        name: 'string-width',
+        version: '4.2.3',
+        resolved: 'https://feed/string-width-4.2.3.tgz',
+      },
+    },
+  };
+  expect(parseNpmLock(lock)).toEqual([{id: 'string-width', version: '4.2.3'}]);
+});
+
 test('an empty or garbage lock yields nothing', () => {
   expect(parseNpmLock({})).toEqual([]);
   expect(parseNpmLock(null)).toEqual([]);

@@ -47,18 +47,18 @@ test('sanitizeSpecs filters non-registry entries', () => {
   ).toEqual({a: '^1.0.0', d: 'latest'});
 });
 
-test('manifestSpecs merges all sections, later sections winning on a clash', () => {
+test('manifestSpecs merges sections; a concrete dep/devDep beats a peer range', () => {
   const pkg = {
     dependencies: {a: '^1.0.0', local: 'file:../l'},
-    devDependencies: {b: '~2.0.0', 'react-native': '*'},
+    devDependencies: {b: '~2.0.0', 'react-native': '0.85.0'},
     optionalDependencies: {c: '^3.0.0'},
-    peerDependencies: {'react-native': '0.86.0'},
+    peerDependencies: {'react-native': '*'},
   };
   expect(manifestSpecs(pkg)).toEqual({
     a: '^1.0.0',
     b: '~2.0.0',
     c: '^3.0.0',
-    'react-native': '0.86.0',
+    'react-native': '0.85.0',
   });
 });
 
