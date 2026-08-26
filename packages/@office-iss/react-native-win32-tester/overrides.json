@@ -5,13 +5,13 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.86.0-nightly-20260325-d1809f0aa",
+  "baseVersion": "0.86.0-nightly-20260408-8bac1df5a",
   "overrides": [
     {
       "type": "patch",
       "file": "src/js/components/ListExampleShared.win32.js",
       "baseFile": "packages/rn-tester/js/components/ListExampleShared.js",
-      "baseHash": "5eddedbaff0a785757713beb25750aac98e40fcb"
+      "baseHash": "df8e829f48192ff86f3e09f47308f18f4f2dacb2"
     },
     {
       "type": "patch",
@@ -42,7 +42,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "6c9c1b36ee77323fa1b76235eaab9907ee7c733c"
+      "baseHash": "31a3c185ebce41969fc8af059b997a3c8442617c"
     }
   ]
 }

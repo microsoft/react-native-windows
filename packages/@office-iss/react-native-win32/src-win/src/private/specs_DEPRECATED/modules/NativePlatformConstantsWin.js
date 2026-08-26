@@ -34,6 +34,6 @@ export interface Spec extends TurboModule {
   +getConstants: () => PlatformConstantsWin32;
 }
 
-export default (TurboModuleRegistry.getEnforcing<Spec>(
+export default TurboModuleRegistry.getEnforcing<Spec>(
   'PlatformConstants',
-): Spec);
+) as Spec;

@@ -2108,11 +2108,11 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = ({
+module.exports = {
   title: 'Text',
   documentationURL: 'https://reactnative.dev/docs/text',
   category: 'Basic',
   description: 'Base component for rendering styled text.',
   displayName: 'TextExample',
   examples,
-}: RNTesterModule);
+} as RNTesterModule;

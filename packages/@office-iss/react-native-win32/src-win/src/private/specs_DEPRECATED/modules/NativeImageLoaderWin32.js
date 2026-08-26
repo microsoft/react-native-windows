@@ -42,4 +42,4 @@ export interface Spec extends TurboModule {
   // Win32]
 }
 
-export default (TurboModuleRegistry.getEnforcing<Spec>('ImageLoader'): Spec);
+export default TurboModuleRegistry.getEnforcing<Spec>('ImageLoader') as Spec;

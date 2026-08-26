@@ -31,7 +31,7 @@ export function checkVersions(): void {
     console.warn(
       // Win32]
       `React Native version mismatch.\n\nJavaScript version: ${_formatVersion(
-        (ReactNativeVersion.version: $FlowFixMe),
+        ReactNativeVersion.version as $FlowFixMe,
       )}\n` +
         `Native version: ${_formatVersion(nativeVersion)}\n\n` +
         'Make sure that you have rebuilt the native code. If the problem ' +
