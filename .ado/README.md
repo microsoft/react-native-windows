@@ -39,8 +39,14 @@ branches, all driven from YAML. Keep the branch lists in `ci-pipeline.yml`,
 `0.82-stable` is deprecated and removed from all pipelines. `0.80-stable` and
 earlier are not built.
 
-Feed warm-up (`warm-feed-pipeline.yml`) is branch-agnostic (scheduled on `main`).
-Branch *creation* is governed separately by the ruleset in
+Feed warm-up (`warm-feed-pipeline.yml`, scheduled on `main`) has two passes: the
+latest-patch enumeration is branch-agnostic (feed-centric), while the closure pass
+reproduces the `create-react-native-library` CLI-init graph **per built release
+branch**. That branch list lives in
+[`warm-feed.config.json`](../packages/@rnw-scripts/warm-feed/warm-feed.config.json)
+(`closure.modules.create-react-native-library.branches`) — keep it in sync with the
+built branches above (it omits the not-yet-integrated ones). Branch *creation* is
+governed separately by the ruleset in
 [`repo-rules/`](./repo-rules/README.md).
 
 ## Template-repository wiring (per-entry `PipelineTemplates` alias)

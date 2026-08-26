@@ -49,6 +49,52 @@ yarn warm-feed
 npm|nuget`, `--dry-run`, `--verify` (warm even already-cached targets),
 `--concurrency <n>`, `-v` / `--verbose`. See `--help` for the full list.
 
+## Closure (graph) warming
+
+Enumeration keeps **known** package lines fresh but can't introduce a **brand-new**
+name the feed has never seen — e.g. the packages a bumped
+`create-react-native-library` pulls into a generated project. Closure warming
+closes that gap: it resolves a dependency **graph** and warms every version in it.
+
+The graph is resolved with `npm install --package-lock-only`, whose lockfile is
+**platform-independent**, so it captures optional dependencies for every OS/CPU
+(e.g. turbo's darwin/linux/windows variants) that a single-platform install would
+miss. It resolves metadata only; the feed save still happens per version.
+
+Three ways to feed it a graph:
+
+```powershell
+# 1. Roots — warm the full npm graph of one or more packages:
+yarn warm-feed --closure npm:create-react-native-library@0.63.0
+
+# 2. Manifest — warm the external-dependency graph of a package.json:
+yarn warm-feed --closure-manifest ./some/package.json
+
+# 3. Special module — a registered reproducer for a case enumeration can't see:
+yarn warm-feed --closure-module create-react-native-library
+yarn warm-feed --closure-module all      # every enabled module
+```
+
+### Special modules (pluggable)
+
+A **special module** reproduces a specific install closure and turns it into a
+dependency graph to warm. They live in `src/specialModules/` and are registered
+in `src/specialModules/index.ts`; add a module there and it's available to config
+(`closure.modules.<name>`) and `--closure-module <name>`.
+
+The first module, **`create-react-native-library`**, reproduces the CLI-init lib
+test: the test scaffolds a library (+ vanilla example app) and installs *that
+generated project*, so its closure — not cRNL's own dependencies — is what the
+feed needs. warm-feed runs only from `main`, but the test runs on every release
+branch pinned to a different React Native, so the module's config manifest lists
+all branches and, per branch, derives the RN/CLI versions (nightly for `main`
+from the working-tree `vnext/package.json`; latest stable `0.NN.x` for
+`0.NN-stable`), scaffolds, and reads the generated manifests. Mirrors
+`vnext/Scripts/creaternwlib.cmd`.
+
+The scheduled pipeline run warms every **enabled** configured module in addition
+to the latest-patch sync, so brand-new closures stay warm automatically.
+
 ## Pipeline usage
 
 `.ado/warm-feed-pipeline.yml` runs the tool on a schedule (and on manual queue)
@@ -76,13 +122,17 @@ maintainer queues the pipeline with the `packages` parameter
 | `expand.maxMajorsBack` | Limit to the N most-recent majors already in use (0 = no limit). |
 | `concurrency` | Parallel requests. |
 | `ignore` | `id`, `id@version`, or `eco:id@version` entries to skip. |
+| `closure.registry` | npm registry for closure resolution (defaults to `feeds.npm.registry`). |
+| `closure.modules` | Per-module config blocks (e.g. `create-react-native-library`), keyed by module name; each may set `enabled: false`. |
 
 ## Scope and limitations
 
-- Warms **latest patch per in-use line**, not a specific build's exact
-  lockfile-pinned closure. A build pinning an older patch, or a version whose
-  transitive graph differs, is not guaranteed by this pass alone.
-- Cannot introduce a **brand-new package name** the feed has never seen (that name
-  is not in the feed's list). First use is covered by the authenticated CI build
-  that restores it, or by a one-off `--packages` warm.
-- Does not resolve transitive closures (each warmed version is fetched on its own).
+- The enumeration pass warms **latest patch per in-use line**, not a specific
+  build's exact lockfile-pinned closure. A build pinning an older patch is not
+  guaranteed by that pass alone — use closure warming for exact graphs.
+- Enumeration cannot introduce a **brand-new package name** the feed has never
+  seen. Covered instead by closure warming (a special module, `--closure`, or
+  `--closure-manifest`), the authenticated CI build that first restores it, or a
+  one-off `--packages` warm.
+- Closure resolution needs `npm` on `PATH` (bundled with Node) and, for special
+  modules that scaffold, network access to the feed for the generator.

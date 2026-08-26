@@ -24,6 +24,14 @@ Options:
       --only <npm|nuget>  Restrict to one ecosystem
       --packages <spec>   One-off warm 'eco:id@version' (repeatable / space-list);
                           skips enumeration and warms exactly these versions
+      --closure <spec>    Warm the full npm graph of 'npm:id@version' (repeatable /
+                          space-list); resolves via npm --package-lock-only
+      --closure-manifest <path>
+                          Warm the full npm graph of a package.json's deps (repeatable)
+      --closure-module <name>
+                          Run a special closure module by name, or 'all' for every
+                          enabled one (repeatable). E.g. create-react-native-library
+      --repo-root <path>  Repo root for modules that read repo files (default: cwd)
       --dry-run           Enumerate and plan only; do not warm
       --verify            Warm every target, ignoring the already-cached skip
       --concurrency <n>   Parallel requests (default from config)
@@ -41,6 +49,10 @@ const {values} = parseArgs({
     config: {type: 'string', short: 'c'},
     only: {type: 'string'},
     packages: {type: 'string', multiple: true},
+    closure: {type: 'string', multiple: true},
+    'closure-manifest': {type: 'string', multiple: true},
+    'closure-module': {type: 'string', multiple: true},
+    'repo-root': {type: 'string'},
     'dry-run': {type: 'boolean'},
     verify: {type: 'boolean'},
     concurrency: {type: 'string'},
@@ -63,6 +75,10 @@ const options: RunOptions = {
   verify: Boolean(values.verify),
   concurrency: values.concurrency ? Number(values.concurrency) : undefined,
   packages: values.packages ?? [],
+  closureRoots: values.closure ?? [],
+  closureManifests: values['closure-manifest'] ?? [],
+  closureModules: values['closure-module'] ?? [],
+  repoRoot: values['repo-root'],
   verbose: Boolean(values.verbose),
 };
 

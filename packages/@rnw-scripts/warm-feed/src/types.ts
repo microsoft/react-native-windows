@@ -61,6 +61,22 @@ export interface WarmerConfig {
   concurrency: number;
   /** Entries of the form 'id', 'id@version', or 'ecosystem:id@version'. */
   ignore: string[];
+  closure: ClosureConfig;
+}
+
+/** Config for the closure/graph warming feature (see closure.ts). */
+export interface ClosureConfig {
+  /** npm registry to resolve against; defaults to feeds.npm.registry. */
+  registry?: string;
+  /** Per-module config blocks, keyed by registered special-module name. */
+  modules: Record<string, ClosureModuleConfig>;
+}
+
+export interface ClosureModuleConfig {
+  /** Run this module on the scheduled pass. Defaults to true when the block exists. */
+  enabled?: boolean;
+  /** Module-specific fields (validated by each module). */
+  [key: string]: unknown;
 }
 
 export interface RunOptions {
@@ -73,6 +89,14 @@ export interface RunOptions {
   concurrency?: number;
   /** Ad-hoc 'ecosystem:id@version' entries (one-off warm). */
   packages: string[];
+  /** Ad-hoc closure roots: 'npm:id@version' whose full graph is warmed. */
+  closureRoots: string[];
+  /** package.json paths whose external-dependency closure is warmed. */
+  closureManifests: string[];
+  /** Registered special-module names to run (empty => enabled config modules). */
+  closureModules: string[];
+  /** Repo root for modules that read repo files (defaults to process.cwd()). */
+  repoRoot?: string;
   verbose: boolean;
 }
 
@@ -87,6 +111,11 @@ export interface Auth {
   kind: 'pat' | 'aad';
   /** Authorization header for feed HTTP requests. */
   header(): Promise<Record<string, string>>;
+  /**
+   * The raw feed credential (PAT or AAD access token), for an npm `.npmrc`
+   * `:_authToken=` line. Azure Artifacts accepts either token form there.
+   */
+  token(): Promise<string>;
 }
 
 export interface Ctx {

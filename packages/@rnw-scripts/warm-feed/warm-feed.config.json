@@ -19,5 +19,24 @@
     "maxMajorsBack": 0
   },
   "concurrency": 8,
-  "ignore": []
+  "ignore": [],
+  "closure": {
+    "modules": {
+      "create-react-native-library": {
+        "enabled": true,
+        "createLibraryVersion": "0.63.0",
+        "type": "turbo-module",
+        "example": "vanilla",
+        "languages": "kotlin-objc",
+        "tools": ["eslint", "jest", "lefthook", "release-it", "vite"],
+        "branches": [
+          {"name": "main", "nightly": true},
+          {"name": "0.85-stable"},
+          {"name": "0.84-stable"},
+          {"name": "0.83-stable"},
+          {"name": "0.81-stable"}
+        ]
+      }
+    }
+  }
 }
