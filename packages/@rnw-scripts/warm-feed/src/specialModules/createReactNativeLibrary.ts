@@ -170,20 +170,22 @@ export async function resolveBranchVersions(
 
   let reactNative = branch.reactNativeVersion;
   let reactNativeCli = branch.reactNativeCliVersion;
-  if (!reactNative) {
-    if (branch.nightly) {
-      reactNative = readVnextField(
+  if (branch.nightly) {
+    // Derive both from the working-tree vnext/package.json independently, so an
+    // explicit reactNativeVersion override still yields a CLI for the nightly fixup.
+    reactNative =
+      reactNative ??
+      readVnextField(mctx.repoRoot, 'devDependencies', 'react-native');
+    reactNativeCli =
+      reactNativeCli ??
+      readVnextField(
         mctx.repoRoot,
-        'devDependencies',
-        'react-native',
+        'dependencies',
+        '@react-native-community/cli',
       );
-      reactNativeCli =
-        reactNativeCli ??
-        readVnextField(mctx.repoRoot, 'dependencies', '@react-native-community/cli');
-    } else if (minor !== null) {
-      reactNative =
-        (await latestLineVersion(mctx, 'react-native', minor)) ?? undefined;
-    }
+  } else if (!reactNative && minor !== null) {
+    reactNative =
+      (await latestLineVersion(mctx, 'react-native', minor)) ?? undefined;
   }
   if (!reactNative) {
     throw new Error(
@@ -232,28 +234,44 @@ export function nightlyFixupSpecs(
   }
 }
 
-/** Merge the generated library + example manifests into one spec set. */
+/**
+ * The generated library and example manifests as separate spec sets. Keeping them
+ * apart matters when they name the same package at different versions (cRNL 0.63's
+ * library template can pin a different React Native than the `--react-native-version`
+ * example); the real Yarn workspace resolves both graphs, so merging into one map
+ * would silently drop one of them.
+ */
 function collectScaffoldSpecs(
   projectDir: string,
   versions: BranchVersions,
-): Record<string, string> {
-  const specs = manifestSpecs(
+  branchName: string,
+): DepSpecSet[] {
+  const libSpecs = manifestSpecs(
     JSON.parse(readFileSync(join(projectDir, 'package.json'), 'utf8')),
   );
-  const examplePkg = join(projectDir, 'example', 'package.json');
-  if (existsSync(examplePkg)) {
-    Object.assign(
-      specs,
-      manifestSpecs(JSON.parse(readFileSync(examplePkg, 'utf8'))),
-    );
-  }
   if (versions.nightly) {
-    nightlyFixupSpecs(specs, versions.reactNative, versions.reactNativeCli);
+    nightlyFixupSpecs(libSpecs, versions.reactNative, versions.reactNativeCli);
   }
   if (versions.reactNativeWindowsSpec) {
-    specs['react-native-windows'] = versions.reactNativeWindowsSpec;
+    libSpecs['react-native-windows'] = versions.reactNativeWindowsSpec;
   }
-  return specs;
+  const sets: DepSpecSet[] = [{label: `crnl:${branchName}:lib`, specs: libSpecs}];
+
+  const examplePkg = join(projectDir, 'example', 'package.json');
+  if (existsSync(examplePkg)) {
+    const exampleSpecs = manifestSpecs(
+      JSON.parse(readFileSync(examplePkg, 'utf8')),
+    );
+    if (versions.nightly) {
+      nightlyFixupSpecs(
+        exampleSpecs,
+        versions.reactNative,
+        versions.reactNativeCli,
+      );
+    }
+    sets.push({label: `crnl:${branchName}:example`, specs: exampleSpecs});
+  }
+  return sets;
 }
 
 function scaffold(
@@ -322,10 +340,7 @@ export const createReactNativeLibraryModule: SpecialModule = {
         const versions = await resolveBranchVersions(mctx, branch);
         const {workDir, projectDir} = scaffold(mctx, cfg, branch, versions);
         try {
-          sets.push({
-            label: `crnl:${branch.name}`,
-            specs: collectScaffoldSpecs(projectDir, versions),
-          });
+          sets.push(...collectScaffoldSpecs(projectDir, versions, branch.name));
         } finally {
           rmSync(workDir, {recursive: true, force: true});
         }

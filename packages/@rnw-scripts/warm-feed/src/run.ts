@@ -255,22 +255,35 @@ async function collectClosureTargets(
     const npmrcPath = await writeFeedNpmrc(ctx.auth, registryUrl, tmp);
     const opt = (label: string) => ({registry: registryUrl, npmrcPath, label});
 
+    // Resolve one set in isolation: a failure records a non-zero exit but never
+    // discards the targets already collected for the healthy sets.
+    const pushResolved = async (
+      getSpecs: () => Record<string, string>,
+      label: string,
+    ) => {
+      try {
+        targets.push(...(await resolveClosureSpecs(ctx, getSpecs(), opt(label))));
+      } catch (err) {
+        log.error(`closure ${label} failed: ${(err as Error).message}`);
+        hadFailure = true;
+      }
+    };
+
     // Roots: pack into layers so repeated names with different versions each resolve.
     const layers = groupRootSpecs(
       rootSpecsList(options.closureRoots, m => log.warn(m)),
     );
     for (let i = 0; i < layers.length; i++) {
-      const label = layers.length > 1 ? `roots#${i + 1}` : 'roots';
-      targets.push(...(await resolveClosureSpecs(ctx, layers[i], opt(label))));
+      await pushResolved(
+        () => layers[i],
+        layers.length > 1 ? `roots#${i + 1}` : 'roots',
+      );
     }
 
     for (const manifest of options.closureManifests) {
-      targets.push(
-        ...(await resolveClosureSpecs(
-          ctx,
-          readManifestSpecs(manifest),
-          opt(`manifest:${basename(manifest)}`),
-        )),
+      await pushResolved(
+        () => readManifestSpecs(manifest),
+        `manifest:${basename(manifest)}`,
       );
     }
 
@@ -305,9 +318,7 @@ async function collectClosureTargets(
           hadFailure = true;
         }
         for (const set of sets) {
-          targets.push(
-            ...(await resolveClosureSpecs(ctx, set.specs, opt(set.label))),
-          );
+          await pushResolved(() => set.specs, set.label);
         }
       }
     }
@@ -356,7 +367,11 @@ async function runOneOff(
       ? enabledClosureModules(config)
       : options.closureModules;
     const closure = await collectClosureTargets(ctx, registries, moduleNames);
-    targets.push(...closure.targets.filter(keep));
+    targets.push(
+      ...closure.targets
+        .filter(keep)
+        .filter(t => !only || t.ecosystem === only),
+    );
     hadFailure = closure.hadFailure;
   }
 

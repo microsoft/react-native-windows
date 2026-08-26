@@ -113,6 +113,25 @@ test('resolveBranchVersions: main reads the nightly from vnext, no rnw spec', as
   expect(v.nightly).toBe(true);
 });
 
+test('resolveBranchVersions: main derives the CLI even when reactNativeVersion is overridden', async () => {
+  const repo = mkdtempSync(join(tmpdir(), 'warm-repo-'));
+  mkdirSync(join(repo, 'vnext'));
+  writeFileSync(
+    join(repo, 'vnext', 'package.json'),
+    JSON.stringify({
+      devDependencies: {'react-native': '0.86.0-nightly-x'},
+      dependencies: {'@react-native-community/cli': '20.0.0'},
+    }),
+  );
+  const v = await resolveBranchVersions(mctx(repo, fakeRegistry({})), {
+    name: 'main',
+    nightly: true,
+    reactNativeVersion: '0.86.0-nightly-pinned',
+  });
+  expect(v.reactNative).toBe('0.86.0-nightly-pinned');
+  expect(v.reactNativeCli).toBe('20.0.0');
+});
+
 test('resolveBranchVersions: a stable branch resolves the latest stable RN and RNW', async () => {
   const reg = fakeRegistry({
     'react-native': ['0.81.0', '0.81.5', '0.81.2', '0.82.0', '0.81.9-rc.0'],
