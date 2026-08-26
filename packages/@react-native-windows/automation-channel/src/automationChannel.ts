@@ -154,10 +154,21 @@ export class AutomationClient {
       }
 
       case RpcStatusType.error: {
-        const pendingReq = this.pendingRequests.get(response.payload.id);
+        const id = response.payload.id;
+        const pendingReq =
+          id === null ? undefined : this.pendingRequests.get(id);
         if (pendingReq) {
-          this.pendingRequests.delete(response.payload.id);
+          this.pendingRequests.delete(id);
           pendingReq({type: 'error', ...response.payload.error}, null);
+        } else if (id === null) {
+          // A null id means the server couldn't attribute the error to a
+          // request (e.g. a parse error on our stream); fail all so none hang.
+          this.failAllPendingRequests(
+            new Error(
+              'JSON-RPC error with null id: ' +
+                JSON.stringify(response.payload.error),
+            ),
+          );
         }
         return;
       }
@@ -165,7 +176,7 @@ export class AutomationClient {
   }
 
   private rejectPendingRequest(id: any, err: Error) {
-    if (id === undefined) {
+    if (id === undefined || id === null) {
       // No id to attribute the failure to; fail every in-flight request so none
       // hang (invoke has no timeout).
       this.failAllPendingRequests(err);
