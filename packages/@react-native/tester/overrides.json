@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.86.0-nightly-20260310-621592d1f",
+  "baseVersion": "0.86.0-nightly-20260325-d1809f0aa",
   "overrides": [
     {
       "type": "copy",
@@ -571,7 +571,7 @@
       "type": "copy",
       "file": "js/examples/TextInput/TextInputExample.android.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "9aa7d0134a84831e699156845ec92d0a2fc8c108",
+      "baseHash": "b6ab9814dd71d6411856a445839a07c3c34e369d",
       "issue": 14292
     },
     {
@@ -780,7 +780,7 @@
       "type": "copy",
       "file": "NativeCxxModuleExample/NativeCxxModuleExample.js",
       "baseFile": "packages/rn-tester/NativeCxxModuleExample/NativeCxxModuleExample.js",
-      "baseHash": "382995716ab5f688187530a5fb5362d97638c4f1",
+      "baseHash": "8b4856759b92abaa3793aa58679507c2827c343c",
       "issue": 4054
     },
     {
@@ -794,7 +794,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "94b8a92c13f2b1a3fa497686ad71d9489a619e8f",
+      "baseHash": "4fe2918030660816d8d1bfd054cd992c465f5997",
       "issue": 13228
     },
     {

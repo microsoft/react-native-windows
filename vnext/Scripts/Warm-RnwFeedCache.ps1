@@ -75,7 +75,7 @@
 
 .EXAMPLE
   # Warm against explicit versions and keep the generated projects to inspect:
-  ./Warm-RnwFeedCache.ps1 -ReactNativeVersion 0.86.0-nightly-20260310-621592d1f -KeepWorkDir
+  ./Warm-RnwFeedCache.ps1 -ReactNativeVersion 0.86.0-nightly-20260325-d1809f0aa -KeepWorkDir
 #>
 [CmdletBinding()]
 param(
@@ -87,7 +87,7 @@ param(
   # CODESYNC: keep in step with vnext/Scripts/creaternwlib.cmd and creaternwapp.cmd,
   # so the warm run reproduces the same generator/template versions the CLI-init tests use.
   [string]$CreateLibraryVersion = '0.48.9',
-  [string]$TemplateVersion = '@react-native-community/template@0.85.3',
+  [string]$TemplateVersion = '@react-native-community/template@0.86.0',
   [string]$NuGetIndex = 'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json',
   [switch]$SkipRepo,
   [switch]$SkipLib,
