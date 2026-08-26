@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Try fixing the e2e x86 test flakiness",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
