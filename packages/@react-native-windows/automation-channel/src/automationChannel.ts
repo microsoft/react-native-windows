@@ -176,9 +176,9 @@ export class AutomationClient {
   }
 
   private rejectPendingRequest(id: any, err: Error) {
-    if (id === undefined || id === null) {
-      // No id to attribute the failure to; fail every in-flight request so none
-      // hang (invoke has no timeout).
+    // This client only issues numeric ids, so a non-numeric id can't match a
+    // pending request; treat it as unattributable and fail all (invoke has no timeout).
+    if (typeof id !== 'number') {
       this.failAllPendingRequests(err);
       return;
     }
@@ -188,7 +188,7 @@ export class AutomationClient {
       this.pendingRequests.delete(id);
       pendingReq(null, err);
     } else {
-      // Recoverable id, but already settled (stale/duplicate) — ignore.
+      // Valid numeric id, but already settled (stale/duplicate) — ignore.
       console.error(err.message);
     }
   }
