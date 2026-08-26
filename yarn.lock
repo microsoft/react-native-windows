@@ -4635,20 +4635,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native/new-app-screen@npm:0.82.0-nightly-20250821-0ef21bf8a":
-  version: 0.82.0-nightly-20250821-0ef21bf8a
-  resolution: "@react-native/new-app-screen@npm:0.82.0-nightly-20250821-0ef21bf8a"
-  peerDependencies:
-    "@types/react": ^19.1.0
-    react: "*"
-    react-native: "*"
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: 10c0/eb90b84ce0138be457c1afdfc8c7d4f71386bb682c10040df3d78a15c803b671d9c2e4cd8077e554421a53b332d71b2626c68dd4bc0ae56086efc76b25965ee9
-  languageName: node
-  linkType: hard
-
 "@react-native/new-app-screen@npm:0.86.0-nightly-20260408-8bac1df5a":
   version: 0.86.0-nightly-20260408-8bac1df5a
   resolution: "@react-native/new-app-screen@npm:0.86.0-nightly-20260408-8bac1df5a"
@@ -5295,7 +5281,7 @@ __metadata:
     "@react-native-community/cli": "npm:20.0.0"
     "@react-native/jest-preset": "npm:0.86.0-nightly-20260408-8bac1df5a"
     "@react-native/metro-config": "npm:0.86.0-nightly-20260408-8bac1df5a"
-    "@react-native/new-app-screen": "npm:0.82.0-nightly-20250821-0ef21bf8a"
+    "@react-native/new-app-screen": "npm:0.86.0-nightly-20260408-8bac1df5a"
     "@rnw-scripts/babel-node-config": "npm:2.3.3"
     "@rnw-scripts/babel-react-native-config": "npm:0.0.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
