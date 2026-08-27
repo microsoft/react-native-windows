@@ -36,6 +36,10 @@ function createNpmWarmer(ctx: Ctx, npm: NpmRegistry): Warmer {
           `npm auth failed (${status}) fetching ${target.id} tarball`,
         );
       }
+      // A lingering 202 (after warmGet's retries) means Azure Artifacts hasn't
+      // finished saving the version upstream — not warmed yet.
+      if (status === 202)
+        return {target, status: 'failed', detail: 'still saving upstream (202)'};
       if (status >= 200 && status < 300) return {target, status: 'warmed'};
       if (status === 404)
         return {target, status: 'missing', detail: 'tarball 404'};
@@ -59,6 +63,8 @@ function createNuGetWarmer(ctx: Ctx, nuget: NuGetRegistry): Warmer {
           `nuget auth failed (${status}) fetching ${target.id}.${target.version}`,
         );
       }
+      if (status === 202)
+        return {target, status: 'failed', detail: 'still saving upstream (202)'};
       if (status >= 200 && status < 300) return {target, status: 'warmed'};
       if (status === 404)
         return {target, status: 'missing', detail: 'nupkg 404'};

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Ensure that our CLI lib tests use Yarn v4",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
