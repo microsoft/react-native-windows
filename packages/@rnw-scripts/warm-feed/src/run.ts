@@ -32,6 +32,7 @@ import {tmpdir} from 'node:os';
 import {basename, join} from 'node:path';
 import {resolveClosureSpecs, writeFeedNpmrc} from './closure';
 import {readManifestSpecs} from './manifest';
+import {collectNuGetLockTargets} from './nugetLocks';
 import {
   getSpecialModule,
   specialModuleNames,
@@ -217,6 +218,34 @@ function enabledClosureModules(config: WarmerConfig): string[] {
     .map(([name]) => name);
 }
 
+/** Absolute dirs to scan for `packages.lock.json` (config roots under the repo root). */
+function nugetLockRoots(ctx: Ctx): string[] {
+  const cfg = ctx.config.closure.nugetLocks;
+  const repoRoot = ctx.options.repoRoot ?? process.cwd();
+  const roots = cfg?.roots && cfg.roots.length > 0 ? cfg.roots : ['.'];
+  return roots.map(r => join(repoRoot, r));
+}
+
+/** NuGet lock-closure targets for the scheduled pass ([] when disabled/only-npm). */
+function scheduledNuGetLockTargets(
+  ctx: Ctx,
+  registries: Registries,
+  only: Ecosystem | undefined,
+): WarmTarget[] {
+  if (
+    only === 'npm' ||
+    !registries.nuget ||
+    ctx.config.closure.nugetLocks?.enabled === false
+  ) {
+    return [];
+  }
+  const targets = collectNuGetLockTargets(nugetLockRoots(ctx), ctx.log);
+  ctx.log.info(
+    `nuget locks: ${targets.length} version(s) from packages.lock.json`,
+  );
+  return targets;
+}
+
 /**
  * Resolve the npm closures requested by roots (--closure), manifests
  * (--closure-manifest), and special modules, into a deduped warm-target list. All
@@ -383,6 +412,20 @@ async function runOneOff(
     hadFailure = closure.hadFailure;
   }
 
+  if (options.nugetLocks) {
+    if (!registries.nuget) {
+      log.warn('--nuget-locks ignored: no feeds.nuget configured');
+    } else {
+      const nugetTargets = collectNuGetLockTargets(nugetLockRoots(ctx), log);
+      log.info(
+        `nuget locks: ${nugetTargets.length} version(s) from packages.lock.json`,
+      );
+      targets.push(
+        ...nugetTargets.filter(t => !only || t.ecosystem === only).filter(keep),
+      );
+    }
+  }
+
   const deduped = dedupe(targets);
   if (options.dryRun) {
     log.info(`dry run (one-off): ${deduped.length} target(s)`);
@@ -463,6 +506,11 @@ async function runScheduled(
     }
   }
 
+  // NuGet lock closure (npm modules are handled above): warm every version the
+  // repo's packages.lock.json files pin, so a brand-new or non-latest NuGet package
+  // still restores under isolation. Reads local files only, so it is dry-run safe.
+  targets.push(...scheduledNuGetLockTargets(ctx, registries, only));
+
   const deduped = dedupe(targets.filter(keep));
 
   if (options.dryRun) {
@@ -525,7 +573,7 @@ export async function run(options: RunOptions, pat?: string): Promise<number> {
     options.closureRoots.length > 0 ||
     options.closureManifests.length > 0 ||
     options.closureModules.length > 0;
-  if (options.packages.length > 0 || closureRequested) {
+  if (options.packages.length > 0 || closureRequested || options.nugetLocks) {
     return runOneOff(ctx, registries, only, keep);
   }
 

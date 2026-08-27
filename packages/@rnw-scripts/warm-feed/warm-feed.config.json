@@ -37,6 +37,9 @@
           {"name": "0.81-stable"}
         ]
       }
+    },
+    "nugetLocks": {
+      "enabled": true
     }
   }
 }

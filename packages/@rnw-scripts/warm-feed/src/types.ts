@@ -70,6 +70,15 @@ export interface ClosureConfig {
   registry?: string;
   /** Per-module config blocks, keyed by registered special-module name. */
   modules: Record<string, ClosureModuleConfig>;
+  /** NuGet `packages.lock.json` closure warming (see nugetLocks.ts). */
+  nugetLocks?: NuGetLocksConfig;
+}
+
+export interface NuGetLocksConfig {
+  /** Include the NuGet lock closure on the scheduled pass. Defaults to true. */
+  enabled?: boolean;
+  /** Repo-relative dirs to scan recursively for lock files (default: repo root). */
+  roots?: string[];
 }
 
 export interface ClosureModuleConfig {
@@ -95,6 +104,8 @@ export interface RunOptions {
   closureManifests: string[];
   /** Registered special-module names to run (empty => enabled config modules). */
   closureModules: string[];
+  /** One-off: warm the NuGet `packages.lock.json` closure (see nugetLocks.ts). */
+  nugetLocks: boolean;
   /** Repo root for modules that read repo files (defaults to process.cwd()). */
   repoRoot?: string;
   verbose: boolean;

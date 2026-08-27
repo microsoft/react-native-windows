@@ -62,6 +62,7 @@ export function loadConfig(configPath: string): WarmerConfig {
     closure: {
       registry: raw.closure?.registry,
       modules: raw.closure?.modules ?? {},
+      nugetLocks: raw.closure?.nugetLocks,
     },
   };
 }

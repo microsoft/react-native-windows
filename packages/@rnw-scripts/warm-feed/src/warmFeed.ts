@@ -31,6 +31,8 @@ Options:
       --closure-module <name>
                           Run a special closure module by name, or 'all' for every
                           enabled one (repeatable). E.g. create-react-native-library
+      --nuget-locks       Warm the NuGet closure from the repo's packages.lock.json
+                          files (the scheduled pass does this automatically)
       --repo-root <path>  Repo root for modules that read repo files (default: cwd)
       --dry-run           Enumerate and plan only; do not warm
       --verify            Warm every target, ignoring the already-cached skip
@@ -52,6 +54,7 @@ const {values} = parseArgs({
     closure: {type: 'string', multiple: true},
     'closure-manifest': {type: 'string', multiple: true},
     'closure-module': {type: 'string', multiple: true},
+    'nuget-locks': {type: 'boolean'},
     'repo-root': {type: 'string'},
     'dry-run': {type: 'boolean'},
     verify: {type: 'boolean'},
@@ -78,6 +81,7 @@ const options: RunOptions = {
   closureRoots: values.closure ?? [],
   closureManifests: values['closure-manifest'] ?? [],
   closureModules: values['closure-module'] ?? [],
+  nugetLocks: Boolean(values['nuget-locks']),
   repoRoot: values['repo-root'],
   verbose: Boolean(values.verbose),
 };

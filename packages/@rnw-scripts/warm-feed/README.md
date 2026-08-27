@@ -98,6 +98,21 @@ from the working-tree `vnext/package.json`; latest stable `0.NN.x` for
 The scheduled pipeline run warms every **enabled** configured module in addition
 to the latest-patch sync, so brand-new closures stay warm automatically.
 
+### NuGet lock closure
+
+The special modules above are npm-only. NuGet has the same gap — enumeration only
+refreshes lines already in the feed — for which the repo's committed
+`packages.lock.json` files are the source of truth: they pin the full resolved
+NuGet closure (incl. transitives) every project restores. warm-feed scans them and
+warms every `name@resolved` they list, so a brand-new NuGet package (or an exact
+non-latest pinned version) restores under isolation.
+
+The scheduled pass does this automatically (unless `closure.nugetLocks.enabled` is
+`false`, or `--only npm`); `--nuget-locks` runs just this pass one-off. Scanning is
+local (no feed access), so it is included in a `--dry-run` plan. By default it
+scans the repo root (`--repo-root`, default cwd), pruning `node_modules`; narrow it
+with `closure.nugetLocks.roots`.
+
 ## Pipeline usage
 
 `.ado/warm-feed-pipeline.yml` runs the tool on a schedule (and on manual queue)
@@ -127,6 +142,7 @@ maintainer queues the pipeline with the `packages` parameter
 | `ignore` | `id`, `id@version`, or `eco:id@version` entries to skip. |
 | `closure.registry` | npm registry for closure resolution (defaults to `feeds.npm.registry`). |
 | `closure.modules` | Per-module config blocks (e.g. `create-react-native-library`), keyed by module name; each may set `enabled: false`. |
+| `closure.nugetLocks` | NuGet `packages.lock.json` closure: `enabled` (default true) and `roots` (repo-relative dirs to scan; default repo root). |
 
 ## Scope and limitations
 
@@ -134,8 +150,9 @@ maintainer queues the pipeline with the `packages` parameter
   build's exact lockfile-pinned closure. A build pinning an older patch is not
   guaranteed by that pass alone — use closure warming for exact graphs.
 - Enumeration cannot introduce a **brand-new package name** the feed has never
-  seen. Covered instead by closure warming (a special module, `--closure`, or
-  `--closure-manifest`), the authenticated CI build that first restores it, or a
-  one-off `--packages` warm.
+  seen, nor an exact non-latest pinned version. Covered instead by closure warming:
+  for **npm** a special module, `--closure`, or `--closure-manifest`; for **NuGet**
+  the `packages.lock.json` closure (above). The authenticated CI build that first
+  restores a package, or a one-off `--packages` warm, also cover it.
 - Closure resolution needs `npm` on `PATH` (bundled with Node) and, for special
   modules that scaffold, network access to the feed for the generator.
