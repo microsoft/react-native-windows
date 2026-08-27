@@ -5,7 +5,17 @@
  * @format
  */
 
-import {parseNpmLock} from '../closure';
+import {mkdtempSync, readFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {parseNpmLock, writeFeedNpmrc} from '../closure';
+import type {Auth} from '../types';
+
+const fakeAuth: Auth = {
+  kind: 'pat',
+  header: async () => ({}),
+  token: async () => 'SECRET-TOKEN',
+};
 
 test('parses a v3 packages map, skipping root/links/non-registry entries', () => {
   const lock = {
@@ -86,4 +96,25 @@ test('an empty or garbage lock yields nothing', () => {
   expect(parseNpmLock({})).toEqual([]);
   expect(parseNpmLock(null)).toEqual([]);
   expect(parseNpmLock({packages: {}})).toEqual([]);
+});
+
+test('writeFeedNpmrc attaches the token only to an Azure DevOps feed host', async () => {
+  const adoDir = mkdtempSync(join(tmpdir(), 'warm-npmrc-'));
+  const adoPath = await writeFeedNpmrc(
+    fakeAuth,
+    'https://pkgs.dev.azure.com/org/proj/_packaging/feed/npm/registry/',
+    adoDir,
+  );
+  expect(readFileSync(adoPath, 'utf8')).toContain(':_authToken=SECRET-TOKEN');
+
+  const foreignDir = mkdtempSync(join(tmpdir(), 'warm-npmrc-'));
+  const foreignPath = await writeFeedNpmrc(
+    fakeAuth,
+    'https://registry.npmjs.org/',
+    foreignDir,
+  );
+  const foreign = readFileSync(foreignPath, 'utf8');
+  expect(foreign).toContain('registry=https://registry.npmjs.org/');
+  expect(foreign).not.toContain('_authToken');
+  expect(foreign).not.toContain('SECRET-TOKEN');
 });

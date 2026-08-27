@@ -24,6 +24,7 @@ import {
 } from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
+import {URL} from 'node:url';
 import type {Auth, Ctx, WarmTarget} from './types';
 import {parseSemver} from './versions';
 
@@ -42,19 +43,38 @@ interface ResolveOptions {
   label: string;
 }
 
-/** Write an authenticated feed `.npmrc` for npm/npx into `dir`; returns its path. */
+/** True for an Azure DevOps Artifacts feed host — the only host the token is valid for. */
+function isAzureDevOpsFeed(url: string): boolean {
+  let host: string;
+  try {
+    host = new URL(url).host.toLowerCase();
+  } catch {
+    return false;
+  }
+  return (
+    host === 'pkgs.dev.azure.com' || host.endsWith('.pkgs.visualstudio.com')
+  );
+}
+
+/**
+ * Write an `.npmrc` for npm/npx into `dir`; returns its path. The feed credential
+ * is attached only when the registry is an Azure DevOps host, so a custom
+ * `closure.registry` can't leak the token to npmjs or another foreign registry.
+ */
 export async function writeFeedNpmrc(
   auth: Auth,
   registryUrl: string,
   dir: string,
 ): Promise<string> {
-  const token = await auth.token();
-  // Azure Artifacts keys the token by the registry URL without its scheme.
-  const key = registryUrl.replace(/^https?:/i, '');
+  const lines = [`registry=${registryUrl}`];
+  if (isAzureDevOpsFeed(registryUrl)) {
+    const token = await auth.token();
+    // Azure Artifacts keys the token by the registry URL without its scheme.
+    const key = registryUrl.replace(/^https?:/i, '');
+    lines.push(`${key}:_authToken=${token}`);
+  }
   const p = join(dir, '.npmrc');
-  writeFileSync(p, `registry=${registryUrl}\n${key}:_authToken=${token}\n`, {
-    encoding: 'utf8',
-  });
+  writeFileSync(p, `${lines.join('\n')}\n`, {encoding: 'utf8'});
   return p;
 }
 

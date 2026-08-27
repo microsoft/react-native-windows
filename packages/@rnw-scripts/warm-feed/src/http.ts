@@ -98,7 +98,7 @@ export async function httpRequest(
   for (let i = 1; i <= attempts; i++) {
     try {
       const res = await rawOnce(url, opts, 5);
-      if (res.status < 400 || !retry.has(res.status)) return res;
+      if (!retry.has(res.status)) return res;
       lastResponse = res;
     } catch (err) {
       lastError = err;
@@ -139,8 +139,9 @@ export async function warmGet(
     headers,
     buffer: false,
     attempts: 5,
-    // 404 while the feed is still pulling the version from upstream is retryable.
-    retryStatuses: [404, 408, 429, 500, 502, 503, 504],
+    // 404 while the feed is still pulling from upstream, and 202 while Azure
+    // Artifacts is still saving the version, are both retryable (not yet warmed).
+    retryStatuses: [202, 404, 408, 429, 500, 502, 503, 504],
   });
   return res.status;
 }
