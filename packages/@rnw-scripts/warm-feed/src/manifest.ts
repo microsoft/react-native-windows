@@ -29,7 +29,7 @@ export function isResolvableSpec(spec: string): boolean {
   const s = spec.trim();
   if (!s) return false;
   if (
-    /^(workspace|link|file|portal|patch|git\+ssh|git\+https|git|ssh|https?):/i.test(
+    /^(workspace|link|file|portal|patch|git\+ssh|git\+https|git\+file|git|ssh|https?|github|gitlab|bitbucket|gist):/i.test(
       s,
     )
   ) {
