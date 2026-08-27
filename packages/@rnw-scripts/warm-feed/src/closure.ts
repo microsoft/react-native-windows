@@ -5,11 +5,14 @@
  * Closure warming: resolve a set of npm dependency specs to their full
  * transitive graph and turn each resolved `name@version` into a warm target.
  *
- * The graph comes from `npm install --package-lock-only`, whose `package-lock.json`
- * is platform-independent — it lists optional dependencies for every OS/CPU (e.g.
- * turbo's darwin/linux/windows variants), which a real per-platform install would
- * miss. It resolves metadata only (no tarball downloads); the feed save still
- * happens through the existing `warmGet` on each returned target.
+ * The graph comes from `npm install --package-lock-only` (metadata only, no
+ * tarball downloads); the feed save happens through `warmGet` on each target.
+ *
+ * The lockfile covers the resolve host's own platform (Windows x64 in CI). Other
+ * OS/CPU optional variants are not captured dependably against an Azure Artifacts
+ * upstream proxy — npm 11+ writes not-yet-cached ones without a `version`
+ * (npm/cli#9342) and `parseNpmLock` drops version-less entries — so full
+ * cross-platform warming would need a per-OS/CPU resolve.
  *
  * @format
  */
