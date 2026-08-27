@@ -69,11 +69,14 @@ export async function writeFeedNpmrc(
   registryUrl: string,
   dir: string,
 ): Promise<string> {
-  const lines = [`registry=${registryUrl}`];
-  if (isAzureDevOpsFeed(registryUrl)) {
+  // npm scopes an auth key by the registry path *with* a trailing slash
+  // (`//host/path/:_authToken`); normalize so a custom `closure.registry` that
+  // lacks one still authenticates instead of failing the resolve with 401.
+  const registry = registryUrl.endsWith('/') ? registryUrl : `${registryUrl}/`;
+  const lines = [`registry=${registry}`];
+  if (isAzureDevOpsFeed(registry)) {
     const token = await auth.token();
-    // Azure Artifacts keys the token by the registry URL without its scheme.
-    const key = registryUrl.replace(/^https?:/i, '');
+    const key = registry.replace(/^https?:/i, '');
     lines.push(`${key}:_authToken=${token}`);
   }
   const p = join(dir, '.npmrc');

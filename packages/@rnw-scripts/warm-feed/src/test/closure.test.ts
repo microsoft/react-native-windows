@@ -118,3 +118,19 @@ test('writeFeedNpmrc attaches the token only to an Azure DevOps feed host', asyn
   expect(foreign).not.toContain('_authToken');
   expect(foreign).not.toContain('SECRET-TOKEN');
 });
+
+test('writeFeedNpmrc normalizes a missing trailing slash so the auth key matches', async () => {
+  const dir = mkdtempSync(join(tmpdir(), 'warm-npmrc-'));
+  const p = await writeFeedNpmrc(
+    fakeAuth,
+    'https://pkgs.dev.azure.com/org/proj/_packaging/feed/npm/registry',
+    dir,
+  );
+  const npmrc = readFileSync(p, 'utf8');
+  expect(npmrc).toContain(
+    'registry=https://pkgs.dev.azure.com/org/proj/_packaging/feed/npm/registry/',
+  );
+  expect(npmrc).toContain(
+    '//pkgs.dev.azure.com/org/proj/_packaging/feed/npm/registry/:_authToken=SECRET-TOKEN',
+  );
+});
