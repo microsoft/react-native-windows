@@ -42,6 +42,9 @@ export function resolveAuth(log: Logger, pat?: string): Auth {
       async header() {
         return {Authorization: `Bearer ${bearer}`};
       },
+      async token() {
+        return bearer;
+      },
     };
   }
 
@@ -53,6 +56,9 @@ export function resolveAuth(log: Logger, pat?: string): Auth {
       kind: 'pat',
       async header() {
         return {Authorization: `Basic ${basic}`};
+      },
+      async token() {
+        return explicit;
       },
     };
   }
@@ -74,6 +80,9 @@ export function resolveAuth(log: Logger, pat?: string): Auth {
     kind: 'aad',
     async header() {
       return {Authorization: `Bearer ${get()}`};
+    },
+    async token() {
+      return get();
     },
   };
 }

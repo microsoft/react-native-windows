@@ -7,6 +7,7 @@
 
 import {readFileSync} from 'node:fs';
 import type {
+  ClosureConfig,
   EnumerateConfig,
   ExpandConfig,
   FeedConfig,
@@ -19,6 +20,7 @@ interface RawConfig {
   expand?: Partial<ExpandConfig>;
   concurrency?: number;
   ignore?: string[];
+  closure?: Partial<ClosureConfig>;
 }
 
 const DEFAULT_EXPAND: ExpandConfig = {
@@ -57,5 +59,10 @@ export function loadConfig(configPath: string): WarmerConfig {
     expand: {...DEFAULT_EXPAND, ...(raw.expand ?? {})},
     concurrency: raw.concurrency ?? 8,
     ignore: raw.ignore ?? [],
+    closure: {
+      registry: raw.closure?.registry,
+      modules: raw.closure?.modules ?? {},
+      nugetLocks: raw.closure?.nugetLocks,
+    },
   };
 }
