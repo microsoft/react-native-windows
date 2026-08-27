@@ -123,7 +123,22 @@ describe('FlatList Tests', () => {
     await searchBoxBasic('555');
     const component = await app.findElementByTestID('flatlist-basic');
     await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('flatlist-basic');
+    let dump = await dumpVisualTree('flatlist-basic');
+    await app.waitUntil(
+      async () => {
+        dump = await dumpVisualTree('flatlist-basic');
+        const automationTree = JSON.stringify(dump['Automation Tree']);
+        return (
+          automationTree.includes('Item 555 -') &&
+          !automationTree.includes('LIST HEADER')
+        );
+      },
+      {
+        interval: 250,
+        timeout: 20000,
+        timeoutMsg: 'Filtered FlatList did not finish rendering.',
+      },
+    );
     expect(normalizeFlatListRows(dump['Visual Tree'])).toBe(1);
     expect(dump).toMatchSnapshot();
   });
