@@ -1,7 +1,8 @@
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 const fs = require('fs');
 const path = require('node:path');
-const escape = require('escape-string-regexp');
+// escape-string-regexp v5 is ESM-only: require() gives a namespace, not a fn.
+const escape = (s) => s.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
 const pack = require('../package.json');
 
 const root = path.resolve(__dirname, '..');
