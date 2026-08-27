@@ -362,7 +362,15 @@ async function runOneOff(
     options.closureRoots.length > 0 ||
     options.closureManifests.length > 0 ||
     options.closureModules.length > 0;
-  if (closureRequested) {
+  // Collecting a closure runs authenticated npm/scaffold subprocesses against the
+  // feed (which can save packages), so skip it when the plan won't warm its npm
+  // targets anyway: a dry run (must not touch the feed) or a NuGet-only selection.
+  const skipClosure = options.dryRun || only === 'nuget';
+  if (closureRequested && skipClosure) {
+    log.info(
+      `skipping closure collection (${options.dryRun ? 'dry run' : '--only nuget'})`,
+    );
+  } else if (closureRequested) {
     const moduleNames = options.closureModules.includes('all')
       ? enabledClosureModules(config)
       : options.closureModules;
@@ -431,8 +439,15 @@ async function runScheduled(
   // A closure failure is surfaced (non-zero exit) but never blocks the feed-wide
   // sync from warming what it enumerated.
   let closureFailed = false;
+  const enabledModules = enabledClosureModules(config);
+  // Skip the closure scaffold when it can't help or must not run: a NuGet-only
+  // selection (closures are npm) or a dry run (collecting one runs authenticated
+  // subprocesses that can save packages to the feed, breaking "do not warm").
   const scheduledModules =
-    only === 'nuget' ? [] : enabledClosureModules(config);
+    only === 'nuget' || options.dryRun ? [] : enabledModules;
+  if (options.dryRun && only !== 'nuget' && enabledModules.length > 0) {
+    log.info('skipping closure collection (dry run)');
+  }
   if (scheduledModules.length > 0) {
     try {
       const closure = await collectClosureTargets(

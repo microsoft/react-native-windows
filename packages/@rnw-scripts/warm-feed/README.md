@@ -56,10 +56,13 @@ name the feed has never seen — e.g. the packages a bumped
 `create-react-native-library` pulls into a generated project. Closure warming
 closes that gap: it resolves a dependency **graph** and warms every version in it.
 
-The graph is resolved with `npm install --package-lock-only`, whose lockfile is
-**platform-independent**, so it captures optional dependencies for every OS/CPU
-(e.g. turbo's darwin/linux/windows variants) that a single-platform install would
-miss. It resolves metadata only; the feed save still happens per version.
+The graph is resolved with `npm install --package-lock-only` (metadata only; the
+feed save still happens per version). The lockfile covers the **resolve host's own
+platform** (Windows x64 in CI). It can also list other-OS/CPU optional variants, but
+not dependably against an Azure Artifacts upstream proxy: npm 11+ writes
+not-yet-cached, non-current-platform optional deps without a `version`
+(npm/cli#9342) and the parser drops version-less entries. Warming every platform's
+optional deps would need a per-OS/CPU resolve.
 
 Three ways to feed it a graph:
 
