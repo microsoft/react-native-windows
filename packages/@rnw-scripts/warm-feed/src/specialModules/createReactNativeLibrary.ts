@@ -12,8 +12,9 @@
  * warm-feed runs only from `main`, but the test runs on every release branch, each
  * pinned to a different React Native. The config manifest therefore lists all
  * branches; per branch we derive the RN/CLI versions (nightly for `main` from the
- * working-tree vnext/package.json; latest stable `0.NN.x` for `0.NN-stable`),
- * scaffold, and read the generated manifests. Mirrors vnext/Scripts/creaternwlib.cmd.
+ * working-tree vnext/package.json; for a stable branch, the react-native it pins in
+ * its own vnext/package.json, read via git), scaffold, and read the generated
+ * manifests. Mirrors vnext/Scripts/creaternwlib.cmd.
  *
  * @format
  */
@@ -37,6 +38,8 @@ interface CrnlBranch {
   reactNativeCliVersion?: string;
   /** Override the `react-native-windows` spec added to the library. */
   reactNativeWindowsSpec?: string;
+  /** Git ref for a stable branch's vnext/package.json (default: the branch name). */
+  ref?: string;
 }
 
 interface CrnlConfig {
@@ -107,6 +110,7 @@ export function parseCrnlConfig(config: Record<string, unknown>): CrnlConfig {
         typeof rec.reactNativeWindowsSpec === 'string'
           ? rec.reactNativeWindowsSpec
           : undefined,
+      ref: typeof rec.ref === 'string' ? rec.ref : undefined,
     };
   });
   return {
@@ -186,9 +190,49 @@ export async function readRnwWorkspaceSpecs(
   return out;
 }
 
+interface VnextManifest {
+  version?: string;
+  dependencies?: Record<string, string>;
+  devDependencies?: Record<string, string>;
+}
+
+/** Reads a stable branch's vnext/package.json; injectable so tests avoid git. */
+export type BranchVnextReader = (
+  mctx: SpecialModuleContext,
+  branch: CrnlBranch,
+) => VnextManifest;
+
+/**
+ * Fetch a stable branch's tip and read its vnext/package.json. The scheduled
+ * warm-feed job checks out only main (shallow), so fetch the branch first. Mirrors
+ * setVersionEnvVars.js's `reactNativeDevDependency` so a stable branch warms the
+ * exact react-native its CLI-init job scaffolds, not the latest patch in the line.
+ */
+const gitReadBranchVnext: BranchVnextReader = (mctx, branch) => {
+  const ref = branch.ref ?? branch.name;
+  // CI's checkout has only `origin`; a local run can point elsewhere (e.g. upstream).
+  const remote = process.env.WARM_FEED_GIT_REMOTE || 'origin';
+  runTool(
+    'git',
+    ['fetch', '--depth=1', remote, ref],
+    mctx.repoRoot,
+    {},
+    `git fetch ${remote} ${ref}`,
+  );
+  const json = runTool(
+    'git',
+    ['show', 'FETCH_HEAD:vnext/package.json'],
+    mctx.repoRoot,
+    {},
+    `git show ${ref}:vnext/package.json`,
+  );
+  return JSON.parse(json) as VnextManifest;
+};
+
 export async function resolveBranchVersions(
   mctx: SpecialModuleContext,
   branch: CrnlBranch,
+  readBranchVnext: BranchVnextReader = gitReadBranchVnext,
 ): Promise<BranchVersions> {
   const minor = stableMinor(branch.name);
 
@@ -208,8 +252,13 @@ export async function resolveBranchVersions(
         '@react-native-community/cli',
       );
   } else if (!reactNative && minor !== null) {
-    reactNative =
-      (await latestLineVersion(mctx, 'react-native', minor)) ?? undefined;
+    // Stable: read the exact react-native/CLI the branch pins in its own
+    // vnext/package.json (what its CLI-init job scaffolds), not the latest patch
+    // in the line — a released branch can lag the newest published patch.
+    const vnext = readBranchVnext(mctx, branch);
+    reactNative = vnext.devDependencies?.['react-native'];
+    reactNativeCli =
+      reactNativeCli ?? vnext.dependencies?.['@react-native-community/cli'];
   }
   if (!reactNative) {
     throw new Error(

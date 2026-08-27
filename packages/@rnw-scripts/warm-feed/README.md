@@ -91,8 +91,9 @@ generated project*, so its closure — not cRNL's own dependencies — is what t
 feed needs. warm-feed runs only from `main`, but the test runs on every release
 branch pinned to a different React Native, so the module's config manifest lists
 all branches and, per branch, derives the RN/CLI versions (nightly for `main`
-from the working-tree `vnext/package.json`; latest stable `0.NN.x` for
-`0.NN-stable`), scaffolds, and reads the generated manifests. Mirrors
+from the working-tree `vnext/package.json`; for `0.NN-stable`, the exact
+`react-native` that branch pins in its own `vnext/package.json`, read via git),
+scaffolds, and reads the generated manifests. Mirrors
 `vnext/Scripts/creaternwlib.cmd`.
 
 The scheduled pipeline run warms every **enabled** configured module in addition

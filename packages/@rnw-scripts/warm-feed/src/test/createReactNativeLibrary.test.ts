@@ -133,46 +133,60 @@ test('resolveBranchVersions: main derives the CLI even when reactNativeVersion i
   expect(v.reactNativeCli).toBe('20.0.0');
 });
 
-test('resolveBranchVersions: a stable branch resolves the latest stable RN and RNW', async () => {
+test('resolveBranchVersions: a stable branch reads RN/CLI from its vnext, RNW from the line', async () => {
   const reg = fakeRegistry({
-    'react-native': ['0.81.0', '0.81.5', '0.81.2', '0.82.0', '0.81.9-rc.0'],
     'react-native-windows': ['0.81.0', '0.81.4', '0.81.5-preview.1'],
   });
-  const v = await resolveBranchVersions(mctx('/no/repo', reg), {
-    name: '0.81-stable',
-  });
-  expect(v.reactNative).toBe('0.81.5');
+  const v = await resolveBranchVersions(
+    mctx('/no/repo', reg),
+    {name: '0.81-stable'},
+    () => ({
+      devDependencies: {'react-native': '0.81.4'},
+      dependencies: {'@react-native-community/cli': '18.0.0'},
+    }),
+  );
+  expect(v.reactNative).toBe('0.81.4');
+  expect(v.reactNativeCli).toBe('18.0.0');
   expect(v.reactNativeWindowsSpec).toBe('0.81.4');
   expect(v.nightly).toBe(false);
 });
 
 test('resolveBranchVersions: a preview-only RNW line falls back to the newest preview', async () => {
   const reg = fakeRegistry({
-    'react-native': ['0.85.0', '0.85.3'],
     'react-native-windows': ['0.85.0-preview.1', '0.85.0-preview.2'],
   });
-  const v = await resolveBranchVersions(mctx('/no/repo', reg), {
-    name: '0.85-stable',
-  });
+  const v = await resolveBranchVersions(
+    mctx('/no/repo', reg),
+    {name: '0.85-stable'},
+    () => ({devDependencies: {'react-native': '0.85.3'}}),
+  );
   expect(v.reactNative).toBe('0.85.3');
   expect(v.reactNativeWindowsSpec).toBe('0.85.0-preview.2');
 });
 
-test('resolveBranchVersions: explicit overrides win', async () => {
-  const v = await resolveBranchVersions(mctx('/no/repo', fakeRegistry({})), {
-    name: '0.83-stable',
-    reactNativeVersion: '0.83.7',
-    reactNativeWindowsSpec: '0.83.0-canary',
-  });
+test('resolveBranchVersions: explicit overrides win without reading the branch vnext', async () => {
+  const v = await resolveBranchVersions(
+    mctx('/no/repo', fakeRegistry({})),
+    {
+      name: '0.83-stable',
+      reactNativeVersion: '0.83.7',
+      reactNativeWindowsSpec: '0.83.0-canary',
+    },
+    () => {
+      throw new Error('should not read branch vnext when overridden');
+    },
+  );
   expect(v.reactNative).toBe('0.83.7');
   expect(v.reactNativeWindowsSpec).toBe('0.83.0-canary');
 });
 
-test('resolveBranchVersions: throws when a stable line has no versions', async () => {
+test('resolveBranchVersions: throws when the branch vnext pins no react-native', async () => {
   await expect(
-    resolveBranchVersions(mctx('/no/repo', fakeRegistry({})), {
-      name: '0.99-stable',
-    }),
+    resolveBranchVersions(
+      mctx('/no/repo', fakeRegistry({})),
+      {name: '0.99-stable'},
+      () => ({}),
+    ),
   ).rejects.toThrow(/could not determine a react-native version/);
 });
 
