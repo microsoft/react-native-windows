@@ -11,6 +11,7 @@ import {join} from 'node:path';
 import {
   nightlyFixupSpecs,
   parseCrnlConfig,
+  readRnwWorkspaceSpecs,
   resolveBranchVersions,
   stableMinor,
 } from '../specialModules/createReactNativeLibrary';
@@ -174,3 +175,29 @@ test('resolveBranchVersions: throws when a stable line has no versions', async (
     }),
   ).rejects.toThrow(/could not determine a react-native version/);
 });
+
+test('readRnwWorkspaceSpecs keeps only resolvable @react-native-windows/* deps', () => {
+  const repo = mkdtempSync(join(tmpdir(), 'warm-repo-'));
+  mkdirSync(join(repo, 'vnext'));
+  writeFileSync(
+    join(repo, 'vnext', 'package.json'),
+    JSON.stringify({
+      dependencies: {
+        '@react-native-windows/cli': '0.0.0-canary.293',
+        '@react-native-community/cli': '20.0.0',
+        'react-native': '0.86.0-nightly-x',
+      },
+      devDependencies: {
+        '@react-native-windows/codegen': '0.0.0-canary.133',
+        '@react-native-windows/find-dotnet-tools': '0.0.0-canary.2',
+        '@rnw-scripts/just-task': 'workspace:*',
+      },
+    }),
+  );
+  expect(readRnwWorkspaceSpecs(repo)).toEqual({
+    '@react-native-windows/cli': '0.0.0-canary.293',
+    '@react-native-windows/codegen': '0.0.0-canary.133',
+    '@react-native-windows/find-dotnet-tools': '0.0.0-canary.2',
+  });
+});
+

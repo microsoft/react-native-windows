@@ -22,7 +22,7 @@ import {existsSync, mkdtempSync, readFileSync, rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
 import {runTool, type DepSpecSet} from '../closure';
-import {manifestSpecs} from '../manifest';
+import {manifestSpecs, readManifestSpecs} from '../manifest';
 import {compareSemver, isStable, parseSemver} from '../versions';
 import type {SpecialModule, SpecialModuleContext} from './types';
 
@@ -160,6 +160,22 @@ function readVnextField(
     Record<string, string> | undefined
   >;
   return pkg[section]?.[name];
+}
+
+/**
+ * The published `@react-native-windows/*` packages the locally built RNW depends on.
+ * The `main` scaffold never pins `react-native-windows` (there is no published nightly),
+ * yet the real CLI-init job installs the locally built RNW, whose manifest references
+ * exact canary `@react-native-windows/*` versions that must exist in the isolated feed.
+ * Scheduled feed enumeration skips prereleases, so warm their closures from here.
+ */
+export function readRnwWorkspaceSpecs(repoRoot: string): Record<string, string> {
+  const specs = readManifestSpecs(join(repoRoot, 'vnext', 'package.json'));
+  const out: Record<string, string> = {};
+  for (const [name, spec] of Object.entries(specs)) {
+    if (name.startsWith('@react-native-windows/')) out[name] = spec;
+  }
+  return out;
 }
 
 export async function resolveBranchVersions(
@@ -343,6 +359,12 @@ export const createReactNativeLibraryModule: SpecialModule = {
           sets.push(...collectScaffoldSpecs(projectDir, versions, branch.name));
         } finally {
           rmSync(workDir, {recursive: true, force: true});
+        }
+        if (versions.nightly) {
+          const rnwSpecs = readRnwWorkspaceSpecs(mctx.repoRoot);
+          if (Object.keys(rnwSpecs).length > 0) {
+            sets.push({label: `crnl:${branch.name}:rnw-workspace`, specs: rnwSpecs});
+          }
         }
       } catch (err) {
         // One branch failing must not drop the others; record it so the caller can
