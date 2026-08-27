@@ -176,7 +176,7 @@ test('resolveBranchVersions: throws when a stable line has no versions', async (
   ).rejects.toThrow(/could not determine a react-native version/);
 });
 
-test('readRnwWorkspaceSpecs keeps only resolvable @react-native-windows/* deps', () => {
+test('readRnwWorkspaceSpecs warms only feed-published @react-native-windows/* pins', async () => {
   const repo = mkdtempSync(join(tmpdir(), 'warm-repo-'));
   mkdirSync(join(repo, 'vnext'));
   writeFileSync(
@@ -194,10 +194,15 @@ test('readRnwWorkspaceSpecs keeps only resolvable @react-native-windows/* deps',
       },
     }),
   );
-  expect(readRnwWorkspaceSpecs(repo)).toEqual({
+  const reg = fakeRegistry({
+    // cli + codegen pins are on the feed; find-dotnet-tools' pin isn't published yet.
+    '@react-native-windows/cli': ['0.0.0-canary.290', '0.0.0-canary.293'],
+    '@react-native-windows/codegen': ['0.0.0-canary.133'],
+    '@react-native-windows/find-dotnet-tools': ['0.0.0-canary.1'],
+  });
+  expect(await readRnwWorkspaceSpecs(mctx(repo, reg))).toEqual({
     '@react-native-windows/cli': '0.0.0-canary.293',
     '@react-native-windows/codegen': '0.0.0-canary.133',
-    '@react-native-windows/find-dotnet-tools': '0.0.0-canary.2',
   });
 });
 

@@ -168,12 +168,20 @@ function readVnextField(
  * yet the real CLI-init job installs the locally built RNW, whose manifest references
  * exact canary `@react-native-windows/*` versions that must exist in the isolated feed.
  * Scheduled feed enumeration skips prereleases, so warm their closures from here.
+ *
+ * A pin the feed doesn't have yet (a freshly bumped canary the local build supplies from
+ * Verdaccio) is skipped: resolving it would ETARGET and discard the whole set.
  */
-export function readRnwWorkspaceSpecs(repoRoot: string): Record<string, string> {
-  const specs = readManifestSpecs(join(repoRoot, 'vnext', 'package.json'));
+export async function readRnwWorkspaceSpecs(
+  mctx: SpecialModuleContext,
+): Promise<Record<string, string>> {
+  const specs = readManifestSpecs(join(mctx.repoRoot, 'vnext', 'package.json'));
   const out: Record<string, string> = {};
   for (const [name, spec] of Object.entries(specs)) {
-    if (name.startsWith('@react-native-windows/')) out[name] = spec;
+    if (!name.startsWith('@react-native-windows/')) continue;
+    if ((await mctx.registry.getVersions(name)).includes(spec)) {
+      out[name] = spec;
+    }
   }
   return out;
 }
@@ -361,7 +369,7 @@ export const createReactNativeLibraryModule: SpecialModule = {
           rmSync(workDir, {recursive: true, force: true});
         }
         if (versions.nightly) {
-          const rnwSpecs = readRnwWorkspaceSpecs(mctx.repoRoot);
+          const rnwSpecs = await readRnwWorkspaceSpecs(mctx);
           if (Object.keys(rnwSpecs).length > 0) {
             sets.push({label: `crnl:${branch.name}:rnw-workspace`, specs: rnwSpecs});
           }
