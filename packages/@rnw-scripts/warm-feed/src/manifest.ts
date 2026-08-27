@@ -13,13 +13,15 @@
 
 import {readFileSync} from 'node:fs';
 
-// Ordered lowest -> highest precedence for the later-wins merge in manifestSpecs:
-// peerDependencies (a broad constraint) is weakest; a concrete dependency wins.
+// Ordered lowest -> highest precedence for the later-wins merge in manifestSpecs.
+// peerDependencies (a broad constraint) is weakest; optionalDependencies is
+// strongest because npm lets a same-name optional entry override the one in
+// dependencies.
 const DEP_SECTIONS = [
   'peerDependencies',
-  'optionalDependencies',
   'devDependencies',
   'dependencies',
+  'optionalDependencies',
 ] as const;
 
 /** True when `spec` is a range npm resolves from a registry (vs. local/VCS/URL). */

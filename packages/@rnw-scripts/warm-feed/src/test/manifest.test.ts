@@ -62,6 +62,15 @@ test('manifestSpecs merges sections; a concrete dep/devDep beats a peer range', 
   });
 });
 
+test('manifestSpecs gives optionalDependencies precedence over dependencies (npm semantics)', () => {
+  expect(
+    manifestSpecs({
+      dependencies: {sharp: '^0.32.0'},
+      optionalDependencies: {sharp: '^0.33.0'},
+    }),
+  ).toEqual({sharp: '^0.33.0'});
+});
+
 test('manifestSpecs tolerates a manifest with no dependency sections', () => {
   expect(manifestSpecs({name: 'x', version: '1.0.0'})).toEqual({});
   expect(manifestSpecs(null)).toEqual({});
