@@ -8,6 +8,7 @@
 const fs = require('fs');
 const https = require('https');
 const {minimatch} = require('minimatch');
+const os = require('os');
 const path = require('path');
 const {pipeline} = require('stream');
 
@@ -160,8 +161,31 @@ task(
   series('downloadFlowTypes', async () => {
     const flowBinPath = require.resolve('flow-bin');
     const flowPath = path.join(path.dirname(flowBinPath), 'cli.js');
-    require('child_process').execSync(`node "${flowPath}" check`, {
-      stdio: 'inherit',
-    });
+    const childProcess = require('child_process');
+    const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'rnw-flow-'));
+    const env = {...process.env, FLOW_TEMP_DIR: tempDir};
+
+    try {
+      childProcess.execFileSync(
+        process.execPath,
+        [flowPath, 'start', '--file-watcher', 'none'],
+        {env, stdio: 'inherit'},
+      );
+      childProcess.execFileSync(
+        process.execPath,
+        [flowPath, 'status', '--no-auto-start'],
+        {env, stdio: 'inherit'},
+      );
+    } finally {
+      const stopResult = childProcess.spawnSync(
+        process.execPath,
+        [flowPath, 'stop'],
+        {env, stdio: 'ignore'},
+      );
+      if (stopResult.status !== 0) {
+        logger.warn('Failed to stop the Flow server');
+      }
+      fs.rmSync(tempDir, {force: true, recursive: true});
+    }
   }),
 );

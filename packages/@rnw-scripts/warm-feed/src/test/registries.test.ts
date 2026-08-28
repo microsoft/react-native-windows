@@ -13,7 +13,7 @@ import type {Auth, Logger} from '../types';
 
 const mockFetchJson = http.fetchJson as jest.Mock;
 
-const auth: Auth = {kind: 'pat', header: async () => ({})};
+const auth: Auth = {kind: 'pat', header: async () => ({}), token: async () => ''};
 const log: Logger = {
   info: () => {},
   warn: () => {},

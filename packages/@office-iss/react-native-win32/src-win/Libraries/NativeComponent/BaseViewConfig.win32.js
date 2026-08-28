@@ -364,6 +364,8 @@ const validAttributesForNonEventProps = {
 
   direction: true,
 
+  focusable: true,
+
   style: ReactNativeStyleAttributes,
 } as const;
 

@@ -2,11 +2,14 @@
 #
 # Enumerates the ms/react-native-public feed and re-pulls, with the pipeline's
 # managed identity, the latest patch of every npm/NuGet major.minor line already
-# in use, so anonymous network-isolated PR/CI builds can restore them.
+# in use, so anonymous network-isolated PR/CI builds can restore them. The
+# scheduled run also resolves and warms the configured closure modules (see
+# warm-feed.config.json), e.g. the create-react-native-library CLI-init closure
+# across every release branch, which enumeration alone can't discover.
 #
 # Runs out of band (never in a PR build) because saving into the feed needs the
 # managed identity. A maintainer can also queue it with the `packages` parameter
-# to warm a specific set of versions on demand.
+# (exact versions) or `closureModules` parameter (a graph) to warm on demand.
 
 name: $(Date:yyyyMMdd).$(Rev:r)
 
@@ -16,6 +19,10 @@ pr: none
 parameters:
   - name: packages
     displayName: 'One-off warm (space-separated): npm:foo@1.2.3 nuget:Bar@4.0.0'
+    type: string
+    default: ' '
+  - name: closureModules
+    displayName: "One-off closure warm (space-separated module names, or 'all')"
     type: string
     default: ' '
 
@@ -60,7 +67,9 @@ extends:
         jobs:
           - job: WarmFeed
             displayName: Warm npm and NuGet feed cache
-            timeoutInMinutes: 60
+            # Longer than a plain sync: the scheduled run also scaffolds and
+            # resolves the create-react-native-library closure per release branch.
+            timeoutInMinutes: 120
             steps:
               - checkout: self
                 fetchDepth: 1
@@ -91,6 +100,7 @@ extends:
                 # under the feed managed identity).
                 env:
                   WARM_FEED_PACKAGES: ${{ parameters.packages }}
+                  WARM_FEED_CLOSURE_MODULES: ${{ parameters.closureModules }}
                 inputs:
                   azureSubscription: Office-Hermes-Windows-Bot
                   scriptType: pscore
@@ -100,6 +110,8 @@ extends:
                     $env:WARM_FEED_TOKEN = az account get-access-token `
                       --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken -o tsv
                     $pkgs = "$env:WARM_FEED_PACKAGES".Trim()
+                    $mods = "$env:WARM_FEED_CLOSURE_MODULES".Trim()
                     $warmArgs = @()
                     if ($pkgs) { foreach ($p in ($pkgs -split '\s+')) { $warmArgs += @('--packages', $p) } }
+                    if ($mods) { foreach ($m in ($mods -split '\s+')) { $warmArgs += @('--closure-module', $m) } }
                     npx warm-feed @warmArgs

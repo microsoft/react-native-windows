@@ -13,7 +13,7 @@ import type {Auth, Logger, WarmerConfig} from '../types';
 
 const mockFetchJson = http.fetchJson as jest.Mock;
 
-const auth: Auth = {kind: 'pat', header: async () => ({})};
+const auth: Auth = {kind: 'pat', header: async () => ({}), token: async () => ''};
 const log: Logger = {
   info: () => {},
   warn: () => {},
@@ -36,6 +36,7 @@ const config: WarmerConfig = {
   },
   concurrency: 1,
   ignore: [],
+  closure: {modules: {}},
 };
 
 beforeEach(() => mockFetchJson.mockReset());

@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.86.0-nightly-20260310-621592d1f",
+  "baseVersion": "0.86.0-nightly-20260325-d1809f0aa",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "007a05886f74a088134c955545ce174d75d8178a"
+      "baseHash": "c0ccac81466faa8097c8ec9341c3ffe788c242da"
     },
     {
       "type": "derived",
@@ -140,7 +140,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/attributedstring/TextAttributes.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/attributedstring/TextAttributes.cpp",
-      "baseHash": "1fc7b68dff2d3a875737659af4a90efe3aa6dcfa"
+      "baseHash": "5b731de462104e9f631790f4e5d19155117dddc2"
     },
     {
       "type": "patch",
@@ -180,13 +180,13 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/accessibilityPropsConversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h",
-      "baseHash": "72cc422293c0e70f454225476cdabd3458bbce5e"
+      "baseHash": "f06bf565eb317796b197a81c2e821fdacf5e8a7c"
     },
     {
-      "type": "patch",
+      "type": "copy",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/BaseViewProps.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/BaseViewProps.cpp",
-      "baseHash": "24baef3c27668197629949d63f1170f2a43e2c15",
+      "baseHash": "ae364254f4a992ddf22246a27418f469538314e7",
       "issue": 15827
     },
     {
@@ -312,7 +312,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "decdc9e7b2af21254c017402ca81b45dbec5018f",
+      "baseHash": "be9a7230542e197b6b4603d806fde0320f21d9b6",
       "issue": 4578
     },
     {
@@ -419,7 +419,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.flow.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.flow.js",
-      "baseHash": "89dae9a6774a2fd24d7468702a616752e314d727"
+      "baseHash": "48221e09512e747863529d29f628cfc83996b89f"
     },
     {
       "type": "patch",
@@ -437,7 +437,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/WindowsTextInputNativeComponent.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/AndroidTextInputNativeComponent.js",
-      "baseHash": "f775756c68a3f7c796207866d8139c010d3c085b"
+      "baseHash": "1911445d723432fbe15b787a50f19af472c83c35"
     },
     {
       "type": "patch",
@@ -509,7 +509,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Core/Devtools/loadBundleFromServer.windows.js",
       "baseFile": "packages/react-native/Libraries/Core/Devtools/loadBundleFromServer.js",
-      "baseHash": "920db91a9af73d35420692d31beb1e4a8e068ff1",
+      "baseHash": "a9c5192a0ba4afc80ec04d633af433296aa4b3c3",
       "issue": 12704
     },
     {
@@ -576,7 +576,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "0e417b1f78fd687a14b84df695eb02e434db4262"
+      "baseHash": "15476a6fd3779560d79d6e29622a1dbbf56406f5"
     },
     {
       "type": "derived",
