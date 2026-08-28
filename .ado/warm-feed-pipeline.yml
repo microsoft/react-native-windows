@@ -1,0 +1,117 @@
+# Scheduled feed-warming pipeline (office/ISS).
+#
+# Enumerates the ms/react-native-public feed and re-pulls, with the pipeline's
+# managed identity, the latest patch of every npm/NuGet major.minor line already
+# in use, so anonymous network-isolated PR/CI builds can restore them. The
+# scheduled run also resolves and warms the configured closure modules (see
+# warm-feed.config.json), e.g. the create-react-native-library CLI-init closure
+# across every release branch, which enumeration alone can't discover.
+#
+# Runs out of band (never in a PR build) because saving into the feed needs the
+# managed identity. A maintainer can also queue it with the `packages` parameter
+# (exact versions) or `closureModules` parameter (a graph) to warm on demand.
+
+name: $(Date:yyyyMMdd).$(Rev:r)
+
+trigger: none
+pr: none
+
+parameters:
+  - name: packages
+    displayName: 'One-off warm (space-separated): npm:foo@1.2.3 nuget:Bar@4.0.0'
+    type: string
+    default: ' '
+  - name: closureModules
+    displayName: "One-off closure warm (space-separated module names, or 'all')"
+    type: string
+    default: ' '
+
+schedules:
+  - cron: '0 0,6,12,18 * * *'
+    displayName: Every 6 hours
+    branches:
+      include:
+        - main
+    always: true
+
+# Route npm/Yarn/NuGet through the ms/react-native-public feed (matches CI) under network isolation.
+variables:
+  - template: variables/shared.yml
+
+resources:
+  repositories:
+    - repository: OfficePipelineTemplates
+      type: git
+      name: 1ESPipelineTemplates/OfficePipelineTemplates
+      ref: refs/tags/release
+
+extends:
+  template: v1/Office.Unofficial.PipelineTemplate.yml@OfficePipelineTemplates
+  parameters:
+    pool:
+      name: Azure-Pipelines-1ESPT-ExDShared
+      vmImage: windows-latest
+      os: windows
+    sdl:
+      bandit:
+        enabled: false
+      # Skip ESLint SDL on this utility pipeline (CI/Release run it on the code); the Unofficial
+      # template's --exit-on-fatal-error trips on repo-wide Guardian ES5-parser parse noise.
+      eslint:
+        enabled: false
+      suppression:
+        suppressionFile: $(Build.SourcesDirectory)\.ado\guardian\sdl\.gdnsuppress
+    stages:
+      - stage: Warm
+        displayName: Warm feed cache
+        jobs:
+          - job: WarmFeed
+            displayName: Warm npm and NuGet feed cache
+            # Longer than a plain sync: the scheduled run also scaffolds and
+            # resolves the create-react-native-library closure per release branch.
+            timeoutInMinutes: 120
+            steps:
+              - checkout: self
+                fetchDepth: 1
+
+              - task: UseNode@1
+                displayName: Use Node.js 24.x
+                inputs:
+                  version: '24.x'
+
+              # Authenticate npm/Yarn to the feed before install (same MI as CI).
+              - template: .ado/templates/auth-npm-feed.yml@self
+
+              - script: yarn install --immutable
+                displayName: yarn install
+                retryCountOnTaskFailure: 2
+
+              - script: npx lage build --scope @rnw-scripts/warm-feed
+                displayName: Build warm-feed
+                retryCountOnTaskFailure: 2
+
+              # AzureCLI logs `az` in as the managed identity, so
+              # `az account get-access-token` mints the feed token the tool reads
+              # from WARM_FEED_TOKEN.
+              - task: AzureCLI@2
+                displayName: Warm ms/react-native-public feed
+                # Pass the queue-time value as data via the environment, never
+                # interpolated into the script body (would allow command injection
+                # under the feed managed identity).
+                env:
+                  WARM_FEED_PACKAGES: ${{ parameters.packages }}
+                  WARM_FEED_CLOSURE_MODULES: ${{ parameters.closureModules }}
+                inputs:
+                  azureSubscription: Office-Hermes-Windows-Bot
+                  scriptType: pscore
+                  scriptLocation: inlineScript
+                  inlineScript: |
+                    $ErrorActionPreference = 'Stop'
+                    $env:WARM_FEED_TOKEN = az account get-access-token `
+                      --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken -o tsv
+                    $pkgs = "$env:WARM_FEED_PACKAGES".Trim()
+                    $mods = "$env:WARM_FEED_CLOSURE_MODULES".Trim()
+                    $warmArgs = @()
+                    if ($pkgs) { foreach ($p in ($pkgs -split '\s+')) { $warmArgs += @('--packages', $p) } }
+                    if ($mods) { foreach ($m in ($mods -split '\s+')) { $warmArgs += @('--closure-module', $m) } }
+                    npx warm-feed @warmArgs

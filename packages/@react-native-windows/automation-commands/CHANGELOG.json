@@ -2,6 +2,57 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Fri, 21 Aug 2026 23:17:43 GMT",
+      "version": "0.0.0-canary.1061",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1061",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1060",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Aug 2026 16:35:17 GMT",
+      "version": "0.0.0-canary.1060",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1060",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1059",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 06 Aug 2026 21:42:42 GMT",
+      "version": "0.0.0-canary.1059",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1059",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "2035179c29b5640c14ebc09c59e5f81ed5115ad3",
+            "comment": "Move CI pipeline to office/ISS ADO project"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1058",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Jul 2026 21:19:52 GMT",
       "version": "0.0.0-canary.1058",
       "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1058",

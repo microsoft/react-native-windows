@@ -1,7 +1,7 @@
 parameters:
 - name: azureSubscription
   type: string
-  default: 'Office-React-Native-Windows-Bot'
+  default: 'Office-Hermes-Windows-Bot'
 - name: endpointId
   type: string
 - name: nugetFeedUrl

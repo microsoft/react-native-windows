@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 21 Aug 2026 16:35:17 GMT",
+      "version": "0.0.0-canary.1030",
+      "tag": "react-native-windows-init_v0.0.0-canary.1030",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.293",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Jul 2026 21:19:48 GMT",
       "version": "0.0.0-canary.1029",
       "tag": "react-native-windows-init_v0.0.0-canary.1029",

@@ -1,8 +1,33 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Mon, 20 Jul 2026 21:19:51 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 21 Aug 2026 23:17:43 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1060
+
+Fri, 21 Aug 2026 23:17:43 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1060
+
+## 0.0.0-canary.1059
+
+Fri, 21 Aug 2026 16:35:17 GMT
+
+### Changes
+
+- Fix CI pipeline and add warm-feed (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.1059
+
+## 0.0.0-canary.1058
+
+Thu, 06 Aug 2026 21:42:42 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.1058
 
 ## 0.0.0-canary.1057
 

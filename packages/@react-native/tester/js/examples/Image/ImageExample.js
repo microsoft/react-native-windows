@@ -21,9 +21,9 @@ import {useEffect, useState} from 'react';
 import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 
 const IMAGE1 =
-  'https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png';
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAIAAABLbSncAAAAEUlEQVR42mO4Y6SPFTEMLQkAItlPQS82a/YAAAAASUVORK5CYII=';
 const IMAGE2 =
-  'https://www.facebook.com/ar_effect/external_textures/648609739826677.png';
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAKklEQVR42mNQ675EU8QwasGoBaMWjFowasGoBaMWjFowasGoBaMWjFowasGoBaMWDBULAEH4DFucrbr4AAAAAElFTkSuQmCC';
 
 const base64Icon =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAABLCAQAAACSR7JhAAADtUlEQVR4Ac3YA2Bj6QLH0XPT1Fzbtm29tW3btm3bfLZtv7e2ObZnms7d8Uw098tuetPzrxv8wiISrtVudrG2JXQZ4VOv+qUfmqCGGl1mqLhoA52oZlb0mrjsnhKpgeUNEs91Z0pd1kvihA3ULGVHiQO2narKSHKkEMulm9VgUyE60s1aWoMQUbpZOWE+kaqs4eLEjdIlZTcFZB0ndc1+lhB1lZrIuk5P2aib1NBpZaL+JaOGIt0ls47SKzLC7CqrlGF6RZ09HGoNy1lYl2aRSWL5GuzqWU1KafRdoRp0iOQEiDzgZPnG6DbldcomadViflnl/cL93tOoVbsOLVM2jylvdWjXolWX1hmfZbGR/wjypDjFLSZIRov09BgYmtUqPQPlQrPapecLgTIy0jMgPKtTeob2zWtrGH3xvjUkPCtNg/tm1rjwrMa+mdUkPd3hWbH0jArPGiU9ufCsNNWFZ40wpwn+62/66R2RUtoso1OB34tnLOcy7YB1fUdc9e0q3yru8PGM773vXsuZ5YIZX+5xmHwHGVvlrGPN6ZSiP1smOsMMde40wKv2VmwPPVXNut4sVpUreZiLBHi0qln/VQeI/LTMYXpsJtFiclUN+5HVZazim+Ky+7sAvxWnvjXrJFneVtLWLyPJu9K3cXLWeOlbMTlrIelbMDlrLenrjEQOtIF+fuI9xRp9ZBFp6+b6WT8RrxEpdK64BuvHgDk+vUy+b5hYk6zfyfs051gRoNO1usU12WWRWL73/MMEy9pMi9qIrR4ZpV16Rrvduxazmy1FSvuFXRkqTnE7m2kdb5U8xGjLw/spRr1uTov4uOgQE+0N/DvFrG/Jt7i/FzwxbA9kDanhf2w+t4V97G8lrT7wc08aA2QNUkuTfW/KimT01wdlfK4yEw030VfT0RtZbzjeMprNq8m8tnSTASrTLti64oBNdpmMQm0eEwvfPwRbUBywG5TzjPCsdwk3IeAXjQblLCoXnDVeoAz6SfJNk5TTzytCNZk/POtTSV40NwOFWzw86wNJRpubpXsn60NJFlHeqlYRbslqZm2jnEZ3qcSKgm0kTli3zZVS7y/iivZTweYXJ26Y+RTbV1zh3hYkgyFGSTKPfRVbRqWWVReaxYeSLarYv1Qqsmh1s95S7G+eEWK0f3jYKTbV6bOwepjfhtafsvUsqrQvrGC8YhmnO9cSCk3yuY984F1vesdHYhWJ5FvASlacshUsajFt2mUM9pqzvKGcyNJW0arTKN1GGGzQlH0tXwLDgQTurS8eIQAAAABJRU5ErkJggg==';
@@ -959,12 +959,13 @@ exports.examples = [
   },
   {
     title: 'Plain Static Image',
+    name: 'static-image',
     description:
       ('Static assets should be placed in the source code tree, and ' +
         'required in the same way as JavaScript modules.': string),
     render: function (): React.Node {
       return (
-        <View style={styles.horizontal}>
+        <View testID="image-static" style={styles.horizontal}>
           <Image
             source={require('../../assets/uie_thumb_normal.png')}
             style={styles.icon}
@@ -1173,9 +1174,10 @@ exports.examples = [
   },
   {
     title: 'Opacity',
+    name: 'opacity',
     render: function (): React.Node {
       return (
-        <View style={styles.horizontal}>
+        <View testID="image-opacity" style={styles.horizontal}>
           <Image style={[styles.base, styles.opacity1]} source={fullImage} />
           <Image style={[styles.base, styles.opacity2]} source={fullImage} />
           <Image style={[styles.base, styles.opacity3]} source={fullImage} />
@@ -1188,9 +1190,10 @@ exports.examples = [
   },
   {
     title: 'Nesting content inside <Image> component',
+    name: 'nesting-content',
     render: function (): React.Node {
       return (
-        <View style={styles.base}>
+        <View testID="image-nesting-content" style={styles.base}>
           <Image style={{...StyleSheet.absoluteFill}} source={fullImage} />
           <Text style={styles.nestedText}>React</Text>
         </View>
@@ -1199,9 +1202,11 @@ exports.examples = [
   },
   {
     title: 'Nesting content inside <ImageBackground> component',
+    name: 'nesting-image-background',
     render: function (): React.Node {
       return (
         <ImageBackground
+          testID="image-nesting-background"
           style={styles.transparentImageBackground}
           source={fullImage}>
           <Text style={styles.nestedText}>React</Text>
@@ -1211,11 +1216,12 @@ exports.examples = [
   },
   {
     title: 'Tint Color',
+    name: 'tint-color',
     description: ('The `tintColor` prop changes all the non-alpha ' +
       'pixels to the tint color.': string),
     render: function (): React.Node {
       return (
-        <View>
+        <View testID="image-tint-color">
           <View style={styles.horizontal}>
             <Image
               source={require('../../assets/uie_thumb_normal.png')}
@@ -1514,9 +1520,11 @@ exports.examples = [
   },
   {
     title: 'Animated GIF',
+    name: 'animated-gif',
     render: function (): React.Node {
       return (
         <Image
+          testID="image-animated-gif"
           style={styles.gif}
           source={require('../../assets/tumblr_mfqekpMktw1rn90umo1_500.gif')}
         />
@@ -1526,9 +1534,14 @@ exports.examples = [
   },
   {
     title: 'Base64 image',
+    name: 'base64-image',
     render: function (): React.Node {
       return (
-        <Image style={styles.base64} source={{uri: base64Icon, scale: 3}} />
+        <Image
+          testID="image-base64"
+          style={styles.base64}
+          source={{uri: base64Icon, scale: 3}}
+        />
       );
     },
     platform: 'ios',
@@ -1599,9 +1612,10 @@ exports.examples = [
   },
   {
     title: 'Blur Radius',
+    name: 'blur-radius',
     render: function (): React.Node {
       return (
-        <View style={styles.horizontal}>
+        <View testID="image-blur-radius" style={styles.horizontal}>
           <Image style={styles.base} source={fullImage} blurRadius={0} />
           <Image style={styles.base} source={fullImage} blurRadius={5} />
           <Image style={styles.base} source={fullImage} blurRadius={10} />

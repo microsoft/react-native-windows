@@ -1,11 +1,18 @@
 const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 const fs = require('fs');
 const path = require('node:path');
-const escape = require('escape-string-regexp');
+// escape-string-regexp v5 is ESM-only: require() gives a namespace, not a fn.
+const escape = (s) => s.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
 const pack = require('../package.json');
 
 const root = path.resolve(__dirname, '..');
 const modules = Object.keys({ ...pack.peerDependencies });
+
+// create-react-native-library 0.63 moved the library's source entry from a
+// top-level "source" field into exports["."] under a "<slug>-source" condition;
+// support both shapes.
+const sourceCondition = `${pack.name.replace(/^@/, '').replace(/\//g, '-')}-source`;
+const librarySource = pack.source ?? pack.exports?.['.']?.[sourceCondition];
 
 // On Windows, require.resolve through yarn workspace junctions can return paths
 // with a different drive letter case than process.cwd(). Metro's internal file
@@ -42,6 +49,15 @@ const config = {
   // We need to make sure that only one version is loaded for peerDependencies
   // So we block them at the root, and alias them to the versions in example's node_modules
   resolver: {
+    // The example imports the library by its package name, but the library is neither
+    // installed in the example's node_modules (no workspace junction) nor built, so metro
+    // can't resolve it. Redirect that bare import to the library's source at the lib root.
+    resolveRequest: (context, moduleName, platform) => {
+      if (moduleName === pack.name) {
+        return { type: 'sourceFile', filePath: path.resolve(root, librarySource) };
+      }
+      return context.resolveRequest(context, moduleName, platform);
+    },
     blocklist: 
       modules.map(
         (m) =>

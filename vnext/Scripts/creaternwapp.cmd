@@ -15,7 +15,7 @@ REM
 REM Requirements:
 REM - You've set the RNW_ROOT environment variable with the path to your clone
 
-setlocal enableextensions enabledelayedexpansion
+setlocal enableextensions disabledelayedexpansion
 
 call git rev-parse --is-inside-work-tree > NUL 2>&1
 if %ERRORLEVEL% equ 0 (
@@ -72,6 +72,9 @@ if not "%part%"=="" (
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwapp.cmd: Setting npm to use verdaccio at http://localhost:4873
+  set NPM_CONFIG_REGISTRY=http://localhost:4873
+  set YARN_NPM_REGISTRY_SERVER=http://localhost:4873
+  set YARN_UNSAFE_HTTP_WHITELIST=localhost
   call npm config set registry http://localhost:4873
 )
 
@@ -117,7 +120,7 @@ if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   REM Do not change, this makes sure we always get a nightly template when still consuming a nightly RN and NOT a later "stable" template that may have been released
   REM set RNCLI_TEMPLATE=--template "@react-native-community/template@^%RN_VERSION:~0,4%.0-"
   REM Windows we need to manually update this with every integration #15124
-  set RNCLI_TEMPLATE=--template "@react-native-community/template@0.84.1"
+  set RNCLI_TEMPLATE=--template "@react-native-community/template@0.86.0"
 )
 
 @echo creaternwapp.cmd: Creating base RN app project with: npx --yes @react-native-community/cli@%RNCLI_VERSION% init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true
@@ -132,19 +135,27 @@ pushd "%APP_NAME%"
 
 if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   @echo creaternwapp.cmd Fixing react-native nightly issues
-  pwsh.exe -Command "(gc package.json) -replace '""react-native"": ""[^\*]*""', '""react-native"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native/((?!jest-preset).+-(config|preset))"": "".*""', '""@react-native/$1"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native/new-app-screen"": "".*""', '""@react-native/new-app-screen"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli((-platform-)?(ios|android))?"": "".*""', '""@react-native-community/cli$1"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
+  call pwsh.exe -NoProfile -File "%RNW_ROOT%\vnext\Scripts\UpdateNightlyDependencies.ps1" -PackageJsonPath package.json -ReactNativeVersion "%RN_VERSION%" -ReactNativeCliVersion "%RNCLI_VERSION%"
+  if errorlevel 1 goto :failure
 )
 
 @echo creaternwapp.cmd: Calling yarn install
 call yarn install
+if errorlevel 1 goto :failure
 
 @echo creaternwapp.cmd: Creating commit to save current state
-if not exist ".git\" call git init .
+if not exist ".git\" (
+  call git init .
+  if errorlevel 1 goto :failure
+)
+call git config user.name "React-Native-Windows Bot"
+if errorlevel 1 goto :failure
+call git config user.email "53619745+rnbot@users.noreply.github.com"
+if errorlevel 1 goto :failure
 call git add .
+if errorlevel 1 goto :failure
 call git commit -m "npx --yes @react-native-community/cli@%RNCLI_VERSION% init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true"
+if errorlevel 1 goto :failure
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwapp.cmd: Setting yarn to use verdaccio at http://localhost:4873
@@ -154,6 +165,7 @@ if %USE_VERDACCIO% equ 1 (
 
 @echo creaternwapp.cmd: Adding RNW dependency to app
 call yarn add react-native-windows@%RNW_VERSION%
+if errorlevel 1 goto :failure
 
 if %LINK_RNW% equ 1 (
   @echo creaternwapp.cmd: Linking RNW dependency to local repo
@@ -169,18 +181,26 @@ if %LINK_RNW% equ 1 (
 
 @echo creaternwapp.cmd: Calling yarn install
 call yarn install
+if errorlevel 1 goto :failure
 
 @echo creaternwapp.cmd: Creating commit to save current state
 call git add .
+if errorlevel 1 goto :failure
 call git commit -m "add rnw dependency"
+if errorlevel 1 goto :failure
 
 @echo creaternwapp.cmd Running init-windows with: npx --yes @react-native-community/cli@%RNCLI_VERSION% init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
 call npx --yes @react-native-community/cli@%RNCLI_VERSION% init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
+if errorlevel 1 goto :failure
 
 @echo creaternwapp.cmd Done, see new %RNW_TEMPLATE_TYPE% project in %CD% with react@%R_VERSION%, react-native@%RN_VERSION%, and react-native-windows@%RNW_VERSION%
+set EXIT_CODE=0
+goto :done
 
+:failure
+set EXIT_CODE=%ERRORLEVEL%
+
+:done
 popd
 
-endlocal
-
-exit /b %ERRORLEVEL%
+endlocal & exit /b %EXIT_CODE%

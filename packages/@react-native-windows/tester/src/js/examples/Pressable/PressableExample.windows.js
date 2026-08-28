@@ -531,6 +531,7 @@ const styles = StyleSheet.create({
 const examples = [
   {
     title: 'Change content based on Press',
+    name: 'content-press',
     render(): React.Node {
       return <ContentPress />;
     },
@@ -583,6 +584,7 @@ const examples = [
   },
   {
     title: 'Pressable feedback events',
+    name: 'feedback-events',
     description: ('<Pressable> components accept onPress, onPressIn, ' +
       'onPressOut, and onLongPress as props.': string),
     render: function (): React.Node {
@@ -683,7 +685,7 @@ const examples = [
               }}>
               <Image
                 source={{
-                  uri: 'https://www.facebook.com/ads/pics/successstories.png',
+                  uri: 'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png',
                 }}
                 style={styles.image}
               />
@@ -696,6 +698,7 @@ const examples = [
   },
   {
     title: '<Text onPress={fn}> with highlight',
+    name: 'text-press',
     render: function (): React.Node {
       return <TextOnPressBox />;
     },
@@ -720,6 +723,7 @@ const examples = [
   },
   {
     title: 'Pressable Hit Slop',
+    name: 'hit-slop',
     description:
       ('<Pressable> components accept hitSlop prop which extends the touch area ' +
         'without changing the view bounds.': string),

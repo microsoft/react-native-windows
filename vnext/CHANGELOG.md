@@ -1,8 +1,38 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 20 Jul 2026 21:19:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 21 Aug 2026 23:17:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1060
+
+Fri, 21 Aug 2026 23:17:42 GMT
+
+### Changes
+
+- Fix crash modifying outline property (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.1059
+
+Fri, 21 Aug 2026 16:35:17 GMT
+
+### Changes
+
+- Fix CI pipeline and add warm-feed (vmorozov@microsoft.com)
+- Release/CI pipeline updates + feed warm-up (vmorozov@microsoft.com)
+- Null-check the capturing component view before notifying OnPointerCaptureLost (crash when the capturing component was unmounted) (collindanielschneide@gmail.com)
+- Fix(fabric): dispatch touch/pen contacts with the W3C primary button (button 0, buttons 1) instead of button -1 / buttons 0, so pointer-event-driven press handling responds to finger taps the same as mouse left-clicks (collindanielschneide@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.293
+
+## 0.0.0-canary.1058
+
+Thu, 06 Aug 2026 21:42:42 GMT
+
+### Changes
+
+- Move CI pipeline to office/ISS ADO project (vmorozov@microsoft.com)
+- Fix placeholder layout constraints fed physical px instead of DIPs; fix no-op NaN fontSize guard in CreatePlaceholderLayout (collindanielschneide@gmail.com)
+- Honor programmatic scrollTo when scrollEnabled={false}, matching iOS/Android (collindanielschneide@gmail.com)
 
 ## 0.0.0-canary.1057
 

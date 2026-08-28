@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate React Native 0.86.0-nightly-20260310-621592d1f",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}

@@ -12622,6 +12622,7 @@ exports[`snapshotAllPages Filter 2`] = `
       "justifyContent": "space-around",
     }
   }
+  testID="filter-test-opacity"
 >
   <View
     style={
@@ -12766,6 +12767,7 @@ exports[`snapshotAllPages Filter 3`] = `
       "justifyContent": "space-around",
     }
   }
+  testID="filter-test-contrast"
 >
   <View
     style={
@@ -12910,6 +12912,7 @@ exports[`snapshotAllPages Filter 4`] = `
       "justifyContent": "space-around",
     }
   }
+  testID="filter-test-sepia"
 >
   <View
     style={
@@ -13054,6 +13057,7 @@ exports[`snapshotAllPages Filter 5`] = `
       "justifyContent": "space-around",
     }
   }
+  testID="filter-test-grayscale"
 >
   <View
     style={
@@ -13198,6 +13202,7 @@ exports[`snapshotAllPages Filter 6`] = `
       "justifyContent": "space-around",
     }
   }
+  testID="filter-test-saturate"
 >
   <View
     style={
@@ -13342,6 +13347,7 @@ exports[`snapshotAllPages Filter 7`] = `
       "justifyContent": "space-around",
     }
   }
+  testID="filter-test-hue-rotate"
 >
   <View
     style={
@@ -13486,6 +13492,7 @@ exports[`snapshotAllPages Filter 8`] = `
       "justifyContent": "space-around",
     }
   }
+  testID="filter-test-invert"
 >
   <View
     style={
@@ -13852,6 +13859,7 @@ exports[`snapshotAllPages Filter 11`] = `
         },
       ]
     }
+    testID="animated-blur-button"
   >
     <View
       style={{}}
@@ -13895,6 +13903,7 @@ exports[`snapshotAllPages Filter 11`] = `
         "width": 100,
       }
     }
+    testID="animated-blur-view"
   />
 </View>
 `;
@@ -29016,7 +29025,7 @@ exports[`snapshotAllPages Layout Events 1`] = `
       onLayout={[Function]}
       source={
         {
-          "uri": "https://www.facebook.com/favicon.ico",
+          "uri": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR4nGNgAAIAAAUAAen63NgAAAAASUVORK5CYII=",
         }
       }
       style={
@@ -39380,7 +39389,7 @@ exports[`snapshotAllPages Pressable 6`] = `
       <Image
         source={
           {
-            "uri": "https://www.facebook.com/ads/pics/successstories.png",
+            "uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
           }
         }
         style={
@@ -71130,7 +71139,9 @@ exports[`snapshotAllPages Text 7`] = `
 `;
 
 exports[`snapshotAllPages Text 8`] = `
-[
+<View
+  testID="text-font-family"
+>
   <Text
     style={
       [
@@ -71144,7 +71155,7 @@ exports[`snapshotAllPages Text 8`] = `
     }
   >
     Sans-Serif
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71160,7 +71171,7 @@ exports[`snapshotAllPages Text 8`] = `
     testID="text-font-family"
   >
     Sans-Serif Bold
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71174,7 +71185,7 @@ exports[`snapshotAllPages Text 8`] = `
     }
   >
     Serif
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71189,7 +71200,7 @@ exports[`snapshotAllPages Text 8`] = `
     }
   >
     Serif Bold
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71203,7 +71214,7 @@ exports[`snapshotAllPages Text 8`] = `
     }
   >
     Monospace
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71218,7 +71229,7 @@ exports[`snapshotAllPages Text 8`] = `
     }
   >
     Monospace Bold (After 5.0)
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71232,8 +71243,8 @@ exports[`snapshotAllPages Text 8`] = `
     }
   >
     Unknown Font Family
-  </Text>,
-]
+  </Text>
+</View>
 `;
 
 exports[`snapshotAllPages Text 9`] = `
@@ -71605,7 +71616,9 @@ exports[`snapshotAllPages Text 10`] = `
 `;
 
 exports[`snapshotAllPages Text 11`] = `
-[
+<View
+  testID="text-font-size"
+>
   <Text
     style={
       [
@@ -71620,7 +71633,7 @@ exports[`snapshotAllPages Text 11`] = `
     testID="text-size"
   >
     Size 23
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71634,12 +71647,14 @@ exports[`snapshotAllPages Text 11`] = `
     }
   >
     Size 8
-  </Text>,
-]
+  </Text>
+</View>
 `;
 
 exports[`snapshotAllPages Text 12`] = `
-[
+<View
+  testID="text-test-color"
+>
   <Text
     style={
       {
@@ -71649,7 +71664,7 @@ exports[`snapshotAllPages Text 12`] = `
     testID="text-color"
   >
     Red color
-  </Text>,
+  </Text>
   <Text
     style={
       {
@@ -71658,12 +71673,14 @@ exports[`snapshotAllPages Text 12`] = `
     }
   >
     Blue color
-  </Text>,
-]
+  </Text>
+</View>
 `;
 
 exports[`snapshotAllPages Text 13`] = `
-[
+<View
+  testID="text-font-weight"
+>
   <Text
     style={
       [
@@ -71677,7 +71694,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     Move fast and be bold
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71691,7 +71708,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     Move fast and be normal
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71705,7 +71722,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 900
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71719,7 +71736,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 800
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71733,7 +71750,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 700
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71747,7 +71764,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 600
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71761,7 +71778,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 500
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71775,7 +71792,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 400
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71789,7 +71806,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 300
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71803,7 +71820,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 200
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71817,7 +71834,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 100
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71831,7 +71848,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 900
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71845,7 +71862,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 800
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71859,7 +71876,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 700
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71873,7 +71890,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 600
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71887,7 +71904,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 500
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71901,7 +71918,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 400
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71915,7 +71932,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 300
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71929,7 +71946,7 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 200
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71943,12 +71960,14 @@ exports[`snapshotAllPages Text 13`] = `
     }
   >
     FONT WEIGHT 100
-  </Text>,
-]
+  </Text>
+</View>
 `;
 
 exports[`snapshotAllPages Text 14`] = `
-[
+<View
+  testID="text-font-style"
+>
   <Text
     style={
       [
@@ -71962,7 +71981,7 @@ exports[`snapshotAllPages Text 14`] = `
     }
   >
     Move fast and be italic
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71976,7 +71995,7 @@ exports[`snapshotAllPages Text 14`] = `
     }
   >
     Move fast and be normal
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -71990,8 +72009,8 @@ exports[`snapshotAllPages Text 14`] = `
     }
   >
     Move fast and be italic, but just be longer so that you don't fit on a single line and make sure text is not truncated.
-  </Text>,
-]
+  </Text>
+</View>
 `;
 
 exports[`snapshotAllPages Text 15`] = `
@@ -72013,7 +72032,9 @@ exports[`snapshotAllPages Text 15`] = `
 `;
 
 exports[`snapshotAllPages Text 16`] = `
-[
+<View
+  testID="text-text-decoration"
+>
   <Text
     style={
       [
@@ -72028,7 +72049,7 @@ exports[`snapshotAllPages Text 16`] = `
     testID="text-decoration-underline"
   >
     Solid underline
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -72042,7 +72063,7 @@ exports[`snapshotAllPages Text 16`] = `
     }
   >
     None textDecoration
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -72058,7 +72079,7 @@ exports[`snapshotAllPages Text 16`] = `
     testID="text-decoration-solid-linethru"
   >
     Solid line-through
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -72072,7 +72093,7 @@ exports[`snapshotAllPages Text 16`] = `
     }
   >
     Both underline and line-through
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -72118,12 +72139,14 @@ exports[`snapshotAllPages Text 16`] = `
     </Text>
      
     text nodes
-  </Text>,
-]
+  </Text>
+</View>
 `;
 
 exports[`snapshotAllPages Text 17`] = `
-[
+<View
+  testID="text-test-nested"
+>
   <Text
     onPress={[Function]}
     style={
@@ -72243,7 +72266,7 @@ exports[`snapshotAllPages Text 17`] = `
       )
     </Text>
     )
-  </Text>,
+  </Text>
   <Text
     onPress={[Function]}
     style={
@@ -72326,7 +72349,7 @@ exports[`snapshotAllPages Text 17`] = `
       )
     </Text>
     )
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -72349,7 +72372,7 @@ exports[`snapshotAllPages Text 17`] = `
     >
       Entity Name
     </Text>
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -72379,7 +72402,7 @@ exports[`snapshotAllPages Text 17`] = `
       size 23, 
     </Text>
     and size 8 again
-  </Text>,
+  </Text>
   <Text
     style={
       {
@@ -72399,7 +72422,7 @@ exports[`snapshotAllPages Text 17`] = `
       blue color, 
     </Text>
     and red color again
-  </Text>,
+  </Text>
   <Text
     style={
       [
@@ -72457,8 +72480,8 @@ exports[`snapshotAllPages Text 17`] = `
       )
     </Text>
     )
-  </Text>,
-]
+  </Text>
+</View>
 `;
 
 exports[`snapshotAllPages Text 18`] = `
@@ -72643,6 +72666,7 @@ exports[`snapshotAllPages Text 20`] = `
       undefined,
     ]
   }
+  testID="text-spaces"
 >
   A 
   generated
@@ -73022,7 +73046,7 @@ exports[`snapshotAllPages Text 23`] = `
 
 exports[`snapshotAllPages Text 24`] = `
 <View
-  testID="text-background-color"
+  testID="text-bg-color-attr"
 >
   <Text
     style={
@@ -73459,31 +73483,37 @@ exports[`snapshotAllPages Text 30`] = `
 `;
 
 exports[`snapshotAllPages Text 31`] = `
-<Text
-  style={
-    [
-      {
-        "color": "#000000ff",
-      },
-      {
-        "fontSize": 20,
-        "textShadowColor": "#00cccc",
-        "textShadowOffset": {
-          "height": 2,
-          "width": 2,
-        },
-        "textShadowRadius": 1,
-      },
-    ]
-  }
-  testID="text-shadow"
+<View
+  testID="text-text-shadow"
 >
-  Demo text shadow
-</Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 20,
+          "textShadowColor": "#00cccc",
+          "textShadowOffset": {
+            "height": 2,
+            "width": 2,
+          },
+          "textShadowRadius": 1,
+        },
+      ]
+    }
+    testID="text-shadow"
+  >
+    Demo text shadow
+  </Text>
+</View>
 `;
 
 exports[`snapshotAllPages Text 32`] = `
-[
+<View
+  testID="text-ellipsize-mode"
+>
   <Text
     numberOfLines={1}
     style={
@@ -73498,7 +73528,7 @@ exports[`snapshotAllPages Text 32`] = `
     }
   >
     This very long text should be truncated with dots in the end.
-  </Text>,
+  </Text>
   <Text
     ellipsizeMode="middle"
     numberOfLines={1}
@@ -73514,7 +73544,7 @@ exports[`snapshotAllPages Text 32`] = `
     }
   >
     RNTesterText very long text should be truncated with dots in the middle.
-  </Text>,
+  </Text>
   <Text
     ellipsizeMode="head"
     numberOfLines={1}
@@ -73530,7 +73560,7 @@ exports[`snapshotAllPages Text 32`] = `
     }
   >
     This very long text should be truncated with dots in the beginning.
-  </Text>,
+  </Text>
   <Text
     ellipsizeMode="clip"
     numberOfLines={1}
@@ -73546,13 +73576,13 @@ exports[`snapshotAllPages Text 32`] = `
     }
   >
     This very long text should be clipped and this will not be visible.
-  </Text>,
-]
+  </Text>
+</View>
 `;
 
 exports[`snapshotAllPages Text 33`] = `
 <View
-  testID="font-variants"
+  testID="text-font-variants"
 >
   <Text
     style={
@@ -75868,16 +75898,24 @@ exports[`snapshotAllPages Text 46`] = `
 `;
 
 exports[`snapshotAllPages Text 47`] = `
-<View>
+<View
+  testID="text-with-link-role"
+>
   <Text
     onPress={[Function]}
     role="link"
     style={
-      {
-        "color": "teal",
-        "textDecorationLine": "underline",
-      }
+      [
+        {
+          "color": "teal",
+          "textDecorationLine": "underline",
+        },
+        {
+          "color": "teal",
+        },
+      ]
     }
+    testID="text-link-role-link"
   >
     Link Text
   </Text>
@@ -83252,8 +83290,260 @@ exports[`snapshotAllPages TextInput 38`] = `
     testID="textinput-autocomplete-sms-otp"
   />
   <TextInput
+    autoComplete="2fa-app-otp"
+    placeholder="2fa-app-otp"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    autoComplete="email-otp"
+    placeholder="email-otp"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    autoComplete="flight-number"
+    placeholder="flight-number"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    autoComplete="flight-confirmation-code"
+    placeholder="flight-confirmation-code"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    autoComplete="gift-card-number"
+    placeholder="gift-card-number"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    autoComplete="gift-card-pin"
+    placeholder="gift-card-pin"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    autoComplete="loyalty-account-number"
+    placeholder="loyalty-account-number"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    autoComplete="postal-address-unit"
+    placeholder="postal-address-unit"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    autoComplete="postal-address-dependent-locality"
+    placeholder="postal-address-dependent-locality"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    autoComplete="promo-code"
+    placeholder="promo-code"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
     autoComplete="sms-otp"
     placeholder="sms-otp"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    autoComplete="upi-vpa"
+    placeholder="upi-vpa"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+  <TextInput
+    autoComplete="wifi-password"
+    placeholder="wifi-password"
     style={
       [
         {
@@ -86082,7 +86372,7 @@ exports[`snapshotAllPages Touchable* and onPress 1`] = `
       <Image
         source={
           {
-            "uri": "https://www.facebook.com/favicon.ico",
+            "uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
           }
         }
         style={
