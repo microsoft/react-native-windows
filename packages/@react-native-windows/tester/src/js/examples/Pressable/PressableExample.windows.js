@@ -558,7 +558,7 @@ const examples = [
   {
     title: 'Change child based on Press',
     description:
-      ('You should be able to press the button, move your finger while pressing, and release it with the proper status updates.': string),
+      'You should be able to press the button, move your finger while pressing, and release it with the proper status updates.' as string,
     render(): React.Node {
       return (
         <View style={styles.row}>
@@ -586,7 +586,7 @@ const examples = [
     title: 'Pressable feedback events',
     name: 'feedback-events',
     description: ('<Pressable> components accept onPress, onPressIn, ' +
-      'onPressOut, and onLongPress as props.': string),
+      'onPressOut, and onLongPress as props.') as string,
     render: function (): React.Node {
       return <PressableFeedbackEvents />;
     },
@@ -594,7 +594,7 @@ const examples = [
   {
     title: 'Pressable with Ripple and Animated child',
     description:
-      ('Pressable can have an AnimatedComponent as a direct child.': string),
+      'Pressable can have an AnimatedComponent as a direct child.' as string,
     platform: 'android',
     render: function (): React.Node {
       const mScale = new Animated.Value(1);
@@ -621,7 +621,7 @@ const examples = [
   {
     title: 'Pressable with custom Ripple',
     description:
-      ("Pressable can specify ripple's radius, color and borderless params": string),
+      "Pressable can specify ripple's radius, color and borderless params" as string,
     platform: 'android',
     render: function (): React.Node {
       const nativeFeedbackButton = {
@@ -707,7 +707,7 @@ const examples = [
     title: 'Pressable delay for events',
     description: ('<Pressable> also accept delayPressIn, ' +
       'delayPressOut, and delayLongPress as props. These props impact the ' +
-      'timing of feedback events.': string),
+      'timing of feedback events.') as string,
     render: function (): React.Node {
       return <PressableDelayEvents />;
     },
@@ -726,7 +726,7 @@ const examples = [
     name: 'hit-slop',
     description:
       ('<Pressable> components accept hitSlop prop which extends the touch area ' +
-        'without changing the view bounds.': string),
+        'without changing the view bounds.') as string,
     render: function (): React.Node {
       return <PressableHitSlop />;
     },
@@ -734,7 +734,7 @@ const examples = [
   {
     title: 'Pressable Native Methods',
     description:
-      ('<Pressable> components expose native methods like `measure`.': string),
+      '<Pressable> components expose native methods like `measure`.' as string,
     render: function (): React.Node {
       return <PressableNativeMethods />;
     },
@@ -743,7 +743,7 @@ const examples = [
     title: 'Disabled Pressable',
     description:
       ('<Pressable> components accept disabled prop which prevents ' +
-        'any interaction with component': string),
+        'any interaction with component') as string,
     render: function (): React.Node {
       return <PressableDisabled />;
     },
@@ -751,14 +751,14 @@ const examples = [
   {
     title: 'Pressable with aria-label="label"',
     description: ('Note: This prop changes the text that a screen ' +
-      'reader announces (there are no visual differences).': string),
+      'reader announces (there are no visual differences).') as string,
     render: function (): React.Node {
       return <PressableAriaLabel />;
     },
   },
   {
     title: 'Pressable with box-shadow',
-    description: ('Pressables with box-shadow': string),
+    description: 'Pressables with box-shadow' as string,
     render: function PressableWithBoxShadow(): React.Node {
       const [parentColor, setParentColor] = useState('red');
       const [childColor, setChildColor] = useState('blue');
@@ -1151,7 +1151,7 @@ const examples = [
   // Windows]
 ];
 
-module.exports = ({
+module.exports = {
   title: 'Pressable',
   documentationURL: 'https://reactnative.dev/docs/pressable',
   category: 'UI',
@@ -1160,4 +1160,4 @@ module.exports = ({
   /* $FlowFixMe[incompatible-type] Natural Inference rollout. See
    * https://fburl.com/workplace/6291gfvu */
   examples,
-}: RNTesterModule);
+} as RNTesterModule;

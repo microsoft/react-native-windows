@@ -111,9 +111,9 @@ const virtualTextViewConfig = {
 // Additional note: Our long term plan is to reduce the overhead of the <Text>
 // and <View> wrappers so that we no longer have any reason to export these APIs.
 export const NativeText: HostComponent<NativeTextProps> =
-  (createReactNativeComponentClass('RCTText', () =>
+  createReactNativeComponentClass('RCTText', () =>
     createViewConfig(textViewConfig),
-  ): any);
+  ) as any;
 
 export const NativeVirtualText: HostComponent<NativeTextProps> =
   !global.RN$Bridgeless &&
@@ -121,7 +121,7 @@ export const NativeVirtualText: HostComponent<NativeTextProps> =
     ? NativeText
     : (createReactNativeComponentClass('RCTVirtualText', () =>
         createViewConfig(virtualTextViewConfig),
-      ): any);
+      ) as any);
 
 export const NativeSelectableText: HostComponent<NativeTextProps> =
   enablePreparedTextLayout()
@@ -130,5 +130,5 @@ export const NativeSelectableText: HostComponent<NativeTextProps> =
           ...textViewConfig,
           uiViewClassName: 'RCTSelectableText',
         }),
-      ): any)
+      ) as any)
     : NativeText;

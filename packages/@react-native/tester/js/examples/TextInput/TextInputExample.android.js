@@ -17,7 +17,7 @@ import type {
 
 import ExampleTextInput from './ExampleTextInput';
 import TextInputSharedExamples from './TextInputSharedExamples';
-import React from 'react';
+import * as React from 'react';
 import {useState} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
@@ -508,11 +508,11 @@ const examples: Array<RNTesterModuleExample> = [
   },
 ];
 
-module.exports = ({
-  displayName: (undefined: ?string),
+module.exports = {
+  displayName: undefined as ?string,
   title: 'TextInput',
   documentationURL: 'https://reactnative.dev/docs/textinput',
   category: 'Basic',
   description: 'Single and multi-line text inputs.',
   examples,
-}: RNTesterModule);
+} as RNTesterModule;

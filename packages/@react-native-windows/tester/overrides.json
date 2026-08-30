@@ -5,38 +5,38 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.86.0-nightly-20260325-d1809f0aa",
+  "baseVersion": "0.86.0-nightly-20260408-8bac1df5a",
   "overrides": [
     {
       "type": "copy",
       "file": "js/examples/ContentURLAndroid/ContentURLAndroid.js",
       "baseFile": "packages/rn-tester/js/examples/ContentURLAndroid/ContentURLAndroid.js",
-      "baseHash": "99a33bffbea3e776edbfca9f26de146995cbe9d0",
+      "baseHash": "39f01dd662f661a906fba2da29e5ebd5e5b3a155",
       "issue": 14844
     },
     {
       "type": "derived",
       "file": "src/js/components/TextInlineView.windows.js",
       "baseFile": "packages/rn-tester/js/components/TextInlineView.js",
-      "baseHash": "c3ef9781d473fa5fd4d0a93842ee875536b19eb2"
+      "baseHash": "eb6acf659f499dfb8e0c49414c81554973b70aaa"
     },
     {
       "type": "derived",
       "file": "src/js/examples-win/Button/ButtonExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Button/ButtonExample.js",
-      "baseHash": "69d270a73a83ff51ba78d174600e50edd1fe2c42"
+      "baseHash": "5b8790f6ee1331deae0163cf8b5c09b2d9f97b72"
     },
     {
       "type": "derived",
       "file": "src/js/examples-win/Switch/SwitchExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Switch/SwitchExample.js",
-      "baseHash": "80662bdca686778c035ca49095f3121afdfe0c93"
+      "baseHash": "5f3ca96c4ef73b03d28b7a2d6bd7330c8d86cf53"
     },
     {
       "type": "patch",
       "file": "src/js/examples/ActivityIndicator/ActivityIndicatorExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/ActivityIndicator/ActivityIndicatorExample.js",
-      "baseHash": "35832d0f01bfc434ce7ebadb4aeb6b6a4b21cc64",
+      "baseHash": "80a2468c9d1579d6f88a54982628183c7920f482",
       "issue": 12869
     },
     {
@@ -50,28 +50,28 @@
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-basic.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-basic.js",
-      "baseHash": "41945de10fceadb15bebb03f7c386e5f1d7cc59a",
+      "baseHash": "a0c1221da66d97bdc7a0c08f8528d3b2646c5071",
       "issue": 12869
     },
     {
       "type": "copy",
       "file": "src/js/examples/FlatList/FlatList-multiColumn.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-multiColumn.js",
-      "baseHash": "13f7c3f3ddfc847cadbafa7c4137b1150f87e053",
+      "baseHash": "25cc6d6b728deefed0b6abce81c5710f8e34708e",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-nested.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-nested.js",
-      "baseHash": "45f9ec2ee31f7d7d1fada2709bc2ac6b54564bdf",
+      "baseHash": "8af3316951172a89f92ea7fcd164fa13faef652c",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-stickyHeaders.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-stickyHeaders.js",
-      "baseHash": "1b4aa52a4c1779607b5bd74c475dd23db152900c"
+      "baseHash": "b5c8bdfcbbc066dba155bed95cb20c0dbc4d74f6"
     },
     {
       "type": "platform",
@@ -85,33 +85,33 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "885ebdd53ac7f33e1fd4d81b4d41de15e530ebe9",
+      "baseHash": "f69e611d660df1bb767d61e1c0fe5b5c2fae378a",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/Modal/ModalOnShow.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalOnShow.js",
-      "baseHash": "911507abcf9172b5fdd1bb68faaf02562df704d4"
+      "baseHash": "4c695e7f73e9c3e71482e1993a3107168cb7955d"
     },
     {
       "type": "patch",
       "file": "src/js/examples/Modal/ModalPresentation.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalPresentation.js",
-      "baseHash": "1c53d7015caa0706d0197423c1f51fcb0c69d872"
+      "baseHash": "361308f1e6362f42be2d04c02995c227d8f947e7"
     },
     {
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "e80fa7c12100c3744d39be075d3a09d5ac2466af",
+      "baseHash": "a88dce30ae4ba4b334b903b2f85663a054b3603c",
       "issue": 6240
     },
     {
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "f69c13423c37eb7de8864b9c846249dce4e77d29"
+      "baseHash": "b5e53c2dce9be6e4fefa9a60b7229a4114208fd6"
     },
     {
       "type": "patch",
@@ -124,14 +124,14 @@
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "b6ab9814dd71d6411856a445839a07c3c34e369d",
+      "baseHash": "3cc8ea65c4cd7b5fb2c0c96a1352ea2dab43b732",
       "issue": 5688
     },
     {
       "type": "derived",
       "file": "src/js/examples/Touchable/TouchableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Touchable/TouchableExample.js",
-      "baseHash": "d56cdb355fd6edfcec3ce22eef7ef50223f709ff"
+      "baseHash": "fe9d2a6d6340dd18639b97a46b3757d71fc52ffe"
     },
     {
       "type": "patch",
@@ -143,7 +143,7 @@
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "8aa56a53370fb53150956fbeb9f5d82c00b677e8"
+      "baseHash": "3ff31e95e684d224a0493422a28956b6a71d34b4"
     },
     {
       "type": "copy",
@@ -156,7 +156,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "6c9c1b36ee77323fa1b76235eaab9907ee7c733c"
+      "baseHash": "31a3c185ebce41969fc8af059b997a3c8442617c"
     }
   ]
 }

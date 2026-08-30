@@ -791,4 +791,4 @@ let WindowsTextInputNativeComponent = NativeComponentRegistry.get<NativeProps>(
 );
 
 // flowlint-next-line unclear-type:off
-export default ((WindowsTextInputNativeComponent: any): HostComponent<NativeProps>);
+export default WindowsTextInputNativeComponent as any as HostComponent<NativeProps>;

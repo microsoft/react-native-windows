@@ -122,7 +122,8 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'SwipeableCardExample',
     category: 'UI',
     module: require('../examples/SwipeableCardExample/SwipeableCardExample'),
-  }*/ {
+  }*/
+  {
     key: 'SwitchExample',
     category: 'UI',
     module: require('../examples/Switch/SwitchExample'),
@@ -166,176 +167,177 @@ const Components: Array<RNTesterModuleInfo> = [
   ...RNTesterListFbInternal.Components,
 ];
 
-const APIs: Array<RNTesterModuleInfo> = ([
-  {
-    key: 'AccessibilityExample',
-    category: 'Basic',
-    module: require('../examples/Accessibility/AccessibilityExample'),
-  },
-  {
-    key: 'AccessibilityExampleWin32',
-    module: require('../examples-win32/Accessibility/AccessibilityExampleWin32'),
-  },
-  {
-    key: 'AlertExample',
-    category: 'UI',
-    module: require('../examples/Alert/AlertExample').default,
-  },
-  {
-    key: 'AnimatedIndex',
-    category: 'UI',
-    module: require('../examples/Animated/AnimatedIndex').default,
-  },
-  {
-    key: 'AnimationBackendIndex',
-    category: 'UI',
-    module: require('../examples/AnimationBackend/AnimationBackendIndex')
-      .default,
-  },
-  {
-    key: 'Animation - GratuitousAnimation',
-    category: 'UI',
-    module: require('../examples/AnimatedGratuitousApp/AnExApp'),
-  },
-  {
-    key: 'AppearanceExample',
-    category: 'UI',
-    module: require('../examples/Appearance/AppearanceExample'),
-  },
-  {
-    key: 'AppStateExample',
-    category: 'Basic',
-    module: require('../examples/AppState/AppStateExample'),
-  },
-  {
-    key: 'ContentURLAndroid',
-    category: 'Android',
-    module: require('../examples/ContentURLAndroid/ContentURLAndroid'),
-  },
-  {
-    key: 'URLExample',
-    category: 'Basic',
-    module: require('../examples/Urls/UrlExample'),
-  },
-  {
-    key: 'BorderExample',
-    category: 'UI',
-    module: require('../examples/Border/BorderExample').default,
-  },
-  {
-    key: 'CrashExample',
-    category: 'Basic',
-    module: require('../examples/Crash/CrashExample'),
-  },
-  {
-    key: 'DevSettings',
-    category: 'Basic',
-    module: require('../examples/DevSettings/DevSettingsExample'),
-  },
-  {
-    key: 'Dimensions',
-    category: 'UI',
-    module: require('../examples/Dimensions/DimensionsExample'),
-  },
-  {
-    key: 'DisplayContentsExample',
-    category: 'UI',
-    module: require('../examples/DisplayContents/DisplayContentsExample')
-      .default,
-  },
-  // Only show the link for the example if the API is available.
-  /*{
+const APIs: Array<RNTesterModuleInfo> = (
+  [
+    {
+      key: 'AccessibilityExample',
+      category: 'Basic',
+      module: require('../examples/Accessibility/AccessibilityExample'),
+    },
+    {
+      key: 'AccessibilityExampleWin32',
+      module: require('../examples-win32/Accessibility/AccessibilityExampleWin32'),
+    },
+    {
+      key: 'AlertExample',
+      category: 'UI',
+      module: require('../examples/Alert/AlertExample').default,
+    },
+    {
+      key: 'AnimatedIndex',
+      category: 'UI',
+      module: require('../examples/Animated/AnimatedIndex').default,
+    },
+    {
+      key: 'AnimationBackendIndex',
+      category: 'UI',
+      module: require('../examples/AnimationBackend/AnimationBackendIndex')
+        .default,
+    },
+    {
+      key: 'Animation - GratuitousAnimation',
+      category: 'UI',
+      module: require('../examples/AnimatedGratuitousApp/AnExApp'),
+    },
+    {
+      key: 'AppearanceExample',
+      category: 'UI',
+      module: require('../examples/Appearance/AppearanceExample'),
+    },
+    {
+      key: 'AppStateExample',
+      category: 'Basic',
+      module: require('../examples/AppState/AppStateExample'),
+    },
+    {
+      key: 'ContentURLAndroid',
+      category: 'Android',
+      module: require('../examples/ContentURLAndroid/ContentURLAndroid'),
+    },
+    {
+      key: 'URLExample',
+      category: 'Basic',
+      module: require('../examples/Urls/UrlExample'),
+    },
+    {
+      key: 'BorderExample',
+      category: 'UI',
+      module: require('../examples/Border/BorderExample').default,
+    },
+    {
+      key: 'CrashExample',
+      category: 'Basic',
+      module: require('../examples/Crash/CrashExample'),
+    },
+    {
+      key: 'DevSettings',
+      category: 'Basic',
+      module: require('../examples/DevSettings/DevSettingsExample'),
+    },
+    {
+      key: 'Dimensions',
+      category: 'UI',
+      module: require('../examples/Dimensions/DimensionsExample'),
+    },
+    {
+      key: 'DisplayContentsExample',
+      category: 'UI',
+      module: require('../examples/DisplayContents/DisplayContentsExample')
+        .default,
+    },
+    // Only show the link for the example if the API is available.
+    /*{
     key: 'FocusEventsExample',
     module: require('../examples/FocusEventsExample/FocusEventsExample')
       .default,
   },*/
-  {
-    key: 'InvalidPropsExample',
-    module: require('../examples/InvalidProps/InvalidPropsExample'),
-  },
-  {
-    key: 'Keyboard',
-    category: 'Basic',
-    module: require('../examples/Keyboard/KeyboardExample').default,
-  },
-  {
-    key: 'LayoutEventsExample',
-    category: 'UI',
-    module: require('../examples/Layout/LayoutEventsExample'),
-  },
-  {
-    key: 'LinkingExample',
-    category: 'Basic',
-    module: require('../examples/Linking/LinkingExample'),
-  },
-  {
-    key: 'LayoutExample',
-    category: 'UI',
-    module: require('../examples/Layout/LayoutExample'),
-  },
-  {
-    key: 'NativeAnimationsExample',
-    category: 'UI',
-    module: require('../examples/NativeAnimation/NativeAnimationsExample'),
-  },
-  {
-    key: 'PanResponderExample',
-    category: 'Basic',
-    module: require('../examples/PanResponder/PanResponderExample'),
-  },
-  {
-    key: 'PixelRatio',
-    category: 'UI',
-    module: require('../examples/PixelRatio/PixelRatioExample'),
-  },
-  /*
+    {
+      key: 'InvalidPropsExample',
+      module: require('../examples/InvalidProps/InvalidPropsExample'),
+    },
+    {
+      key: 'Keyboard',
+      category: 'Basic',
+      module: require('../examples/Keyboard/KeyboardExample').default,
+    },
+    {
+      key: 'LayoutEventsExample',
+      category: 'UI',
+      module: require('../examples/Layout/LayoutEventsExample'),
+    },
+    {
+      key: 'LinkingExample',
+      category: 'Basic',
+      module: require('../examples/Linking/LinkingExample'),
+    },
+    {
+      key: 'LayoutExample',
+      category: 'UI',
+      module: require('../examples/Layout/LayoutExample'),
+    },
+    {
+      key: 'NativeAnimationsExample',
+      category: 'UI',
+      module: require('../examples/NativeAnimation/NativeAnimationsExample'),
+    },
+    {
+      key: 'PanResponderExample',
+      category: 'Basic',
+      module: require('../examples/PanResponder/PanResponderExample'),
+    },
+    {
+      key: 'PixelRatio',
+      category: 'UI',
+      module: require('../examples/PixelRatio/PixelRatioExample'),
+    },
+    /*
   {
     key: 'PermissionsExampleAndroid',
     category: 'Android',
     module: require('../examples/PermissionsAndroid/PermissionsExample'),
   },
   */
-  {
-    key: 'PlatformColorExample',
-    category: 'UI',
-    module: require('../examples/PlatformColor/PlatformColorExample'),
-  },
-  {
-    key: 'PointerEventsExample',
-    category: 'Basic',
-    module: require('../examples/PointerEvents/PointerEventsExample'),
-  } /*
+    {
+      key: 'PlatformColorExample',
+      category: 'UI',
+      module: require('../examples/PlatformColor/PlatformColorExample'),
+    },
+    {
+      key: 'PointerEventsExample',
+      category: 'Basic',
+      module: require('../examples/PointerEvents/PointerEventsExample'),
+    } /*
   {
     key: 'RTLExample',
     category: 'Basic',
     module: require('../examples/RTL/RTLExample'),
   }*/,
-  {
-    key: 'ShareExample',
-    category: 'Basic',
-    module: require('../examples/Share/ShareExample'),
-  },
-  {
-    key: 'TimerExample',
-    category: 'UI',
-    module: require('../examples/Timer/TimerExample'),
-  },
+    {
+      key: 'ShareExample',
+      category: 'Basic',
+      module: require('../examples/Share/ShareExample'),
+    },
+    {
+      key: 'TimerExample',
+      category: 'UI',
+      module: require('../examples/Timer/TimerExample'),
+    },
 
-  {
-    key: 'ThemingExample',
-    module: require('../examples-win32/Theming/ThemingModuleAPI'),
-  },
-  {
-    key: 'TransformExample',
-    category: 'UI',
-    module: require('../examples/Transform/TransformExample'),
-  },
-  {
-    key: 'FilterExample',
-    category: 'UI',
-    module: require('../examples/Filter/FilterExample'),
-  },
-  /*
+    {
+      key: 'ThemingExample',
+      module: require('../examples-win32/Theming/ThemingModuleAPI'),
+    },
+    {
+      key: 'TransformExample',
+      category: 'UI',
+      module: require('../examples/Transform/TransformExample'),
+    },
+    {
+      key: 'FilterExample',
+      category: 'UI',
+      module: require('../examples/Filter/FilterExample'),
+    },
+    /*
   {
     key: 'LinearGradientExample',
     category: 'UI',
@@ -372,42 +374,43 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/XHR/XHRExample'),
   },
   */ {
-    key: 'TurboModuleExample',
-    category: 'Basic',
-    module: require('../examples/TurboModule/TurboModuleExample'),
-  },
-  {
-    key: 'LegacyModuleExample',
-    module: require('../examples/TurboModule/LegacyModuleExample'),
-  },
-  {
-    key: 'TurboCxxModuleExample',
-    category: 'Basic',
-    module: require('../examples/TurboModule/TurboCxxModuleExample'),
-  },
-  // Basic check to detect the availability of the IntersectionObserver API.
-  // $FlowExpectedError[cannot-resolve-name]
-  ...(typeof IntersectionObserver === 'function'
-    ? [
-        {
-          key: 'IntersectionObserver',
-          category: 'UI',
-          module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
-        },
-      ]
-    : []),
-  // Basic check to detect the availability of the modern Performance API.
-  ...(typeof performance.getEntries === 'function'
-    ? [
-        {
-          key: 'PerformanceApiExample',
-          category: 'Basic',
-          module: require('../examples/Performance/PerformanceApiExample'),
-        },
-      ]
-    : []),
-  ...RNTesterListFbInternal.APIs,
-]: Array<?RNTesterModuleInfo>).filter(Boolean);
+      key: 'TurboModuleExample',
+      category: 'Basic',
+      module: require('../examples/TurboModule/TurboModuleExample'),
+    },
+    {
+      key: 'LegacyModuleExample',
+      module: require('../examples/TurboModule/LegacyModuleExample'),
+    },
+    {
+      key: 'TurboCxxModuleExample',
+      category: 'Basic',
+      module: require('../examples/TurboModule/TurboCxxModuleExample'),
+    },
+    // Basic check to detect the availability of the IntersectionObserver API.
+    // $FlowExpectedError[cannot-resolve-name]
+    ...(typeof IntersectionObserver === 'function'
+      ? [
+          {
+            key: 'IntersectionObserver',
+            category: 'UI',
+            module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
+          },
+        ]
+      : []),
+    // Basic check to detect the availability of the modern Performance API.
+    ...(typeof performance.getEntries === 'function'
+      ? [
+          {
+            key: 'PerformanceApiExample',
+            category: 'Basic',
+            module: require('../examples/Performance/PerformanceApiExample'),
+          },
+        ]
+      : []),
+    ...RNTesterListFbInternal.APIs,
+  ] as Array<?RNTesterModuleInfo>
+).filter(Boolean);
 
 const Playgrounds: Array<RNTesterModuleInfo> = [
   {

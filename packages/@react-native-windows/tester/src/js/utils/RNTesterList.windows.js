@@ -230,217 +230,218 @@ const Components: Array<RNTesterModuleInfo> = [
   ...RNTesterListFbInternal.Components,
 ];
 
-const APIs: Array<RNTesterModuleInfo> = ([
-  {
-    key: 'KeyboardFocusExample',
-    category: 'Basic',
-    module: require('../examples-win/Keyboard/KeyboardFocusExample'),
-  },
-  {
-    key: 'AccessibilityExample',
-    category: 'Basic',
-    module: require('../examples/Accessibility/AccessibilityExample'),
-  },
-  {
-    key: 'AccessibilityExampleWindows',
-    category: 'Basic',
-    module: require('../examples-win/Accessibility/AccessibilityExampleWindows'),
-  },
-  {
-    key: 'AccessibilityInfo',
-    category: 'Basic',
-    module: require('../examples-win/Accessibility/AccessibilityInfoExample'),
-  },
-  {
-    key: 'AlertExample',
-    category: 'UI',
-    module: require('../examples/Alert/AlertExample').default,
-  },
-  {
-    key: 'AnimatedIndex',
-    category: 'UI',
-    module: require('../examples/Animated/AnimatedIndex').default,
-  },
-  {
-    key: 'AnimationBackendIndex',
-    category: 'UI',
-    module: require('../examples/AnimationBackend/AnimationBackendIndex')
-      .default,
-  },
-  {
-    key: 'Animation - GratuitousAnimation',
-    category: 'UI',
-    module: require('../examples/AnimatedGratuitousApp/AnExApp'),
-  },
-  {
-    key: 'AppearanceExample',
-    category: 'UI',
-    module: require('../examples/Appearance/AppearanceExample'),
-  },
-  {
-    key: 'AppStateExample',
-    category: 'Basic',
-    module: require('../examples/AppState/AppStateExample'),
-  },
-  {
-    key: 'ContentURLAndroid',
-    category: 'Android',
-    module: require('../examples/ContentURLAndroid/ContentURLAndroid'),
-  },
-  {
-    key: 'URLExample',
-    category: 'Basic',
-    module: require('../examples/Urls/UrlExample'),
-  },
-  {
-    key: 'BorderExample',
-    category: 'UI',
-    module: require('../examples/Border/BorderExample').default,
-  },
-  {
-    key: 'CrashExample',
-    category: 'Basic',
-    module: require('../examples/Crash/CrashExample'),
-  },
-  {
-    key: 'DevSettings',
-    category: 'Basic',
-    module: require('../examples/DevSettings/DevSettingsExample'),
-  },
-  {
-    key: 'Dimensions',
-    category: 'UI',
-    module: require('../examples/Dimensions/DimensionsExample'),
-  },
-  {
-    key: 'DisplayContentsExample',
-    category: 'UI',
-    module: require('../examples/DisplayContents/DisplayContentsExample')
-      .default,
-  },
-  /*{
+const APIs: Array<RNTesterModuleInfo> = (
+  [
+    {
+      key: 'KeyboardFocusExample',
+      category: 'Basic',
+      module: require('../examples-win/Keyboard/KeyboardFocusExample'),
+    },
+    {
+      key: 'AccessibilityExample',
+      category: 'Basic',
+      module: require('../examples/Accessibility/AccessibilityExample'),
+    },
+    {
+      key: 'AccessibilityExampleWindows',
+      category: 'Basic',
+      module: require('../examples-win/Accessibility/AccessibilityExampleWindows'),
+    },
+    {
+      key: 'AccessibilityInfo',
+      category: 'Basic',
+      module: require('../examples-win/Accessibility/AccessibilityInfoExample'),
+    },
+    {
+      key: 'AlertExample',
+      category: 'UI',
+      module: require('../examples/Alert/AlertExample').default,
+    },
+    {
+      key: 'AnimatedIndex',
+      category: 'UI',
+      module: require('../examples/Animated/AnimatedIndex').default,
+    },
+    {
+      key: 'AnimationBackendIndex',
+      category: 'UI',
+      module: require('../examples/AnimationBackend/AnimationBackendIndex')
+        .default,
+    },
+    {
+      key: 'Animation - GratuitousAnimation',
+      category: 'UI',
+      module: require('../examples/AnimatedGratuitousApp/AnExApp'),
+    },
+    {
+      key: 'AppearanceExample',
+      category: 'UI',
+      module: require('../examples/Appearance/AppearanceExample'),
+    },
+    {
+      key: 'AppStateExample',
+      category: 'Basic',
+      module: require('../examples/AppState/AppStateExample'),
+    },
+    {
+      key: 'ContentURLAndroid',
+      category: 'Android',
+      module: require('../examples/ContentURLAndroid/ContentURLAndroid'),
+    },
+    {
+      key: 'URLExample',
+      category: 'Basic',
+      module: require('../examples/Urls/UrlExample'),
+    },
+    {
+      key: 'BorderExample',
+      category: 'UI',
+      module: require('../examples/Border/BorderExample').default,
+    },
+    {
+      key: 'CrashExample',
+      category: 'Basic',
+      module: require('../examples/Crash/CrashExample'),
+    },
+    {
+      key: 'DevSettings',
+      category: 'Basic',
+      module: require('../examples/DevSettings/DevSettingsExample'),
+    },
+    {
+      key: 'Dimensions',
+      category: 'UI',
+      module: require('../examples/Dimensions/DimensionsExample'),
+    },
+    {
+      key: 'DisplayContentsExample',
+      category: 'UI',
+      module: require('../examples/DisplayContents/DisplayContentsExample')
+        .default,
+    },
+    /*{
     key: 'FocusEventsExample',
     module: require('../examples/FocusEventsExample/FocusEventsExample')
       .default,
   },*/
-  // Only show the link for the example if the API is available.
-  // E2E Tests failing when this test is enabled
-  // {
-  //   key: 'InvalidPropsExample',
-  //   module: require('../examples/InvalidProps/InvalidPropsExample'),
-  // },
-  {
-    key: 'Keyboard',
-    category: 'Basic',
-    module: require('../examples/Keyboard/KeyboardExample').default,
-  },
-  {
-    key: 'KeyboardExample',
-    module: require('../examples-win/Keyboard/KeyboardExample'),
-  },
-  {
-    key: 'LayoutEventsExample',
-    category: 'UI',
-    module: require('../examples/Layout/LayoutEventsExample'),
-  },
-  {
-    key: 'LinkingExample',
-    category: 'Basic',
-    module: require('../examples/Linking/LinkingExample'),
-  },
-  // {
-  //   key: 'LayoutAnimationExample',
-  //   category: 'UI',
-  //   module: require('../examples/Layout/LayoutAnimationExample'),
-  // },
-  {
-    key: 'LayoutExample',
-    category: 'UI',
-    module: require('../examples/Layout/LayoutExample'),
-  },
-  {
-    key: 'MouseExample',
-    category: 'Basic',
-    module: require('../examples-win/Mouse/MouseExample'),
-  },
-  {
-    key: 'MouseClickExample',
-    category: 'Basic',
-    module: require('../examples-win/Mouse/MouseClickExample'),
-  },
-  {
-    key: 'NativeAnimationsExample',
-    category: 'UI',
-    module: require('../examples/NativeAnimation/NativeAnimationsExample'),
-  },
-  {
-    key: 'CompositionBugsExample',
-    category: 'UI',
-    module: require('../examples-win/NativeAnimation/CompositionBugsExample'),
-  },
-  {
-    key: 'PanResponderExample',
-    category: 'Basic',
-    module: require('../examples/PanResponder/PanResponderExample'),
-  },
-  {
-    key: 'PixelRatio',
-    category: 'UI',
-    module: require('../examples/PixelRatio/PixelRatioExample'),
-  },
-  /*
+    // Only show the link for the example if the API is available.
+    // E2E Tests failing when this test is enabled
+    // {
+    //   key: 'InvalidPropsExample',
+    //   module: require('../examples/InvalidProps/InvalidPropsExample'),
+    // },
+    {
+      key: 'Keyboard',
+      category: 'Basic',
+      module: require('../examples/Keyboard/KeyboardExample').default,
+    },
+    {
+      key: 'KeyboardExample',
+      module: require('../examples-win/Keyboard/KeyboardExample'),
+    },
+    {
+      key: 'LayoutEventsExample',
+      category: 'UI',
+      module: require('../examples/Layout/LayoutEventsExample'),
+    },
+    {
+      key: 'LinkingExample',
+      category: 'Basic',
+      module: require('../examples/Linking/LinkingExample'),
+    },
+    // {
+    //   key: 'LayoutAnimationExample',
+    //   category: 'UI',
+    //   module: require('../examples/Layout/LayoutAnimationExample'),
+    // },
+    {
+      key: 'LayoutExample',
+      category: 'UI',
+      module: require('../examples/Layout/LayoutExample'),
+    },
+    {
+      key: 'MouseExample',
+      category: 'Basic',
+      module: require('../examples-win/Mouse/MouseExample'),
+    },
+    {
+      key: 'MouseClickExample',
+      category: 'Basic',
+      module: require('../examples-win/Mouse/MouseClickExample'),
+    },
+    {
+      key: 'NativeAnimationsExample',
+      category: 'UI',
+      module: require('../examples/NativeAnimation/NativeAnimationsExample'),
+    },
+    {
+      key: 'CompositionBugsExample',
+      category: 'UI',
+      module: require('../examples-win/NativeAnimation/CompositionBugsExample'),
+    },
+    {
+      key: 'PanResponderExample',
+      category: 'Basic',
+      module: require('../examples/PanResponder/PanResponderExample'),
+    },
+    {
+      key: 'PixelRatio',
+      category: 'UI',
+      module: require('../examples/PixelRatio/PixelRatioExample'),
+    },
+    /*
   {
     key: 'PermissionsExampleAndroid',
     category: 'Android',
     module: require('../examples/PermissionsAndroid/PermissionsExample'),
   },
   */
-  {
-    key: 'PlatformColorExample',
-    category: 'UI',
-    module: require('../examples/PlatformColor/PlatformColorExample'),
-  },
-  {
-    key: 'PointerEventsExample',
-    category: 'Basic',
-    module: require('../examples/PointerEvents/PointerEventsExample'),
-  },
-  {
-    key: 'PointerClickEventsExample',
-    category: 'Basic',
-    module: require('../examples-win/Pointer/PointerClickEventsExample'),
-  },
-  {
-    key: 'PointerButtonExample',
-    category: 'Basic',
-    module: require('../examples-win/Pointer/PointerButtonExample'),
-  },
-  {
-    key: 'RTLExample',
-    category: 'Basic',
-    module: require('../examples/RTL/RTLExample'),
-  },
-  {
-    key: 'ShareExample',
-    category: 'Basic',
-    module: require('../examples/Share/ShareExample'),
-  },
-  {
-    key: 'TimerExample',
-    category: 'UI',
-    module: require('../examples/Timer/TimerExample'),
-  },
-  {
-    key: 'TransformExample',
-    category: 'UI',
-    module: require('../examples/Transform/TransformExample'),
-  },
-  {
-    key: 'FilterExample',
-    category: 'UI',
-    module: require('../examples/Filter/FilterExample'),
-  },
-  /*
+    {
+      key: 'PlatformColorExample',
+      category: 'UI',
+      module: require('../examples/PlatformColor/PlatformColorExample'),
+    },
+    {
+      key: 'PointerEventsExample',
+      category: 'Basic',
+      module: require('../examples/PointerEvents/PointerEventsExample'),
+    },
+    {
+      key: 'PointerClickEventsExample',
+      category: 'Basic',
+      module: require('../examples-win/Pointer/PointerClickEventsExample'),
+    },
+    {
+      key: 'PointerButtonExample',
+      category: 'Basic',
+      module: require('../examples-win/Pointer/PointerButtonExample'),
+    },
+    {
+      key: 'RTLExample',
+      category: 'Basic',
+      module: require('../examples/RTL/RTLExample'),
+    },
+    {
+      key: 'ShareExample',
+      category: 'Basic',
+      module: require('../examples/Share/ShareExample'),
+    },
+    {
+      key: 'TimerExample',
+      category: 'UI',
+      module: require('../examples/Timer/TimerExample'),
+    },
+    {
+      key: 'TransformExample',
+      category: 'UI',
+      module: require('../examples/Transform/TransformExample'),
+    },
+    {
+      key: 'FilterExample',
+      category: 'UI',
+      module: require('../examples/Filter/FilterExample'),
+    },
+    /*
   {
     key: 'LinearGradientExample',
     category: 'UI',
@@ -467,54 +468,55 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/Vibration/VibrationExample'),
   },
   */
-  {
-    key: 'WebSocketExample',
-    category: 'Basic',
-    module: require('../examples/WebSocket/WebSocketExample'),
-  },
-  /* TODO: ? XHRExample requires CameraRoll access
+    {
+      key: 'WebSocketExample',
+      category: 'Basic',
+      module: require('../examples/WebSocket/WebSocketExample'),
+    },
+    /* TODO: ? XHRExample requires CameraRoll access
   {
     key: 'XHRExample',
     category: 'Basic',
     module: require('../examples/XHR/XHRExample'),
   }, */
-  {
-    key: 'TurboModuleExample',
-    category: 'Basic',
-    module: require('../examples/TurboModule/TurboModuleExample'),
-  },
-  {
-    key: 'LegacyModuleExample',
-    module: require('../examples/TurboModule/LegacyModuleExample'),
-  },
-  {
-    key: 'TurboCxxModuleExample',
-    category: 'Basic',
-    module: require('../examples/TurboModule/TurboCxxModuleExample'),
-  },
-  // Basic check to detect the availability of the IntersectionObserver API.
-  // $FlowExpectedError[cannot-resolve-name]
-  ...(typeof IntersectionObserver === 'function'
-    ? [
-        {
-          key: 'IntersectionObserver',
-          category: 'UI',
-          module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
-        },
-      ]
-    : []),
-  // Basic check to detect the availability of the modern Performance API.
-  ...(typeof performance.getEntries === 'function'
-    ? [
-        {
-          key: 'PerformanceApiExample',
-          category: 'Basic',
-          module: require('../examples/Performance/PerformanceApiExample'),
-        },
-      ]
-    : []),
-  ...RNTesterListFbInternal.APIs,
-]: Array<?RNTesterModuleInfo>).filter(Boolean);
+    {
+      key: 'TurboModuleExample',
+      category: 'Basic',
+      module: require('../examples/TurboModule/TurboModuleExample'),
+    },
+    {
+      key: 'LegacyModuleExample',
+      module: require('../examples/TurboModule/LegacyModuleExample'),
+    },
+    {
+      key: 'TurboCxxModuleExample',
+      category: 'Basic',
+      module: require('../examples/TurboModule/TurboCxxModuleExample'),
+    },
+    // Basic check to detect the availability of the IntersectionObserver API.
+    // $FlowExpectedError[cannot-resolve-name]
+    ...(typeof IntersectionObserver === 'function'
+      ? [
+          {
+            key: 'IntersectionObserver',
+            category: 'UI',
+            module: require('../examples/IntersectionObserver/IntersectionObserverIndex'),
+          },
+        ]
+      : []),
+    // Basic check to detect the availability of the modern Performance API.
+    ...(typeof performance.getEntries === 'function'
+      ? [
+          {
+            key: 'PerformanceApiExample',
+            category: 'Basic',
+            module: require('../examples/Performance/PerformanceApiExample'),
+          },
+        ]
+      : []),
+    ...RNTesterListFbInternal.APIs,
+  ] as Array<?RNTesterModuleInfo>
+).filter(Boolean);
 
 const Playgrounds: Array<RNTesterModuleInfo> = [
   {
