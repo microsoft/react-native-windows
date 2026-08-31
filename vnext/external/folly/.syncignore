@@ -12,7 +12,8 @@
 /CMake/
 /build/
 /shim/
-/static/
+/static/*
+!/static/logo.svg
 /BUCK
 /PACKAGE
 /buck2
