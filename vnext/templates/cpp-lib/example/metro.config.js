@@ -58,7 +58,7 @@ const config = {
       }
       return context.resolveRequest(context, moduleName, platform);
     },
-    blocklist: 
+    blockList: 
       modules.map(
         (m) =>
           new RegExp(`^${escape(path.join(root, 'node_modules', m))}\\/.*$`)
