@@ -41,7 +41,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const child_process_1 = require("child_process");
 const path = __importStar(require("path"));
-const syncScript = path.join(__dirname, '..', 'node_modules', '@rnx-kit', 'fork-sync', 'lib', 'sync.js');
+// Resolve through Node's module resolver so it works whether @rnx-kit/fork-sync is
+// installed under this package or hoisted to the repo root by Yarn's node-modules linker.
+const syncScript = require.resolve('@rnx-kit/fork-sync/lib/sync.js');
 const repoRoot = path.join(__dirname, '..', '..', '..', '..');
 const args = [syncScript, '-C', repoRoot, ...process.argv.slice(2)];
 try {
