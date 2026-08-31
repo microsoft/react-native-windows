@@ -13,7 +13,6 @@ setup and the network-isolation workarounds.
 | CI | `ci-pipeline.yml` | `ISS` | `Office.Official` | signed Official build; `trigger` branch filters and a weekly heartbeat `schedule` are defined in YAML |
 | PR | `pr-pipeline.yml` | public (`ms`) | `1ES.Unofficial` | validation build for GitHub PRs |
 | Release | `release-pipeline.yml` | `ISS` | `Office.Official` | triggered by CI completion; publishes packages and symbols |
-| Feed warm-up | `warm-feed-cache-pipeline.yml` | `ISS` | `Office.Unofficial` | scheduled; keeps `ms/react-native-public` populated for anonymous PR restores |
 
 CI and PR share all build/test/pack logic through `build-template.yml`; the
 `buildEnvironment` parameter (`Continuous` vs `PullRequest`) gates the
@@ -71,9 +70,9 @@ otherwise hide:
   agent image.
 
 Public PR builds read this feed **anonymously**, so they can only restore versions
-an authenticated identity has already saved. `warm-feed-cache-pipeline.yml` (script:
-`vnext/Scripts/Warm-RnwFeedCache.ps1`) runs on a schedule to pre-populate the npm
-and NuGet dependency closures and keep those anonymous restores working.
+an authenticated identity has already saved. A scheduled feed warm-up (maintained on
+`main`, branch-agnostic) pre-populates the npm and NuGet dependency closures on the
+feed and keeps those anonymous restores working.
 
 ## SDL and Component Governance
 
