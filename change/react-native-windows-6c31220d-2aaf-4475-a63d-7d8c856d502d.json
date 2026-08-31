@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "0.81 to main pipelines sync",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
