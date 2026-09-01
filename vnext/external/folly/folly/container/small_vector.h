@@ -1351,9 +1351,8 @@ class small_vector
       sizeof(HeapPtrWithCapacity) < sizeof(InlineStorageType);
 
   // This value should we multiple of word size.
-  static size_t constexpr kHeapifyCapacitySize = sizeof(
-      typename std::
-          aligned_storage<sizeof(InternalSizeType), alignof(value_type)>::type);
+  static size_t constexpr kHeapifyCapacitySize =
+      sizeof(aligned_storage_t<sizeof(InternalSizeType), alignof(value_type)>);
 
   struct AllocationSize {
     auto operator()(void* ptr) const {

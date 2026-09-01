@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Sync main pipeline, tooling, and vendored dependency changes to 0.85-stable",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
