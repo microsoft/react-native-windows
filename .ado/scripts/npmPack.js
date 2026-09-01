@@ -17,7 +17,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execSync, execFileSync } = require('child_process');
 const { parseArgs } = require('util');
 
 // ANSI color codes
@@ -219,12 +219,17 @@ function isPrivatePackage(packageJsonPath) {
  * @returns {boolean} True if the package version is already published
  */
 function isPublishedOnNpm(packageName, version, registry) {
-  const registryArg = registry ? ` --registry ${registry}` : '';
+  // Shell-free npm invocation (node + its CLI, values as argv) so a caller-controlled
+  // registry/package/version can't inject; npm's Windows .cmd shim needs a shell otherwise.
+  const npmCli = path.join(path.dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npm-cli.js');
+  const args = [npmCli, 'view', `${packageName}@${version}`, 'version'];
+  if (registry) {
+    args.push('--registry', registry);
+  }
   try {
-    // Use npm view to check if the specific version exists
-    execSync(`npm view ${packageName}@${version} version${registryArg}`, {
+    execFileSync(process.execPath, args, {
       encoding: 'utf8',
-      stdio: ['pipe', 'pipe', 'pipe']
+      stdio: ['pipe', 'pipe', 'pipe'],
     });
     return true;
   } catch (error) {

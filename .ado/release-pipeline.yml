@@ -42,9 +42,9 @@ resources:
     trigger:
       branches:
         include:
+        # Supported branches
         - main
         - '0.81-stable'
-        - '0.82-stable'
         - '0.83-stable'
         - '0.84-stable'
         - '0.85-stable'
