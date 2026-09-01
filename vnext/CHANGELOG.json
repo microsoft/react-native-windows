@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 01 Sep 2026 22:31:49 GMT",
+      "version": "0.81.36",
+      "tag": "react-native-windows_v0.81.36",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6c65aae9b3b97b7ab8c30d3b26bdd4cba93d033e",
+            "comment": "Retain license, README, and docs in vendored folly, fmt, and fast-float, and update the example Metro config for create-react-native-library 0.63"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6c65aae9b3b97b7ab8c30d3b26bdd4cba93d033e",
+            "comment": "Clamp Tooltip Position To Monitor"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 22 Aug 2026 01:38:28 GMT",
       "version": "0.81.35",
       "tag": "react-native-windows_v0.81.35",
