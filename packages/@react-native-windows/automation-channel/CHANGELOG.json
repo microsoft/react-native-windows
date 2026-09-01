@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Tue, 01 Sep 2026 22:31:49 GMT",
+      "version": "0.81.36",
+      "tag": "@react-native-windows/automation-channel_v0.81.36",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "6c65aae9b3b97b7ab8c30d3b26bdd4cba93d033e",
+            "comment": "Try fixing the e2e x86 test flakiness"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.81.36",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 22 Aug 2026 01:38:28 GMT",
       "version": "0.81.35",
       "tag": "@react-native-windows/automation-channel_v0.81.35",

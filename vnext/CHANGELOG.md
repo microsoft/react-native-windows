@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 22 Aug 2026 01:38:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 01 Sep 2026 22:31:49 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.36
+
+Tue, 01 Sep 2026 22:31:49 GMT
+
+### Patches
+
+- Retain license, README, and docs in vendored folly, fmt, and fast-float, and update the example Metro config for create-react-native-library 0.63 (vmorozov@microsoft.com)
+- Clamp Tooltip Position To Monitor (66076509+vineethkuttan@users.noreply.github.com)
 
 ## 0.81.35
 
