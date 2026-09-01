@@ -1,5 +1,5 @@
 {
-  "name": "react-native-windows-repo",
+  "name": "@rnw-scripts/react-native-windows-repo",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -15,7 +15,9 @@
     "release-notes": "yarn workspace @rnw-scripts/generate-release-notes release-notes",
     "spellcheck": "npx cspell",
     "test": "lage test --verbose --passWithNoTests",
-    "validate-overrides": "react-native-platform-override validate"
+    "validate-overrides": "react-native-platform-override validate",
+    "fork-sync": "node packages/@rnw-scripts/fork-sync/lib-commonjs/sync.js",
+    "fork-sync:status": "yarn fork-sync --dep fmt --status"
   },
   "repository": {
     "type": "git",

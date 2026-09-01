@@ -42,9 +42,9 @@ resources:
     trigger:
       branches:
         include:
+        # Supported branches
         - main
         - '0.81-stable'
-        - '0.82-stable'
         - '0.83-stable'
         - '0.84-stable'
         - '0.85-stable'
@@ -245,6 +245,10 @@ extends:
             pipeline: 'CI'
             artifactName: 'NpmPackedTarballs'
             targetPath: '$(Pipeline.Workspace)/npm-feed-packages'
+          - input: pipelineArtifact
+            pipeline: 'CI'
+            artifactName: 'VersionEnvVars'
+            targetPath: '$(Pipeline.Workspace)/VersionEnvVars'
         steps:
         - template: .ado/templates/publish-npm-to-ado-feed.yml@self
           parameters:
@@ -264,6 +268,10 @@ extends:
             pipeline: 'CI'
             artifactName: 'NpmPackedTarballs'
             targetPath: '$(Pipeline.Workspace)/npm-feed-packages'
+          - input: pipelineArtifact
+            pipeline: 'CI'
+            artifactName: 'VersionEnvVars'
+            targetPath: '$(Pipeline.Workspace)/VersionEnvVars'
         steps:
         - template: .ado/templates/publish-npm-to-ado-feed.yml@self
           parameters:

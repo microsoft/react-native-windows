@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Sat, 22 Aug 2026 01:38:28 GMT",
+      "version": "0.81.35",
+      "tag": "@react-native-windows/automation-channel_v0.81.35",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "27b0fb61f5e8aa5ad0c662ea4475bee8b87c5b62",
+            "comment": "Make the vendored Folly headers C++23-ready and update fmt to 11.0.2 (now managed via fork-sync)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.81.35",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Aug 2026 02:25:43 GMT",
       "version": "0.81.34",
       "tag": "@react-native-windows/automation-channel_v0.81.34",

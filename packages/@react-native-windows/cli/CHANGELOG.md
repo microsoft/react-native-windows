@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Wed, 19 Aug 2026 02:25:42 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 22 Aug 2026 01:38:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.9
+
+Sat, 22 Aug 2026 01:38:28 GMT
+
+### Patches
+
+- Make the vendored Folly headers C++23-ready and update fmt to 11.0.2 (now managed via fork-sync) (vmorozov@microsoft.com)
 
 ## 0.81.8
 
