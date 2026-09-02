@@ -20,7 +20,7 @@ import findRepoRoot from '@react-native-windows/find-repo-root';
 
 import {GitRepo} from './git';
 import {findPR, createPR, updatePR} from './github';
-import {hasChangeFiles, bumpVersions} from './beachballBump';
+import {hasChangeFiles, bumpVersions, updateLockfile} from './beachballBump';
 import {
   collectBumpedPackages,
   generatePRBody,
@@ -279,7 +279,6 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
         ),
       );
       await git.checkoutNewBranch(prBranch, `${remoteName}/${targetBranch}`);
-import {hasChangeFiles, bumpVersions, updateLockfile} from './beachballBump';
 
       // 10. Run beachball bump
       console.log(colorize('Running beachball bump...', ansi.bright));
