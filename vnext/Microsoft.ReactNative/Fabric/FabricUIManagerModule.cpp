@@ -497,6 +497,15 @@ void FabricUIManager::schedulerDidUpdateShadowTree(
   // This method is called when the scheduler updates shadow tree props
 }
 
+void FabricUIManager::schedulerDidCaptureViewSnapshot(facebook::react::Tag tag, facebook::react::SurfaceId surfaceId) {}
+
+void FabricUIManager::schedulerDidSetViewSnapshot(
+    facebook::react::Tag sourceTag,
+    facebook::react::Tag targetTag,
+    facebook::react::SurfaceId surfaceId) {}
+
+void FabricUIManager::schedulerDidClearPendingSnapshots() {}
+
 void FabricUIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
 

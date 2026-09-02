@@ -7,25 +7,25 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.86.0-nightly-20260408-8bac1df5a",
+  "baseVersion": "0.86.0-nightly-20260430-118198599",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "6432378bd921ccd4ddb48296f710ec593c82d6e4"
+      "baseHash": "d3f598036d7487063720f4d3bc912f84b1dea509"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "5b9aa9de98ceb1bc54698f1a6889148d51c73790"
+      "baseHash": "4f1425bdee2bfc1532954a3ad0a9bca5ac5cb52d"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js.flow",
       "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "7e36d1b2b90a74e30b63a14dab2d97ccbb46e579"
+      "baseHash": "6ed6e4c48890f67618a2bacc4160cc7a1a205962"
     },
     {
       "type": "platform",
@@ -47,7 +47,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "be9a7230542e197b6b4603d806fde0320f21d9b6"
+      "baseHash": "d3700b2fa03fd4636ed64de3e3e93a44ed5de223"
     },
     {
       "type": "copy",
@@ -315,7 +315,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorStackFrame.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js",
-      "baseHash": "95e584184ae16ef23a57f7ebc3fba6b5c54a5268",
+      "baseHash": "190f6d3f01a68504017bf97e0c1e00cce961e7b2",
       "issue": 5885
     },
     {
@@ -394,7 +394,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Renderer/shims/ReactNativeTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Renderer/shims/ReactNativeTypes.js",
-      "baseHash": "333afc05f5a42a5321196f5f7a14d14c8fd5dd0f",
+      "baseHash": "45be4b4fd695ae161c686f4f906e3b1a2e9e7a26",
       "issue": 0
     },
     {

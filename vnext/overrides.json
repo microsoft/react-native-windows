@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.86.0-nightly-20260408-8bac1df5a",
+  "baseVersion": "0.86.0-nightly-20260430-118198599",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "6432378bd921ccd4ddb48296f710ec593c82d6e4"
+      "baseHash": "d3f598036d7487063720f4d3bc912f84b1dea509"
     },
     {
       "type": "derived",
@@ -64,7 +64,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
-      "baseHash": "9257f8b7e12945db34f9f329850f90174dd8119c",
+      "baseHash": "ac3280fb7824200579579e42ea84d42f41e66273",
       "issue": 12210
     },
     {
@@ -205,7 +205,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/propsConversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/propsConversions.h",
-      "baseHash": "4b5427c2d17fc9ae2842d56a78db949467411178",
+      "baseHash": "b09d68d7bb3082380530b3d9f56505edc48e222e",
       "issue": 15782
     },
     {
@@ -219,7 +219,7 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManager.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/UIManager.cpp",
-      "baseHash": "3405f56a23adc1a5784d96bcf4041c5e43755b48"
+      "baseHash": "3f35ae01c97462b0d3334879e0fcb69e416303b8"
     },
     {
       "type": "derived",
@@ -238,13 +238,13 @@
       "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "5b9aa9de98ceb1bc54698f1a6889148d51c73790"
+      "baseHash": "4f1425bdee2bfc1532954a3ad0a9bca5ac5cb52d"
     },
     {
       "type": "derived",
       "file": "src-win/index.windows.js.flow",
       "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "7e36d1b2b90a74e30b63a14dab2d97ccbb46e579"
+      "baseHash": "6ed6e4c48890f67618a2bacc4160cc7a1a205962"
     },
     {
       "type": "platform",
@@ -312,7 +312,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "be9a7230542e197b6b4603d806fde0320f21d9b6",
+      "baseHash": "d3700b2fa03fd4636ed64de3e3e93a44ed5de223",
       "issue": 4578
     },
     {
@@ -558,7 +558,7 @@
       "type": "copy",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorStackFrame.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js",
-      "baseHash": "95e584184ae16ef23a57f7ebc3fba6b5c54a5268"
+      "baseHash": "190f6d3f01a68504017bf97e0c1e00cce961e7b2"
     },
     {
       "type": "patch",
@@ -570,7 +570,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Modal/Modal.windows.js",
       "baseFile": "packages/react-native/Libraries/Modal/Modal.js",
-      "baseHash": "98988591447c5d2d67875d2ffe0858909a0a1d74"
+      "baseHash": "2b723339e99afd152dc0fd801277c3a87130909f"
     },
     {
       "type": "derived",
@@ -624,7 +624,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Renderer/shims/ReactNativeTypes.windows.js",
       "baseFile": "packages/react-native/Libraries/Renderer/shims/ReactNativeTypes.js",
-      "baseHash": "333afc05f5a42a5321196f5f7a14d14c8fd5dd0f",
+      "baseHash": "45be4b4fd695ae161c686f4f906e3b1a2e9e7a26",
       "issue": 4578
     },
     {
