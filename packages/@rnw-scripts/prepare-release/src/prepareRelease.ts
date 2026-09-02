@@ -279,6 +279,7 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
         ),
       );
       await git.checkoutNewBranch(prBranch, `${remoteName}/${targetBranch}`);
+import {hasChangeFiles, bumpVersions, updateLockfile} from './beachballBump';
 
       // 10. Run beachball bump
       console.log(colorize('Running beachball bump...', ansi.bright));
@@ -287,6 +288,11 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
         remote: remoteName,
         cwd: repoRoot,
       });
+
+      // 10b. Refresh yarn.lock to match the bumped versions so the release
+      //      commit stays installable under `yarn install --immutable`.
+      console.log(colorize('Updating yarn.lock...', ansi.bright));
+      await updateLockfile({cwd: repoRoot});
 
       // 11. Check if beachball actually changed anything
       const status = await git.statusPorcelain();
