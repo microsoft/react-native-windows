@@ -3,6 +3,7 @@
 		<BundleOutputPath>$(OutputPath)</BundleOutputPath>
 		<BundleSourceMapDir>$(OutputPath)sourcemaps\react</BundleSourceMapDir>
 		<BundleContentRoot>$(OutputPath)</BundleContentRoot>
+		<BundleCliCommand Condition="'$(BundleCliCommand)' == ''">yarn exec rnc-cli bundle</BundleCliCommand>
 	</PropertyGroup>
 	<Import Project="$(ReactNativeWindowsDir)\PropertySheets\Bundle.props" />
 	<Target
