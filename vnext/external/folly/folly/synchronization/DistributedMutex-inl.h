@@ -353,7 +353,7 @@ class Waiter {
     // knowledge of the return type and can apply the appropriate
     // reinterpret_cast and launder operation to safely retrieve the data from
     // this buffer
-    std::aligned_storage_t<48, 8> storage_;
+    folly::aligned_storage_t<48, 8> storage_;
   };
   std::array<std::uint8_t, hardware_destructive_interference_size> padding2;
 };
@@ -524,9 +524,8 @@ class TaskWithBigReturnValue {
   using ReturnType = folly::invoke_result_t<const Func&>;
   static const auto kReturnValueAlignment = folly::constexpr_max(
       alignof(ReturnType), folly::hardware_destructive_interference_size);
-  using StorageType = std::aligned_storage_t<
-      sizeof(std::aligned_storage_t<sizeof(ReturnType), kReturnValueAlignment>),
-      kReturnValueAlignment>;
+  using StorageType =
+      folly::aligned_storage_t<sizeof(ReturnType), kReturnValueAlignment>;
 
   explicit TaskWithBigReturnValue(Func func, Waiter&)
       : func_{std::move(func)} {}

@@ -31,6 +31,19 @@ parameters:
     # invoked. Example: ['RNTesterApp-Fabric', 'Playground'].
 
 steps:
+  # VS Installer's background auto-update (BackgroundDownload.exe) fetches VS updates from the MS
+  # CDN mid-build and trips network isolation. Interim belt; the durable fix is BackgroundDownloadDisabled=1
+  # baked into the agent image JSON (.ado/image/rnw-img-vs2026-node24.json) — remove once that image ships.
+  - pwsh: |
+      foreach ($key in @(
+          'HKLM:\SOFTWARE\Microsoft\VisualStudio\Setup',
+          'HKLM:\SOFTWARE\Policies\Microsoft\VisualStudio\Setup')) {
+        New-Item -Path $key -Force | Out-Null
+        New-ItemProperty -Path $key -Name BackgroundDownloadDisabled -PropertyType DWord -Value 1 -Force | Out-Null
+      }
+      Get-Process -Name BackgroundDownload -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
+    displayName: Disable VS Installer background download
+
   # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
   - task: NuGetToolInstaller@1
     displayName: Set NuGet version

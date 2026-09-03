@@ -125,6 +125,8 @@ jobs:
                 persistCredentials: false # We don't need git creds in this job
 
             - template: ../templates/prepare-js-env.yml
+              parameters:
+                buildEnvironment: ${{ parameters.buildEnvironment }}
 
             - template: ../templates/prepare-build-env.yml
               parameters:
