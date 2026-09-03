@@ -116,6 +116,7 @@ void FabricUIManager::installFabricUIManager() noexcept {
     return registry;
   };
   toolbox.runtimeExecutor = runtimeExecutor;
+  toolbox.bridgelessBindingsExecutor = SchedulerSettings::GetBridgelessBindingsExecutor(m_context.Properties());
   toolbox.eventBeatFactory = asynchronousBeatFactory;
 
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
@@ -553,15 +554,7 @@ void FabricUIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext con
   */
 
   // binding.register( // This is register in java, which calls into Binding::installFabricUIManager
-  installFabricUIManager(
-      /*
-        mReactApplicationContext.getCatalystInstance().getRuntimeExecutor(),
-        uiManager,
-        eventBeatManager,
-        jsMessageQueueThread,
-        mComponentFactory,
-        mConfig
-        */);
+  installFabricUIManager();
   /*
   Systrace.endSection(Systrace.TRACE_TAG_REACT_JAVA_BRIDGE);
   return uiManager;

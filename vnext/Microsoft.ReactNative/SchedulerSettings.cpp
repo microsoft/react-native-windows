@@ -49,6 +49,35 @@ facebook::react::RuntimeExecutor &GetRuntimeExecutor(
 }
 
 winrt::Microsoft::ReactNative::ReactPropertyId<
+    winrt::Microsoft::ReactNative::ReactNonAbiValue<facebook::react::RuntimeExecutor>>
+BridgelessBindingsExecutorProperty() noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyId<
+      winrt::Microsoft::ReactNative::ReactNonAbiValue<facebook::react::RuntimeExecutor>>
+      propId{L"ReactNative.Scheduler", L"BridgelessBindingsExecutor"};
+  return propId;
+}
+
+void SetBridgelessBindingsExecutor(
+    winrt::Microsoft::ReactNative::ReactPropertyBag properties,
+    facebook::react::RuntimeExecutor value) noexcept {
+  properties.Set(BridgelessBindingsExecutorProperty(), value);
+}
+
+std::optional<facebook::react::RuntimeExecutor> GetBridgelessBindingsExecutor(
+    winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept {
+  auto executor = properties.Get(BridgelessBindingsExecutorProperty());
+  if (!executor) {
+    return std::nullopt;
+  }
+
+  return executor.Value();
+}
+
+void ClearBridgelessBindingsExecutor(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept {
+  properties.Remove(BridgelessBindingsExecutorProperty());
+}
+
+winrt::Microsoft::ReactNative::ReactPropertyId<
     winrt::Microsoft::ReactNative::ReactNonAbiValue<std::weak_ptr<facebook::react::RuntimeScheduler>>>
 RuntimeSchedulerProperty() noexcept {
   winrt::Microsoft::ReactNative::ReactPropertyId<

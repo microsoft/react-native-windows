@@ -4,6 +4,7 @@
 #pragma once
 
 #include <ReactCommon/RuntimeExecutor.h>
+#include <optional>
 #include "ReactPropertyBag.h"
 
 namespace facebook::react {
@@ -24,6 +25,13 @@ void SetRuntimeExecutor(
     facebook::react::RuntimeExecutor runtimeExecutor) noexcept;
 facebook::react::RuntimeExecutor &GetRuntimeExecutor(
     winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+
+void SetBridgelessBindingsExecutor(
+    winrt::Microsoft::ReactNative::ReactPropertyBag properties,
+    facebook::react::RuntimeExecutor runtimeExecutor) noexcept;
+std::optional<facebook::react::RuntimeExecutor> GetBridgelessBindingsExecutor(
+    winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+void ClearBridgelessBindingsExecutor(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
 void SetRuntimeScheduler(
     winrt::Microsoft::ReactNative::ReactPropertyBag properties,
