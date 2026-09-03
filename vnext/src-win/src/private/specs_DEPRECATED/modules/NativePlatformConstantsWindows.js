@@ -29,6 +29,7 @@ export type PlatformConstantsWindows = {|
     patch: number,
   |},
   osVersion: number,
+  Release: string,
 |};
 
 export interface Spec extends TurboModule {
