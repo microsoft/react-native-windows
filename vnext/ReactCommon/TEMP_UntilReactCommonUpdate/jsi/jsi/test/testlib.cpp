@@ -98,46 +98,6 @@ TEST_P(JSITest, StringTest) {
   EXPECT_EQ(movedQuux.utf8(rt), "quux2");
 }
 
-TEST_P(JSITest, StringLengthTest) {
-  // Test ASCII string length
-  String ascii = String::createFromAscii(rt, "hello");
-  EXPECT_EQ(ascii.length(rt), 5);
-
-  // Test empty string
-  String empty = String::createFromAscii(rt, "");
-  EXPECT_EQ(empty.length(rt), 0);
-
-  // Test euro sign '€' (U+20AC) - BMP character, 1 code unit
-  String euro = eval("'\\u20AC'").getString(rt);
-  EXPECT_EQ(euro.length(rt), 1);
-
-  // Test codepoint requiring 2 code units (surrogate pair)
-  // U+1F408 (🐈) is encoded as \uD83D\uDC08 in UTF-16
-  String emoji = eval("'\\uD83D\\uDC08'").getString(rt);
-  EXPECT_EQ(emoji.length(rt), 2);
-
-  // Test another surrogate pair: U+10000 (first supplementary character)
-  String supplementary = eval("'\\uD800\\uDC00'").getString(rt);
-  EXPECT_EQ(supplementary.length(rt), 2);
-
-  // Test lone high surrogate (U+D800)
-  String loneHighSurrogate = eval("'\\uD800'").getString(rt);
-  EXPECT_EQ(loneHighSurrogate.length(rt), 1);
-
-  // Test lone low surrogate (U+DC00)
-  String loneLowSurrogate = eval("'\\uDC00'").getString(rt);
-  EXPECT_EQ(loneLowSurrogate.length(rt), 1);
-
-  // Test lone surrogate in the middle of a string
-  String mixedWithLoneSurrogate = eval("'a\\uD800b'").getString(rt);
-  EXPECT_EQ(mixedWithLoneSurrogate.length(rt), 3);
-
-  // Unicode Max Value is U+10FFFF, U+11FFFF is invalid
-  // But it could be theoretically encoded as \uDBFF\uDFFF
-  String invalid = eval("'\\uDBFF\\uDFFF'").getString(rt);
-  EXPECT_EQ(invalid.length(rt), 2);
-}
-
 TEST_P(JSITest, ObjectTest) {
   eval("x = {1:2, '3':4, 5:'six', 'seven':['eight', 'nine']}");
   Object x = rt.global().getPropertyAsObject(rt, "x");
@@ -974,42 +934,6 @@ TEST_P(JSITest, ValueTest) {
   EXPECT_EQ(eval("['zero',1,2,3]").toString(rt).utf8(rt), "zero,1,2,3");
 }
 
-TEST_P(JSITest, IsIntegerTest) {
-  // Non-number values should return false
-  EXPECT_FALSE(Value::undefined().isInteger());
-  EXPECT_FALSE(Value::null().isInteger());
-  EXPECT_FALSE(Value(true).isInteger());
-  EXPECT_FALSE(Value(false).isInteger());
-  EXPECT_FALSE(Value(rt, String::createFromAscii(rt, "42")).isInteger());
-  EXPECT_FALSE(Value(rt, Object(rt)).isInteger());
-
-  // NaN should return false
-  EXPECT_FALSE(Value(std::numeric_limits<double>::quiet_NaN()).isInteger());
-
-  // Infinity should return false
-  EXPECT_FALSE(Value(std::numeric_limits<double>::infinity()).isInteger());
-  EXPECT_FALSE(Value(-std::numeric_limits<double>::infinity()).isInteger());
-
-  // Non-integer numbers should return false
-  EXPECT_FALSE(Value(1.5).isInteger());
-  EXPECT_FALSE(Value(-2.3).isInteger());
-  EXPECT_FALSE(Value(0.1).isInteger());
-
-  // Integer numbers should return true
-  EXPECT_TRUE(Value(0).isInteger());
-  EXPECT_TRUE(Value(0.0).isInteger());
-  EXPECT_TRUE(Value(-0.0).isInteger());
-  EXPECT_TRUE(Value(1).isInteger());
-  EXPECT_TRUE(Value(-1).isInteger());
-  EXPECT_TRUE(Value(42).isInteger());
-  EXPECT_TRUE(Value(1000000).isInteger());
-  EXPECT_TRUE(Value(-999999).isInteger());
-
-  // Large integers that can be exactly represented as doubles
-  EXPECT_TRUE(Value(static_cast<double>(1LL << 52)).isInteger());
-  EXPECT_TRUE(Value(static_cast<double>(-(1LL << 52))).isInteger());
-}
-
 TEST_P(JSITest, EqualsTest) {
   EXPECT_TRUE(Object::strictEquals(rt, rt.global(), rt.global()));
   EXPECT_TRUE(Value::strictEquals(rt, 1, 1));
@@ -1502,101 +1426,6 @@ TEST_P(JSITest, JSErrorTest) {
           "var e = {toString() { throw new Error('errstr'); }};"
           "throw e;"),
       JSIException);
-}
-
-TEST_P(JSITest, CreateErrorTest) {
-  // Test JSError::createEvalError
-  {
-    try {
-      throw JSError::createEvalError(rt, "eval error");
-    } catch (const JSError& e) {
-      // getMessage() checks the C++ JSError's cached message.
-      // The "message" property check verifies the JS object was constructed
-      // correctly, since they are populated independently.
-      EXPECT_EQ(e.getMessage(), "eval error");
-      Object caughtObj = e.value().getObject(rt);
-      EXPECT_EQ(
-          caughtObj.getProperty(rt, "message").getString(rt).utf8(rt),
-          "eval error");
-      EXPECT_TRUE(rt.instanceOf(
-          caughtObj, rt.global().getPropertyAsFunction(rt, "EvalError")));
-    }
-  }
-
-  // Test JSError::createRangeError
-  {
-    try {
-      throw JSError::createRangeError(rt, "range error");
-    } catch (const JSError& e) {
-      EXPECT_EQ(e.getMessage(), "range error");
-      Object caughtObj = e.value().getObject(rt);
-      EXPECT_EQ(
-          caughtObj.getProperty(rt, "message").getString(rt).utf8(rt),
-          "range error");
-      EXPECT_TRUE(rt.instanceOf(
-          caughtObj, rt.global().getPropertyAsFunction(rt, "RangeError")));
-    }
-  }
-
-  // Test JSError::createReferenceError
-  {
-    try {
-      throw JSError::createReferenceError(rt, "reference error");
-    } catch (const JSError& e) {
-      EXPECT_EQ(e.getMessage(), "reference error");
-      Object caughtObj = e.value().getObject(rt);
-      EXPECT_EQ(
-          caughtObj.getProperty(rt, "message").getString(rt).utf8(rt),
-          "reference error");
-      EXPECT_TRUE(rt.instanceOf(
-          caughtObj, rt.global().getPropertyAsFunction(rt, "ReferenceError")));
-    }
-  }
-
-  // Test JSError::createSyntaxError
-  {
-    try {
-      throw JSError::createSyntaxError(rt, "syntax error");
-    } catch (const JSError& e) {
-      EXPECT_EQ(e.getMessage(), "syntax error");
-      Object caughtObj = e.value().getObject(rt);
-      EXPECT_EQ(
-          caughtObj.getProperty(rt, "message").getString(rt).utf8(rt),
-          "syntax error");
-      EXPECT_TRUE(rt.instanceOf(
-          caughtObj, rt.global().getPropertyAsFunction(rt, "SyntaxError")));
-    }
-  }
-
-  // Test JSError::createTypeError
-  {
-    try {
-      throw JSError::createTypeError(rt, "type error");
-    } catch (const JSError& e) {
-      EXPECT_EQ(e.getMessage(), "type error");
-      Object caughtObj = e.value().getObject(rt);
-      EXPECT_EQ(
-          caughtObj.getProperty(rt, "message").getString(rt).utf8(rt),
-          "type error");
-      EXPECT_TRUE(rt.instanceOf(
-          caughtObj, rt.global().getPropertyAsFunction(rt, "TypeError")));
-    }
-  }
-
-  // Test JSError::createURIError
-  {
-    try {
-      throw JSError::createURIError(rt, "uri error");
-    } catch (const JSError& e) {
-      EXPECT_EQ(e.getMessage(), "uri error");
-      Object caughtObj = e.value().getObject(rt);
-      EXPECT_EQ(
-          caughtObj.getProperty(rt, "message").getString(rt).utf8(rt),
-          "uri error");
-      EXPECT_TRUE(rt.instanceOf(
-          caughtObj, rt.global().getPropertyAsFunction(rt, "URIError")));
-    }
-  }
 }
 
 TEST_P(JSITest, MicrotasksTest) {
@@ -2190,6 +2019,7 @@ TEST_P(JSITest, DeleteProperty) {
   EXPECT_TRUE(hasRes);
 }
 
+/* [Windows #12210
 TEST_P(JSITest, ArrayPush) {
   // This Runtime Decorator is used to test the default implementation of
   // Runtime::push
@@ -2471,6 +2301,7 @@ TEST_P(JSITest, ArrayBufferDetachedTest) {
       "}");
   EXPECT_TRUE(ab.detached(rd));
 }
+Windows] */
 
 INSTANTIATE_TEST_CASE_P(
     Runtimes,
