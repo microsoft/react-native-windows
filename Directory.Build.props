@@ -25,6 +25,13 @@
     <ReactNativeYarnIntDir>$(RootIntDir)\yarn_install\</ReactNativeYarnIntDir>
   </PropertyGroup>
 
+  <PropertyGroup Label="ReactNativeCommunityCli">
+    <ReactNativeCommunityCliCommand>&quot;$(MSBuildThisFileDirectory)node_modules\.bin\rnc-cli.cmd&quot;</ReactNativeCommunityCliCommand>
+    <AutolinkCommand Condition="'$(AutolinkCommand)' == ''">$(ReactNativeCommunityCliCommand) autolink-windows</AutolinkCommand>
+    <BundleCliCommand Condition="'$(BundleCliCommand)' == ''">$(ReactNativeCommunityCliCommand) bundle</BundleCliCommand>
+    <CodegenCommand Condition="'$(CodegenCommand)' == ''">$(ReactNativeCommunityCliCommand) codegen-windows</CodegenCommand>
+  </PropertyGroup>
+
   <PropertyGroup Label="NuGet">
     <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' != ''">$(RootIntDir)\ProjectExtensions\$(ProjectName)\</MSBuildProjectExtensionsPath>
     <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' == ''">$(RootIntDir)\ProjectExtensions\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
