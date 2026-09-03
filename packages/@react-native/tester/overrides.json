@@ -367,6 +367,13 @@
     },
     {
       "type": "copy",
+      "directory": "js/examples/MutationObserver",
+      "baseDirectory": "packages/rn-tester/js/examples/MutationObserver",
+      "baseHash": "9aac0129435c54a08396dbb47fec1b7ce518ac9a",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "directory": "js/examples/NativeAnimation",
       "baseDirectory": "packages/rn-tester/js/examples/NativeAnimation",
       "baseHash": "969c8e3dbb38df4e0ade137ff1692f815a7df434",
