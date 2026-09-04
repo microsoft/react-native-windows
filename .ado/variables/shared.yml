@@ -6,9 +6,10 @@ variables:
   NPM_CONFIG_YES: false
   NPM_CONFIG_CACHE: $(Agent.TempDirectory)/.npmCache
 
-  # Route npm/Yarn through the ms/react-native-public feed (npmjs upstream) on isolated agents
-  NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
-  YARN_NPM_REGISTRY_SERVER: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
+  # Pull-request builds do not have a feed token, so use the anonymous proxy by default.
+  # Continuous builds switch to the authenticated feed in auth-npm-feed.yml.
+  NPM_CONFIG_REGISTRY: https://packagefeedproxy.microsoft.io/npm/
+  YARN_NPM_REGISTRY_SERVER: https://packagefeedproxy.microsoft.io/npm/
 
   # Stop React Native DevTools from fetching its standalone shell binary via DotSlash from a
   # Facebook CDN on dev-server start, which is blocked under network isolation. The 'dev'
