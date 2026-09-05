@@ -58,8 +58,8 @@ export async function runPowerShellScriptFunction(
   errorCategory: CodedErrorType,
   useAppxCompatibility = false,
 ) {
-  powershell ??= findPowerShell();
   try {
+    powershell ??= findPowerShell();
     const printException = verbose ? '$_;' : '';
     const importAppx = useAppxCompatibility
       ? 'Import-Module Appx -WarningAction SilentlyContinue; '
