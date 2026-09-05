@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 05 Sep 2026 02:49:19 GMT",
+      "version": "0.0.0-canary.1061",
+      "tag": "react-native-windows_v0.0.0-canary.1061",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "351df4271924204bcc121bc6dd5bc20e3f0818dd",
+            "comment": "Fix use-after-free crash when an Image is destroyed while its download is still in flight"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "351df4271924204bcc121bc6dd5bc20e3f0818dd",
+            "comment": "Clamp Tooltip Position To Monitor"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "351df4271924204bcc121bc6dd5bc20e3f0818dd",
+            "comment": "Integrate React Native 0.86.0-nightly-20260430-118198599"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "351df4271924204bcc121bc6dd5bc20e3f0818dd",
+            "comment": "Integrate React Native 0.86.0-nightly-20260310-621592d1f"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "351df4271924204bcc121bc6dd5bc20e3f0818dd",
+            "comment": "0.81 to main pipelines sync"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "351df4271924204bcc121bc6dd5bc20e3f0818dd",
+            "comment": "Integrate React Native 0.86.0-nightly-20260408-8bac1df5a"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "351df4271924204bcc121bc6dd5bc20e3f0818dd",
+            "comment": "Ensure that our CLI lib tests use Yarn v4"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "351df4271924204bcc121bc6dd5bc20e3f0818dd",
+            "comment": "Integrate React Native 0.86.0-nightly-20260325-d1809f0aa"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.294",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Aug 2026 23:17:42 GMT",
       "version": "0.0.0-canary.1060",
       "tag": "react-native-windows_v0.0.0-canary.1060",

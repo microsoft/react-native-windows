@@ -10,11 +10,11 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ReactNativeWindowsVersion>0.0.0-canary.1060</ReactNativeWindowsVersion>
+    <ReactNativeWindowsVersion>0.0.0-canary.1061</ReactNativeWindowsVersion>
     <ReactNativeWindowsMajor>0</ReactNativeWindowsMajor>
     <ReactNativeWindowsMinor>0</ReactNativeWindowsMinor>
     <ReactNativeWindowsPatch>0</ReactNativeWindowsPatch>
     <ReactNativeWindowsCanary>true</ReactNativeWindowsCanary>
-    <ReactNativeWindowsCommitId>de669d0a4c2267faa0391eccc7e858db02304c17</ReactNativeWindowsCommitId>
+    <ReactNativeWindowsCommitId>351df4271924204bcc121bc6dd5bc20e3f0818dd</ReactNativeWindowsCommitId>
   </PropertyGroup>
 </Project>

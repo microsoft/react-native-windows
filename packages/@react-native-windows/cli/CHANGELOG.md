@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Fri, 21 Aug 2026 16:35:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 05 Sep 2026 02:49:19 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.294
+
+Sat, 05 Sep 2026 02:49:19 GMT
+
+### Changes
+
+- Integrate React Native 0.86.0-nightly-20260408-8bac1df5a (email not defined)
+- Integrate React Native 0.86.0-nightly-20260430-118198599 (email not defined)
+- Integrate React Native 0.86.0-nightly-20260325-d1809f0aa (email not defined)
+- Integrate React Native 0.86.0-nightly-20260310-621592d1f (email not defined)
 
 ## 0.0.0-canary.293
 
