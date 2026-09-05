@@ -107,6 +107,12 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       std::string const &eventType) override;
   virtual void schedulerDidUpdateShadowTree(
       const std::unordered_map<facebook::react::Tag, folly::dynamic> &tagToProps) override;
+  virtual void schedulerDidCaptureViewSnapshot(facebook::react::Tag tag, facebook::react::SurfaceId surfaceId) override;
+  virtual void schedulerDidSetViewSnapshot(
+      facebook::react::Tag sourceTag,
+      facebook::react::Tag targetTag,
+      facebook::react::SurfaceId surfaceId) override;
+  virtual void schedulerDidClearPendingSnapshots() override;
 };
 
 } // namespace Microsoft::ReactNative

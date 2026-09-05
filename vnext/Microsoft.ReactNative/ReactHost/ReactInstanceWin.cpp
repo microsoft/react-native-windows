@@ -24,6 +24,7 @@
 #include <appModel.h>
 #include <comUtil/qiCast.h>
 #include <dispatchQueue/dispatchQueue.h>
+#include <folly/ScopeGuard.h>
 #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
 #include <react/renderer/runtimescheduler/RuntimeSchedulerCallInvoker.h>
 #include <winrt/Windows.Storage.h>
@@ -570,6 +571,16 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                         facebook::react::componentNameByReactViewName(name));
                   };
                   facebook::react::bindHasComponentProvider(runtime, std::move(hasComponentProvider));
+
+                  auto properties = winrt::Microsoft::ReactNative::ReactPropertyBag(m_options.Properties);
+                  // Scheduler consumes this executor synchronously while constructing the eager Fabric module.
+                  Microsoft::ReactNative::SchedulerSettings::SetBridgelessBindingsExecutor(
+                      properties, [&runtime](std::function<void(facebook::jsi::Runtime & runtime)> &&callback) {
+                        callback(runtime);
+                      });
+                  auto clearBridgelessBindingsExecutor = folly::makeGuard([&properties]() noexcept {
+                    Microsoft::ReactNative::SchedulerSettings::ClearBridgelessBindingsExecutor(properties);
+                  });
 
                   // init TurboModule
                   for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {

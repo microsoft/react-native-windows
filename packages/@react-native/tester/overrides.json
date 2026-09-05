@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.86.0-nightly-20260408-8bac1df5a",
+  "baseVersion": "0.86.0-nightly-20260430-118198599",
   "overrides": [
     {
       "type": "copy",
@@ -278,7 +278,7 @@
       "type": "copy",
       "file": "js/examples/IntersectionObserver/IntersectionObserverMDNExample.js",
       "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverMDNExample.js",
-      "baseHash": "6598e7f7f1d1de0e0d593eaf0db571ddd4c17bf5",
+      "baseHash": "395d0096415862f94a87095221cd8faf6849c64e",
       "issue": 4054
     },
     {
@@ -367,6 +367,13 @@
     },
     {
       "type": "copy",
+      "directory": "js/examples/MutationObserver",
+      "baseDirectory": "packages/rn-tester/js/examples/MutationObserver",
+      "baseHash": "9aac0129435c54a08396dbb47fec1b7ce518ac9a",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "directory": "js/examples/NativeAnimation",
       "baseDirectory": "packages/rn-tester/js/examples/NativeAnimation",
       "baseHash": "969c8e3dbb38df4e0ade137ff1692f815a7df434",
@@ -404,7 +411,7 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseHash": "c7ec5b78d729322113953c2ac62d410a21b6091c"
+      "baseHash": "49293217a0510649f0a2784773df9e86bee6b13a"
     },
     {
       "type": "copy",
@@ -627,7 +634,7 @@
       "type": "copy",
       "directory": "js/examples/Transform",
       "baseDirectory": "packages/rn-tester/js/examples/Transform",
-      "baseHash": "9513928165cced31351220504e5a0abc113e910a",
+      "baseHash": "d557696d9561f9537a896fb3b8b6a889f0a928eb",
       "issue": 4054
     },
     {
@@ -717,14 +724,14 @@
       "type": "copy",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "31a3c185ebce41969fc8af059b997a3c8442617c",
+      "baseHash": "0d3d781956398fea18ffc2fe09969dc337bf1ee5",
       "issue": 13228
     },
     {
       "type": "copy",
       "file": "js/utils/RNTesterList.ios.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
-      "baseHash": "1a0053cf4822ffb96bec7f0674ee0323693a03ec",
+      "baseHash": "9551776715eab41feebbb269585a6f37a5e089ca",
       "issue": 13228
     },
     {

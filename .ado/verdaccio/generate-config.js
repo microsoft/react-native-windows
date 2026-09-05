@@ -2,9 +2,13 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const FEED_URL =
+const AUTHENTICATED_FEED_URL =
   'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/';
+const ANONYMOUS_FEED_URL = 'https://packagefeedproxy.microsoft.io/npm/';
 const TOKEN_ENV = 'RNW_NPM_FEED_TOKEN';
+const feedUrl = process.env[TOKEN_ENV]
+  ? AUTHENTICATED_FEED_URL
+  : ANONYMOUS_FEED_URL;
 
 const lines = [
   'storage: ./storage',
@@ -13,7 +17,7 @@ const lines = [
   '    file: ./htpasswd',
   'uplinks:',
   '  npmFeed:',
-  `    url: ${FEED_URL}`,
+  `    url: ${feedUrl}`,
   '    max_fails: 40',
   '    maxage: 30m',
   '    timeout: 60s',
@@ -51,5 +55,5 @@ const outputPath = path.join(__dirname, 'config.generated.yaml');
 fs.writeFileSync(outputPath, `${lines.join('\n')}\n`);
 
 console.log(
-  `Wrote ${outputPath} (feed authentication ${process.env[TOKEN_ENV] ? 'enabled' : 'disabled'})`,
+  `Wrote ${outputPath} (feed authentication ${process.env[TOKEN_ENV] ? 'enabled' : 'disabled'}, uplink ${feedUrl})`,
 );

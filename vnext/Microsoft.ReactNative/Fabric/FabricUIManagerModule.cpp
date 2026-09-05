@@ -116,6 +116,7 @@ void FabricUIManager::installFabricUIManager() noexcept {
     return registry;
   };
   toolbox.runtimeExecutor = runtimeExecutor;
+  toolbox.bridgelessBindingsExecutor = SchedulerSettings::GetBridgelessBindingsExecutor(m_context.Properties());
   toolbox.eventBeatFactory = asynchronousBeatFactory;
 
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
@@ -497,6 +498,15 @@ void FabricUIManager::schedulerDidUpdateShadowTree(
   // This method is called when the scheduler updates shadow tree props
 }
 
+void FabricUIManager::schedulerDidCaptureViewSnapshot(facebook::react::Tag tag, facebook::react::SurfaceId surfaceId) {}
+
+void FabricUIManager::schedulerDidSetViewSnapshot(
+    facebook::react::Tag sourceTag,
+    facebook::react::Tag targetTag,
+    facebook::react::SurfaceId surfaceId) {}
+
+void FabricUIManager::schedulerDidClearPendingSnapshots() {}
+
 void FabricUIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
 
@@ -544,15 +554,7 @@ void FabricUIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext con
   */
 
   // binding.register( // This is register in java, which calls into Binding::installFabricUIManager
-  installFabricUIManager(
-      /*
-        mReactApplicationContext.getCatalystInstance().getRuntimeExecutor(),
-        uiManager,
-        eventBeatManager,
-        jsMessageQueueThread,
-        mComponentFactory,
-        mConfig
-        */);
+  installFabricUIManager();
   /*
   Systrace.endSection(Systrace.TRACE_TAG_REACT_JAVA_BRIDGE);
   return uiManager;
