@@ -48,7 +48,7 @@ export function newSpinner(text: string) {
   return ora(options).start();
 }
 
-const powershell = findPowerShell();
+let powershell: string | undefined;
 
 export async function runPowerShellScriptFunction(
   taskDescription: string,
@@ -59,6 +59,7 @@ export async function runPowerShellScriptFunction(
   useAppxCompatibility = false,
 ) {
   try {
+    powershell ??= findPowerShell();
     const printException = verbose ? '$_;' : '';
     const importAppx = useAppxCompatibility
       ? 'Import-Module Appx -WarningAction SilentlyContinue; '
@@ -95,7 +96,7 @@ export function commandWithProgress(
   errorCategory: CodedErrorType,
 ) {
   return new Promise<void>((resolve, reject) => {
-    const spawnOptions: SpawnOptions = verbose ? { stdio: 'inherit' } : {};
+    const spawnOptions: SpawnOptions = verbose ? {stdio: 'inherit'} : {};
 
     if (verbose) {
       spinner.stop();
