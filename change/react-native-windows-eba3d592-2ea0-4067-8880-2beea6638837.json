@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix use-after-free crash when an Image is destroyed while its download is still in flight",
-  "packageName": "react-native-windows",
-  "email": "gordomacmaster@gmail.com",
-  "dependentChangeType": "patch"
-}
