@@ -79,7 +79,18 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
             };
           },
           runAutomaticFix: async ({loader, logManualInstallation}) => {
-            powershell ??= findPowerShell();
+            try {
+              powershell ??= findPowerShell();
+            } catch (error) {
+              const errorMessage = error instanceof Error ? error.message : undefined;
+              logManualInstallation({
+                healthcheck: `react-native-windows dependency "${id}"`,
+                message: `Error finding Powershell${errorMessage ? `: ${errorMessage}` : ""}`
+              });
+              loader.fail();
+              return;
+            }
+
             const command = `"${powershell}" -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -Check ${id}`;
             try {
               const {exitCode} = await execa(command, {stdio: 'inherit'});
