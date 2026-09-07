@@ -38,6 +38,7 @@ export type TouchableWithoutFeedbackPropsAndroid = {
   touchSoundDisabled?: ?boolean,
 };
 
+/** @build-types emit-as-interface Expo compatibility */
 // [Windows
 export type TouchableWithoutFeedbackPropsWindows = {
   accessibilityPosInSet?: ?number,

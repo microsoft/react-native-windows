@@ -582,6 +582,7 @@ type ViewBaseProps = Readonly<{
   'aria-required'?: ?boolean, // [Windows]
 }>;
 
+/** @build-types emit-as-interface Nativewind, Expo compatibility */
 export type ViewProps = Readonly<{
   ...DirectEventProps,
   ...GestureResponderHandlers,

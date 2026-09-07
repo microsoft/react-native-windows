@@ -184,7 +184,6 @@ component View(
       text: ariaValueText ?? accessibilityValue?.text,
     };
   }
-
   // [Windows key event processing and accessible property
   if (otherProps.keyDownEvents || otherProps.onKeyDown) {
     const keydownLocal = otherProps.onKeyDown;

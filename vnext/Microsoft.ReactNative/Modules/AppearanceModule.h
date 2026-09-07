@@ -32,7 +32,7 @@ struct Appearance : std::enable_shared_from_this<Appearance> {
   void setColorScheme(std::string style) noexcept;
 
   REACT_SYNC_METHOD(getColorScheme)
-  std::optional<std::string> getColorScheme() noexcept;
+  std::string getColorScheme() noexcept;
 
   REACT_METHOD(addListener)
   void addListener(std::string eventName) noexcept;

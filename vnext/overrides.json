@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.86.0-nightly-20260430-118198599",
+  "baseVersion": "0.87.0-nightly-20260519-58cd1bf58",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "d3f598036d7487063720f4d3bc912f84b1dea509"
+      "baseHash": "8541594eb651d934e295d80bfca57608797c051d"
     },
     {
       "type": "derived",
@@ -140,7 +140,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/attributedstring/TextAttributes.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/attributedstring/TextAttributes.cpp",
-      "baseHash": "5b731de462104e9f631790f4e5d19155117dddc2"
+      "baseHash": "9b3e91cc3b64225dcc1f115d0c2a40c5a2ce94b7"
     },
     {
       "type": "patch",
@@ -219,7 +219,7 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManager.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/UIManager.cpp",
-      "baseHash": "3f35ae01c97462b0d3334879e0fcb69e416303b8"
+      "baseHash": "0b7e6b8aa2dec853e01fb3e3cb661d5244d5f6a3"
     },
     {
       "type": "derived",
@@ -312,7 +312,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "d3700b2fa03fd4636ed64de3e3e93a44ed5de223",
+      "baseHash": "8f272968c188f7cfcbc0416091d028f32c906b9d",
       "issue": 4578
     },
     {
@@ -333,7 +333,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "c3f8d0874549590ba8d2d020fd1c13d604d74be9"
+      "baseHash": "441c1b0e0db63cb1f0e7597105e0ebdbfaabc6f4"
     },
     {
       "type": "platform",
@@ -389,19 +389,19 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "cf86b53a53968ee3140f5aba8f07ec90c961f2ea"
+      "baseHash": "f4f899e3e0cc0fc70de0021fbc2e4268e68c66dd"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/RefreshControl/RefreshControl.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/RefreshControl/RefreshControl.js",
-      "baseHash": "bcfa44b41ccdacc834418012f2fa8accd10d6466"
+      "baseHash": "0318a95f15b38f09f5b78522419e32dbd16be8a1"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollView.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "2877f7545839bae6bdb6998220676175eedf4b5a"
+      "baseHash": "c69c0c1244e378e5e5a6026eb175ef2e097957a1"
     },
     {
       "type": "derived",
@@ -413,13 +413,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Switch/Switch.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Switch/Switch.js",
-      "baseHash": "6b1a4780f2412e8f2893eab43cc0a3080b4a1e5e"
+      "baseHash": "2c4d34ae7caeb5d97f0771ba605e8875bef9e14e"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.flow.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.flow.js",
-      "baseHash": "48221e09512e747863529d29f628cfc83996b89f"
+      "baseHash": "5e2e87bd2d42ebeb4e53fdca382964eadf585155"
     },
     {
       "type": "patch",
@@ -455,7 +455,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "c75ca47570eb31904093f8fead941ca6fa30c45c"
+      "baseHash": "bb168366cda832fc9361b0ce76f2f4c27c418e16"
     },
     {
       "type": "derived",
@@ -473,13 +473,13 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "f71ee1bab3695d4f47017ece98f2312d733b678c"
+      "baseHash": "6531afc8efc24dcb268ef5f59880f540a0f39d31"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/View/View.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "194eebd6a94c61218461d08ef879e852e8503883"
+      "baseHash": "31ddfc79350a2f57e3963501d37c1522b76b2f40"
     },
     {
       "type": "derived",
@@ -503,7 +503,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "138a0f01dfe3524a61cf585461867fd522e49964"
+      "baseHash": "4be3c7c79c4def3cd1a1a4df27f8ca2d8507f6e3"
     },
     {
       "type": "patch",
@@ -570,7 +570,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Modal/Modal.windows.js",
       "baseFile": "packages/react-native/Libraries/Modal/Modal.js",
-      "baseHash": "2b723339e99afd152dc0fd801277c3a87130909f"
+      "baseHash": "1d08d04a7938ac1ff8f56028c02a82814b744581"
     },
     {
       "type": "derived",
@@ -611,7 +611,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "65f7013eb707b42f787520de552571102b249fb5",
+      "baseHash": "c576eb414a7b496abf357919c6a3cb8da14cf6ac",
       "issue": 4379
     },
     {
@@ -647,7 +647,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/TextProps.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/TextProps.js",
-      "baseHash": "7c4f916e4b08bcffaed10144506ff99b0781fc20"
+      "baseHash": "8392ed76bf20cb9cc345066baa5809530fed1b72"
     },
     {
       "type": "patch",

@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.86.0-nightly-20260430-118198599",
+  "baseVersion": "0.87.0-nightly-20260519-58cd1bf58",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "d3f598036d7487063720f4d3bc912f84b1dea509"
+      "baseHash": "8541594eb651d934e295d80bfca57608797c051d"
     },
     {
       "type": "derived",
@@ -41,13 +41,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.d.ts",
-      "baseHash": "34bb1374c3d892607c894ad676de1e5d104ffaae"
+      "baseHash": "e619f50a88e445329edf44184ea02374040414f1"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "d3700b2fa03fd4636ed64de3e3e93a44ed5de223"
+      "baseHash": "8f272968c188f7cfcbc0416091d028f32c906b9d"
     },
     {
       "type": "copy",
@@ -66,7 +66,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "c3f8d0874549590ba8d2d020fd1c13d604d74be9"
+      "baseHash": "441c1b0e0db63cb1f0e7597105e0ebdbfaabc6f4"
     },
     {
       "type": "platform",
@@ -91,7 +91,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Pressable/Pressable.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "cf86b53a53968ee3140f5aba8f07ec90c961f2ea",
+      "baseHash": "f4f899e3e0cc0fc70de0021fbc2e4268e68c66dd",
       "issue": 6240
     },
     {
@@ -114,7 +114,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.flow.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.flow.js",
-      "baseHash": "48221e09512e747863529d29f628cfc83996b89f"
+      "baseHash": "5e2e87bd2d42ebeb4e53fdca382964eadf585155"
     },
     {
       "type": "derived",
@@ -177,7 +177,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/View.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "194eebd6a94c61218461d08ef879e852e8503883"
+      "baseHash": "31ddfc79350a2f57e3963501d37c1522b76b2f40"
     },
     {
       "type": "derived",
@@ -201,7 +201,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "138a0f01dfe3524a61cf585461867fd522e49964",
+      "baseHash": "4be3c7c79c4def3cd1a1a4df27f8ca2d8507f6e3",
       "issue": 6240
     },
     {
@@ -365,7 +365,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "65f7013eb707b42f787520de552571102b249fb5",
+      "baseHash": "c576eb414a7b496abf357919c6a3cb8da14cf6ac",
       "issue": 6240
     },
     {
@@ -438,7 +438,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/TextProps.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextProps.js",
-      "baseHash": "7c4f916e4b08bcffaed10144506ff99b0781fc20"
+      "baseHash": "8392ed76bf20cb9cc345066baa5809530fed1b72"
     },
     {
       "type": "patch",
@@ -497,7 +497,7 @@
       "type": "patch",
       "file": "src-win/src/private/animated/NativeAnimatedHelper.win32.js",
       "baseFile": "packages/react-native/src/private/animated/NativeAnimatedHelper.js",
-      "baseHash": "b2f5d15fcf7b7b26fbd49e0196037fbb8175bb17",
+      "baseHash": "cb4954c7fe4b3e5ac7a39f2a1fa0ce111e299a65",
       "issue": 11041
     },
     {
