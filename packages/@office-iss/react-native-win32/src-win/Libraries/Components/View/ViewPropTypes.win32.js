@@ -532,6 +532,7 @@ type ViewBaseProps = Readonly<{
   accessibilityControls?: ?string,
 }>;
 
+/** @build-types emit-as-interface Nativewind, Expo compatibility */
 // [Windows
 export type HandledKeyboardEvent = Readonly<{|
   altKey?: ?boolean,

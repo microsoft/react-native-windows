@@ -78,7 +78,7 @@ void Appearance::setColorScheme(std::string style) noexcept {
   // no-op
 }
 
-std::optional<std::string> Appearance::getColorScheme() noexcept {
+std::string Appearance::getColorScheme() noexcept {
   return ToString(
       m_context.Properties().Get(AppearanceCurrentThemePropertyId()).value_or(false)
           ? Appearance::ApplicationTheme::Dark

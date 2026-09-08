@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.86.0-nightly-20260430-118198599",
+  "baseVersion": "0.87.0-nightly-20260519-58cd1bf58",
   "overrides": [
     {
       "type": "copy",
@@ -103,14 +103,14 @@
       "type": "copy",
       "directory": "js/examples/AnimationBackend",
       "baseDirectory": "packages/rn-tester/js/examples/AnimationBackend",
-      "baseHash": "9e29a49d159864f092c7c6f4ad0bbe40bfae45e0",
+      "baseHash": "557a7e242830499a360f08e0b1772fba75ffcc46",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Appearance",
       "baseDirectory": "packages/rn-tester/js/examples/Appearance",
-      "baseHash": "613e0b5d9573f3f7e743ccde4fe6c6bc5841e3a3",
+      "baseHash": "e78d7bab7ffed36416158ccea6d2b1747bf5fb39",
       "issue": 4054
     },
     {
@@ -194,7 +194,7 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "3ed460d67f58b41fe39b8ad2cffee909f22b5d04",
+      "baseHash": "051a836afcb287a47d8ddfb7853cdd4f11560900",
       "issue": 4054
     },
     {
@@ -222,7 +222,7 @@
       "type": "derived",
       "file": "js/examples/Image/ImageExample.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "f69e611d660df1bb767d61e1c0fe5b5c2fae378a",
+      "baseHash": "7e0acad4f41eae5d225f893755f464cfa06e1eab",
       "issue": 4054
     },
     {
@@ -801,7 +801,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "4fe2918030660816d8d1bfd054cd992c465f5997",
+      "baseHash": "67adc74806c05f95e3a5dd6a15a67c3b570f563f",
       "issue": 13228
     },
     {

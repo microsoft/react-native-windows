@@ -10,7 +10,7 @@
 
 import type {ViewProps} from './ViewPropTypes';
 
-import TextAncestor from '../../Text/TextAncestor';
+import TextAncestorContext from '../../Text/TextAncestorContext';
 import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
 import invariant from 'invariant'; // [Windows]
@@ -220,7 +220,7 @@ const View: component(
       // In core this is a TextAncestor.Provider value={false} See
       // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c
       // But since Views are not currently supported in Text, we do not need the extra provider
-      <TextAncestor.Consumer>
+      <TextAncestorContext.Consumer>
         {hasTextAncestor => {
           invariant(
             !hasTextAncestor,
@@ -280,7 +280,7 @@ const View: component(
             />
           );
         }}
-      </TextAncestor.Consumer>
+      </TextAncestorContext.Consumer>
       // Windows]
     );
   },

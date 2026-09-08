@@ -72,6 +72,7 @@ type TouchableHighlightBaseProps = Readonly<{
   hostRef?: React.RefSetter<React.ElementRef<typeof View>>,
 }>;
 
+/** @build-types emit-as-interface Uniwind compatibility */
 export type TouchableHighlightProps = Readonly<{
   ...TouchableWithoutFeedbackProps,
   ...AndroidProps,

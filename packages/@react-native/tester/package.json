@@ -1,6 +1,6 @@
 {
   "name": "@react-native/tester",
-  "version": "0.86.0-nightly-20260430-118198599",
+  "version": "0.87.0-nightly-20260519-58cd1bf58",
   "private": true,
   "description": "React Native tester app.",
   "license": "MIT",
@@ -19,14 +19,15 @@
     "clean-android": "rm -rf android/app/build",
     "prepare-ios": "node ./cli.js bootstrap ios",
     "clean-ios": "rm -rf build/generated/ios Pods Podfile.lock",
+    "ios:clear-prebuild-caches": "rm -rf $HOME/Library/Caches/ReactNative",
     "e2e-build-android": "../../gradlew :packages:rn-tester:android:app:installHermesRelease -PreactNativeArchitectures=arm64-v8a",
     "e2e-build-ios": "./scripts/maestro-build-ios.sh",
     "e2e-test-android": "maestro test .maestro/ -e APP_ID=com.facebook.react.uiapp",
     "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
-    "@react-native/new-app-screen": "0.86.0-nightly-20260430-118198599",
-    "@react-native/popup-menu-android": "0.86.0-nightly-20260430-118198599",
+    "@react-native/new-app-screen": "0.87.0-nightly-20260519-58cd1bf58",
+    "@react-native/popup-menu-android": "0.87.0-nightly-20260519-58cd1bf58",
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"
@@ -43,11 +44,6 @@
       "javaPackageName": "com.facebook.fbreact.specs"
     },
     "ios": {
-      "modules": {
-        "SampleTurboModule": {
-          "unstableRequiresMainQueueSetup": true
-        }
-      },
       "components": {
         "RNTMyNativeView": {
           "className": "RNTMyNativeViewComponentView"
@@ -62,7 +58,7 @@
     "commander": "^12.0.0",
     "listr2": "^6.4.1",
     "react": "19.2.3",
-    "react-native": "0.86.0-nightly-20260430-118198599",
+    "react-native": "0.87.0-nightly-20260519-58cd1bf58",
     "rxjs": "npm:@react-native-community/rxjs@6.5.4-custom"
   }
 }

@@ -731,7 +731,7 @@ export default class Pressability {
                     );
                     if (delayHoverOut > 0) {
                       event.persist();
-                      this._hoverInDelayTimeout = setTimeout(() => {
+                      this._hoverOutDelayTimeout = setTimeout(() => {
                         onHoverOut(event);
                       }, delayHoverOut);
                     } else {
