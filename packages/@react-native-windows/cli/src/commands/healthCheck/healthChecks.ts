@@ -82,10 +82,13 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
             try {
               powershell ??= findPowerShell();
             } catch (error) {
-              const errorMessage = error instanceof Error ? error.message : undefined;
+              const errorMessage =
+                error instanceof Error ? error.message : undefined;
               logManualInstallation({
                 healthcheck: `react-native-windows dependency "${id}"`,
-                message: `Error finding PowerShell${errorMessage ? `: ${errorMessage}` : ""}`
+                message: `Error finding PowerShell${
+                  errorMessage ? `: ${errorMessage}` : ''
+                }`,
               });
               loader.fail();
               return;
