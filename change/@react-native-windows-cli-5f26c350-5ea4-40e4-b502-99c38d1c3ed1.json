@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Defer PowerShell discovery until a command or health check needs it so CLI configuration can load without Windows build tools.",
+  "packageName": "@react-native-windows/cli",
+  "email": "14055146+shirakaba@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
