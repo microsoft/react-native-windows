@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 22 Aug 2026 01:38:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 09 Sep 2026 16:37:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.36
+
+Wed, 09 Sep 2026 16:37:08 GMT
+
+### Patches
+
+- Retain license, README, and docs in vendored folly, fmt, and fast-float, and update the example Metro config for create-react-native-library 0.63 (vmorozov@microsoft.com)
+- Clamp Tooltip Position To Monitor (66076509+vineethkuttan@users.noreply.github.com)
+- Fix use-after-free crash when an Image is destroyed while its download is still in flight (gordomacmaster@gmail.com)
+- Bump @react-native-windows/cli to v0.81.10
 
 ## 0.81.35
 

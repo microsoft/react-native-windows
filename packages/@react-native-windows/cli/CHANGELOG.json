@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 09 Sep 2026 16:37:08 GMT",
+      "version": "0.81.10",
+      "tag": "@react-native-windows/cli_v0.81.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "14055146+shirakaba@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "87ecc02fbc3641eb70d8179f61fdb98ba5dd8f04",
+            "comment": "Defer PowerShell discovery until a command or health check needs it so CLI configuration can load without Windows build tools."
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 22 Aug 2026 01:38:28 GMT",
       "version": "0.81.9",
       "tag": "@react-native-windows/cli_v0.81.9",

@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 09 Sep 2026 16:37:08 GMT",
+      "version": "0.81.36",
+      "tag": "react-native-windows_v0.81.36",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "87ecc02fbc3641eb70d8179f61fdb98ba5dd8f04",
+            "comment": "Retain license, README, and docs in vendored folly, fmt, and fast-float, and update the example Metro config for create-react-native-library 0.63"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "87ecc02fbc3641eb70d8179f61fdb98ba5dd8f04",
+            "comment": "Clamp Tooltip Position To Monitor"
+          },
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "87ecc02fbc3641eb70d8179f61fdb98ba5dd8f04",
+            "comment": "Fix use-after-free crash when an Image is destroyed while its download is still in flight"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.81.10",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 22 Aug 2026 01:38:28 GMT",
       "version": "0.81.35",
       "tag": "react-native-windows_v0.81.35",
