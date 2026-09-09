@@ -17,7 +17,7 @@ import type {
 import {findPowerShell} from '@react-native-windows/find-dotnet-tools';
 import {HealthCheckList} from './healthCheckList';
 
-const powershell = findPowerShell();
+let powershell: string | undefined;
 
 export function getHealthChecks(): HealthCheckCategory[] | undefined {
   // #8471: There are known cases where the dependencies script will error out.
@@ -68,6 +68,7 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
           getDiagnostics: async () => {
             let needsToBeFixed = true;
             try {
+              powershell ??= findPowerShell();
               await execa(
                 `"${powershell}" -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -Check ${id}`,
               );
@@ -78,6 +79,21 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
             };
           },
           runAutomaticFix: async ({loader, logManualInstallation}) => {
+            try {
+              powershell ??= findPowerShell();
+            } catch (error) {
+              const errorMessage =
+                error instanceof Error ? error.message : undefined;
+              logManualInstallation({
+                healthcheck: `react-native-windows dependency "${id}"`,
+                message: `Error finding PowerShell${
+                  errorMessage ? `: ${errorMessage}` : ''
+                }`,
+              });
+              loader.fail();
+              return;
+            }
+
             const command = `"${powershell}" -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -Check ${id}`;
             try {
               const {exitCode} = await execa(command, {stdio: 'inherit'});
