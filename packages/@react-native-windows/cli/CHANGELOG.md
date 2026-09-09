@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Sat, 22 Aug 2026 01:38:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 09 Sep 2026 16:37:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.10
+
+Wed, 09 Sep 2026 16:37:08 GMT
+
+### Patches
+
+- Defer PowerShell discovery until a command or health check needs it so CLI configuration can load without Windows build tools. (14055146+shirakaba@users.noreply.github.com)
 
 ## 0.81.9
 
