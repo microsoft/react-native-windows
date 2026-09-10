@@ -2,6 +2,51 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 10 Sep 2026 02:36:05 GMT",
+      "version": "0.0.0-canary.294",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.294",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "42e7afc49489010109ad3643ababb488d200b40f",
+            "comment": "Integrate React Native 0.86.0-nightly-20260430-118198599"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "42e7afc49489010109ad3643ababb488d200b40f",
+            "comment": "Integrate React Native 0.86.0-nightly-20260325-d1809f0aa"
+          },
+          {
+            "author": "14055146+shirakaba@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "42e7afc49489010109ad3643ababb488d200b40f",
+            "comment": "Defer PowerShell discovery until a command or health check needs it so CLI configuration can load without Windows build tools."
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "42e7afc49489010109ad3643ababb488d200b40f",
+            "comment": "Integrate React Native 0.86.0-nightly-20260310-621592d1f"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "42e7afc49489010109ad3643ababb488d200b40f",
+            "comment": "Integrate React Native 0.86.0-nightly-20260408-8bac1df5a"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "42e7afc49489010109ad3643ababb488d200b40f",
+            "comment": "Integrate React Native 0.87.0-nightly-20260519-58cd1bf58"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Aug 2026 16:35:17 GMT",
       "version": "0.0.0-canary.293",
       "tag": "@react-native-windows/cli_v0.0.0-canary.293",

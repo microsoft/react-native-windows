@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 21 Aug 2026 23:17:42 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 10 Sep 2026 02:36:04 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1061
+
+Thu, 10 Sep 2026 02:36:04 GMT
+
+### Changes
+
+- Clamp Tooltip Position To Monitor (66076509+vineethkuttan@users.noreply.github.com)
+- Integrate React Native 0.86.0-nightly-20260408-8bac1df5a (email not defined)
+- Ensure that our CLI lib tests use Yarn v4 (vmorozov@microsoft.com)
+- Integrate React Native 0.86.0-nightly-20260325-d1809f0aa (email not defined)
+- Fix use-after-free crash when an Image is destroyed while its download is still in flight (gordomacmaster@gmail.com)
+- Fix Modal title bar contrast when the native window is inactive (anuagra@microsoft.com)
+- 0.81 to main pipelines sync (vmorozov@microsoft.com)
+- Integrate React Native 0.87.0-nightly-20260519-58cd1bf58 (email not defined)
+- Integrate React Native 0.86.0-nightly-20260430-118198599 (email not defined)
+- Integrate React Native 0.86.0-nightly-20260310-621592d1f (email not defined)
+- Bump @react-native-windows/cli to v0.0.0-canary.294
 
 ## 0.0.0-canary.1060
 

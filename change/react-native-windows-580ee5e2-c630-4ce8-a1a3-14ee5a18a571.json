@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix Modal title bar contrast when the native window is inactive",
-  "packageName": "react-native-windows",
-  "email": "anuagra@microsoft.com",
-  "dependentChangeType": "patch"
-}
