@@ -1457,6 +1457,17 @@ void WindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end) noe
     onSelectionChangeArgs.selection.end = end;
     emitter->onSelectionChange(onSelectionChangeArgs);
   }
+
+  // Notify UI Automation clients (e.g. Narrator and braille displays) that the caret or
+  // selection moved, so they re-read the current character/word/line during keyboard
+  // navigation. Without this, arrowing through the text is silent for screen readers.
+  // Mirrors the focus- and value-changed raises elsewhere in the Composition layer.
+  if (UiaClientsAreListening()) {
+    auto spProviderSimple = EnsureUiaProvider().try_as<IRawElementProviderSimple>();
+    if (spProviderSimple != nullptr) {
+      UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_Text_TextSelectionChangedEventId);
+    }
+  }
 }
 
 std::string WindowsTextInputComponentView::GetTextFromRichEdit() const noexcept {
