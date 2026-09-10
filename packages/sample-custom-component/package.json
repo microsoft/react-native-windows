@@ -25,7 +25,7 @@
     "minimatch": "^10.0.3",
     "react": "^19.2.3",
     "react-native": "0.87.0-nightly-20260519-58cd1bf58",
-    "react-native-windows": "^0.0.0-canary.1060"
+    "react-native-windows": "^0.0.0-canary.1061"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

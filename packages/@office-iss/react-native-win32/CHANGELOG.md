@@ -1,8 +1,20 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Mon, 20 Jul 2026 21:19:51 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 10 Sep 2026 02:36:05 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.313
+
+Thu, 10 Sep 2026 02:36:05 GMT
+
+### Changes
+
+- Integrate React Native 0.86.0-nightly-20260325-d1809f0aa (email not defined)
+- Integrate React Native 0.86.0-nightly-20260310-621592d1f (email not defined)
+- Integrate React Native 0.86.0-nightly-20260430-118198599 (email not defined)
+- Integrate React Native 0.86.0-nightly-20260408-8bac1df5a (email not defined)
+- Integrate React Native 0.87.0-nightly-20260519-58cd1bf58 (email not defined)
 
 ## 0.0.0-canary.312
 

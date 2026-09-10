@@ -2,6 +2,45 @@
   "name": "@react-native-windows/perf-testing",
   "entries": [
     {
+      "date": "Thu, 10 Sep 2026 02:36:05 GMT",
+      "version": "0.0.0-canary.1040",
+      "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1040",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "42e7afc49489010109ad3643ababb488d200b40f",
+            "comment": "Integrate React Native 0.86.0-nightly-20260310-621592d1f"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "42e7afc49489010109ad3643ababb488d200b40f",
+            "comment": "Integrate React Native 0.86.0-nightly-20260325-d1809f0aa"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "42e7afc49489010109ad3643ababb488d200b40f",
+            "comment": "Integrate React Native 0.86.0-nightly-20260430-118198599"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "42e7afc49489010109ad3643ababb488d200b40f",
+            "comment": "Integrate React Native 0.87.0-nightly-20260519-58cd1bf58"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "42e7afc49489010109ad3643ababb488d200b40f",
+            "comment": "Integrate React Native 0.86.0-nightly-20260408-8bac1df5a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Jul 2026 21:19:50 GMT",
       "version": "0.0.0-canary.1039",
       "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1039",
