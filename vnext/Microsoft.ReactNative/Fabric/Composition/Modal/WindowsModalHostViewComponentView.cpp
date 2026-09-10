@@ -15,6 +15,22 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
+static winrt::Windows::UI::Color CompositeOverOpaqueBackground(
+    const winrt::Windows::UI::Color &foreground,
+    const winrt::Windows::UI::Color &background) noexcept {
+  const uint32_t alpha = foreground.A;
+  const uint32_t inverseAlpha = 0xFF - alpha;
+  const auto compositeChannel = [alpha, inverseAlpha](uint8_t foregroundChannel, uint8_t backgroundChannel) {
+    return static_cast<uint8_t>((foregroundChannel * alpha + backgroundChannel * inverseAlpha + 0x7F) / 0xFF);
+  };
+
+  return {
+      0xFF,
+      compositeChannel(foreground.R, background.R),
+      compositeChannel(foreground.G, background.G),
+      compositeChannel(foreground.B, background.B)};
+}
+
 struct ModalHostState
     : winrt::implements<ModalHostState, winrt::Microsoft::ReactNative::Composition::IPortalStateData> {
   ModalHostState(winrt::Microsoft::ReactNative::LayoutConstraints layoutConstraints, float scaleFactor)
@@ -36,6 +52,8 @@ struct ModalHostState
 struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::Foundation::IInspectable>,
                        ::Microsoft::ReactNativeSpecs::BaseModalHostView<ModalHostView> {
   ~ModalHostView() {
+    UnsubscribeFromThemeChanges();
+
     if (m_popUp) {
       // Unregister closing event handler
       if (m_appWindowClosingToken) {
@@ -171,6 +189,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 
  private:
   void OnMounted(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+    SubscribeToThemeChanges(view);
     m_mounted = true;
     if (m_visible) {
       QueueShow(view);
@@ -178,7 +197,45 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   }
 
   void OnUnmounted(const winrt::Microsoft::ReactNative::ComponentView & /*view*/) noexcept {
+    UnsubscribeFromThemeChanges();
     m_mounted = false;
+  }
+
+  void SubscribeToThemeChanges(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+    UnsubscribeFromThemeChanges();
+
+    auto themeSource = view.Parent().as<winrt::Microsoft::ReactNative::Composition::ComponentView>();
+    m_themeSource = winrt::make_weak(themeSource);
+    m_theme = themeSource.Theme();
+    const auto themeSubscriptionGeneration = m_themeSubscriptionGeneration;
+    m_themeChangedToken = themeSource.ThemeChanged([wkThis = get_weak(), themeSubscriptionGeneration](
+                                                       const winrt::Windows::Foundation::IInspectable &sender,
+                                                       const winrt::Windows::Foundation::IInspectable & /*args*/) {
+      auto theme = sender.as<winrt::Microsoft::ReactNative::Composition::ComponentView>().Theme();
+      if (auto strongThis = wkThis.get()) {
+        strongThis->m_reactContext.UIDispatcher().Post([wkThis, theme, themeSubscriptionGeneration]() {
+          if (auto strongThis = wkThis.get()) {
+            if (strongThis->m_themeSubscriptionGeneration != themeSubscriptionGeneration) {
+              return;
+            }
+            strongThis->m_theme = theme;
+            strongThis->UpdateTitleBarColors();
+          }
+        });
+      }
+    });
+  }
+
+  void UnsubscribeFromThemeChanges() noexcept {
+    if (m_themeChangedToken) {
+      if (auto themeSource = m_themeSource.get()) {
+        themeSource.ThemeChanged(m_themeChangedToken);
+      }
+      m_themeChangedToken = {};
+    }
+    m_themeSource = {};
+    m_theme = nullptr;
+    ++m_themeSubscriptionGeneration;
   }
 
   void AdjustWindowSize(const winrt::Microsoft::ReactNative::LayoutMetrics &layoutMetrics) noexcept {
@@ -318,6 +375,52 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 
       titleBar.IconShowOptions(winrt::Microsoft::UI::Windowing::IconShowOptions::HideIconAndSystemMenu);
     }
+
+    UpdateTitleBarColors();
+  }
+
+  void UpdateTitleBarColors() noexcept {
+    if (!m_rnWindow || !m_theme || !m_localProps || m_localProps->hideTitleBar.value_or(false) ||
+        !winrt::Microsoft::UI::Windowing::AppWindowTitleBar::IsCustomizationSupported()) {
+      return;
+    }
+
+    winrt::Windows::UI::Color background;
+    winrt::Windows::UI::Color activeForeground;
+    winrt::Windows::UI::Color inactiveForeground;
+    winrt::Windows::UI::Color buttonHoverBackground;
+    winrt::Windows::UI::Color buttonPressedBackground;
+    winrt::Windows::UI::Color buttonPressedForeground;
+    if (!m_theme.TryGetPlatformColor(L"SolidBackgroundFillColorBase", background) ||
+        !m_theme.TryGetPlatformColor(L"TextFillColorPrimary", activeForeground) ||
+        !m_theme.TryGetPlatformColor(L"TextFillColorSecondary", inactiveForeground) ||
+        !m_theme.TryGetPlatformColor(L"ControlFillColorSecondary", buttonHoverBackground) ||
+        !m_theme.TryGetPlatformColor(L"ControlFillColorTertiary", buttonPressedBackground) ||
+        !m_theme.TryGetPlatformColor(L"ButtonForegroundPressed", buttonPressedForeground)) {
+      return;
+    }
+
+    // AppWindowTitleBar ignores alpha, so resolve RNW's translucent semantic text colors to opaque colors first.
+    background.A = 0xFF;
+    activeForeground = CompositeOverOpaqueBackground(activeForeground, background);
+    inactiveForeground = CompositeOverOpaqueBackground(inactiveForeground, background);
+    buttonHoverBackground = CompositeOverOpaqueBackground(buttonHoverBackground, background);
+    buttonPressedBackground = CompositeOverOpaqueBackground(buttonPressedBackground, background);
+    buttonPressedForeground = CompositeOverOpaqueBackground(buttonPressedForeground, buttonPressedBackground);
+
+    auto titleBar = m_rnWindow.AppWindow().TitleBar();
+    titleBar.ForegroundColor(activeForeground);
+    titleBar.BackgroundColor(background);
+    titleBar.InactiveForegroundColor(inactiveForeground);
+    titleBar.InactiveBackgroundColor(background);
+    titleBar.ButtonForegroundColor(activeForeground);
+    titleBar.ButtonBackgroundColor(background);
+    titleBar.ButtonHoverForegroundColor(activeForeground);
+    titleBar.ButtonHoverBackgroundColor(buttonHoverBackground);
+    titleBar.ButtonPressedForegroundColor(buttonPressedForeground);
+    titleBar.ButtonPressedBackgroundColor(buttonPressedBackground);
+    titleBar.ButtonInactiveForegroundColor(inactiveForeground);
+    titleBar.ButtonInactiveBackgroundColor(background);
   }
 
   // creates a new modal window
@@ -453,6 +556,10 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
   winrt::Microsoft::ReactNative::ReactNativeWindow m_rnWindow{nullptr};
   winrt::Microsoft::UI::Content::DesktopPopupSiteBridge m_popUp{nullptr};
   winrt::event_token m_appWindowClosingToken;
+  winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::ComponentView> m_themeSource;
+  winrt::event_token m_themeChangedToken;
+  uint64_t m_themeSubscriptionGeneration{0};
+  winrt::Microsoft::ReactNative::Composition::Theme m_theme{nullptr};
   winrt::com_ptr<::Microsoft::ReactNativeSpecs::ModalHostViewProps> m_localProps{nullptr};
 };
 
