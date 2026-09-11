@@ -7,25 +7,25 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.87.0-nightly-20260519-58cd1bf58",
+  "baseVersion": "0.87.0-nightly-20260604-63683f091",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "8541594eb651d934e295d80bfca57608797c051d"
+      "baseHash": "cab29897ab41daf0bdf7ec14469f549709ee8df1"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "4f1425bdee2bfc1532954a3ad0a9bca5ac5cb52d"
+      "baseHash": "a8995a3fd85b5ac8b503f475134706add0ac628d"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js.flow",
       "baseFile": "packages/react-native/index.js.flow",
-      "baseHash": "6ed6e4c48890f67618a2bacc4160cc7a1a205962"
+      "baseHash": "ba5a4284d241076a429506eb5f35df0e813237a1"
     },
     {
       "type": "platform",
@@ -66,7 +66,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "441c1b0e0db63cb1f0e7597105e0ebdbfaabc6f4"
+      "baseHash": "dfaae1a77b333609c531734fd29fc9212094f2c7"
     },
     {
       "type": "platform",
@@ -91,20 +91,20 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Pressable/Pressable.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "f4f899e3e0cc0fc70de0021fbc2e4268e68c66dd",
+      "baseHash": "671fd9e3b50ad0dbc21237aba195b2fd536b0d33",
       "issue": 6240
     },
     {
       "type": "copy",
       "file": "src-win/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
       "baseFile": "packages/react-native/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
-      "baseHash": "5eb51a48b73b5c1ccc24fe34fd91c67c01b969d4"
+      "baseHash": "5ce9bc8741381a80a1eaa4af64fc7023bd3c43e9"
     },
     {
       "type": "copy",
       "file": "src-win/Libraries/Components/SafeAreaView/SafeAreaView.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseHash": "ebfbaeb4fbaaf7a262149d47f1af526828f7b086"
+      "baseHash": "73f001c9cf840b12c8f0e01da3388cedbcfdf105"
     },
     {
       "type": "platform",
@@ -120,7 +120,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "63cc3972f4d9d1c369e616dd1a93348595e67a20"
+      "baseHash": "9f6b2c9e0e65947f9b76142aab4279c838515188"
     },
     {
       "type": "patch",
@@ -147,7 +147,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/Touchable.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/Touchable.js",
-      "baseHash": "bb64188fc7f7c760c960de6a66d74048658d2fe5"
+      "baseHash": "eda6184f18761af5ae80c4ec4a8271e65140b28e"
     },
     {
       "type": "derived",
@@ -159,7 +159,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Touchable/TouchableNativeFeedback.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableNativeFeedback.js",
-      "baseHash": "7adb86e9810269266c8d1f9d252dc541a7030b75"
+      "baseHash": "56b83741ba7bfd763e0aa161ebde4a9648b30a67"
     },
     {
       "type": "platform",
@@ -177,13 +177,13 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/View.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "31ddfc79350a2f57e3963501d37c1522b76b2f40"
+      "baseHash": "cc9a4ded5391bc4ac8e2054ea5f158d92d24b26f"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewAccessibility.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.d.ts",
-      "baseHash": "1e4e3a89397960e8f08b86be62496473829c0ac3"
+      "baseHash": "6f10f9c0c28d5d70bfcb74d7cddb8f3c114c940d"
     },
     {
       "type": "derived",
@@ -201,7 +201,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "4be3c7c79c4def3cd1a1a4df27f8ca2d8507f6e3",
+      "baseHash": "72246881f3da4f2eb2a11b4fcc459ecb9d3abe04",
       "issue": 6240
     },
     {
@@ -236,7 +236,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Image/Image.win32.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
-      "baseHash": "e52a6144ed3241e1e31e87292536908f8088d9c0",
+      "baseHash": "f2bfa56783706d0fd2af980d992f06a0a0d928a6",
       "issue": 4320
     },
     {
@@ -425,7 +425,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "c7a8fd756a79aee901d60cf731d3be71199bd3b3"
+      "baseHash": "9e8e0694c95f81bf26f842dcff8be43292f8c85d"
     },
     {
       "type": "derived",
@@ -438,20 +438,20 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/TextProps.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextProps.js",
-      "baseHash": "8392ed76bf20cb9cc345066baa5809530fed1b72"
+      "baseHash": "62b3c3a1353376fb0e144a7916cd3dc79d1859cf"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Types/CoreEventTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Types/CoreEventTypes.js",
-      "baseHash": "a171d222c66e809419656decb12be33185f35952",
+      "baseHash": "486ae7020716f382ed63cef9f1d4aec15a8c3c70",
       "issue": 6240
     },
     {
       "type": "copy",
       "file": "src-win/Libraries/Utilities/BackHandler.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/BackHandler.android.js",
-      "baseHash": "9fa1579308fcafa2d919b6f428e1ef2bdbfb83fc",
+      "baseHash": "da60a90a9e44f7146318ed30b2ff26867768b217",
       "issue": 4629
     },
     {
@@ -497,7 +497,7 @@
       "type": "patch",
       "file": "src-win/src/private/animated/NativeAnimatedHelper.win32.js",
       "baseFile": "packages/react-native/src/private/animated/NativeAnimatedHelper.js",
-      "baseHash": "cb4954c7fe4b3e5ac7a39f2a1fa0ce111e299a65",
+      "baseHash": "a2891638cebb0c8782f8adbb18a855fe0b282b41",
       "issue": 11041
     },
     {
@@ -510,19 +510,19 @@
       "type": "derived",
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativeAccessibilityInfoWin32.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/modules/NativeAccessibilityInfo.js",
-      "baseHash": "c36aa0a8347aa80fdc8bdbfc687adf284b7a2cae"
+      "baseHash": "9e0e3d3ad824e8acecd5f2e583d9d3281cb47215"
     },
     {
       "type": "derived",
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativeImageLoaderWin32.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/modules/NativeImageLoaderAndroid.js",
-      "baseHash": "755d9106743414de391e261e31558de5ab28a8d0"
+      "baseHash": "ca9d38954ef1f7ae98b8975c244153fc8dbaea16"
     },
     {
       "type": "derived",
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/modules/NativePlatformConstantsAndroid.js",
-      "baseHash": "809b3807bafb9b73c95fd5ecf30f2d398f993847"
+      "baseHash": "6d562f689df6f0fd926a78326afce7f51b6b1279"
     }
   ]
 }

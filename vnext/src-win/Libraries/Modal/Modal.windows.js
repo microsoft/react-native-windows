@@ -36,7 +36,10 @@ type ModalEventDefinitions = {
   modalDismissed: [{modalID: number}],
 };
 
-export type PublicModalInstance = HostInstance;
+export type ModalInstance = HostInstance;
+
+/** @deprecated Use ModalInstance instead */
+export type PublicModalInstance = ModalInstance;
 
 const ModalEventEmitter =
   (Platform.OS === 'ios' || Platform.OS === 'windows') && // [Windows]
@@ -105,7 +108,7 @@ export type ModalBaseProps = {
   /**
    * A ref to the native Modal component.
    */
-  modalRef?: React.RefSetter<PublicModalInstance>,
+  modalRef?: React.RefSetter<ModalInstance>,
 };
 
 export type ModalPropsIOS = {
@@ -402,7 +405,7 @@ const styles = StyleSheet.create({
 });
 
 type ModalRefProps = Readonly<{
-  ref?: React.RefSetter<PublicModalInstance>,
+  ref?: React.RefSetter<ModalInstance>,
 }>;
 
 // NOTE: This wrapper component is necessary because `Modal` is a class

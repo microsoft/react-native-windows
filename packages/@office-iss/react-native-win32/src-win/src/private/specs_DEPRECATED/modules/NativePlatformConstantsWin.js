@@ -31,7 +31,7 @@ export type PlatformConstantsWin32 = {
 };
 
 export interface Spec extends TurboModule {
-  +getConstants: () => PlatformConstantsWin32;
+  readonly getConstants: () => PlatformConstantsWin32;
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>(

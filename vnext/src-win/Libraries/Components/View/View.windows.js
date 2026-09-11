@@ -8,6 +8,7 @@
  * @format
  */
 
+import type {HostInstance} from '../../../src/private/types/HostInstance';
 import type {ViewProps} from './ViewPropTypes';
 
 import TextAncestorContext from '../../Text/TextAncestorContext';
@@ -55,6 +56,8 @@ const childrenWithImportantForAccessibility: (
 };
 // Windows]
 
+export type ViewInstance = HostInstance;
+
 /**
  * The most fundamental component for building a UI, View is a container that
  * supports layout with flexbox, style, some touch handling, and accessibility
@@ -62,10 +65,7 @@ const childrenWithImportantForAccessibility: (
  *
  * @see https://reactnative.dev/docs/view
  */
-component View(
-  ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
-  ...props: ViewProps
-) {
+component View(ref?: React.RefSetter<ViewInstance>, ...props: ViewProps) {
   const hasTextAncestor = use(TextAncestorContext);
 
   let actualView;

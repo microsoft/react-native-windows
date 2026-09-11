@@ -8,6 +8,7 @@
  * @format
  */
 
+import type {HostInstance} from '../../../src/private/types/HostInstance';
 import type {ViewProps} from './ViewPropTypes';
 
 import TextAncestorContext from '../../Text/TextAncestorContext';
@@ -18,6 +19,8 @@ import invariant from 'invariant'; // [Windows]
 import type {KeyUpEvent, KeyDownEvent} from '../../Types/CoreEventTypes';
 // Windows]
 
+export type ViewInstance = HostInstance;
+
 /**
  * The most fundamental component for building a UI, View is a container that
  * supports layout with flexbox, style, some touch handling, and accessibility
@@ -26,7 +29,7 @@ import type {KeyUpEvent, KeyDownEvent} from '../../Types/CoreEventTypes';
  * @see https://reactnative.dev/docs/view
  */
 const View: component(
-  ref?: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
+  ref?: React.RefSetter<ViewInstance>,
   ...props: ViewProps
 ) = React.forwardRef(
   (
@@ -71,7 +74,7 @@ const View: component(
       tabIndex,
       ...otherProps
     }: ViewProps,
-    forwardedRef: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
+    forwardedRef: React.RefSetter<ViewInstance>,
   ) => {
     const _accessibilityLabelledBy =
       ariaLabelledBy?.split(/\s*,\s*/g) ?? accessibilityLabelledBy;
