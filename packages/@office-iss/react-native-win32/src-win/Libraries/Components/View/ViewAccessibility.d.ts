@@ -235,6 +235,7 @@ export type AccessibilityRole =
   | 'tree' // Win32
   | 'treeitem' // Win32
   | 'button'
+  | 'dropdownlist'
   | 'togglebutton'
   | 'link'
   | 'search'
@@ -262,7 +263,16 @@ export type AccessibilityRole =
   | 'tablist'
   | 'timer'
   | 'list'
-  | 'toolbar';
+  | 'toolbar'
+  | 'grid'
+  | 'pager'
+  | 'scrollview'
+  | 'horizontalscrollview'
+  | 'viewgroup'
+  | 'webview'
+  | 'drawerlayout'
+  | 'slidingdrawer'
+  | 'iconmenu';
 
 export interface AccessibilityPropsAndroid {
   /**

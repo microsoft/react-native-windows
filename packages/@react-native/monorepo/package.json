@@ -53,8 +53,8 @@
     "@jest/create-cache-key-function": "^29.7.0",
     "@microsoft/api-extractor": "^7.52.2",
     "@octokit/rest": "^22.0.0",
-    "@react-native/metro-babel-transformer": "0.87.0-nightly-20260519-58cd1bf58",
-    "@react-native/metro-config": "0.87.0-nightly-20260519-58cd1bf58",
+    "@react-native/metro-babel-transformer": "0.87.0-nightly-20260604-63683f091",
+    "@react-native/metro-config": "0.87.0-nightly-20260604-63683f091",
     "@tsconfig/node22": "22.0.2",
     "@types/react": "^19.2.3",
     "@typescript-eslint/parser": "^8.59.2",
@@ -81,7 +81,7 @@
     "eslint-plugin-relay": "^1.8.3",
     "fb-dotslash": "0.5.8",
     "flow-api-translator": "0.36.1",
-    "flow-bin": "^0.314.0",
+    "flow-bin": "^0.316.0",
     "hermes-eslint": "0.36.1",
     "hermes-transform": "0.36.1",
     "ini": "^5.0.0",
@@ -120,6 +120,7 @@
     "on-headers": "1.1.0",
     "compression": "1.8.1",
     "@microsoft/api-extractor/minimatch": "3.1.4",
+    "metro-babel-register/babel-plugin-syntax-hermes-parser": "0.36.1",
     "lodash": "4.18.1"
   }
 }

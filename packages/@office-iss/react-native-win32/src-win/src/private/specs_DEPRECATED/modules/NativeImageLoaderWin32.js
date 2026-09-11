@@ -14,9 +14,9 @@ import type {TurboModule} from '../../../../Libraries/TurboModule/RCTExport';
 import * as TurboModuleRegistry from '../../../../Libraries/TurboModule/TurboModuleRegistry';
 
 export interface Spec extends TurboModule {
-  +getConstants: () => {};
+  readonly getConstants: () => {};
   // [Win32 uses callback instead of promise
-  +getSize: (
+  readonly getSize: (
     uri: string,
     callback: (width: number, height: number, err?: string) => void,
   ) => void;
@@ -24,7 +24,7 @@ export interface Spec extends TurboModule {
 
   // [Win32 These aren't actually implemented, and will just blow up if called
   // currently.
-  +getSizeWithHeaders: (
+  readonly getSizeWithHeaders: (
     uri: string,
     headers: Object,
   ) => Promise<{
@@ -32,13 +32,13 @@ export interface Spec extends TurboModule {
     height: number,
     ...
   }>;
-  +prefetchImage: (uri: string) => Promise<boolean>;
-  +prefetchImageWithMetadata?: (
+  readonly prefetchImage: (uri: string) => Promise<boolean>;
+  readonly prefetchImageWithMetadata?: (
     uri: string,
     queryRootName: string,
     rootTag: RootTag,
   ) => Promise<boolean>;
-  +queryCache: (uris: Array<string>) => Promise<Object>;
+  readonly queryCache: (uris: Array<string>) => Promise<Object>;
   // Win32]
 }
 

@@ -8,6 +8,7 @@
  * @format
  */
 
+import type {HostInstance} from '../../../src/private/types/HostInstance';
 import type {ColorValue} from '../../StyleSheet/StyleSheet';
 import type {AccessibilityState} from '../View/ViewAccessibility';
 import type {TouchableWithoutFeedbackProps} from './TouchableWithoutFeedback';
@@ -19,8 +20,11 @@ import Pressability, {
 import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import StyleSheet, {type ViewStyleProp} from '../../StyleSheet/StyleSheet';
 import Platform from '../../Utilities/Platform';
+import warnOnce from '../../Utilities/warnOnce';
 import * as React from 'react';
 import {cloneElement} from 'react';
+
+export type TouchableHighlightInstance = HostInstance;
 
 type AndroidProps = Readonly<{
   nextFocusDown?: ?number,
@@ -69,7 +73,7 @@ type TouchableHighlightBaseProps = Readonly<{
   onHideUnderlay?: ?() => void,
   testOnly_pressed?: ?boolean,
 
-  hostRef?: React.RefSetter<React.ElementRef<typeof View>>,
+  hostRef?: React.RefSetter<TouchableHighlightInstance>,
 }>;
 
 /** @build-types emit-as-interface Uniwind compatibility */
@@ -317,6 +321,13 @@ class TouchableHighlightImpl extends React.Component<
 
   render(): React.Node {
     const child = React.Children.only<$FlowFixMe>(this.props.children);
+    if (__DEV__ && child.type === React.Fragment) {
+      warnOnce(
+        'TouchableHighlight-fragment',
+        'TouchableHighlight does not support React.Fragment as a child. ' +
+          'Wrap the children in a single host element such as <View>.',
+      );
+    }
 
     // BACKWARD-COMPATIBILITY: Focus and blur events were never supported before
     // adopting `Pressability`, so preserve that behavior.
@@ -402,12 +413,14 @@ class TouchableHighlightImpl extends React.Component<
         onMouseEnter={this.props.onMouseEnter} // [Windows]
         onMouseLeave={this.props.onMouseLeave} // [Windows]
         {...eventHandlersWithoutBlurAndFocus}>
-        {cloneElement(child, {
-          style: StyleSheet.compose(
-            child.props.style,
-            this.state.extraStyles?.child,
-          ),
-        })}
+        {child.type === React.Fragment
+          ? child
+          : cloneElement(child, {
+              style: StyleSheet.compose(
+                child.props.style,
+                this.state.extraStyles?.child,
+              ),
+            })}
         {__DEV__ ? (
           <PressabilityDebugView color="green" hitSlop={this.props.hitSlop} />
         ) : null}
@@ -437,13 +450,13 @@ class TouchableHighlightImpl extends React.Component<
 }
 
 const TouchableHighlight: component(
-  ref?: React.RefSetter<React.ElementRef<typeof View>>,
+  ref?: React.RefSetter<TouchableHighlightInstance>,
   ...props: Readonly<Omit<TouchableHighlightProps, 'hostRef'>>
 ) = ({
   ref: hostRef,
   ...props
 }: {
-  ref?: React.RefSetter<React.ElementRef<typeof View>>,
+  ref?: React.RefSetter<TouchableHighlightInstance>,
   ...Readonly<Omit<TouchableHighlightProps, 'hostRef'>>,
 }) => <TouchableHighlightImpl {...props} hostRef={hostRef} />;
 
