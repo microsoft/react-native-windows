@@ -36,7 +36,8 @@ struct TurboModuleMethodInfo {
 };
 
 struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBuilder> {
-  TurboModuleBuilder(const IReactContext &reactContext) noexcept : m_reactContext(reactContext) {}
+  TurboModuleBuilder(const IReactContext &reactContext, IInspectable runtimeHandle) noexcept
+      : m_reactContext(reactContext), m_runtimeHandle(std::move(runtimeHandle)) {}
 
  public: // IReactModuleBuilder
   void AddInitializer(InitializerDelegate const &initializer) noexcept {
@@ -44,11 +45,7 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
   }
 
   void AddJsiInitializer(JsiInitializerDelegate const &initializer) noexcept {
-    initializer(
-        m_reactContext,
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_reactContext)
-            ->GetInner()
-            .JsiRuntime());
+    initializer(m_reactContext, m_runtimeHandle);
   }
 
   void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept {
@@ -91,6 +88,10 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
     return m_eventEmitters;
   }
 
+  void CompleteRegistration() noexcept {
+    m_runtimeHandle = nullptr;
+  }
+
  private:
   void EnsureMemberNotSet(const std::string &key, bool checkingMethod) noexcept {
     VerifyElseCrash(m_methods.find(key) == m_methods.end());
@@ -103,6 +104,7 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
 
  private:
   IReactContext m_reactContext;
+  IInspectable m_runtimeHandle;
   std::unordered_map<std::string, EventEmitterInitializerDelegate> m_eventEmitters;
   std::unordered_map<std::string, TurboModuleMethodInfo> m_methods;
   std::unordered_map<std::string, SyncMethodDelegate> m_syncMethods;
@@ -121,17 +123,16 @@ class TurboModuleImpl : public facebook::react::TurboModule {
       const std::string &name,
       const std::shared_ptr<facebook::react::CallInvoker> &jsInvoker,
       std::weak_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
+      IInspectable runtimeHandle,
       const ReactModuleProvider &reactModuleProvider)
       : facebook::react::TurboModule(name, jsInvoker),
         m_reactContext(reactContext),
         m_longLivedObjectCollection(std::move(longLivedObjectCollection)),
-        m_moduleBuilder(winrt::make_self<TurboModuleBuilder>(reactContext)),
-        m_providedModule(reactModuleProvider(m_moduleBuilder.as<IReactModuleBuilder>())) {
+        m_moduleBuilder(winrt::make_self<TurboModuleBuilder>(reactContext, std::move(runtimeHandle))) {
+    m_providedModule = reactModuleProvider(m_moduleBuilder.as<IReactModuleBuilder>());
+    m_moduleBuilder->CompleteRegistration();
+
     if (auto hostObject = m_providedModule.try_as<IJsiHostObject>()) {
-      // Force ABI runtime creation if it hasn't already been created
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_reactContext)
-          ->GetInner()
-          .JsiRuntime();
       m_hostObjectWrapper = std::make_shared<implementation::HostObjectWrapper>(hostObject);
     }
   }
@@ -488,8 +489,24 @@ std::shared_ptr<facebook::react::TurboModule> TurboModulesProvider::getModule(
     return nullptr;
   }
 
+  if (!m_reactContext) {
+    return nullptr;
+  }
+
+  auto runtimeHandle = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_reactContext)
+                           ->GetInner()
+                           .JsiRuntime();
+  if (!runtimeHandle) {
+    return nullptr;
+  }
+
   auto tm = std::make_shared<TurboModuleImpl>(
-      m_reactContext, moduleName, callInvoker, m_longLivedObjectCollection, /*reactModuleProvider*/ it->second);
+      m_reactContext,
+      moduleName,
+      callInvoker,
+      m_longLivedObjectCollection,
+      std::move(runtimeHandle),
+      /*reactModuleProvider*/ it->second);
   return tm;
 }
 
