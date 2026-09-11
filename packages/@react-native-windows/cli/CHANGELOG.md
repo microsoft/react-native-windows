@@ -1,8 +1,37 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Thu, 23 Jul 2026 23:58:53 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 09 Sep 2026 16:37:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.10
+
+Wed, 09 Sep 2026 16:37:08 GMT
+
+### Patches
+
+- Defer PowerShell discovery until a command or health check needs it so CLI configuration can load without Windows build tools. (14055146+shirakaba@users.noreply.github.com)
+
+## 0.81.9
+
+Sat, 22 Aug 2026 01:38:28 GMT
+
+### Patches
+
+- Make the vendored Folly headers C++23-ready and update fmt to 11.0.2 (now managed via fork-sync) (vmorozov@microsoft.com)
+
+## 0.81.8
+
+Wed, 19 Aug 2026 02:25:42 GMT
+
+### Patches
+
+- Move CI pipeline to office/ISS and address security (vmorozov@microsoft.com)
+- Bump @react-native-windows/codegen to v0.81.7
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.3
+- Bump @react-native-windows/fs to v0.81.2
+- Bump @react-native-windows/package-utils to v0.81.2
+- Bump @react-native-windows/telemetry to v0.81.4
 
 ## 0.81.7
 

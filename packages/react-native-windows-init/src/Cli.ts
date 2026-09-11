@@ -274,7 +274,7 @@ async function getLatestMatchingRNWVersion(
       versionSemVer,
     );
     return version;
-  } catch (err) {
+  } catch {
     return null;
   }
 }

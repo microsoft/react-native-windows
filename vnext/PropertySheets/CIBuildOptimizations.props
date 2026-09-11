@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--
-    CI-specific C++ build optimizations for the publish pipeline.
+    CI-specific C++ build optimizations.
 
-    This file is injected via /p:ForceImportAfterCppTargets in .ado/publish.yml.
+    This file is injected via /p:ForceImportAfterCppTargets by the Desktop and Universal build jobs.
     It overrides defaults that are tuned for developer workflows (incremental builds,
     file tracking) with settings that are better for CI clean builds.
 

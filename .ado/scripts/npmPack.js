@@ -5,18 +5,19 @@
  * npmPack.js - Pack all non-private workspace packages to tgz files
  *
  * Usage:
- *   node npmPack.js [targetDir] [--clean] [--check-npm] [--no-pack]
+ *   node npmPack.js [targetDir] [--clean] [--check-npm] [--registry <url>] [--no-pack]
  *
  * Arguments:
  *   targetDir    - Target directory for .tgz files (default: npm-pkgs in repo root)
  *   --clean      - Clean target directory if it's not empty
- *   --check-npm  - Check each package against npmjs.com and remove already published ones
+ *   --check-npm  - Check each package against a registry and remove already published ones
+ *   --registry   - Registry to check against (default: the npm-configured registry)
  *   --no-pack    - Skip packing, only check and clean target folder
  */
 
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execSync, execFileSync } = require('child_process');
 const { parseArgs } = require('util');
 
 // ANSI color codes
@@ -64,7 +65,8 @@ Arguments:
 
 Options:
   --clean             Clean target directory if it's not empty
-  --check-npm         Check each package against npmjs.com and remove already published ones
+  --check-npm         Check each package against a registry and remove already published ones
+  --registry <url>    Registry to check against (default: the npm-configured registry)
   --no-pack           Skip packing, only check and clean target folder
   --no-color          Disable colored output
   --help, -h          Show this help message
@@ -74,6 +76,7 @@ Examples:
   node npmPack.js --clean
   node npmPack.js --check-npm
   node npmPack.js --no-pack --check-npm
+  node npmPack.js --no-pack --check-npm --registry https://example/npm/registry/ path/to/output
   node npmPack.js path/to/output
   node npmPack.js --clean --no-color path/to/output
 `);
@@ -209,17 +212,24 @@ function isPrivatePackage(packageJsonPath) {
 }
 
 /**
- * Check if a package version is published on npmjs.com
+ * Check if a package version is already published to the target registry
  * @param {string} packageName - Name of the package
  * @param {string} version - Version to check
+ * @param {string} [registry] - Registry to query (defaults to the npm-configured registry)
  * @returns {boolean} True if the package version is already published
  */
-function isPublishedOnNpm(packageName, version) {
+function isPublishedOnNpm(packageName, version, registry) {
+  // Shell-free npm invocation (node + its CLI, values as argv) so a caller-controlled
+  // registry/package/version can't inject; npm's Windows .cmd shim needs a shell otherwise.
+  const npmCli = path.join(path.dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npm-cli.js');
+  const args = [npmCli, 'view', `${packageName}@${version}`, 'version'];
+  if (registry) {
+    args.push('--registry', registry);
+  }
   try {
-    // Use npm view to check if the specific version exists
-    execSync(`npm view ${packageName}@${version} version`, {
+    execFileSync(process.execPath, args, {
       encoding: 'utf8',
-      stdio: ['pipe', 'pipe', 'pipe']
+      stdio: ['pipe', 'pipe', 'pipe'],
     });
     return true;
   } catch (error) {
@@ -261,9 +271,10 @@ function getPackageInfoFromTgz(tgzPath) {
 /**
  * Check and remove already published packages from target directory
  * @param {string} targetDir - Directory containing .tgz files
+ * @param {string} [registry] - Registry to query (defaults to the npm-configured registry)
  * @returns {{checked: number, removed: number}} Statistics about checked and removed packages
  */
-function checkAndRemovePublishedPackages(targetDir) {
+function checkAndRemovePublishedPackages(targetDir, registry) {
   let checkedCount = 0;
   let removedCount = 0;
 
@@ -274,7 +285,8 @@ function checkAndRemovePublishedPackages(targetDir) {
   const files = fs.readdirSync(targetDir);
   const tgzFiles = files.filter(f => f.endsWith('.tgz'));
 
-  console.log(`\n${colorize('Checking packages against npmjs.com...', colors.bright)}`);
+  const target = registry || 'the default npm registry';
+  console.log(`\n${colorize(`Checking packages against ${target}...`, colors.bright)}`);
 
   for (const tgzFile of tgzFiles) {
     const tgzPath = path.join(targetDir, tgzFile);
@@ -290,7 +302,7 @@ function checkAndRemovePublishedPackages(targetDir) {
     checkedCount++;
     console.log(`  Checking ${colorize(packageInfo.name, colors.cyan)}@${colorize(packageInfo.version, colors.dim)}...`);
 
-    if (isPublishedOnNpm(packageInfo.name, packageInfo.version)) {
+    if (isPublishedOnNpm(packageInfo.name, packageInfo.version, registry)) {
       fs.rmSync(tgzPath);
       console.log(`    ${colorize('✓', colors.green)} Already published - removed ${tgzFile}`);
       removedCount++;
@@ -361,6 +373,9 @@ function main() {
       type: 'boolean',
       default: false,
     },
+    registry: {
+      type: 'string',
+    },
   };
 
   let args;
@@ -388,6 +403,7 @@ function main() {
   const cleanFlag = args.values.clean;
   const checkNpmFlag = args.values['check-npm'];
   const noPackFlag = args.values['no-pack'];
+  const registryArg = typeof args.values.registry === 'string' ? args.values.registry : undefined;
   const targetDirArg = args.positionals[0];
 
   try {
@@ -476,7 +492,7 @@ function main() {
     let removedCount = 0;
 
     if (checkNpmFlag) {
-      const result = checkAndRemovePublishedPackages(targetDir);
+      const result = checkAndRemovePublishedPackages(targetDir, registryArg);
       checkedCount = result.checked;
       removedCount = result.removed;
 

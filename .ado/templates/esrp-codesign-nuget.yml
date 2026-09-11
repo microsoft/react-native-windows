@@ -10,7 +10,7 @@ steps:
   - task: EsrpCodeSigning@6
     displayName: ${{ parameters.displayName }}
     inputs:
-      ConnectedServiceName: 'ESRP-CodeSigning-OGX-JSHost-RNW'
+      ConnectedServiceName: 'ESRP-JSHost3'
       AppRegistrationClientId: '0a35e01f-eadf-420a-a2bf-def002ba898d'
       AppRegistrationTenantId: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
       AuthAKVName: 'OGX-JSHost-KV'

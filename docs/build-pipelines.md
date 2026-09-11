@@ -1,14 +1,14 @@
 # Build Pipelines
 
-React Native Windows uses three Azure DevOps pipelines, all built on the 1ES Pipeline Templates.
+React Native Windows uses three Azure DevOps pipelines built on the Office and general 1ES Pipeline Templates.
 
 ## Pipeline Overview
 
 | Pipeline | File | Template | Trigger |
 |----------|------|----------|---------|
-| **CI** | `ci-pipeline.yml` | 1ES Official | Push to `main`, `*-stable` |
-| **PR** | `pr-pipeline.yml` | 1ES Unofficial | PRs to `main`, `*-stable` |
-| **Release** | `release.yml` | 1ES Official | Triggered by successful CI run |
+| **CI** | `.ado/ci-pipeline.yml` | Office Official | Push to `main`, `*-stable` |
+| **PR** | `.ado/pr-pipeline.yml` | 1ES Unofficial | PRs to `main`, `*-stable` |
+| **Release** | `.ado/release-pipeline.yml` | Office Official | Triggered by successful CI run |
 
 CI and PR share a single `build-template.yml` that contains all build, test, and packaging logic. The `buildEnvironment` parameter (`Continuous` or `PullRequest`) controls what runs:
 
@@ -56,8 +56,7 @@ Depends on Build (needs the NuGet packages). Runs `react-native init` + `react-n
 
 | Pool | Used By |
 |------|---------|
-| `rnw-pool-4-microsoft` | CI: most jobs (default) |
-| `rnw-pool-8-microsoft` | CI: native builds (Desktop, Universal) |
+| `fabric-internal-pool-large` | CI: all jobs |
 | `rnw-pool-4` | PR: most jobs (default) |
 | `rnw-pool-8` | PR: native builds |
 
@@ -65,7 +64,7 @@ PR uses public pools (no `-microsoft` suffix). The PR entry point overrides the 
 
 ## SDL & Compliance
 
-The 1ES Official template (CI) handles SDL automatically:
+The Office Official template (CI) handles SDL automatically:
 
 - **CredScan** — credential scanning
 - **BinSkim** — binary security analysis (per-job targets via `templateContext.sdl`)
@@ -93,7 +92,7 @@ PREfast, SpotBugs, and Bandit are disabled (no actionable findings for this repo
 | `.ado/ci-pipeline.yml` | CI entry point |
 | `.ado/pr-pipeline.yml` | PR entry point |
 | `.ado/build-template.yml` | Shared build/test/pack logic |
-| `.ado/release.yml` | Release pipeline (publishes to feeds) |
+| `.ado/release-pipeline.yml` | Release pipeline (publishes to feeds) |
 | `.ado/jobs/desktop-single.yml` | Desktop build + test steps |
 | `.ado/jobs/universal-single.yml` | Universal build + test steps |
 | `.ado/jobs/cli-init-windows.yml` | CLI init verification |

@@ -271,12 +271,6 @@
     <ProjectReference Include="..\Common\Common.win32.vcxproj">
       <Project>{07B21646-07A1-4C53-9D5C-FE7C8C9FA5C6}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\Folly\Folly.win32.vcxproj">
-      <Project>{BFF1EAC8-4C70-4A55-9A88-3810052E8FBA}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\FollyWin32\FollyWin32.vcxproj">
-      <Project>{74085F13-2DDE-45E5-A0CA-927AC9D0B953}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.win32.vcxproj">
       <Project>{5CB3C038-4A3C-4F09-A36B-66DB8EC650F5}</Project>
     </ProjectReference>

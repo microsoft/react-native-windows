@@ -683,7 +683,7 @@ const examples = [
               }}>
               <Image
                 source={{
-                  uri: 'https://www.facebook.com/ads/pics/successstories.png',
+                  uri: 'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png',
                 }}
                 style={styles.image}
               />

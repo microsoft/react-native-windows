@@ -741,4 +741,6 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
+  <!-- External (vendored) third-party library sources -->
+  <Import Project="$(ExternalDir)External.vcxitems" />
 </Project>

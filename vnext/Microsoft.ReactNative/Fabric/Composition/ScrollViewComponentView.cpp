@@ -1192,10 +1192,14 @@ void ScrollViewComponentView::HandleCommand(const winrt::Microsoft::ReactNative:
 }
 
 void ScrollViewComponentView::scrollTo(winrt::Windows::Foundation::Numerics::float3 offset, bool animate) noexcept {
-  if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
-    return;
-  }
-
+  // scrollEnabled={false} must only disable *user* scroll gestures, matching
+  // iOS and Android where setContentOffset / scrollToOffset still work when
+  // scrolling is disabled. Programmatic scrolls - the scrollTo command, and
+  // scrollToIndex / scrollToOffset which route through it - previously hit a
+  // scrollEnabled early-return here and were silently dropped. User-gesture
+  // input is gated separately (m_scrollVisual.ScrollEnabled, set from
+  // scrollEnabled in updateProps), so it is safe to always honor a
+  // programmatic scroll here.
   m_scrollVisual.TryUpdatePosition(offset, animate);
 }
 

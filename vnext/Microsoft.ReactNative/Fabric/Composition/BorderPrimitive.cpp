@@ -713,7 +713,7 @@ BorderPrimitive::BorderPrimitive(
     : m_outer(&outer), m_rootVisual(rootVisual), m_ownsRootVisual(false) {}
 
 BorderPrimitive::BorderPrimitive(winrt::Microsoft::ReactNative::Composition::implementation::ComponentView &outer)
-    : m_outer(&outer), m_rootVisual(outer.CompositionContext().CreateSpriteVisual()) {}
+    : m_outer(&outer), m_rootVisual(outer.CompositionContext().CreateSpriteVisual()), m_ownsRootVisual(true) {}
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual BorderPrimitive::RootVisual() const noexcept {
   return m_rootVisual;

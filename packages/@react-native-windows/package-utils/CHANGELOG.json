@@ -2,6 +2,33 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Wed, 19 Aug 2026 02:25:43 GMT",
+      "version": "0.81.2",
+      "tag": "@react-native-windows/package-utils_v0.81.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "35af7762b027b96d59fced454b92f7fd10dee6fe",
+            "comment": "Move CI pipeline to office/ISS and address security"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.81.2",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.81.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Mar 2026 08:48:51 GMT",
       "version": "0.81.1",
       "tag": "@react-native-windows/package-utils_v0.81.1",

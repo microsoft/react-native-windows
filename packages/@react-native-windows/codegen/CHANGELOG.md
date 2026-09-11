@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Fri, 12 Jun 2026 04:17:47 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 19 Aug 2026 02:25:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.7
+
+Wed, 19 Aug 2026 02:25:42 GMT
+
+### Patches
+
+- Move CI pipeline to office/ISS and address security (vmorozov@microsoft.com)
+- Bump @react-native-windows/fs to v0.81.2
 
 ## 0.81.6
 

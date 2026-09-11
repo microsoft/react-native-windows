@@ -124,28 +124,21 @@ function removeGuidsFromImageSourcesHelper(node: ComponentNode) {
             /blob:[a-f0-9]+-[a-f0-9]+-[a-f0-9]+-[a-f0-9]+-[a-f0-9]+/,
             'blob:<some_guid_here>',
           );
-          source.Uri = source.Uri.replace(/size=\d{5}/, 'size=<size>');
+          source.Uri = source.Uri.replace(/size=\d+/, 'size=<size>');
         } else if (
           source.Uri.startsWith(
-            'https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1&t=',
+            'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png?r=1&t=',
           )
         ) {
           source.Uri =
-            'https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1&t=<some_hash_here>';
+            'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png?r=1&t=<some_hash_here>';
         } else if (
           source.Uri.startsWith(
-            'https://www.facebook.com/ar_effect/external_textures/648609739826677.png?hash=',
+            'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png?hash=',
           )
         ) {
           source.Uri =
-            'https://www.facebook.com/ar_effect/external_textures/648609739826677.png?hash=<some_hash_here>';
-        } else if (
-          source.Uri.startsWith(
-            'https://www.facebook.com/ads/pics/successstories.png?hash=',
-          )
-        ) {
-          source.Uri =
-            'https://www.facebook.com/ads/pics/successstories.png?hash=<some_hash_here>';
+            'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png?hash=<some_hash_here>';
         } else {
           // When getting files from a prebuilt bundle the uri is going to include a local path, which would make snapshots inconsistent,
           // This logic replaces the local path so that we get consistent results.

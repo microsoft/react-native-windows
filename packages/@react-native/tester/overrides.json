@@ -164,9 +164,16 @@
     },
     {
       "type": "copy",
-      "directory": "js/examples/Image",
-      "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "88c455e871b55a0e82fd2eed05626b750e350199",
+      "file": "js/examples/Image/ImageCapInsetsExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Image/ImageCapInsetsExample.js",
+      "baseHash": "4467c8b9830a8ecf921cd430dc5642e568ea68eb",
+      "issue": 4054
+    },
+    {
+      "type": "derived",
+      "file": "js/examples/Image/ImageExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
+      "baseHash": "9381aa0a0b1d084fda30e13c3b35eac653b28625",
       "issue": 4054
     },
     {
@@ -206,9 +213,23 @@
     },
     {
       "type": "copy",
-      "directory": "js/examples/Layout",
-      "baseDirectory": "packages/rn-tester/js/examples/Layout",
-      "baseHash": "2c057a259bc8ab4468b210ba0a1c93f14e592afc",
+      "file": "js/examples/Layout/LayoutAnimationExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Layout/LayoutAnimationExample.js",
+      "baseHash": "324180002742ed7c50eca3f96504410bbb40d44c",
+      "issue": 4054
+    },
+    {
+      "type": "derived",
+      "file": "js/examples/Layout/LayoutEventsExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Layout/LayoutEventsExample.js",
+      "baseHash": "692e0b32866795beb35b5a2d88c21014c710f16d",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/Layout/LayoutExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Layout/LayoutExample.js",
+      "baseHash": "71c52a43a68bd68d1e306a97cd3b9a10724dea38",
       "issue": 4054
     },
     {
@@ -330,10 +351,10 @@
       "issue": 4054
     },
     {
-      "type": "copy",
-      "directory": "js/examples/Pressable",
-      "baseDirectory": "packages/rn-tester/js/examples/Pressable",
-      "baseHash": "c5d2c7e009eaece6ca49b0687c9b855e82426546",
+      "type": "derived",
+      "file": "js/examples/Pressable/PressableExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
+      "baseHash": "c6dd35fb59d439ee655844b2baa16f1711b70619",
       "issue": 4054
     },
     {
@@ -491,10 +512,10 @@
       "issue": 4054
     },
     {
-      "type": "copy",
-      "directory": "js/examples/Touchable",
-      "baseDirectory": "packages/rn-tester/js/examples/Touchable",
-      "baseHash": "c7e77472680734c2bb7ae31018978d019cf2c3a5",
+      "type": "derived",
+      "file": "js/examples/Touchable/TouchableExample.js",
+      "baseFile": "packages/rn-tester/js/examples/Touchable/TouchableExample.js",
+      "baseHash": "838aa97d99b1a4deb26cd92b7dbd3824e5818cb5",
       "issue": 4054
     },
     {

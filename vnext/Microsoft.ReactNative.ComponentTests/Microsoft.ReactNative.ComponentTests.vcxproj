@@ -49,6 +49,9 @@
   <ImportGroup Label="Shared">
     <Import Project="..\Mso\Mso.vcxitems" Label="Shared" />
     <Import Project="..\Chakra\Chakra.vcxitems" Label="Shared" />
+    <!-- Compile the vendored Folly sources here (replaces the removed Folly.vcxproj
+         reference) so the folly symbols used by DynamicReader/Writer and Chakra resolve. -->
+    <Import Project="$(ExternalDir)External.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -81,7 +84,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>
-        $(FmtDir)include;
+        $(ExternalDir)fmt\include;
         $(ProjectDir)pch;
         $(VCInstallDir)UnitTest\include;
         $(ReactNativeWindowsDir);
@@ -91,7 +94,7 @@
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
         $(ReactNativeWindowsDir)Microsoft.ReactNative.Cxx;
         $(YogaDir);
-        $(FmtDir)include;
+        $(ExternalDir)fmt\include;
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
       <UseFullPaths>true</UseFullPaths>
@@ -218,9 +221,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{fca38f3c-7c73-4c47-be4e-32f77fa8538d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Folly\Folly.vcxproj">
-      <Project>{A990658C-CE31-4BCC-976F-0FC6B1AF693D}</Project>
     </ProjectReference>
     <ProjectReference Include="..\ReactCommon\ReactCommon.vcxproj">
       <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>

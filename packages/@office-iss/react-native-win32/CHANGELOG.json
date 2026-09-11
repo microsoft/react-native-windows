@@ -2,6 +2,33 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 19 Aug 2026 02:25:43 GMT",
+      "version": "0.81.9",
+      "tag": "@office-iss/react-native-win32_v0.81.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "35af7762b027b96d59fced454b92f7fd10dee6fe",
+            "comment": "Move CI pipeline to office/ISS and address security"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "35af7762b027b96d59fced454b92f7fd10dee6fe",
+            "comment": "Fix saveAssetPlugin"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v0.81.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 May 2026 23:38:50 GMT",
       "version": "0.81.8",
       "tag": "@office-iss/react-native-win32_v0.81.8",

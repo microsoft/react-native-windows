@@ -48,7 +48,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -59,7 +59,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -70,7 +70,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -81,7 +81,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -92,7 +92,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -103,7 +103,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -114,7 +114,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -125,7 +125,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -136,7 +136,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -147,7 +147,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -158,7 +158,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -169,7 +169,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -180,7 +180,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -191,7 +191,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -1184,7 +1184,7 @@ exports[`Image Tests An Image can be added to the accessibility tree 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-accessible",
@@ -1234,7 +1234,7 @@ exports[`Image Tests An Image can be nested inside of a component 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -1300,7 +1300,7 @@ exports[`Image Tests An Image can be rendered at a different size 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-size",
@@ -1335,7 +1335,7 @@ exports[`Image Tests An Image can borders 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
         },
       ],
       "TestId": "image-border",
@@ -1416,7 +1416,7 @@ exports[`Image Tests An Image can have a background color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -1427,7 +1427,7 @@ exports[`Image Tests An Image can have a background color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -1438,7 +1438,7 @@ exports[`Image Tests An Image can have a background color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -1449,7 +1449,7 @@ exports[`Image Tests An Image can have a background color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -1630,7 +1630,7 @@ exports[`Image Tests An Image can have a can have alt text 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-alt",
@@ -1671,7 +1671,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -1682,7 +1682,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -1693,7 +1693,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -1704,7 +1704,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -1715,7 +1715,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -1726,7 +1726,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -1871,7 +1871,7 @@ exports[`Image Tests An Image can have a loading indicator visual 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png?hash=<some_hash_here>",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png?hash=<some_hash_here>",
         },
       ],
       "TestId": "image-loading-indicator",
@@ -2103,7 +2103,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -2114,7 +2114,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -2125,7 +2125,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -2136,7 +2136,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -2509,7 +2509,7 @@ exports[`Image Tests An Image can have an accessibilityLabel 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-accessibilitylabel",
@@ -2582,7 +2582,7 @@ exports[`Image Tests An Image can have border colors 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -2593,7 +2593,7 @@ exports[`Image Tests An Image can have border colors 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -2604,7 +2604,7 @@ exports[`Image Tests An Image can have border colors 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -2615,7 +2615,7 @@ exports[`Image Tests An Image can have border colors 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -2626,7 +2626,7 @@ exports[`Image Tests An Image can have border colors 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -2637,7 +2637,7 @@ exports[`Image Tests An Image can have border colors 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -3028,7 +3028,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -3040,7 +3040,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -3052,7 +3052,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -3064,7 +3064,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -3076,7 +3076,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -3088,7 +3088,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -3239,12 +3239,12 @@ exports[`Image Tests An Image can have multiple sources 1`] = `
         {
           "Size": "38, 38",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
         },
         {
           "Size": "100, 100",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-multiple-sources",
@@ -3281,13 +3281,13 @@ exports[`Image Tests An Image can have multiple sources through the srcSet prop 
           "Scale": 4,
           "Size": "64, 64",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
         {
           "Scale": 2,
           "Size": "64, 64",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
         },
       ],
       "TestId": "image-srcset",
@@ -3323,17 +3323,17 @@ exports[`Image Tests An Image can have onLayout behavior 1`] = `
         {
           "Size": "38, 38",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
         },
         {
           "Size": "76, 76",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
         },
         {
           "Size": "400, 400",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-onlayout",
@@ -3522,7 +3522,7 @@ exports[`Image Tests An Image can load an image through its source prop 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-plain-source",
@@ -3557,7 +3557,7 @@ exports[`Image Tests An Image can load an image through its src prop 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-plain-src",
@@ -3592,7 +3592,7 @@ exports[`Image Tests An Image component can have a network callback 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1&t=<some_hash_here>",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png?r=1&t=<some_hash_here>",
         },
       ],
       "TestId": "image-network-callback",
@@ -3737,7 +3737,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -3752,7 +3752,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -3767,7 +3767,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -3782,7 +3782,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -3797,7 +3797,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -3812,7 +3812,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -3827,7 +3827,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -3842,7 +3842,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -3857,7 +3857,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -3872,7 +3872,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -4613,7 +4613,7 @@ exports[`Image Tests An Image supports abortPrefetch and resolveAssetSource 1`] 
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-asset-source",
@@ -4650,7 +4650,7 @@ exports[`Image Tests An Image supports accessibility actions 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-accessibility-actions",
@@ -4689,7 +4689,7 @@ exports[`Image Tests An Image supports accessibility properties 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-accessibility-properties",
@@ -4725,7 +4725,7 @@ exports[`Image Tests An Image supports interaction properties 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-interaction-properties",
@@ -4760,7 +4760,7 @@ exports[`Image Tests An Image supports style properties 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
         },
       ],
       "TestId": "image-style-properties",
@@ -4819,7 +4819,7 @@ exports[`Image Tests Images can be defined as a set using accessibilityPosInSet 
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -4830,7 +4830,7 @@ exports[`Image Tests Images can be defined as a set using accessibilityPosInSet 
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -4995,7 +4995,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -5010,7 +5010,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -5025,7 +5025,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -5040,7 +5040,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -5055,7 +5055,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -5070,7 +5070,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png",
             },
           ],
         },
@@ -5085,7 +5085,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -5100,7 +5100,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -5115,7 +5115,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -5130,7 +5130,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -5145,7 +5145,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },
@@ -5160,7 +5160,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+              "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png",
             },
           ],
         },

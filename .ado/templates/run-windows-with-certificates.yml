@@ -24,7 +24,7 @@ parameters:
     default: true
   - name: restoreForceEvaluate
     type: boolean
-    default: true
+    default: false
   - name: errorOnNuGetLockChanges
     type: boolean
     default : true

@@ -245,16 +245,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleWithJSIBindings.cpp" />
   </ItemGroup>
-  <ItemGroup Condition="'$(ReactTargetWin32)' != 'true'">
-    <ProjectReference Include="..\Folly\Folly.vcxproj">
-      <Project>{A990658C-CE31-4BCC-976F-0FC6B1AF693D}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(ReactTargetWin32)' == 'true'">
-    <ProjectReference Include="..\Folly\Folly.win32.vcxproj">
-      <Project>{BFF1EAC8-4C70-4A55-9A88-3810052E8FBA}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.84.0.0" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />

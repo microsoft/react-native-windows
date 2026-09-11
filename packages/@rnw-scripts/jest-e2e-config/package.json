@@ -23,7 +23,7 @@
   },
   "peerDependencies": {
     "babel-jest": "^29.3.0",
-    "jest": "^26.4.0"
+    "jest": "^29.7.0"
   },
   "engines": {
     "node": ">= 22"

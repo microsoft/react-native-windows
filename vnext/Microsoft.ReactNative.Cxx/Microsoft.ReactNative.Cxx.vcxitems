@@ -172,8 +172,8 @@
         source. Scoped to v145+ (the bug does not reproduce on v143); remove
         when the compiler bug is fixed.
       -->
-      <Optimization Condition="$(PlatformToolsetVersion)&gt;=145">Disabled</Optimization>
-      <WholeProgramOptimization Condition="$(PlatformToolsetVersion)&gt;=145">false</WholeProgramOptimization>
+      <Optimization Condition="'$(PlatformToolsetVersion)' != '' And $(PlatformToolsetVersion)&gt;=145">Disabled</Optimization>
+      <WholeProgramOptimization Condition="'$(PlatformToolsetVersion)' != '' And $(PlatformToolsetVersion)&gt;=145">false</WholeProgramOptimization>
     </ClCompile>
   </ItemGroup>
   <ItemGroup Condition="'$(BuildMSRNCxxNodeApiJsiLoader)' != 'false'">

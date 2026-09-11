@@ -135,6 +135,49 @@ LRESULT CALLBACK TooltipWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM l
   return DefWindowProc(hwnd, message, wparam, lparam);
 }
 
+POINT ClampTooltipPositionToMonitor(const POINT &anchorPt, int &tooltipWidth, int &tooltipHeight, int margin) noexcept {
+  POINT result = {anchorPt.x - tooltipWidth / 2, anchorPt.y - tooltipHeight - margin};
+
+  HMONITOR hMonitor = MonitorFromPoint(anchorPt, MONITOR_DEFAULTTONEAREST);
+  MONITORINFO monitorInfo = {};
+  monitorInfo.cbSize = sizeof(monitorInfo);
+  if (!GetMonitorInfo(hMonitor, &monitorInfo)) {
+    return result;
+  }
+
+  const RECT &bounds = monitorInfo.rcWork;
+
+  // Cap the tooltip size to the work area so the position clamping below is guaranteed to keep
+  // the whole tooltip on-screen, even for unusually long tooltip text.
+  tooltipWidth = std::min(tooltipWidth, static_cast<int>(bounds.right - bounds.left));
+  tooltipHeight = std::min(tooltipHeight, static_cast<int>(bounds.bottom - bounds.top));
+
+  result = {anchorPt.x - tooltipWidth / 2, anchorPt.y - tooltipHeight - margin};
+
+  // Flip below the anchor if there isn't enough room above it within the work area.
+  if (result.y < bounds.top) {
+    result.y = anchorPt.y + margin;
+  }
+
+  // Clamp vertically so the tooltip never extends past the work area.
+  if (result.y + tooltipHeight > bounds.bottom) {
+    result.y = bounds.bottom - tooltipHeight;
+  }
+  if (result.y < bounds.top) {
+    result.y = bounds.top;
+  }
+
+  // Clamp horizontally so the tooltip never extends past the work area.
+  if (result.x + tooltipWidth > bounds.right) {
+    result.x = bounds.right - tooltipWidth;
+  }
+  if (result.x < bounds.left) {
+    result.x = bounds.left;
+  }
+
+  return result;
+}
+
 void RegisterTooltipWndClass() noexcept {
   static bool registered = false;
   if (registered) {
@@ -334,14 +377,17 @@ void TooltipTracker::ShowTooltip(const winrt::Microsoft::ReactNative::ComponentV
       POINT pt = {static_cast<LONG>(m_pos.X * scaleFactor), static_cast<LONG>(m_pos.Y * scaleFactor)};
       ClientToScreen(parentHwnd, &pt);
 
+      POINT tooltipPos = ClampTooltipPositionToMonitor(
+          pt, tooltipData->width, tooltipData->height, static_cast<int>(toolTipPlacementMargin * scaleFactor));
+
       RegisterTooltipWndClass();
       HINSTANCE hInstance = GetModuleHandle(NULL);
       m_hwndTip = CreateWindow(
           c_tooltipWindowClassName,
           L"Tooltip",
           WS_POPUP,
-          pt.x - tooltipData->width / 2,
-          static_cast<int>(pt.y - tooltipData->height - (toolTipPlacementMargin * scaleFactor)),
+          tooltipPos.x,
+          tooltipPos.y,
           tooltipData->width,
           tooltipData->height,
           parentHwnd,
