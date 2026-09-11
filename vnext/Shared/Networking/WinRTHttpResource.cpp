@@ -40,6 +40,7 @@ using winrt::Microsoft::ReactNative::JSValueObject;
 using winrt::Windows::Foundation::IAsyncOperation;
 using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Foundation::Uri;
+using winrt::Windows::Networking::Connectivity::NetworkInformation;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 using winrt::Windows::Storage::StorageFile;
 using winrt::Windows::Storage::Streams::DataReader;
@@ -103,6 +104,15 @@ void AttachMultipartHeaders(IHttpContent content, const JSValueObject &headers) 
 WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{std::move(client)} {}
 
 WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient{}) {}
+
+WinRTHttpResource::WinRTHttpResource(
+    winrt::hstring &&defaultUserAgent,
+    OriginPolicy originPolicy,
+    std::string &&globalOrigin) noexcept
+    : m_refreshClientOnNetworkChange{true},
+      m_defaultUserAgent{std::move(defaultUserAgent)},
+      m_originPolicy{originPolicy},
+      m_globalOrigin{std::move(globalOrigin)} {}
 
 #pragma region IWinRTHttpRequestFactory
 
@@ -398,6 +408,49 @@ void WinRTHttpResource::UntrackResponse(int64_t requestId) noexcept {
   m_responses.erase(requestId);
 }
 
+IHttpClient WinRTHttpResource::CreateClient() {
+  auto redirFilter = winrt::make<RedirectHttpFilter>(m_defaultUserAgent);
+  redirFilter.as<RedirectHttpFilter>()->SetRequestFactory(weak_from_this());
+
+  if (m_originPolicy == OriginPolicy::None) {
+    return winrt::Windows::Web::Http::HttpClient{redirFilter};
+  }
+
+  auto opFilter = winrt::make<OriginPolicyHttpFilter>(std::string{m_globalOrigin}, redirFilter);
+  redirFilter.as<RedirectHttpFilter>()->SetRedirectSource(opFilter.as<IRedirectEventSource>());
+  return winrt::Windows::Web::Http::HttpClient{opFilter};
+}
+
+IHttpClient WinRTHttpResource::GetClient() {
+  scoped_lock lock{m_clientMutex};
+  if (m_refreshClientOnNetworkChange && m_clientNeedsRefresh.exchange(false, std::memory_order_acq_rel)) {
+    try {
+      m_client = CreateClient();
+    } catch (...) {
+      m_clientNeedsRefresh.store(true, std::memory_order_release);
+      throw;
+    }
+  }
+
+  return m_client;
+}
+
+void WinRTHttpResource::InitializeNetworkStatusMonitoring() {
+  {
+    scoped_lock lock{m_clientMutex};
+    m_client = CreateClient();
+  }
+
+  m_networkStatusChangedRevoker =
+      NetworkInformation::NetworkStatusChanged(winrt::auto_revoke, [weakThis = weak_from_this()](auto &&) noexcept {
+        if (auto strongThis = weakThis.lock()) {
+          // HttpBaseProtocolFilter caches system proxy state. Recreate it before the next request after a network
+          // change.
+          strongThis->m_clientNeedsRefresh.store(true, std::memory_order_release);
+        }
+      });
+}
+
 fire_and_forget
 WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspectable const &args) noexcept {
   // Keep references after coroutine suspension.
@@ -452,7 +505,8 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
   }
 
   try {
-    auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
+    auto client = self->GetClient();
+    auto sendRequestOp = client.SendRequestAsync(coRequest);
 
     auto isText = reqArgs->ResponseType == responseTypeText;
 
@@ -649,7 +703,6 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
 
 /*static*/ shared_ptr<IHttpResource> IHttpResource::Make(IInspectable const &inspectableProperties) noexcept {
   using namespace winrt::Microsoft::ReactNative;
-  using winrt::Windows::Web::Http::HttpClient;
 
   winrt::hstring defaultUserAgent;
   if (inspectableProperties) {
@@ -664,23 +717,10 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
     defaultUserAgent = winrt::to_hstring(userAgent);
   }
 
-  auto redirFilter = winrt::make<RedirectHttpFilter>(defaultUserAgent);
-  HttpClient client;
-
-  if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {
-    client = HttpClient{redirFilter};
-  } else {
-    auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
-    auto opFilter = winrt::make<OriginPolicyHttpFilter>(std::move(globalOrigin), redirFilter);
-    redirFilter.as<RedirectHttpFilter>()->SetRedirectSource(opFilter.as<IRedirectEventSource>());
-
-    client = HttpClient{opFilter};
-  }
-
-  auto result = std::make_shared<WinRTHttpResource>(std::move(client));
-
-  // Allow redirect filter to create requests based on the resource's state
-  redirFilter.as<RedirectHttpFilter>()->SetRequestFactory(weak_ptr<IWinRTHttpRequestFactory>{result});
+  auto originPolicy = static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy"));
+  auto globalOrigin = originPolicy == OriginPolicy::None ? std::string{} : GetRuntimeOptionString("Http.GlobalOrigin");
+  auto result = std::make_shared<WinRTHttpResource>(std::move(defaultUserAgent), originPolicy, std::move(globalOrigin));
+  result->InitializeNetworkStatusMonitoring();
 
   // Register resource as HTTP module proxy.
   if (inspectableProperties) {
