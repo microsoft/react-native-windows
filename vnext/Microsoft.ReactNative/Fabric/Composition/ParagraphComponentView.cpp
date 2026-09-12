@@ -73,6 +73,9 @@ void ParagraphComponentView::UnmountChildComponentView(
 void ParagraphComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
+  // Simulated regression: adds ~3ms per Text mount for perf gate demo
+  Sleep(3);
+
   const auto &oldViewProps =
       *std::static_pointer_cast<const facebook::react::ParagraphProps>(oldProps ? oldProps : viewProps());
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(props);
