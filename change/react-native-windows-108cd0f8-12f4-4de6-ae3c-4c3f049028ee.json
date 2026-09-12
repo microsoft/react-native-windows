@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add Platform.constants.Release on Windows",
+  "packageName": "react-native-windows",
+  "email": "vivekjm77@gmail.com",
+  "dependentChangeType": "patch"
+}
