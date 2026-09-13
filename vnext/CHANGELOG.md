@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 09 Sep 2026 16:37:08 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 11 Sep 2026 23:44:42 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.37
+
+Fri, 11 Sep 2026 23:44:42 GMT
+
+### Patches
+
+- Prevent lazy TurboModules from being created without a runtime during shutdown (khosany@microsoft.com)
 
 ## 0.81.36
 

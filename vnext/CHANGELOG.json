@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Sep 2026 23:44:42 GMT",
+      "version": "0.81.37",
+      "tag": "react-native-windows_v0.81.37",
+      "comments": {
+        "patch": [
+          {
+            "author": "khosany@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a88d2a30cbd740bfa56b6525a9a29ce15e3bbb9b",
+            "comment": "Prevent lazy TurboModules from being created without a runtime during shutdown"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Sep 2026 16:37:08 GMT",
       "version": "0.81.36",
       "tag": "react-native-windows_v0.81.36",
