@@ -39408,6 +39408,235 @@ exports[`snapshotAllPages Pressable 6`] = `
 `;
 
 exports[`snapshotAllPages Pressable 7`] = `
+<View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#eee",
+        "margin": 4,
+        "padding": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "margin": 10,
+          "textAlign": "center",
+        }
+      }
+    >
+      PlatformColor('?attr/colorAccent'), no alpha
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#eee",
+        "margin": 4,
+        "padding": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "margin": 10,
+          "textAlign": "center",
+        }
+      }
+    >
+      PlatformColor('?attr/colorAccent'), alpha=0.3
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#eee",
+        "margin": 4,
+        "padding": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "margin": 10,
+          "textAlign": "center",
+        }
+      }
+    >
+      Red (#FF0000), no alpha
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#eee",
+        "margin": 4,
+        "padding": 10,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "margin": 10,
+          "textAlign": "center",
+        }
+      }
+    >
+      Red (#FF0000), alpha=0.5
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Pressable 8`] = `
 [
   <Text
     onPress={[Function]}
@@ -39439,7 +39668,7 @@ exports[`snapshotAllPages Pressable 7`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 8`] = `
+exports[`snapshotAllPages Pressable 9`] = `
 <View
   testID="pressable_delay_events"
 >
@@ -39528,7 +39757,7 @@ exports[`snapshotAllPages Pressable 8`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 9`] = `
+exports[`snapshotAllPages Pressable 10`] = `
 <View
   testID="pressable_3dtouch_event"
 >
@@ -39587,7 +39816,7 @@ exports[`snapshotAllPages Pressable 9`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 10`] = `
+exports[`snapshotAllPages Pressable 11`] = `
 <View
   testID="pressable_hit_slop"
 >
@@ -39684,7 +39913,7 @@ exports[`snapshotAllPages Pressable 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 11`] = `
+exports[`snapshotAllPages Pressable 12`] = `
 <View
   style={
     [
@@ -39750,7 +39979,7 @@ exports[`snapshotAllPages Pressable 11`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 12`] = `
+exports[`snapshotAllPages Pressable 13`] = `
 [
   <View
     accessibilityState={
@@ -39879,7 +40108,7 @@ exports[`snapshotAllPages Pressable 12`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 13`] = `
+exports[`snapshotAllPages Pressable 14`] = `
 <View
   style={
     [
@@ -39952,7 +40181,7 @@ exports[`snapshotAllPages Pressable 13`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 14`] = `
+exports[`snapshotAllPages Pressable 15`] = `
 <View
   accessibilityState={
     {
@@ -40057,7 +40286,7 @@ exports[`snapshotAllPages Pressable 14`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 15`] = `
+exports[`snapshotAllPages Pressable 16`] = `
 [
   <View
     style={
@@ -40170,7 +40399,7 @@ exports[`snapshotAllPages Pressable 15`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 16`] = `
+exports[`snapshotAllPages Pressable 17`] = `
 [
   <View
     style={
@@ -40265,7 +40494,7 @@ exports[`snapshotAllPages Pressable 16`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 17`] = `
+exports[`snapshotAllPages Pressable 18`] = `
 [
   <View
     onKeyDown={[Function]}
@@ -40354,7 +40583,7 @@ exports[`snapshotAllPages Pressable 17`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 18`] = `
+exports[`snapshotAllPages Pressable 19`] = `
 <View>
   <View
     accessibilityState={
@@ -40414,7 +40643,7 @@ exports[`snapshotAllPages Pressable 18`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 19`] = `
+exports[`snapshotAllPages Pressable 20`] = `
 <View
   accessible={true}
   testID="opacity_pressable"
@@ -40928,7 +41157,7 @@ exports[`snapshotAllPages Pressable 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 20`] = `
+exports[`snapshotAllPages Pressable 21`] = `
 <View
   accessible={true}
   testID="accessible_pressable"
@@ -41124,7 +41353,7 @@ exports[`snapshotAllPages Pressable 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 21`] = `
+exports[`snapshotAllPages Pressable 22`] = `
 <View>
   <View
     accessibilityState={
@@ -41179,7 +41408,7 @@ exports[`snapshotAllPages Pressable 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 22`] = `
+exports[`snapshotAllPages Pressable 23`] = `
 <View>
   <View
     accessibilityHint="Button"
@@ -41271,7 +41500,7 @@ exports[`snapshotAllPages Pressable 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 23`] = `
+exports[`snapshotAllPages Pressable 24`] = `
 <View
   accessible={true}
   testID="backface_pressable"
@@ -41532,7 +41761,7 @@ exports[`snapshotAllPages Pressable 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 24`] = `
+exports[`snapshotAllPages Pressable 25`] = `
 <View
   accessible={true}
   testID="pressable_set"
