@@ -304,12 +304,18 @@ export type ButtonProps = Readonly<{
   ```
  */
 
-type ButtonRef = React.ElementRef<typeof TouchableHighlight>;
+export type ButtonInstance = React.ElementRef<typeof TouchableHighlight>;
 
 const Button: component(
-  ref?: React.RefSetter<ButtonRef>,
+  ref?: React.RefSetter<ButtonInstance>,
   ...props: ButtonProps
-) = ({ref, ...props}: {ref?: React.RefSetter<ButtonRef>, ...ButtonProps}) => {
+) = ({
+  ref,
+  ...props
+}: {
+  ref?: React.RefSetter<ButtonInstance>,
+  ...ButtonProps,
+}) => {
   // [Windows
   const [hover, setHover] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);

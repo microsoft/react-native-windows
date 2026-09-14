@@ -226,6 +226,7 @@ export interface AccessibilityValue {
 export type AccessibilityRole =
   | 'none'
   | 'button'
+  | 'dropdownlist'
   | 'togglebutton'
   | 'link'
   | 'search'
@@ -257,7 +258,16 @@ export type AccessibilityRole =
   | 'tree' // Windows
   | 'treeitem' // Windows
   | 'listitem' // Windows
-  | 'toolbar';
+  | 'toolbar'
+  | 'grid'
+  | 'pager'
+  | 'scrollview'
+  | 'horizontalscrollview'
+  | 'viewgroup'
+  | 'webview'
+  | 'drawerlayout'
+  | 'slidingdrawer'
+  | 'iconmenu';
 
 // [Windows]
 export type AnnotationType =

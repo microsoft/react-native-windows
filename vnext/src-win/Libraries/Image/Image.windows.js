@@ -32,6 +32,8 @@ import NativeImageLoaderIOS from './NativeImageLoaderIOS';
 import resolveAssetSource from './resolveAssetSource';
 import * as React from 'react';
 
+export type ImageInstance = HostInstance;
+
 function getSize(
   uri: string,
   success?: (width: number, height: number) => void,
@@ -113,7 +115,7 @@ let BaseImage: AbstractImageIOS = ({
   ref: forwardedRef,
   ...props
 }: {
-  ref?: React.RefSetter<HostInstance>,
+  ref?: React.RefSetter<ImageInstance>,
   ...ImageProps,
 }) => {
   const source = getImageSourcesFromImageProps(props) || {

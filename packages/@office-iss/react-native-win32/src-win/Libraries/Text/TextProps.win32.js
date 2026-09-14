@@ -130,6 +130,13 @@ type TextBaseProps = Readonly<{
   accessibilityPositionInSet?: ?number, // Win32
   accessibilitySetSize?: ?number, // Win32
   /**
+   * Controls whether the `Text` can be the target of touch events.
+   *
+   * See https://reactnative.dev/docs/view#pointerevents
+   */
+  pointerEvents?: ?('auto' | 'box-none' | 'box-only' | 'none'),
+
+  /**
    * Whether fonts should scale to respect Text Size accessibility settings.
    * The default is `true`.
    *

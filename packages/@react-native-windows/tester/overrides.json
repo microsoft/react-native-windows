@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.87.0-nightly-20260519-58cd1bf58",
+  "baseVersion": "0.87.0-nightly-20260604-63683f091",
   "overrides": [
     {
       "type": "copy",
@@ -85,7 +85,7 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "7e0acad4f41eae5d225f893755f464cfa06e1eab",
+      "baseHash": "145838b4b8b6b614f6c2b1b34b19d1d6002fb49e",
       "issue": 12869
     },
     {
@@ -104,7 +104,7 @@
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "a88dce30ae4ba4b334b903b2f85663a054b3603c",
+      "baseHash": "b8a25360dfe8ca7412862756624ce298aed07dde",
       "issue": 6240
     },
     {

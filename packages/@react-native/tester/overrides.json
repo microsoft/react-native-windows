@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.87.0-nightly-20260519-58cd1bf58",
+  "baseVersion": "0.87.0-nightly-20260604-63683f091",
   "overrides": [
     {
       "type": "copy",
@@ -194,7 +194,7 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "051a836afcb287a47d8ddfb7853cdd4f11560900",
+      "baseHash": "34657bfaf9334813bdb5d0c121b030630299e551",
       "issue": 4054
     },
     {
@@ -222,7 +222,7 @@
       "type": "derived",
       "file": "js/examples/Image/ImageExample.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "7e0acad4f41eae5d225f893755f464cfa06e1eab",
+      "baseHash": "145838b4b8b6b614f6c2b1b34b19d1d6002fb49e",
       "issue": 4054
     },
     {
@@ -459,7 +459,7 @@
       "type": "derived",
       "file": "js/examples/Pressable/PressableExample.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "a88dce30ae4ba4b334b903b2f85663a054b3603c",
+      "baseHash": "b8a25360dfe8ca7412862756624ce298aed07dde",
       "issue": 4054
     },
     {
@@ -543,7 +543,7 @@
       "type": "copy",
       "directory": "js/examples/StatusBar",
       "baseDirectory": "packages/rn-tester/js/examples/StatusBar",
-      "baseHash": "2e8d155724d9d3f2fb8664b2b2bedcd02fb3725c",
+      "baseHash": "06eccb4a69e9f6b554e940fe3572418f438461a2",
       "issue": 4054
     },
     {
@@ -648,7 +648,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "efc05879738a3ad59a96487c2aa3005951ac72d4",
+      "baseHash": "2987f1aef163cc375f399042702ab258aa21895a",
       "issue": 4054
     },
     {
@@ -780,28 +780,28 @@
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeViewNativeComponent.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeViewNativeComponent.js",
-      "baseHash": "b5f9e271ec21857cb6a6b07f9df412561cca2561",
+      "baseHash": "8bda424f4e88971e829d0c2203cb1c3a5fb2211b",
       "issue": 4054
     },
     {
       "type": "copy",
       "file": "NativeCxxModuleExample/NativeCxxModuleExample.js",
       "baseFile": "packages/rn-tester/NativeCxxModuleExample/NativeCxxModuleExample.js",
-      "baseHash": "fc6b78efdd2f5a316d4d4a8b1b59181ef266d19f",
+      "baseHash": "177e17226f9b2f7470b3bce5f76e25ca290d568b",
       "issue": 4054
     },
     {
       "type": "copy",
       "file": "NativeModuleExample/NativeScreenshotManager.js",
       "baseFile": "packages/rn-tester/NativeModuleExample/NativeScreenshotManager.js",
-      "baseHash": "6eca67ffe577705a40034632effffd4cb2a96308",
+      "baseHash": "bd67b558e4b9c7fc346905a97ac05592799571b0",
       "issue": 4054
     },
     {
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "67adc74806c05f95e3a5dd6a15a67c3b570f563f",
+      "baseHash": "6edf2f0de86d44f18f4670abbce1f3e182b93657",
       "issue": 13228
     },
     {

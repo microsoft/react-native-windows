@@ -129,6 +129,7 @@ export type {
   TextInputKeyPressEvent,
   TextInputProps,
   TextInputSelectionChangeEvent,
+  TextInputInstance,
   TextInputSubmitEditingEvent,
   TextInputWindowsProps, // [Windows]
 };

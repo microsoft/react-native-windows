@@ -20,7 +20,14 @@ import RNTesterPlatformTest from '../Experimental/PlatformTest/RNTesterPlatformT
 import ImageCapInsetsExample from './ImageCapInsetsExample';
 import * as React from 'react';
 import {useEffect, useState} from 'react';
-import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  ImageBackground,
+  PixelRatio,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 const IMAGE1 =
   'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png';
@@ -633,6 +640,76 @@ const VectorDrawableExample = () => {
   );
 };
 
+const VectorDrawableGetSizeExample = () => {
+  const [results, setResults] = useState<
+    Array<{name: string, status: string, width?: number, height?: number}>,
+  >([]);
+
+  const testResources = [
+    {name: 'ic_vector_test_24', label: 'VectorDrawable (24dp circle)'},
+    {
+      name: 'ic_launcher_foreground',
+      label: 'VectorDrawable (108dp React logo)',
+    },
+    {name: 'ic_launcher_background', label: 'VectorDrawable (108dp grid)'},
+    {name: 'ic_menu_black_24dp', label: 'PNG drawable (24dp menu icon)'},
+    {
+      name: 'ic_settings_black_48dp',
+      label: 'PNG drawable (48dp settings icon)',
+    },
+    {name: 'nonexistent_drawable', label: 'Non-existent resource'},
+  ];
+
+  const runTest = () => {
+    setResults([]);
+    const scale = PixelRatio.get();
+    testResources.forEach(({name, label}) => {
+      Image.getSize(
+        name,
+        (width, height) => {
+          setResults(prev => [
+            ...prev,
+            {
+              name: label,
+              status: 'success',
+              width: Math.round(width / scale),
+              height: Math.round(height / scale),
+            },
+          ]);
+        },
+        (error: unknown) => {
+          setResults(prev => [
+            ...prev,
+            {name: label, status: `error: ${String(error)}`},
+          ]);
+        },
+      );
+    });
+  };
+
+  return (
+    <View testID="vector-drawable-getsize-example">
+      <RNTesterButton onPress={runTest}>
+        Run Image.getSize on local drawable resources
+      </RNTesterButton>
+      {results.map((result, index) => (
+        <View key={index} style={styles.getSizeRow}>
+          <RNTesterText style={styles.getSizeLabel}>{result.name}</RNTesterText>
+          {result.status === 'success' ? (
+            <RNTesterText style={styles.getSizeSuccess}>
+              {result.width}x{result.height} dp
+            </RNTesterText>
+          ) : (
+            <RNTesterText style={styles.getSizeError}>
+              {result.status}
+            </RNTesterText>
+          )}
+        </View>
+      ))}
+    </View>
+  );
+};
+
 const AccessibilityActions = () => {
   const [accessibilityLabel, setAccessibilityLabel] =
     React.useState('Initial Label');
@@ -1227,6 +1304,22 @@ const styles = StyleSheet.create({
   vectorDrawable: {
     height: 64,
     width: 64,
+  },
+  getSizeRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
+  getSizeLabel: {
+    flex: 1,
+  },
+  getSizeSuccess: {
+    color: 'green',
+    fontWeight: 'bold',
+  },
+  getSizeError: {
+    color: 'red',
   },
   resizedImage: {
     height: 100,
@@ -2200,6 +2293,16 @@ exports.examples = [
       'Demonstrating an example of loading a vector drawable asset by name',
     render: function (): React.Node {
       return <VectorDrawableExample />;
+    },
+    platform: 'android',
+  },
+  {
+    title: 'Image.getSize with local drawables',
+    name: 'vector-drawable-getsize',
+    description:
+      'Calls Image.getSize() on Android drawable resource names (both VectorDrawable and raster PNG) and displays dimensions in density-independent pixels (dp).',
+    render: function (): React.Node {
+      return <VectorDrawableGetSizeExample />;
     },
     platform: 'android',
   },
