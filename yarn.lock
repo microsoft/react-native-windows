@@ -4728,6 +4728,14 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rnw-scripts/accessibility-diagnostics@workspace:packages/@rnw-scripts/accessibility-diagnostics":
+  version: 0.0.0-use.local
+  resolution: "@rnw-scripts/accessibility-diagnostics@workspace:packages/@rnw-scripts/accessibility-diagnostics"
+  bin:
+    rnw-a11y: bin.js
+  languageName: unknown
+  linkType: soft
+
 "@rnw-scripts/babel-node-config@npm:2.3.3, @rnw-scripts/babel-node-config@workspace:packages/@rnw-scripts/babel-node-config":
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/babel-node-config@workspace:packages/@rnw-scripts/babel-node-config"

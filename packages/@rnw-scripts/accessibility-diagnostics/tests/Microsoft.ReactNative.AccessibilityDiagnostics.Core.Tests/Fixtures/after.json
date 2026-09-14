@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "captureStatus": "complete",
+  "warnings": [],
+  "capturedAtUtc": "2026-09-14T12:05:00+00:00",
+  "target": {
+    "requestedProcessName": "RNTesterApp-Fabric",
+    "requestedProcessId": 100,
+    "windowProcessId": 100,
+    "nativeWindowHandle": 1234,
+    "windowTitle": "RNTester"
+  },
+  "options": {
+    "view": "control",
+    "maxDepth": 100,
+    "maxNodes": 10000
+  },
+  "root": {
+    "automationId": null,
+    "name": "RNTester",
+    "controlType": "Window",
+    "localizedControlType": "window",
+    "className": "RNTesterWindow",
+    "frameworkId": "Win32",
+    "isEnabled": true,
+    "isKeyboardFocusable": true,
+    "isOffscreen": false,
+    "helpText": null,
+    "accessKey": null,
+    "isSelected": null,
+    "toggleState": null,
+    "expandCollapseState": null,
+    "children": [
+      {
+        "automationId": "saveButton",
+        "name": null,
+        "controlType": "Button",
+        "localizedControlType": "button",
+        "className": "Button",
+        "frameworkId": "ReactNative",
+        "isEnabled": true,
+        "isKeyboardFocusable": false,
+        "isOffscreen": false,
+        "helpText": null,
+        "accessKey": null,
+        "isSelected": null,
+        "toggleState": null,
+        "expandCollapseState": null,
+        "children": []
+      }
+    ]
+  }
+}
