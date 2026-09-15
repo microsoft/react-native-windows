@@ -7,8 +7,22 @@
 #include <VersionHelpers.h>
 #include <cxxreact/ReactNativeVersion.h>
 #include <winrt/Windows.Foundation.Metadata.h>
+#include <winrt/Windows.System.Profile.h>
 
 namespace Microsoft::ReactNative {
+
+static std::string GetReleaseVersion() noexcept {
+  try {
+    const auto versionInfo = winrt::Windows::System::Profile::AnalyticsInfo::VersionInfo();
+    const auto version = std::stoull(winrt::to_string(versionInfo.DeviceFamilyVersion()));
+    return std::to_string((version & 0xFFFF000000000000ULL) >> 48) + "." +
+        std::to_string((version & 0x0000FFFF00000000ULL) >> 32) + "." +
+        std::to_string((version & 0x00000000FFFF0000ULL) >> 16) + "." +
+        std::to_string(version & 0x000000000000FFFFULL);
+  } catch (...) {
+    return "";
+  }
+}
 
 ReactNativeSpecs::PlatformConstantsWindowsSpec_PlatformConstantsWindows PlatformConstants::GetConstants() noexcept {
   ReactNativeSpecs::PlatformConstantsWindowsSpec_PlatformConstantsWindows constants;
@@ -42,6 +56,8 @@ ReactNativeSpecs::PlatformConstantsWindowsSpec_PlatformConstantsWindows Platform
       }
     }
   }
+
+  constants.Release = GetReleaseVersion();
 
   return constants;
 }
