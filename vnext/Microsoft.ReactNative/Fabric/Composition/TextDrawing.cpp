@@ -165,11 +165,23 @@ void RenderText(
     position += length;
   }
 
+  // The composition drawing surface this text lands on is premultiplied-alpha and is transparent
+  // wherever the view has no opaque background; the surface is then composited by the visual tree,
+  // possibly under an opacity or a transform. ClearType subpixel antialiasing has no valid opaque
+  // background to filter against in that situation, and its per-channel coverage survives into the
+  // surface's color channels as dark/colored fringes along thin glyph stems. Grayscale antialiasing
+  // is the correct mode for transparent render targets, so ask for it explicitly rather than
+  // inheriting whatever the device context defaults to.
+  auto oldTextAntialiasMode = deviceContext.GetTextAntialiasMode();
+  deviceContext.SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
+
   // Draw the line of text at the specified offset, which corresponds to the top-left
   // corner of our drawing surface. Notice we don't call BeginDraw on the D2D device
   // context; this has already been done for us by the composition API.
   deviceContext.DrawTextLayout(
       D2D1::Point2F(offsetX, offsetY), &textLayout, brush.get(), D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+
+  deviceContext.SetTextAntialiasMode(oldTextAntialiasMode);
 
   // restore dpi to old state
   deviceContext.SetDpi(oldDpiX, oldDpiY);

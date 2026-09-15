@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Draw Fabric text with grayscale antialiasing instead of inheriting ClearType, which fringes thin glyphs on transparent composition surfaces",
+  "packageName": "react-native-windows",
+  "email": "collindanielschneide@gmail.com",
+  "dependentChangeType": "patch"
+}
