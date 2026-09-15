@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fabric: resolve app-bundled fonts (Assets, Assets\\Fonts) during text layout by merging them with the system font set into the DirectWrite font collection used by WindowsTextLayoutManager",
+  "packageName": "react-native-windows",
+  "email": "collindanielschneide@gmail.com",
+  "dependentChangeType": "patch"
+}
