@@ -23,6 +23,7 @@
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
+#include "SelectionItemAutomationEvent.h"
 #include "Theme.h"
 #include "TooltipService.h"
 #include "UiaHelpers.h"
@@ -963,19 +964,6 @@ void ComponentView::updateAccessibilityProps(
         static_cast<int>(winrt::Microsoft::ReactNative::implementation::GetExpandCollapseState(oldExpanded)),
         static_cast<int>(winrt::Microsoft::ReactNative::implementation::GetExpandCollapseState(newExpanded)));
   }
-
-  if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
-      ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {
-    EnsureUiaProvider();
-    if (m_innerAutomationProvider) {
-      if ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value())) {
-        winrt::Microsoft::ReactNative::implementation::AddSelectionItemsToContainer(m_innerAutomationProvider.get());
-      } else {
-        winrt::Microsoft::ReactNative::implementation::RemoveSelectionItemsFromContainer(
-            m_innerAutomationProvider.get());
-      }
-    }
-  }
 }
 
 std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
@@ -1271,6 +1259,10 @@ void ViewComponentView::updateProps(
     facebook::react::Props::Shared const &oldProps) noexcept {
   const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(oldProps ? oldProps : m_props);
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(props);
+  const auto oldSelected =
+      oldViewProps.accessibilityState.has_value() ? oldViewProps.accessibilityState->selected : std::nullopt;
+  const auto newSelected =
+      newViewProps.accessibilityState.has_value() ? newViewProps.accessibilityState->selected : std::nullopt;
 
   ensureVisual();
   if (oldViewProps.opacity != newViewProps.opacity) {
@@ -1286,6 +1278,19 @@ void ViewComponentView::updateProps(
   base_type::updateProps(props, oldProps);
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
+
+  if (UiaClientsAreListening() &&
+      winrt::Microsoft::ReactNative::implementation::ShouldRaiseSelectionItemStateChanged(
+          isMounted(), oldSelected, newSelected)) {
+    auto provider = EnsureUiaProvider();
+    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+        provider, UIA_SelectionItemIsSelectedPropertyId, oldSelected.value_or(false), newSelected.value_or(false));
+
+    if (m_innerAutomationProvider) {
+      winrt::Microsoft::ReactNative::implementation::RaiseSelectionItemAutomationEvent(
+          m_innerAutomationProvider.get(), newSelected.value_or(false));
+    }
+  }
 }
 
 const winrt::Microsoft::ReactNative::IComponentProps ViewComponentView::userProps(
