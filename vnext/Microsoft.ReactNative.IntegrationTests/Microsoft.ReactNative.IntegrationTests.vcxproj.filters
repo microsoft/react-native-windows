@@ -9,6 +9,7 @@
     <ClCompile Include="ReactPropertyBagTests.cpp" />
     <ClCompile Include="ReactNativeHostTests.cpp" />
     <ClCompile Include="TurboModuleTests.cpp" />
+    <ClCompile Include="UiaHelpersTests.cpp" />
     <ClCompile Include="main.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
