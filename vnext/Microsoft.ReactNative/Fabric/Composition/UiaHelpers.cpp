@@ -3,6 +3,7 @@
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <atlcomcli.h>
 #include <inspectable.h>
+#include <oleacc.h>
 #include "CompositionRootAutomationProvider.h"
 #include "RootComponentView.h"
 #include "SelectionItemAutomationEvent.h"
@@ -541,7 +542,10 @@ std::vector<winrt::Microsoft::ReactNative::ComponentView> GetSelectedItemsInSele
       });
 }
 
-void RaiseSelectionItemAutomationEvent(CompositionDynamicAutomationProvider *provider, bool isSelected) noexcept {
+void RaiseSelectionItemAutomationEvent(
+    CompositionDynamicAutomationProvider *provider,
+    bool isSelected,
+    bool hasKeyboardFocus) noexcept {
   BOOL canSelectMultiple = false;
   size_t selectedItemCount = isSelected ? 1 : 0;
   winrt::com_ptr<IRawElementProviderSimple> eventProvider;
@@ -577,6 +581,42 @@ void RaiseSelectionItemAutomationEvent(CompositionDynamicAutomationProvider *pro
 
   UiaRaiseAutomationEvent(
       eventProvider.get(), GetSelectionItemAutomationEventId(isSelected, canSelectMultiple, selectedItemCount));
+
+  if (ShouldRaiseSelectionItemNotification(isSelected, canSelectMultiple, hasKeyboardFocus)) {
+    const auto selectedTextLength = GetStateTextW(STATE_SYSTEM_SELECTED, nullptr, 0);
+    if (selectedTextLength == 0) {
+      return;
+    }
+
+    std::vector<wchar_t> selectedText(selectedTextLength + 1);
+    if (GetStateTextW(STATE_SYSTEM_SELECTED, selectedText.data(), static_cast<UINT>(selectedText.size())) == 0) {
+      return;
+    }
+
+    VARIANT name{};
+    VariantInit(&name);
+    if (SUCCEEDED(eventProvider->GetPropertyValue(UIA_NamePropertyId, &name)) && name.vt == VT_BSTR && name.bstrVal) {
+      std::wstring announcement{name.bstrVal};
+      if (!announcement.empty()) {
+        announcement.append(L", ");
+      }
+      announcement.append(selectedText.data());
+
+      auto announcementBstr = SysAllocString(announcement.c_str());
+      auto activityId = SysAllocString(L"ReactNative.SelectionItem.Selected");
+      if (announcementBstr && activityId) {
+        UiaRaiseNotificationEvent(
+            eventProvider.get(),
+            NotificationKind_ActionCompleted,
+            NotificationProcessing_ImportantMostRecent,
+            announcementBstr,
+            activityId);
+      }
+      SysFreeString(activityId);
+      SysFreeString(announcementBstr);
+    }
+    VariantClear(&name);
+  }
 }
 
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept {
