@@ -7,6 +7,7 @@
 #include <cstddef>
 #include <functional>
 #include <optional>
+#include <string>
 #include <vector>
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -63,6 +64,10 @@ GetSelectionItemAutomationEventId(bool isSelected, bool canSelectMultiple, size_
 inline bool
 ShouldRaiseSelectionItemNotification(bool isSelected, bool canSelectMultiple, bool hasKeyboardFocus) noexcept {
   return isSelected && !canSelectMultiple && hasKeyboardFocus;
+}
+
+inline std::wstring GetSelectionItemNotificationText(const std::wstring &name, const std::wstring &selectedText) {
+  return name.empty() ? selectedText : name + L", " + selectedText;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

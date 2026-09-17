@@ -10,6 +10,20 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
+namespace {
+
+using GetStateTextWFn = UINT(WINAPI *)(DWORD, LPWSTR, UINT);
+
+GetStateTextWFn GetStateTextFunction() noexcept {
+  static const auto getStateText = []() noexcept {
+    auto oleacc = LoadLibraryExW(L"oleacc.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+    return oleacc ? reinterpret_cast<GetStateTextWFn>(GetProcAddress(oleacc, "GetStateTextW")) : nullptr;
+  }();
+  return getStateText;
+}
+
+} // namespace
+
 HRESULT UiaNavigateHelper(
     const winrt::Microsoft::ReactNative::ComponentView &view,
     NavigateDirection direction,
@@ -583,39 +597,40 @@ void RaiseSelectionItemAutomationEvent(
       eventProvider.get(), GetSelectionItemAutomationEventId(isSelected, canSelectMultiple, selectedItemCount));
 
   if (ShouldRaiseSelectionItemNotification(isSelected, canSelectMultiple, hasKeyboardFocus)) {
-    const auto selectedTextLength = GetStateTextW(STATE_SYSTEM_SELECTED, nullptr, 0);
+    const auto getStateText = GetStateTextFunction();
+    if (!getStateText) {
+      return;
+    }
+
+    const auto selectedTextLength = getStateText(STATE_SYSTEM_SELECTED, nullptr, 0);
     if (selectedTextLength == 0) {
       return;
     }
 
     std::vector<wchar_t> selectedText(selectedTextLength + 1);
-    if (GetStateTextW(STATE_SYSTEM_SELECTED, selectedText.data(), static_cast<UINT>(selectedText.size())) == 0) {
+    if (getStateText(STATE_SYSTEM_SELECTED, selectedText.data(), static_cast<UINT>(selectedText.size())) == 0) {
       return;
     }
 
     VARIANT name{};
     VariantInit(&name);
-    if (SUCCEEDED(eventProvider->GetPropertyValue(UIA_NamePropertyId, &name)) && name.vt == VT_BSTR && name.bstrVal) {
-      std::wstring announcement{name.bstrVal};
-      if (!announcement.empty()) {
-        announcement.append(L", ");
-      }
-      announcement.append(selectedText.data());
-
-      auto announcementBstr = SysAllocString(announcement.c_str());
-      auto activityId = SysAllocString(L"ReactNative.SelectionItem.Selected");
-      if (announcementBstr && activityId) {
-        UiaRaiseNotificationEvent(
-            eventProvider.get(),
-            NotificationKind_ActionCompleted,
-            NotificationProcessing_ImportantMostRecent,
-            announcementBstr,
-            activityId);
-      }
-      SysFreeString(activityId);
-      SysFreeString(announcementBstr);
-    }
+    eventProvider->GetPropertyValue(UIA_NamePropertyId, &name);
+    auto announcement =
+        GetSelectionItemNotificationText(name.vt == VT_BSTR && name.bstrVal ? name.bstrVal : L"", selectedText.data());
     VariantClear(&name);
+
+    auto announcementBstr = SysAllocString(announcement.c_str());
+    auto activityId = SysAllocString(L"ReactNative.SelectionItem.Selected");
+    if (announcementBstr && activityId) {
+      UiaRaiseNotificationEvent(
+          eventProvider.get(),
+          NotificationKind_ActionCompleted,
+          NotificationProcessing_ImportantMostRecent,
+          announcementBstr,
+          activityId);
+    }
+    SysFreeString(activityId);
+    SysFreeString(announcementBstr);
   }
 }
 
