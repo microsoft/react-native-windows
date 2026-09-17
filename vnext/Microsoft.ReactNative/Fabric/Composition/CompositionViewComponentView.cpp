@@ -1287,9 +1287,8 @@ void ViewComponentView::updateProps(
         provider, UIA_SelectionItemIsSelectedPropertyId, oldSelected.value_or(false), newSelected.value_or(false));
 
     if (m_innerAutomationProvider) {
-      auto root = rootComponentView();
       winrt::Microsoft::ReactNative::implementation::RaiseSelectionItemAutomationEvent(
-          m_innerAutomationProvider.get(), newSelected.value_or(false), root && root->GetFocusedComponent() == *this);
+          m_innerAutomationProvider.get(), newSelected.value_or(false));
     }
   }
 }
