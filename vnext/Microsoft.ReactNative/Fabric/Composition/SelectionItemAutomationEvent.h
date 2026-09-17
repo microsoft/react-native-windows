@@ -60,9 +60,4 @@ GetSelectionItemAutomationEventId(bool isSelected, bool canSelectMultiple, size_
                                                      : UIA_SelectionItem_ElementRemovedFromSelectionEventId;
 }
 
-inline bool
-ShouldRaiseSelectionItemFocusEvent(bool isSelected, bool canSelectMultiple, bool hasKeyboardFocus) noexcept {
-  return isSelected && !canSelectMultiple && hasKeyboardFocus;
-}
-
 } // namespace winrt::Microsoft::ReactNative::implementation
