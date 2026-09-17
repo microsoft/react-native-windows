@@ -117,6 +117,16 @@ TEST_CLASS (UiaHelpersTests) {
         UIA_SelectionItem_ElementSelectedEventId,
         winrt::Microsoft::ReactNative::implementation::GetSelectionItemAutomationEventId(false, true, 1));
   }
+
+  TEST_METHOD(FocusedSelectedItemInSingleSelectionContainerRaisesNotification) {
+    TestCheck(winrt::Microsoft::ReactNative::implementation::ShouldRaiseSelectionItemNotification(true, false, true));
+  }
+
+  TEST_METHOD(SelectionItemNotificationIsLimitedToFocusedSingleSelection) {
+    TestCheck(!winrt::Microsoft::ReactNative::implementation::ShouldRaiseSelectionItemNotification(false, false, true));
+    TestCheck(!winrt::Microsoft::ReactNative::implementation::ShouldRaiseSelectionItemNotification(true, true, true));
+    TestCheck(!winrt::Microsoft::ReactNative::implementation::ShouldRaiseSelectionItemNotification(true, false, false));
+  }
 };
 
 } // namespace ReactNativeIntegrationTests
