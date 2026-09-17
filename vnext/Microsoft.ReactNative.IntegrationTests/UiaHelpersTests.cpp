@@ -127,6 +127,15 @@ TEST_CLASS (UiaHelpersTests) {
     TestCheck(!winrt::Microsoft::ReactNative::implementation::ShouldRaiseSelectionItemNotification(true, true, true));
     TestCheck(!winrt::Microsoft::ReactNative::implementation::ShouldRaiseSelectionItemNotification(true, false, false));
   }
+
+  TEST_METHOD(SelectionItemNotificationIncludesItemNameAndLocalizedState) {
+    TestCheckEqual(
+        std::wstring{L"Item 2, selected"},
+        winrt::Microsoft::ReactNative::implementation::GetSelectionItemNotificationText(L"Item 2", L"selected"));
+    TestCheckEqual(
+        std::wstring{L"selected"},
+        winrt::Microsoft::ReactNative::implementation::GetSelectionItemNotificationText(L"", L"selected"));
+  }
 };
 
 } // namespace ReactNativeIntegrationTests
