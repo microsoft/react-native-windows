@@ -79,7 +79,10 @@ ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept;
 std::vector<winrt::Microsoft::ReactNative::ComponentView> GetSelectedItemsInSelectionContainer(
     const winrt::Microsoft::ReactNative::ComponentView &selectionContainer) noexcept;
 
-void RaiseSelectionItemAutomationEvent(CompositionDynamicAutomationProvider *provider, bool isSelected) noexcept;
+void RaiseSelectionItemAutomationEvent(
+    CompositionDynamicAutomationProvider *provider,
+    bool isSelected,
+    bool hasKeyboardFocus) noexcept;
 
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept;
 

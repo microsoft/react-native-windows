@@ -541,7 +541,10 @@ std::vector<winrt::Microsoft::ReactNative::ComponentView> GetSelectedItemsInSele
       });
 }
 
-void RaiseSelectionItemAutomationEvent(CompositionDynamicAutomationProvider *provider, bool isSelected) noexcept {
+void RaiseSelectionItemAutomationEvent(
+    CompositionDynamicAutomationProvider *provider,
+    bool isSelected,
+    bool hasKeyboardFocus) noexcept {
   BOOL canSelectMultiple = false;
   size_t selectedItemCount = isSelected ? 1 : 0;
   winrt::com_ptr<IRawElementProviderSimple> eventProvider;
@@ -577,6 +580,13 @@ void RaiseSelectionItemAutomationEvent(CompositionDynamicAutomationProvider *pro
 
   UiaRaiseAutomationEvent(
       eventProvider.get(), GetSelectionItemAutomationEventId(isSelected, canSelectMultiple, selectedItemCount));
+
+  // Windows screen readers reliably announce a selection change on an already-focused item
+  // when the focused item raises a focus event. Keep the SelectionItem event above for UIA
+  // clients that consume the standard selection contract.
+  if (ShouldRaiseSelectionItemFocusEvent(isSelected, canSelectMultiple, hasKeyboardFocus)) {
+    UiaRaiseAutomationEvent(eventProvider.get(), UIA_AutomationFocusChangedEventId);
+  }
 }
 
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept {
