@@ -72,6 +72,23 @@ public sealed class SnapshotDifferTests
     }
 
     [TestMethod]
+    public void ReplacementAcrossExistingMatchDoesNotProduceOrderRegression()
+    {
+        var before = CreateSnapshot(
+            Node("Window", children: [Node("Text", "One"), Node("Text", "Two")]));
+        var after = CreateSnapshot(
+            Node("Window", children: [Node("Text", "Two"), Node("Text", "Three")]));
+
+        var diff = new SnapshotDiffer().Compare(before, after, "before", "after");
+
+        Assert.AreEqual(2, diff.Changes.Count);
+        Assert.IsTrue(diff.Changes.Any(change => change.Kind == ChangeKind.Removed && change.Before!.Contains("One")));
+        Assert.IsTrue(diff.Changes.Any(change => change.Kind == ChangeKind.Added && change.After!.Contains("Three")));
+        Assert.IsFalse(diff.Changes.Any(change => change.Property == "childrenOrder"));
+        Assert.IsFalse(diff.HasPotentialRegressions);
+    }
+
+    [TestMethod]
     public void IncompleteSnapshotsAreRejectedByDefault()
     {
         var before = CreateSnapshot(

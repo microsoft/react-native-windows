@@ -351,6 +351,7 @@ public sealed class SnapshotDiffer
             var candidates = Enumerable.Range(0, after.Count)
                 .Where(index => !usedAfter.Contains(index))
                 .Where(index => WeakIdentity(before[beforeIndex]) == WeakIdentity(after[index]))
+                .Where(index => !WouldCrossExistingMatch(beforeIndex, index, matches))
                 .OrderBy(index => Math.Abs(index - beforeIndex))
                 .ToArray();
 
@@ -364,6 +365,16 @@ public sealed class SnapshotDiffer
             usedBefore.Add(beforeIndex);
             usedAfter.Add(afterIndex);
         }
+    }
+
+    private static bool WouldCrossExistingMatch(
+        int beforeIndex,
+        int afterIndex,
+        IReadOnlyList<NodeMatch> matches)
+    {
+        return matches.Any(match =>
+            (match.BeforeIndex < beforeIndex && match.AfterIndex > afterIndex) ||
+            (match.BeforeIndex > beforeIndex && match.AfterIndex < afterIndex));
     }
 
     private static void CompareProperty<T>(

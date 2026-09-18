@@ -45,7 +45,10 @@ internal static class WindowSelector
 
     private static WindowSelection SelectByProcessName(string processName)
     {
-        var normalizedName = Path.GetFileNameWithoutExtension(processName);
+        var fileName = Path.GetFileName(processName);
+        var normalizedName = fileName.EndsWith(".exe", StringComparison.OrdinalIgnoreCase)
+            ? fileName[..^4]
+            : fileName;
         var processes = Process.GetProcessesByName(normalizedName);
         if (processes.Length == 0)
         {
