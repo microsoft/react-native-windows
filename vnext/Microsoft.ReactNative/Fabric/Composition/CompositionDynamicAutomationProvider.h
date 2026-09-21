@@ -95,8 +95,6 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall RemoveFromSelection() override;
   virtual HRESULT __stdcall Select() override;
 
-  void AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
-  void RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
   winrt::Microsoft::ReactNative::ComponentView GetSelectionContainer() noexcept;
 
   void SetChildSiteLink(winrt::Microsoft::UI::Content::ChildSiteLink childSiteLink) {
@@ -111,7 +109,6 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   ::Microsoft::ReactNative::ReactTaggedView m_view;
   winrt::com_ptr<ITextProvider2> m_textProvider;
   winrt::com_ptr<IAnnotationProvider> m_annotationProvider;
-  std::vector<winrt::com_ptr<IRawElementProviderSimple>> m_selectionItems;
   // Non-null when this UIA node is the peer of a ContentIslandComponentView.
   winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
 };

@@ -3,10 +3,26 @@
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <atlcomcli.h>
 #include <inspectable.h>
+#include <oleacc.h>
 #include "CompositionRootAutomationProvider.h"
 #include "RootComponentView.h"
+#include "SelectionItemAutomationEvent.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
+
+namespace {
+
+using GetStateTextWFn = UINT(WINAPI *)(DWORD, LPWSTR, UINT);
+
+GetStateTextWFn GetStateTextFunction() noexcept {
+  static const auto getStateText = []() noexcept {
+    auto oleacc = LoadLibraryExW(L"oleacc.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+    return oleacc ? reinterpret_cast<GetStateTextWFn>(GetProcAddress(oleacc, "GetStateTextW")) : nullptr;
+  }();
+  return getStateText;
+}
+
+} // namespace
 
 HRESULT UiaNavigateHelper(
     const winrt::Microsoft::ReactNative::ComponentView &view,
@@ -519,46 +535,103 @@ ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept {
   }
 }
 
-void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider) noexcept {
-  auto selectionContainerView = provider->GetSelectionContainer();
-  if (!selectionContainerView)
-    return;
-
-  auto selectionContainerCompView =
-      selectionContainerView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
-  if (!selectionContainerCompView)
-    return;
-
-  selectionContainerCompView->EnsureUiaProvider();
-
-  if (!selectionContainerCompView->InnerAutomationProvider())
-    return;
-
-  auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
-  winrt::com_ptr<IRawElementProviderSimple> simpleProviderPtr;
-  simpleProviderPtr.copy_from(simpleProvider);
-  selectionContainerCompView->InnerAutomationProvider()->AddToSelectionItems(simpleProviderPtr);
+std::vector<winrt::Microsoft::ReactNative::ComponentView> GetSelectedItemsInSelectionContainer(
+    const winrt::Microsoft::ReactNative::ComponentView &selectionContainer) noexcept {
+  return GetSelectedItemsInSelectionContainer(
+      selectionContainer,
+      [](const auto &view) { return view.Children(); },
+      [](const auto &view) {
+        return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->isMounted();
+      },
+      [](const auto &view) {
+        auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+            winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->props());
+        return props && props->accessibilityState.has_value() &&
+            props->accessibilityState->multiselectable.has_value() && props->accessibilityState->required.has_value();
+      },
+      [](const auto &view) {
+        auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+            winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->props());
+        return props && props->accessibilityState.has_value() && props->accessibilityState->selected.value_or(false);
+      });
 }
 
-void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept {
+void RaiseSelectionItemAutomationEvent(
+    CompositionDynamicAutomationProvider *provider,
+    bool isSelected,
+    bool hasKeyboardFocus) noexcept {
+  BOOL canSelectMultiple = false;
+  size_t selectedItemCount = isSelected ? 1 : 0;
+  winrt::com_ptr<IRawElementProviderSimple> eventProvider;
+  eventProvider.copy_from(static_cast<IRawElementProviderSimple *>(provider));
+
   auto selectionContainerView = provider->GetSelectionContainer();
-  if (!selectionContainerView)
-    return;
+  if (selectionContainerView) {
+    auto selectionContainerCompView =
+        selectionContainerView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+    if (selectionContainerCompView) {
+      auto props = selectionContainerCompView->viewProps();
+      canSelectMultiple =
+          props->accessibilityState.has_value() && props->accessibilityState->multiselectable.value_or(false);
 
-  auto selectionContainerCompView =
-      selectionContainerView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
-  if (!selectionContainerCompView)
-    return;
+      auto selectedItems = GetSelectedItemsInSelectionContainer(selectionContainerView);
+      selectedItemCount = selectedItems.size();
+      if (!isSelected && canSelectMultiple && selectedItemCount == 1) {
+        auto remainingSelectedItem =
+            selectedItems[0].try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+        if (!remainingSelectedItem) {
+          return;
+        }
 
-  selectionContainerCompView->EnsureUiaProvider();
+        auto remainingSelectedItemProvider =
+            remainingSelectedItem->EnsureUiaProvider().try_as<IRawElementProviderSimple>();
+        if (!remainingSelectedItemProvider) {
+          return;
+        }
+        eventProvider = std::move(remainingSelectedItemProvider);
+      }
+    }
+  }
 
-  if (!selectionContainerCompView->InnerAutomationProvider())
-    return;
+  UiaRaiseAutomationEvent(
+      eventProvider.get(), GetSelectionItemAutomationEventId(isSelected, canSelectMultiple, selectedItemCount));
 
-  auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
-  winrt::com_ptr<IRawElementProviderSimple> simpleProviderPtr;
-  simpleProviderPtr.copy_from(simpleProvider);
-  selectionContainerCompView->InnerAutomationProvider()->RemoveFromSelectionItems(simpleProviderPtr);
+  if (ShouldRaiseSelectionItemNotification(isSelected, canSelectMultiple, hasKeyboardFocus)) {
+    const auto getStateText = GetStateTextFunction();
+    if (!getStateText) {
+      return;
+    }
+
+    const auto selectedTextLength = getStateText(STATE_SYSTEM_SELECTED, nullptr, 0);
+    if (selectedTextLength == 0) {
+      return;
+    }
+
+    std::vector<wchar_t> selectedText(selectedTextLength + 1);
+    if (getStateText(STATE_SYSTEM_SELECTED, selectedText.data(), static_cast<UINT>(selectedText.size())) == 0) {
+      return;
+    }
+
+    VARIANT name{};
+    VariantInit(&name);
+    eventProvider->GetPropertyValue(UIA_NamePropertyId, &name);
+    auto announcement =
+        GetSelectionItemNotificationText(name.vt == VT_BSTR && name.bstrVal ? name.bstrVal : L"", selectedText.data());
+    VariantClear(&name);
+
+    auto announcementBstr = SysAllocString(announcement.c_str());
+    auto activityId = SysAllocString(L"ReactNative.SelectionItem.Selected");
+    if (announcementBstr && activityId) {
+      UiaRaiseNotificationEvent(
+          eventProvider.get(),
+          NotificationKind_ActionCompleted,
+          NotificationProcessing_ImportantMostRecent,
+          announcementBstr,
+          activityId);
+    }
+    SysFreeString(activityId);
+    SysFreeString(announcementBstr);
+  }
 }
 
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept {
