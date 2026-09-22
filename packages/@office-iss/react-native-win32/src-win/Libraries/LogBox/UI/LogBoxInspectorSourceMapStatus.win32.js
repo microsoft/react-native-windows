@@ -110,7 +110,9 @@ component LogBoxInspectorSourceMapStatus(
         ]}
       />
       */}
-      <Text style={[styles.text, {color}]}>Source Map</Text>
+      <Text maxFontSizeMultiplier={1.5} style={[styles.text, {color}]}>
+        Source Map
+      </Text>
     </LogBoxButton>
   );
 }

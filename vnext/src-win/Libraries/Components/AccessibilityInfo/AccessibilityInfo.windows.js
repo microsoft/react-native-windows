@@ -80,13 +80,9 @@ const EventNames: Map<keyof AccessibilityEventDefinitions, string> =
         ]);
 
 /**
- * Sometimes it's useful to know whether or not the device has a screen reader
- * that is currently active. The `AccessibilityInfo` API is designed for this
- * purpose. You can use it to query the current state of the screen reader as
- * well as to register to be notified when the state of the screen reader
- * changes.
+ * Provides information about the device's accessibility features, such as whether a screen reader is active. Can be used to query the current state and register for change notifications.
  *
- * See https://reactnative.dev/docs/accessibilityinfo
+ * @see https://reactnative.dev/docs/accessibilityinfo
  */
 const AccessibilityInfo = {
   /**
@@ -95,7 +91,7 @@ const AccessibilityInfo = {
    * Returns a promise which resolves to a boolean.
    * The result is `true` when bold text is enabled and `false` otherwise.
    *
-   * See https://reactnative.dev/docs/accessibilityinfo#isBoldTextEnabled
+   * @platform ios
    */
   isBoldTextEnabled(): Promise<boolean> {
     if (Platform.OS === 'android' || Platform.OS === 'windows') {
@@ -120,7 +116,7 @@ const AccessibilityInfo = {
    * Returns a promise which resolves to a boolean.
    * The result is `true` when grayscale is enabled and `false` otherwise.
    *
-   * See https://reactnative.dev/docs/accessibilityinfo#isGrayscaleEnabled
+   * @platform ios
    */
   isGrayscaleEnabled(): Promise<boolean> {
     if (Platform.OS === 'android') {
@@ -157,7 +153,7 @@ const AccessibilityInfo = {
    * Returns a promise which resolves to a boolean.
    * The result is `true` when invert color is enabled and `false` otherwise.
    *
-   * See https://reactnative.dev/docs/accessibilityinfo#isInvertColorsEnabled
+   * @platform ios
    */
   isInvertColorsEnabled(): Promise<boolean> {
     if (Platform.OS === 'android') {
@@ -193,8 +189,6 @@ const AccessibilityInfo = {
    *
    * Returns a promise which resolves to a boolean.
    * The result is `true` when a reduce motion is enabled and `false` otherwise.
-   *
-   * See https://reactnative.dev/docs/accessibilityinfo#isReduceMotionEnabled
    */
   isReduceMotionEnabled(): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -218,12 +212,12 @@ const AccessibilityInfo = {
   },
 
   /**
-   * Query whether high text contrast is currently enabled. Android only.
+   * Query whether high text contrast is currently enabled.
    *
    * Returns a promise which resolves to a boolean.
    * The result is `true` when high text contrast is enabled and `false` otherwise.
    *
-   * See https://reactnative.dev/docs/accessibilityinfo#ishightextcontrastenabled-android
+   * @platform android
    */
   isHighTextContrastEnabled(): Promise<boolean> {
     if (Platform.OS === 'android') {
@@ -244,12 +238,12 @@ const AccessibilityInfo = {
   },
 
   /**
-   * Query whether dark system colors is currently enabled. iOS only.
+   * Query whether darker system colors is currently enabled.
    *
    * Returns a promise which resolves to a boolean.
-   * The result is `true` when dark system colors is enabled and `false` otherwise.
+   * The result is `true` when darker system colors is enabled and `false` otherwise.
    *
-   * See https://reactnative.dev/docs/accessibilityinfo#isdarkersystemcolorsenabled-ios
+   * @platform ios
    */
   isDarkerSystemColorsEnabled(): Promise<boolean> {
     if (Platform.OS === 'android') {
@@ -276,12 +270,12 @@ const AccessibilityInfo = {
   },
 
   /**
-   * Query whether reduce motion and prefer cross-fade transitions settings are currently enabled.
+   * Query whether cross-fade transitions are preferred over slide transitions.
    *
    * Returns a promise which resolves to a boolean.
-   * The result is `true` when  prefer cross-fade transitions is enabled and `false` otherwise.
+   * The result is `true` when cross-fade transitions are preferred and `false` otherwise.
    *
-   * See https://reactnative.dev/docs/accessibilityinfo#prefersCrossFadeTransitions
+   * @platform ios
    */
   prefersCrossFadeTransitions(): Promise<boolean> {
     if (Platform.OS === 'android') {
@@ -313,7 +307,7 @@ const AccessibilityInfo = {
    * Returns a promise which resolves to a boolean.
    * The result is `true` when a reduce transparency is enabled and `false` otherwise.
    *
-   * See https://reactnative.dev/docs/accessibilityinfo#isReduceTransparencyEnabled
+   * @platform ios
    */
   isReduceTransparencyEnabled(): Promise<boolean> {
     if (Platform.OS === 'android' || Platform.OS === 'windows') {
@@ -337,8 +331,6 @@ const AccessibilityInfo = {
    *
    * Returns a promise which resolves to a boolean.
    * The result is `true` when a screen reader is enabled and `false` otherwise.
-   *
-   * See https://reactnative.dev/docs/accessibilityinfo#isScreenReaderEnabled
    */
   isScreenReaderEnabled(): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -368,8 +360,6 @@ const AccessibilityInfo = {
    * The result is `true` when any service is enabled and `false` otherwise.
    *
    * @platform android
-   *
-   * See https://reactnative.dev/docs/accessibilityinfo/#isaccessibilityserviceenabled-android
    */
   isAccessibilityServiceEnabled(): Promise<boolean> {
     return new Promise((resolve, reject) => {
@@ -436,8 +426,6 @@ const AccessibilityInfo = {
    * - `highTextContrastChanged`: Android-only event. Fires when the state of the high text contrast
    *   toggle changes. The argument to the event handler is a boolean. The boolean is `true` when
    *   high text contrast is enabled and `false` otherwise.
-   *
-   * See https://reactnative.dev/docs/accessibilityinfo#addeventlistener
    */
   addEventListener<K extends keyof AccessibilityEventDefinitions>(
     eventName: K,
@@ -454,8 +442,6 @@ const AccessibilityInfo = {
   /**
    * Set accessibility focus to a React component.
    *
-   * See https://reactnative.dev/docs/accessibilityinfo#setaccessibilityfocus
-   *
    * @deprecated Use `sendAccessibilityEvent` with eventType `focus` instead.
    */
   setAccessibilityFocus(reactTag: number): void {
@@ -463,7 +449,8 @@ const AccessibilityInfo = {
   },
 
   /**
-   * Send a named accessibility event to a HostComponent.
+   * Trigger an accessibility event on a host instance. The `eventType` can be
+   * `'focus'`, `'click'`, `'viewHoverEnter'`, or `'windowStateChange'`.
    */
   sendAccessibilityEvent(
     handle: HostInstance,
@@ -479,8 +466,6 @@ const AccessibilityInfo = {
 
   /**
    * Post a string to be announced by the screen reader.
-   *
-   * See https://reactnative.dev/docs/accessibilityinfo#announceforaccessibility
    */
   announceForAccessibility(announcement: string): void {
     if (Platform.OS === 'android' || Platform.OS === 'windows') {
@@ -491,7 +476,8 @@ const AccessibilityInfo = {
   },
 
   /**
-   * Post a string to be announced by the screen reader.
+   * Post a string to be announced by the screen reader with options.
+   *
    * - `announcement`: The string announced by the screen reader.
    * - `options`: An object that configures the reading options.
    *   - `queue`: The announcement will be queued behind existing announcements. iOS only.
@@ -520,9 +506,10 @@ const AccessibilityInfo = {
   },
 
   /**
-   * Get the recommended timeout for changes to the UI needed by this user.
+   * Get the recommended timeout in milliseconds the user needs, as specified
+   * in the device's Accessibility settings.
    *
-   * See https://reactnative.dev/docs/accessibilityinfo#getrecommendedtimeoutmillis
+   * @platform android
    */
   getRecommendedTimeoutMillis(originalTimeout: number): Promise<number> {
     if (Platform.OS === 'android' || Platform.OS === 'windows') {

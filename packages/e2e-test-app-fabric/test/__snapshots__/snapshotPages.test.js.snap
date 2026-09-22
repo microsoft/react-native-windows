@@ -72272,12 +72272,77 @@ exports[`snapshotAllPages Text 16`] = `
         },
         {
           "textDecorationLine": "underline",
+          "textDecorationStyle": "solid",
         },
       ]
     }
     testID="text-decoration-underline"
   >
     Solid underline
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textDecorationColor": "red",
+          "textDecorationLine": "underline",
+          "textDecorationStyle": "double",
+        },
+      ]
+    }
+  >
+    Double underline (red)
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textDecorationColor": "#9CDC60",
+          "textDecorationLine": "underline",
+          "textDecorationStyle": "dashed",
+        },
+      ]
+    }
+  >
+    Dashed underline (green)
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textDecorationColor": "blue",
+          "textDecorationLine": "underline",
+          "textDecorationStyle": "dotted",
+        },
+      ]
+    }
+  >
+    Dotted underline (blue)
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textDecorationColor": "red",
+          "textDecorationLine": "underline",
+          "textDecorationStyle": "wavy",
+        },
+      ]
+    }
+  >
+    Wavy underline (red)
   </Text>
   <Text
     style={
@@ -72316,12 +72381,77 @@ exports[`snapshotAllPages Text 16`] = `
           "color": "#000000ff",
         },
         {
-          "textDecorationLine": "underline line-through",
+          "textDecorationColor": "red",
+          "textDecorationLine": "line-through",
+          "textDecorationStyle": "double",
         },
       ]
     }
   >
-    Both underline and line-through
+    Double line-through (red)
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textDecorationColor": "#9CDC60",
+          "textDecorationLine": "line-through",
+          "textDecorationStyle": "dashed",
+        },
+      ]
+    }
+  >
+    Dashed line-through (green)
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textDecorationColor": "blue",
+          "textDecorationLine": "line-through",
+          "textDecorationStyle": "dotted",
+        },
+      ]
+    }
+  >
+    Dotted line-through (blue)
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textDecorationColor": "red",
+          "textDecorationLine": "line-through",
+          "textDecorationStyle": "wavy",
+        },
+      ]
+    }
+  >
+    Wavy line-through (red)
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textDecorationLine": "underline line-through",
+          "textDecorationStyle": "wavy",
+        },
+      ]
+    }
+  >
+    Both underline and line-through (wavy)
   </Text>
   <Text
     style={
@@ -72368,6 +72498,37 @@ exports[`snapshotAllPages Text 16`] = `
     </Text>
      
     text nodes
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
+    Unstyled text
+     
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "textDecorationColor": "red",
+            "textDecorationLine": "line-through",
+            "textDecorationStyle": "wavy",
+          },
+        ]
+      }
+    >
+      with wavy strike-through that wraps across multiple lines to verify continuity
+    </Text>
+     
+    normal text
   </Text>
 </View>
 `;
@@ -72986,6 +73147,29 @@ exports[`snapshotAllPages Text 21`] = `
       Continually
     </Text>
      expedite magnetic potentialities rather than client-focused interfaces.
+  </Text>,
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        [
+          {
+            "borderColor": "black",
+            "borderWidth": 1,
+            "fontSize": 24,
+            "lineHeight": 24,
+          },
+          {
+            "maxWidth": 300,
+          },
+        ],
+      ]
+    }
+    testID="line-height-matches-font-size-descenders"
+  >
+    gjpqy
   </Text>,
   <Text
     style={

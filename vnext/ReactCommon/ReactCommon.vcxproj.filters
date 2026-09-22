@@ -93,9 +93,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSExecutor.cpp">
       <Filter>cxxreact</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSIndexedRAMBundle.cpp">
-      <Filter>cxxreact</Filter>
-    </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\MethodCall.cpp">
       <Filter>cxxreact</Filter>
     </ClCompile>
@@ -249,9 +246,6 @@
       <Filter>cxxreact</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBundleType.h">
-      <Filter>cxxreact</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSIndexedRAMBundle.h">
       <Filter>cxxreact</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSModulesUnbundle.h">

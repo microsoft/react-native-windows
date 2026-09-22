@@ -8,21 +8,21 @@
  * @format
  */
 
-import type {ViewProps} from '../../../../Libraries/Components/View/ViewPropTypes';
+import type {ViewProps} from '../../../../../Libraries/Components/View/ViewPropTypes';
 import type {
   DirectEventHandler,
   Int32,
   WithDefault,
-} from '../../../../Libraries/Types/CodegenTypes';
-import type {HostComponent} from '../../types/HostComponent';
+} from '../../../../../Libraries/Types/CodegenTypes';
+import type {HostComponent} from '../../../types/HostComponent';
 
-import codegenNativeComponent from '../../../../Libraries/Utilities/codegenNativeComponent';
+import codegenNativeComponent from '../../../../../Libraries/Utilities/codegenNativeComponent';
 
-type OrientationChangeEvent = Readonly<{|
+type OrientationChangeEvent = Readonly<{
   orientation: 'portrait' | 'landscape',
-|}>;
+}>;
 
-type RCTModalHostViewNativeProps = Readonly<{|
+type RCTModalHostViewNativeProps = Readonly<{
   ...ViewProps,
 
   /**
@@ -108,11 +108,6 @@ type RCTModalHostViewNativeProps = Readonly<{|
   visible?: WithDefault<boolean, false>,
 
   /**
-   * Deprecated. Use the `animationType` prop instead.
-   */
-  animated?: WithDefault<boolean, false>,
-
-  /**
    * Controls whether the modal can be dismissed by swiping down on iOS.
    * This requires you to implement the `onRequestClose` prop to handle the dismissal.
    */
@@ -157,7 +152,7 @@ type RCTModalHostViewNativeProps = Readonly<{|
 
   hideBorder?: WithDefault<boolean, false>,
   // Windows]
-|}>;
+}>;
 
 export default codegenNativeComponent<RCTModalHostViewNativeProps>(
   'ModalHostView',

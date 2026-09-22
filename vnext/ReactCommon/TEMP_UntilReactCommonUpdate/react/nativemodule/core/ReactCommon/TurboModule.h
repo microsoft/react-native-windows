@@ -36,6 +36,7 @@ enum TurboModuleMethodValueKind {
   ArrayKind,
   FunctionKind,
   PromiseKind,
+  ArrayBufferKind,
 };
 
 /**

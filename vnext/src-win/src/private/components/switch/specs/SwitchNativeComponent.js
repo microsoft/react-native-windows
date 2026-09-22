@@ -8,17 +8,17 @@
  * @format
  */
 
-import type {ViewProps} from '../../../../Libraries/Components/View/ViewPropTypes';
-import type {ColorValue} from '../../../../Libraries/StyleSheet/StyleSheet';
+import type {ViewProps} from '../../../../../Libraries/Components/View/ViewPropTypes';
+import type {ColorValue} from '../../../../../Libraries/StyleSheet/StyleSheet';
 import type {
   BubblingEventHandler,
   Int32,
   WithDefault,
-} from '../../../../Libraries/Types/CodegenTypes';
-import type {HostComponent} from '../../types/HostComponent';
+} from '../../../../../Libraries/Types/CodegenTypes';
+import type {HostComponent} from '../../../types/HostComponent';
 
-import codegenNativeCommands from '../../../../Libraries/Utilities/codegenNativeCommands';
-import codegenNativeComponent from '../../../../Libraries/Utilities/codegenNativeComponent';
+import codegenNativeCommands from '../../../../../Libraries/Utilities/codegenNativeCommands';
+import codegenNativeComponent from '../../../../../Libraries/Utilities/codegenNativeComponent';
 import * as React from 'react';
 
 type NativeSwitchChangeEvent = Readonly<{

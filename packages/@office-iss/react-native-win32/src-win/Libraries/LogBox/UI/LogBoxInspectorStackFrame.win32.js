@@ -44,11 +44,13 @@ component LogBoxInspectorStackFrame(
         style={styles.frame}>
         <Text
           id="logbox_stack_frame_text"
+          maxFontSizeMultiplier={1.5}
           style={[styles.name, frame.collapse === true && styles.dim]}>
           {frame.methodName}
         </Text>
         <Text
           ellipsizeMode="tail" // Win32 doesn't support middle
+          maxFontSizeMultiplier={1.5}
           numberOfLines={2} // Win32 extend to two lines to help mitigate lack of middle ellipsize.
           style={[styles.location, frame.collapse === true && styles.dim]}>
           {location}

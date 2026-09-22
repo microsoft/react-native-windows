@@ -84,8 +84,20 @@ BaseViewProps::BaseViewProps(
               : convertRawProp(
                     context,
                     rawProps,
-                    "border",
-                    "Radius",
+                    CascadedRectangleCornersNames{
+                        .topLeft = "borderTopLeftRadius",
+                        .topRight = "borderTopRightRadius",
+                        .bottomLeft = "borderBottomLeftRadius",
+                        .bottomRight = "borderBottomRightRadius",
+                        .topStart = "borderTopStartRadius",
+                        .topEnd = "borderTopEndRadius",
+                        .bottomStart = "borderBottomStartRadius",
+                        .bottomEnd = "borderBottomEndRadius",
+                        .endEnd = "borderEndEndRadius",
+                        .endStart = "borderEndStartRadius",
+                        .startEnd = "borderStartEndRadius",
+                        .startStart = "borderStartStartRadius",
+                        .all = "borderRadius"},
                     sourceProps.borderRadii,
                     {})),
       borderColors(
@@ -94,8 +106,19 @@ BaseViewProps::BaseViewProps(
               : convertRawProp(
                     context,
                     rawProps,
-                    "border",
-                    "Color",
+                    CascadedRectangleEdgesNames{
+                        .left = "borderLeftColor",
+                        .right = "borderRightColor",
+                        .top = "borderTopColor",
+                        .bottom = "borderBottomColor",
+                        .start = "borderStartColor",
+                        .end = "borderEndColor",
+                        .horizontal = "borderHorizontalColor",
+                        .vertical = "borderVerticalColor",
+                        .block = "borderBlockColor",
+                        .blockEnd = "borderBlockEndColor",
+                        .blockStart = "borderBlockStartColor",
+                        .all = "borderColor"},
                     sourceProps.borderColors,
                     {})),
       borderCurves(
@@ -104,8 +127,20 @@ BaseViewProps::BaseViewProps(
               : convertRawProp(
                     context,
                     rawProps,
-                    "border",
-                    "Curve",
+                    CascadedRectangleCornersNames{
+                        .topLeft = "borderTopLeftCurve",
+                        .topRight = "borderTopRightCurve",
+                        .bottomLeft = "borderBottomLeftCurve",
+                        .bottomRight = "borderBottomRightCurve",
+                        .topStart = "borderTopStartCurve",
+                        .topEnd = "borderTopEndCurve",
+                        .bottomStart = "borderBottomStartCurve",
+                        .bottomEnd = "borderBottomEndCurve",
+                        .endEnd = "borderEndEndCurve",
+                        .endStart = "borderEndStartCurve",
+                        .startEnd = "borderStartEndCurve",
+                        .startStart = "borderStartStartCurve",
+                        .all = "borderCurve"},
                     sourceProps.borderCurves,
                     {})),
       borderStyles(
@@ -114,8 +149,19 @@ BaseViewProps::BaseViewProps(
               : convertRawProp(
                     context,
                     rawProps,
-                    "border",
-                    "Style",
+                    CascadedRectangleEdgesNames{
+                        .left = "borderLeftStyle",
+                        .right = "borderRightStyle",
+                        .top = "borderTopStyle",
+                        .bottom = "borderBottomStyle",
+                        .start = "borderStartStyle",
+                        .end = "borderEndStyle",
+                        .horizontal = "borderHorizontalStyle",
+                        .vertical = "borderVerticalStyle",
+                        .block = "borderBlockStyle",
+                        .blockEnd = "borderBlockEndStyle",
+                        .blockStart = "borderBlockStartStyle",
+                        .all = "borderStyle"},
                     sourceProps.borderStyles,
                     {})),
       outlineColor(
@@ -223,8 +269,13 @@ BaseViewProps::BaseViewProps(
               : convertRawProp(
                     context,
                     rawProps,
-                    "experimental_backgroundImage",
-                    sourceProps.backgroundImage,
+                    "backgroundImage",
+                    convertRawProp(
+                        context,
+                        rawProps,
+                        "experimental_backgroundImage",
+                        sourceProps.backgroundImage,
+                        {}),
                     {})),
       backgroundSize(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
@@ -403,6 +454,7 @@ void BaseViewProps::setProp(
   switch (hash) {
     RAW_SET_PROP_SWITCH_CASE_BASIC(opacity);
     RAW_SET_PROP_SWITCH_CASE_BASIC(backgroundColor);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(backgroundImage);
     RAW_SET_PROP_SWITCH_CASE(backgroundImage, "experimental_backgroundImage");
     RAW_SET_PROP_SWITCH_CASE(backgroundSize, "experimental_backgroundSize");
     RAW_SET_PROP_SWITCH_CASE(
@@ -413,6 +465,7 @@ void BaseViewProps::setProp(
     RAW_SET_PROP_SWITCH_CASE_BASIC(shadowOpacity);
     RAW_SET_PROP_SWITCH_CASE_BASIC(shadowRadius);
     RAW_SET_PROP_SWITCH_CASE_BASIC(transform);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(transformOrigin);
     RAW_SET_PROP_SWITCH_CASE_BASIC(backfaceVisibility);
     RAW_SET_PROP_SWITCH_CASE_BASIC(shouldRasterize);
     RAW_SET_PROP_SWITCH_CASE_BASIC(zIndex);
@@ -470,6 +523,7 @@ void BaseViewProps::setProp(
     // BorderRadii
     SET_CASCADED_RECTANGLE_CORNERS(borderRadii, "border", "Radius", value);
     SET_CASCADED_RECTANGLE_EDGES(borderColors, "border", "Color", value);
+    SET_CASCADED_RECTANGLE_CORNERS(borderCurves, "border", "Curve", value);
     SET_CASCADED_RECTANGLE_EDGES(borderStyles, "border", "Style", value);
   }
 }

@@ -56,7 +56,7 @@ const singleOpQueue: Array<unknown> = [];
 const isSingleOpBatching =
   Platform.OS === 'android' &&
   NativeAnimatedModule?.queueAndExecuteBatchedOperations != null &&
-  ReactNativeFeatureFlags.animatedShouldUseSingleOp();
+  !ReactNativeFeatureFlags.cxxNativeAnimatedEnabled();
 let flushQueueImmediate = null;
 
 const eventListenerGetValueCallbacks: {
@@ -70,6 +70,21 @@ let globalEventEmitterAnimationFinishedListener: ?EventSubscription = null;
 
 const shouldSignalBatch: boolean =
   ReactNativeFeatureFlags.cxxNativeAnimatedEnabled();
+
+// Schedules `API.flushQueue` after the current batch, replacing any pending
+// flush. On device `setImmediate` is a microtask; under jest's fake timers it's
+// a fake-timer entry that only `runAllTimers` drains — not `await` or
+// `advanceTimersByTime` — so the deferred flush wouldn't run before a test's
+// assertions. Flush synchronously in tests instead.
+function scheduleQueueFlush(): void {
+  clearImmediate(flushQueueImmediate);
+  if (process.env.NODE_ENV === 'test') {
+    // TODO: T275950736 - remove this path
+    API.flushQueue();
+  } else {
+    flushQueueImmediate = setImmediate(API.flushQueue);
+  }
+}
 
 function createNativeOperations(): NonNullable<typeof NativeAnimatedModule> {
   const methodNames = [
@@ -116,8 +131,7 @@ function createNativeOperations(): NonNullable<typeof NativeAnimatedModule> {
         // details, see `NativeAnimatedModule.queueAndExecuteBatchedOperations`.
         singleOpQueue.push(operationID, ...args);
         if (shouldSignalBatch) {
-          clearImmediate(flushQueueImmediate);
-          flushQueueImmediate = setImmediate(API.flushQueue);
+          scheduleQueueFlush();
         }
       };
     }
@@ -137,8 +151,7 @@ function createNativeOperations(): NonNullable<typeof NativeAnimatedModule> {
         } else if (shouldSignalBatch) {
           // $FlowExpectedError[incompatible-call] - Dynamism.
           queue.push(() => method(...args));
-          clearImmediate(flushQueueImmediate);
-          flushQueueImmediate = setImmediate(API.flushQueue);
+          scheduleQueueFlush();
         } else {
           // $FlowExpectedError[incompatible-call] - Dynamism.
           method(...args);
@@ -189,13 +202,7 @@ const API = {
   disableQueue(): void {
     invariant(NativeAnimatedModule, 'Native animated module is not available');
 
-    if (ReactNativeFeatureFlags.animatedShouldDebounceQueueFlush()) {
-      const prevImmediate = flushQueueImmediate;
-      clearImmediate(prevImmediate);
-      flushQueueImmediate = setImmediate(API.flushQueue);
-    } else {
-      API.flushQueue();
-    }
+    scheduleQueueFlush();
   },
   disconnectAnimatedNodeFromView(nodeTag: number, viewTag: number): void {
     NativeOperations.disconnectAnimatedNodeFromView(nodeTag, viewTag);
@@ -302,10 +309,7 @@ const API = {
 
     waitingForQueuedOperations.add(id);
     queueOperations = true;
-    if (
-      ReactNativeFeatureFlags.animatedShouldDebounceQueueFlush() &&
-      flushQueueImmediate
-    ) {
+    if (flushQueueImmediate) {
       clearImmediate(flushQueueImmediate);
     }
   },
@@ -409,17 +413,35 @@ function assertNativeAnimatedModule(): void {
 
 let _warnedMissingNativeAnimated = false;
 
+// Whether the native driver should be forced on for every animation, overriding
+// the config (including an explicit `useNativeDriver: false`). This is only safe
+// when the shared animated backend is enabled — that backend is what makes every
+// prop drivable natively. Forcing native without it would break animations of
+// props the legacy native driver doesn't support.
+function isNativeDriverForced(): boolean {
+  return (
+    ReactNativeFeatureFlags.animatedForceNativeDriver() &&
+    ReactNativeFeatureFlags.cxxNativeAnimatedEnabled() &&
+    // eslint-disable-next-line
+    ReactNativeFeatureFlags.useSharedAnimatedBackend()
+  );
+}
+
 function shouldUseNativeDriver(
   config: Readonly<{...AnimationConfig, ...}> | EventConfig<unknown>,
 ): boolean {
-  if (config.useNativeDriver == null) {
+  const forceNativeDriver = isNativeDriverForced();
+
+  if (config.useNativeDriver == null && !forceNativeDriver) {
     console.warn(
       'Animated: `useNativeDriver` was not specified. This is a required ' +
         'option and must be explicitly set to `true` or `false`',
     );
   }
 
-  if (config.useNativeDriver === true && !NativeAnimatedModule) {
+  const useNativeDriver = forceNativeDriver || config.useNativeDriver === true;
+
+  if (useNativeDriver === true && !NativeAnimatedModule) {
     if (process.env.NODE_ENV !== 'test') {
       if (!_warnedMissingNativeAnimated) {
         console.warn(
@@ -435,7 +457,7 @@ function shouldUseNativeDriver(
     return false;
   }
 
-  return config.useNativeDriver || false;
+  return useNativeDriver;
 }
 
 function transformDataType(value: number | string): number | string {
@@ -461,6 +483,7 @@ export default {
   assertNativeAnimatedModule,
   generateNewAnimationId,
   generateNewNodeTag,
+  isNativeDriverForced,
   // $FlowExpectedError[unsafe-getters-setters] - unsafe getter lint suppression
   // $FlowExpectedError[missing-type-arg] - unsafe getter lint suppression
   get nativeEventEmitter(): NativeEventEmitter {

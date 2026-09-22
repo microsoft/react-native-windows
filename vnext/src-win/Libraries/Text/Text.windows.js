@@ -39,7 +39,11 @@ const View = require('../Components/View/View').default; // [Windows]
 import {type ViewStyleProp} from '../StyleSheet/StyleSheet'; // [Windows]
 
 /**
- * Text is the fundamental component for displaying text.
+ * A React component for displaying text. `Text` supports nesting, styling,
+ * and touch handling.
+ *
+ * `Text` uses text layout instead of flexbox — elements inside wrap at end of
+ * line rather than being positioned as rectangles.
  *
  * @see https://reactnative.dev/docs/text
  */

@@ -682,9 +682,41 @@ function TextDecorationExample(props: {}): React.Node {
   return (
     <View testID="text-text-decoration">
       <RNTesterText
-        style={{textDecorationLine: 'underline'}}
+        style={{textDecorationLine: 'underline', textDecorationStyle: 'solid'}}
         testID="text-decoration-underline">
         Solid underline
+      </RNTesterText>
+      <RNTesterText
+        style={{
+          textDecorationLine: 'underline',
+          textDecorationStyle: 'double',
+          textDecorationColor: 'red',
+        }}>
+        Double underline (red)
+      </RNTesterText>
+      <RNTesterText
+        style={{
+          textDecorationLine: 'underline',
+          textDecorationStyle: 'dashed',
+          textDecorationColor: '#9CDC60',
+        }}>
+        Dashed underline (green)
+      </RNTesterText>
+      <RNTesterText
+        style={{
+          textDecorationLine: 'underline',
+          textDecorationStyle: 'dotted',
+          textDecorationColor: 'blue',
+        }}>
+        Dotted underline (blue)
+      </RNTesterText>
+      <RNTesterText
+        style={{
+          textDecorationLine: 'underline',
+          textDecorationStyle: 'wavy',
+          textDecorationColor: 'red',
+        }}>
+        Wavy underline (red)
       </RNTesterText>
       <RNTesterText style={{textDecorationLine: 'none'}}>
         None textDecoration
@@ -697,8 +729,44 @@ function TextDecorationExample(props: {}): React.Node {
         testID={'text-decoration-solid-linethru'}>
         Solid line-through
       </RNTesterText>
-      <RNTesterText style={{textDecorationLine: 'underline line-through'}}>
-        Both underline and line-through
+      <RNTesterText
+        style={{
+          textDecorationLine: 'line-through',
+          textDecorationStyle: 'double',
+          textDecorationColor: 'red',
+        }}>
+        Double line-through (red)
+      </RNTesterText>
+      <RNTesterText
+        style={{
+          textDecorationLine: 'line-through',
+          textDecorationStyle: 'dashed',
+          textDecorationColor: '#9CDC60',
+        }}>
+        Dashed line-through (green)
+      </RNTesterText>
+      <RNTesterText
+        style={{
+          textDecorationLine: 'line-through',
+          textDecorationStyle: 'dotted',
+          textDecorationColor: 'blue',
+        }}>
+        Dotted line-through (blue)
+      </RNTesterText>
+      <RNTesterText
+        style={{
+          textDecorationLine: 'line-through',
+          textDecorationStyle: 'wavy',
+          textDecorationColor: 'red',
+        }}>
+        Wavy line-through (red)
+      </RNTesterText>
+      <RNTesterText
+        style={{
+          textDecorationLine: 'underline line-through',
+          textDecorationStyle: 'wavy',
+        }}>
+        Both underline and line-through (wavy)
       </RNTesterText>
       <RNTesterText>
         Mixed text with{' '}
@@ -710,6 +778,19 @@ function TextDecorationExample(props: {}): React.Node {
           line-through
         </RNTesterText>{' '}
         text nodes
+      </RNTesterText>
+      <RNTesterText>
+        Unstyled text{' '}
+        <RNTesterText
+          style={{
+            textDecorationLine: 'line-through',
+            textDecorationStyle: 'wavy',
+            textDecorationColor: 'red',
+          }}>
+          with wavy strike-through that wraps across multiple lines to verify
+          continuity
+        </RNTesterText>{' '}
+        normal text
       </RNTesterText>
     </View>
   );
@@ -1050,6 +1131,19 @@ function LineHeightExample(props: {}): React.Node {
         Holisticly formulate inexpensive ideas before best-of-breed benefits.{' '}
         <RNTesterText style={{fontSize: 20}}>Continually</RNTesterText> expedite
         magnetic potentialities rather than client-focused interfaces.
+      </RNTesterText>
+      <RNTesterText
+        style={[
+          {
+            fontSize: 24,
+            lineHeight: 24,
+            borderColor: 'black',
+            borderWidth: 1,
+          },
+          styles.wrappedText,
+        ]}
+        testID="line-height-matches-font-size-descenders">
+        gjpqy
       </RNTesterText>
       <RNTesterText
         style={[
