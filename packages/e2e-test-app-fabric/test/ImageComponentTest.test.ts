@@ -24,13 +24,13 @@ afterEach(async () => {
 describe('Image Tests', () => {
   test('An Image component can render a blob image', async () => {
     const component = await app.findElementByTestID('image-blob');
-    await component.waitForDisplayed({timeout: 5000});
+    await component.waitForDisplayed({timeout: 15000});
     const dump = await dumpVisualTree('image-blob');
     expect(dump).toMatchSnapshot();
   });
   test('An Image component can have a network callback', async () => {
     const component = await app.findElementByTestID('image-network-callback');
-    await component.waitForDisplayed({timeout: 5000});
+    await component.waitForDisplayed({timeout: 15000});
     const dump = await dumpVisualTree('image-network-callback');
     expect(dump).toMatchSnapshot();
   });

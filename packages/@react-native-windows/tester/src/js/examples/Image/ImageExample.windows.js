@@ -251,7 +251,7 @@ class NetworkImageExample extends React.Component<
         <Image
           {...this.props}
           style={[styles.base, styles.visibleOverflow]}
-          testID="image-network"
+          testID={this.props.testID ?? 'image-network'}
           accessible
           onLoadStart={e => this.setState({loading: true})}
           onError={e =>
@@ -1593,6 +1593,7 @@ exports.examples = [
     render: function (): React.Node {
       return (
         <NetworkImageExample
+          testID="image-error"
           source={{
             uri: IMAGE1 + '_TYPO',
           }}
@@ -1605,6 +1606,7 @@ exports.examples = [
     render: function (): React.Node {
       return (
         <NetworkImageExample
+          testID="image-large-error"
           resizeMethod="none"
           // 6000x5340 ~ 128 MB
           source={require('../../assets/very-large-image.png')}
