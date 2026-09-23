@@ -140,7 +140,7 @@ export type ModalPropsIOS = {
   /**
    * Called once the modal has been dismissed.
    *
-   * @platform ios
+   * @platform ios windows
    */
   // onDismiss?: (() => void) | undefined;
   onDismiss?: ?() => void,

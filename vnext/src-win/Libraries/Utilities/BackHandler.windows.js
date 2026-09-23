@@ -43,7 +43,7 @@ RCTDeviceEventEmitter.addListener(DEVICE_BACK_EVENT, function (nativeEvent) {
  * subscription returns `true`, earlier subscriptions are not called.
  *
  * @see https://reactnative.dev/docs/backhandler
- * @platform android
+ * @platform windows
  */
 type TBackHandler = {
   readonly exitApp: () => void,

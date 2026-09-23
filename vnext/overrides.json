@@ -662,7 +662,7 @@
       "baseHash": "8216ce2e1312af8431bcdc80cbc4ca8bc4ae3925"
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "src-win/Libraries/Utilities/BackHandler.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/BackHandler.android.js",
       "baseHash": "51774735b8c37ab2c03e03f3d31b361ae490637b",

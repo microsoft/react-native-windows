@@ -90,8 +90,8 @@ function stopImageFixtureServer(server) {
   return new Promise((resolve, reject) => {
     // The app keeps connections alive, which would otherwise hold the close
     // callback open until they time out.
-    server.closeAllConnections();
     server.close(error => (error ? reject(error) : resolve()));
+    server.closeAllConnections();
   });
 }
 
