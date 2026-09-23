@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Normalize cache-busting Image URIs by query string instead of host so snapshots work against the E2E image fixture server",
+  "packageName": "@react-native-windows/automation-commands",
+  "email": "anuagra@microsoft.com",
+  "dependentChangeType": "patch"
+}
