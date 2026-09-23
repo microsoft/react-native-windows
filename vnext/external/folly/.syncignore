@@ -12,7 +12,8 @@
 /CMake/
 /build/
 /shim/
-/static/
+/static/*
+!/static/logo.svg
 /BUCK
 /PACKAGE
 /buck2
@@ -20,8 +21,6 @@
 /build.sh
 /CODE_OF_CONDUCT.md
 /CONTRIBUTING.md
-/LICENSE
-/README.md
 
 # folly/ subdirectories not used by RNW
 /folly/algorithm/*
@@ -36,7 +35,6 @@
 /folly/coro/
 /folly/crypto/
 /folly/debugging/
-/folly/docs/
 /folly/executors/
 /folly/experimental/
 /folly/ext/

@@ -12,7 +12,7 @@ steps:
     inputs:
       script: node $(Build.StagingDirectory)/versionEnvVars/versionEnvVars.js
 
-  # During the official publish (in publish.yml) The stamp-version script that updates the value
+  # During the official publish build the stamp-version script that updates the value
   # runs during beachball. But this stayed on the machine that ran the Setup phase and doesn't make
   # it to the machines that run the actual buld. This script does run on those machines
   # and the previous step sets the environment/pipeline variables to the right version

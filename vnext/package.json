@@ -117,7 +117,7 @@
     "/codegen",
     "/Common",
     "/DeforkingPatches",
-    "fmt",
+    "/external",
     "/Folly",
     "/generate.js",
     "/include",

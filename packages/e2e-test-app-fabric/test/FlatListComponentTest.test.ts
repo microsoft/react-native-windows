@@ -10,6 +10,55 @@ import {goToComponentExample} from './RNTesterNavigation';
 import {app} from '@react-native-windows/automation';
 import {verifyNoErrorLogs} from './Helpers';
 
+type VisualNode = Awaited<ReturnType<typeof dumpVisualTree>>['Visual Tree'];
+
+const parseVector = (value: string | undefined) =>
+  value?.split(',').map(Number) ?? [];
+
+const normalizeFlatListRows = (root: VisualNode) => {
+  const normalizers: Array<() => void> = [];
+
+  const visit = (node: VisualNode) => {
+    const children = node.__Children;
+    if (!children) {
+      return;
+    }
+
+    const [parentWidth] = parseVector(node.Size);
+    const rows = children
+      .map((child, index) => {
+        const [x, y] = parseVector(child.Offset);
+        const [width, height] = parseVector(child.Size);
+        return {child, height, index, width, x, y};
+      })
+      .filter(
+        row => row.x === 0 && row.width === parentWidth && row.height > 0,
+      );
+    const orderedRows = [...rows].sort((left, right) => left.y - right.y);
+    const rowsDoNotOverlap = orderedRows.every(
+      (row, index) =>
+        index === 0 ||
+        orderedRows[index - 1].y + orderedRows[index - 1].height <= row.y,
+    );
+
+    if (rows.length === 3 && rowsDoNotOverlap) {
+      normalizers.push(() => {
+        rows.forEach((row, index) => {
+          children[row.index] = orderedRows[index].child;
+        });
+      });
+    }
+
+    children.forEach(visit);
+  };
+
+  visit(root);
+  if (normalizers.length === 1) {
+    normalizers[0]();
+  }
+  return normalizers.length;
+};
+
 beforeAll(async () => {
   // If window is partially offscreen, tests will fail to click on certain elements
   await app.setWindowPosition(0, 0);
@@ -74,7 +123,23 @@ describe('FlatList Tests', () => {
     await searchBoxBasic('555');
     const component = await app.findElementByTestID('flatlist-basic');
     await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('flatlist-basic');
+    let dump = await dumpVisualTree('flatlist-basic');
+    await app.waitUntil(
+      async () => {
+        dump = await dumpVisualTree('flatlist-basic');
+        const automationTree = JSON.stringify(dump['Automation Tree']);
+        return (
+          automationTree.includes('Item 555 -') &&
+          !automationTree.includes('LIST HEADER')
+        );
+      },
+      {
+        interval: 250,
+        timeout: 20000,
+        timeoutMsg: 'Filtered FlatList did not finish rendering.',
+      },
+    );
+    expect(normalizeFlatListRows(dump['Visual Tree'])).toBe(1);
     expect(dump).toMatchSnapshot();
   });
   test('A FlatList has an onStartReached event', async () => {

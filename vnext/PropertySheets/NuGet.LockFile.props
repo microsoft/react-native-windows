@@ -8,15 +8,8 @@
        -->
 
   <PropertyGroup>
-    <RestoreLockedMode Condition="'$(RestoreLockedMode)'=='' OR '$(BuildingInRnwRepo)'=='true'">true</RestoreLockedMode>
-    <!--
-      VS's NuGet restore cannot evaluate vcxproj PackageReferences through the project reference
-      chain (the VC project system does not report them via the CPS nomination API). This causes
-      NU1004 lock file mismatches for csproj files that reference vcxproj. Disable locked mode
-      in VS so the initial restore succeeds and package targets load correctly.
-      CI is unaffected: it passes /p:RestoreLockedMode=true as a global property which overrides this.
-    -->
-    <RestoreLockedMode Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(MSBuildProjectExtension)' == '.csproj'">false</RestoreLockedMode>
+    <!-- Locked vs. force-evaluate is decided centrally in the repo-root Directory.Build.props (force-evaluate locally, locked in CI); don't force locked mode on here or it conflicts with force-evaluate (NU1512). -->
+    <RestoreLockedMode Condition="'$(RestoreLockedMode)'==''">false</RestoreLockedMode>
 
     <NuGetLockFileName>packages</NuGetLockFileName>
     <NuGetLockFileName Condition="'$(UseExperimentalWinUI3)'=='true'">$(NuGetLockFileName).experimentalwinui3</NuGetLockFileName>

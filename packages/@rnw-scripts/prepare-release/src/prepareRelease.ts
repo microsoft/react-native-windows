@@ -20,7 +20,7 @@ import findRepoRoot from '@react-native-windows/find-repo-root';
 
 import {GitRepo} from './git';
 import {findPR, createPR, updatePR} from './github';
-import {hasChangeFiles, bumpVersions} from './beachballBump';
+import {hasChangeFiles, bumpVersions, updateLockfile} from './beachballBump';
 import {
   collectBumpedPackages,
   generatePRBody,
@@ -287,6 +287,11 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
         remote: remoteName,
         cwd: repoRoot,
       });
+
+      // 10b. Refresh yarn.lock to match the bumped versions so the release
+      //      commit stays installable under `yarn install --immutable`.
+      console.log(colorize('Updating yarn.lock...', ansi.bright));
+      await updateLockfile({cwd: repoRoot});
 
       // 11. Check if beachball actually changed anything
       const status = await git.statusPorcelain();

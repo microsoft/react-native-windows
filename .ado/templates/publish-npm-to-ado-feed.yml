@@ -1,0 +1,78 @@
+# Publishes packed npm tarballs to an Azure Artifacts feed's npm registry, mirroring
+# publish-nuget-to-ado-feed.yml. Auth uses the shared managed identity (same identity/
+# resource the NuGet feed publish uses).
+parameters:
+- name: azureSubscription
+  type: string
+  default: 'Office-Hermes-Windows-Bot'
+- name: npmFeedRegistry
+  type: string
+- name: packagesPath
+  type: string
+- name: feedDisplayName
+  type: string
+- name: npmPackScript
+  type: string
+  default: '$(Pipeline.Workspace)/VersionEnvVars/npmPack.js'
+
+steps:
+- task: AzureCLI@2
+  displayName: Acquire ${{ parameters.feedDisplayName }} feed token
+  inputs:
+    azureSubscription: ${{ parameters.azureSubscription }}
+    visibleAzLogin: false
+    scriptType: pscore
+    scriptLocation: inlineScript
+    inlineScript: |
+      $token = az account get-access-token --query accessToken --resource 499b84ac-1321-427f-aa17-267ca6975798 -o tsv
+      if ([string]::IsNullOrWhiteSpace($token)) { throw 'Failed to acquire a feed access token.' }
+      Write-Host "##vso[task.setsecret]$token"
+      Write-Host "##vso[task.setvariable variable=AdoNpmFeedToken;issecret=true]$token"
+
+- pwsh: |
+    # The .npmrc holds only the ${NPM_FEED_TOKEN} placeholder; npm expands it from the masked env
+    # var at run time, so the raw token never lands in a file. The feed registry is set as the
+    # default so the authenticated read below resolves locally published versions (an anonymous
+    # read only sees versions cached from the npmjs upstream).
+    $registry = '${{ parameters.npmFeedRegistry }}'
+    $key = ($registry -replace '^https?:', '')
+    Set-Content -Path (Join-Path $env:USERPROFILE '.npmrc') -Encoding ascii -Value @(
+      "registry=$registry"
+      "${key}:_authToken=`${NPM_FEED_TOKEN}"
+    )
+  displayName: Configure npm auth for ${{ parameters.feedDisplayName }}
+
+- pwsh: Get-ChildItem -Path '${{ parameters.packagesPath }}' -Filter *.tgz -Recurse | Select-Object Name, Length
+  displayName: Show npm packages before cleanup
+
+# Mirror the npmjs.com publish job: drop tarballs whose version already exists in the feed so the
+# publish step never overwrites an immutable version. NPM_CONFIG_REGISTRY points the check at this
+# ADO feed (authenticated via the .npmrc token) so it sees locally published versions, not just the
+# ones cached from the npmjs upstream. Set via env, not --registry, so an older npmPack.js bundled
+# in the CI artifact still honors it.
+- script: node "${{ parameters.npmPackScript }}" --no-pack --check-npm --no-color "${{ parameters.packagesPath }}"
+  displayName: Remove already published packages
+  env:
+    NPM_CONFIG_REGISTRY: ${{ parameters.npmFeedRegistry }}
+    NPM_FEED_TOKEN: $(AdoNpmFeedToken)
+
+- pwsh: Get-ChildItem -Path '${{ parameters.packagesPath }}' -Filter *.tgz -Recurse | Select-Object Name, Length
+  displayName: Show npm packages after cleanup
+
+- pwsh: |
+    # A version already present in the feed (locally or via its npmjs upstream) returns 409, which
+    # we treat as success as a safety net in case one slips past the cleanup step above.
+    $registry = '${{ parameters.npmFeedRegistry }}'
+    $tgzs = @(Get-ChildItem -Path '${{ parameters.packagesPath }}' -Filter *.tgz -Recurse)
+    Write-Host "Publishing $($tgzs.Count) package(s) to ${{ parameters.feedDisplayName }}"
+    $failed = @()
+    foreach ($tgz in $tgzs) {
+      $out = & npm publish $tgz.FullName --registry $registry 2>&1 | Out-String
+      if ($LASTEXITCODE -eq 0) { Write-Host "published $($tgz.Name)" }
+      elseif ($out -match 'already exists|EPUBLISHCONFLICT|cannot publish over|\b409\b') { Write-Host "skipped (already in feed): $($tgz.Name)" }
+      else { Write-Host "##[error]Failed to publish $($tgz.Name): $out"; $failed += $tgz.Name }
+    }
+    if ($failed.Count -gt 0) { throw "Failed to publish $($failed.Count) package(s) to ${{ parameters.feedDisplayName }}." }
+  displayName: Publish npm packages to ${{ parameters.feedDisplayName }}
+  env:
+    NPM_FEED_TOKEN: $(AdoNpmFeedToken)

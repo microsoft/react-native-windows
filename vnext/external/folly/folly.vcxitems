@@ -153,4 +153,12 @@
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Folly;$(ReactNativeWindowsDir)stubs;$(ExternalDir)folly;$(ExternalDir)fast-float\include;$(ExternalDir)fmt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemGroup>
+  <!-- SysMman.cpp is Desktop-only and must not use folly's UWP pch; re-assert no-PCH after
+       the blanket Update above, which would otherwise force pch.h onto it. -->
+  <ItemGroup>
+    <ClCompile Update="$(ExternalDir)folly\folly\portability\SysMman.cpp" Condition="'$(AppContainerApplication)' != 'true'">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <ForcedIncludeFiles />
+    </ClCompile>
+  </ItemGroup>
 </Project>

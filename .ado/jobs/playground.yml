@@ -64,6 +64,8 @@ jobs:
             - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
+              parameters:
+                buildEnvironment: ${{ parameters.buildEnvironment }}
 
             - template: ../templates/prepare-build-env.yml
               parameters:

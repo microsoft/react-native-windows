@@ -8,23 +8,36 @@ import fs from '@react-native-windows/fs';
 import * as path from 'path';
 import {execSync} from 'child_process';
 
+// The creaternwapp tests below only validate command-string construction against a
+// mocked npm registry (mockNpmShow); they never install a real package. Resolve versions
+// best-effort with deterministic fallbacks instead of failing the suite when one isn't
+// published: `preview` versions are cut by in-progress *-stable branches (not main) and
+// are absent from the network-isolated CI feed, so requiring one made main's CI depend on
+// an unrelated branch.
+const FALLBACK_STABLE_VERSION = '0.0.0';
+const FALLBACK_PREVIEW_VERSION = '0.0.0-preview.1';
+
 /**
- * Get latest stable version from npm
+ * Get latest stable version from npm, or a deterministic fallback.
  */
 function getLatestStableVersion(): string {
   try {
-    return execSync('npm view react-native-windows version', {
+    const version = execSync('npm view react-native-windows version', {
       encoding: 'utf8',
     }).trim();
+    if (version && !version.includes('preview')) {
+      return version;
+    }
   } catch (error) {
-    throw new Error(`Could not fetch latest stable version from npm: ${error}`);
+    console.warn('Could not fetch latest stable version from npm:', error);
   }
+  return FALLBACK_STABLE_VERSION;
 }
 
 /**
- * Get latest preview version from npm
+ * Get latest preview version from npm, or a deterministic fallback.
  */
-function getLatestPreviewVersion(): string | undefined {
+function getLatestPreviewVersion(): string {
   try {
     const versions = JSON.parse(
       execSync('npm view react-native-windows versions --json', {
@@ -32,23 +45,18 @@ function getLatestPreviewVersion(): string | undefined {
       }),
     ) as string[];
     // Preview versions usually have "preview" in the string
-    return versions.reverse().find(v => v.includes('preview'));
+    const preview = versions.reverse().find(v => v.includes('preview'));
+    if (preview) {
+      return preview;
+    }
   } catch (error) {
     console.warn('Could not fetch preview versions from npm:', error);
-    return undefined;
   }
+  return FALLBACK_PREVIEW_VERSION;
 }
 
 const LATEST_STABLE_VERSION = getLatestStableVersion();
 const LATEST_PREVIEW_VERSION = getLatestPreviewVersion();
-
-// Ensure we have valid versions for testing
-if (!LATEST_STABLE_VERSION) {
-  throw new Error('Could not fetch latest stable version from npm');
-}
-if (!LATEST_PREVIEW_VERSION) {
-  throw new Error('Could not fetch latest preview version from npm');
-}
 
 /**
  * Mock NPM registry response for version check

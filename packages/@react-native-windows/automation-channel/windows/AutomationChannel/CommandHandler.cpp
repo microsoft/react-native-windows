@@ -86,6 +86,9 @@ IAsyncOperation<IJsonValue> CommandHandler::Invoke(const winrt::hstring &methodN
     auto result = co_await asyncOperation->second(params);
     co_return result;
   }
+
+  // Unknown methods surface as JSON-RPC MethodNotFound in the request processor; this guards direct callers.
+  throw winrt::hresult_invalid_argument(L"No automation-channel handler registered for method '" + methodName + L"'");
 }
 
 } // namespace winrt::AutomationChannel::implementation

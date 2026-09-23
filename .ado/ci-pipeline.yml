@@ -5,8 +5,28 @@
 
 name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
-trigger: none
+trigger:
+  branches:
+    include:
+    # Supported branches — keep in sync with .ado/README.md
+    - main
+    - '0.81-stable'
+    - '0.83-stable'
+    - '0.84-stable'
+    - '0.85-stable'
+    - '0.86-stable'
+    - '0.87-stable'
 pr: none
+
+schedules:
+# Weekly heartbeat: keeps the pipeline from being auto-disabled after long
+# inactivity. 10:00 UTC ~= 02:00 Pacific (cron is UTC-only: 02:00 PST / 03:00 PDT).
+- cron: '0 10 * * Mon'
+  displayName: Weekly heartbeat (Mondays ~02:00 Pacific)
+  branches:
+    include:
+    - main
+  always: true
 
 parameters:
   - name: isReleaseBuild
@@ -20,10 +40,25 @@ parameters:
 
 variables:
   - template: variables/windows.yml
-  - group: RNW Secrets
+
+resources:
+  repositories:
+  # CI runs in the internal ISS project, which can use the Office 1ES templates.
+  - repository: PipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/OfficePipelineTemplates
+    ref: refs/tags/release
 
 extends:
   template: build-template.yml@self
   parameters:
     buildEnvironment: Continuous
     isReleaseBuild: ${{ parameters.isReleaseBuild }}
+    # ISS x64 pool with the react-native-windows VM image.
+    AgentPool:
+      Medium:
+        name: fabric-internal-pool-large
+        demands: ImageOverride -equals rnw-img-vs2026-node24
+      Large:
+        name: fabric-internal-pool-large
+        demands: ImageOverride -equals rnw-img-vs2026-node24

@@ -3,10 +3,23 @@ parameters:
   - name: beachballPublish
     type: boolean
     default: true
+  - name: buildEnvironment
+    type: string
+    default: PullRequest
+    values:
+      - PullRequest
+      - Continuous
 
 steps:
-  - pwsh: start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.yaml')
+  - pwsh: |
+      node .ado/verdaccio/generate-config.js
+      if ($LASTEXITCODE -ne 0) { throw 'Failed to generate the verdaccio config.' }
+      start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.generated.yaml')
     displayName: Launch test npm server (verdaccio)
+    # Only CI has a feed token; an undefined variable would expand to a literal string.
+    ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+      env:
+        RNW_NPM_FEED_TOKEN: $(RNW_NPM_FEED_TOKEN)
 
   - script: node .ado/scripts/waitForVerdaccio.js
     displayName: Wait for verdaccio server to boot

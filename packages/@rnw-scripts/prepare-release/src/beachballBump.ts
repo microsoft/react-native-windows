@@ -47,3 +47,19 @@ export async function bumpVersions(opts: {
     {cwd: opts.cwd},
   );
 }
+
+/**
+ * Regenerate yarn.lock so it matches the versions beachball just bumped.
+ *
+ * beachball rewrites package.json/changelogs but never touches the lockfile, so
+ * without this the lockfile drifts and every downstream `yarn install
+ * --immutable` fails with YN0028. `--mode=update-lockfile` refreshes the
+ * lockfile without touching node_modules; immutable installs are on by default
+ * under CI, so disable that for this one call.
+ */
+export async function updateLockfile(opts: {cwd: string}): Promise<void> {
+  await exec('yarn install --mode=update-lockfile', {
+    cwd: opts.cwd,
+    env: {YARN_ENABLE_IMMUTABLE_INSTALLS: 'false'},
+  });
+}

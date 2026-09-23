@@ -516,7 +516,7 @@ class sorted_vector_set : detail::growth_policy_wrapper<GrowthPolicy> {
   // compatibility
   template <typename... Args>
   std::pair<iterator, bool> emplace(Args&&... args) {
-    std::aligned_storage_t<sizeof(value_type), alignof(value_type)> b;
+    folly::aligned_storage_for_t<value_type> b;
     value_type* p = static_cast<value_type*>(static_cast<void*>(&b));
     auto a = get_allocator();
     std::allocator_traits<allocator_type>::construct(
@@ -538,7 +538,7 @@ class sorted_vector_set : detail::growth_policy_wrapper<GrowthPolicy> {
   // compatibility
   template <typename... Args>
   iterator emplace_hint(const_iterator hint, Args&&... args) {
-    std::aligned_storage_t<sizeof(value_type), alignof(value_type)> b;
+    folly::aligned_storage_for_t<value_type> b;
     value_type* p = static_cast<value_type*>(static_cast<void*>(&b));
     auto a = get_allocator();
     std::allocator_traits<allocator_type>::construct(
@@ -1158,7 +1158,7 @@ class sorted_vector_map : detail::growth_policy_wrapper<GrowthPolicy> {
   // compatibility
   template <typename... Args>
   std::pair<iterator, bool> emplace(Args&&... args) {
-    std::aligned_storage_t<sizeof(value_type), alignof(value_type)> b;
+    folly::aligned_storage_for_t<value_type> b;
     value_type* p = static_cast<value_type*>(static_cast<void*>(&b));
     auto a = get_allocator();
     std::allocator_traits<allocator_type>::construct(
@@ -1180,7 +1180,7 @@ class sorted_vector_map : detail::growth_policy_wrapper<GrowthPolicy> {
   // compatibility
   template <typename... Args>
   iterator emplace_hint(const_iterator hint, Args&&... args) {
-    std::aligned_storage_t<sizeof(value_type), alignof(value_type)> b;
+    folly::aligned_storage_for_t<value_type> b;
     value_type* p = static_cast<value_type*>(static_cast<void*>(&b));
     auto a = get_allocator();
     std::allocator_traits<allocator_type>::construct(

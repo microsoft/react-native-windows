@@ -32,6 +32,8 @@ parameters:
 steps:
   # Start npm test server
   - template: verdaccio-start.yml
+    parameters:
+      buildEnvironment: ${{ parameters.buildEnvironment }}
 
   - template: set-version-vars.yml
     parameters:
@@ -46,7 +48,9 @@ steps:
 
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: |
-        $(Build.SourcesDirectory)\vnext\Scripts\creaternwapp.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /t ${{ parameters.template }} /verdaccio testcli
+        if exist testcli rmdir /s /q testcli
+        if exist testcli exit /b 1
+        call $(Build.SourcesDirectory)\vnext\Scripts\creaternwapp.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /t ${{ parameters.template }} /verdaccio testcli
       displayName: Init new app project with creaternwapp.cmd
       workingDirectory: $(Agent.BuildDirectory)
       retryCountOnTaskFailure: 2
@@ -55,7 +59,9 @@ steps:
 
   - ${{ if endsWith(parameters.template, '-lib') }}:
     - script: |
-        $(Build.SourcesDirectory)\vnext\Scripts\creaternwlib.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /t ${{ parameters.template }} /verdaccio testcli
+        if exist testcli rmdir /s /q testcli
+        if exist testcli exit /b 1
+        call $(Build.SourcesDirectory)\vnext\Scripts\creaternwlib.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /t ${{ parameters.template }} /verdaccio testcli
       displayName: Init new lib project with creaternwlib.cmd
       workingDirectory: $(Agent.BuildDirectory)
       retryCountOnTaskFailure: 2
@@ -99,11 +105,36 @@ steps:
         workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - pwsh: |
-      nuget.exe sources add -name TestFeed -source $(System.DefaultWorkingDirectory)\NugetTestFeed
-      nuget.exe sources remove -name react-native
-      nuget.exe sources remove -name Nuget.org
-      nuget.exe sources add -name Nuget.org -source https://api.nuget.org/v3/index.json
-    displayName: Add local NuGet test feed
+      $configPaths = @('NuGet.config')
+      if ('${{ parameters.template }}'.EndsWith('-lib')) {
+        $configPaths += 'example\NuGet.config'
+      }
+
+      $sources = [ordered]@{
+        TestFeed = '$(System.DefaultWorkingDirectory)\NugetTestFeed'
+        'react-native' = 'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json'
+      }
+
+      foreach ($configPath in $configPaths) {
+        [xml] $config = Get-Content -LiteralPath $configPath
+        $packageSources = $config.configuration.packageSources
+        if (-not $packageSources) {
+          # The lib example ships a placeholder NuGet.config with no packageSources; it inherits feeds from the lib root config.
+          Write-Host "Skipping $configPath (no packageSources element)"
+          continue
+        }
+        $packageSources.RemoveAll()
+        [void] $packageSources.AppendChild($config.CreateElement('clear'))
+        foreach ($source in $sources.GetEnumerator()) {
+          $element = $config.CreateElement('add')
+          $element.SetAttribute('key', $source.Key)
+          $element.SetAttribute('value', $source.Value)
+          [void] $packageSources.AppendChild($element)
+        }
+        $config.Save((Resolve-Path -LiteralPath $configPath))
+        Write-Host "Updated $configPath"
+      }
+    displayName: Add compliant NuGet test feeds
     workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - template: ../templates/run-windows-with-certificates.yml
