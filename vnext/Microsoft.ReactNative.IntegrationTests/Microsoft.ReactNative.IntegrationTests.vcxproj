@@ -144,6 +144,7 @@
     <ClCompile Include="TestEventService.cpp" />
     <ClCompile Include="TestReactNativeHostHolder.cpp" />
     <ClCompile Include="TurboModuleTests.cpp" />
+    <ClCompile Include="UiaHelpersTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

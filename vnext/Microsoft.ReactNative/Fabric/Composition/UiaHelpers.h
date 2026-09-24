@@ -5,6 +5,7 @@
 #include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/ReactTaggedView.h>
 #include <UIAutomation.h>
+#include <vector>
 
 namespace Microsoft::ReactNative {
 struct winrt::Microsoft::ReactNative::implementation::ComponentView;
@@ -75,9 +76,13 @@ void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view
 
 ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept;
 
-void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider) noexcept;
+std::vector<winrt::Microsoft::ReactNative::ComponentView> GetSelectedItemsInSelectionContainer(
+    const winrt::Microsoft::ReactNative::ComponentView &selectionContainer) noexcept;
 
-void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept;
+void RaiseSelectionItemAutomationEvent(
+    CompositionDynamicAutomationProvider *provider,
+    bool isSelected,
+    bool hasKeyboardFocus) noexcept;
 
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept;
 

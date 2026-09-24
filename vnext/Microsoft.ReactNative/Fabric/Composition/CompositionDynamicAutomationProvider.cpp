@@ -32,21 +32,7 @@ bool IsHiddenByParent(const winrt::Microsoft::ReactNative::ComponentView &view) 
 
 CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
     const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept
-    : m_view{componentView} {
-  auto strongView = m_view.view();
-
-  if (!strongView)
-    return;
-
-  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
-  if (!props)
-    return;
-
-  if (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value()) {
-    AddSelectionItemsToContainer(this);
-  }
-}
+    : m_view{componentView} {}
 
 CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
     const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
@@ -951,51 +937,47 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsSelectionRequired(
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY **pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+
+  *pRetVal = nullptr;
+
   auto strongView = m_view.view();
 
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  std::vector<int> selectedItems;
-  for (size_t i = 0; i < m_selectionItems.size(); i++) {
-    auto selectionItem = m_selectionItems.at(i);
-
-    winrt::com_ptr<IUnknown> unkSelectionItemProvider;
-    auto hr = selectionItem->GetPatternProvider(UIA_SelectionItemPatternId, unkSelectionItemProvider.put());
-    if (FAILED(hr))
-      return hr;
-
-    auto selectionItemProvider = unkSelectionItemProvider.try_as<ISelectionItemProvider>();
-    if (!selectionItemProvider)
-      return E_FAIL;
-
-    BOOL selected;
-    hr = selectionItemProvider->get_IsSelected(&selected);
-    if (hr == S_OK && selected) {
-      selectedItems.push_back(int(i));
-    }
-  }
+  auto selectedItems = GetSelectedItemsInSelectionContainer(strongView);
 
   *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, ULONG(selectedItems.size()));
   if (*pRetVal == nullptr)
     return E_OUTOFMEMORY;
 
   for (size_t i = 0; i < selectedItems.size(); i++) {
+    auto selectionItem =
+        selectedItems[i].try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+    if (!selectionItem) {
+      SafeArrayDestroy(*pRetVal);
+      *pRetVal = nullptr;
+      return E_FAIL;
+    }
+
+    auto selectionItemProvider = selectionItem->EnsureUiaProvider().try_as<IRawElementProviderSimple>();
+    if (!selectionItemProvider) {
+      SafeArrayDestroy(*pRetVal);
+      *pRetVal = nullptr;
+      return E_FAIL;
+    }
+
     auto pos = static_cast<long>(i);
-    SafeArrayPutElement(*pRetVal, &pos, m_selectionItems.at(selectedItems.at(i)).get());
+    auto hr = SafeArrayPutElement(*pRetVal, &pos, selectionItemProvider.get());
+    if (FAILED(hr)) {
+      SafeArrayDestroy(*pRetVal);
+      *pRetVal = nullptr;
+      return hr;
+    }
   }
   return S_OK;
-}
-
-void CompositionDynamicAutomationProvider::AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item) {
-  if (std::find(m_selectionItems.begin(), m_selectionItems.end(), item) != m_selectionItems.end()) {
-    return;
-  }
-  m_selectionItems.push_back(item);
-}
-
-void CompositionDynamicAutomationProvider::RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item) {
-  std::erase(m_selectionItems, item);
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::AddToSelection() {
