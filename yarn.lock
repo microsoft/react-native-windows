@@ -13270,14 +13270,14 @@ __metadata:
   linkType: hard
 
 "js-yaml@npm:^3.15.0":
-  version: 3.15.0
-  resolution: "js-yaml@npm:3.15.0"
+  version: 3.15.2
+  resolution: "js-yaml@npm:3.15.2"
   dependencies:
     argparse: "npm:^1.0.7"
     esprima: "npm:^4.0.0"
   bin:
     js-yaml: bin/js-yaml.js
-  checksum: 10c0/ca966bd354ac5b1b7a4694ebdba46526796aa3a6a99529fa540af2abf85918bd155a50ccc0166b413130a00622999973754458ec01e7095bc902177bfdbd5b64
+  checksum: 10c0/e341df211dece9d4b784849647ad7568b5b6a58a9ee58ead750482316d83276387343649fe4b71522705dc6c76acf97718588f23dc19443833ef3e75033af967
   languageName: node
   linkType: hard
 
