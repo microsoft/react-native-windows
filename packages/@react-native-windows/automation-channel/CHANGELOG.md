@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Tue, 21 Jul 2026 18:52:11 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 24 Sep 2026 03:05:29 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.85.0-preview.2
+
+Thu, 24 Sep 2026 03:05:29 GMT
+
+### Changes
+
+- Sync main pipeline, tooling, and vendored dependency changes to 0.85-stable (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.85.0-preview.2
 
 ## 0.85.0-preview.1
 

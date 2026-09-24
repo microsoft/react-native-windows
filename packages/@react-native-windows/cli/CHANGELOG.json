@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 24 Sep 2026 03:05:29 GMT",
+      "version": "0.85.0-preview.2",
+      "tag": "@react-native-windows/cli_v0.85.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "371ec7f0a9a6eb6d62404931ac4ded904595e353",
+            "comment": "Sync pipeline changes to 0.85-stable branch"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Jul 2026 18:52:11 GMT",
       "version": "0.85.0-preview.1",
       "tag": "@react-native-windows/cli_v0.85.0-preview.1",

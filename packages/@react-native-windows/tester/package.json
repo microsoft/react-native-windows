@@ -20,7 +20,7 @@
     "@react-native-picker/picker": "2.11.0",
     "react": "19.2.3",
     "react-native": "^0.85.0",
-    "react-native-windows": "0.85.0-preview.1",
+    "react-native-windows": "0.85.0-preview.2",
     "react-native-xaml": "^0.0.80"
   },
   "peerDependenciesMeta": {
@@ -46,7 +46,7 @@
     "react": "19.2.3",
     "react-native": "0.85.3",
     "react-native-platform-override": "0.85.0-preview.1",
-    "react-native-windows": "0.85.0-preview.1",
+    "react-native-windows": "0.85.0-preview.2",
     "typescript": "5.0.4"
   },
   "engines": {
