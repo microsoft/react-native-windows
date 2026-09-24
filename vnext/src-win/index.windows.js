@@ -38,7 +38,18 @@ module.exports = {
   get Button() {
     return require('./Libraries/Components/Button').default;
   },
+  /**
+   * @deprecated DrawerLayoutAndroid is deprecated and will be removed in a future release.
+   * Use 'react-native-drawer-layout' instead.
+   * See https://reactnavigation.org/docs/drawer-layout/
+   */
   get DrawerLayoutAndroid() {
+    warnOnce(
+      'drawer-layout-android-deprecated',
+      'DrawerLayoutAndroid is deprecated and will be removed in a future release. ' +
+        "Use 'react-native-drawer-layout' instead. " +
+        'See https://reactnavigation.org/docs/drawer-layout/',
+    );
     return require('./Libraries/Components/DrawerAndroid/DrawerLayoutAndroid')
       .default;
   },
@@ -51,7 +62,18 @@ module.exports = {
   get Image() {
     return require('./Libraries/Image/Image').default;
   },
+  /**
+   * @deprecated ImageBackground is deprecated and will be removed in a future release.
+   * Use a View with an absolutely positioned Image instead.
+   * See https://reactnative.dev/docs/imagebackground
+   */
   get ImageBackground() {
+    warnOnce(
+      'image-background-deprecated',
+      'ImageBackground is deprecated and will be removed in a future release. ' +
+        'Use a View with an absolutely positioned Image instead. ' +
+        'See https://reactnative.dev/docs/imagebackground',
+    );
     return require('./Libraries/Image/ImageBackground').default;
   },
   get InputAccessoryView() {
@@ -367,7 +389,14 @@ module.exports = {
   get useWindowDimensions() {
     return require('./Libraries/Utilities/useWindowDimensions').default;
   },
+  /**
+   * @deprecated UTFSequence will be removed in a future release. Please insert Unicode escape sequences directly
+   */
   get UTFSequence() {
+    warnOnce(
+      'utfsequence-deprecated',
+      "UTFSequence has been deprecated and will be removed in a future release. Please insert Unicode escape sequences directly, e.g. `'\\ufeff'` (BOM)",
+    );
     return require('./Libraries/UTFSequence').default;
   },
   get Vibration() {

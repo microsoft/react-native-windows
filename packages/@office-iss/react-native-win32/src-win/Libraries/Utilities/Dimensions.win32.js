@@ -29,23 +29,27 @@ let dimensionsInitialized = false;
 let dimensions: DimensionsPayload;
 
 /**
- * While a global Dimensions object for window and screen dimensions is too simple for Win32,
+ * Provides the application window's width and height. Prefer
+ * `useWindowDimensions` in React components.
+ *
+ * @see https://reactnative.dev/docs/dimensions
+ *
+ * [Win32] While a global Dimensions object for window and screen dimensions is too simple for Win32,
  * attached to this object is also fontScale which is a system global value.  We expose this value
  * for large text scaling support while leaving other window dimension information undefined. These undefined
  * values will cause rendering issues if used but should avoid runtime failures in JS.
  */
 class Dimensions {
   /**
+   * Returns the current dimensions for `'window'` or `'screen'`. On Android,
+   * `'window'` dimensions exclude the status bar and navigation bar.
+   *
    * NOTE: `useWindowDimensions` is the preferred API for React components.
    *
-   * Initial dimensions are set before `runApplication` is called so they should
-   * be available before any other require's are run, but may be updated later.
-   *
-   * Note: Although dimensions are available immediately, they may change (e.g
-   * due to device rotation) so any rendering logic or styles that depend on
-   * these constants should try to call this function on every render, rather
-   * than caching the value (for example, using inline styles rather than
-   * setting a value in a `StyleSheet`).
+   * Although dimensions are available immediately, they may change (e.g. due to
+   * device rotation) so any rendering logic or styles that depend on these
+   * constants should try to call this function on every render, rather than
+   * caching the value.
    *
    * Example: `const {height, width} = Dimensions.get('window');`
    *
@@ -99,10 +103,11 @@ class Dimensions {
   /**
    * Add an event handler. Supported events:
    *
-   * - `change`: Fires when a property within the `Dimensions` object changes. The argument
-   *   to the event handler is an object with `window` and `screen` properties whose values
-   *   are the same as the return values of `Dimensions.get('window')` and
-   *   `Dimensions.get('screen')`, respectively.
+   * - `change`: Fires when a property within the `Dimensions` object changes,
+   *   such as on device rotation or foldable device state changes. The argument
+   *   to the event handler is a `DimensionsPayload` object with `window` and
+   *   `screen` properties whose values are the same as the return values of
+   *   `Dimensions.get('window')` and `Dimensions.get('screen')`, respectively.
    */
   static addEventListener(
     type: 'change',

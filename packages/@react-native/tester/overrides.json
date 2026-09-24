@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.87.0-nightly-20260604-63683f091",
+  "baseVersion": "0.87.0-nightly-20260704-e04ff69ab",
   "overrides": [
     {
       "type": "copy",
@@ -222,7 +222,7 @@
       "type": "derived",
       "file": "js/examples/Image/ImageExample.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "145838b4b8b6b614f6c2b1b34b19d1d6002fb49e",
+      "baseHash": "4f0c0c664e671f81fc8381852d3753ef4767fb89",
       "issue": 4054
     },
     {
@@ -264,7 +264,7 @@
       "type": "copy",
       "file": "js/examples/IntersectionObserver/IntersectionObserverExplicitRootScroll.js",
       "baseFile": "packages/rn-tester/js/examples/IntersectionObserver/IntersectionObserverExplicitRootScroll.js",
-      "baseHash": "762f9d228be103a961fb94336c6ce68bc58183e4",
+      "baseHash": "6331d38395a90569ce16f587c69f56e944b4479e",
       "issue": 4054
     },
     {
@@ -341,7 +341,7 @@
       "type": "copy",
       "directory": "js/examples/LinearGradient",
       "baseDirectory": "packages/rn-tester/js/examples/LinearGradient/",
-      "baseHash": "61e25affe2ae877267eaaa8f3d61ca6bdbfaef06",
+      "baseHash": "935aecc0dbde959fd25cc483b1c18c59699be8eb",
       "issue": 4054
     },
     {
@@ -543,7 +543,7 @@
       "type": "copy",
       "directory": "js/examples/StatusBar",
       "baseDirectory": "packages/rn-tester/js/examples/StatusBar",
-      "baseHash": "06eccb4a69e9f6b554e940fe3572418f438461a2",
+      "baseHash": "728c1c04ee221c9c2f7a32ab1f8f645e03b53d4b",
       "issue": 4054
     },
     {
@@ -564,7 +564,7 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "fdd48aba5b6427ee63198221830678a7b6cf4ebb",
+      "baseHash": "cfab064d612eacc48406c19f97ffc0e1dc8af32f",
       "issue": 4054
     },
     {
@@ -634,7 +634,7 @@
       "type": "copy",
       "directory": "js/examples/Transform",
       "baseDirectory": "packages/rn-tester/js/examples/Transform",
-      "baseHash": "d557696d9561f9537a896fb3b8b6a889f0a928eb",
+      "baseHash": "19088596c1f6991b7dedd9642db8b0cf932b5f4d",
       "issue": 4054
     },
     {
@@ -703,7 +703,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "2891b809358e8c1a3c8f428c0313656afcc689bd",
+      "baseHash": "580ada9220c7e0170d836ccc9b1f95812be0ef0b",
       "issue": 4054
     },
     {
@@ -801,7 +801,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "6edf2f0de86d44f18f4670abbce1f3e182b93657",
+      "baseHash": "44f597b3c2f02b82c2d7fbd419aaa3ac0a7c5836",
       "issue": 13228
     },
     {

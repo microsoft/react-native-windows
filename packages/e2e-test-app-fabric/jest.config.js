@@ -29,6 +29,12 @@ module.exports = {
   // Default timeout of a test in milliseconds
   testTimeout: 70000,
 
+  // Serves the Image example assets over loopback for the lifetime of the run,
+  // so tests that wait for an image download to complete do not depend on
+  // public network access.
+  globalSetup: '<rootDir>/globalSetup.js',
+  globalTeardown: '<rootDir>/globalTeardown.js',
+
   // A map from regular expressions to paths to transformers
   transform: {
     '\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$': assetTransform,

@@ -113,20 +113,13 @@ function removeGuidsFromImageSourcesHelper(node: ComponentNode) {
             'blob:<some_guid_here>',
           );
           source.Uri = source.Uri.replace(/size=\d+/, 'size=<size>');
-        } else if (
-          source.Uri.startsWith(
-            'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png?r=1&t=',
-          )
-        ) {
-          source.Uri =
-            'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png?r=1&t=<some_hash_here>';
-        } else if (
-          source.Uri.startsWith(
-            'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png?hash=',
-          )
-        ) {
-          source.Uri =
-            'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png?hash=<some_hash_here>';
+        } else if (/\/flux@3x\.png\?r=1&t=\d+$/.test(source.Uri)) {
+          // The Image examples cache-bust with a timestamp. Host-agnostic so the
+          // same snapshots work against the E2E loopback fixture server and the
+          // remote assets RNTester uses elsewhere.
+          source.Uri = source.Uri.replace(/t=\d+$/, 't=<some_hash_here>');
+        } else if (/\/flowers\.png\?hash=\d+$/.test(source.Uri)) {
+          source.Uri = source.Uri.replace(/hash=\d+$/, 'hash=<some_hash_here>');
         } else {
           // When getting files from a prebuilt bundle the uri is going to include a local path, which would make snapshots inconsistent,
           // This logic replaces the local path so that we get consistent results.

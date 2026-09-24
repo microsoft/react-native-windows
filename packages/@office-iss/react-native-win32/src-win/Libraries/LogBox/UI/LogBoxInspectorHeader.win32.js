@@ -38,7 +38,10 @@ export default function LogBoxInspectorHeader(props: Props): React.Node {
       <LogBoxInspectorHeaderSafeArea style={styles[props.level]}>
         <View style={styles.header}>
           <View style={styles.title}>
-            <Text style={styles.titleText} id="logbox_header_title_text">
+            <Text
+              id="logbox_header_title_text"
+              maxFontSizeMultiplier={1.5}
+              style={styles.titleText}>
               Failed to compile
             </Text>
           </View>
@@ -65,7 +68,10 @@ export default function LogBoxInspectorHeader(props: Props): React.Node {
           onPress={() => props.onSelectIndex(prevIndex)}
         />
         <View style={styles.title}>
-          <Text style={styles.titleText} id="logbox_header_title_text">
+          <Text
+            id="logbox_header_title_text"
+            maxFontSizeMultiplier={1.5}
+            style={styles.titleText}>
             {titleText}
           </Text>
         </View>
