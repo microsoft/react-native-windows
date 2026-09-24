@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix(textinput): show the touch keyboard on focus and on tap for the windowless island TextInput (no CoreWindow auto-invoke) via InputPane Win32 interop — re-tapping an already-focused field reopens a dismissed keyboard",
+  "packageName": "react-native-windows",
+  "email": "collindanielschneide@gmail.com",
+  "dependentChangeType": "patch"
+}

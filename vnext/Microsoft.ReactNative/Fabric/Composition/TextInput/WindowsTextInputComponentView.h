@@ -123,6 +123,9 @@ struct WindowsTextInputComponentView
   void updateSpellCheck(bool value) noexcept;
   void ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept;
   void calculateContentVerticalOffset() noexcept;
+  // Request the on-screen touch keyboard for this input (InputPane interop), called on
+  // focus and on tap. See the .cpp for the windowing-model rationale.
+  void ShowSoftKeyboard() noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
