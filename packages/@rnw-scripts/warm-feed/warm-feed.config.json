@@ -36,6 +36,17 @@
           {"name": "0.83-stable"},
           {"name": "0.81-stable"}
         ]
+      },
+      "create-react-native-app": {
+        "enabled": true,
+        "nightlyTemplate": "@react-native-community/template@0.86.0",
+        "branches": [
+          {"name": "main", "nightly": true},
+          {"name": "0.85-stable"},
+          {"name": "0.84-stable"},
+          {"name": "0.83-stable"},
+          {"name": "0.81-stable"}
+        ]
       }
     },
     "nugetLocks": {

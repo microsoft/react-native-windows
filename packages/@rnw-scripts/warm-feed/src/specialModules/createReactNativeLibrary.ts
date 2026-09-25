@@ -27,7 +27,7 @@ import {manifestSpecs, readManifestSpecs} from '../manifest';
 import {compareSemver, isStable, parseSemver} from '../versions';
 import type {SpecialModule, SpecialModuleContext} from './types';
 
-interface CrnlBranch {
+export interface CrnlBranch {
   /** Branch name, e.g. 'main' or '0.85-stable'. */
   name: string;
   /** `main` uses a nightly RN and needs the generated deps rewritten. */
@@ -51,7 +51,7 @@ interface CrnlConfig {
   branches: CrnlBranch[];
 }
 
-interface BranchVersions {
+export interface BranchVersions {
   reactNative: string;
   reactNativeCli?: string;
   reactNativeWindowsSpec?: string;
