@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 24 Sep 2026 03:05:29 GMT",
+      "version": "0.85.0-preview.2",
+      "tag": "react-native-windows_v0.85.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "371ec7f0a9a6eb6d62404931ac4ded904595e353",
+            "comment": "Raise UI Automation selection events when accessibilityState.selected changes."
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "371ec7f0a9a6eb6d62404931ac4ded904595e353",
+            "comment": "Fix Modal title bar contrast when the native window is inactive"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "371ec7f0a9a6eb6d62404931ac4ded904595e353",
+            "comment": "Sync main pipeline, tooling, and vendored dependency changes to 0.85-stable"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.85.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Jul 2026 18:52:10 GMT",
       "version": "0.85.0-preview.1",
       "tag": "react-native-windows_v0.85.0-preview.1",
