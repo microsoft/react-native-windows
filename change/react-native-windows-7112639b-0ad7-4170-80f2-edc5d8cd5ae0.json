@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use codegenConfig name for C++ library template codegen includes",
+  "packageName": "react-native-windows",
+  "email": "vivekjm77@gmail.com",
+  "dependentChangeType": "patch"
+}
