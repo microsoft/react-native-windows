@@ -1,8 +1,24 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Fri, 21 Aug 2026 23:17:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 26 Sep 2026 18:00:58 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1061
+
+Sat, 26 Sep 2026 18:00:58 GMT
+
+### Changes
+
+- Integrate React Native 0.87.0-nightly-20260604-63683f091 (June 4th)
+- Integrate React Native 0.86.0-nightly-20260325-d1809f0aa
+- 0.81 to main pipelines sync (vmorozov@microsoft.com)
+- Integrate React Native 0.86.0-nightly-20260408-8bac1df5a
+- Integrate React Native 0.86.0-nightly-20260430-118198599
+- Integrate React Native 0.87.0-nightly-20260704-e04ff69ab (July 4th)
+- Integrate React Native 0.87.0-nightly-20260519-58cd1bf58
+- Integrate React Native 0.86.0-nightly-20260310-621592d1f
+- Bump react-native-windows to v0.0.0-canary.1061
 
 ## 0.0.0-canary.1060
 
