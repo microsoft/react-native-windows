@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Raise UI Automation selection events when accessibilityState.selected changes.",
-  "packageName": "react-native-windows",
-  "email": "anuagra@microsoft.com",
-  "dependentChangeType": "patch"
-}

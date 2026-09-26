@@ -2,6 +2,99 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 26 Sep 2026 18:00:55 GMT",
+      "version": "0.0.0-canary.1061",
+      "tag": "react-native-windows_v0.0.0-canary.1061",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "gordomacmaster@gmail.com",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "Fix use-after-free crash when an Image is destroyed while its download is still in flight"
+          },
+          {
+            "author": "66076509+vineethkuttan@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "Clamp Tooltip Position To Monitor"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "Raise UI Automation selection events when accessibilityState.selected changes."
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "Integrate React Native 0.87.0-nightly-20260519-58cd1bf58"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "Integrate React Native 0.86.0-nightly-20260430-118198599"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "Integrate React Native 0.86.0-nightly-20260310-621592d1f"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "Fix Modal title bar contrast when the native window is inactive"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "0.81 to main pipelines sync"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "Integrate React Native 0.86.0-nightly-20260408-8bac1df5a"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "Ensure that our CLI lib tests use Yarn v4"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "Integrate React Native 0.86.0-nightly-20260325-d1809f0aa"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "Integrate React Native 0.87.0-nightly-20260604-63683f091 (June 4th)"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "dac75b6e65641a049d7d212fc07d312795a9f2c3",
+            "comment": "Integrate React Native 0.87.0-nightly-20260704-e04ff69ab (July 4th)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.294",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Aug 2026 23:17:42 GMT",
       "version": "0.0.0-canary.1060",
       "tag": "react-native-windows_v0.0.0-canary.1060",
