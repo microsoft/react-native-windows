@@ -10,6 +10,7 @@
 
 import type {SpecialModule} from './types';
 import {createReactNativeLibraryModule} from './createReactNativeLibrary';
+import {createReactNativeAppModule} from './createReactNativeApp';
 
 const modules = new Map<string, SpecialModule>();
 
@@ -26,5 +27,6 @@ export function specialModuleNames(): string[] {
 }
 
 registerSpecialModule(createReactNativeLibraryModule);
+registerSpecialModule(createReactNativeAppModule);
 
 export type {SpecialModule, SpecialModuleContext} from './types';

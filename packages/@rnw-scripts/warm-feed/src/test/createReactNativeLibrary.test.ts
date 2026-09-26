@@ -13,6 +13,7 @@ import {
   parseCrnlConfig,
   readRnwWorkspaceSpecs,
   resolveBranchVersions,
+  scaffoldReactNativeVersion,
   stableMinor,
 } from '../specialModules/createReactNativeLibrary';
 import type {SpecialModuleContext} from '../specialModules/types';
@@ -92,6 +93,25 @@ test('nightlyFixupSpecs rewrites the RN family and cli specs only', () => {
   expect(specs['react-native-windows']).toBe('*');
   expect(specs.react).toBe('19.0.0');
   expect(specs.other).toBe('1.0.0');
+});
+
+test('scaffoldReactNativeVersion: strips the suffix for a nightly, passes stable through', () => {
+  expect(
+    scaffoldReactNativeVersion({
+      reactNative: '0.87.0-nightly-20260704-e04ff69ab',
+      reactNativeCli: '20.0.0',
+      reactNativeWindowsSpec: undefined,
+      nightly: true,
+    }),
+  ).toBe('0.87.0');
+  expect(
+    scaffoldReactNativeVersion({
+      reactNative: '0.85.3',
+      reactNativeCli: '20.0.0',
+      reactNativeWindowsSpec: '0.85.3',
+      nightly: false,
+    }),
+  ).toBe('0.85.3');
 });
 
 test('resolveBranchVersions: main reads the nightly from vnext, no rnw spec', async () => {

@@ -96,6 +96,18 @@ from the working-tree `vnext/package.json`; for `0.NN-stable`, the exact
 scaffolds, and reads the generated manifests. Mirrors
 `vnext/Scripts/creaternwlib.cmd`.
 
+The second module, **`create-react-native-app`**, is the app counterpart: it
+reproduces the CLI-init *app* test, which scaffolds a standalone app with
+`@react-native-community/cli init` (pulling `@react-native-community/template`)
+and installs *that generated app* — so its closure (e.g.
+`react-native-safe-area-context`) is what the feed needs. It reuses the same
+per-branch RN/CLI/RNW version resolution and mirrors
+`vnext/Scripts/creaternwapp.cmd`, including that script's template selection: a
+stable branch lets the CLI pick the template matching its React Native, while a
+nightly RN overrides it to a fixed stable `@react-native-community/template`
+(`nightlyTemplate`, default `@react-native-community/template@0.86.0`). Keep that
+default in sync with the `#15124` override in `creaternwapp.cmd`.
+
 The scheduled pipeline run warms every **enabled** configured module in addition
 to the latest-patch sync, so brand-new closures stay warm automatically.
 
