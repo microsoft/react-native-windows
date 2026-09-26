@@ -27,7 +27,7 @@ import {manifestSpecs, readManifestSpecs} from '../manifest';
 import {compareSemver, isStable, parseSemver} from '../versions';
 import type {SpecialModule, SpecialModuleContext} from './types';
 
-interface CrnlBranch {
+export interface CrnlBranch {
   /** Branch name, e.g. 'main' or '0.85-stable'. */
   name: string;
   /** `main` uses a nightly RN and needs the generated deps rewritten. */
@@ -51,7 +51,7 @@ interface CrnlConfig {
   branches: CrnlBranch[];
 }
 
-interface BranchVersions {
+export interface BranchVersions {
   reactNative: string;
   reactNativeCli?: string;
   reactNativeWindowsSpec?: string;
@@ -283,6 +283,20 @@ export async function resolveBranchVersions(
 }
 
 /**
+ * The react-native version to scaffold cRNL with. cRNL resolves a nightly RN
+ * through the short-lived `@react-native-community/template@nightly` tag, which
+ * rotates away and then fails to resolve (ETARGET). So for a nightly we scaffold
+ * from the matching stable base version (`0.87.0-nightly-...` -> `0.87.0`) and let
+ * nightlyFixupSpecs rewrite the generated deps back to the nightly. Mirrors
+ * vnext/Scripts/creaternwlib.cmd's RN_SCAFFOLD_VERSION.
+ */
+export function scaffoldReactNativeVersion(versions: BranchVersions): string {
+  return versions.nightly
+    ? versions.reactNative.split('-')[0]
+    : versions.reactNative;
+}
+
+/**
  * Rewrite generated nightly deps to the nightly RN/CLI, mirroring
  * vnext/Scripts/UpdateNightlyDependencies.ps1 (cRNL can't pin nightly RN itself).
  */
@@ -376,7 +390,7 @@ function scaffold(
     cfg.type,
     ...cfg.tools.map(t => `--tools=${t}`),
     '--react-native-version',
-    versions.reactNative,
+    scaffoldReactNativeVersion(versions),
     '--example',
     cfg.example,
     'warmlib',
