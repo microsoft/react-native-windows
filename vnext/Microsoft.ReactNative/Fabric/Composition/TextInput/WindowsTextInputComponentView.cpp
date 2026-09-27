@@ -18,6 +18,8 @@
 #include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.h>
+#include <winrt/Windows.UI.ViewManagement.h>
+#include <inputpaneinterop.h>
 #include <mutex>
 #include "../Composition.Input.h"
 #include "../CompositionHelpers.h"
@@ -787,6 +789,10 @@ void WindowsTextInputComponentView::OnPointerPressed(
 
     emitter->onPressIn(pressInArgs);
   }
+
+  // Tapping the field brings up the touch keyboard — including when the input is already
+  // focused (e.g. after the user dismissed the keyboard), which does not fire onGotFocus.
+  ShowSoftKeyboard();
 }
 
 void WindowsTextInputComponentView::OnPointerReleased(
@@ -1122,6 +1128,43 @@ void WindowsTextInputComponentView::onLostFocus(
   }
 }
 
+void WindowsTextInputComponentView::ShowSoftKeyboard() noexcept {
+  // On a tablet with no physical keyboard the shell never auto-invokes the touch
+  // keyboard for a windowless RichEdit host: in the WinAppSDK island model there is no
+  // CoreWindow, and the RichEdit is hosted via ITextServices with no child input HWND,
+  // so the OS heuristic can't see a focused edit control and never fires. Request the
+  // touch keyboard explicitly via the InputPane Win32 interop, keyed off the island's
+  // top-level AppWindow HWND (rootComponentView()->GetHwndForParenting()). Gated to
+  // slate/tablet posture (SM_CONVERTIBLESLATEMODE == 0) so it does not pop on a
+  // laptop/convertible with a keyboard attached. Called on focus AND on pointer press,
+  // so tapping an already-focused input reopens a keyboard the user had dismissed (a tap
+  // on an already-focused field does not fire onGotFocus). Best-effort — never let
+  // keyboard invocation break input handling.
+  if (::GetSystemMetrics(SM_CONVERTIBLESLATEMODE) != 0)
+    return;
+  auto root = rootComponentView();
+  if (!root)
+    return;
+  HWND hwnd = root->GetHwndForParenting();
+  if (!hwnd)
+    return;
+  try {
+    auto interop =
+        winrt::get_activation_factory<winrt::Windows::UI::ViewManagement::InputPane>()
+            .as<::IInputPaneInterop>();
+    winrt::Windows::UI::ViewManagement::InputPane inputPane{nullptr};
+    if (interop &&
+        SUCCEEDED(interop->GetForWindow(
+            hwnd,
+            winrt::guid_of<winrt::Windows::UI::ViewManagement::InputPane>(),
+            winrt::put_abi(inputPane))) &&
+        inputPane) {
+      inputPane.TryShow();
+    }
+  } catch (...) {
+  }
+}
+
 void WindowsTextInputComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   m_hasFocus = true;
@@ -1138,6 +1181,9 @@ void WindowsTextInputComponentView::onGotFocus(
       m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(0), static_cast<WPARAM>(-1), &res);
     }
   }
+
+  // Bring up the touch keyboard when this input gains focus.
+  ShowSoftKeyboard();
 }
 
 std::string WindowsTextInputComponentView::DefaultControlType() const noexcept {
