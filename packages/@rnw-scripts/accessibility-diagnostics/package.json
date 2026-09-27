@@ -1,0 +1,25 @@
+{
+  "name": "@rnw-scripts/accessibility-diagnostics",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows",
+    "directory": "packages/@rnw-scripts/accessibility-diagnostics"
+  },
+  "scripts": {
+    "build": "node scripts/run-dotnet.js build",
+    "clean": "node scripts/run-dotnet.js clean",
+    "lint": "node --check bin.js && node --check scripts/run-dotnet.js && node scripts/run-dotnet.js lint",
+    "lint:fix": "node scripts/run-dotnet.js lint:fix",
+    "rnw-a11y": "node bin.js",
+    "test": "node scripts/run-dotnet.js test"
+  },
+  "bin": {
+    "rnw-a11y": "bin.js"
+  },
+  "engines": {
+    "node": ">= 22"
+  }
+}
