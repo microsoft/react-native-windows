@@ -33,10 +33,4 @@
   <PropertyGroup>
     <RestoreAdditionalProjectFallbackFolders></RestoreAdditionalProjectFallbackFolders>
   </PropertyGroup>
-
-  <PropertyGroup Label="WindowsAppSDKOverrides" Condition="'$(Platform)' == 'ARM64EC'">
-    <Ixp-Platform>win10-x64</Ixp-Platform>
-    <_WindowsAppSDKFoundationPlatform>x64</_WindowsAppSDKFoundationPlatform>
-    <_MrtCoreRuntimeIdentifier>x64</_MrtCoreRuntimeIdentifier>
-  </PropertyGroup>
 </Project>
