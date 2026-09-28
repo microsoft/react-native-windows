@@ -68,6 +68,24 @@ void ContentIslandComponentView::ConnectInternal() noexcept {
 
   ChildSiteLink().ActualSize({m_layoutMetrics.frame.size.width, m_layoutMetrics.frame.size.height});
 
+  // The child site reports ShouldApplyRasterizationScale = false: the host is
+  // responsible for applying the island's rasterization scale at presentation.
+  // This placement visual lives in the physical-pixel composition tree, so
+  // without a scale the hosted content lays out at DIP size, rasterizes at
+  // RasterizationScale, and presents unscaled - on a display above 100% scale,
+  // hosted islands render proportionally smaller in the top-left of their
+  // frame (observed with a WebView2-hosted island at 200%: site ActualSize
+  // 1368x728 DIPs, RasterizationScale 2.0, rendered at exactly half size).
+  // Scaling the placement visual by pointScaleFactor is the missing host-side
+  // step; at 100% scale this is Scale(1,1,1), a no-op.
+  {
+    auto placementVisual =
+        winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
+            .as<winrt::Microsoft::UI::Composition::ContainerVisual>();
+    const float placementScale = m_layoutMetrics.pointScaleFactor;
+    placementVisual.Scale({placementScale, placementScale, 1.0f});
+  }
+
   // Issue #15557: Set initial LocalToParentTransformMatrix synchronously before Connect.
   // This fixes popup position being wrong even without scrolling.
   // Note: getClientRect() returns physical pixels, but LocalToParentTransformMatrix expects DIPs.
