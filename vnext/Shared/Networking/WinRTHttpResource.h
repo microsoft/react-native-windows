@@ -22,6 +22,11 @@ class WinRTHttpResource : public IHttpResource,
                           public IHttpModuleProxy,
                           public IWinRTHttpRequestFactory,
                           public std::enable_shared_from_this<WinRTHttpResource> {
+ public:
+  using HttpClientFactory = std::function<winrt::Windows::Web::Http::IHttpClient()>;
+
+ private:
+  HttpClientFactory m_clientFactory;
   winrt::Windows::Web::Http::IHttpClient m_client;
   std::mutex m_mutex;
   std::unordered_map<int64_t, ResponseOperation> m_responses;
@@ -54,6 +59,8 @@ class WinRTHttpResource : public IHttpResource,
   WinRTHttpResource() noexcept;
 
   WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient &&client) noexcept;
+
+  WinRTHttpResource(HttpClientFactory clientFactory) noexcept;
 
 #pragma region IWinRTHttpRequestFactory
 

@@ -104,6 +104,9 @@ WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{s
 
 WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient{}) {}
 
+WinRTHttpResource::WinRTHttpResource(HttpClientFactory clientFactory) noexcept
+    : m_clientFactory{std::move(clientFactory)}, m_client{m_clientFactory()} {}
+
 #pragma region IWinRTHttpRequestFactory
 
 IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(

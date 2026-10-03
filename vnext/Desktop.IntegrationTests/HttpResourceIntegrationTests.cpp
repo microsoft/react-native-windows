@@ -35,6 +35,10 @@ string MakeCacheUrl(const string &requestId) {
   return kHttpResourceBaseUrl + "/cache/" + requestId;
 }
 
+string MakeOfficeJsIssue4972Url(const string &requestId) {
+  return "http://localhost:5555/officedev/office-js/issues/4972/" + requestId;
+}
+
 } // namespace
 
 TEST_CLASS (HttpResourceIntegrationTest) {
@@ -265,6 +269,47 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
     Logger::WriteMessage(error.c_str());
     Assert::AreNotEqual(string{}, error);
+  }
+
+  TEST_METHOD(OfficeDev_OfficeJS_4972_RetriesGetWithFreshClientAfterConnectionFailure) {
+    const auto uniqueId = std::to_string(std::chrono::steady_clock::now().time_since_epoch().count());
+    string url = MakeOfficeJsIssue4972Url(uniqueId);
+
+    promise<void> requestPromise;
+    string error;
+    string content;
+    int statusCode = 0;
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&statusCode](int64_t, IHttpResource::Response response) {
+      statusCode = static_cast<int>(response.StatusCode);
+    });
+    resource->SetOnData([&requestPromise, &content](int64_t, string &&responseData) {
+      content = std::move(responseData);
+      requestPromise.set_value();
+    });
+    resource->SetOnError([&requestPromise, &error](int64_t, string &&message, bool) {
+      error = std::move(message);
+      requestPromise.set_value();
+    });
+
+    resource->SendRequest(
+        "GET",
+        std::move(url),
+        0, /*requestId*/
+        {}, /*headers*/
+        {}, /*data*/
+        "text",
+        false, /*useIncrementalUpdates*/
+        0, /*timeout*/
+        false, /*withCredentials*/
+        [](int64_t) {});
+
+    requestPromise.get_future().wait();
+
+    Assert::AreEqual({}, error);
+    Assert::AreEqual(200, statusCode);
+    Assert::AreEqual({"2"}, content);
   }
 
   TEST_METHOD(RequestOptionsSucceeds) {

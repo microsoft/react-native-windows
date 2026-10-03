@@ -105,6 +105,10 @@ app.MapPost(
    Microsoft.Office.Test.OfficeJsTests.Issue5869);
 
 app.MapGet(
+  "/officedev/office-js/issues/4972/{id}",
+   Microsoft.Office.Test.OfficeJsTests.Issue4972);
+
+app.MapGet(
   "/rnw/http/get",
   Microsoft.React.Test.HttpTests.BasicGet);
 
