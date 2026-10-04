@@ -14,8 +14,8 @@ pr:
 
 variables:
   - group: platform-override-zero-permission-token
-  # Public PR agents restore through the RNW feed when npmjs policy blocks packages such as midgard-yarn.
-  - name: NPM_CONFIG_REGISTRY
+  # Public PR agents acquire the bootstrap toolset through this feed when npmjs policy blocks midgard-yarn.
+  - name: RNW_BOOTSTRAP_NPM_REGISTRY
     value: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
 
 extends:

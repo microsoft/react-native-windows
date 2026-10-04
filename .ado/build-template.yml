@@ -167,7 +167,9 @@ extends:
               script: |
                 npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@6.7.2
             displayName: Install Node base packages
-            retryCountOnTaskFailure: 2
+            ${{ if ne(coalesce(variables['RNW_BOOTSTRAP_NPM_REGISTRY'], ''), '') }}:
+              env:
+                NPM_CONFIG_REGISTRY: ${{ variables['RNW_BOOTSTRAP_NPM_REGISTRY'] }}
 
           - template: .ado/templates/compute-beachball-branch-name.yml@self
 
@@ -185,6 +187,9 @@ extends:
             displayName: Strict yarn install @rnw-scripts/beachball-config
             condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'))
             retryCountOnTaskFailure: 2
+            ${{ if ne(coalesce(variables['RNW_BOOTSTRAP_NPM_REGISTRY'], ''), '') }}:
+              env:
+                NPM_CONFIG_REGISTRY: ${{ variables['RNW_BOOTSTRAP_NPM_REGISTRY'] }}
 
           - script: npx lage build --scope @rnw-scripts/prepare-release --scope @rnw-scripts/beachball-config
             displayName: Build prepare-release and beachball-config
