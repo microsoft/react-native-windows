@@ -21,9 +21,16 @@ steps:
       script: |
         npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@6.7.2
     displayName: Install Node base packages
-    ${{ if ne(coalesce(variables['RNW_BOOTSTRAP_NPM_REGISTRY'], ''), '') }}:
-      env:
-        NPM_CONFIG_REGISTRY: ${{ variables['RNW_BOOTSTRAP_NPM_REGISTRY'] }}
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+  - task: CmdLine@2
+    inputs:
+      script: |
+        npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@6.7.2
+    displayName: Install Node base packages
+    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+    env:
+      NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
 
     # When using our own images, prefer the machine-installed version of
   # `midgard-yarn`.
@@ -38,6 +45,11 @@ steps:
     - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
       displayName: midgard-yarn (faster yarn install)
       retryCountOnTaskFailure: 2
-      ${{ if ne(coalesce(variables['RNW_BOOTSTRAP_NPM_REGISTRY'], ''), '') }}:
-        env:
-          NPM_CONFIG_REGISTRY: ${{ variables['RNW_BOOTSTRAP_NPM_REGISTRY'] }}
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+    - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
+      displayName: midgard-yarn (faster yarn install)
+      retryCountOnTaskFailure: 2
+      condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+      env:
+        NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
