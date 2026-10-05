@@ -3,9 +3,22 @@ parameters:
   - name: beachballPublish
     type: boolean
     default: true
+  - name: buildEnvironment
+    type: string
+    values:
+      - PullRequest
+      - Continuous
 
 steps:
-  - pwsh: start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.yaml')
+  - pwsh: |
+      $configPath = './.ado/verdaccio/config.yaml'
+      if ('${{ parameters.buildEnvironment }}' -eq 'PullRequest') {
+        $configPath = './.ado/verdaccio/config.pr.yaml'
+      }
+      if (-not (Test-Path -LiteralPath $configPath)) {
+        throw "Verdaccio config not found: $configPath"
+      }
+      start-process verdaccio.cmd -ArgumentList @('--config', $configPath)
     displayName: Launch test npm server (verdaccio)
 
   - script: node .ado/scripts/waitForVerdaccio.js

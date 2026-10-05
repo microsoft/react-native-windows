@@ -32,6 +32,8 @@ parameters:
 steps:
   # Start npm test server
   - template: verdaccio-start.yml
+    parameters:
+      buildEnvironment: ${{ parameters.buildEnvironment }}
 
   - template: set-version-vars.yml
     parameters:
