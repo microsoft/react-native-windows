@@ -17,6 +17,7 @@ steps:
       call yarn config delete registry
       call yarn config delete npmRegistryServer
       call yarn config delete unsafeHttpWhitelist
+      echo ##vso[task.setvariable variable=NPM_CONFIG_REGISTRY]$(RNW_UPSTREAM_NPM_REGISTRY)
     displayName: Reset npm/yarn config to stop poiting at local verdaccio server
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false

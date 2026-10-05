@@ -40,6 +40,8 @@ steps:
       call yarn config set registry http://localhost:4873
       call yarn config set npmRegistryServer http://localhost:4873
       call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
+      echo ##vso[task.setvariable variable=RNW_UPSTREAM_NPM_REGISTRY]%NPM_CONFIG_REGISTRY%
+      echo ##vso[task.setvariable variable=NPM_CONFIG_REGISTRY]http://localhost:4873
     displayName: Modify npm/yarn config to point to local verdaccio server
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false

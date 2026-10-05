@@ -46,7 +46,9 @@ steps:
 
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: |
-        $(Build.SourcesDirectory)\vnext\Scripts\creaternwapp.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /t ${{ parameters.template }} /verdaccio testcli
+        if exist testcli rmdir /s /q testcli
+        if exist testcli exit /b 1
+        call $(Build.SourcesDirectory)\vnext\Scripts\creaternwapp.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /t ${{ parameters.template }} /verdaccio testcli
       displayName: Init new app project with creaternwapp.cmd
       workingDirectory: $(Agent.BuildDirectory)
       retryCountOnTaskFailure: 2
@@ -55,7 +57,9 @@ steps:
 
   - ${{ if endsWith(parameters.template, '-lib') }}:
     - script: |
-        $(Build.SourcesDirectory)\vnext\Scripts\creaternwlib.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /t ${{ parameters.template }} /verdaccio testcli
+        if exist testcli rmdir /s /q testcli
+        if exist testcli exit /b 1
+        call $(Build.SourcesDirectory)\vnext\Scripts\creaternwlib.cmd /rn $(reactNativeDevDependency) /rnw $(npmVersion) /t ${{ parameters.template }} /verdaccio testcli
       displayName: Init new lib project with creaternwlib.cmd
       workingDirectory: $(Agent.BuildDirectory)
       retryCountOnTaskFailure: 2
