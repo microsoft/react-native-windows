@@ -18,5 +18,6 @@ steps:
       call yarn config delete npmRegistryServer
       call yarn config delete unsafeHttpWhitelist
     displayName: Reset npm/yarn config to stop poiting at local verdaccio server
+    condition: succeededOrFailed()
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false

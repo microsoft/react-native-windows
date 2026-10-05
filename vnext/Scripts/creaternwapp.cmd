@@ -72,6 +72,9 @@ if not "%part%"=="" (
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwapp.cmd: Setting npm to use verdaccio at http://localhost:4873
+  set NPM_CONFIG_REGISTRY=http://localhost:4873
+  set YARN_NPM_REGISTRY_SERVER=http://localhost:4873
+  set YARN_UNSAFE_HTTP_WHITELIST=localhost
   call npm config set registry http://localhost:4873
 )
 
