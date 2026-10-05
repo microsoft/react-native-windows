@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Stabilize HTTP OPTIONS integration testing and local Verdaccio CLI validation",
+  "comment": "Stabilize HTTP OPTIONS integration testing and network-isolated CLI validation",
   "packageName": "react-native-windows",
   "email": "anuagra@microsoft.com",
   "dependentChangeType": "patch"
