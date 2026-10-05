@@ -21,16 +21,7 @@ steps:
       script: |
         npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@6.7.2
     displayName: Install Node base packages
-    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-
-  - task: CmdLine@2
-    inputs:
-      script: |
-        npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@6.7.2
-    displayName: Install Node base packages
-    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
-    env:
-      NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
+    retryCountOnTaskFailure: 2
 
     # When using our own images, prefer the machine-installed version of
   # `midgard-yarn`.
@@ -38,6 +29,12 @@ steps:
     - script: midgard-yarn --ignore-scripts --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
       displayName: midgard-yarn (faster yarn install)
       retryCountOnTaskFailure: 2
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
+    - pwsh: .ado/scripts/install-yarn-dependencies.ps1 -Installer Midgard -WorkingDirectory '${{ parameters.workingDirectory }}'
+      displayName: midgard-yarn (faster yarn install)
+      retryCountOnTaskFailure: 2
+      condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
 
   # If using an image we don't control, acquire a fixed version of midgard-yarn
   # before install
@@ -47,9 +44,7 @@ steps:
       retryCountOnTaskFailure: 2
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
-    - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
+    - pwsh: .ado/scripts/install-yarn-dependencies.ps1 -Installer MidgardNpx -WorkingDirectory '${{ parameters.workingDirectory }}'
       displayName: midgard-yarn (faster yarn install)
       retryCountOnTaskFailure: 2
       condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
-      env:
-        NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/

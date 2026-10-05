@@ -167,16 +167,7 @@ extends:
               script: |
                 npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@6.7.2
             displayName: Install Node base packages
-            condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-
-          - task: CmdLine@2
-            inputs:
-              script: |
-                npm install --global yarn@1.22.22 midgard-yarn@1.23.34 verdaccio@6.7.2
-            displayName: Install Node base packages
-            condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
-            env:
-              NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
+            retryCountOnTaskFailure: 2
 
           - template: .ado/templates/compute-beachball-branch-name.yml@self
 
@@ -195,12 +186,10 @@ extends:
             condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'), ne(variables['Build.Reason'], 'PullRequest'))
             retryCountOnTaskFailure: 2
 
-          - script: npx --yes midgard-yarn-strict@1.2.4 @rnw-scripts/beachball-config
+          - pwsh: .ado/scripts/install-yarn-dependencies.ps1 -Installer Strict -Scope '@rnw-scripts/beachball-config'
             displayName: Strict yarn install @rnw-scripts/beachball-config
             condition: and(succeeded(), eq(variables['detectScenario.isReleaseBuild'], 'False'), eq(variables['Build.Reason'], 'PullRequest'))
             retryCountOnTaskFailure: 2
-            env:
-              NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
 
           - script: npx lage build --scope @rnw-scripts/prepare-release --scope @rnw-scripts/beachball-config
             displayName: Build prepare-release and beachball-config

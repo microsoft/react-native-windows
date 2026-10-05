@@ -16,6 +16,9 @@ pr:
 
 variables:
   - group: platform-override-zero-permission-token
+  # PR builds use the anonymous package proxy because 1ES network isolation blocks public registries.
+  - name: NPM_CONFIG_REGISTRY
+    value: https://packagefeedproxy.microsoft.io/npm/
 
 extends:
   template: build-template.yml@self
