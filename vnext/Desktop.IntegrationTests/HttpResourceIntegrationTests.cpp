@@ -15,6 +15,7 @@
 #include <boost/beast/http.hpp>
 
 // Standard Library
+#include <atomic>
 #include <future>
 
 #include "HttpServer.h"
@@ -302,12 +303,18 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(RequestOptionsSucceeds) {
+    constexpr int64_t optionsRequestId = 1;
+    constexpr int64_t getRequestId = 2;
     string url = "http://localhost:" + std::to_string(s_port);
 
     promise<void> getResponsePromise;
     promise<void> getDataPromise;
     promise<void> optionsPromise;
-    string error;
+    std::atomic_bool getResponseCompleted{false};
+    std::atomic_bool getDataCompleted{false};
+    std::atomic_bool optionsCompleted{false};
+    string getError;
+    string optionsError;
     IHttpResource::Response getResponse;
     IHttpResource::Response optionsResponse;
     string content;
@@ -330,38 +337,66 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server->Start();
 
     auto resource = IHttpResource::Make();
-    resource->SetOnResponse([&getResponse, &getResponsePromise, &optionsResponse, &optionsPromise](
-                                int64_t, IHttpResource::Response callbackResponse) {
-      if (callbackResponse.StatusCode == static_cast<int64_t>(http::status::ok)) {
-        getResponse = callbackResponse;
-        getResponsePromise.set_value();
-      } else if (callbackResponse.StatusCode == static_cast<int64_t>(http::status::partial_content)) {
-        optionsResponse = callbackResponse;
-        optionsPromise.set_value();
+    resource->SetOnResponse([&getResponse,
+                             &getResponsePromise,
+                             &getResponseCompleted,
+                             &optionsResponse,
+                             &optionsPromise,
+                             &optionsCompleted,
+                             getRequestId,
+                             optionsRequestId](int64_t requestId, IHttpResource::Response callbackResponse) {
+      if (requestId == getRequestId) {
+        if (!getResponseCompleted.exchange(true)) {
+          getResponse = callbackResponse;
+          getResponsePromise.set_value();
+        }
+      } else if (requestId == optionsRequestId) {
+        if (!optionsCompleted.exchange(true)) {
+          optionsResponse = callbackResponse;
+          optionsPromise.set_value();
+        }
       }
     });
-    resource->SetOnData([&getDataPromise, &content](int64_t, string &&responseData) {
-      content = std::move(responseData);
-
-      if (!content.empty())
-        getDataPromise.set_value();
-    });
-    resource->SetOnError(
-        [&optionsPromise, &getResponsePromise, &getDataPromise, &error, &server](int64_t, string &&message, bool) {
-          error = std::move(message);
-
-          optionsPromise.set_value();
-          getResponsePromise.set_value();
-          getDataPromise.set_value();
-
-          server->Stop();
+    resource->SetOnData(
+        [&getDataPromise, &getDataCompleted, &content, getRequestId](int64_t requestId, string &&responseData) {
+          if (requestId == getRequestId && !getDataCompleted.exchange(true)) {
+            content = std::move(responseData);
+            getDataPromise.set_value();
+          }
         });
+    resource->SetOnError([&optionsPromise,
+                          &optionsCompleted,
+                          &getResponsePromise,
+                          &getResponseCompleted,
+                          &getDataPromise,
+                          &getDataCompleted,
+                          &getError,
+                          &optionsError,
+                          getRequestId,
+                          optionsRequestId](int64_t requestId, string &&message, bool) {
+      if (requestId == optionsRequestId && !optionsCompleted.exchange(true)) {
+        optionsError = std::move(message);
+        optionsPromise.set_value();
+      } else if (requestId == getRequestId) {
+        const bool completeResponse = !getResponseCompleted.exchange(true);
+        const bool completeData = !getDataCompleted.exchange(true);
+        if (completeResponse || completeData) {
+          getError = std::move(message);
+        }
+        if (completeResponse) {
+          getResponsePromise.set_value();
+        }
+        if (completeData) {
+          getDataPromise.set_value();
+        }
+      }
+    });
 
     //clang-format off
     resource->SendRequest(
         "OPTIONS",
         string{url},
-        0, /*requestId*/
+        optionsRequestId,
         {}, /*headers*/
         {}, /*data*/
         "text",
@@ -372,7 +407,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SendRequest(
         "GET",
         std::move(url),
-        0, /*requestId*/
+        getRequestId,
         {}, /*headers*/
         {}, /*data*/
         "text",
@@ -387,7 +422,10 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     getDataPromise.get_future().wait();
     server->Stop();
 
-    Assert::AreEqual({}, error, L"Error encountered");
+    Assert::AreEqual({}, optionsError, L"OPTIONS error encountered");
+    Assert::AreEqual({}, getError, L"GET error encountered");
+    Assert::AreEqual(static_cast<int64_t>(http::status::partial_content), optionsResponse.StatusCode);
+    Assert::AreEqual(static_cast<int64_t>(http::status::ok), getResponse.StatusCode);
     Assert::AreEqual(static_cast<size_t>(1), optionsResponse.Headers.size());
     for (auto header : optionsResponse.Headers) {
       if (header.first == "PreflightName") {
