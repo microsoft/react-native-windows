@@ -50,6 +50,8 @@ steps:
     displayName: Install Windows App SDK Runtime
 
   - template: ../templates/prepare-js-env.yml
+    parameters:
+      buildEnvironment: ${{ parameters.buildEnvironment }}
 
   - template: ../templates/prepare-build-env.yml
     parameters:
@@ -65,7 +67,6 @@ steps:
       solutionName: ReactWindows-Desktop.sln
       buildPlatform: ${{ parameters.buildPlatform }}
       buildConfiguration: ${{ parameters.buildConfiguration }}
-      oneESMode: true
       msbuildArguments: /p:ForceImportAfterCppTargets=$(Build.SourcesDirectory)\vnext\PropertySheets\CIBuildOptimizations.props
 
   - ${{ if and(eq(parameters.buildConfiguration, 'Debug'), eq(parameters.buildPlatform, 'x64')) }}:

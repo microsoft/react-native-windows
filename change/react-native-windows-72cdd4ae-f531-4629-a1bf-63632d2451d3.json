@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Sync pipeline, tooling, and vendored dependency changes to 0.83-stable",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -9,8 +9,6 @@ Sample applications are not covered.
 - **[Desktop.DLL\React.Windows.Desktop.DLL.vcxproj](#React.Windows.Desktop.DLL)**
 - [Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.vcxproj](#React.Windows.Desktop.IntegrationTests)
 - [Desktop.UnitTests\React.Windows.Desktop.UnitTests.vcxproj](#React.Windows.Desktop.UnitTests)
-- [Folly\Folly.vcxproj](#Folly)
-- [FollyWin32\FollyWin32.vcxproj](#FollyWin32)
 - [IntegrationTests\React.Windows.IntegrationTests.vcxproj](#React.Windows.IntegrationTests)
 - **[Microsoft.ReactNative\Microsoft.ReactNative.vcxproj](#Microsoft.ReactNative)**
 - [Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems](#Microsoft.ReactNative.Cxx)
@@ -36,11 +34,6 @@ Holds sources common to both Windows variants, that require different build conf
 React Native core, cross-platform C++ types and interfaces.\
 Sources provided as part of the `react-native` Node dependency. Not part of this repository.\
 See https://github.com/facebook/react-native/tree/v0.62.0/ReactCommon.
-
-### Folly
-*Static Library*\
-Folly variant type system for JavaScript/C++ interoperability.\
-Sources provided as part of the `react-native` Node dependency. Not part of this repository.
 
 ### Microsoft.ReactNative.Cxx
 *Shared Items (no build artifact)*\

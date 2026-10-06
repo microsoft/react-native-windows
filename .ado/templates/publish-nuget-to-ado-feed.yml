@@ -1,7 +1,6 @@
 parameters:
 - name: azureSubscription
   type: string
-  default: 'Office-React-Native-Windows-Bot'
 - name: endpointId
   type: string
 - name: nugetFeedUrl

@@ -15,9 +15,7 @@
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch"
   },
-  "bin": {
-    "format-files": "./bin.js"
-  },
+  "bin": "./bin.js",
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",

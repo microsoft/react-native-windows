@@ -1,0 +1,10 @@
+/sync-config.json
+/.syncignore
+/cgmanifest.json
+/CMakeLists.txt
+/cmake/
+/tests/
+/benchmarks/
+/script/
+/.github/
+/CONTRIBUTORS

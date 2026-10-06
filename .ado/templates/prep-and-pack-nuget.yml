@@ -1,6 +1,9 @@
 parameters:
   - name: artifactName
     type: string
+  - name: artifactName2
+    type: string
+    default: ''
   - name: slices
     type: object
 
@@ -23,6 +26,12 @@ parameters:
     type: boolean
     default: false
   - name: packMicrosoftReactNativeCxx
+    type: boolean
+    default: false
+  - name: packMicrosoftReactNativeManaged
+    type: boolean
+    default: false
+  - name: packMicrosoftReactNativeManagedCodeGen
     type: boolean
     default: false
 
@@ -51,6 +60,13 @@ steps:
         artifact: ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }}
         path: ${{parameters.nugetroot}}/${{ parameters.artifactName }}/${{ slice.platform }}/${{ slice.configuration }}
 
+    - ${{ if ne(parameters.artifactName2, '') }}:
+      - task: DownloadPipelineArtifact@2
+        displayName: 'Download ${{ parameters.artifactName2 }}.${{ slice.platform }}.${{ slice.configuration }}'
+        inputs:
+          artifact: ${{ parameters.artifactName2 }}.${{ slice.platform }}.${{ slice.configuration }}
+          path: ${{parameters.nugetroot}}/${{ parameters.artifactName2 }}/${{ slice.platform }}/${{ slice.configuration }}
+
   - pwsh: yarn build
     displayName: Run yarn build
 
@@ -69,7 +85,7 @@ steps:
         arguments: -TargetRoot ${{parameters.nugetroot}}
         pwsh: true
 
-  - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true)) }}:
+  - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true)) }}:
     - pwsh: |
         (Get-Content -Path ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets
       displayName: Patch version check file with version ${{parameters.npmVersion}}
@@ -99,3 +115,18 @@ steps:
         packageVersion: ${{parameters.npmVersion}}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=$(baseConfiguration);baseplatform=$(basePlatform)
 
+  - ${{ if eq(parameters.packMicrosoftReactNativeManaged, true) }}:
+    - ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
+      - template: prep-and-pack-single.yml
+        parameters:
+          outputPackage: Microsoft.ReactNative.Managed
+          slices: $(releaseSlices)
+          packageVersion: ${{parameters.npmVersion}}
+          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=$(releaseBasePlatform)
+
+  - ${{ if eq(parameters.packMicrosoftReactNativeManagedCodeGen, true) }}:
+    - template: prep-and-pack-single.yml
+      parameters:
+        outputPackage: Microsoft.ReactNative.Managed.CodeGen
+        packageVersion: ${{parameters.npmVersion}}
+        buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=$(baseConfiguration);baseplatform=$(basePlatform)
