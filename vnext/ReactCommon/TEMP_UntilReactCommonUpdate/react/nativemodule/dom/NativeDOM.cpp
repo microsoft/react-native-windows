@@ -119,7 +119,7 @@ double NativeDOM::compareDocumentPosition(
 
       if (isRootShadowNode(*otherShadowNode)) {
         // If the other is a root node, we just need to check if it is its
-        // `documentElement`
+        // documentElement
         return (surfaceId == otherShadowNode->getSurfaceId())
             ? dom::DOCUMENT_POSITION_CONTAINED_BY |
                 dom::DOCUMENT_POSITION_FOLLOWING
@@ -198,15 +198,21 @@ jsi::Value NativeDOM::getParentNode(
   }
 
   auto shadowNode = getShadowNode(rt, nativeNodeReference);
-  if (isRootShadowNode(*shadowNode)) {
-    // The parent of the root node is the document.
-    return jsi::Value{shadowNode->getSurfaceId()};
-  }
 
   auto currentRevision =
       getCurrentShadowTreeRevision(rt, shadowNode->getSurfaceId());
   if (currentRevision == nullptr) {
     return jsi::Value::undefined();
+  }
+
+  // The parent of the surface's root node is the document. Only the actual
+  // root node qualifies: nested nodes that carry the `RootNodeKind` trait
+  // (e.g. <Modal>, portals/overlays) still have a real parent in the shadow
+  // tree and must report it. Otherwise capture/bubble event propagation is
+  // silently severed at that boundary (a listener on an ancestor rendered
+  // above the modal would never receive descendant focus/blur, etc.).
+  if (ShadowNode::sameFamily(*currentRevision, *shadowNode)) {
+    return jsi::Value{shadowNode->getSurfaceId()};
   }
 
   auto parentShadowNode = dom::getParentNode(currentRevision, *shadowNode);

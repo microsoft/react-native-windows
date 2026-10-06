@@ -257,7 +257,8 @@ export interface ViewPropsWin32 {
  * @see https://reactnative.dev/docs/view#props
  */
 export interface ViewProps
-  extends ViewPropsAndroid,
+  extends
+    ViewPropsAndroid,
     ViewPropsIOS,
     ViewPropsWin32,
     GestureResponderHandlers,

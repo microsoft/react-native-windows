@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.87.0-nightly-20260704-e04ff69ab",
+  "baseVersion": "0.88.0-nightly-20260805-f2188610c",
   "overrides": [
     {
       "type": "copy",
@@ -194,7 +194,7 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "34657bfaf9334813bdb5d0c121b030630299e551",
+      "baseHash": "6fb01d94f6ce84d9fa0bcc9bab65208f73bd30b7",
       "issue": 4054
     },
     {
@@ -208,7 +208,7 @@
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "c3b1f8d752427863404d1822ebfe71c9b588dc3c",
+      "baseHash": "70e6b556bd0488402c06fa3560e08b145f209d05",
       "issue": 4054
     },
     {
@@ -222,7 +222,7 @@
       "type": "derived",
       "file": "js/examples/Image/ImageExample.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "4f0c0c664e671f81fc8381852d3753ef4767fb89",
+      "baseHash": "6cdfd4f387c03b98ed1bf070c38b65b864e9e7b0",
       "issue": 4054
     },
     {
@@ -313,7 +313,7 @@
       "type": "copy",
       "directory": "js/examples/KeyboardAvoidingView",
       "baseDirectory": "packages/rn-tester/js/examples/KeyboardAvoidingView",
-      "baseHash": "5dab1ccc11c3a00a035883d3747b43c9af54f32e",
+      "baseHash": "16109f0a5900569da3e7a008b4b594908639a091",
       "issue": 4054
     },
     {
@@ -508,7 +508,7 @@
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseHash": "13c0707b7f7c21689197cf2c382b271e49935bae",
+      "baseHash": "16c4be76299f03da95ac99e0856eaaf57ebb9c76",
       "issue": 4054
     },
     {
@@ -564,7 +564,7 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "cfab064d612eacc48406c19f97ffc0e1dc8af32f",
+      "baseHash": "c363dd001bb75355feea28136edd54db820c3045",
       "issue": 4054
     },
     {
@@ -675,7 +675,7 @@
       "type": "copy",
       "directory": "js/examples/WebSocket",
       "baseDirectory": "packages/rn-tester/js/examples/WebSocket",
-      "baseHash": "5db86d28a9a57665a2699531e60498474b3c84cd",
+      "baseHash": "9bd368528834a6512603a2c7ea9772c67751424f",
       "issue": 4054
     },
     {
@@ -724,14 +724,14 @@
       "type": "copy",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "0d3d781956398fea18ffc2fe09969dc337bf1ee5",
+      "baseHash": "c35323a0e557d5ac3e6ebf217f0d573c342bf474",
       "issue": 13228
     },
     {
       "type": "copy",
       "file": "js/utils/RNTesterList.ios.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
-      "baseHash": "9551776715eab41feebbb269585a6f37a5e089ca",
+      "baseHash": "df5cca102a6fb708ea53af4929e4e297ab8cb566",
       "issue": 13228
     },
     {
@@ -801,7 +801,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "44f597b3c2f02b82c2d7fbd419aaa3ac0a7c5836",
+      "baseHash": "493f635647a555079f26e66ceaf596965ac20c2e",
       "issue": 13228
     },
     {

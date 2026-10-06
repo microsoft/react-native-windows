@@ -47,7 +47,7 @@
     "lookpath": "^1.2.1",
     "prettier": "^3.6.2",
     "semver": "^7.6.3",
-    "typescript": "5.0.4"
+    "typescript": "5.1.6"
   },
   "files": [
     "lib-commonjs"

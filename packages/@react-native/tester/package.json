@@ -1,6 +1,6 @@
 {
   "name": "@react-native/tester",
-  "version": "0.87.0-nightly-20260704-e04ff69ab",
+  "version": "0.88.0-nightly-20260805-f2188610c",
   "private": true,
   "description": "React Native tester app.",
   "license": "MIT",
@@ -26,8 +26,8 @@
     "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
-    "@react-native/new-app-screen": "0.87.0-nightly-20260704-e04ff69ab",
-    "@react-native/popup-menu-android": "0.87.0-nightly-20260704-e04ff69ab",
+    "@react-native/new-app-screen": "0.88.0-nightly-20260805-f2188610c",
+    "@react-native/popup-menu-android": "0.88.0-nightly-20260805-f2188610c",
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"
@@ -59,7 +59,7 @@
     "commander": "^12.0.0",
     "listr2": "^6.4.1",
     "react": "19.2.3",
-    "react-native": "0.87.0-nightly-20260704-e04ff69ab",
+    "react-native": "0.88.0-nightly-20260805-f2188610c",
     "rxjs": "npm:@react-native-community/rxjs@6.5.4-custom"
   }
 }

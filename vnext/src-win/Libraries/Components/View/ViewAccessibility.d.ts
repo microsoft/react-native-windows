@@ -99,15 +99,13 @@ export interface AccessibilityProps
    * When `accessible` is true, the system will try to invoke this function when the user performs an accessibility custom action.
    */
   onAccessibilityAction?:
-    | ((event: AccessibilityActionEvent) => void)
-    | undefined;
+    ((event: AccessibilityActionEvent) => void) | undefined;
 
   /**
    * [Android] Controlling if a view fires accessibility events and if it is reported to accessibility services.
    */
   importantForAccessibility?:
-    | ('auto' | 'yes' | 'no' | 'no-hide-descendants')
-    | undefined;
+    ('auto' | 'yes' | 'no' | 'no-hide-descendants') | undefined;
 
   /**
    * A value indicating whether the accessibility elements contained within
@@ -391,6 +389,13 @@ export interface AccessibilityPropsAndroid {
     | 'no'
     | 'no-hide-descendants'
     | undefined;
+
+  /**
+   * Enables the view to be screen reader focusable, not keyboard focusable.
+   *
+   * @platform android
+   */
+  screenReaderFocusable?: boolean | undefined;
 }
 
 export interface AccessibilityPropsIOS {

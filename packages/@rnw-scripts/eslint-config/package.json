@@ -13,7 +13,7 @@
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.25.1",
     "@microsoft/eslint-plugin-sdl": "^0.2.0",
-    "@react-native/eslint-config": "0.87.0-nightly-20260704-e04ff69ab",
+    "@react-native/eslint-config": "0.88.0-nightly-20260805-f2188610c",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-ft-flow": "^2.0.1",
     "hermes-eslint": "0.23.1"
@@ -23,7 +23,7 @@
     "eslint": "^8.19.0",
     "eslint-plugin-jest": "^29.0.1",
     "prettier": "^3.6.2",
-    "typescript": "5.0.4"
+    "typescript": "5.1.6"
   },
   "peerDependencies": {
     "eslint": "*",

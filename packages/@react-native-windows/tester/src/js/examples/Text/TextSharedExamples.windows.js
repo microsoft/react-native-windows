@@ -246,6 +246,27 @@ const styles = StyleSheet.create({
   },
 });
 
+function LastLineClippingExample(): React.Node {
+  // Wrapped paragraphs at assorted font sizes are prone to the final line being
+  // clipped by one physical pixel after layout rounding (issue #53450). The
+  // border makes any clipping of the last line visible.
+  return (
+    <View>
+      {[11, 12, 13, 14, 15, 16, 17].map(fontSize => (
+        <View
+          key={fontSize}
+          style={{borderWidth: 1, borderColor: '#999999', marginBottom: 6}}>
+          <Text style={{fontSize}}>
+            {`(${fontSize}px) This sentence wraps across multiple lines so the ` +
+              'final line sits near a pixel boundary and must render fully, ' +
+              'without being cut off.'}
+          </Text>
+        </View>
+      ))}
+    </View>
+  );
+}
+
 const examples = [
   {
     title: 'Empty Text',
@@ -280,6 +301,14 @@ const examples = [
     name: 'textWithLinkRole',
     description: 'Shows the a11y behavior of Text with role="link"',
     render: TextWithLinkRoleExample,
+  },
+  {
+    title: 'Wrapped text last-line clipping',
+    name: 'wrappedLastLineClipping',
+    description:
+      'The final line of wrapped text must render fully, not clipped by one ' +
+      'physical pixel after layout rounding (issue #53450).',
+    render: LastLineClippingExample,
   },
   // Windows: Only include TextInlineViewsExample in Fabric mode (bridgeless)
   // Paper mode doesn't support Views nested in Text

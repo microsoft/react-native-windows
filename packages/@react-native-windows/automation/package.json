@@ -38,7 +38,7 @@
     "@types/readline-sync": "^1.4.4",
     "eslint": "^8.19.0",
     "prettier": "^3.6.2",
-    "typescript": "5.0.4"
+    "typescript": "5.1.6"
   },
   "peerDependencies": {
     "jest": ">=29.0.3",

@@ -18,6 +18,11 @@
     "inlineSources": true,
     "experimentalDecorators": true,
     "noEmitOnError": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "react-native": ["../../../node_modules/react-native/types_generated/index.d.ts"],
+      "react-native/*": ["../../../node_modules/react-native/types_generated/*"]
+    }
   }
 }
