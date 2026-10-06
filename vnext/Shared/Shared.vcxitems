@@ -624,6 +624,6 @@
   <ItemGroup Condition="'$(SupportWinUI3Islands)' == 'true'">
     <ApplicationDefinition Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\App.xaml" />
   </ItemGroup>
-</Project>
   <!-- External (vendored) third-party library sources -->
   <Import Project="$(ExternalDir)External.vcxitems" />
+</Project>
