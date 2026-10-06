@@ -285,15 +285,13 @@ bool NetworkIOAgent::handleRequest(
     return true;
   }
 
-  if (InspectorFlags::getInstance().getNetworkInspectionEnabled()) {
-    auto& networkHandler = NetworkHandler::getInstance();
+  auto& networkHandler = NetworkHandler::getInstance();
 
-    // @cdp Network.enable support is experimental.
-    if (req.method == "Network.enable") {
-      networkAgentId_ = networkHandler.enableAgent(frontendChannel_); // [Windows #16263]
-      // NOTE: Domain enable/disable responses are sent by HostAgent.
-      return false;
-    }
+  // @cdp Network.enable support is experimental.
+  if (req.method == "Network.enable") {
+    networkAgentId_ = networkHandler.enableAgent(frontendChannel_); // [Windows #16263]
+    // NOTE: Domain enable/disable responses are sent by HostAgent.
+    return false;
   }
 
   // @cdp Network.disable support is experimental.
