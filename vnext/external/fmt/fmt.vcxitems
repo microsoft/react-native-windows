@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="$(ExternalDir)fmt\src\format.cc" />
+    <ClCompile Include="$(ExternalDir)fmt\src\os.cc">
+      <PreprocessorDefinitions>FMT_USE_FCNTL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <ClInclude Include="$(ExternalDir)fmt\include\fmt\core.h" />
+    <ClInclude Include="$(ExternalDir)fmt\include\fmt\format.h" />
+    <ClInclude Include="$(ExternalDir)fmt\include\fmt\chrono.h" />
+    <ClInclude Include="$(ExternalDir)fmt\include\fmt\color.h" />
+    <ClInclude Include="$(ExternalDir)fmt\include\fmt\compile.h" />
+    <ClInclude Include="$(ExternalDir)fmt\include\fmt\format-inl.h" />
+    <ClInclude Include="$(ExternalDir)fmt\include\fmt\os.h" />
+    <ClInclude Include="$(ExternalDir)fmt\include\fmt\ostream.h" />
+    <ClInclude Include="$(ExternalDir)fmt\include\fmt\printf.h" />
+    <ClInclude Include="$(ExternalDir)fmt\include\fmt\ranges.h" />
+  </ItemGroup>
+  <!-- Compiler settings for fmt sources -->
+  <ItemGroup>
+    <ClCompile Update="$(ExternalDir)fmt\**">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <PreprocessorDefinitions>NOMINMAX;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+  </ItemGroup>
+</Project>

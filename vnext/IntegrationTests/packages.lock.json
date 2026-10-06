@@ -13,16 +13,6 @@
         "dependencies": {
           "boost": "[1.84.0, )"
         }
-      },
-      "fmt": {
-        "type": "Project"
-      },
-      "folly": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "[1.84.0, )",
-          "fmt": "[1.0.0, )"
-        }
       }
     },
     "native,Version=v0.0/win": {},
