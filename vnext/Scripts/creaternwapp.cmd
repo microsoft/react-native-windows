@@ -72,6 +72,9 @@ if not "%part%"=="" (
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwapp.cmd: Setting npm to use verdaccio at http://localhost:4873
+  set NPM_CONFIG_REGISTRY=http://localhost:4873
+  set YARN_NPM_REGISTRY_SERVER=http://localhost:4873
+  set YARN_UNSAFE_HTTP_WHITELIST=localhost
   call npm config set registry http://localhost:4873
 )
 
@@ -120,13 +123,6 @@ if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   set RNCLI_TEMPLATE=--template "@react-native-community/template@0.84.1"
 )
 
-if not "x%RN_VERSION:-rc=%"=="x%RN_VERSION%" (
-  @echo creaternwapp.cmd Override @react-native-community/template version for RC
-  REM RC versions may not have a corresponding template published to npm
-  REM Windows we need to manually update this with every integration #15124
-  set RNCLI_TEMPLATE=--template "@react-native-community/template@0.84.1"
-)
-
 @echo creaternwapp.cmd: Creating base RN app project with: npx --yes @react-native-community/cli@%RNCLI_VERSION% init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true
 call npx --yes @react-native-community/cli@%RNCLI_VERSION% init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true
 
@@ -150,12 +146,13 @@ call yarn install
 
 @echo creaternwapp.cmd: Creating commit to save current state
 if not exist ".git\" call git init .
+call git config user.name "React-Native-Windows Bot"
+call git config user.email "53619745+rnbot@users.noreply.github.com"
 call git add .
 call git commit -m "npx --yes @react-native-community/cli@%RNCLI_VERSION% init %APP_NAME% --version %RN_VERSION% %RNCLI_TEMPLATE% --verbose --skip-install --install-pods false --skip-git-init true"
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwapp.cmd: Setting yarn to use verdaccio at http://localhost:4873
-  call yarn config set registry http://localhost:4873
   call yarn config set npmRegistryServer http://localhost:4873
   call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
 )

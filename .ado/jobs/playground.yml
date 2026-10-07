@@ -19,13 +19,13 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x86
             SolutionFile: Playground-Composition.sln
+          - Name: X64DebugComposition
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            SolutionFile: Playground-Composition.sln
           - Name: X64ReleaseComposition
             BuildConfiguration: Release
             BuildPlatform: x64
-            SolutionFile: Playground-Composition.sln
-          - Name: X86DebugCompositionExperimentalWinUI3
-            BuildConfiguration: Debug
-            BuildPlatform: x86
             SolutionFile: Playground-Composition.sln
       - BuildEnvironment: Continuous
         Matrix:
@@ -64,6 +64,8 @@ jobs:
             - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
+              parameters:
+                buildEnvironment: ${{ parameters.buildEnvironment }}
 
             - template: ../templates/prepare-build-env.yml
               parameters:

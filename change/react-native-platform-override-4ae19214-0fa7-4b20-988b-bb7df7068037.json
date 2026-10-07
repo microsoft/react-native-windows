@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Migrate package metadata to Yarn 4",
+  "packageName": "react-native-platform-override",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
