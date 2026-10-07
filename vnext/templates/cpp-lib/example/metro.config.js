@@ -56,6 +56,12 @@ const config = {
       if (moduleName === pack.name) {
         return { type: 'sourceFile', filePath: path.resolve(root, librarySource) };
       }
+      if (
+        moduleName === 'react-native/react-private-interface' ||
+        moduleName === 'react-native/setup-env'
+      ) {
+        return { type: 'sourceFile', filePath: require.resolve(moduleName) };
+      }
       return context.resolveRequest(context, moduleName, platform);
     },
     blocklist: 

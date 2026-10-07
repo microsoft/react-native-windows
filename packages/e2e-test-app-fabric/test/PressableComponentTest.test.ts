@@ -27,7 +27,8 @@ describe('Pressable Tests', () => {
     await app.waitUntil(
       async () => {
         await searchBox.clearValue();
-        await searchBox.setValue('Cha');
+        await searchBox.click();
+        await searchBox.addValue('Cha');
         return (await searchBox.getText()) === 'Cha';
       },
       {
@@ -45,7 +46,7 @@ describe('Pressable Tests', () => {
     expect(dump2).toMatchSnapshot();
     await app.waitUntil(
       async () => {
-        await searchBox.setValue(['Backspace', 'Backspace', 'Backspace']);
+        await searchBox.clearValue();
         return (await searchBox.getText()) === 'Search...';
       },
       {

@@ -47,6 +47,7 @@ WindowsTextInputProps::WindowsTextInputProps(
       caretHidden(convertRawProp(context, rawProps, "caretHidden", sourceProps.caretHidden, {false})),
       autoCapitalize(convertRawProp(context, rawProps, "autoCapitalize", sourceProps.autoCapitalize, {})),
       clearTextOnSubmit(convertRawProp(context, rawProps, "clearTextOnSubmit", sourceProps.clearTextOnSubmit, {false})),
+      submitBehavior(convertRawProp(context, rawProps, "submitBehavior", sourceProps.submitBehavior, {})),
       submitKeyEvents(convertRawProp(context, rawProps, "submitKeyEvents", sourceProps.submitKeyEvents, {})),
       autoFocus(convertRawProp(context, rawProps, "autoFocus", sourceProps.autoFocus, {false})),
       textAlign(

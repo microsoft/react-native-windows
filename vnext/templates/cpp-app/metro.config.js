@@ -34,6 +34,15 @@ const config = {
   watchFolders: [rnwPath, rnwRootNodeModules, rnwPackages],
   // devMode]{{/devMode}}
   resolver: {
+    resolveRequest: (context, moduleName, platform) => {
+      if (
+        moduleName === 'react-native/react-private-interface' ||
+        moduleName === 'react-native/setup-env'
+      ) {
+        return {type: 'sourceFile', filePath: require.resolve(moduleName)};
+      }
+      return context.resolveRequest(context, moduleName, platform);
+    },
     blockList: [
       // This stops "npx @react-native-community/cli run-windows" from causing the metro server to crash if its already running
       new RegExp(

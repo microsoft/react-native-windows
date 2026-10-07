@@ -974,9 +974,9 @@ bool WindowsTextInputComponentView::ShouldSubmit(
   bool shouldSubmit = true;
 
   if (shouldSubmit) {
-    if (!m_multiline && m_submitKeyEvents.size() == 0) {
-      // If no 'submitKeyEvents' are supplied, use the default behavior for single-line TextInput
-      shouldSubmit = args.KeyCode() == '\r';
+    if (m_submitKeyEvents.size() == 0) {
+      const auto &submitBehavior = windowsTextInputProps().submitBehavior;
+      shouldSubmit = args.KeyCode() == '\r' && submitBehavior != "newline" && !(submitBehavior.empty() && m_multiline);
     } else if (m_submitKeyEvents.size() > 0) {
       auto submitKeyEvent = m_submitKeyEvents.at(0);
       // If 'submitKeyEvents' are supplied, use them to determine whether to emit onSubmitEditing' for either
@@ -1035,6 +1035,15 @@ void WindowsTextInputComponentView::OnCharacterReceived(
     if (m_clearTextOnSubmit) {
       // clear text from RichEdit
       m_textServices->TxSetText(L"");
+    }
+    const auto &submitBehavior = windowsTextInputProps().submitBehavior;
+    if (submitBehavior == "blurAndSubmit" || (submitBehavior.empty() && !m_multiline)) {
+      if (auto root = rootComponentView()) {
+        root->TrySetFocusedComponent(
+            nullptr,
+            winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+            winrt::Microsoft::ReactNative::FocusState::Programmatic);
+      }
     }
     return;
   }
@@ -1133,6 +1142,7 @@ void WindowsTextInputComponentView::onGotFocus(
 
     if (windowsTextInputProps().clearTextOnFocus) {
       m_textServices->TxSetText(L"");
+      OnTextUpdated();
     } else if (windowsTextInputProps().selectTextOnFocus) {
       LRESULT res;
       m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(0), static_cast<WPARAM>(-1), &res);
@@ -1537,6 +1547,13 @@ std::optional<std::string> WindowsTextInputComponentView::getAccessiblityValue()
 }
 
 void WindowsTextInputComponentView::setAcccessiblityValue(std::string &&value) noexcept {
+  if (windowsTextInputProps().autoCapitalize == "characters") {
+    auto uppercaseValue = ::Microsoft::Common::Unicode::Utf8ToUtf16(value);
+    if (!uppercaseValue.empty()) {
+      CharUpperBuffW(uppercaseValue.data(), static_cast<DWORD>(uppercaseValue.size()));
+    }
+    value = ::Microsoft::Common::Unicode::Utf16ToUtf8(uppercaseValue);
+  }
   UpdateText(value);
 }
 
