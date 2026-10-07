@@ -27,16 +27,21 @@ winrt::fire_and_forget JsonRpcRequestProcessor::HandleRequest(
 
   // Cannot co_await to emit failure inside catch block. Keep vars outside scope.
   winrt::hstring errorMessage;
+  auto const hasId = message.HasKey(L"id");
+  auto const id = hasId ? message.GetNamedValue(L"id") : nullptr;
 
   try {
     auto method = message.GetNamedString(L"method");
     if (!handler.IsMethodRegistered(method)) {
-      co_await EmitError(
-          JsonRpcErrorCode::MethodNotFound, L"Method not found: " + method, message.GetNamedValue(L"id"), output);
+      if (hasId) {
+        co_await EmitError(JsonRpcErrorCode::MethodNotFound, L"Method not found: " + method, id, output);
+      }
       co_return;
     }
     auto result = co_await handler.Invoke(method, message.GetNamedValue(L"params"));
-    co_await EmitResult(result, message.GetNamedValue(L"id"), output);
+    if (hasId) {
+      co_await EmitResult(result, id, output);
+    }
     co_return;
   } catch (const winrt::hresult_error &ex) {
     errorMessage = ex.message();
@@ -44,7 +49,9 @@ winrt::fire_and_forget JsonRpcRequestProcessor::HandleRequest(
     errorMessage = winrt::to_hstring(ex.what());
   }
 
-  co_await EmitError(JsonRpcErrorCode::InternalError, errorMessage, message.GetNamedValue(L"id"), output);
+  if (hasId) {
+    co_await EmitError(JsonRpcErrorCode::InternalError, errorMessage, id, output);
+  }
 }
 
 IAsyncOperation<JsonObject> JsonRpcRequestProcessor::DecodeAndValidateMessage(
