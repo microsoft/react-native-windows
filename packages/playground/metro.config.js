@@ -114,13 +114,49 @@ function tryResolveDevPackage(moduleName) /*: string | null*/ {
   return null;
 }
 
+const packageJsonCache = {};
+
+// Some packages (e.g. react-native) expose "self-referencing" subpath
+// imports (e.g. "react-native/react-private-interface") that are only valid
+// via the package's package.json "exports" map, and don't correspond to a
+// literal file at that subpath. Translate such subpaths to their real
+// relative file path so they can be redirected into the dev package (e.g.
+// src-win) the same way as any other "react-native/..." import.
+function resolveExportsSubpath(packageName, subpath) /*: string*/ {
+  if (!(packageName in packageJsonCache)) {
+    try {
+      packageJsonCache[packageName] = require(`${packageName}/package.json`);
+    } catch {
+      packageJsonCache[packageName] = null;
+    }
+  }
+
+  const pkg = packageJsonCache[packageName];
+  const exportsTarget = pkg && pkg.exports && pkg.exports[`./${subpath}`];
+
+  let resolved = exportsTarget;
+  while (resolved && typeof resolved === 'object') {
+    resolved =
+      resolved.default ??
+      resolved['react-native'] ??
+      resolved.require ??
+      resolved.import ??
+      null;
+  }
+
+  return typeof resolved === 'string'
+    ? resolved.replace(/^[.][/]/, '')
+    : subpath;
+}
+
 function tryResolveDevAbsoluteImport(moduleName) /*: string | null*/ {
   for (const [packageName, packagePath] of Object.entries(devPackages)) {
     if (moduleName.startsWith(`${packageName}/`)) {
+      const subpath = moduleName.slice(`${packageName}/`.length);
       return devResolve(
         packageName,
         packagePath,
-        `./${moduleName.slice(`${packageName}/`.length)}`,
+        `./${resolveExportsSubpath(packageName, subpath)}`,
       );
     }
   }
