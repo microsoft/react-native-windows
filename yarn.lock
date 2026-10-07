@@ -10349,19 +10349,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flow-estree@npm:0.333.0":
-  version: 0.333.0
-  resolution: "flow-estree@npm:0.333.0"
-  checksum: 10c0/6f662c1cf6589e65a6bf0cb47dbbbb32003d8546e31b587e5b80848688faaf1116ae94b1b4a0e2d6b8fcb8957479514484af82482a52b9ddcb30c926ca3edf7e
-  languageName: node
-  linkType: hard
-
-"flow-parser@npm:0.*":
-  version: 0.333.0
-  resolution: "flow-parser@npm:0.333.0"
-  dependencies:
-    flow-estree: "npm:0.333.0"
-  checksum: 10c0/9ad86818fd777dca9503923a3595f6e295b4a539c2a47a395bbc48e0b88598e0ecfd90236b9dbe8dfb6539128d00858d43285d72c548d5ed458137cf04eeff3f
+"flow-parser@npm:0.292.0":
+  version: 0.292.0
+  resolution: "flow-parser@npm:0.292.0"
+  checksum: 10c0/99734b7e301382bdffa3bf978d2d4d4b267bf9e9d1fb2e28b6166f21a3851a31961751f17d8cdfb76fa035f6ff0d8851eea8cd562781da4585dbb77812c23e75
   languageName: node
   linkType: hard
 

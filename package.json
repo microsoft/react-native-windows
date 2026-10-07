@@ -62,6 +62,7 @@
     "set-value": "^4.0.1",
     "strip-ansi": "^6.0.1",
     "eslint-plugin-jest": "29.10.1",
+    "flow-parser@0.*": "0.292.0",
     "typescript@>=4.7.0": "5.9.3",
     "parse-url/normalize-url": "^4.5.1",
     "@react-native/monorepo/jest-junit": "^13.0.0",
