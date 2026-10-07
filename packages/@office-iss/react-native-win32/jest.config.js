@@ -1,4 +1,4 @@
-module.exports = require('@rnx-kit/jest-preset')("win32", {
+const config = require('@rnx-kit/jest-preset')('win32', {
   verbose: true,
   snapshotResolver: './jest-snapshot-resolver.js',
   transform: {
@@ -18,7 +18,7 @@ module.exports = require('@rnx-kit/jest-preset')("win32", {
   testPathIgnorePatterns: [
     // Only run the version of the tests that are part of the merged source output
     'src-win',
-    'src/private/webapis/performance/__tests__/NativePerformanceMock-test.js' // Temporarily disabled until test is fixed. #<Insert Issue Num>
+    'src/private/webapis/performance/__tests__/NativePerformanceMock-test.js', // Temporarily disabled until test is fixed. #<Insert Issue Num>
   ],
   unmockedModulePathPatterns: [
     'react',
@@ -36,3 +36,12 @@ module.exports = require('@rnx-kit/jest-preset')("win32", {
     '<rootDir>/Libraries/react-native/',
   ],
 });
+
+config.moduleNameMapper = {
+  '^react-native/react-private-interface$':
+    '<rootDir>/src/react-private-interface.js',
+  '^react-native/setup-env$': '<rootDir>/src/setup-env.js',
+  ...config.moduleNameMapper,
+};
+
+module.exports = config;

@@ -14,11 +14,45 @@ const {
   DuplicateDependencies,
 } = require('@rnx-kit/metro-plugin-duplicates-checker');
 
+// eslint-disable-next-line @react-native/no-deep-imports
+const reactNativePackage = require('react-native/package.json');
+
+function resolveReactNativeExport(moduleName) {
+  const prefix = 'react-native/';
+  if (!moduleName.startsWith(prefix)) {
+    return moduleName;
+  }
+
+  const subpath = moduleName.slice(prefix.length);
+  let target = reactNativePackage.exports?.[`./${subpath}`];
+  while (target && typeof target === 'object') {
+    target =
+      target['react-native'] ??
+      target.default ??
+      target.require ??
+      target.import ??
+      null;
+  }
+
+  return typeof target === 'string'
+    ? `${prefix}${target.replace(/^[.][/]/, '')}`
+    : moduleName;
+}
+
 function makeMetroConfig(customConfig = {}) {
   if (customConfig.unstable_allowAssetsOutsideProjectRoot === undefined)
     customConfig.unstable_allowAssetsOutsideProjectRoot = true;
 
-  return mergeConfig(MetroConfig.makeMetroConfig(customConfig), {
+  const metroConfig = MetroConfig.makeMetroConfig(customConfig);
+  const resolveRequest = metroConfig.resolver.resolveRequest;
+  metroConfig.resolver.resolveRequest = (context, moduleName, platform) =>
+    resolveRequest(
+      context,
+      resolveReactNativeExport(moduleName),
+      platform,
+    );
+
+  return mergeConfig(metroConfig, {
     resolver: {
       enableGlobalPackages: true,
       blockList: MetroConfig.exclusionList([

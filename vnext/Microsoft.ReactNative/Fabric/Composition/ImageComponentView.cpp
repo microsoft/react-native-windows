@@ -226,7 +226,8 @@ void ImageComponentView::OnRenderingDeviceLost() noexcept {
 }
 
 bool ImageComponentView::themeEffectsImage() const noexcept {
-  return viewProps()->backgroundColor || isColorMeaningful(imageProps().tintColor.value_or(facebook::react::SharedColor{}));
+  return viewProps()->backgroundColor ||
+      isColorMeaningful(imageProps().tintColor.value_or(facebook::react::SharedColor{}));
 }
 
 void ImageComponentView::onThemeChanged() noexcept {
