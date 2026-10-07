@@ -91,5 +91,3 @@ steps:
       vsTestVersion: latest
       failOnMinTestsNotRun: true
     condition: and(succeeded(), eq('${{ parameters.buildConfiguration }}', 'Debug'), eq('${{ parameters.buildPlatform }}', 'x64'))
-
-      condition: and(succeeded(), eq('${{ parameters.buildPlatform }}', 'x64'))
