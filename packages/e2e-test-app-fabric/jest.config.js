@@ -10,9 +10,10 @@
 // https://jestjs.io/docs/en/configuration.html
 
 const assetTransform = 'react-native-windows/jest/assetFileTransformer.js';
+const rnxPreset = require('@rnx-kit/jest-preset')('windows');
 
 module.exports = {
-  preset: '@rnx-kit/jest-preset',
+  ...rnxPreset,
 
   // A list of paths to directories that Jest should use to search for files in
   roots: ['<rootDir>/test/'],
@@ -59,6 +60,14 @@ module.exports = {
   // A list of paths to modules that run some code to configure or set up the testing framework
   // before each test file in the suite is executed
   setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
+
+  moduleNameMapper: {
+    '^react-native/react-private-interface$':
+      '<rootDir>/../../vnext/src/react-private-interface.js',
+    '^react-native/setup-env$': '<rootDir>/../../vnext/src/setup-env.js',
+    '^react-native/(.*)$': '<rootDir>/../../node_modules/react-native/$1',
+    ...rnxPreset.moduleNameMapper,
+  },
 
   testEnvironmentOptions: {
     app: 'RNTesterApp-Fabric', // Both the app package to launch and the window to attach to
