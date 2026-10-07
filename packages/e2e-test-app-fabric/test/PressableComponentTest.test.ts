@@ -26,6 +26,7 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
+        await searchBox.clearValue();
         await searchBox.setValue('Cha');
         return (await searchBox.getText()) === 'Cha';
       },
@@ -64,6 +65,7 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
+        await searchBox.clearValue();
         await searchBox.setValue('<Te');
         return (await searchBox.getText()) === '<Te';
       },
@@ -97,6 +99,7 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
+        await searchBox.clearValue();
         await searchBox.setValue('fee');
         return (await searchBox.getText()) === 'fee';
       },
@@ -135,6 +138,7 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
+        await searchBox.clearValue();
         await searchBox.setValue('fee');
         return (await searchBox.getText()) === 'fee';
       },
@@ -169,6 +173,7 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
+        await searchBox.clearValue();
         await searchBox.setValue('del');
         return (await searchBox.getText()) === 'del';
       },
@@ -203,6 +208,7 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
+        await searchBox.clearValue();
         await searchBox.setValue('dis');
         return (await searchBox.getText()) === 'dis';
       },
@@ -232,6 +238,7 @@ describe('Pressable Tests', () => {
     const searchBox = await app.findElementByTestID('example_search');
     await app.waitUntil(
       async () => {
+        await searchBox.clearValue();
         await searchBox.setValue('dis');
         return (await searchBox.getText()) === 'dis';
       },

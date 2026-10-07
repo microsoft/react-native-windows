@@ -65,7 +65,6 @@ module.exports = {
     '^react-native/react-private-interface$':
       '<rootDir>/../../vnext/src/react-private-interface.js',
     '^react-native/setup-env$': '<rootDir>/../../vnext/src/setup-env.js',
-    '^react-native/(.*)$': '<rootDir>/../../node_modules/react-native/$1',
     ...rnxPreset.moduleNameMapper,
   },
 

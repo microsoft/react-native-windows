@@ -834,6 +834,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
         accessibilityLevel={_accessibilityLevel}
         accessibilityPosInSet={_accessibilityPosInSet}
         accessibilitySetSize={_accessibilitySetSize}
+        submitBehavior={submitBehavior}
         /* $FlowFixMe[incompatible-type] the types for WindowsTextInput
          * don't match up exactly with the props for TextInput. This will need
          * to get fixed */

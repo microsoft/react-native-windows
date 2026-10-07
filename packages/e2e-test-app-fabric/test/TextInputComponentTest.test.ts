@@ -188,7 +188,9 @@ describe('TextInput Tests', () => {
 
     await app.waitUntil(
       async () => {
-        await component.setValue(
+        await component.clearValue();
+        await component.click();
+        await component.addValue(
           'hi i am setting up this whole UPPERCASE sentence.',
         );
         return (
@@ -460,6 +462,7 @@ describe('TextInput Tests', () => {
     );
 
     await componentFocusTrue.waitForDisplayed({timeout: 5000});
+    await componentFocusTrue.click();
     await app.waitUntil(
       async () => {
         await componentFocusTrue.setValue('Hello World');
@@ -511,7 +514,9 @@ describe('TextInput Tests', () => {
     const targetComponent = await app.findElementByTestID(
       'select-text-on-focus-while-clear-text-on-focus',
     );
+
     await targetComponent.waitForDisplayed({timeout: 5000});
+    await targetComponent.click();
 
     await app.waitUntil(
       async () => {

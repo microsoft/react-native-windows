@@ -51,6 +51,7 @@ const config = {
     // devMode]{{/devMode}}
   },
   transformer: {
+    assetRegistryPath: require.resolve('react-native/asset-registry'),
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,
