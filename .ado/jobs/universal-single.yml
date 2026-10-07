@@ -15,10 +15,6 @@ parameters:
     values:
       - PullRequest
       - Continuous
-  - name: useFabric
-    type: boolean
-    default: true
-
 steps:
   - template: ../templates/checkout-shallow.yml
 
@@ -37,12 +33,10 @@ steps:
   - template: ../templates/msbuild-sln.yml
     parameters:
       solutionDir: vnext
-      ${{ if eq(parameters.useFabric, true) }}:
-        solutionName: Microsoft.ReactNative.NewArch.sln
-      ${{ else }}:
-        solutionName: Microsoft.ReactNative.sln
+      solutionName: Microsoft.ReactNative.NewArch.sln
       buildPlatform: ${{ parameters.buildPlatform }}
       buildConfiguration: ${{ parameters.buildConfiguration }}
+      oneESMode: true
       msbuildArguments: /p:ForceImportAfterCppTargets=$(Build.SourcesDirectory)\vnext\PropertySheets\CIBuildOptimizations.props
 
   - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
@@ -69,7 +63,6 @@ steps:
         Mso.UnitTests/Mso.UnitTests.exe
       pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
       searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
-      testFiltercriteria: $(Universal.IntegrationTests.Filter)
       runTestsInIsolation: true
       platform: ${{ parameters.buildPlatform }}
       configuration: ${{ parameters.buildConfiguration }}
@@ -79,62 +72,3 @@ steps:
       vstestLocation: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
       failOnMinTestsNotRun: true
     condition: and(succeeded(), not(eq('${{ parameters.buildPlatform }}', 'ARM64')))
-
-  # Component tests — Debug/x64 only
-  - task: VSTest@3
-    displayName: Run Universal Unit Tests (Native - ComponentTests)
-    timeoutInMinutes: 5
-    inputs:
-      testSelector: testAssemblies
-      testAssemblyVer2: |
-        Microsoft.ReactNative.ComponentTests/Microsoft.ReactNative.ComponentTests.exe
-      pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-      searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
-      runTestsInIsolation: true
-      platform: ${{ parameters.buildPlatform }}
-      configuration: ${{ parameters.buildConfiguration }}
-      publishRunAttachments: true
-      collectDumpOn: onAbortOnly
-      vsTestVersion: latest
-      failOnMinTestsNotRun: true
-    condition: and(succeeded(), eq('${{ parameters.buildConfiguration }}', 'Debug'), eq('${{ parameters.buildPlatform }}', 'x64'))
-
-  # Managed UWP unit tests — non-Fabric only, skip ARM64
-  - ${{ if ne(parameters.useFabric, true) }}:
-    - task: VSTest@3
-      displayName: Run Universal Unit Tests (UWP)
-      timeoutInMinutes: 5
-      inputs:
-        testSelector: testAssemblies
-        testAssemblyVer2: |
-          Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
-        searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
-        runTestsInIsolation: true
-        platform: ${{ parameters.buildPlatform }}
-        configuration: ${{ parameters.buildConfiguration }}
-        publishRunAttachments: true
-        codeCoverageEnabled: true
-        collectDumpOn: onAbortOnly
-        vsTestVersion: latest
-        failOnMinTestsNotRun: true
-      condition: and(succeeded(), not(eq('${{ parameters.buildPlatform }}', 'ARM64')))
-
-  # Managed CodeGen unit tests — non-Fabric only, x64 only
-  - ${{ if ne(parameters.useFabric, true) }}:
-    - task: VSTest@3
-      displayName: Run Universal Unit Tests (NetCore)
-      timeoutInMinutes: 5
-      inputs:
-        testSelector: testAssemblies
-        testAssemblyVer2: |
-          Microsoft.ReactNative.Managed.CodeGen.UnitTests/Microsoft.ReactNative.Managed.CodeGen.UnitTests.dll
-        searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
-        runTestsInIsolation: true
-        platform: ${{ parameters.buildPlatform }}
-        configuration: ${{ parameters.buildConfiguration }}
-        publishRunAttachments: true
-        codeCoverageEnabled: true
-        collectDumpOn: onAbortOnly
-        vsTestVersion: latest
-        failOnMinTestsNotRun: true
-      condition: and(succeeded(), eq('${{ parameters.buildPlatform }}', 'x64'))

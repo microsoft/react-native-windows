@@ -18,7 +18,6 @@
     <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'==''">false</RnwNewArchOnly>
 
     <NuGetLockFileName>packages</NuGetLockFileName>
-    <NuGetLockFileName Condition="'$(UseHermes)'=='false'">$(NuGetLockFileName).chakra</NuGetLockFileName>
     <NuGetLockFileName Condition="'$(RnwNewArch)'=='true' AND '$(RnwNewArchOnly)'=='false'">$(NuGetLockFileName).newarch</NuGetLockFileName>
     <NuGetLockFileName Condition="'$(UseExperimentalWinUI3)'=='true'">$(NuGetLockFileName).experimentalwinui3</NuGetLockFileName>
     <NuGetLockFilePath>.\$(NuGetLockFileName).lock.json</NuGetLockFilePath>
