@@ -26,6 +26,9 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 
+// Standard Library
+#include <chrono>
+
 using std::function;
 using std::scoped_lock;
 using std::shared_ptr;
@@ -66,6 +69,30 @@ constexpr uint32_t operator""_MiB(unsigned long long int x) {
 constexpr char responseTypeText[] = "text";
 constexpr char responseTypeBase64[] = "base64";
 constexpr char responseTypeBlob[] = "blob";
+constexpr char retryOnTransientNetworkErrorOption[] = "Http.RetryOnTransientNetworkError";
+
+bool IsRetryableMethod(HttpMethod const &method) {
+  // C++/WinRT object equality checks COM identity, so compare method values instead.
+  // See https://learn.microsoft.com/uwp/cpp-ref-for-winrt/get-abi.
+  auto methodName = method.ToString();
+  return boost::iequals(methodName, HttpMethod::Get().ToString()) ||
+      boost::iequals(methodName, HttpMethod::Head().ToString());
+}
+
+bool IsRetryableTransportError(HRESULT error) noexcept {
+  switch (static_cast<uint32_t>(error)) {
+    case 0x80072EE2: // ERROR_INTERNET_TIMEOUT
+    case 0x80072EE7: // ERROR_INTERNET_NAME_NOT_RESOLVED
+    case 0x80072EFD: // ERROR_INTERNET_CANNOT_CONNECT
+    case 0x80072EFE: // ERROR_INTERNET_CONNECTION_ABORTED
+    case 0x80072EFF: // ERROR_INTERNET_CONNECTION_RESET
+    case 0x80072F83: // ERROR_INTERNET_DISCONNECTED
+    case 0x80072F85: // ERROR_INTERNET_PROXY_SERVER_UNREACHABLE
+      return true;
+    default:
+      return false;
+  }
+}
 
 } // namespace
 namespace Microsoft::React::Networking {
@@ -104,8 +131,8 @@ WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{s
 
 WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient{}) {}
 
-WinRTHttpResource::WinRTHttpResource(HttpClientFactory clientFactory) noexcept
-    : m_clientFactory{std::move(clientFactory)}, m_client{m_clientFactory()} {}
+WinRTHttpResource::WinRTHttpResource(IHttpClient &&client, HttpClientFactory clientFactory) noexcept
+    : m_clientFactory{std::move(clientFactory)}, m_client{std::move(client)} {}
 
 #pragma region IWinRTHttpRequestFactory
 
@@ -332,6 +359,7 @@ void WinRTHttpResource::AbortRequest(int64_t requestId) noexcept /*override*/ {
       return;
     }
     request = iter->second;
+    m_responses.erase(iter);
   }
 
   try {
@@ -397,9 +425,59 @@ void WinRTHttpResource::TrackResponse(int64_t requestId, ResponseOperation respo
   m_responses[requestId] = response;
 }
 
+ResponseOperation WinRTHttpResource::TryStartRetry(
+    int64_t requestId,
+    ResponseOperation const &expected,
+    IHttpClient const &client,
+    HttpRequestMessage const &request) {
+  scoped_lock lock{m_mutex};
+  auto iter = m_responses.find(requestId);
+  if (iter == m_responses.end() || iter->second != expected) {
+    return nullptr;
+  }
+
+  auto replacement = client.SendRequestAsync(request);
+  iter->second = replacement;
+  return replacement;
+}
+
 void WinRTHttpResource::UntrackResponse(int64_t requestId) noexcept {
   scoped_lock lock{m_mutex};
   m_responses.erase(requestId);
+}
+
+WinRTHttpResource::HttpClientSnapshot WinRTHttpResource::GetHttpClientSnapshot() noexcept {
+  scoped_lock lock{m_mutex};
+  return {m_client, m_clientGeneration};
+}
+
+bool WinRTHttpResource::TryReplaceHttpClient(uint64_t expectedGeneration) {
+  if (!m_clientFactory) {
+    return false;
+  }
+
+  scoped_lock factoryLock{m_clientFactoryMutex};
+  {
+    scoped_lock lock{m_mutex};
+    if (m_clientGeneration != expectedGeneration) {
+      return true;
+    }
+  }
+
+  auto replacement = m_clientFactory();
+
+  scoped_lock lock{m_mutex};
+  if (m_clientGeneration != expectedGeneration) {
+    return true;
+  }
+
+  m_client = std::move(replacement);
+  ++m_clientGeneration;
+  return true;
+}
+
+void WinRTHttpResource::InitializeHttpClient() {
+  m_client = m_clientFactory();
 }
 
 fire_and_forget
@@ -410,90 +488,132 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
   auto reqArgs = coArgs.as<RequestArgs>();
   auto coMethod = std::move(method);
   auto coUri = std::move(rtUri);
+  auto retryOnTransientNetworkError = GetRuntimeOptionBool(retryOnTransientNetworkErrorOption);
 
   // Ensure background thread
   co_await winrt::resume_background();
 
   auto props = winrt::single_threaded_map<winrt::hstring, IInspectable>();
   props.Insert(L"RequestArgs", coArgs);
-
-  auto coRequestOp = CreateRequest(std::move(coMethod), std::move(coUri), props, /*includeContent*/ true);
-  co_await lessthrow_await_adapter<IAsyncOperation<HttpRequestMessage>>{coRequestOp};
-  auto coRequestOpHR = coRequestOp.ErrorCode();
-  if (coRequestOpHR < 0) {
-    if (self->m_onError) {
-      self->m_onError(reqArgs->RequestId, Utilities::HResultToString(std::move(coRequestOpHR)), false);
-    }
-    co_return self->UntrackResponse(reqArgs->RequestId);
-  }
-
-  auto coRequest = coRequestOp.GetResults();
-
-  // If URI handler is available, it takes over request processing.
-  if (auto uriHandler = self->m_uriHandler.lock()) {
-    auto uri = winrt::to_string(coRequest.RequestUri().ToString());
-    try {
-      if (uriHandler->Supports(uri, reqArgs->ResponseType)) {
-        auto blob = uriHandler->Fetch(uri);
-        if (self->m_onDataObject && self->m_onRequestSuccess) {
-          self->m_onDataObject(reqArgs->RequestId, std::move(blob));
-          self->m_onRequestSuccess(reqArgs->RequestId);
-        }
-
-        if (self->m_onComplete) {
-          self->m_onComplete(reqArgs->RequestId);
-        }
-
-        co_return;
-      }
-    } catch (const hresult_error &e) {
-      if (self->m_onError)
-        co_return self->m_onError(reqArgs->RequestId, Utilities::HResultToString(e), false);
-    } catch (const std::exception &e) {
-      if (self->m_onError)
-        co_return self->m_onError(reqArgs->RequestId, e.what(), false);
-    }
-  }
+  auto timeoutDeadline = std::chrono::steady_clock::time_point::max();
 
   try {
-    auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
-
+    HttpRequestMessage coRequest{nullptr};
+    ResponseOperation sendRequestOp{nullptr};
+    ResponseOperation trackedRequestOp{nullptr};
     auto isText = reqArgs->ResponseType == responseTypeText;
 
-    self->TrackResponse(reqArgs->RequestId, sendRequestOp);
-
-    if (reqArgs->Timeout > 0) {
-      // See https://devblogs.microsoft.com/oldnewthing/20220415-00/?p=106486
-      auto timedOut = std::make_shared<bool>(false);
-      auto sendRequestTimeout = [](auto timedOut, auto milliseconds) -> ResponseOperation {
-        // Convert milliseconds to "ticks" (10^-7 seconds)
-        co_await winrt::resume_after(winrt::Windows::Foundation::TimeSpan{milliseconds * 10000});
-        *timedOut = true;
-        co_return nullptr;
-      }(timedOut, reqArgs->Timeout);
-
-      co_await lessthrow_await_adapter<ResponseOperation>{winrt::when_any(sendRequestOp, sendRequestTimeout)};
-
-      // Cancel either still unfinished coroutine.
-      sendRequestTimeout.Cancel();
-      sendRequestOp.Cancel();
-
-      if (*timedOut) {
+    for (uint32_t attempt = 0;; ++attempt) {
+      auto coRequestOp = CreateRequest(HttpMethod{coMethod}, Uri{coUri}, props, /*includeContent*/ true);
+      co_await lessthrow_await_adapter<IAsyncOperation<HttpRequestMessage>>{coRequestOp};
+      auto coRequestOpHR = coRequestOp.ErrorCode();
+      if (coRequestOpHR < 0) {
         if (self->m_onError) {
-          // TODO: Try to replace with either:
-          //       WININET_E_TIMEOUT
-          //       ERROR_INTERNET_TIMEOUT
-          //       INET_E_CONNECTION_TIMEOUT
-          self->m_onError(reqArgs->RequestId, Utilities::HResultToString(HRESULT_FROM_WIN32(ERROR_TIMEOUT)), true);
+          self->m_onError(reqArgs->RequestId, Utilities::HResultToString(std::move(coRequestOpHR)), false);
         }
         co_return self->UntrackResponse(reqArgs->RequestId);
       }
-    } else {
-      co_await lessthrow_await_adapter<ResponseOperation>{sendRequestOp};
-    }
 
-    auto result = sendRequestOp.ErrorCode();
-    if (result < 0) {
+      coRequest = coRequestOp.GetResults();
+
+      // If URI handler is available, it takes over request processing.
+      if (auto uriHandler = self->m_uriHandler.lock()) {
+        auto uri = winrt::to_string(coRequest.RequestUri().ToString());
+        try {
+          if (uriHandler->Supports(uri, reqArgs->ResponseType)) {
+            auto blob = uriHandler->Fetch(uri);
+            if (self->m_onDataObject && self->m_onRequestSuccess) {
+              self->m_onDataObject(reqArgs->RequestId, std::move(blob));
+              self->m_onRequestSuccess(reqArgs->RequestId);
+            }
+
+            if (self->m_onComplete) {
+              self->m_onComplete(reqArgs->RequestId);
+            }
+
+            co_return self->UntrackResponse(reqArgs->RequestId);
+          }
+        } catch (const hresult_error &e) {
+          if (self->m_onError) {
+            self->m_onError(reqArgs->RequestId, Utilities::HResultToString(e), false);
+          }
+          co_return self->UntrackResponse(reqArgs->RequestId);
+        } catch (const std::exception &e) {
+          if (self->m_onError) {
+            self->m_onError(reqArgs->RequestId, e.what(), false);
+          }
+          co_return self->UntrackResponse(reqArgs->RequestId);
+        }
+      }
+
+      auto clientSnapshot = self->GetHttpClientSnapshot();
+      if (attempt == 0) {
+        sendRequestOp = clientSnapshot.Client.SendRequestAsync(coRequest);
+        self->TrackResponse(reqArgs->RequestId, sendRequestOp);
+      } else {
+        sendRequestOp =
+            self->TryStartRetry(reqArgs->RequestId, trackedRequestOp, clientSnapshot.Client, coRequest);
+        if (!sendRequestOp) {
+          co_return;
+        }
+      }
+      trackedRequestOp = sendRequestOp;
+
+      if (reqArgs->Timeout > 0) {
+        if (timeoutDeadline == std::chrono::steady_clock::time_point::max()) {
+          timeoutDeadline = std::chrono::steady_clock::now() + std::chrono::milliseconds{reqArgs->Timeout};
+        }
+        auto remainingTimeout =
+            std::chrono::duration_cast<std::chrono::milliseconds>(timeoutDeadline - std::chrono::steady_clock::now())
+                .count();
+        if (remainingTimeout <= 0) {
+          sendRequestOp.Cancel();
+          if (self->m_onError) {
+            self->m_onError(reqArgs->RequestId, Utilities::HResultToString(HRESULT_FROM_WIN32(ERROR_TIMEOUT)), true);
+          }
+          co_return self->UntrackResponse(reqArgs->RequestId);
+        }
+
+        // See https://devblogs.microsoft.com/oldnewthing/20220415-00/?p=106486
+        auto timedOut = std::make_shared<bool>(false);
+        auto sendRequestTimeout = [](auto timedOut, auto milliseconds) -> ResponseOperation {
+          // Convert milliseconds to "ticks" (10^-7 seconds)
+          co_await winrt::resume_after(winrt::Windows::Foundation::TimeSpan{milliseconds * 10000});
+          *timedOut = true;
+          co_return nullptr;
+        }(timedOut, remainingTimeout);
+
+        co_await lessthrow_await_adapter<ResponseOperation>{winrt::when_any(sendRequestOp, sendRequestTimeout)};
+
+        // Cancel either still unfinished coroutine.
+        sendRequestTimeout.Cancel();
+        sendRequestOp.Cancel();
+
+        if (*timedOut) {
+          if (self->m_onError) {
+            // TODO: Try to replace with either:
+            //       WININET_E_TIMEOUT
+            //       ERROR_INTERNET_TIMEOUT
+            //       INET_E_CONNECTION_TIMEOUT
+            self->m_onError(reqArgs->RequestId, Utilities::HResultToString(HRESULT_FROM_WIN32(ERROR_TIMEOUT)), true);
+          }
+          co_return self->UntrackResponse(reqArgs->RequestId);
+        }
+      } else {
+        co_await lessthrow_await_adapter<ResponseOperation>{sendRequestOp};
+      }
+
+      auto result = sendRequestOp.ErrorCode();
+      if (result >= 0) {
+        break;
+      }
+
+      if (attempt == 0 && retryOnTransientNetworkError && IsRetryableMethod(coMethod) &&
+          IsRetryableTransportError(result) &&
+          self->TryReplaceHttpClient(clientSnapshot.Generation)) {
+        continue;
+      }
+
       if (self->m_onError) {
         self->m_onError(reqArgs->RequestId, Utilities::HResultToString(std::move(result)), false);
       }
@@ -668,23 +788,29 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
     defaultUserAgent = winrt::to_hstring(userAgent);
   }
 
-  auto redirFilter = winrt::make<RedirectHttpFilter>(defaultUserAgent);
-  HttpClient client;
+  auto originPolicy = static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy"));
+  auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
+  auto createClient = [defaultUserAgent, originPolicy, globalOrigin](weak_ptr<IWinRTHttpRequestFactory> requestFactory) {
+    auto redirFilter = winrt::make<RedirectHttpFilter>(defaultUserAgent);
+    redirFilter.as<RedirectHttpFilter>()->SetRequestFactory(std::move(requestFactory));
 
-  if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {
-    client = HttpClient{redirFilter};
-  } else {
-    auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
-    auto opFilter = winrt::make<OriginPolicyHttpFilter>(std::move(globalOrigin), redirFilter);
+    if (originPolicy == OriginPolicy::None) {
+      return HttpClient{redirFilter};
+    }
+
+    auto opFilter = winrt::make<OriginPolicyHttpFilter>(string{globalOrigin}, redirFilter);
     redirFilter.as<RedirectHttpFilter>()->SetRedirectSource(opFilter.as<IRedirectEventSource>());
 
-    client = HttpClient{opFilter};
-  }
+    return HttpClient{opFilter};
+  };
 
-  auto result = std::make_shared<WinRTHttpResource>(std::move(client));
-
-  // Allow redirect filter to create requests based on the resource's state
-  redirFilter.as<RedirectHttpFilter>()->SetRequestFactory(weak_ptr<IWinRTHttpRequestFactory>{result});
+  auto requestFactory = std::make_shared<weak_ptr<IWinRTHttpRequestFactory>>();
+  auto clientFactory = [createClient = std::move(createClient), requestFactory]() {
+    return createClient(*requestFactory);
+  };
+  auto result = std::make_shared<WinRTHttpResource>(IHttpClient{nullptr}, clientFactory);
+  *requestFactory = result;
+  result->InitializeHttpClient();
 
   // Register resource as HTTP module proxy.
   if (inspectableProperties) {

@@ -45,6 +45,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   TEST_METHOD_CLEANUP(MethodCleanup) {
     // Clear any runtime options that may be used by tests in this class.
     MicrosoftReactSetRuntimeOptionString("Http.UserAgent", nullptr);
+    MicrosoftReactSetRuntimeOptionBool("Http.RetryOnTransientNetworkError", false);
   }
   TEST_METHOD(RequestGetSucceeds) {
     string url = MakeHttpResourceUrl("/get");
@@ -274,6 +275,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   TEST_METHOD(OfficeDev_OfficeJS_4972_RetriesGetWithFreshClientAfterConnectionFailure) {
     const auto uniqueId = std::to_string(std::chrono::steady_clock::now().time_since_epoch().count());
     string url = MakeOfficeJsIssue4972Url(uniqueId);
+    MicrosoftReactSetRuntimeOptionBool("Http.RetryOnTransientNetworkError", true);
 
     promise<void> requestPromise;
     string error;

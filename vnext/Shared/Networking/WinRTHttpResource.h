@@ -26,8 +26,15 @@ class WinRTHttpResource : public IHttpResource,
   using HttpClientFactory = std::function<winrt::Windows::Web::Http::IHttpClient()>;
 
  private:
+  struct HttpClientSnapshot {
+    winrt::Windows::Web::Http::IHttpClient Client;
+    uint64_t Generation;
+  };
+
   HttpClientFactory m_clientFactory;
   winrt::Windows::Web::Http::IHttpClient m_client;
+  uint64_t m_clientGeneration{0};
+  std::mutex m_clientFactoryMutex;
   std::mutex m_mutex;
   std::unordered_map<int64_t, ResponseOperation> m_responses;
 
@@ -48,7 +55,17 @@ class WinRTHttpResource : public IHttpResource,
 
   void TrackResponse(int64_t requestId, ResponseOperation response) noexcept;
 
+  ResponseOperation TryStartRetry(
+      int64_t requestId,
+      ResponseOperation const &expected,
+      winrt::Windows::Web::Http::IHttpClient const &client,
+      winrt::Windows::Web::Http::HttpRequestMessage const &request);
+
   void UntrackResponse(int64_t requestId) noexcept;
+
+  HttpClientSnapshot GetHttpClientSnapshot() noexcept;
+
+  bool TryReplaceHttpClient(uint64_t expectedGeneration);
 
   winrt::fire_and_forget PerformSendRequest(
       winrt::Windows::Web::Http::HttpMethod &&method,
@@ -60,7 +77,11 @@ class WinRTHttpResource : public IHttpResource,
 
   WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient &&client) noexcept;
 
-  WinRTHttpResource(HttpClientFactory clientFactory) noexcept;
+  WinRTHttpResource(
+      winrt::Windows::Web::Http::IHttpClient &&client,
+      HttpClientFactory clientFactory) noexcept;
+
+  void InitializeHttpClient();
 
 #pragma region IWinRTHttpRequestFactory
 
