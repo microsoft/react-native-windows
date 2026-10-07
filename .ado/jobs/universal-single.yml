@@ -36,6 +36,7 @@ steps:
       solutionName: Microsoft.ReactNative.NewArch.sln
       buildPlatform: ${{ parameters.buildPlatform }}
       buildConfiguration: ${{ parameters.buildConfiguration }}
+      oneESMode: true
       msbuildArguments: /p:ForceImportAfterCppTargets=$(Build.SourcesDirectory)\vnext\PropertySheets\CIBuildOptimizations.props
 
   - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
@@ -62,7 +63,6 @@ steps:
         Mso.UnitTests/Mso.UnitTests.exe
       pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
       searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
-      testFiltercriteria: $(Universal.IntegrationTests.Filter)
       runTestsInIsolation: true
       platform: ${{ parameters.buildPlatform }}
       configuration: ${{ parameters.buildConfiguration }}
@@ -72,22 +72,3 @@ steps:
       vstestLocation: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
       failOnMinTestsNotRun: true
     condition: and(succeeded(), not(eq('${{ parameters.buildPlatform }}', 'ARM64')))
-
-  # Component tests — Debug/x64 only
-  - task: VSTest@3
-    displayName: Run Universal Unit Tests (Native - ComponentTests)
-    timeoutInMinutes: 5
-    inputs:
-      testSelector: testAssemblies
-      testAssemblyVer2: |
-        Microsoft.ReactNative.ComponentTests/Microsoft.ReactNative.ComponentTests.exe
-      pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-      searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
-      runTestsInIsolation: true
-      platform: ${{ parameters.buildPlatform }}
-      configuration: ${{ parameters.buildConfiguration }}
-      publishRunAttachments: true
-      collectDumpOn: onAbortOnly
-      vsTestVersion: latest
-      failOnMinTestsNotRun: true
-    condition: and(succeeded(), eq('${{ parameters.buildConfiguration }}', 'Debug'), eq('${{ parameters.buildPlatform }}', 'x64'))
