@@ -1411,12 +1411,15 @@ std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const no
 
 // When we are notified by RichEdit that the text changed, we need to notify JS
 void WindowsTextInputComponentView::OnTextUpdated() noexcept {
+  const auto eventCount = m_eventEmitter && !m_comingFromJS ? ++m_nativeEventCount : m_nativeEventCount;
+  m_mostRecentEventCount = eventCount;
+
   auto data = m_state->getData();
   // auto newAttributedString = getAttributedString();
   // if (data.attributedString == newAttributedString)
   //    return;
   data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
-  data.mostRecentEventCount = m_nativeEventCount;
+  data.mostRecentEventCount = eventCount;
 
   m_state->updateState(std::move(data));
 
@@ -1425,7 +1428,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
     onChangeArgs.text = GetTextFromRichEdit();
-    onChangeArgs.eventCount = ++m_nativeEventCount;
+    onChangeArgs.eventCount = eventCount;
     emitter->onChange(onChangeArgs);
     if (windowsTextInputProps().multiline) {
       auto [contentWidth, contentHeight] = GetContentSize();
@@ -1555,6 +1558,7 @@ void WindowsTextInputComponentView::setAcccessiblityValue(std::string &&value) n
     value = ::Microsoft::Common::Unicode::Utf16ToUtf8(uppercaseValue);
   }
   UpdateText(value);
+  OnTextUpdated();
 }
 
 bool WindowsTextInputComponentView::getAcccessiblityIsReadOnly() noexcept {
