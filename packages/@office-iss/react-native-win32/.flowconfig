@@ -1,7 +1,4 @@
 [ignore]
-; Ignore build cache folder
-glob:packages/react-native/sdks/**
-
 ; We fork some components by platform - ignore all platforms except win32
 .*/*[.]android.js
 .*/*[.]ios.js
@@ -9,7 +6,7 @@ glob:packages/react-native/sdks/**
 .*/*[.]windesktop.js
 
 ; Ignore fb_internal modules
-glob:packages/react-native/src/fb_internal/**
+<PROJECT_ROOT>/packages/react-native/src/fb_internal/.*
 
 ; These modules have base components and win32 versions.
 ; Ideally we'd delete the base versions of files that had .win32 overrides as part of the
@@ -68,14 +65,10 @@ glob:packages/react-native/src/fb_internal/**
 <PROJECT_ROOT>/packages/react-native/sdks/.*
 
 ; Ignore the codegen e2e tests
-glob:packages/react-native-codegen/e2e/__test_fixtures__/modules/NativeEnumTurboModule.js
+<PROJECT_ROOT>/packages/react-native-codegen/e2e/__test_fixtures__/modules/NativeEnumTurboModule.js
 
 ; Ignore "BUCK" generated dirs
-glob:.buckd/**
-
-; Ignore other platform suffixes
-glob:**/*.macos.js
-glob:**/*.windows.js
+<PROJECT_ROOT>/\.buckd/
 
 ; Ignore cache files
 .*/node_modules/.cache*
@@ -89,19 +82,19 @@ glob:**/*.windows.js
 ; Ignore files with flow typing issues #9223
 .*/react-native-win32/Libraries/Core/ReactNativeVersionCheck.js
 
-glob:**/node_modules/resolve/test/resolver/malformed_package_json/package.json
+.*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
 
 ; Checked-in build output
-glob:packages/debugger-frontend/dist/**
+<PROJECT_ROOT>/packages/debugger-frontend/dist/
 
 ; Generated build output
-glob:packages/*/dist/**
+<PROJECT_ROOT>/packages/.*/dist
 
 ; helloworld
-glob:private/helloworld/ios/Pods/**
+<PROJECT_ROOT>/private/helloworld/ios/Pods/
 
 ; Ignore rn-tester Pods
-glob:packages/rn-tester/Pods/**
+<PROJECT_ROOT>/packages/rn-tester/Pods/
 
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
@@ -145,6 +138,8 @@ munge_underscores=true
 
 module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.win32.js'
 module.name_mapper='^@office-iss/react-native-win32$' -> '<PROJECT_ROOT>/index.win32.js'
+module.name_mapper='^react-native/react-private-interface$' -> '<PROJECT_ROOT>/src/react-private-interface.js'
+module.name_mapper='^react-native/setup-env$' -> '<PROJECT_ROOT>/src/setup-env.js'
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@office-iss/react-native-win32/\(.*\)$' -> '<PROJECT_ROOT>\/1'
 module.name_mapper='^@react-native/dev-middleware$' -> '<PROJECT_ROOT>/\1'
@@ -179,4 +174,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.325.0
+^0.316.0

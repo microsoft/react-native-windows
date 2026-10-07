@@ -137,8 +137,8 @@ function resolveExportsSubpath(packageName, subpath) /*: string*/ {
   let resolved = exportsTarget;
   while (resolved && typeof resolved === 'object') {
     resolved =
-      resolved.default ??
       resolved['react-native'] ??
+      resolved.default ??
       resolved.require ??
       resolved.import ??
       null;
