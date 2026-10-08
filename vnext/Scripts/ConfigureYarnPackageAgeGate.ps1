@@ -3,7 +3,7 @@
 
 $ErrorActionPreference = 'Stop'
 
-& corepack yarn config set npmMinimalAgeGate 8d
+& yarn config set npmMinimalAgeGate 8d
 if ($LASTEXITCODE -ne 0) {
     throw 'Failed to configure the Yarn package age gate.'
 }
