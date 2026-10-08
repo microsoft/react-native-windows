@@ -146,10 +146,13 @@ export class AutomationClient {
 
       case RpcStatusType.success: {
         const pendingReq = this.pendingRequests.get(response.payload.id);
-        if (pendingReq) {
-          this.pendingRequests.delete(response.payload.id);
-          pendingReq({type: 'success', result: response.payload.result}, null);
+        if (!pendingReq) {
+          this.failUnexpectedResponseId(response.payload.id);
+          return;
         }
+
+        this.pendingRequests.delete(response.payload.id);
+        pendingReq({type: 'success', result: response.payload.result}, null);
         return;
       }
 
@@ -169,6 +172,8 @@ export class AutomationClient {
                 JSON.stringify(response.payload.error),
             ),
           );
+        } else {
+          this.failUnexpectedResponseId(id);
         }
         return;
       }
@@ -188,9 +193,17 @@ export class AutomationClient {
       this.pendingRequests.delete(id);
       pendingReq(null, err);
     } else {
-      // Valid numeric id, but already settled (stale/duplicate) — ignore.
-      console.error(err.message);
+      this.failAllPendingRequests(err);
     }
+  }
+
+  private failUnexpectedResponseId(id: any) {
+    this.failAllPendingRequests(
+      new Error(
+        'Could not find pending request for JSON-RPC response ID ' +
+          JSON.stringify(id),
+      ),
+    );
   }
 
   private failAllPendingRequests(err: Error) {
