@@ -189,15 +189,8 @@ if errorlevel 1 goto :failure
 call git commit -m "add rnw dependency"
 if errorlevel 1 goto :failure
 
-@echo creaternwapp.cmd Running init-windows with: npx --yes @react-native-community/cli@%RNCLI_VERSION% init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
-call npx --yes @react-native-community/cli@%RNCLI_VERSION% init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
-
-if %ERRORLEVEL% neq 0 (
-  @echo creaternwapp.cmd init-windows command not available from react-native CLI, falling back to react-native-windows-init
-  set RNW_PROJECT_LANGUAGE=cpp
-  if not "x%RNW_TEMPLATE_TYPE:cs=%"=="x%RNW_TEMPLATE_TYPE%" set RNW_PROJECT_LANGUAGE=cs
-  call npx --yes react-native-windows-init@%RNW_VERSION% --projectType app --language !RNW_PROJECT_LANGUAGE! --overwrite --verbose
-)
+@echo creaternwapp.cmd Running init-windows with the project-installed React Native CLI
+call node node_modules\@react-native-community\cli\build\bin.js init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
 
 if %ERRORLEVEL% neq 0 (
   @echo creaternwapp.cmd: Unable to initialize Windows project

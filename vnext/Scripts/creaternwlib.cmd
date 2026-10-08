@@ -174,13 +174,8 @@ rem --no-verify skips the generated project's lefthook hooks (run via bash, abse
 call git commit --no-verify -m "chore: add rnw dependency"
 if errorlevel 1 goto :failure
 
-@echo creaternwlib.cmd Running init-windows with: yarn react-native init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
-call yarn react-native init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
-
-if %ERRORLEVEL% neq 0 (
-  @echo creaternwlib.cmd init-windows command not available from react-native CLI, falling back to react-native-windows-init
-  call npx --yes react-native-windows-init@%RNW_VERSION% --projectType lib --language cpp --overwrite --verbose
-)
+@echo creaternwlib.cmd Running init-windows with the project-installed React Native CLI
+call node node_modules\@react-native-community\cli\build\bin.js init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
 
 if %ERRORLEVEL% neq 0 (
   @echo creaternwlib.cmd: Unable to initialize Windows project
