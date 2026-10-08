@@ -1,0 +1,16 @@
+# Authenticates npm and Yarn 4 to the ms/react-native-public feed with the build's managed identity.
+steps:
+- task: AzureCLI@2
+  displayName: Authenticate to the package feed
+  inputs:
+    azureSubscription: Office-Hermes-Windows-Bot
+    scriptType: pscore
+    scriptLocation: inlineScript
+    inlineScript: |
+      $token = az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798 --query accessToken --output tsv
+      if ([string]::IsNullOrWhiteSpace($token)) { throw 'Failed to acquire a package feed access token.' }
+      Write-Host "##vso[task.setsecret]$token"
+      Write-Host "##vso[task.setvariable variable=RNW_NPM_FEED_TOKEN;issecret=true]$token"
+      $reg = '//pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/'
+      Set-Content -Path (Join-Path $env:USERPROFILE '.npmrc') -Encoding ascii -Value "${reg}:_authToken=$token"
+      Set-Content -Path (Join-Path $env:USERPROFILE '.yarnrc.yml') -Encoding ascii -Value @('npmAlwaysAuth: true', "npmAuthToken: $token")

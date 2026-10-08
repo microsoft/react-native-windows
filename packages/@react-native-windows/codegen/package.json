@@ -9,7 +9,6 @@
     "directory": "packages/@react-native-windows/codegen"
   },
   "license": "MIT",
-  "private": false,
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",

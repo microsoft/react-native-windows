@@ -51,6 +51,8 @@ jobs:
             - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
+              parameters:
+                buildEnvironment: ${{ parameters.buildEnvironment }}
 
             - template: ../templates/prepare-build-env.yml
               parameters:
@@ -365,6 +367,14 @@ jobs:
               condition: failed()
 
             - task: CopyFiles@2
+              displayName: Copy Fabric image snapshots
+              inputs:
+                sourceFolder: packages/e2e-test-app-fabric/test/__image_snapshots__
+                targetFolder: $(Build.StagingDirectory)/snapshots-image
+                contents: "**"
+              condition: failed()
+
+            - task: CopyFiles@2
               displayName: Copy RNTesterApp artifacts
               inputs:
                 sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabric/windows/${{ matrix.BuildPlatform }}/Release
@@ -374,7 +384,6 @@ jobs:
 
             - template: ../templates/upload-build-logs.yml
               parameters:
-                oneESMode: true
                 buildLogDirectory: '$(BuildLogDirectory)'
 
           templateContext:
@@ -394,6 +403,16 @@ jobs:
               condition: failed()
               targetPath: $(Build.StagingDirectory)/snapshots-fabric
               artifactName: Snapshots - RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
+            - output: pipelineArtifact
+              displayName: 'Publish Artifact: Image Diffs'
+              condition: failed()
+              targetPath: $(Build.StagingDirectory)/snapshots-image-diffs
+              artifactName: Snapshots - RNTesterApp-Image-Diffs-${{ matrix.Name }}-$(System.JobAttempt)
+            - output: pipelineArtifact
+              displayName: 'Publish Artifact: Image Snapshots'
+              condition: failed()
+              targetPath: $(Build.StagingDirectory)/snapshots-image
+              artifactName: Snapshots - RNTesterApp-Image-${{ matrix.Name }}-$(System.JobAttempt)
             - output: pipelineArtifact
               displayName: 'Upload build logs'
               condition: succeededOrFailed()

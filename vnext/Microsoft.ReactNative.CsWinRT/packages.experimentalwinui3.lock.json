@@ -2,28 +2,20 @@
   "version": 1,
   "dependencies": {
     "net10.0-windows10.0.22621": {
+      "Microsoft.UI.Xaml": {
+        "type": "Direct",
+        "requested": "[2.8.0, )",
+        "resolved": "2.8.0",
+        "contentHash": "vxdHxTr63s5KVtNddMFpgvjBjUH50z7seq/5jLWmmSuf8poxg+sXrywkofUdE8ZstbpO9y3FL/IXXUcPYbeesA==",
+        "dependencies": {
+          "Microsoft.Web.WebView2": "1.0.1264.42"
+        }
+      },
       "Microsoft.Windows.CsWinRT": {
         "type": "Direct",
         "requested": "[2.2.0, )",
         "resolved": "2.2.0",
         "contentHash": "R8MDVawukHrKgYCFgYaoLfbAna/FrImEFRxDK9k8ITbrXv3KLE5uN6tRqrNV83H4MFdqJ/uiA/hg1cSsXkl0vw=="
-      },
-      "Microsoft.WindowsAppSDK": {
-        "type": "Direct",
-        "requested": "[2.0.0-experimental3, )",
-        "resolved": "2.0.0-experimental3",
-        "contentHash": "eP4XWWccngqnwyJVTYbdlVDyUyFW7EintimqOyq3ttk/h4dCwvW0FNTjq6qvnzkmWKiSqoXau/d5Dy27wSAKpg==",
-        "dependencies": {
-          "Microsoft.WindowsAppSDK.AI": "[2.0.57-experimental]",
-          "Microsoft.WindowsAppSDK.Base": "[2.0.0-experimental]",
-          "Microsoft.WindowsAppSDK.DWrite": "[2.0.0-experimental]",
-          "Microsoft.WindowsAppSDK.Foundation": "[2.0.8-experimental]",
-          "Microsoft.WindowsAppSDK.InteractiveExperiences": "[2.0.3-experimental]",
-          "Microsoft.WindowsAppSDK.ML": "[2.0.44-experimental]",
-          "Microsoft.WindowsAppSDK.Runtime": "[2.0.0-experimental3]",
-          "Microsoft.WindowsAppSDK.Widgets": "[2.0.2-experimental]",
-          "Microsoft.WindowsAppSDK.WinUI": "[2.0.3-experimental]"
-        }
       },
       "boost": {
         "type": "Transitive",
@@ -37,8 +29,8 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
-        "resolved": "0.0.0-2604.21001-94aa5e1d",
-        "contentHash": "8eHA3O043jIeK7E1gJbzgsdujaDTIBwLSl6pZj7CdQl+ryFqaW88XVU9ogWJPxk5lR2T4cU/OlEJfZynqoyYew=="
+        "resolved": "0.0.0-2608.12001-35d34796",
+        "contentHash": "6EirG0swfzCbfajtXtUUUFJJqi0yYzYOMRjkx0XcLB1a8qYjAhRcFdAfsNDvxPbs0ErI+6++EjBZquf3YFQZDA=="
       },
       "Microsoft.SourceLink.Common": {
         "type": "Transitive",
@@ -68,6 +60,22 @@
         "type": "Transitive",
         "resolved": "1.7.20250829.1",
         "contentHash": "IMdvRmCIZnBS5GkYnv0po1bcx6U1OF39pqA4TphQ9evDzpCRoSE19/PkDvlUNNrBavTsLIEJgd/TAIFner75ow=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Transitive",
+        "resolved": "2.0.0-experimental3",
+        "contentHash": "eP4XWWccngqnwyJVTYbdlVDyUyFW7EintimqOyq3ttk/h4dCwvW0FNTjq6qvnzkmWKiSqoXau/d5Dy27wSAKpg==",
+        "dependencies": {
+          "Microsoft.WindowsAppSDK.AI": "[2.0.57-experimental]",
+          "Microsoft.WindowsAppSDK.Base": "[2.0.0-experimental]",
+          "Microsoft.WindowsAppSDK.DWrite": "[2.0.0-experimental]",
+          "Microsoft.WindowsAppSDK.Foundation": "[2.0.8-experimental]",
+          "Microsoft.WindowsAppSDK.InteractiveExperiences": "[2.0.3-experimental]",
+          "Microsoft.WindowsAppSDK.ML": "[2.0.44-experimental]",
+          "Microsoft.WindowsAppSDK.Runtime": "[2.0.0-experimental3]",
+          "Microsoft.WindowsAppSDK.Widgets": "[2.0.2-experimental]",
+          "Microsoft.WindowsAppSDK.WinUI": "[2.0.3-experimental]"
+        }
       },
       "Microsoft.WindowsAppSDK.AI": {
         "type": "Transitive",
@@ -160,22 +168,11 @@
           "boost": "[1.84.0, )"
         }
       },
-      "fmt": {
-        "type": "Project"
-      },
-      "folly": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "[1.84.0, )",
-          "fmt": "[1.0.0, )"
-        }
-      },
       "microsoft.reactnative": {
         "type": "Project",
         "dependencies": {
           "Common": "[1.0.0, )",
-          "Folly": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.0.0-2604.21001-94aa5e1d, )",
+          "Microsoft.JavaScript.Hermes": "[0.0.0-2608.12001-35d34796, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.WindowsAppSDK": "[2.0.0-experimental3, )",
           "ReactCommon": "[1.0.0, )",
@@ -185,7 +182,6 @@
       "reactcommon": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
           "boost": "[1.84.0, )"
         }
       }

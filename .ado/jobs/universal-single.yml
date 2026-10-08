@@ -19,6 +19,8 @@ steps:
   - template: ../templates/checkout-shallow.yml
 
   - template: ../templates/prepare-js-env.yml
+    parameters:
+      buildEnvironment: ${{ parameters.buildEnvironment }}
 
   - template: ../templates/prepare-build-env.yml
     parameters:
@@ -34,7 +36,6 @@ steps:
       solutionName: Microsoft.ReactNative.NewArch.sln
       buildPlatform: ${{ parameters.buildPlatform }}
       buildConfiguration: ${{ parameters.buildConfiguration }}
-      oneESMode: true
       msbuildArguments: /p:ForceImportAfterCppTargets=$(Build.SourcesDirectory)\vnext\PropertySheets\CIBuildOptimizations.props
 
   - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:

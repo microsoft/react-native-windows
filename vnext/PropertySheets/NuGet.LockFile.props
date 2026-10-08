@@ -8,9 +8,17 @@
        -->
 
   <PropertyGroup>
-    <RestoreLockedMode Condition="'$(RestoreLockedMode)'=='' OR '$(BuildingInRnwRepo)'=='true'">true</RestoreLockedMode>
+    <!-- Locked vs. force-evaluate is decided centrally in the repo-root Directory.Build.props (force-evaluate locally, locked in CI); don't force locked mode on here or it conflicts with force-evaluate (NU1512). -->
+    <RestoreLockedMode Condition="'$(RestoreLockedMode)'==''">false</RestoreLockedMode>
+
+    <!-- RnwNewArchOnly is for projects that always build with RnwNewArch so they don't add .newarch to the filename. -->
+    <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'=='' AND '$(SolutionName)'=='ReactWindows-Desktop'">true</RnwNewArchOnly>
+    <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'=='' AND '$(RnwExternalPropsLoaded)'=='Microsoft.ReactNative.Composition.CppApp.props'">true</RnwNewArchOnly>
+    <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'=='' AND '$(RnwExternalPropsLoaded)'=='Microsoft.ReactNative.Composition.Package.props'">true</RnwNewArchOnly>
+    <RnwNewArchOnly Condition="'$(RnwNewArchOnly)'==''">false</RnwNewArchOnly>
 
     <NuGetLockFileName>packages</NuGetLockFileName>
+    <NuGetLockFileName Condition="'$(RnwNewArch)'=='true' AND '$(RnwNewArchOnly)'=='false'">$(NuGetLockFileName).newarch</NuGetLockFileName>
     <NuGetLockFileName Condition="'$(UseExperimentalWinUI3)'=='true'">$(NuGetLockFileName).experimentalwinui3</NuGetLockFileName>
     <NuGetLockFilePath>.\$(NuGetLockFileName).lock.json</NuGetLockFilePath>
   </PropertyGroup>

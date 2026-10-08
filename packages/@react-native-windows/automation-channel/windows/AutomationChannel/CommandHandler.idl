@@ -19,6 +19,8 @@ namespace AutomationChannel {
         CommandHandler BindOperation(String methodName, SyncOperation operation);
         CommandHandler BindAsyncOperation(String methodName, AsyncOperation operation);
 
+        Boolean IsMethodRegistered(String methodName);
+
         // May throw on delegate error
         Windows.Foundation.IAsyncOperation<Windows.Data.Json.IJsonValue> Invoke(String methodName, Windows.Data.Json.JsonValue params);
     };

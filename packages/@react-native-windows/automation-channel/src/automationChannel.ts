@@ -71,20 +71,31 @@ export class AutomationClient {
 
   private onData(chunk: Buffer) {
     this.receiveBuffer = Buffer.concat([this.receiveBuffer, chunk]);
-    if (this.receiveBuffer.length >= 4) {
+
+    // Localhost TCP can coalesce responses into one chunk, so drain every
+    // complete frame and advance past it; stopping after one leaves later
+    // responses stuck behind it and wedges the channel.
+    while (this.receiveBuffer.length >= 4) {
       const messageLength = this.receiveBuffer.readUInt32LE();
       const totalLength = messageLength + 4;
+      if (this.receiveBuffer.length < totalLength) {
+        break;
+      }
 
-      if (this.receiveBuffer.length >= totalLength) {
-        const messageBuffer = this.receiveBuffer.slice(4, totalLength);
+      const messageBuffer = this.receiveBuffer.subarray(4, totalLength);
+      this.receiveBuffer = this.receiveBuffer.subarray(totalLength);
 
-        if (totalLength < this.receiveBuffer.length) {
-          this.receiveBuffer = Buffer.from(this.receiveBuffer, totalLength);
-        } else {
-          this.receiveBuffer = Buffer.alloc(0);
-        }
-
+      // One bad frame can't be tied to a specific request, so fail every
+      // in-flight request rather than let any hang forever (invoke has no timeout).
+      try {
         this.onMessage(messageBuffer);
+      } catch (err) {
+        this.failAllPendingRequests(
+          new Error(
+            'Unexpected error handling automation-channel message: ' +
+              (err instanceof Error ? err.message : String(err)),
+          ),
+        );
       }
     }
   }
@@ -102,41 +113,104 @@ export class AutomationClient {
   private onMessage(message: Buffer) {
     const response = jsonrpc.parseJsonRpcString(message.toString('utf8'));
     if (Array.isArray(response)) {
-      throw new Error('Expected single message');
+      this.failAllPendingRequests(
+        new Error('Unexpected JSON-RPC batch response'),
+      );
+      return;
     }
 
     switch (response.type) {
+      // The server only ever sends responses; a request/notification frame means
+      // the stream is out of sync, so fail all in-flight requests rather than
+      // silently ignore it (invoke has no timeout).
       case RpcStatusType.request:
-        throw new Error('Received JSON-RPC request instead of response');
       case RpcStatusType.notification:
-        throw new Error('Unexpected JSON-RPC notification');
-      case RpcStatusType.invalid:
-        throw new Error(
-          'Invalid JSON-RPC2 response: ' +
-            JSON.stringify(response.payload, null, 2),
+        this.failAllPendingRequests(
+          new Error('Unexpected JSON-RPC message from server'),
         );
+        return;
+
+      case RpcStatusType.invalid: {
+        // jsonrpc-lite keeps the raw response under `data`; use its id to reject
+        // the matching request so its caller fails fast instead of hanging.
+        const rawId = (response.payload as any)?.data?.id;
+        this.rejectPendingRequest(
+          rawId,
+          new Error(
+            'Invalid JSON-RPC2 response: ' +
+              JSON.stringify(response.payload, null, 2),
+          ),
+        );
+        return;
+      }
 
       case RpcStatusType.success: {
         const pendingReq = this.pendingRequests.get(response.payload.id);
         if (!pendingReq) {
-          throw new Error('Could not find pending request from response ID');
+          this.failUnexpectedResponseId(response.payload.id);
+          return;
         }
 
         this.pendingRequests.delete(response.payload.id);
         pendingReq({type: 'success', result: response.payload.result}, null);
-        break;
+        return;
       }
 
       case RpcStatusType.error: {
-        const pendingReq = this.pendingRequests.get(response.payload.id);
-        if (!pendingReq) {
-          throw new Error('Could not find pending request from response ID');
+        const id = response.payload.id;
+        const pendingReq =
+          id === null ? undefined : this.pendingRequests.get(id);
+        if (pendingReq) {
+          this.pendingRequests.delete(id);
+          pendingReq({type: 'error', ...response.payload.error}, null);
+        } else if (id === null) {
+          // A null id means the server couldn't attribute the error to a
+          // request (e.g. a parse error on our stream); fail all so none hang.
+          this.failAllPendingRequests(
+            new Error(
+              'JSON-RPC error with null id: ' +
+                JSON.stringify(response.payload.error),
+            ),
+          );
+        } else {
+          this.failUnexpectedResponseId(id);
         }
-
-        this.pendingRequests.delete(response.payload.id);
-        pendingReq({type: 'error', ...response.payload.error}, null);
-        break;
+        return;
       }
+    }
+  }
+
+  private rejectPendingRequest(id: any, err: Error) {
+    // This client only issues numeric ids, so a non-numeric id can't match a
+    // pending request; treat it as unattributable and fail all (invoke has no timeout).
+    if (typeof id !== 'number') {
+      this.failAllPendingRequests(err);
+      return;
+    }
+
+    const pendingReq = this.pendingRequests.get(id);
+    if (pendingReq) {
+      this.pendingRequests.delete(id);
+      pendingReq(null, err);
+    } else {
+      this.failAllPendingRequests(err);
+    }
+  }
+
+  private failUnexpectedResponseId(id: any) {
+    this.failAllPendingRequests(
+      new Error(
+        'Could not find pending request for JSON-RPC response ID ' +
+          JSON.stringify(id),
+      ),
+    );
+  }
+
+  private failAllPendingRequests(err: Error) {
+    const pending = Array.from(this.pendingRequests.values());
+    this.pendingRequests.clear();
+    for (const req of pending) {
+      req(null, err);
     }
   }
 }

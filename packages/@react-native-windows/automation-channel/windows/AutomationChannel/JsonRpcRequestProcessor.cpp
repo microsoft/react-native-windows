@@ -27,10 +27,21 @@ winrt::fire_and_forget JsonRpcRequestProcessor::HandleRequest(
 
   // Cannot co_await to emit failure inside catch block. Keep vars outside scope.
   winrt::hstring errorMessage;
+  auto const hasId = message.HasKey(L"id");
+  auto const id = hasId ? message.GetNamedValue(L"id") : nullptr;
 
   try {
-    auto result = co_await handler.Invoke(message.GetNamedString(L"method"), message.GetNamedValue(L"params"));
-    co_await EmitResult(result, message.GetNamedValue(L"id"), output);
+    auto method = message.GetNamedString(L"method");
+    if (!handler.IsMethodRegistered(method)) {
+      if (hasId) {
+        co_await EmitError(JsonRpcErrorCode::MethodNotFound, L"Method not found: " + method, id, output);
+      }
+      co_return;
+    }
+    auto result = co_await handler.Invoke(method, message.GetNamedValue(L"params"));
+    if (hasId) {
+      co_await EmitResult(result, id, output);
+    }
     co_return;
   } catch (const winrt::hresult_error &ex) {
     errorMessage = ex.message();
@@ -38,7 +49,9 @@ winrt::fire_and_forget JsonRpcRequestProcessor::HandleRequest(
     errorMessage = winrt::to_hstring(ex.what());
   }
 
-  co_await EmitError(JsonRpcErrorCode::InternalError, errorMessage, message.GetNamedValue(L"id"), output);
+  if (hasId) {
+    co_await EmitError(JsonRpcErrorCode::InternalError, errorMessage, id, output);
+  }
 }
 
 IAsyncOperation<JsonObject> JsonRpcRequestProcessor::DecodeAndValidateMessage(
@@ -62,14 +75,23 @@ IAsyncAction JsonRpcRequestProcessor::EmitError(
     winrt::hstring message,
     JsonValue id,
     IOutputStream output) noexcept {
-  JsonObject err;
-  err.SetNamedValue(L"code", JsonValue::CreateNumberValue(static_cast<int32_t>(code)));
-  err.SetNamedValue(L"message", JsonValue::CreateStringValue(message));
-  co_await EmitResponse(err, id, output);
+  JsonObject error;
+  error.SetNamedValue(L"code", JsonValue::CreateNumberValue(static_cast<int32_t>(code)));
+  error.SetNamedValue(L"message", JsonValue::CreateStringValue(message));
+
+  // JSON-RPC 2.0 requires code/message under an "error" member; at top level the client rejects it as invalid.
+  JsonObject res;
+  res.SetNamedValue(L"error", error);
+  co_await EmitResponse(res, id, output);
 }
 
 IAsyncAction JsonRpcRequestProcessor::EmitResult(IJsonValue result, JsonValue id, IOutputStream output) noexcept {
   JsonObject res;
+  // A null result must still serialize as "result": null. SetNamedValue with a
+  // null value drops the key, producing a response the client rejects as invalid.
+  if (!result) {
+    result = JsonValue::CreateNullValue();
+  }
   res.SetNamedValue(L"result", result);
   co_await EmitResponse(res, id, output);
 }

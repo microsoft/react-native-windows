@@ -1,0 +1,31 @@
+#
+# Publishes PDBs + binaries to the org symbol service. Authenticate with the build
+# identity (System.AccessToken); a connection lacking symbol rights fails (TF400813).
+#
+parameters:
+  # Name of the org symbol service request.
+- name: symbolsArtifactName
+  type: string
+  # Root folder searched recursively for PDBs/DLLs/EXEs to publish.
+- name: symbolsFolder
+  type: string
+  default: $(Pipeline.Workspace)/symbols
+
+steps:
+- task: PublishSymbols@2
+  displayName: Publish Symbols to Microsoft Symbol Server
+  continueOnError: true
+  inputs:
+    UseNetCoreClientTool: true
+    SymbolsFolder: '${{ parameters.symbolsFolder }}'
+    SearchPattern: |
+      **/*.pdb
+      **/*.dll
+      **/*.exe
+    SymbolServerType: TeamServices
+    IndexSources: false # SourceLink is already embedded in the PDBs at compile time
+    SymbolsProduct: ReactNativeWindows
+    SymbolsVersion: $(Build.BuildNumber)
+    SymbolsArtifactName: ${{ parameters.symbolsArtifactName }}
+    DetailedLog: true
+    TreatNotIndexedAsWarning: false

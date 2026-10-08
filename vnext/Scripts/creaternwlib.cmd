@@ -77,6 +77,9 @@ if not "%part%"=="" (
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwlib.cmd: Setting npm to use verdaccio at http://localhost:4873
+  set NPM_CONFIG_REGISTRY=http://localhost:4873
+  set YARN_NPM_REGISTRY_SERVER=http://localhost:4873
+  set YARN_UNSAFE_HTTP_WHITELIST=localhost
   call npm config set registry http://localhost:4873
 )
 
@@ -116,8 +119,8 @@ for /f "delims=" %%a in ('npm show react@%R_VERSION% version') do @set R_VERSION
 
 @echo creaternwlib.cmd Creating RNW lib "%LIB_NAME%" with react@%R_VERSION%, react-native@%RN_VERSION%, and react-native-windows@%RNW_VERSION%
 
-@echo creaternwlib.cmd Creating base RN library project with: npx --yes create-react-native-library@0.48.9 --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --local false --type %RN_TEMPLATE_TYPE% --react-native-version %RN_VERSION% --example vanilla %LIB_NAME%
-call npx --yes create-react-native-library@0.48.9 --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --local false --type %RN_TEMPLATE_TYPE% --react-native-version %RN_VERSION% --example vanilla %LIB_NAME%
+@echo creaternwlib.cmd Creating base RN library project with: npx --yes create-react-native-library@0.63.0 --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type %RN_TEMPLATE_TYPE% --tools=eslint --tools=jest --tools=lefthook --tools=release-it --tools=vite --react-native-version %RN_VERSION% --example vanilla %LIB_NAME%
+call npx --yes create-react-native-library@0.63.0 --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type %RN_TEMPLATE_TYPE% --tools=eslint --tools=jest --tools=lefthook --tools=release-it --tools=vite --react-native-version %RN_VERSION% --example vanilla %LIB_NAME%
 
 if %ERRORLEVEL% neq 0 (
   @echo creaternwlib.cmd: Unable to create base RN library project
@@ -128,29 +131,36 @@ pushd "%LIB_NAME%"
 
 if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   @echo creaternwlib.cmd Fixing react-native nightly issue
-  pwsh.exe -Command "(gc package.json) -replace '""react-native"": ""[^\*]*""', '""react-native"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native/(.+-(config|preset))"": "".*""', '""@react-native/$1"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli((-platform-)?(ios|android))?"": "".*""', '""@react-native-community/cli$1"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pushd example
-  pwsh.exe -Command "(gc package.json) -replace '""react-native"": ""[^\*]*""', '""react-native"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native/(.+-(config|preset))"": "".*""', '""@react-native/$1"": ""%RN_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  pwsh.exe -Command "(gc package.json) -replace '""@react-native-community/cli((-platform-)?(ios|android))?"": "".*""', '""@react-native-community/cli$1"": ""%RNCLI_VERSION%""' | Out-File -encoding utf8NoBOM package.json"
-  popd
+  call pwsh.exe -NoProfile -File "%RNW_ROOT%\vnext\Scripts\UpdateNightlyDependencies.ps1" -PackageJsonPath package.json -ReactNativeVersion "%RN_VERSION%" -ReactNativeCliVersion "%RNCLI_VERSION%"
+  if errorlevel 1 goto :failure
+  call pwsh.exe -NoProfile -File "%RNW_ROOT%\vnext\Scripts\UpdateNightlyDependencies.ps1" -PackageJsonPath example\package.json -ReactNativeVersion "%RN_VERSION%" -ReactNativeCliVersion "%RNCLI_VERSION%"
+  if errorlevel 1 goto :failure
 )
+
+@echo creaternwlib.cmd: Configuring the isolated-feed package age gate
+call pwsh.exe -NoProfile -File "%RNW_ROOT%\vnext\Scripts\ConfigureYarnPackageAgeGate.ps1"
+if errorlevel 1 goto :failure
 
 @echo creaternwlib.cmd: Calling yarn install
 call yarn install
+if errorlevel 1 goto :failure
+
+call git config user.name "React-Native-Windows Bot"
+if errorlevel 1 goto :failure
+call git config user.email "53619745+rnbot@users.noreply.github.com"
+if errorlevel 1 goto :failure
 
 if %USE_VERDACCIO% equ 1 (
   @echo creaternwlib.cmd: Setting yarn to use verdaccio at http://localhost:4873
-  call yarn config set registry http://localhost:4873
   call yarn config set npmRegistryServer http://localhost:4873
   call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
 )
 
 @echo creaternwlib.cmd Adding RNW dependency to library
 call yarn add react-native-windows@%RNW_VERSION% --dev
+if errorlevel 1 goto :failure
 call yarn add react-native-windows@* --peer
+if errorlevel 1 goto :failure
 
 if %LINK_RNW% equ 1 (
   @echo creaternwlib.cmd Linking RNW dependency to local repo
@@ -159,28 +169,31 @@ if %LINK_RNW% equ 1 (
 
 @echo creaternwlib.cmd: Calling yarn install
 call yarn install
+if errorlevel 1 goto :failure
 
 @echo creaternwlib.cmd Creating commit to save current state
 call git add .
-call git commit -m "chore: add rnw dependency"
+if errorlevel 1 goto :failure
+rem --no-verify skips the generated project's lefthook hooks (run via bash, absent on Windows agents)
+call git commit --no-verify -m "chore: add rnw dependency"
+if errorlevel 1 goto :failure
 
-@echo creaternwlib.cmd Running init-windows with: yarn react-native init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
-call yarn react-native init-windows --template %RNW_TEMPLATE_TYPE% --overwrite --logging
-
-if %ERRORLEVEL% neq 0 (
-  @echo creaternwlib.cmd init-windows command not available from react-native CLI, falling back to react-native-windows-init
-  call npx --yes react-native-windows-init@%RNW_VERSION% --template %RNW_TEMPLATE_TYPE% --overwrite --logging
-)
+@echo creaternwlib.cmd Running init-windows with the project-installed React Native CLI
+call node "%RNW_ROOT%\vnext\Scripts\RunRnwInitWindows.js" "%RNW_TEMPLATE_TYPE%"
 
 if %ERRORLEVEL% neq 0 (
   @echo creaternwlib.cmd: Unable to initialize Windows project
-  exit /b %ERRORLEVEL%
+  goto :failure
 )
 
 @echo creaternwlib.cmd Done, see new %RNW_TEMPLATE_TYPE% project in %CD% with react@%R_VERSION%, react-native@%RN_VERSION%, and react-native-windows@%RNW_VERSION%
+set EXIT_CODE=0
+goto :done
 
+:failure
+set EXIT_CODE=%ERRORLEVEL%
+
+:done
 popd
 
-endlocal
-
-exit /b %ERRORLEVEL%
+endlocal & exit /b %EXIT_CODE%
