@@ -976,7 +976,8 @@ bool WindowsTextInputComponentView::ShouldSubmit(
   if (shouldSubmit) {
     if (m_submitKeyEvents.size() == 0) {
       const auto &submitBehavior = windowsTextInputProps().submitBehavior;
-      shouldSubmit = args.KeyCode() == '\r' && submitBehavior != "newline" && !(submitBehavior.empty() && m_multiline);
+      shouldSubmit = args.KeyCode() == '\r' && submitBehavior != "newline" &&
+          !(submitBehavior.empty() && windowsTextInputProps().multiline);
     } else if (m_submitKeyEvents.size() > 0) {
       auto submitKeyEvent = m_submitKeyEvents.at(0);
       // If 'submitKeyEvents' are supplied, use them to determine whether to emit onSubmitEditing' for either
@@ -1082,7 +1083,10 @@ void WindowsTextInputComponentView::OnCharacterReceived(
 
   LRESULT lresult;
   DrawBlock db(*this);
-  auto hr = m_textServices->TxSendMessage(WM_CHAR, wParam, lParam, &lresult);
+  const wchar_t newline[] = L"\r";
+  auto hr = args.KeyCode() == '\r' && windowsTextInputProps().multiline
+      ? m_textServices->TxSendMessage(EM_REPLACESEL, TRUE, reinterpret_cast<LPARAM>(newline), &lresult)
+      : m_textServices->TxSendMessage(WM_CHAR, wParam, lParam, &lresult);
   if (hr >= 0) {
     args.Handled(true);
   }
@@ -1205,7 +1209,7 @@ void WindowsTextInputComponentView::updateProps(
     }
   }
 
-  if (oldTextInputProps.multiline != newTextInputProps.multiline) {
+  if (m_multiline != newTextInputProps.multiline) {
     m_recalculateContentVerticalOffset = true;
     m_multiline = newTextInputProps.multiline;
     m_propBitsMask |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;

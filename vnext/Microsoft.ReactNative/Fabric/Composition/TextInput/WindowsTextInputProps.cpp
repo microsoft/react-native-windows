@@ -4,6 +4,7 @@
 #pragma once
 
 #include "WindowsTextInputProps.h"
+#include <react/renderer/core/PropsMacros.h>
 
 namespace facebook::react {
 
@@ -61,6 +62,37 @@ void WindowsTextInputProps::setProp(
     RawValue const &value) {
   BaseTextProps::setProp(context, hash, propName, value);
   ViewProps::setProp(context, hash, propName, value);
+
+  static auto defaults = WindowsTextInputProps{};
+
+  switch (hash) {
+    RAW_SET_PROP_SWITCH_CASE_BASIC(allowFontScaling);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(autoCorrect);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(clearTextOnFocus);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(editable);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(maxLength);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(multiline);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(placeholder);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(placeholderTextColor);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(scrollEnabled);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(cursorColor);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(selection);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(selectionColor);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(selectTextOnFocus);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(spellCheck);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(text);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(mostRecentEventCount);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(secureTextEntry);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(keyboardType);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(contextMenuHidden);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(caretHidden);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(autoCapitalize);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(clearTextOnSubmit);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(submitBehavior);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(submitKeyEvents);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(autoFocus);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(textAlign);
+  }
 }
 
 } // namespace facebook::react

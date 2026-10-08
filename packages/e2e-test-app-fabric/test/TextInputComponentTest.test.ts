@@ -188,9 +188,7 @@ describe('TextInput Tests', () => {
 
     await app.waitUntil(
       async () => {
-        await component.clearValue();
-        await component.click();
-        await component.addValue(
+        await component.setValue(
           'hi i am setting up this whole UPPERCASE sentence.',
         );
         return (
