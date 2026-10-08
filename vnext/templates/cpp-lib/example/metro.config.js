@@ -57,10 +57,16 @@ const config = {
         return { type: 'sourceFile', filePath: path.resolve(root, librarySource) };
       }
       if (
-        moduleName === 'react-native/react-private-interface' ||
-        moduleName === 'react-native/setup-env'
+        moduleName ===
+        '../../src/private/devsupport/rndevtools/ReactDevToolsSettingsManager'
       ) {
-        return { type: 'sourceFile', filePath: require.resolve(moduleName) };
+        return {
+          type: 'sourceFile',
+          filePath: path.join(
+            rnwPath,
+            'src/private/devsupport/rndevtools/ReactDevToolsSettingsManager.windows.js',
+          ),
+        };
       }
       return context.resolveRequest(context, moduleName, platform);
     },

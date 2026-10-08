@@ -152,7 +152,9 @@
     "/metro-react-native-platform.js",
     "/metro.config.js",
     "/react-native.config.js",
+    "/react-private-interface.js",
     "/rn-get-polyfills.js",
+    "/setup-env.js",
     "!packages*.lock.json"
   ],
   "promoteRelease": true,

@@ -1141,7 +1141,9 @@ void WindowsTextInputComponentView::onGotFocus(
     m_textServices->TxSendMessage(WM_SETFOCUS, 0, 0, &lresult);
 
     if (windowsTextInputProps().clearTextOnFocus) {
+      m_comingFromState = true;
       m_textServices->TxSetText(L"");
+      m_comingFromState = false;
       OnTextUpdated();
     } else if (windowsTextInputProps().selectTextOnFocus) {
       LRESULT res;
@@ -1411,6 +1413,10 @@ std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const no
 
 // When we are notified by RichEdit that the text changed, we need to notify JS
 void WindowsTextInputComponentView::OnTextUpdated() noexcept {
+  if (m_comingFromState) {
+    return;
+  }
+
   const auto eventCount = m_eventEmitter && !m_comingFromJS ? ++m_nativeEventCount : m_nativeEventCount;
   m_mostRecentEventCount = eventCount;
 
@@ -1557,7 +1563,9 @@ void WindowsTextInputComponentView::setAcccessiblityValue(std::string &&value) n
     }
     value = ::Microsoft::Common::Unicode::Utf16ToUtf8(uppercaseValue);
   }
+  m_comingFromState = true;
   UpdateText(value);
+  m_comingFromState = false;
   OnTextUpdated();
 }
 
