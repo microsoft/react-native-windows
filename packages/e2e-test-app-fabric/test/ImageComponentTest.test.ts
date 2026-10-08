@@ -34,6 +34,18 @@ describe('Image Tests', () => {
     const dump = await dumpVisualTree('image-network-callback');
     expect(dump).toMatchSnapshot();
   });
+  test('An Image can handle network errors', async () => {
+    const component = await app.findElementByTestID('image-network-error');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('image-network-error');
+    expect(dump).toMatchSnapshot();
+  });
+  test('An Image can handle large image errors', async () => {
+    const component = await app.findElementByTestID('image-large-error');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('image-large-error');
+    expect(dump).toMatchSnapshot();
+  });
   test('A network Image example', async () => {
     const component = await app.findElementByTestID('image-network');
     await component.waitForDisplayed({timeout: 5000});
