@@ -82,11 +82,6 @@ Validates [React.Windows.Desktop.DLL](#React.Windows.Desktop.DLL).
 Gathers tests within `react-native\ReactCommon`.\
 Its main purpose is to validate JSI with any given engine (V8, etc).
 
-### FollyWin32
-*Static Library*\
-Superset of Folly APIs only available and required by [React.Windows.Desktop](#React.Windows.Desktop).\
-Sources provided as part of the `react-native` Node dependency. Not part of this repository.
-
 ## Windows Universal Projects
 
 ### Microsoft.ReactNative
