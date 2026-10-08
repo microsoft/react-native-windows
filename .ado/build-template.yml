@@ -31,7 +31,7 @@ parameters:
 
 - name: runVerifyCliInitWindowsJobs
   type: boolean
-  default: false
+  default: true
 
 - name: desktopBuildMatrix
   type: object

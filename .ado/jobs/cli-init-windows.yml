@@ -248,3 +248,13 @@ jobs:
               condition: failed()
               targetPath: verdaccio.log
               artifactName: $(Agent.JobName).Verdaccio.log-$(System.JobAttempt)
+            - output: pipelineArtifact
+              displayName: 'Upload build logs'
+              condition: succeededOrFailed()
+              targetPath: $(Build.BinariesDirectory)\${{ matrix.platform }}\${{ matrix.configuration }}\BuildLogs
+              artifactName: Build logs - $(Agent.JobName)-$(System.JobAttempt)
+            - output: pipelineArtifact
+              displayName: 'Upload crash dumps'
+              condition: and(succeededOrFailed(), eq(variables.HasCrashDumps, 'True'))
+              targetPath: '$(CrashDumpRootPath)'
+              artifactName: Crash dumps - $(Agent.JobName)-$(System.JobAttempt)
