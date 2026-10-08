@@ -36,6 +36,10 @@ parameters:
      - Continuous
 
 steps:
+  - pwsh: |
+      New-Item -Path '$(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs' -ItemType Directory -Force | Out-Null
+    displayName: Create CLI build log directory
+
   # Start npm test server
   - template: verdaccio-start.yml
     parameters:

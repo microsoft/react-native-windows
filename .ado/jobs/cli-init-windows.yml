@@ -244,10 +244,10 @@ jobs:
               targetPath: $(Build.StagingDirectory)/Tracing
               artifactName: Traces - $(Agent.JobName)-$(System.JobAttempt)
             - output: pipelineArtifact
-              displayName: 'Upload Verdaccio.log (on failure)'
+              displayName: 'Upload Verdaccio logs (on failure)'
               condition: failed()
-              targetPath: verdaccio.log
-              artifactName: $(Agent.JobName).Verdaccio.log-$(System.JobAttempt)
+              targetPath: $(Build.StagingDirectory)\VerdaccioLogs
+              artifactName: Verdaccio logs - $(Agent.JobName)-$(System.JobAttempt)
             - output: pipelineArtifact
               displayName: 'Upload build logs'
               condition: succeededOrFailed()

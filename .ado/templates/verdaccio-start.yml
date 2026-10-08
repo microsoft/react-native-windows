@@ -14,7 +14,11 @@ steps:
   - pwsh: |
       node .ado/verdaccio/generate-config.js
       if ($LASTEXITCODE -ne 0) { throw 'Failed to generate the verdaccio config.' }
-      start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.generated.yaml')
+      $logDir = '$(Build.StagingDirectory)\VerdaccioLogs'
+      New-Item -Path $logDir -ItemType Directory -Force | Out-Null
+      Start-Process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.generated.yaml') `
+        -RedirectStandardOutput (Join-Path $logDir 'stdout.log') `
+        -RedirectStandardError (Join-Path $logDir 'stderr.log')
     displayName: Launch test npm server (verdaccio)
     # Only CI has a feed token; an undefined variable would expand to a literal string.
     ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:

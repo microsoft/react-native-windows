@@ -179,7 +179,7 @@ call yarn react-native init-windows --template %RNW_TEMPLATE_TYPE% --overwrite -
 
 if %ERRORLEVEL% neq 0 (
   @echo creaternwlib.cmd init-windows command not available from react-native CLI, falling back to react-native-windows-init
-  call npx --yes react-native-windows-init@%RNW_VERSION% --template %RNW_TEMPLATE_TYPE% --overwrite --logging
+  call npx --yes react-native-windows-init@%RNW_VERSION% --projectType lib --language cpp --overwrite --verbose
 )
 
 if %ERRORLEVEL% neq 0 (
