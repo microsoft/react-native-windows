@@ -3599,6 +3599,7 @@ __metadata:
     "@react-native-community/cli-doctor": "npm:20.0.0"
     "@react-native-community/cli-types": "npm:20.0.0"
     "@react-native-windows/codegen": "npm:0.83.1"
+    "@react-native-windows/find-dotnet-tools": "npm:0.0.0"
     "@react-native-windows/fs": "npm:0.83.1"
     "@react-native-windows/package-utils": "npm:0.83.1"
     "@react-native-windows/telemetry": "npm:0.83.1"
@@ -3679,7 +3680,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/find-dotnet-tools@workspace:packages/@react-native-windows/find-dotnet-tools":
+"@react-native-windows/find-dotnet-tools@npm:0.0.0, @react-native-windows/find-dotnet-tools@workspace:packages/@react-native-windows/find-dotnet-tools":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/find-dotnet-tools@workspace:packages/@react-native-windows/find-dotnet-tools"
   dependencies:
