@@ -137,6 +137,10 @@ if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
   if errorlevel 1 goto :failure
 )
 
+@echo creaternwlib.cmd: Configuring the isolated-feed package age gate
+call pwsh.exe -NoProfile -File "%RNW_ROOT%\vnext\Scripts\ConfigureYarnPackageAgeGate.ps1"
+if errorlevel 1 goto :failure
+
 @echo creaternwlib.cmd: Calling yarn install
 call yarn install
 if errorlevel 1 goto :failure
