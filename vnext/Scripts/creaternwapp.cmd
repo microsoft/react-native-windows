@@ -190,7 +190,7 @@ call git commit -m "add rnw dependency"
 if errorlevel 1 goto :failure
 
 @echo creaternwapp.cmd Running init-windows with the project-installed React Native CLI
-call node "%~dp0RunRnwInitWindows.js" "%RNW_TEMPLATE_TYPE%"
+call node "%RNW_ROOT%\vnext\Scripts\RunRnwInitWindows.js" "%RNW_TEMPLATE_TYPE%"
 
 if %ERRORLEVEL% neq 0 (
   @echo creaternwapp.cmd: Unable to initialize Windows project
