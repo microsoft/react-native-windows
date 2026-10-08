@@ -29,11 +29,6 @@ parameters:
     type: string
     default: 'Office-Hermes-Windows-Bot'
 
-variables:
-  # Only npm call is the publish-eligibility check (npm view) in PushNpm; keep it on the compliant feed.
-  - name: NPM_CONFIG_REGISTRY
-    value: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
-
 resources:
   pipelines:
   - pipeline: 'CI'
@@ -207,7 +202,7 @@ extends:
             script: node $(Pipeline.Workspace)/VersionEnvVars/versionEnvVars.js
         - script: dir /s "$(Pipeline.Workspace)\published-packages"
           displayName: Show npm packages before cleanup
-        - script: node "$(Pipeline.Workspace)\VersionEnvVars\npmPack.js" --no-pack --check-npm --no-color "$(Pipeline.Workspace)\published-packages"
+        - script: node "$(Pipeline.Workspace)\VersionEnvVars\npmPack.js" --no-pack --check-npm --registry https://registry.npmjs.org/ --no-color "$(Pipeline.Workspace)\published-packages"
           displayName: Remove already published packages
         - script: dir /s "$(Pipeline.Workspace)\published-packages"
           displayName: Show npm packages after cleanup
