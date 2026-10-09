@@ -285,15 +285,13 @@ export async function resolveBranchVersions(
 /**
  * The react-native version to scaffold cRNL with. cRNL resolves a nightly RN
  * through the short-lived `@react-native-community/template@nightly` tag, which
- * rotates away and then fails to resolve (ETARGET). So for a nightly we scaffold
- * from the matching stable base version (`0.87.0-nightly-...` -> `0.87.0`) and let
+ * rotates away and then fails to resolve (ETARGET). The matching stable version
+ * may not be published yet, so scaffold from the latest stable and let
  * nightlyFixupSpecs rewrite the generated deps back to the nightly. Mirrors
  * vnext/Scripts/creaternwlib.cmd's RN_SCAFFOLD_VERSION.
  */
 export function scaffoldReactNativeVersion(versions: BranchVersions): string {
-  return versions.nightly
-    ? versions.reactNative.split('-')[0]
-    : versions.reactNative;
+  return versions.nightly ? 'latest' : versions.reactNative;
 }
 
 /**

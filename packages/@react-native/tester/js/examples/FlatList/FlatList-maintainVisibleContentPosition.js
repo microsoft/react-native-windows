@@ -55,8 +55,17 @@ export component FlatList_maintainVisibleContentPosition() {
   const [variableHeight, setVariableHeight] = useState(false);
   const [scrollOffset, setScrollOffset] = useState(0);
   const flatListRef = useRef<FlatList<ListItem> | null>(null);
+  const nextAddedItemId = useRef(INITIAL_DATA.length);
 
   const config = createConfig(minIndexForVisible, autoscrollToTopThreshold);
+  const createAddedItems = useCallback(
+    (count: number): Array<ListItem> =>
+      Array.from({length: count}, () => ({
+        id: `added-${nextAddedItemId.current++}`,
+        height: FIXED_ITEM_HEIGHT,
+      })),
+    [],
+  );
 
   const renderItem = useCallback(
     ({item}: ListRenderItemInfo<ListItem>) => (
@@ -78,39 +87,27 @@ export component FlatList_maintainVisibleContentPosition() {
   );
 
   const addItemAtTop = useCallback(() => {
-    setData(prev => [
-      {id: `added-${prev.length}`, height: FIXED_ITEM_HEIGHT},
-      ...prev,
-    ]);
-  }, []);
+    const [newItem] = createAddedItems(1);
+    setData(prev => [newItem, ...prev]);
+  }, [createAddedItems]);
 
   const addItemAtBottom = useCallback(() => {
-    setData(prev => [
-      ...prev,
-      {id: `added-${prev.length}`, height: FIXED_ITEM_HEIGHT},
-    ]);
-  }, []);
+    const [newItem] = createAddedItems(1);
+    setData(prev => [...prev, newItem]);
+  }, [createAddedItems]);
 
   const addItemAtTopMultiple = useCallback(() => {
-    setData(prev => [
-      {id: `added-${prev.length}`, height: FIXED_ITEM_HEIGHT},
-      {id: `added-${prev.length + 1}`, height: FIXED_ITEM_HEIGHT},
-      {id: `added-${prev.length + 2}`, height: FIXED_ITEM_HEIGHT},
-      ...prev,
-    ]);
-  }, []);
+    const newItems = createAddedItems(3);
+    setData(prev => [...newItems, ...prev]);
+  }, [createAddedItems]);
 
   const addItemAtTopFifty = useCallback(() => {
-    setData(prev => {
-      const newItems = Array.from({length: 50}, (_, i) => ({
-        id: `added-${prev.length + i}`,
-        height: FIXED_ITEM_HEIGHT,
-      }));
-      return [...newItems, ...prev];
-    });
-  }, []);
+    const newItems = createAddedItems(50);
+    setData(prev => [...newItems, ...prev]);
+  }, [createAddedItems]);
 
   const resetData = useCallback(() => {
+    nextAddedItemId.current = INITIAL_DATA.length;
     setData(INITIAL_DATA);
     flatListRef.current?.scrollToOffset({offset: 0, animated: false});
   }, []);
@@ -129,14 +126,12 @@ export component FlatList_maintainVisibleContentPosition() {
   }, []);
 
   const addItemAtTopAndRemoveBottom = useCallback(() => {
+    const [newItem] = createAddedItems(1);
     setData(prev => {
-      const newItems = [
-        {id: `added-${prev.length}`, height: FIXED_ITEM_HEIGHT},
-      ];
       const remaining = prev.slice(0, Math.max(0, prev.length - 3));
-      return [...newItems, ...remaining];
+      return [newItem, ...remaining];
     });
-  }, []);
+  }, [createAddedItems]);
 
   const onScroll = useCallback(
     (e: ScrollEvent) => {

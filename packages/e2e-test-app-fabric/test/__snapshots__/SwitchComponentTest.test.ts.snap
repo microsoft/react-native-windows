@@ -5,6 +5,7 @@ exports[`SwitchTests Change events can be detected, event bottom 1`] = `
   "Automation Tree": {
     "AutomationId": "event-switch-bottom",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
   },
   "Component Tree": {
@@ -41,6 +42,7 @@ exports[`SwitchTests Change events can be detected, event regression top 1`] = `
   "Automation Tree": {
     "AutomationId": "event-switch-regression-top",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "TogglePattern.ToggleState": "On",
   },
@@ -78,6 +80,7 @@ exports[`SwitchTests Change events can be detected, event top 1`] = `
   "Automation Tree": {
     "AutomationId": "event-switch-top",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
   },
   "Component Tree": {
@@ -114,6 +117,7 @@ exports[`SwitchTests Change events can be detected, events regression bottom 1`]
   "Automation Tree": {
     "AutomationId": "event-switch-regression-bottom",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "TogglePattern.ToggleState": "On",
   },
@@ -151,6 +155,7 @@ exports[`SwitchTests Controlled switch 1`] = `
   "Automation Tree": {
     "AutomationId": "controlled-switch",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
   },
   "Component Tree": {
@@ -187,6 +192,7 @@ exports[`SwitchTests Custom colors can be provided, initial false 1`] = `
   "Automation Tree": {
     "AutomationId": "initial-false-switch",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
   },
   "Component Tree": {
@@ -223,6 +229,7 @@ exports[`SwitchTests Custom colors can be provided, initial true 1`] = `
   "Automation Tree": {
     "AutomationId": "initial-true-switch",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "TogglePattern.ToggleState": "On",
   },
@@ -260,6 +267,7 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
   "Automation Tree": {
     "AutomationId": "disabled-initial-off",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
   },
   "Component Tree": {
@@ -296,6 +304,7 @@ exports[`SwitchTests Switches can be disabled, initial false 2`] = `
   "Automation Tree": {
     "AutomationId": "disabled-initial-off",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
   },
   "Component Tree": {
@@ -332,6 +341,7 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
   "Automation Tree": {
     "AutomationId": "disabled-initial-on",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "TogglePattern.ToggleState": "On",
   },
@@ -369,6 +379,7 @@ exports[`SwitchTests Switches can be set to true/false, initial false 1`] = `
   "Automation Tree": {
     "AutomationId": "on-off-initial-off",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
   },
   "Component Tree": {
@@ -405,6 +416,7 @@ exports[`SwitchTests Switches can be set to true/false, initial false 2`] = `
   "Automation Tree": {
     "AutomationId": "on-off-initial-off",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "TogglePattern.ToggleState": "On",
   },
@@ -442,6 +454,7 @@ exports[`SwitchTests Switches can be set to true/false, initial true 1`] = `
   "Automation Tree": {
     "AutomationId": "on-off-initial-on",
     "ControlType": 50000,
+    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "TogglePattern.ToggleState": "On",
   },
@@ -485,31 +498,45 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         "AutomationId": "",
         "ControlType": 50000,
         "HelpText": "Switch",
+        "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
         "Name": "This is a Switch",
+        "PositionInSet": 1,
+        "SizeofSet": 4,
         "TogglePattern.ToggleState": "On",
       },
       {
         "AutomationId": "",
         "ControlType": 50000,
         "HelpText": "Switch",
+        "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
         "Name": "This is a Switch with focusable set to false",
+        "PositionInSet": 2,
+        "SizeofSet": 4,
         "TogglePattern.ToggleState": "On",
       },
       {
         "AutomationId": "",
         "ControlType": 50000,
         "HelpText": "Switch",
+        "IsKeyboardFocusable": true,
+        "LiveSetting": "Polite",
         "LocalizedControlType": "button",
         "Name": "This is a Switch with accessible set to false",
+        "PositionInSet": 3,
+        "SizeofSet": 4,
       },
       {
         "AutomationId": "",
         "ControlType": 50000,
         "HelpText": "Switch",
+        "IsKeyboardFocusable": true,
+        "LiveSetting": "Assertive",
         "LocalizedControlType": "button",
         "Name": "This is a Switch with focusable and accessible set to false",
+        "PositionInSet": 4,
+        "SizeofSet": 4,
         "TogglePattern.ToggleState": "On",
       },
     ],

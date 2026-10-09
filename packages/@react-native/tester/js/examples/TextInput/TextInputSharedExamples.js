@@ -269,6 +269,12 @@ class BlurOnSubmitExample extends React.Component<{...}> {
 }
 
 class SubmitBehaviorExample extends React.Component<{...}> {
+  state = {
+    submitCount: 0,
+    blurAndSubmitCount: 0,
+    newlineCount: 0,
+  };
+
   ref1: ExampleRef = createRef();
   ref2: ExampleRef = createRef();
   ref3: ExampleRef = createRef();
@@ -284,6 +290,44 @@ class SubmitBehaviorExample extends React.Component<{...}> {
   render(): React.Node {
     return (
       <View>
+        <ExampleTextInput
+          multiline
+          testID="submit-behavior-submit"
+          placeholder="submit behavior test: submit"
+          submitBehavior="submit"
+          onSubmitEditing={() =>
+            this.setState(state => ({submitCount: state.submitCount + 1}))
+          }
+        />
+        <Text testID="submit-behavior-submit-count">
+          {this.state.submitCount}
+        </Text>
+        <ExampleTextInput
+          multiline
+          testID="submit-behavior-blur-and-submit"
+          placeholder="submit behavior test: blurAndSubmit"
+          submitBehavior="blurAndSubmit"
+          onSubmitEditing={() =>
+            this.setState(state => ({
+              blurAndSubmitCount: state.blurAndSubmitCount + 1,
+            }))
+          }
+        />
+        <Text testID="submit-behavior-blur-and-submit-count">
+          {this.state.blurAndSubmitCount}
+        </Text>
+        <ExampleTextInput
+          multiline
+          testID="submit-behavior-newline"
+          placeholder="submit behavior test: newline"
+          submitBehavior="newline"
+          onSubmitEditing={() =>
+            this.setState(state => ({newlineCount: state.newlineCount + 1}))
+          }
+        />
+        <Text testID="submit-behavior-newline-count">
+          {this.state.newlineCount}
+        </Text>
         <ExampleTextInput
           ref={this.ref1}
           placeholder="single line submit"

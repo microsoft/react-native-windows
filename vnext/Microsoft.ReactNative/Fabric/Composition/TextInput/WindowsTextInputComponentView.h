@@ -111,7 +111,8 @@ struct WindowsTextInputComponentView
       const facebook::react::SharedColor &cursorColor,
       const facebook::react::SharedColor &foregroundColor) noexcept;
   bool ShouldSubmit(
-      const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
+      uint32_t keyCode,
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &keyboardSource) noexcept;
   void InternalFinalize() noexcept;
   void UpdatePropertyBits() noexcept;
 

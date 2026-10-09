@@ -206,9 +206,142 @@
     },
     {
       "type": "copy",
-      "directory": "js/examples/FlatList",
-      "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "70e6b556bd0488402c06fa3560e08b145f209d05",
+      "file": "js/examples/FlatList/BaseFlatListExample.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/BaseFlatListExample.js",
+      "baseHash": "a79e34987dae395540efc0c4df8f999d6e400947",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-BaseOnViewableItemsChanged.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-BaseOnViewableItemsChanged.js",
+      "baseHash": "c80e795bd154d313cef1356c367456adc2884602",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-basic.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-basic.js",
+      "baseHash": "a0c1221da66d97bdc7a0c08f8528d3b2646c5071",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-contentInset.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-contentInset.js",
+      "baseHash": "a129a5d5571e70fcf0b109b48783899733302d38",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-inverted.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-inverted.js",
+      "baseHash": "bb337d9c2471af18dff1f62983f61c711a0f00de",
+      "issue": 4054
+    },
+    {
+      "type": "patch",
+      "file": "js/examples/FlatList/FlatList-maintainVisibleContentPosition.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-maintainVisibleContentPosition.js",
+      "baseHash": "238c95dfb1da5f346b1127b898470ccd1cd5251c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-multiColumn.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-multiColumn.js",
+      "baseHash": "25cc6d6b728deefed0b6abce81c5710f8e34708e",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-nested.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-nested.js",
+      "baseHash": "8af3316951172a89f92ea7fcd164fa13faef652c",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-onEndReached.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-onEndReached.js",
+      "baseHash": "f87c10f8f20bbd7e08cd596224c345841f6f019b",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-onStartReached.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-onStartReached.js",
+      "baseHash": "f0b4984ada61effa4ca64a114a335a4cf2da4003",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-onViewableItemsChanged-horizontal-noWaitForInteraction.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-onViewableItemsChanged-horizontal-noWaitForInteraction.js",
+      "baseHash": "a4c6f73f623627ab4ea1994771e5216a16038bc7",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-onViewableItemsChanged-horizontal-offScreen.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-onViewableItemsChanged-horizontal-offScreen.js",
+      "baseHash": "af12d4fbb6f8b3a6773917aff9b1c1ecce93c056",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-onViewableItemsChanged-horizontal-waitForInteraction.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-onViewableItemsChanged-horizontal-waitForInteraction.js",
+      "baseHash": "0489d428e3a908575afcd72505fdc7ab753b70b1",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-onViewableItemsChanged-noWaitForInteraction.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-onViewableItemsChanged-noWaitForInteraction.js",
+      "baseHash": "43c8e924bba5da101a2311831fa9882a48bc97b8",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-onViewableItemsChanged-offScreen.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-onViewableItemsChanged-offScreen.js",
+      "baseHash": "96aba3fb55576d544271351c857a843497397bbd",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-onViewableItemsChanged-waitForInteraction.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-onViewableItemsChanged-waitForInteraction.js",
+      "baseHash": "110d219a843267a8e36cee873848c5ff9be87932",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-onViewableItemsChanged.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-onViewableItemsChanged.js",
+      "baseHash": "d85263bce7623912b8a76ba724f24ac36b02f3c7",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-stickyHeaders.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-stickyHeaders.js",
+      "baseHash": "b5c8bdfcbbc066dba155bed95cb20c0dbc4d74f6",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatList-withSeparators.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-withSeparators.js",
+      "baseHash": "8d18c94d613daeb151e1cdd611e9f147109f06bb",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/examples/FlatList/FlatListExampleIndex.js",
+      "baseFile": "packages/rn-tester/js/examples/FlatList/FlatListExampleIndex.js",
+      "baseHash": "daaf7b83c59004753be81f611fedd1709c76374c",
       "issue": 4054
     },
     {
@@ -603,7 +736,7 @@
       "issue": 14292
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "js/examples/TextInput/TextInputSharedExamples.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputSharedExamples.js",
       "baseHash": "0fccb8d05c8c1963022a5b1e05598543639cd1cd",
@@ -728,7 +861,7 @@
       "issue": 13228
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "js/utils/RNTesterList.ios.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
       "baseHash": "df5cca102a6fb708ea53af4929e4e297ab8cb566",

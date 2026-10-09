@@ -937,6 +937,56 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-searchbox');
     expect(dump).toMatchSnapshot();
   });
+  test('TextInputs honor explicit submitBehavior values', async () => {
+    await searchBox('Submit behavior');
+
+    const submit = await app.findElementByTestID('submit-behavior-submit');
+    const submitCount = await app.findElementByTestID(
+      'submit-behavior-submit-count',
+    );
+    await submit.setValue('abc');
+    await submit.click();
+    await submit.setValue('\uE007');
+    await app.waitUntil(async () => (await submitCount.getText()) === '1', {
+      timeout: 5000,
+      timeoutMsg: 'submit did not emit onSubmitEditing.',
+    });
+    expect(await submit.getText()).toBe('abc');
+    expect(await submit.isFocused()).toBe(true);
+
+    const blurAndSubmit = await app.findElementByTestID(
+      'submit-behavior-blur-and-submit',
+    );
+    const blurAndSubmitCount = await app.findElementByTestID(
+      'submit-behavior-blur-and-submit-count',
+    );
+    await blurAndSubmit.setValue('abc');
+    await blurAndSubmit.click();
+    await blurAndSubmit.setValue('\uE007');
+    await app.waitUntil(
+      async () => (await blurAndSubmitCount.getText()) === '1',
+      {
+        timeout: 5000,
+        timeoutMsg: 'blurAndSubmit did not emit onSubmitEditing.',
+      },
+    );
+    expect(await blurAndSubmit.getText()).toBe('abc');
+    expect(await blurAndSubmit.isFocused()).toBe(false);
+
+    const newline = await app.findElementByTestID('submit-behavior-newline');
+    const newlineCount = await app.findElementByTestID(
+      'submit-behavior-newline-count',
+    );
+    await newline.setValue('abc');
+    await newline.click();
+    await newline.setValue('\uE007');
+    await app.waitUntil(async () => (await newline.getText()) === 'abc\r', {
+      timeout: 5000,
+      timeoutMsg: 'newline did not insert a newline.',
+    });
+    expect(await newlineCount.getText()).toBe('0');
+    expect(await newline.isFocused()).toBe(true);
+  });
   test('TextInput triggers onPressIn and updates state text', async () => {
     // Scroll the example into view
     await searchBox('onPressIn');
