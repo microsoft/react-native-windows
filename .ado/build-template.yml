@@ -29,10 +29,6 @@ parameters:
   type: boolean
   default: false
 
-- name: runVerifyCliInitWindowsJobs
-  type: boolean
-  default: true
-
 - name: desktopBuildMatrix
   type: object
   default:
@@ -548,18 +544,3 @@ extends:
             parameters:
               buildEnvironment: ${{ parameters.buildEnvironment }}
               AgentPool: ${{ parameters.AgentPool }}
-
-    #=================================================================
-    # Stage: CLI
-    # CLI init verification — tests the final NuGet + npm packages.
-    # Runs after Build stage completes (needs RNWNuget artifacts).
-    #=================================================================
-    - stage: CLI
-      displayName: CLI
-      dependsOn: Build
-      condition: and(succeeded(), ${{ parameters.runVerifyCliInitWindowsJobs }})
-      jobs:
-        - template: .ado/jobs/cli-init-windows.yml@self
-          parameters:
-            buildEnvironment: ${{ parameters.buildEnvironment }}
-            AgentPool: ${{ parameters.AgentPool }}

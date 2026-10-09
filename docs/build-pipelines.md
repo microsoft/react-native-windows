@@ -12,14 +12,14 @@ React Native Windows uses three Azure DevOps pipelines built on the Office and g
 
 CI and PR share a single `build-template.yml` that contains all build, test, and packaging logic. The `buildEnvironment` parameter (`Continuous` or `PullRequest`) controls what runs:
 
-- **Both**: build, test, lint, NuGet pack, CLI init verification
+- **Both**: build, test, lint, NuGet pack
 - **CI only**: ESRP code signing, release tagging
 - **PR only**: beachball change file check
 
 ## Stages
 
 ```
-Setup ──┬── Build ──── CLI
+Setup ──┬── Build
         │
         └── Tests
 ```
@@ -48,9 +48,8 @@ Runs in parallel with Build (both depend only on Setup):
 - **Playground** — builds playground apps across configs
 - **E2E Tests** — Fabric end-to-end tests
 
-### CLI
-
-Depends on Build (needs the NuGet packages). Runs `react-native init` + `react-native-windows init` against the just-built packages to verify the developer experience works.
+CLI init verification templates remain available for targeted validation, but the shared pipeline does not instantiate
+them because the additional jobs exceed the Office Official template's expansion limit.
 
 ## Agent Pools
 
@@ -95,7 +94,7 @@ PREfast, SpotBugs, and Bandit are disabled (no actionable findings for this repo
 | `.ado/release-pipeline.yml` | Release pipeline (publishes to feeds) |
 | `.ado/jobs/desktop-single.yml` | Desktop build + test steps |
 | `.ado/jobs/universal-single.yml` | Universal build + test steps |
-| `.ado/jobs/cli-init-windows.yml` | CLI init verification |
+| `.ado/jobs/cli-init-windows.yml` | Reusable CLI init verification jobs |
 | `.ado/jobs/e2e-test.yml` | E2E test job |
 | `.ado/jobs/playground.yml` | Playground build job |
 | `.ado/jobs/linting.yml` | Linting job |
