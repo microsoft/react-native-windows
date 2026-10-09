@@ -273,8 +273,8 @@ class SubmitBehaviorExample extends React.Component<{...}> {
     submitCount: 0,
     blurAndSubmitCount: 0,
     newlineCount: 0,
-    submitText: '',
-    blurAndSubmitText: '',
+    submittedText: '',
+    blurAndSubmittedText: '',
     newlineText: '',
   };
 
@@ -368,14 +368,15 @@ class SubmitBehaviorExample extends React.Component<{...}> {
           testID="submit-behavior-submit"
           placeholder="submit behavior test: submit"
           submitBehavior="submit"
-          value={this.state.submitText}
-          onChangeText={submitText => this.setState({submitText})}
-          onSubmitEditing={() =>
-            this.setState(state => ({submitCount: state.submitCount + 1}))
+          onSubmitEditing={event =>
+            this.setState(state => ({
+              submitCount: state.submitCount + 1,
+              submittedText: event.nativeEvent.text,
+            }))
           }
         />
         <Text testID="submit-behavior-submit-text">
-          {this.formatTextValue(this.state.submitText)}
+          {this.formatTextValue(this.state.submittedText)}
         </Text>
         <Text testID="submit-behavior-submit-count">
           {this.state.submitCount}
@@ -385,18 +386,15 @@ class SubmitBehaviorExample extends React.Component<{...}> {
           testID="submit-behavior-blur-and-submit"
           placeholder="submit behavior test: blurAndSubmit"
           submitBehavior="blurAndSubmit"
-          value={this.state.blurAndSubmitText}
-          onChangeText={blurAndSubmitText =>
-            this.setState({blurAndSubmitText})
-          }
-          onSubmitEditing={() =>
+          onSubmitEditing={event =>
             this.setState(state => ({
               blurAndSubmitCount: state.blurAndSubmitCount + 1,
+              blurAndSubmittedText: event.nativeEvent.text,
             }))
           }
         />
         <Text testID="submit-behavior-blur-and-submit-text">
-          {this.formatTextValue(this.state.blurAndSubmitText)}
+          {this.formatTextValue(this.state.blurAndSubmittedText)}
         </Text>
         <Text testID="submit-behavior-blur-and-submit-count">
           {this.state.blurAndSubmitCount}
@@ -406,7 +404,6 @@ class SubmitBehaviorExample extends React.Component<{...}> {
           testID="submit-behavior-newline"
           placeholder="submit behavior test: newline"
           submitBehavior="newline"
-          value={this.state.newlineText}
           onChangeText={newlineText => this.setState({newlineText})}
           onSubmitEditing={() =>
             this.setState(state => ({newlineCount: state.newlineCount + 1}))
