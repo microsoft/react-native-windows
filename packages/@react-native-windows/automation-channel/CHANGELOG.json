@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Fri, 09 Oct 2026 17:38:08 GMT",
+      "version": "0.83.3",
+      "tag": "@react-native-windows/automation-channel_v0.83.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "8f46a4cbec874a6f69130d94c02df517b9e29723",
+            "comment": "Sync pipeline, tooling, and vendored dependency changes to 0.83-stable"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.83.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Jun 2026 09:54:41 GMT",
       "version": "0.83.2",
       "tag": "@react-native-windows/automation-channel_v0.83.2",
