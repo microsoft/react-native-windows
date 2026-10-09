@@ -2,6 +2,21 @@
   "name": "@react-native-windows/perf-testing",
   "entries": [
     {
+      "date": "Fri, 09 Oct 2026 17:38:08 GMT",
+      "version": "0.83.2",
+      "tag": "@react-native-windows/perf-testing_v0.83.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "8f46a4cbec874a6f69130d94c02df517b9e29723",
+            "comment": "Migrate package metadata to Yarn 4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Jun 2026 09:54:41 GMT",
       "version": "0.83.1",
       "tag": "@react-native-windows/perf-testing_v0.83.1",

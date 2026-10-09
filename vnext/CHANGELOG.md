@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 16 Jun 2026 09:54:41 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 09 Oct 2026 17:38:08 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.83.3
+
+Fri, 09 Oct 2026 17:38:08 GMT
+
+### Patches
+
+- fix(pointer): null-check the capturing component view before notifying OnPointerCaptureLost (crash when the capturing component was unmounted) (collindanielschneide@gmail.com)
+- Fix placeholder layout constraints fed physical px instead of DIPs; fix no-op NaN fontSize guard in CreatePlaceholderLayout (collindanielschneide@gmail.com)
+- Fixes misalignment with TextInput on different display scales (dlucas@seabird.com)
+- Sync pipeline, tooling, and vendored dependency changes to 0.83-stable (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.83.3
+- Bump @react-native-windows/codegen to v0.83.2
+- Bump react-native-platform-override to v0.83.2
 
 ## 0.83.2
 

@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 09 Oct 2026 17:38:08 GMT",
+      "version": "0.83.3",
+      "tag": "react-native-windows_v0.83.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "8f46a4cbec874a6f69130d94c02df517b9e29723",
+            "comment": "fix(pointer): null-check the capturing component view before notifying OnPointerCaptureLost (crash when the capturing component was unmounted)"
+          },
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "8f46a4cbec874a6f69130d94c02df517b9e29723",
+            "comment": "Fix placeholder layout constraints fed physical px instead of DIPs; fix no-op NaN fontSize guard in CreatePlaceholderLayout"
+          },
+          {
+            "author": "dlucas@seabird.com",
+            "package": "react-native-windows",
+            "commit": "8f46a4cbec874a6f69130d94c02df517b9e29723",
+            "comment": "Fixes misalignment with TextInput on different display scales"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8f46a4cbec874a6f69130d94c02df517b9e29723",
+            "comment": "Sync pipeline, tooling, and vendored dependency changes to 0.83-stable"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.83.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.83.2",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.83.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Jun 2026 09:54:41 GMT",
       "version": "0.83.2",
       "tag": "react-native-windows_v0.83.2",

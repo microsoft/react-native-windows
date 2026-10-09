@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "fix(pointer): null-check the capturing component view before notifying OnPointerCaptureLost (crash when the capturing component was unmounted)",
-  "packageName": "react-native-windows",
-  "email": "collindanielschneide@gmail.com",
-  "dependentChangeType": "patch"
-}
