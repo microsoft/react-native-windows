@@ -81437,6 +81437,93 @@ exports[`snapshotAllPages TextInput 11`] = `
       ]
     }
   />
+  <TextInput
+    multiline={true}
+    onSubmitEditing={[Function]}
+    placeholder="submit behavior test: submit"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+    submitBehavior="submit"
+    testID="submit-behavior-submit"
+  />
+  <Text
+    testID="submit-behavior-submit-count"
+  >
+    0
+  </Text>
+  <TextInput
+    multiline={true}
+    onSubmitEditing={[Function]}
+    placeholder="submit behavior test: blurAndSubmit"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+    submitBehavior="blurAndSubmit"
+    testID="submit-behavior-blur-and-submit"
+  />
+  <Text
+    testID="submit-behavior-blur-and-submit-count"
+  >
+    0
+  </Text>
+  <TextInput
+    multiline={true}
+    onSubmitEditing={[Function]}
+    placeholder="submit behavior test: newline"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+    submitBehavior="newline"
+    testID="submit-behavior-newline"
+  />
+  <Text
+    testID="submit-behavior-newline-count"
+  >
+    0
+  </Text>
 </View>
 `;
 

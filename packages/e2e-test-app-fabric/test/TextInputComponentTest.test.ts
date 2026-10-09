@@ -45,6 +45,25 @@ const searchBox = async (input: string) => {
   );
 };
 
+const setTextInputValue = async (
+  component: Awaited<ReturnType<typeof app.findElementByTestID>>,
+  value: string,
+) => {
+  await component.click();
+  await app.waitUntil(
+    async () => {
+      await component.clearValue();
+      await component.setValue(value);
+      return (await component.getText()) === value;
+    },
+    {
+      interval: 500,
+      timeout: 5000,
+      timeoutMsg: `Unable to enter correct text.`,
+    },
+  );
+};
+
 describe('TextInput Tests', () => {
   test('TextInputs can rewrite characters: Replace Space with Underscore', async () => {
     const component = await app.findElementByTestID(
@@ -944,8 +963,7 @@ describe('TextInput Tests', () => {
     const submitCount = await app.findElementByTestID(
       'submit-behavior-submit-count',
     );
-    await submit.setValue('abc');
-    await submit.click();
+    await setTextInputValue(submit, 'abc');
     await submit.setValue('\uE007');
     await app.waitUntil(async () => (await submitCount.getText()) === '1', {
       timeout: 5000,
@@ -960,8 +978,7 @@ describe('TextInput Tests', () => {
     const blurAndSubmitCount = await app.findElementByTestID(
       'submit-behavior-blur-and-submit-count',
     );
-    await blurAndSubmit.setValue('abc');
-    await blurAndSubmit.click();
+    await setTextInputValue(blurAndSubmit, 'abc');
     await blurAndSubmit.setValue('\uE007');
     await app.waitUntil(
       async () => (await blurAndSubmitCount.getText()) === '1',
@@ -977,8 +994,7 @@ describe('TextInput Tests', () => {
     const newlineCount = await app.findElementByTestID(
       'submit-behavior-newline-count',
     );
-    await newline.setValue('abc');
-    await newline.click();
+    await setTextInputValue(newline, 'abc');
     await newline.setValue('\uE007');
     await app.waitUntil(async () => (await newline.getText()) === 'abc\r', {
       timeout: 5000,

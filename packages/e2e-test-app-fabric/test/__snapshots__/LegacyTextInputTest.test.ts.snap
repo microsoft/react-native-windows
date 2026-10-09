@@ -83,8 +83,6 @@ onChange text:
 onFocus
 onEndEditing text: abc
 onBlur
-onEndEditing text: abc
-onBlur
 onSubmitEditing text: abc
 onChange text: abc
 onSelectionChange range: 3,3
@@ -126,8 +124,6 @@ onSelectionChange range: 1,1
 onKeyPress key: a
 onChange text: 
 onFocus
-onEndEditing text: abc
-onBlur
 onEndEditing text: abc
 onBlur
 onSubmitEditing text: abc
