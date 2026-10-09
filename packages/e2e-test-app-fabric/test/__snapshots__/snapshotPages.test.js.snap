@@ -81439,6 +81439,7 @@ exports[`snapshotAllPages TextInput 11`] = `
   />
   <TextInput
     multiline={true}
+    onChangeText={[Function]}
     onSubmitEditing={[Function]}
     placeholder="submit behavior test: submit"
     style={
@@ -81460,6 +81461,10 @@ exports[`snapshotAllPages TextInput 11`] = `
     }
     submitBehavior="submit"
     testID="submit-behavior-submit"
+    value=""
+  />
+  <Text
+    testID="submit-behavior-submit-text"
   />
   <Text
     testID="submit-behavior-submit-count"
@@ -81468,6 +81473,7 @@ exports[`snapshotAllPages TextInput 11`] = `
   </Text>
   <TextInput
     multiline={true}
+    onChangeText={[Function]}
     onSubmitEditing={[Function]}
     placeholder="submit behavior test: blurAndSubmit"
     style={
@@ -81489,6 +81495,10 @@ exports[`snapshotAllPages TextInput 11`] = `
     }
     submitBehavior="blurAndSubmit"
     testID="submit-behavior-blur-and-submit"
+    value=""
+  />
+  <Text
+    testID="submit-behavior-blur-and-submit-text"
   />
   <Text
     testID="submit-behavior-blur-and-submit-count"
@@ -81497,6 +81507,7 @@ exports[`snapshotAllPages TextInput 11`] = `
   </Text>
   <TextInput
     multiline={true}
+    onChangeText={[Function]}
     onSubmitEditing={[Function]}
     placeholder="submit behavior test: newline"
     style={
@@ -81518,6 +81529,10 @@ exports[`snapshotAllPages TextInput 11`] = `
     }
     submitBehavior="newline"
     testID="submit-behavior-newline"
+    value=""
+  />
+  <Text
+    testID="submit-behavior-newline-text"
   />
   <Text
     testID="submit-behavior-newline-count"
