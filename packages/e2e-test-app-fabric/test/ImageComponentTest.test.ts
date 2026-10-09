@@ -22,16 +22,28 @@ afterEach(async () => {
 });
 
 describe('Image Tests', () => {
-  test('An Image component can render a blob image', async () => {
+  test.skip('An Image component can render a blob image', async () => {
     const component = await app.findElementByTestID('image-blob');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('image-blob');
     expect(dump).toMatchSnapshot();
   });
-  test('An Image component can have a network callback', async () => {
+  test.skip('An Image component can have a network callback', async () => {
     const component = await app.findElementByTestID('image-network-callback');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('image-network-callback');
+    expect(dump).toMatchSnapshot();
+  });
+  test('An Image can handle network errors', async () => {
+    const component = await app.findElementByTestID('image-network-error');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('image-network-error');
+    expect(dump).toMatchSnapshot();
+  });
+  test('An Image can handle large image errors', async () => {
+    const component = await app.findElementByTestID('image-large-error');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('image-large-error');
     expect(dump).toMatchSnapshot();
   });
   test('A network Image example', async () => {

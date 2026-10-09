@@ -12,9 +12,8 @@ exports[`Image Tests A network Image example 1`] = `
     "_Props": {
       "Sources": [
         {
-          "Size": "6000, 5340",
-          "Type": "Local",
-          "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/very-large-image.png",
+          "Type": "Remote",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png?r=1",
         },
       ],
       "TestId": "image-network",
@@ -1393,6 +1392,63 @@ exports[`Image Tests An Image can borders 1`] = `
         "Visual Type": "SpriteVisual",
       },
     ],
+  },
+}
+`;
+
+exports[`Image Tests An Image can handle large image errors 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-large-error",
+    "ControlType": 50006,
+    "LocalizedControlType": "image",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+    "_Props": {
+      "Sources": [
+        {
+          "Size": "6000, 5340",
+          "Type": "Local",
+          "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/very-large-image.png",
+        },
+      ],
+      "TestId": "image-large-error",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "image-large-error",
+    "Offset": "0, 0, 0",
+    "Size": "64, 64",
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can handle network errors 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-network-error",
+    "ControlType": 50006,
+    "LocalizedControlType": "image",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+    "_Props": {
+      "Sources": [
+        {
+          "Type": "Remote",
+          "Uri": "https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flux@3x.png_TYPO",
+        },
+      ],
+      "TestId": "image-network-error",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "image-network-error",
+    "Offset": "0, 0, 0",
+    "Size": "64, 64",
+    "Visual Type": "SpriteVisual",
   },
 }
 `;
