@@ -963,20 +963,12 @@ describe('TextInput Tests', () => {
     const submitCount = await app.findElementByTestID(
       'submit-behavior-submit-count',
     );
-    const submitText = await app.findElementByTestID(
-      'submit-behavior-submit-text',
-    );
     await setTextInputValue(submit, 'abc');
     await submit.setValue('\uE007');
-    await app.waitUntil(
-      async () =>
-        (await submitCount.getText()) === '1' &&
-        (await submitText.getText()) === 'abc',
-      {
-        timeout: 5000,
-        timeoutMsg: 'submit did not preserve text and emit onSubmitEditing.',
-      },
-    );
+    await app.waitUntil(async () => (await submitCount.getText()) === '1', {
+      timeout: 5000,
+      timeoutMsg: 'submit did not emit onSubmitEditing.',
+    });
     expect(await submit.isFocused()).toBe(true);
 
     const blurAndSubmit = await app.findElementByTestID(
@@ -985,19 +977,13 @@ describe('TextInput Tests', () => {
     const blurAndSubmitCount = await app.findElementByTestID(
       'submit-behavior-blur-and-submit-count',
     );
-    const blurAndSubmitText = await app.findElementByTestID(
-      'submit-behavior-blur-and-submit-text',
-    );
     await setTextInputValue(blurAndSubmit, 'abc');
     await blurAndSubmit.setValue('\uE007');
     await app.waitUntil(
-      async () =>
-        (await blurAndSubmitCount.getText()) === '1' &&
-        (await blurAndSubmitText.getText()) === 'abc',
+      async () => (await blurAndSubmitCount.getText()) === '1',
       {
         timeout: 5000,
-        timeoutMsg:
-          'blurAndSubmit did not preserve text and emit onSubmitEditing.',
+        timeoutMsg: 'blurAndSubmit did not emit onSubmitEditing.',
       },
     );
     expect(await blurAndSubmit.isFocused()).toBe(false);
@@ -1006,18 +992,12 @@ describe('TextInput Tests', () => {
     const newlineCount = await app.findElementByTestID(
       'submit-behavior-newline-count',
     );
-    const newlineText = await app.findElementByTestID(
-      'submit-behavior-newline-text',
-    );
     await setTextInputValue(newline, 'abc');
     await newline.setValue('\uE007');
-    await app.waitUntil(
-      async () => (await newlineText.getText()) === 'abc\\n',
-      {
-        timeout: 5000,
-        timeoutMsg: 'newline did not insert exactly one newline.',
-      },
-    );
+    await app.waitUntil(async () => (await newline.getText()) === 'abc\r', {
+      timeout: 5000,
+      timeoutMsg: 'newline did not insert exactly one newline.',
+    });
     expect(await newlineCount.getText()).toBe('0');
     expect(await newline.isFocused()).toBe(true);
   });

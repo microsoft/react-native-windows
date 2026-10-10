@@ -81462,9 +81462,6 @@ exports[`snapshotAllPages TextInput 11`] = `
     testID="submit-behavior-submit"
   />
   <Text
-    testID="submit-behavior-submit-text"
-  />
-  <Text
     testID="submit-behavior-submit-count"
   >
     0
@@ -81494,16 +81491,12 @@ exports[`snapshotAllPages TextInput 11`] = `
     testID="submit-behavior-blur-and-submit"
   />
   <Text
-    testID="submit-behavior-blur-and-submit-text"
-  />
-  <Text
     testID="submit-behavior-blur-and-submit-count"
   >
     0
   </Text>
   <TextInput
     multiline={true}
-    onChangeText={[Function]}
     onSubmitEditing={[Function]}
     placeholder="submit behavior test: newline"
     style={
@@ -81525,9 +81518,6 @@ exports[`snapshotAllPages TextInput 11`] = `
     }
     submitBehavior="newline"
     testID="submit-behavior-newline"
-  />
-  <Text
-    testID="submit-behavior-newline-text"
   />
   <Text
     testID="submit-behavior-newline-count"
