@@ -64,6 +64,10 @@ const setTextInputValue = async (
   );
 };
 
+const hasKeyboardFocus = async (
+  component: Awaited<ReturnType<typeof app.findElementByTestID>>,
+) => (await component.getAttribute('HasKeyboardFocus')) === 'true';
+
 describe('TextInput Tests', () => {
   test('TextInputs can rewrite characters: Replace Space with Underscore', async () => {
     const component = await app.findElementByTestID(
@@ -969,7 +973,7 @@ describe('TextInput Tests', () => {
       timeout: 5000,
       timeoutMsg: 'submit did not emit onSubmitEditing.',
     });
-    expect(await submit.isFocused()).toBe(true);
+    expect(await hasKeyboardFocus(submit)).toBe(true);
 
     const blurAndSubmit = await app.findElementByTestID(
       'submit-behavior-blur-and-submit',
@@ -986,7 +990,7 @@ describe('TextInput Tests', () => {
         timeoutMsg: 'blurAndSubmit did not emit onSubmitEditing.',
       },
     );
-    expect(await blurAndSubmit.isFocused()).toBe(false);
+    expect(await hasKeyboardFocus(blurAndSubmit)).toBe(false);
 
     const newline = await app.findElementByTestID('submit-behavior-newline');
     const newlineCount = await app.findElementByTestID(
@@ -999,7 +1003,7 @@ describe('TextInput Tests', () => {
       timeoutMsg: 'newline did not insert exactly one newline.',
     });
     expect(await newlineCount.getText()).toBe('0');
-    expect(await newline.isFocused()).toBe(true);
+    expect(await hasKeyboardFocus(newline)).toBe(true);
   });
   test('TextInput triggers onPressIn and updates state text', async () => {
     // Scroll the example into view
