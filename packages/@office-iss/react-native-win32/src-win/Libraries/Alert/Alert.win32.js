@@ -18,10 +18,7 @@ const PLYAlertManager = TurboModuleRegistry.getEnforcing('Alert');
  * @platform ios
  */
 export type AlertType =
-  | 'default'
-  | 'plain-text'
-  | 'secure-text'
-  | 'login-password';
+  'default' | 'plain-text' | 'secure-text' | 'login-password';
 
 /**
  * @platform ios

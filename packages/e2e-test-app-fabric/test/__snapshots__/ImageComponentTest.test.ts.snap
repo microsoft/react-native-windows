@@ -195,6 +195,17 @@ exports[`Image Tests An Image can a border radius 1`] = `
           ],
         },
       },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "http://127.0.0.1:8089/flowers.png",
+            },
+          ],
+        },
+      },
     ],
   },
   "Visual Tree": {
@@ -626,6 +637,97 @@ exports[`Image Tests An Image can a border radius 1`] = `
       },
       {
         "Offset": "586, 4, 0",
+        "Size": "64, 64",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "64, 64",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "36, 36",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": "36, 0, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": "-36, 0, 0",
+                "Size": "36, 36",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": "-4, 36, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": "-36, -36, 0",
+                "Size": "36, 36",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": "36, -4, 0",
+                "Size": "-8, 4",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": "0, -36, 0",
+                "Size": "36, 36",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": "0, 36, 0",
+                "Size": "4, -8",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "658, 4, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -716,7 +818,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "684, 4, 0",
+        "Offset": "756, 4, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -807,7 +909,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "782, 4, 0",
+        "Offset": "4, 76, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -866,7 +968,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "4, 76, 0",
+        "Offset": "102, 76, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -925,7 +1027,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "102, 76, 0",
+        "Offset": "200, 76, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1016,7 +1118,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "200, 76, 0",
+        "Offset": "298, 76, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1107,7 +1209,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "298, 76, 0",
+        "Offset": "396, 76, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [

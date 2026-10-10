@@ -34,6 +34,21 @@ const config = {
   watchFolders: [rnwPath, rnwRootNodeModules, rnwPackages],
   // devMode]{{/devMode}}
   resolver: {
+    resolveRequest: (context, moduleName, platform) => {
+      if (
+        moduleName ===
+        '../../src/private/devsupport/rndevtools/ReactDevToolsSettingsManager'
+      ) {
+        return {
+          type: 'sourceFile',
+          filePath: path.join(
+            rnwPath,
+            'src/private/devsupport/rndevtools/ReactDevToolsSettingsManager.windows.js',
+          ),
+        };
+      }
+      return context.resolveRequest(context, moduleName, platform);
+    },
     blockList: [
       // This stops "npx @react-native-community/cli run-windows" from causing the metro server to crash if its already running
       new RegExp(
@@ -51,6 +66,7 @@ const config = {
     // devMode]{{/devMode}}
   },
   transformer: {
+    assetRegistryPath: require.resolve('react-native/asset-registry'),
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,

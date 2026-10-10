@@ -93,11 +93,11 @@ void RootComponentView::SetFocusedComponent(
         ->onLostFocus(args);
   }
 
+  m_focusedComponent = value;
   if (value) {
     if (auto rootView = m_wkRootView.get()) {
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->TrySetFocus();
     }
-    m_focusedComponent = value;
     if (focusState == winrt::Microsoft::ReactNative::FocusState::Programmatic) {
       focusState =
           (!m_useKeyboardForProgrammaticFocus || m_focusState == winrt::Microsoft::ReactNative::FocusState::Pointer)

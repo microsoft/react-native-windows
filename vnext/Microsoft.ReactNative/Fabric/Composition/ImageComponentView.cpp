@@ -226,7 +226,8 @@ void ImageComponentView::OnRenderingDeviceLost() noexcept {
 }
 
 bool ImageComponentView::themeEffectsImage() const noexcept {
-  return viewProps()->backgroundColor || isColorMeaningful(imageProps().tintColor);
+  return viewProps()->backgroundColor ||
+      isColorMeaningful(imageProps().tintColor.value_or(facebook::react::SharedColor{}));
 }
 
 void ImageComponentView::onThemeChanged() noexcept {
@@ -350,9 +351,10 @@ void ImageComponentView::DrawImage() noexcept {
     }
 
     const auto &imgProps = imageProps();
+    const facebook::react::SharedColor tintColor = imgProps.tintColor.value_or(facebook::react::SharedColor{});
 
     bool useEffects{
-        imgProps.blurRadius > 0 || isColorMeaningful(imgProps.tintColor) ||
+        imgProps.blurRadius > 0 || isColorMeaningful(tintColor) ||
         imgProps.resizeMode == facebook::react::ImageResizeMode::Repeat};
 
     if (useEffects) {
@@ -373,10 +375,10 @@ void ImageComponentView::DrawImage() noexcept {
         bitmapEffects.copy_from(gaussianBlurEffect.get());
       }
 
-      if (isColorMeaningful(imgProps.tintColor)) {
+      if (isColorMeaningful(tintColor)) {
         winrt::com_ptr<ID2D1Effect> tintColorEffect;
         winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1Flood, tintColorEffect.put()));
-        winrt::check_hresult(tintColorEffect->SetValue(D2D1_FLOOD_PROP_COLOR, theme()->D2DColor(*imgProps.tintColor)));
+        winrt::check_hresult(tintColorEffect->SetValue(D2D1_FLOOD_PROP_COLOR, theme()->D2DColor(*tintColor)));
 
         winrt::com_ptr<ID2D1Effect> compositeEffect;
         winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1Composite, compositeEffect.put()));

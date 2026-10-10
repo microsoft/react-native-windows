@@ -10,31 +10,10 @@
 
 'use strict';
 
-export type ResolvedAssetSource = {
-  readonly __packager_asset: boolean,
-  readonly width: ?number,
-  readonly height: ?number,
-  readonly uri: string,
-  readonly scale: number,
-};
-
-// From @react-native/assets-registry
-type AssetDestPathResolver = 'android' | 'generic';
-
-// From @react-native/assets-registry
-type PackagerAsset = Readonly<{
-  __packager_asset: boolean,
-  fileSystemLocation: string,
-  httpServerLocation: string,
-  width: ?number,
-  height: ?number,
-  scales: Array<number>,
-  hash: string,
-  name: string,
-  type: string,
-  resolver?: AssetDestPathResolver,
-  ...
-}>;
+import type {
+  AssetDestPathResolver,
+  PackagerAsset,
+} from '../../src/private/assets/AssetRegistry';
 
 const PixelRatio = require('../Utilities/PixelRatio').default;
 const Platform = require('../Utilities/Platform').default;
@@ -42,7 +21,7 @@ const {pickScale} = require('./AssetUtils');
 const {
   getAndroidResourceFolderName,
   getAndroidResourceIdentifier,
-} = require('@react-native/assets-registry/path-support');
+} = require('@react-native/asset-utils');
 const invariant = require('invariant');
 // $FlowFixMe[untyped-import]
 const ensureShortPath = require('./assetPaths.js'); // [Windows]
@@ -67,6 +46,14 @@ function getBasePath(asset: PackagerAsset, local: boolean) {
 
   return basePath;
 }
+
+export type ResolvedAssetSource = {
+  readonly __packager_asset: boolean,
+  readonly width: ?number,
+  readonly height: ?number,
+  readonly uri: string,
+  readonly scale: number,
+};
 
 /**
  * Returns a path like 'assets/AwesomeModule/icon@2x.png'

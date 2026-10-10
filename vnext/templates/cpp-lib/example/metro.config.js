@@ -56,6 +56,18 @@ const config = {
       if (moduleName === pack.name) {
         return { type: 'sourceFile', filePath: path.resolve(root, librarySource) };
       }
+      if (
+        moduleName ===
+        '../../src/private/devsupport/rndevtools/ReactDevToolsSettingsManager'
+      ) {
+        return {
+          type: 'sourceFile',
+          filePath: path.join(
+            rnwPath,
+            'src/private/devsupport/rndevtools/ReactDevToolsSettingsManager.windows.js',
+          ),
+        };
+      }
       return context.resolveRequest(context, moduleName, platform);
     },
     blocklist: 
@@ -86,6 +98,7 @@ const config = {
   },
 
   transformer: {
+    assetRegistryPath: require.resolve('react-native/asset-registry'),
     getTransformOptions: async () => ({
       transform: {
         experimentalImportSupport: false,

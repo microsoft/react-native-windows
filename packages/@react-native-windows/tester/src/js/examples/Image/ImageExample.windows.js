@@ -1331,6 +1331,11 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     backgroundColor: 'yellow',
   },
+  borderRadiusPercentage: {
+    borderWidth: 4,
+    borderRadius: '50%',
+    borderColor: 'green',
+  },
   borderBottomEndRadius: {
     resizeMode: 'contain',
     width: 90,
@@ -1751,6 +1756,10 @@ exports.examples = [
           />
           <Image
             style={[styles.base, styles.borderRadius5]}
+            source={fullImage}
+          />
+          <Image
+            style={[styles.base, styles.borderRadiusPercentage]}
             source={fullImage}
           />
           <Image

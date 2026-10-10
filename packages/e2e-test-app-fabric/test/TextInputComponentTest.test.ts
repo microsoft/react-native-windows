@@ -45,6 +45,29 @@ const searchBox = async (input: string) => {
   );
 };
 
+const setTextInputValue = async (
+  component: Awaited<ReturnType<typeof app.findElementByTestID>>,
+  value: string,
+) => {
+  await component.click();
+  await app.waitUntil(
+    async () => {
+      await component.clearValue();
+      await component.setValue(value);
+      return (await component.getText()) === value;
+    },
+    {
+      interval: 500,
+      timeout: 5000,
+      timeoutMsg: `Unable to enter correct text.`,
+    },
+  );
+};
+
+const hasKeyboardFocus = async (
+  component: Awaited<ReturnType<typeof app.findElementByTestID>>,
+) => (await component.getAttribute('HasKeyboardFocus')) === 'true';
+
 describe('TextInput Tests', () => {
   test('TextInputs can rewrite characters: Replace Space with Underscore', async () => {
     const component = await app.findElementByTestID(
@@ -460,6 +483,7 @@ describe('TextInput Tests', () => {
     );
 
     await componentFocusTrue.waitForDisplayed({timeout: 5000});
+    await componentFocusTrue.click();
     await app.waitUntil(
       async () => {
         await componentFocusTrue.setValue('Hello World');
@@ -511,7 +535,9 @@ describe('TextInput Tests', () => {
     const targetComponent = await app.findElementByTestID(
       'select-text-on-focus-while-clear-text-on-focus',
     );
+
     await targetComponent.waitForDisplayed({timeout: 5000});
+    await targetComponent.click();
 
     await app.waitUntil(
       async () => {
@@ -933,6 +959,51 @@ describe('TextInput Tests', () => {
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('textinput-searchbox');
     expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs honor explicit submitBehavior values', async () => {
+    await searchBox('Submit behavior');
+
+    const submit = await app.findElementByTestID('submit-behavior-submit');
+    const submitCount = await app.findElementByTestID(
+      'submit-behavior-submit-count',
+    );
+    await setTextInputValue(submit, 'abc');
+    await submit.setValue('\uE007');
+    await app.waitUntil(async () => (await submitCount.getText()) === '1', {
+      timeout: 5000,
+      timeoutMsg: 'submit did not emit onSubmitEditing.',
+    });
+    expect(await hasKeyboardFocus(submit)).toBe(true);
+
+    const blurAndSubmit = await app.findElementByTestID(
+      'submit-behavior-blur-and-submit',
+    );
+    const blurAndSubmitCount = await app.findElementByTestID(
+      'submit-behavior-blur-and-submit-count',
+    );
+    await setTextInputValue(blurAndSubmit, 'abc');
+    await blurAndSubmit.setValue('\uE007');
+    await app.waitUntil(
+      async () => (await blurAndSubmitCount.getText()) === '1',
+      {
+        timeout: 5000,
+        timeoutMsg: 'blurAndSubmit did not emit onSubmitEditing.',
+      },
+    );
+    expect(await hasKeyboardFocus(blurAndSubmit)).toBe(false);
+
+    const newline = await app.findElementByTestID('submit-behavior-newline');
+    const newlineCount = await app.findElementByTestID(
+      'submit-behavior-newline-count',
+    );
+    await setTextInputValue(newline, 'abc');
+    await newline.setValue('\uE007');
+    await app.waitUntil(async () => (await newline.getText()) === 'abc\r', {
+      timeout: 5000,
+      timeoutMsg: 'newline did not insert exactly one newline.',
+    });
+    expect(await newlineCount.getText()).toBe('0');
+    expect(await hasKeyboardFocus(newline)).toBe(true);
   });
   test('TextInput triggers onPressIn and updates state text', async () => {
     // Scroll the example into view

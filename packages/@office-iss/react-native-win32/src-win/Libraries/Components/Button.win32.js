@@ -171,8 +171,7 @@ export type ButtonProps = Readonly<{
 }>;
 
 const NativeTouchable:
-  | typeof TouchableNativeFeedback
-  | typeof TouchableOpacity =
+  typeof TouchableNativeFeedback | typeof TouchableOpacity =
   Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
 
 export type ButtonInstance = React.ElementRef<typeof NativeTouchable>;
