@@ -53,12 +53,12 @@ ISS agents run under 1ES **Network Isolation**, which blocks egress to public CD
 The pipelines route package requests through approved endpoints and neutralize
 three background egress attempts that green builds would otherwise hide:
 
-- **Package registries:** `variables/shared.yml` routes npm/npx through the
-  anonymous PackageFeedProxy (`NPM_CONFIG_REGISTRY`) and Yarn through the
-  `ms/react-native-public` Azure Artifacts feed (`YARN_NPM_REGISTRY_SERVER`).
-  On CI, `templates/auth-npm-feed.yml` mints a managed-identity token for the
-  Azure Artifacts feed and writes it to `~/.npmrc` and `~/.yarnrc.yml` before
-  any install.
+- **Package registries:** `variables/shared.yml` routes npm/npx and Yarn through
+  the anonymous PackageFeedProxy (`NPM_CONFIG_REGISTRY` /
+  `YARN_NPM_REGISTRY_SERVER`). On CI, `templates/auth-npm-feed.yml` mints a
+  managed-identity token for direct access to the `ms/react-native-public`
+  Azure Artifacts feed. The token is scoped to that feed in `~/.npmrc` and
+  passed separately to the Verdaccio uplink; Yarn does not send it to the proxy.
 - **Verdaccio (CLI init tests):** `verdaccio/generate-config.js` emits the config at
   runtime, so the uplink targets the feed (with the CI token when present) while
   local packages still publish offline. The former static `config.yaml` was removed.
@@ -70,11 +70,11 @@ three background egress attempts that green builds would otherwise hide:
   CDN mid-build. This is an interim step; the durable fix is to bake it into the
   agent image.
 
-Public PR Yarn and NuGet restores read the Azure Artifacts feed **anonymously**,
-so they can only restore versions an authenticated identity has already saved.
-A scheduled feed warm-up (maintained on `main`, branch-agnostic) pre-populates
-the npm and NuGet dependency closures on the feed and keeps those anonymous
-restores working.
+Public PR Verdaccio and NuGet restores read the Azure Artifacts feed
+**anonymously**, so they can only restore versions an authenticated identity has
+already saved. A scheduled feed warm-up (maintained on `main`, branch-agnostic)
+pre-populates the npm and NuGet dependency closures on the feed and keeps those
+anonymous restores working.
 
 ## SDL and Component Governance
 
