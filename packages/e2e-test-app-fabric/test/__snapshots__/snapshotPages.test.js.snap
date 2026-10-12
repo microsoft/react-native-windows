@@ -81500,6 +81500,7 @@ exports[`snapshotAllPages TextInput 11`] = `
   <TextInput
     multiline={true}
     onBlur={[Function]}
+    onKeyPress={[Function]}
     onSubmitEditing={[Function]}
     placeholder="submit behavior test: newline"
     style={
@@ -81525,7 +81526,7 @@ exports[`snapshotAllPages TextInput 11`] = `
   <Text
     testID="submit-behavior-newline-count"
   >
-    0:0
+    0:0:0
   </Text>
 </View>
 `;

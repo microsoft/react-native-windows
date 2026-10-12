@@ -276,6 +276,7 @@ class SubmitBehaviorExample extends React.Component<{...}> {
     blurAndSubmitBlurCount: 0,
     newlineCount: 0,
     newlineBlurCount: 0,
+    newlineKeyPressCount: 0,
   };
 
   ref1: ExampleRef = createRef();
@@ -409,9 +410,16 @@ class SubmitBehaviorExample extends React.Component<{...}> {
               newlineBlurCount: state.newlineBlurCount + 1,
             }))
           }
+          onKeyPress={() =>
+            this.setState(state => ({
+              newlineKeyPressCount: state.newlineKeyPressCount + 1,
+            }))
+          }
         />
         <Text testID="submit-behavior-newline-count">
-          {`${this.state.newlineCount}:${this.state.newlineBlurCount}`}
+          {`${this.state.newlineCount}:${this.state.newlineBlurCount}:${
+            this.state.newlineKeyPressCount
+          }`}
         </Text>
       </View>
     );

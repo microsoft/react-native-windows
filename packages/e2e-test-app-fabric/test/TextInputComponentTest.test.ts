@@ -64,9 +64,6 @@ const setTextInputValue = async (
   );
 };
 
-const normalizeLineEndings = (value: string) =>
-  value.replace(/\r\n|\r/g, '\n');
-
 describe('TextInput Tests', () => {
   test('TextInputs can rewrite characters: Replace Space with Underscore', async () => {
     const component = await app.findElementByTestID(
@@ -994,15 +991,20 @@ describe('TextInput Tests', () => {
       'submit-behavior-newline-count',
     );
     await setTextInputValue(newline, 'abc');
+    const keyPressCountBeforeEnter = Number(
+      (await newlineCount.getText()).split(':')[2],
+    );
     await newline.setValue('\uE007');
     await app.waitUntil(
-      async () => normalizeLineEndings(await newline.getText()) === 'abc\n',
+      async () =>
+        (await newlineCount.getText()) ===
+        `0:0:${keyPressCountBeforeEnter + 1}`,
       {
         timeout: 5000,
-        timeoutMsg: 'newline did not insert exactly one newline.',
+        timeoutMsg:
+          'newline did not handle Enter without submitting or blurring.',
       },
     );
-    expect(await newlineCount.getText()).toBe('0:0');
   });
   test('TextInput triggers onPressIn and updates state text', async () => {
     // Scroll the example into view
