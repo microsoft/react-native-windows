@@ -64,10 +64,6 @@ const setTextInputValue = async (
   );
 };
 
-const hasKeyboardFocus = async (
-  component: Awaited<ReturnType<typeof app.findElementByTestID>>,
-) => (await component.getAttribute('HasKeyboardFocus')) === 'true';
-
 describe('TextInput Tests', () => {
   test('TextInputs can rewrite characters: Replace Space with Underscore', async () => {
     const component = await app.findElementByTestID(
@@ -969,11 +965,10 @@ describe('TextInput Tests', () => {
     );
     await setTextInputValue(submit, 'abc');
     await submit.setValue('\uE007');
-    await app.waitUntil(async () => (await submitCount.getText()) === '1', {
+    await app.waitUntil(async () => (await submitCount.getText()) === '1:0', {
       timeout: 5000,
-      timeoutMsg: 'submit did not emit onSubmitEditing.',
+      timeoutMsg: 'submit did not emit onSubmitEditing without blurring.',
     });
-    expect(await hasKeyboardFocus(submit)).toBe(true);
 
     const blurAndSubmit = await app.findElementByTestID(
       'submit-behavior-blur-and-submit',
@@ -984,13 +979,12 @@ describe('TextInput Tests', () => {
     await setTextInputValue(blurAndSubmit, 'abc');
     await blurAndSubmit.setValue('\uE007');
     await app.waitUntil(
-      async () => (await blurAndSubmitCount.getText()) === '1',
+      async () => (await blurAndSubmitCount.getText()) === '1:1',
       {
         timeout: 5000,
-        timeoutMsg: 'blurAndSubmit did not emit onSubmitEditing.',
+        timeoutMsg: 'blurAndSubmit did not emit submit and blur events.',
       },
     );
-    expect(await hasKeyboardFocus(blurAndSubmit)).toBe(false);
 
     const newline = await app.findElementByTestID('submit-behavior-newline');
     const newlineCount = await app.findElementByTestID(
@@ -1002,8 +996,7 @@ describe('TextInput Tests', () => {
       timeout: 5000,
       timeoutMsg: 'newline did not insert exactly one newline.',
     });
-    expect(await newlineCount.getText()).toBe('0');
-    expect(await hasKeyboardFocus(newline)).toBe(true);
+    expect(await newlineCount.getText()).toBe('0:0');
   });
   test('TextInput triggers onPressIn and updates state text', async () => {
     // Scroll the example into view
