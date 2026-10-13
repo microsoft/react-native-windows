@@ -26,17 +26,13 @@ const searchBox = async (input: string) => {
   const searchBox = await app.findElementByTestID('example_search');
   await app.waitUntil(
     async () => {
-      // Clear before each attempt: WinAppDriver's setValue can fall back to
-      // synthesized keystrokes for custom RN TextInputs, which append rather
-      // than replace. Without the clear, a retry produces concatenated text
-      // and the comparison never converges.
       await searchBox.clearValue();
-      await searchBox.setValue(input);
       if (input === '') {
         return (await searchBox.getText()) === 'Search...';
-      } else {
-        return (await searchBox.getText()) === input;
       }
+      await searchBox.click();
+      await searchBox.addValue(input);
+      return (await searchBox.getText()) === input;
     },
     {
       interval: 500,

@@ -81,20 +81,23 @@ std::shared_ptr<ShadowNode> UIManager::createNode(
       {.tag = tag,
        .surfaceId = surfaceId,
        .instanceHandle = std::move(instanceHandle)});
-  const auto props = componentDescriptor.cloneProps(
+  auto props = componentDescriptor.cloneProps(
       propsParserContext, nullptr, std::move(rawProps));
-  const auto state = componentDescriptor.createInitialState(props, family);
+  auto state = componentDescriptor.createInitialState(props, family);
+
+  // Add a "name" prop if this is the fallback component
+  if (fallbackDescriptor != nullptr &&
+      fallbackDescriptor->getComponentHandle() ==
+          componentDescriptor.getComponentHandle()) {
+    props = componentDescriptor.cloneProps(
+        propsParserContext,
+        props,
+        RawProps(folly::dynamic::object("name", name)));
+  }
 
   auto shadowNode = componentDescriptor.createShadowNode(
       ShadowNodeFragment{
-          .props = fallbackDescriptor != nullptr &&
-                  fallbackDescriptor->getComponentHandle() ==
-                      componentDescriptor.getComponentHandle()
-              ? componentDescriptor.cloneProps(
-                    propsParserContext,
-                    props,
-                    RawProps(folly::dynamic::object("name", name)))
-              : props,
+          .props = props,
           .children = ShadowNodeFragment::childrenPlaceholder(),
           .state = state,
       },
@@ -669,6 +672,21 @@ void UIManager::shadowTreeDidPromoteReactRevision(
     const ShadowTree& shadowTree) const {
   if (delegate_ != nullptr) {
     delegate_->uiManagerDidPromoteReactRevision(shadowTree);
+  }
+}
+
+void UIManager::shadowTreeDidCommit(
+    const ShadowTree& shadowTree,
+    const RootShadowNode::Shared& rootShadowNode,
+    const std::vector<const LayoutableShadowNode*>& affectedLayoutableNodes)
+    const noexcept {
+  TraceSection s("UIManager::shadowTreeDidCommit");
+
+  std::shared_lock lock(commitHookMutex_);
+
+  for (auto* commitHook : commitHooks_) {
+    commitHook->shadowTreeDidCommit(
+        shadowTree, rootShadowNode, affectedLayoutableNodes);
   }
 }
 

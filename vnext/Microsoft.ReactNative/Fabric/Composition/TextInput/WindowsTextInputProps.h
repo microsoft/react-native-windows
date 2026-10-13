@@ -118,6 +118,7 @@ class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
   bool caretHidden{false};
   std::string autoCapitalize{};
   bool clearTextOnSubmit{false};
+  std::string submitBehavior{};
   std::vector<CompWindowsTextInputSubmitKeyEventsStruct> submitKeyEvents{};
   bool autoFocus{false};
   facebook::react::TextAlignment textAlign{};

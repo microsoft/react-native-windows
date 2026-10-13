@@ -699,7 +699,7 @@ const TouchableMixinImpl = {
           curState +
           '` for Touchable responder `' +
           typeof this.state.touchable.responderID ===
-        'number'
+          'number'
           ? this.state.touchable.responderID
           : 'host component' + '`',
       );
@@ -712,7 +712,7 @@ const TouchableMixinImpl = {
           signal +
           '` for responder `' +
           typeof this.state.touchable.responderID ===
-        'number'
+          'number'
           ? this.state.touchable.responderID
           : '<<host component>>' + '`',
       );

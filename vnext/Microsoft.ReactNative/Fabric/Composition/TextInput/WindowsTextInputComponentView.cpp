@@ -914,6 +914,12 @@ void WindowsTextInputComponentView::OnPointerWheelChanged(
 }
 void WindowsTextInputComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
+  if (args.Key() == winrt::Windows::System::VirtualKey::Enter && ShouldSubmit('\r', args.KeyboardSource())) {
+    args.Handled(true);
+    Super::OnKeyDown(args);
+    return;
+  }
+
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with
   // WinUI behavior We do forward Ctrl+Tab to the textinput.
   if (args.Key() != winrt::Windows::System::VirtualKey::Tab ||
@@ -970,31 +976,33 @@ void WindowsTextInputComponentView::OnKeyUp(
 }
 
 bool WindowsTextInputComponentView::ShouldSubmit(
-    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+    uint32_t keyCode,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &keyboardSource) noexcept {
   bool shouldSubmit = true;
 
   if (shouldSubmit) {
-    if (!m_multiline && m_submitKeyEvents.size() == 0) {
-      // If no 'submitKeyEvents' are supplied, use the default behavior for single-line TextInput
-      shouldSubmit = args.KeyCode() == '\r';
+    if (m_submitKeyEvents.size() == 0) {
+      const auto &submitBehavior = windowsTextInputProps().submitBehavior;
+      shouldSubmit = keyCode == '\r' && submitBehavior != "newline" &&
+          !(submitBehavior.empty() && windowsTextInputProps().multiline);
     } else if (m_submitKeyEvents.size() > 0) {
       auto submitKeyEvent = m_submitKeyEvents.at(0);
       // If 'submitKeyEvents' are supplied, use them to determine whether to emit onSubmitEditing' for either
       // single-line or multi-line TextInput
-      if (args.KeyCode() == '\r') {
-        bool shiftDown = (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+      if (keyCode == '\r') {
+        bool shiftDown = (keyboardSource.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
                           winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
             winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
-        bool ctrlDown = (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+        bool ctrlDown = (keyboardSource.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
                          winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
             winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
-        bool altDown = (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
+        bool altDown = (keyboardSource.GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
                         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
             winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
-        bool metaDown = (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
+        bool metaDown = (keyboardSource.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
                          winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
                 winrt::Microsoft::UI::Input::VirtualKeyStates::Down ||
-            (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
+            (keyboardSource.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
              winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
                 winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
         return (submitKeyEvent.shiftKey && shiftDown) || (submitKeyEvent.ctrlKey && ctrlDown) ||
@@ -1022,7 +1030,7 @@ void WindowsTextInputComponentView::OnCharacterReceived(
   }
 
   // Logic for submit events
-  if (ShouldSubmit(args)) {
+  if (ShouldSubmit(args.KeyCode(), args.KeyboardSource())) {
     // call onSubmitEditing event
     if (m_eventEmitter && !m_comingFromJS) {
       auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
@@ -1035,6 +1043,15 @@ void WindowsTextInputComponentView::OnCharacterReceived(
     if (m_clearTextOnSubmit) {
       // clear text from RichEdit
       m_textServices->TxSetText(L"");
+    }
+    const auto &submitBehavior = windowsTextInputProps().submitBehavior;
+    if (submitBehavior == "blurAndSubmit" || (submitBehavior.empty() && !m_multiline)) {
+      if (auto root = rootComponentView()) {
+        root->TrySetFocusedComponent(
+            nullptr,
+            winrt::Microsoft::ReactNative::FocusNavigationDirection::None,
+            winrt::Microsoft::ReactNative::FocusState::Programmatic);
+      }
     }
     return;
   }
@@ -1073,7 +1090,10 @@ void WindowsTextInputComponentView::OnCharacterReceived(
 
   LRESULT lresult;
   DrawBlock db(*this);
-  auto hr = m_textServices->TxSendMessage(WM_CHAR, wParam, lParam, &lresult);
+  const wchar_t newline[] = L"\r";
+  auto hr = args.KeyCode() == '\r' && windowsTextInputProps().multiline
+      ? m_textServices->TxSendMessage(EM_REPLACESEL, TRUE, reinterpret_cast<LPARAM>(newline), &lresult)
+      : m_textServices->TxSendMessage(WM_CHAR, wParam, lParam, &lresult);
   if (hr >= 0) {
     args.Handled(true);
   }
@@ -1132,7 +1152,10 @@ void WindowsTextInputComponentView::onGotFocus(
     m_textServices->TxSendMessage(WM_SETFOCUS, 0, 0, &lresult);
 
     if (windowsTextInputProps().clearTextOnFocus) {
+      m_comingFromState = true;
       m_textServices->TxSetText(L"");
+      m_comingFromState = false;
+      OnTextUpdated();
     } else if (windowsTextInputProps().selectTextOnFocus) {
       LRESULT res;
       m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(0), static_cast<WPARAM>(-1), &res);
@@ -1193,7 +1216,7 @@ void WindowsTextInputComponentView::updateProps(
     }
   }
 
-  if (oldTextInputProps.multiline != newTextInputProps.multiline) {
+  if (m_multiline != newTextInputProps.multiline) {
     m_recalculateContentVerticalOffset = true;
     m_multiline = newTextInputProps.multiline;
     m_propBitsMask |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
@@ -1401,12 +1424,19 @@ std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const no
 
 // When we are notified by RichEdit that the text changed, we need to notify JS
 void WindowsTextInputComponentView::OnTextUpdated() noexcept {
+  if (m_comingFromState) {
+    return;
+  }
+
+  const auto eventCount = m_eventEmitter && !m_comingFromJS ? ++m_nativeEventCount : m_nativeEventCount;
+  m_mostRecentEventCount = eventCount;
+
   auto data = m_state->getData();
   // auto newAttributedString = getAttributedString();
   // if (data.attributedString == newAttributedString)
   //    return;
   data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
-  data.mostRecentEventCount = m_nativeEventCount;
+  data.mostRecentEventCount = eventCount;
 
   m_state->updateState(std::move(data));
 
@@ -1415,7 +1445,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
     onChangeArgs.text = GetTextFromRichEdit();
-    onChangeArgs.eventCount = ++m_nativeEventCount;
+    onChangeArgs.eventCount = eventCount;
     emitter->onChange(onChangeArgs);
     if (windowsTextInputProps().multiline) {
       auto [contentWidth, contentHeight] = GetContentSize();
@@ -1537,7 +1567,17 @@ std::optional<std::string> WindowsTextInputComponentView::getAccessiblityValue()
 }
 
 void WindowsTextInputComponentView::setAcccessiblityValue(std::string &&value) noexcept {
+  if (windowsTextInputProps().autoCapitalize == "characters") {
+    auto uppercaseValue = ::Microsoft::Common::Unicode::Utf8ToUtf16(value);
+    if (!uppercaseValue.empty()) {
+      CharUpperBuffW(uppercaseValue.data(), static_cast<DWORD>(uppercaseValue.size()));
+    }
+    value = ::Microsoft::Common::Unicode::Utf16ToUtf8(uppercaseValue);
+  }
+  m_comingFromState = true;
   UpdateText(value);
+  m_comingFromState = false;
+  OnTextUpdated();
 }
 
 bool WindowsTextInputComponentView::getAcccessiblityIsReadOnly() noexcept {

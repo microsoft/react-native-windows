@@ -1,5 +1,4 @@
-module.exports = {
-  preset: '@rnx-kit/jest-preset',
+const config = require('@rnx-kit/jest-preset')('windows', {
   verbose: true,
   snapshotResolver: './jest-snapshot-resolver.js',
   transform: {
@@ -37,4 +36,13 @@ module.exports = {
     '/vendor/',
     '<rootDir>/Libraries/react-native/',
   ],
+});
+
+config.moduleNameMapper = {
+  '^react-native/react-private-interface$':
+    '<rootDir>/src/react-private-interface.js',
+  '^react-native/setup-env$': '<rootDir>/src/setup-env.js',
+  ...config.moduleNameMapper,
 };
+
+module.exports = config;

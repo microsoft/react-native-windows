@@ -109,6 +109,11 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('@office-iss/react-native-win32/Libraries/Components/Touchable/Tests/TouchableWin32Test'),
   },
   {
+    key: 'ScrollViewMaintainVisibleContentPositionExample',
+    category: 'Basic',
+    module: require('../examples/ScrollView/ScrollViewMaintainVisibleContentPositionExample'),
+  },
+  {
     key: 'ScrollViewSimpleExample',
     category: 'Basic',
     module: require('../examples/ScrollView/ScrollViewSimpleExample'),

@@ -138,6 +138,8 @@ munge_underscores=true
 
 module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.win32.js'
 module.name_mapper='^@office-iss/react-native-win32$' -> '<PROJECT_ROOT>/index.win32.js'
+module.name_mapper='^react-native/react-private-interface$' -> '<PROJECT_ROOT>/src/react-private-interface.js'
+module.name_mapper='^react-native/setup-env$' -> '<PROJECT_ROOT>/src/setup-env.js'
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@office-iss/react-native-win32/\(.*\)$' -> '<PROJECT_ROOT>\/1'
 module.name_mapper='^@react-native/dev-middleware$' -> '<PROJECT_ROOT>/\1'
