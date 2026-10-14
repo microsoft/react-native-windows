@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Composition.WindowsTextInputComponentView.g.h"
+#include <ComponentView.Experimental.interop.h>
 #include <ReactContext.h>
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
 #include <richedit.h>
@@ -22,10 +23,16 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct CompTextHost;
 
 struct WindowsTextInputComponentView
-    : WindowsTextInputComponentViewT<WindowsTextInputComponentView, ViewComponentView> {
+    : public WindowsTextInputComponentViewT<
+          WindowsTextInputComponentView,
+          ViewComponentView,
+          ::Microsoft::ReactNative::Composition::Experimental::ITextInputComponentInterop> {
   friend CompTextHost;
 
-  using Super = WindowsTextInputComponentViewT<WindowsTextInputComponentView, ViewComponentView>;
+  using Super = WindowsTextInputComponentViewT<
+      WindowsTextInputComponentView,
+      ViewComponentView,
+      ::Microsoft::ReactNative::Composition::Experimental::ITextInputComponentInterop>;
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
@@ -71,6 +78,9 @@ struct WindowsTextInputComponentView
   void OnContextMenuKey(
       const winrt::Microsoft::ReactNative::Composition::Input::ContextMenuKeyEventArgs &args) noexcept override;
   void onMounted() noexcept override;
+  const winrt::Microsoft::ReactNative::IComponentProps userProps(
+      facebook::react::Props::Shared const &props) noexcept override;
+  winrt::Microsoft::ReactNative::ViewProps ViewPropsInner() noexcept override;
 
   std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
@@ -80,12 +90,16 @@ struct WindowsTextInputComponentView
   WindowsTextInputComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+      winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder *builder = nullptr);
   ~WindowsTextInputComponentView();
 
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual createVisual() noexcept;
 
   std::pair<facebook::react::Cursor, HCURSOR> cursor() const noexcept override;
+
+  HRESULT GetTextDocument(ITextDocument2 **) noexcept;
+  HRESULT GetTextServices(ITextServices2 **textServices) noexcept;
 
  private:
   struct DrawBlock {
@@ -123,6 +137,8 @@ struct WindowsTextInputComponentView
   void updateSpellCheck(bool value) noexcept;
   void ShowContextMenu(const winrt::Windows::Foundation::Point &position) noexcept;
   void calculateContentVerticalOffset() noexcept;
+
+  void ensureTextHost() noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};

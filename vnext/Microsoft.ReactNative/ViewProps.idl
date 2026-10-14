@@ -98,5 +98,16 @@ namespace Microsoft.ReactNative {
     // TODO add accessors to all the properties on ImageProps
   }
   
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  runtimeclass TextInputProps : ViewProps
+  {
+    String Placeholder { get; };
+    Boolean SecureTextEntry { get; };
+    // TODO add accessors to all the properties on TextInputProps
+  }
+  
+  
 
 } // namespace Microsoft. ReactNative

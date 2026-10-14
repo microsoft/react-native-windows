@@ -6,6 +6,7 @@
 #include "WindowsTextInputComponentView.h"
 
 #include <AutoDraw.h>
+#include <Fabric/AbiTextInputProps.h>
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Fabric/platform/react/renderer/graphics/PlatformColorUtils.h>
 #include <Utils/ThemeUtils.h>
@@ -573,13 +574,15 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
 WindowsTextInputComponentView::WindowsTextInputComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
-    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+    winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder *builder)
     : Super(
           WindowsTextInputComponentView::defaultProps(),
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {}
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
+          builder) {}
 
 WindowsTextInputComponentView::~WindowsTextInputComponentView() {
   // Release text services first to prevent further callbacks into CompTextHost.
@@ -589,6 +592,17 @@ WindowsTextInputComponentView::~WindowsTextInputComponentView() {
   if (m_textHost) {
     winrt::get_self<CompTextHost>(m_textHost)->Detach();
   }
+}
+
+winrt::Microsoft::ReactNative::ViewProps WindowsTextInputComponentView::ViewPropsInner() noexcept {
+  // During initialization, even custom text inputs still have native default props.
+  if (auto abiProps = dynamic_cast<const ::Microsoft::ReactNative::AbiTextInputProps *>(viewProps().get())) {
+    if (auto props = abiProps->ViewProps()) {
+      return props;
+    }
+  }
+
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::TextInputProps>(viewProps());
 }
 
 void WindowsTextInputComponentView::HandleCommand(
@@ -1158,6 +1172,12 @@ void WindowsTextInputComponentView::updateCursorColor(
   const auto &props = windowsTextInputProps();
   auto caretColor = ::Microsoft::ReactNative::GetCaretColor(cursorColor, foregroundColor, props.backgroundColor);
   m_caretVisual.Brush(theme()->Brush(*caretColor));
+}
+
+const winrt::Microsoft::ReactNative::IComponentProps WindowsTextInputComponentView::userProps(
+    facebook::react::Props::Shared const &props) noexcept {
+  const auto &textInputProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiTextInputProps>(props);
+  return textInputProps.UserProps();
 }
 
 void WindowsTextInputComponentView::updateProps(
@@ -1885,21 +1905,46 @@ void WindowsTextInputComponentView::DrawText() noexcept {
   m_needsRedraw = false;
 }
 
+void WindowsTextInputComponentView::ensureTextHost() noexcept {
+  if (!m_textHost) {
+    m_textHost = winrt::make<CompTextHost>(this);
+    winrt::com_ptr<::IUnknown> spUnk;
+    winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
+    spUnk.as(m_textServices);
+    winrt::check_bool(m_textServices != nullptr);
+
+    // Enable TSF support
+    winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEDITSTYLE, SES_USECTF, SES_USECTF, nullptr));
+  }
+}
+
+HRESULT WindowsTextInputComponentView::GetTextDocument(ITextDocument2 **textDocument) noexcept {
+  winrt::com_ptr<IUnknown> spUnk;
+  winrt::com_ptr<ITextDocument2> spTextDoc;
+  ensureTextHost();
+
+  // initialize TOM
+  LRESULT res;
+  m_textServices->TxSendMessage(EM_GETOLEINTERFACE, 0, reinterpret_cast<LPARAM>(spUnk.put()), &res);
+  HRESULT hr = spUnk->QueryInterface(__uuidof(ITextDocument2), reinterpret_cast<void **>(spTextDoc.put()));
+  spTextDoc.copy_to(textDocument);
+  return hr;
+}
+
+HRESULT WindowsTextInputComponentView::GetTextServices(ITextServices2 **textServices) noexcept {
+  ensureTextHost();
+  m_textServices.copy_to(textServices);
+  return S_OK;
+}
+
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 WindowsTextInputComponentView::createVisual() noexcept {
   HrEnsureRichEd20Loaded();
   auto visual = m_compContext.CreateSpriteVisual();
-  m_textHost = winrt::make<CompTextHost>(this);
-  winrt::com_ptr<::IUnknown> spUnk;
-  winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
-  spUnk.as(m_textServices);
-  winrt::check_bool(m_textServices != nullptr);
+  ensureTextHost();
 
   LRESULT res;
   winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_PLAINTEXT, 0, &res));
-
-  // Enable TSF support
-  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEDITSTYLE, SES_USECTF, SES_USECTF, nullptr));
 
   m_caretVisual = m_compContext.CreateCaretVisual();
   visual.InsertAt(m_caretVisual.InnerVisual(), 0);

@@ -84,8 +84,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   } else {
     auto descriptor =
         WindowsComponentDescriptorRegistry::FromProperties(m_context.Properties())->GetDescriptor(componentHandle);
-    view = winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(
-               descriptor.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>())
+    view = winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(descriptor)
                ->CreateView(m_context.Handle(), tag, compContext);
   }
 
