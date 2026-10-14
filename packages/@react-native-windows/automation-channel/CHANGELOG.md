@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Tue, 16 Jun 2026 10:29:39 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 14 Oct 2026 01:21:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.1
+
+Wed, 14 Oct 2026 01:21:07 GMT
+
+### Patches
+
+- Promote 0.84 to legacy (email not defined)
+- Sync pipeline, tooling, and vendored dependency changes to 0.84-stable (vmorozov@microsoft.com)
+- Bump react-native-windows to v0.84.1
 
 ## 0.84.0
 

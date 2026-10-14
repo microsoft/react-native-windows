@@ -1,8 +1,22 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Tue, 16 Jun 2026 10:29:39 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 14 Oct 2026 01:21:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.1
+
+Wed, 14 Oct 2026 01:21:06 GMT
+
+### Patches
+
+- Sync pipeline and CLI test changes to 0.84-stable (vmorozov@microsoft.com)
+- Promote 0.84 to legacy (email not defined)
+- Bump @react-native-windows/codegen to v0.84.1
+- Bump @react-native-windows/find-dotnet-tools to v0.84.1
+- Bump @react-native-windows/fs to v0.84.1
+- Bump @react-native-windows/package-utils to v0.84.1
+- Bump @react-native-windows/telemetry to v0.84.1
 
 ## 0.84.0
 

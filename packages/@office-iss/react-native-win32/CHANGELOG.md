@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Tue, 16 Jun 2026 10:29:39 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 14 Oct 2026 01:21:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.84.1
+
+Wed, 14 Oct 2026 01:21:07 GMT
+
+### Patches
+
+- Promote 0.84 to legacy (email not defined)
+- Bump react-native-platform-override to v0.84.1
 
 ## 0.84.0
 
