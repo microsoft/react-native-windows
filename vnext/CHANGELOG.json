@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 14 Oct 2026 01:21:06 GMT",
+      "version": "0.84.1",
+      "tag": "react-native-windows_v0.84.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "dlucas@seabird.com",
+            "package": "react-native-windows",
+            "commit": "7f6011f841bd7636804e3506ee47824110d4191d",
+            "comment": "Fixes misalignment with TextInput on different display scales"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "7f6011f841bd7636804e3506ee47824110d4191d",
+            "comment": "Promote 0.84 to legacy"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7f6011f841bd7636804e3506ee47824110d4191d",
+            "comment": "Sync pipeline, tooling, and vendored dependency changes to 0.84-stable"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.84.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.84.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.84.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Jun 2026 10:29:39 GMT",
       "version": "0.84.0",
       "tag": "react-native-windows_v0.84.0",
