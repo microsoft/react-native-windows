@@ -46,7 +46,14 @@ namespace {
 
 class HermesFuncResolver : public IFuncResolver {
  public:
-  HermesFuncResolver() : libHandle_(LoadLibraryAsPeerFirst(L"hermes.dll")) {}
+  HermesFuncResolver() {
+    libHandle_ = LoadLibraryAsPeerFirst(L"hermes.dll");
+
+    // If hermes.dll failed to load, catch the last Win32 error and surface it.
+    if (libHandle_ == nullptr) {
+      CRASH_ON_ERROR(GetLastError());
+    }
+  }
 
   FuncPtr getFuncPtr(const char *funcName) override {
     return reinterpret_cast<FuncPtr>(GetProcAddress(libHandle_, funcName));
