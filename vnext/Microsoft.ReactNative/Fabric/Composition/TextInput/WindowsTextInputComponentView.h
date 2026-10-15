@@ -114,8 +114,9 @@ struct WindowsTextInputComponentView
   void ShowCaret(bool show) noexcept;
   winrt::com_ptr<::IDWriteTextLayout> CreatePlaceholderLayout();
   void UpdateCharFormat() noexcept;
+  CHARFORMAT2W GetCharFormat(const facebook::react::TextAttributes &textAttributes) noexcept;
   void UpdateParaFormat() noexcept;
-  void UpdateText(const std::string &str) noexcept;
+  void UpdateText(const facebook::react::AttributedString &attributedString) noexcept;
   void OnTextUpdated() noexcept;
   void EmitOnScrollEvent() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
