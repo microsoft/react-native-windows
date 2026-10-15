@@ -104,11 +104,11 @@
     "react-native": "^0.85.0"
   },
   "beachball": {
-    "defaultNpmTag": "preview",
+    "defaultNpmTag": "latest",
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch",
+      "prerelease",
       "premajor",
       "preminor",
       "prepatch"
