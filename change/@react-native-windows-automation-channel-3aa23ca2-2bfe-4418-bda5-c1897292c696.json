@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Upgrade to Microsoft.WindowsAppSDK 2.4.0 (and experimental 2.3.2-experimentalA)",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "66076509+vineethkuttan@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
