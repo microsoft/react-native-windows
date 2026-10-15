@@ -43,7 +43,7 @@ class ConcreteAbiViewComponentDescriptor : public BaseT {
                         .Properties())
                     ->GetDescriptor(flavor);
 
-    BaseT::rawPropsParser_.prepare<ConcreteProps>();
+    BaseT::rawPropsParser_.template prepare<ConcreteProps>();
   }
   facebook::react::ComponentHandle getComponentHandle() const override {
     return reinterpret_cast<facebook::react::ComponentHandle>(getComponentName());
@@ -116,17 +116,14 @@ class ConcreteAbiViewComponentDescriptor : public BaseT {
 
     // Call old-style constructor
     // auto shadowNodeProps = std::make_shared<ShadowNodeT::Props>(context, rawProps, props);
-    auto shadowNodeProps = std::make_shared<ShadowNodeT::ConcreteProps>(
-        context,
-        props ? static_cast<ShadowNodeT::ConcreteProps const &>(*props) : *ShadowNodeT::defaultSharedProps(),
-        rawProps);
+    auto shadowNodeProps = std::make_shared<ConcreteProps>(
+        context, props ? static_cast<ConcreteProps const &>(*props) : *ShadowNodeT::defaultSharedProps(), rawProps);
     auto viewProps =
 
         winrt::make<AbiPropT>(shadowNodeProps, false /*holdRef*/);
     auto userProps =
         winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
-            ->CreateProps(
-                viewProps, props ? static_cast<ShadowNodeT::ConcreteProps const &>(*props).UserProps() : nullptr);
+            ->CreateProps(viewProps, props ? static_cast<ConcreteProps const &>(*props).UserProps() : nullptr);
     shadowNodeProps->SetUserProps(userProps, viewProps);
 
     const auto &dynamic = static_cast<folly::dynamic>(rawProps);
@@ -217,7 +214,7 @@ class ConcreteAbiViewComponentDescriptor : public BaseT {
         winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(
             static_cast<const ConcreteAbiViewComponentDescriptor<ShadowNodeT, AbiPropT, BaseT> &>(componentDescriptor)
                 .m_builder)
-            ->InitialStateData(std::static_pointer_cast<const ShadowNodeT::ConcreteProps>(props)->UserProps())};
+            ->InitialStateData(std::static_pointer_cast<const ConcreteProps>(props)->UserProps())};
     return {};
   }
 

@@ -28,7 +28,9 @@ void AbiTextInputComponentState::UpdateState(const winrt::Windows::Foundation::I
 void AbiTextInputComponentState::UpdateStateWithMutation(
     const winrt::Microsoft::ReactNative::StateUpdateMutation &mutation) noexcept {
   m_state->updateState([mutation](const AbiTextInputStateData &oldData) {
-    return std::make_shared<AbiTextInputStateData const>(mutation(oldData.userdata));
+    auto newData = oldData;
+    newData.userdata = mutation(oldData.userdata);
+    return std::make_shared<AbiTextInputStateData const>(std::move(newData));
   });
 }
 

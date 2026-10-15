@@ -1381,15 +1381,25 @@ void WindowsTextInputComponentView::updateProps(
 void WindowsTextInputComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
-  m_state = std::static_pointer_cast<facebook::react::WindowsTextInputShadowNode::ConcreteState const>(state);
+  if (m_builder) {
+    m_abistate = std::static_pointer_cast<::Microsoft::ReactNative::AbiTextInputShadowNode::ConcreteState const>(state);
+  } else {
+    m_state = std::static_pointer_cast<facebook::react::WindowsTextInputShadowNode::ConcreteState const>(state);
+  }
 
-  if (!m_state) {
+  // Avoid new-ing up a new AbiComponentState on every state change if we are not a custom component
+  if (m_builder && m_builder->UpdateStateHandler()) {
+    m_builder->UpdateStateHandler()(*this, winrt::make<::Microsoft::ReactNative::AbiTextInputComponentState>(state));
+  }
+
+  if (!m_state && !m_abistate) {
     assert(false && "State is `null` for <TextInput> component.");
     return;
   }
 
   if (!oldState) {
-    m_mostRecentEventCount = m_state->getData().mostRecentEventCount;
+    m_mostRecentEventCount =
+        m_builder ? m_abistate->getData().mostRecentEventCount : m_state->getData().mostRecentEventCount;
   }
 
   if (auto root = rootComponentView()) {
@@ -1401,12 +1411,15 @@ void WindowsTextInputComponentView::updateState(
     }
   }
 
-  if (m_mostRecentEventCount == m_state->getData().mostRecentEventCount) {
+  if (m_builder ? m_mostRecentEventCount == m_abistate->getData().mostRecentEventCount
+                : m_mostRecentEventCount == m_state->getData().mostRecentEventCount) {
     m_comingFromState = true;
     {
       // DrawBlock defers DrawText() until after UpdateText completes
       DrawBlock db(*this);
-      UpdateText(m_state->getData().attributedStringBox.getValue());
+      UpdateText(
+          m_builder ? m_abistate->getData().attributedStringBox.getValue()
+                    : m_state->getData().attributedStringBox.getValue());
     }
     m_comingFromState = false;
   }
@@ -1558,14 +1571,17 @@ std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const no
 
 // When we are notified by RichEdit that the text changed, we need to notify JS
 void WindowsTextInputComponentView::OnTextUpdated() noexcept {
-  auto data = m_state->getData();
-  // auto newAttributedString = getAttributedString();
-  // if (data.attributedString == newAttributedString)
-  //    return;
-  data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
-  data.mostRecentEventCount = m_nativeEventCount;
-
-  m_state->updateState(std::move(data));
+  if (m_builder) {
+    auto data = m_abistate->getData();
+    data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
+    data.mostRecentEventCount = m_nativeEventCount;
+    m_abistate->updateState(std::move(data));
+  } else {
+    auto data = m_state->getData();
+    data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
+    data.mostRecentEventCount = m_nativeEventCount;
+    m_state->updateState(std::move(data));
+  }
 
   if (m_eventEmitter && !m_comingFromJS) {
     // call onChange event
@@ -2064,6 +2080,7 @@ void WindowsTextInputComponentView::DrawText() noexcept {
 
 void WindowsTextInputComponentView::ensureTextHost() noexcept {
   if (!m_textHost) {
+    winrt::check_hresult(HrEnsureRichEd20Loaded());
     m_textHost = winrt::make<CompTextHost>(this);
     winrt::com_ptr<::IUnknown> spUnk;
     winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
@@ -2096,7 +2113,6 @@ HRESULT WindowsTextInputComponentView::GetTextServices(ITextServices2 **textServ
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 WindowsTextInputComponentView::createVisual() noexcept {
-  HrEnsureRichEd20Loaded();
   auto visual = m_compContext.CreateSpriteVisual();
   ensureTextHost();
 

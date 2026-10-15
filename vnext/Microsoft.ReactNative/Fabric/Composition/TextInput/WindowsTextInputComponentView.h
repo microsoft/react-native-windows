@@ -6,6 +6,7 @@
 
 #include "Composition.WindowsTextInputComponentView.g.h"
 #include <ComponentView.Experimental.interop.h>
+#include <Fabric/AbiTextInputShadowNode.h>
 #include <ReactContext.h>
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
 #include <richedit.h>
@@ -153,6 +154,7 @@ struct WindowsTextInputComponentView
   winrt::com_ptr<ITextServices2> m_textServices;
   unsigned int m_imgWidth{0}, m_imgHeight{0};
   std::shared_ptr<facebook::react::WindowsTextInputShadowNode::ConcreteState const> m_state;
+  std::shared_ptr<::Microsoft::ReactNative::AbiTextInputShadowNode::ConcreteState const> m_abistate;
   float m_fontSizeMultiplier{1.0};
   int64_t m_mostRecentEventCount{0};
   int m_nativeEventCount{0};

@@ -4,6 +4,8 @@
 
 #include "codegen/react/components/SampleCustomComponent/CustomTextInput.g.h"
 
+#ifdef RNW_NEW_ARCH
+
 #include "ComponentView.Experimental.interop.h"
 
 #include <Richedit.h>
@@ -51,3 +53,5 @@ void RegisterCustomTextInputComponentView(
             });
       });
 }
+
+#endif // RNW_NEW_ARCH
