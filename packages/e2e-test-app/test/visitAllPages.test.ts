@@ -36,6 +36,7 @@ describe('visitAllPages', () => {
   for (const component of componentExamples) {
     if (
       component === 'Custom Native Accessibility Example' ||
+      component === 'Custom TextInput component Example' ||
       component === 'Moving Light Example' ||
       component === 'Drawing Island Example' ||
       component === 'Fabric Native Component' ||
