@@ -7,14 +7,13 @@
 
 #include <react/renderer/components/view/ViewProps.h>
 #include <react/renderer/imagemanager/primitives.h>
+#include "Composition/TextInput/WindowsTextInputProps.h"
 #include "winrt/Microsoft.ReactNative.Composition.Experimental.h"
 #include "winrt/Microsoft.ReactNative.h"
-#include "Composition/TextInput/WindowsTextInputProps.h"
 
 namespace Microsoft::ReactNative {
 
-class AbiTextInputProps final : public facebook::react::WindowsTextInputProps
-{
+class AbiTextInputProps final : public facebook::react::WindowsTextInputProps {
  public:
   AbiTextInputProps() = default;
   AbiTextInputProps(
@@ -45,7 +44,7 @@ struct TextInputProps : TextInputPropsT<TextInputProps, ViewProps> {
   winrt::hstring Placeholder() noexcept;
   bool SecureTextEntry() noexcept;
 
-protected:
+ protected:
   const facebook::react::WindowsTextInputProps &windowsTextInputProps() const noexcept;
 };
 

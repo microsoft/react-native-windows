@@ -25,8 +25,7 @@ void AbiTextInputShadowNode::OnClone(const facebook::react::ShadowNode &sourceSh
   m_builder = source.m_builder;
 }
 
-void AbiTextInputShadowNode::Builder(
-    winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept {
+void AbiTextInputShadowNode::Builder(winrt::Microsoft::ReactNative::IReactViewComponentBuilder builder) noexcept {
   m_builder = builder;
 }
 
@@ -69,28 +68,21 @@ winrt::Microsoft::ReactNative::ViewProps AbiTextInputProps::ViewProps() const no
   return m_innerProps;
 }
 
-
-
-
 } // namespace Microsoft::ReactNative
 
-
 namespace winrt::Microsoft::ReactNative::implementation {
-  TextInputProps::TextInputProps(facebook::react::SharedViewProps props, bool holdRef) noexcept :
-    Super(props, holdRef)
-  {
-  }
+TextInputProps::TextInputProps(facebook::react::SharedViewProps props, bool holdRef) noexcept : Super(props, holdRef) {}
 
-  const facebook::react::WindowsTextInputProps & TextInputProps::windowsTextInputProps() const noexcept {
-    return static_cast<const facebook::react::WindowsTextInputProps &>(*m_viewProps);
-  }
+const facebook::react::WindowsTextInputProps &TextInputProps::windowsTextInputProps() const noexcept {
+  return static_cast<const facebook::react::WindowsTextInputProps &>(*m_viewProps);
+}
 
-  winrt::hstring TextInputProps::Placeholder() noexcept {
-    return m_viewProps ? winrt::to_hstring(windowsTextInputProps().placeholder) : winrt::hstring();
-  }
+winrt::hstring TextInputProps::Placeholder() noexcept {
+  return m_viewProps ? winrt::to_hstring(windowsTextInputProps().placeholder) : winrt::hstring();
+}
 
-  bool TextInputProps::SecureTextEntry() noexcept {
-    return m_viewProps ? windowsTextInputProps().secureTextEntry : false;
-  }
+bool TextInputProps::SecureTextEntry() noexcept {
+  return m_viewProps ? windowsTextInputProps().secureTextEntry : false;
+}
 
 } // namespace winrt::Microsoft::ReactNative::implementation

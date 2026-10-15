@@ -1,5 +1,4 @@
 
-#include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 #include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/attributedstring/PlaceholderAttributedString.h>
@@ -10,6 +9,7 @@
 #include <react/renderer/core/LayoutContext.h>
 #include <react/renderer/core/conversions.h>
 #include <react/renderer/textlayoutmanager/TextLayoutContext.h>
+#include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 #include <react/utils/ContextContainer.h>
 
 namespace facebook::react {

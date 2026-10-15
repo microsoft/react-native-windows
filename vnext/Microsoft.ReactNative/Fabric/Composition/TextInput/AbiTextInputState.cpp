@@ -16,7 +16,12 @@ winrt::Windows::Foundation::IInspectable AbiTextInputComponentState::Data() noex
 void AbiTextInputComponentState::UpdateState(const winrt::Windows::Foundation::IInspectable &data) noexcept {
   // Maintaining the existing internal state fields, while replacing the userdata field with the new data.
   m_state->updateState([data](const AbiTextInputStateData &oldData) {
-    return std::make_shared<AbiTextInputStateData const>(oldData.attributedStringBox, oldData.reactTreeAttributedString, oldData.paragraphAttributes, oldData.mostRecentEventCount, data);
+    return std::make_shared<AbiTextInputStateData const>(
+        oldData.attributedStringBox,
+        oldData.reactTreeAttributedString,
+        oldData.paragraphAttributes,
+        oldData.mostRecentEventCount,
+        data);
   });
 }
 
