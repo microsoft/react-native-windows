@@ -2,6 +2,39 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Thu, 15 Oct 2026 20:50:56 GMT",
+      "version": "0.85.0",
+      "tag": "@react-native-windows/automation_v0.85.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/automation",
+            "commit": "0e2b495c27e04e4dacfcb02765d80cf61daef23b",
+            "comment": "Promote 0.85 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.85.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/find-dotnet-tools to v0.85.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/fs to v0.85.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Sep 2026 03:05:30 GMT",
       "version": "0.85.0-preview.2",
       "tag": "@react-native-windows/automation_v0.85.0-preview.2",
