@@ -27,9 +27,6 @@ const spec =
     validAttributes: Object.assign({...TextInputViewSpec.validAttributes, test: true, onSomething: true })
 };
 
-console.log('CustomTextInputSpec loaded');
-console.log(JSON.stringify(spec, null, 2));
-
 export interface CustomTextInputProps extends TextInputProps {
       test?: boolean;
       onSomething?: (event: SomethingEvent) => void;
