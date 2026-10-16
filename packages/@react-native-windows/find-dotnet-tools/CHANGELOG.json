@@ -2,6 +2,27 @@
   "name": "@react-native-windows/find-dotnet-tools",
   "entries": [
     {
+      "date": "Fri, 16 Oct 2026 16:57:05 GMT",
+      "version": "0.0.0-canary.3",
+      "tag": "@react-native-windows/find-dotnet-tools_v0.0.0-canary.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/find-dotnet-tools",
+            "commit": "56d0ff9e9e3677f2e00b8faaa5f2bef1cef5d846",
+            "comment": "Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-dotnet-tools",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.73",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 10 May 2026 18:20:42 GMT",
       "version": "0.0.0-canary.2",
       "tag": "@react-native-windows/find-dotnet-tools_v0.0.0-canary.2",

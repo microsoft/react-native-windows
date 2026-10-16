@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.1060",
+  "version": "0.0.0-canary.1061",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "@react-native-community/cli": "20.0.0",
     "@react-native-community/cli-platform-android": "20.0.0",
     "@react-native-community/cli-platform-ios": "20.0.0",
-    "@react-native-windows/cli": "0.0.0-canary.293",
+    "@react-native-windows/cli": "0.0.0-canary.294",
     "@react-native/asset-utils": "0.88.0-nightly-20260805-f2188610c",
     "@react-native/assets": "1.0.0",
     "@react-native/assets-registry": "0.88.0-nightly-20260805-f2188610c",
@@ -75,8 +75,8 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
-    "@react-native-windows/codegen": "0.0.0-canary.133",
-    "@react-native-windows/find-dotnet-tools": "0.0.0-canary.2",
+    "@react-native-windows/codegen": "0.0.0-canary.134",
+    "@react-native-windows/find-dotnet-tools": "0.0.0-canary.3",
     "@react-native/metro-config": "0.88.0-nightly-20260805-f2188610c",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",
@@ -93,7 +93,7 @@
     "prettier": "^3.6.2",
     "react": "19.2.3",
     "react-native": "0.88.0-nightly-20260805-f2188610c",
-    "react-native-platform-override": "0.0.0-canary.1023",
+    "react-native-platform-override": "0.0.0-canary.1024",
     "react-refresh": "^0.14.0",
     "typescript": "5.1.6"
   },
