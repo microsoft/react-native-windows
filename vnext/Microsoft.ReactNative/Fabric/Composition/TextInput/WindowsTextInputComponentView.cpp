@@ -568,14 +568,8 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
   winrt::check_hresult(document->Range(0, 0, range.put()));
   LONG storyLength;
   winrt::check_hresult(range->GetStoryLength(&storyLength));
-  // TOM includes a final paragraph mark that is not part of the TextInput's value.
-  const LONG textLength = storyLength - 1;
-
-  auto bstrToString = [](BSTR value) {
-    std::unique_ptr<wchar_t, decltype(&::SysFreeString)> owned(value, &::SysFreeString);
-    auto length = ::SysStringLen(owned.get());
-    return length ? ::Microsoft::Common::Unicode::Utf16ToUtf8(owned.get(), length) : std::string{};
-  };
+  // Only rich-text stories include a final paragraph mark outside the TextInput's value.
+  const LONG textLength = storyLength - ((textMode & TM_RICHTEXT) ? 1 : 0);
 
   float fontSizeMultiplier = 1.0f;
   if (*baseTextAttributes.allowFontScaling) {
@@ -1450,34 +1444,36 @@ void WindowsTextInputComponentView::UpdateText(const facebook::react::Attributed
   auto baseTextAttributes = windowsTextInputProps().textAttributes;
   baseTextAttributes.apply(attributedString.getBaseTextAttributes());
   auto charFormat = GetCharFormat(baseTextAttributes);
-  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETSEL, 0, -1, &res));
-  winrt::check_hresult(
-      m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_SELECTION, reinterpret_cast<LPARAM>(&charFormat), &res));
+  winrt::check_hresult(m_textServices->TxSendMessage(
+      EM_SETCHARFORMAT, SCF_ALL, reinterpret_cast<LPARAM>(&charFormat), &res));
   winrt::check_bool(res != 0);
 
-  LONG position = 0;
-  bool previousWasCR = false;
-  for (const auto &fragment : attributedString.getFragments()) {
-    auto fragmentText = ::Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string);
-    LONG end = position;
-    for (auto character : fragmentText) {
-      // RichEdit positions count UTF-16 code units, with CRLF normalized to a single paragraph mark.
-      if (character != L'\n' || !previousWasCR) {
-        ++end;
+  // Richedit in password mode does not support per-fragment formatting, so we only apply it when not in secureTextEntry mode.
+  if (!windowsTextInputProps().secureTextEntry) {
+    LONG position = 0;
+    bool previousWasCR = false;
+    for (const auto &fragment : attributedString.getFragments()) {
+      auto fragmentText = ::Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string);
+      LONG end = position;
+      for (auto character : fragmentText) {
+        // RichEdit positions count UTF-16 code units, with CRLF normalized to a single paragraph mark.
+        if (character != L'\n' || !previousWasCR) {
+          ++end;
+        }
+        previousWasCR = character == L'\r';
       }
-      previousWasCR = character == L'\r';
-    }
 
-    if (end != position) {
-      auto textAttributes = baseTextAttributes;
-      textAttributes.apply(fragment.textAttributes);
-      charFormat = GetCharFormat(textAttributes);
-      winrt::check_hresult(m_textServices->TxSendMessage(EM_SETSEL, position, end, &res));
-      winrt::check_hresult(
-          m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_SELECTION, reinterpret_cast<LPARAM>(&charFormat), &res));
-      winrt::check_bool(res != 0);
+      if (end != position) {
+        auto textAttributes = baseTextAttributes;
+        textAttributes.apply(fragment.textAttributes);
+        charFormat = GetCharFormat(textAttributes);
+        winrt::check_hresult(m_textServices->TxSendMessage(EM_SETSEL, position, end, &res));
+        winrt::check_hresult(m_textServices->TxSendMessage(
+            EM_SETCHARFORMAT, SCF_SELECTION, reinterpret_cast<LPARAM>(&charFormat), &res));
+        winrt::check_bool(res != 0);
+      }
+      position = end;
     }
-    position = end;
   }
 
   winrt::check_hresult(
@@ -2089,6 +2085,8 @@ void WindowsTextInputComponentView::ensureTextHost() noexcept {
 
     // Enable TSF support
     winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEDITSTYLE, SES_USECTF, SES_USECTF, nullptr));
+    winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_RICHTEXT, 0, nullptr));
+
   }
 }
 
@@ -2115,9 +2113,6 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 WindowsTextInputComponentView::createVisual() noexcept {
   auto visual = m_compContext.CreateSpriteVisual();
   ensureTextHost();
-
-  LRESULT res;
-  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_RICHTEXT, 0, &res));
 
   m_caretVisual = m_compContext.CreateCaretVisual();
   visual.InsertAt(m_caretVisual.InnerVisual(), 0);
