@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Raise a UIA TextSelectionChanged event when the TextInput caret/selection moves, so Narrator and braille displays announce character/word/line navigation during keyboard caret movement",
+  "packageName": "react-native-windows",
+  "email": "clintc@microsoft.com",
+  "dependentChangeType": "patch"
+}
