@@ -568,6 +568,8 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
   winrt::check_hresult(document->Range(0, 0, range.put()));
   LONG storyLength;
   winrt::check_hresult(range->GetStoryLength(&storyLength));
+  LRESULT textMode{};
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_GETTEXTMODE, 0, 0, &textMode));
   // Only rich-text stories include a final paragraph mark outside the TextInput's value.
   const LONG textLength = storyLength - ((textMode & TM_RICHTEXT) ? 1 : 0);
 
@@ -593,6 +595,11 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
     auto fragment = facebook::react::AttributedString::Fragment{};
     BSTR text = nullptr;
     winrt::check_hresult(range->GetText(&text));
+    auto bstrToString = [](BSTR value) {
+      auto converted = value ? winrt::to_string(std::wstring_view{value, SysStringLen(value)}) : std::string{};
+      SysFreeString(value);
+      return converted;
+    };
     fragment.string = bstrToString(text);
     auto &textAttributes = fragment.textAttributes;
     textAttributes = baseTextAttributes;
