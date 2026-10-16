@@ -10,8 +10,8 @@ setup and the network-isolation workarounds.
 
 | Pipeline | Entry file | ADO project | 1ES template | Notes |
 |----------|------------|-------------|--------------|-------|
-| CI | `ci-pipeline.yml` | `ISS` | `Office.Official` | signed Official build; `trigger` branch filters and a weekly heartbeat `schedule` are defined in YAML |
-| PR | `pr-pipeline.yml` | public (`ms`) | `1ES.Unofficial` | validation build for GitHub PRs |
+| CI | `ci-pipeline.yml` | `ISS` | `Office.Official` | signed Official build; `trigger` branch filters and a monthly keep-alive `schedule` on `main` are defined in YAML |
+| PR | `pr-pipeline.yml` | public (`ms`) | `1ES.Unofficial` | validation build for GitHub PRs; monthly keep-alive on `main` |
 | Release | `release-pipeline.yml` | `ISS` | `Office.Official` | triggered by CI completion; publishes packages and symbols |
 | Feed warm-up | `warm-feed-pipeline.yml` | `ISS` | `Office.Unofficial` | scheduled; keeps `ms/react-native-public` populated for anonymous PR restores |
 

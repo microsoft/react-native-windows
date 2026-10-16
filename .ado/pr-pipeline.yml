@@ -17,6 +17,16 @@ pr:
   - '0.86-stable'
   - '0.87-stable'
 
+# Monthly keep-alive run so ADO does not disable the pipeline for inactivity.
+# It is not used for real releases and its time is not significant.
+schedules:
+- cron: '0 9 1 * *'
+  displayName: Monthly keep-alive
+  branches:
+    include:
+    - main
+  always: true
+
 variables:
   - group: platform-override-zero-permission-token
 
