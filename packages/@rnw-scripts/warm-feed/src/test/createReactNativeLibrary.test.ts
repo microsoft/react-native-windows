@@ -95,7 +95,7 @@ test('nightlyFixupSpecs rewrites the RN family and cli specs only', () => {
   expect(specs.other).toBe('1.0.0');
 });
 
-test('scaffoldReactNativeVersion: strips the suffix for a nightly, passes stable through', () => {
+test('scaffoldReactNativeVersion: uses latest stable for a nightly, passes stable through', () => {
   expect(
     scaffoldReactNativeVersion({
       reactNative: '0.87.0-nightly-20260704-e04ff69ab',
@@ -103,7 +103,7 @@ test('scaffoldReactNativeVersion: strips the suffix for a nightly, passes stable
       reactNativeWindowsSpec: undefined,
       nightly: true,
     }),
-  ).toBe('0.87.0');
+  ).toBe('latest');
   expect(
     scaffoldReactNativeVersion({
       reactNative: '0.85.3',
@@ -239,4 +239,3 @@ test('readRnwWorkspaceSpecs warms only feed-published @react-native-windows/* pi
     '@react-native-windows/codegen': '0.0.0-canary.133',
   });
 });
-

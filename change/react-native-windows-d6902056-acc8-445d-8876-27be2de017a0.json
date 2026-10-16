@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}

@@ -269,6 +269,16 @@ class BlurOnSubmitExample extends React.Component<{...}> {
 }
 
 class SubmitBehaviorExample extends React.Component<{...}> {
+  state = {
+    submitCount: 0,
+    submitBlurCount: 0,
+    blurAndSubmitCount: 0,
+    blurAndSubmitBlurCount: 0,
+    newlineCount: 0,
+    newlineBlurCount: 0,
+    newlineKeyPressCount: 0,
+  };
+
   ref1: ExampleRef = createRef();
   ref2: ExampleRef = createRef();
   ref3: ExampleRef = createRef();
@@ -351,6 +361,66 @@ class SubmitBehaviorExample extends React.Component<{...}> {
           multiline
           placeholder="multiline default"
         />
+        <ExampleTextInput
+          multiline
+          testID="submit-behavior-submit"
+          placeholder="submit behavior test: submit"
+          submitBehavior="submit"
+          onSubmitEditing={() =>
+            this.setState(state => ({submitCount: state.submitCount + 1}))
+          }
+          onBlur={() =>
+            this.setState(state => ({
+              submitBlurCount: state.submitBlurCount + 1,
+            }))
+          }
+        />
+        <Text testID="submit-behavior-submit-count">
+          {`${this.state.submitCount}:${this.state.submitBlurCount}`}
+        </Text>
+        <ExampleTextInput
+          multiline
+          testID="submit-behavior-blur-and-submit"
+          placeholder="submit behavior test: blurAndSubmit"
+          submitBehavior="blurAndSubmit"
+          onSubmitEditing={() =>
+            this.setState(state => ({
+              blurAndSubmitCount: state.blurAndSubmitCount + 1,
+            }))
+          }
+          onBlur={() =>
+            this.setState(state => ({
+              blurAndSubmitBlurCount: state.blurAndSubmitBlurCount + 1,
+            }))
+          }
+        />
+        <Text testID="submit-behavior-blur-and-submit-count">
+          {`${this.state.blurAndSubmitCount}:${this.state.blurAndSubmitBlurCount}`}
+        </Text>
+        <ExampleTextInput
+          multiline
+          testID="submit-behavior-newline"
+          placeholder="submit behavior test: newline"
+          submitBehavior="newline"
+          onSubmitEditing={() =>
+            this.setState(state => ({newlineCount: state.newlineCount + 1}))
+          }
+          onBlur={() =>
+            this.setState(state => ({
+              newlineBlurCount: state.newlineBlurCount + 1,
+            }))
+          }
+          onKeyPress={() =>
+            this.setState(state => ({
+              newlineKeyPressCount: state.newlineKeyPressCount + 1,
+            }))
+          }
+        />
+        <Text testID="submit-behavior-newline-count">
+          {`${this.state.newlineCount}:${this.state.newlineBlurCount}:${
+            this.state.newlineKeyPressCount
+          }`}
+        </Text>
       </View>
     );
   }

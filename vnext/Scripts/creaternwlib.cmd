@@ -121,9 +121,9 @@ for /f "delims=" %%a in ('npm show react@%R_VERSION% version') do @set R_VERSION
 
 set RN_SCAFFOLD_VERSION=%RN_VERSION%
 if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
-  REM cRNL resolves nightly React Native through the short-lived template@nightly tag.
-  REM Scaffold from the matching stable template, then rewrite dependencies below.
-  for /f "tokens=1 delims=-" %%a in ("%RN_VERSION%") do set RN_SCAFFOLD_VERSION=%%a
+  REM cRNL cannot scaffold a nightly before its matching stable RN release exists.
+  REM Use the latest published stable template, then rewrite dependencies below.
+  for /f "delims=" %%a in ('npm show react-native@latest version') do set RN_SCAFFOLD_VERSION=%%a
 )
 
 @echo creaternwlib.cmd Creating base RN library project with: npx --yes create-react-native-library@0.63.0 --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type %RN_TEMPLATE_TYPE% --tools=eslint --tools=jest --tools=lefthook --tools=release-it --tools=vite --react-native-version %RN_SCAFFOLD_VERSION% --example vanilla %LIB_NAME%
