@@ -43,7 +43,9 @@ class ConcreteAbiViewComponentDescriptor : public BaseT {
                         .Properties())
                     ->GetDescriptor(flavor);
 
-    BaseT::rawPropsParser_.template prepare<ConcreteProps>();
+    if constexpr (std::is_same<BaseT, facebook::react::ComponentDescriptor>::value) {
+      BaseT::rawPropsParser_.template prepare<ConcreteProps>();
+    }
   }
   facebook::react::ComponentHandle getComponentHandle() const override {
     return reinterpret_cast<facebook::react::ComponentHandle>(getComponentName());

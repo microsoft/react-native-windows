@@ -1451,11 +1451,12 @@ void WindowsTextInputComponentView::UpdateText(const facebook::react::Attributed
   auto baseTextAttributes = windowsTextInputProps().textAttributes;
   baseTextAttributes.apply(attributedString.getBaseTextAttributes());
   auto charFormat = GetCharFormat(baseTextAttributes);
-  winrt::check_hresult(m_textServices->TxSendMessage(
-      EM_SETCHARFORMAT, SCF_ALL, reinterpret_cast<LPARAM>(&charFormat), &res));
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_ALL, reinterpret_cast<LPARAM>(&charFormat), &res));
   winrt::check_bool(res != 0);
 
-  // Richedit in password mode does not support per-fragment formatting, so we only apply it when not in secureTextEntry mode.
+  // Richedit in password mode does not support per-fragment formatting, so we only apply it when not in secureTextEntry
+  // mode.
   if (!windowsTextInputProps().secureTextEntry) {
     LONG position = 0;
     bool previousWasCR = false;
@@ -2093,7 +2094,6 @@ void WindowsTextInputComponentView::ensureTextHost() noexcept {
     // Enable TSF support
     winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEDITSTYLE, SES_USECTF, SES_USECTF, nullptr));
     winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_RICHTEXT, 0, nullptr));
-
   }
 }
 
