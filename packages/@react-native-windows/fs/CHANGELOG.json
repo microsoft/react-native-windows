@@ -2,6 +2,21 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Fri, 16 Oct 2026 16:57:05 GMT",
+      "version": "0.0.0-canary.73",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.73",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/fs",
+            "commit": "56d0ff9e9e3677f2e00b8faaa5f2bef1cef5d846",
+            "comment": "Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2026 05:29:55 GMT",
       "version": "0.0.0-canary.72",
       "tag": "@react-native-windows/fs_v0.0.0-canary.72",

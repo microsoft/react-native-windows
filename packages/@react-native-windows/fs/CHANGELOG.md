@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 16 Oct 2026 16:57:05 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.73
+
+Fri, 16 Oct 2026 16:57:05 GMT
+
+### Changes
+
+- Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)
 
 ## 0.0.0-canary.72
 

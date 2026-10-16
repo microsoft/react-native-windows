@@ -20,7 +20,7 @@
     "@react-native-picker/picker": "2.11.0",
     "react": "19.2.3",
     "react-native": "0.88.0-nightly-20260805-f2188610c",
-    "react-native-windows": "^0.0.0-canary.1060",
+    "react-native-windows": "^0.0.0-canary.1061",
     "react-native-xaml": "^0.0.80"
   },
   "peerDependenciesMeta": {
@@ -45,8 +45,8 @@
     "prettier": "^3.6.2",
     "react": "19.2.3",
     "react-native": "0.88.0-nightly-20260805-f2188610c",
-    "react-native-platform-override": "0.0.0-canary.1023",
-    "react-native-windows": "^0.0.0-canary.1060",
+    "react-native-platform-override": "0.0.0-canary.1024",
+    "react-native-windows": "^0.0.0-canary.1061",
     "typescript": "5.1.6"
   },
   "engines": {

@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Fri, 21 Aug 2026 23:17:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 16 Oct 2026 16:57:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1061
+
+Fri, 16 Oct 2026 16:57:07 GMT
+
+### Changes
+
+- Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1061
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.3
+- Bump @react-native-windows/fs to v0.0.0-canary.73
 
 ## 0.0.0-canary.1060
 

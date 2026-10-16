@@ -2,6 +2,39 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Fri, 16 Oct 2026 16:57:07 GMT",
+      "version": "0.0.0-canary.1061",
+      "tag": "@react-native-windows/automation_v0.0.0-canary.1061",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/automation",
+            "commit": "56d0ff9e9e3677f2e00b8faaa5f2bef1cef5d846",
+            "comment": "Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1061",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.73",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Aug 2026 23:17:43 GMT",
       "version": "0.0.0-canary.1060",
       "tag": "@react-native-windows/automation_v0.0.0-canary.1060",
