@@ -18,11 +18,12 @@ trigger:
     - '0.87-stable'
 pr: none
 
+# Monthly keep-alive run so ADO does not disable the pipeline for inactivity.
+# It is not used for real releases and its time is not significant.
+# The scheduled CI run also starts the release pipeline.
 schedules:
-# Weekly heartbeat: keeps the pipeline from being auto-disabled after long
-# inactivity. 10:00 UTC ~= 02:00 Pacific (cron is UTC-only: 02:00 PST / 03:00 PDT).
-- cron: '0 10 * * Mon'
-  displayName: Weekly heartbeat (Mondays ~02:00 Pacific)
+- cron: '0 9 1 * *'
+  displayName: Monthly keep-alive
   branches:
     include:
     - main
