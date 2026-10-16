@@ -77,6 +77,9 @@ export const CodedErrors = {
   NoProjectName: 5003,
   InvalidProjectName: 5004,
   InvalidProjectNamespace: 5005,
+
+  // setup-module-windows
+  NoTurboModuleSpec: 6000,
 };
 
 export type CodedErrorType = keyof typeof CodedErrors;
