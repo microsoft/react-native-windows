@@ -1576,10 +1576,16 @@ std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const no
 // When we are notified by RichEdit that the text changed, we need to notify JS
 void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   if (m_builder) {
-    auto data = m_abistate->getData();
-    data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
-    data.mostRecentEventCount = m_nativeEventCount;
-    m_abistate->updateState(std::move(data));
+    auto attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
+    const auto eventCount = m_nativeEventCount;
+    m_abistate->updateState(
+        [attributedStringBox = std::move(attributedStringBox), eventCount](
+            const ::Microsoft::ReactNative::AbiTextInputStateData &oldData) {
+          auto data = oldData;
+          data.attributedStringBox = attributedStringBox;
+          data.mostRecentEventCount = eventCount;
+          return std::make_shared<const ::Microsoft::ReactNative::AbiTextInputStateData>(std::move(data));
+        });
   } else {
     auto data = m_state->getData();
     data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
