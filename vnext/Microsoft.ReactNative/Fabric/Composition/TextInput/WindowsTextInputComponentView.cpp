@@ -1496,6 +1496,14 @@ void WindowsTextInputComponentView::UpdateText(const facebook::react::Attributed
   if ((eventMask & ENM_CHANGE) && !m_comingFromState) {
     OnTextUpdated();
   }
+  if (eventMask & ENM_SELCHANGE) {
+    CHARRANGE finalSelection;
+    winrt::check_hresult(
+        m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&finalSelection), &res));
+    if (finalSelection.cpMin != cr.cpMin || finalSelection.cpMax != cr.cpMax) {
+      OnSelectionChanged(finalSelection.cpMin, finalSelection.cpMax);
+    }
+  }
 }
 
 void WindowsTextInputComponentView::updateLayoutMetrics(
