@@ -166,9 +166,29 @@ class TurboModuleImpl : public facebook::react::TurboModule {
       return m_hostObjectWrapper->get(runtime, propName);
     }
 
-    // it is not safe to assume that "runtime" never changes, so members are not cached here
     std::string key = propName.utf8(runtime);
+    if (m_cachedRuntime != &runtime) {
+      m_cachedRuntime = &runtime;
+      m_propertyCache =
+          std::make_unique<facebook::jsi::Object>(facebook::jsi::Object::create(runtime, facebook::jsi::Value::null()));
+    }
 
+    auto value = m_propertyCache->getProperty(runtime, propName);
+    if (!value.isUndefined()) {
+      return value;
+    }
+
+    value = CreateProperty(runtime, propName, key);
+    if (!value.isUndefined()) {
+      m_propertyCache->setProperty(runtime, propName, value);
+    }
+
+    return value;
+  }
+
+ private:
+  facebook::jsi::Value
+  CreateProperty(facebook::jsi::Runtime &runtime, const facebook::jsi::PropNameID &propName, const std::string &key) {
     if (key == "getConstants" && !m_moduleBuilder->ConstantProviders().empty()) {
       // try to find getConstants if there is any constant
       return facebook::jsi::Function::createFromHostFunction(
@@ -471,8 +491,11 @@ class TurboModuleImpl : public facebook::react::TurboModule {
   winrt::com_ptr<TurboModuleBuilder> m_moduleBuilder;
   IInspectable m_providedModule;
   std::unordered_map<std::string, std::shared_ptr<facebook::react::IAsyncEventEmitter>> m_eventEmitters;
+  std::unique_ptr<facebook::jsi::Object> m_propertyCache;
   std::shared_ptr<implementation::HostObjectWrapper> m_hostObjectWrapper;
   std::weak_ptr<facebook::react::LongLivedObjectCollection> m_longLivedObjectCollection;
+  // Non-owning identity used only to invalidate JSI values when the runtime changes.
+  facebook::jsi::Runtime *m_cachedRuntime{};
 };
 
 /*-------------------------------------------------------------------------------
