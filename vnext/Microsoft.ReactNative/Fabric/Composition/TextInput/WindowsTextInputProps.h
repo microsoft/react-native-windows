@@ -85,7 +85,7 @@ static inline void fromRawValue(
   }
 }
 
-class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
+class WindowsTextInputProps : public ViewProps, public BaseTextProps {
  public:
   WindowsTextInputProps() = default;
   WindowsTextInputProps(

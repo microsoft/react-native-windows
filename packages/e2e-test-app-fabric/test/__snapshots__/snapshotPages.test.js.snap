@@ -10956,6 +10956,95 @@ exports[`snapshotAllPages Custom Native Accessibility Example 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Custom TextInput component Example 1`] = `
+<View
+  accessibilityLabel="example root"
+  accessible={true}
+  testID="custom-textinput-root-1"
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
+    The below text input is a custom text input component
+  </Text>
+  <CustomTextInput
+    accessibilityLabel="Custom TextInput"
+    accessible={true}
+    focusable={true}
+    mostRecentEventCount={0}
+    onChange={[Function]}
+    onSelectionChange={[Function]}
+    style={
+      {
+        "borderWidth": 1,
+        "width": 500,
+      }
+    }
+    testID="custom-textinput-1"
+    text="hello"
+  />
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="custom-textinput-change"
+  />
+  <CustomTextInput
+    accessible={true}
+    focusable={true}
+    mostRecentEventCount={0}
+    onChange={[Function]}
+    onSelectionChange={[Function]}
+    style={
+      {
+        "borderWidth": 1,
+        "width": 500,
+      }
+    }
+    testID="custom-textinput-default"
+    text="default value"
+  />
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="custom-textinput-default-change"
+  />
+  <CustomTextInput
+    accessible={true}
+    focusable={true}
+    mostRecentEventCount={0}
+    onChange={[Function]}
+    onSelectionChange={[Function]}
+    style={
+      {
+        "borderWidth": 1,
+        "width": 500,
+      }
+    }
+    testID="custom-textinput-fixed"
+    text="fixed"
+  />
+</View>
+`;
+
 exports[`snapshotAllPages DevSettings 1`] = `
 <View
   accessibilityRole="button"

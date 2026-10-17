@@ -65,8 +65,8 @@ exports[`LegacyTextInputTest TextInput onChange before onSelectionChange 1`] = `
     "Name": "onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
-onChange text: 
 onSelectionChange range: 0,0
+onChange text: 
 onFocus
 onEndEditing text: abc
 onBlur
@@ -80,8 +80,8 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
-onChange text: 
 onSelectionChange range: 0,0
+onChange text: 
 onChange text: def
 onSelectionChange range: 3,3
 onKeyPress key: f
@@ -91,8 +91,8 @@ onKeyPress key: e
 onChange text: d
 onSelectionChange range: 1,1
 onKeyPress key: d
-onChange text: 
 onSelectionChange range: 0,0
+onChange text: 
 onChange text: abc
 onSelectionChange range: 3,3
 onKeyPress key: c
@@ -102,6 +102,7 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
+onChange text: 
 onFocus
 onEndEditing text: 
 onBlur
@@ -110,8 +111,8 @@ onFocus
     "TextRangePattern.GetText": "onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
-onChange text: 
 onSelectionChange range: 0,0
+onChange text: 
 onFocus
 onEndEditing text: abc
 onBlur
@@ -125,8 +126,8 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
-onChange text: 
 onSelectionChange range: 0,0
+onChange text: 
 onChange text: def
 onSelectionChange range: 3,3
 onKeyPress key: f
@@ -136,8 +137,8 @@ onKeyPress key: e
 onChange text: d
 onSelectionChange range: 1,1
 onKeyPress key: d
-onChange text: 
 onSelectionChange range: 0,0
+onChange text: 
 onChange text: abc
 onSelectionChange range: 3,3
 onKeyPress key: c
@@ -147,6 +148,7 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
+onChange text: 
 onFocus
 onEndEditing text: 
 onBlur
@@ -183,6 +185,7 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
+onChange text: 
 onFocus
 onEndEditing text: 
 onBlur
@@ -197,6 +200,7 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
+onChange text: 
 onFocus
 onEndEditing text: 
 onBlur
@@ -212,7 +216,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "998, 261",
+    "Size": "998, 280",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -234,8 +238,8 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
-onChange text: 
 onSelectionChange range: 0,0
+onChange text: 
 onChange text: def
 onSelectionChange range: 3,3
 onKeyPress key: f
@@ -245,8 +249,8 @@ onKeyPress key: e
 onChange text: d
 onSelectionChange range: 1,1
 onKeyPress key: d
-onChange text: 
 onSelectionChange range: 0,0
+onChange text: 
 onChange text: abc
 onSelectionChange range: 3,3
 onKeyPress key: c
@@ -256,6 +260,7 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
+onChange text: 
 onFocus
 onEndEditing text: 
 onBlur
@@ -271,8 +276,8 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
-onChange text: 
 onSelectionChange range: 0,0
+onChange text: 
 onChange text: def
 onSelectionChange range: 3,3
 onKeyPress key: f
@@ -282,8 +287,8 @@ onKeyPress key: e
 onChange text: d
 onSelectionChange range: 1,1
 onKeyPress key: d
-onChange text: 
 onSelectionChange range: 0,0
+onChange text: 
 onChange text: abc
 onSelectionChange range: 3,3
 onKeyPress key: c
@@ -293,6 +298,7 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
+onChange text: 
 onFocus
 onEndEditing text: 
 onBlur
@@ -308,7 +314,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "998, 689",
+    "Size": "998, 708",
     "Visual Type": "SpriteVisual",
   },
 }
