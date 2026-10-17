@@ -1586,14 +1586,13 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   if (m_builder) {
     auto attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
     const auto eventCount = m_nativeEventCount;
-    m_abistate->updateState(
-        [attributedStringBox = std::move(attributedStringBox), eventCount](
-            const ::Microsoft::ReactNative::AbiTextInputStateData &oldData) {
-          auto data = oldData;
-          data.attributedStringBox = attributedStringBox;
-          data.mostRecentEventCount = eventCount;
-          return std::make_shared<const ::Microsoft::ReactNative::AbiTextInputStateData>(std::move(data));
-        });
+    m_abistate->updateState([attributedStringBox = std::move(attributedStringBox),
+                             eventCount](const ::Microsoft::ReactNative::AbiTextInputStateData &oldData) {
+      auto data = oldData;
+      data.attributedStringBox = attributedStringBox;
+      data.mostRecentEventCount = eventCount;
+      return std::make_shared<const ::Microsoft::ReactNative::AbiTextInputStateData>(std::move(data));
+    });
   } else {
     auto data = m_state->getData();
     data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
