@@ -126,7 +126,9 @@ if (tool === 'npm' && args[0] === 'view') {
     );
   }
   const env = {
-    ...process.env,
+    ...Object.fromEntries(
+      Object.entries(process.env).filter(([key]) => !/^npm_config_/i.test(key)),
+    ),
     npm_config_registry: 'https://feed.invalid/npm/',
     npm_config_userconfig: join(root, '.npmrc'),
     RNW_ROOT: checkout,
@@ -180,6 +182,33 @@ test('the shared resolver ignores latest=1000.0.0 and checks exact matching RN/t
   expect(
     calls(f).every(call => call.userconfig === f.env.npm_config_userconfig),
   ).toBe(true);
+});
+
+test('the fixture isolates inherited npm configuration regardless of key casing', () => {
+  const previousEnv = process.env;
+  try {
+    process.env = {
+      ...previousEnv,
+      NPM_CONFIG_REGISTRY: 'https://inherited.invalid/npm/',
+      NPM_CONFIG_USERCONFIG: join(tmpdir(), 'inherited.npmrc'),
+    };
+    const f = fixture();
+    expect(
+      Object.keys(f.env)
+        .filter(key => /^npm_config_/i.test(key))
+        .sort(),
+    ).toEqual(['npm_config_registry', 'npm_config_userconfig']);
+    const result = runResolver(f);
+    expect(result.error).toBeUndefined();
+    expect(result.status).toBe(0);
+    expect(result.stdout.trim()).toBe('0.85.0');
+    expect(calls(f).map(call => [call.registry, call.userconfig])).toEqual([
+      [f.env.npm_config_registry, f.env.npm_config_userconfig],
+      [f.env.npm_config_registry, f.env.npm_config_userconfig],
+    ]);
+  } finally {
+    process.env = previousEnv;
+  }
 });
 
 test.each(['latest', '0.64.0'])(
