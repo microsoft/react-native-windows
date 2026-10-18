@@ -271,7 +271,8 @@ export async function resolveBranchVersions(
   let reactNativeWindowsSpec = branch.reactNativeWindowsSpec;
   if (!reactNativeWindowsSpec && !branch.nightly && minor !== null) {
     reactNativeWindowsSpec =
-      (await latestLineVersion(mctx, 'react-native-windows', minor)) ?? undefined;
+      (await latestLineVersion(mctx, 'react-native-windows', minor)) ??
+      undefined;
   }
 
   return {
@@ -283,15 +284,29 @@ export async function resolveBranchVersions(
 }
 
 /**
- * The react-native version to scaffold cRNL with. cRNL resolves a nightly RN
- * through the short-lived `@react-native-community/template@nightly` tag, which
- * rotates away and then fails to resolve (ETARGET). The matching stable version
- * may not be published yet, so scaffold from the latest stable and let
- * nightlyFixupSpecs rewrite the generated deps back to the nightly. Mirrors
- * vnext/Scripts/creaternwlib.cmd's RN_SCAFFOLD_VERSION.
+ * Share the CLI's checked, generator-supported nightly bootstrap. Registry
+ * dist-tags are not compatibility information; the target nightly is restored
+ * by nightlyFixupSpecs after scaffolding. Stable branches keep their exact RN.
  */
-export function scaffoldReactNativeVersion(versions: BranchVersions): string {
-  return versions.nightly ? 'latest' : versions.reactNative;
+export function scaffoldReactNativeVersion(
+  mctx: SpecialModuleContext,
+  versions: BranchVersions,
+  createLibraryVersion: string,
+): string {
+  if (!versions.nightly) return versions.reactNative;
+  return runTool(
+    'node',
+    [
+      join('vnext', 'Scripts', 'GetReactNativeLibraryScaffoldVersion.js'),
+      createLibraryVersion,
+    ],
+    mctx.repoRoot,
+    {
+      npm_config_userconfig: mctx.npmrcPath,
+      npm_config_registry: mctx.npmRegistryUrl,
+    },
+    `resolve cRNL ${createLibraryVersion} nightly scaffold`,
+  ).trim();
 }
 
 /**
@@ -340,7 +355,9 @@ function collectScaffoldSpecs(
   if (versions.reactNativeWindowsSpec) {
     libSpecs['react-native-windows'] = versions.reactNativeWindowsSpec;
   }
-  const sets: DepSpecSet[] = [{label: `crnl:${branchName}:lib`, specs: libSpecs}];
+  const sets: DepSpecSet[] = [
+    {label: `crnl:${branchName}:lib`, specs: libSpecs},
+  ];
 
   const examplePkg = join(projectDir, 'example', 'package.json');
   if (existsSync(examplePkg)) {
@@ -365,6 +382,11 @@ function scaffold(
   branch: CrnlBranch,
   versions: BranchVersions,
 ): {workDir: string; projectDir: string} {
+  const scaffoldVersion = scaffoldReactNativeVersion(
+    mctx,
+    versions,
+    cfg.createLibraryVersion,
+  );
   const workDir = mkdtempSync(join(tmpdir(), 'warm-crnl-'));
   // Space-free arg values so the Windows shell launch needs no quoting.
   const args = [
@@ -388,7 +410,7 @@ function scaffold(
     cfg.type,
     ...cfg.tools.map(t => `--tools=${t}`),
     '--react-native-version',
-    scaffoldReactNativeVersion(versions),
+    scaffoldVersion,
     '--example',
     cfg.example,
     'warmlib',
@@ -432,7 +454,10 @@ export const createReactNativeLibraryModule: SpecialModule = {
         if (versions.nightly) {
           const rnwSpecs = await readRnwWorkspaceSpecs(mctx);
           if (Object.keys(rnwSpecs).length > 0) {
-            sets.push({label: `crnl:${branch.name}:rnw-workspace`, specs: rnwSpecs});
+            sets.push({
+              label: `crnl:${branch.name}:rnw-workspace`,
+              specs: rnwSpecs,
+            });
           }
         }
       } catch (err) {
