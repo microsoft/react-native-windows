@@ -142,7 +142,7 @@ test('scaffoldReactNativeVersion shares the CLI resolver and its registry config
   expect(run).toHaveBeenCalledWith(
     'node',
     [
-      `"${join(context.repoRoot, 'vnext', 'Scripts', 'GetReactNativeLibraryScaffoldVersion.js')}"`,
+      join('vnext', 'Scripts', 'GetReactNativeLibraryScaffoldVersion.js'),
       '0.63.0',
     ],
     context.repoRoot,
@@ -170,6 +170,36 @@ test('scaffoldReactNativeVersion passes a stable version through without a boots
   ).toBe('0.85.3');
   expect(run).not.toHaveBeenCalled();
 });
+
+test.each(['absolute', 'relative'])(
+  'scaffoldReactNativeVersion launches the resolver with %s repo-root paths containing spaces',
+  rootKind => {
+    const repo = tempRepo();
+    const checkout = join(repo, 'RNW checkout');
+    const scriptDir = join(checkout, 'vnext', 'Scripts');
+    mkdirSync(scriptDir, {recursive: true});
+    writeFileSync(
+      join(scriptDir, 'GetReactNativeLibraryScaffoldVersion.js'),
+      "process.stdout.write('0.85.0\\n');",
+    );
+    const previousCwd = process.cwd();
+    try {
+      process.chdir(repo);
+      expect(
+        scaffoldReactNativeVersion(
+          mctx(
+            rootKind === 'absolute' ? checkout : join('.', 'RNW checkout'),
+            fakeRegistry({}),
+          ),
+          {reactNative: '0.88.0-nightly-x', nightly: true},
+          '0.63.0',
+        ),
+      ).toBe('0.85.0');
+    } finally {
+      process.chdir(previousCwd);
+    }
+  },
+);
 
 test('resolveBranchVersions: main reads the nightly from vnext, no rnw spec', async () => {
   const repo = tempRepo();

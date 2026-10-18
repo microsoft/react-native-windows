@@ -297,7 +297,7 @@ export function scaffoldReactNativeVersion(
   return runTool(
     'node',
     [
-      `"${join(mctx.repoRoot, 'vnext', 'Scripts', 'GetReactNativeLibraryScaffoldVersion.js')}"`,
+      join('vnext', 'Scripts', 'GetReactNativeLibraryScaffoldVersion.js'),
       createLibraryVersion,
     ],
     mctx.repoRoot,
