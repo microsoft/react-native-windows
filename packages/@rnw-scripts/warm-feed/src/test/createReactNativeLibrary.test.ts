@@ -5,10 +5,18 @@
  * @format
  */
 
-import {mkdirSync, mkdtempSync, writeFileSync} from 'node:fs';
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
+import * as closure from '../closure';
 import {
+  createReactNativeLibraryModule,
   nightlyFixupSpecs,
   parseCrnlConfig,
   readRnwWorkspaceSpecs,
@@ -18,6 +26,21 @@ import {
 } from '../specialModules/createReactNativeLibrary';
 import type {SpecialModuleContext} from '../specialModules/types';
 import type {NpmRegistry} from '../registries';
+
+const tempDirs: string[] = [];
+
+function tempRepo(): string {
+  const dir = mkdtempSync(join(tmpdir(), 'warm-repo-'));
+  tempDirs.push(dir);
+  return dir;
+}
+
+afterEach(() => {
+  jest.restoreAllMocks();
+  for (const dir of tempDirs.splice(0)) {
+    rmSync(dir, {recursive: true, force: true});
+  }
+});
 
 function fakeRegistry(versions: Record<string, string[]>): NpmRegistry {
   return {
@@ -56,7 +79,13 @@ test('parseCrnlConfig validates required fields and applies defaults', () => {
   expect(cfg.type).toBe('turbo-module');
   expect(cfg.example).toBe('vanilla');
   expect(cfg.languages).toBe('kotlin-objc');
-  expect(cfg.tools).toEqual(['eslint', 'jest', 'lefthook', 'release-it', 'vite']);
+  expect(cfg.tools).toEqual([
+    'eslint',
+    'jest',
+    'lefthook',
+    'release-it',
+    'vite',
+  ]);
   expect(cfg.branches).toHaveLength(2);
   expect(cfg.branches[0]).toMatchObject({name: 'main', nightly: true});
 });
@@ -95,27 +124,55 @@ test('nightlyFixupSpecs rewrites the RN family and cli specs only', () => {
   expect(specs.other).toBe('1.0.0');
 });
 
-test('scaffoldReactNativeVersion: uses latest stable for a nightly, passes stable through', () => {
+test('scaffoldReactNativeVersion shares the CLI resolver and its registry configuration', () => {
+  const context = mctx('C:\\RNW checkout', fakeRegistry({}));
+  context.npmrcPath = 'C:\\feed auth\\.npmrc';
+  const run = jest.spyOn(closure, 'runTool').mockReturnValue('0.85.0\r\n');
   expect(
-    scaffoldReactNativeVersion({
-      reactNative: '0.87.0-nightly-20260704-e04ff69ab',
-      reactNativeCli: '20.0.0',
-      reactNativeWindowsSpec: undefined,
-      nightly: true,
-    }),
-  ).toBe('latest');
+    scaffoldReactNativeVersion(
+      context,
+      {
+        reactNative: '0.88.0-nightly-20260805-f2188610c',
+        reactNativeCli: '20.0.0',
+        nightly: true,
+      },
+      '0.63.0',
+    ),
+  ).toBe('0.85.0');
+  expect(run).toHaveBeenCalledWith(
+    'node',
+    [
+      `"${join(context.repoRoot, 'vnext', 'Scripts', 'GetReactNativeLibraryScaffoldVersion.js')}"`,
+      '0.63.0',
+    ],
+    context.repoRoot,
+    {
+      npm_config_userconfig: context.npmrcPath,
+      npm_config_registry: context.npmRegistryUrl,
+    },
+    'resolve cRNL 0.63.0 nightly scaffold',
+  );
+});
+
+test('scaffoldReactNativeVersion passes a stable version through without a bootstrap lookup', () => {
+  const run = jest.spyOn(closure, 'runTool');
   expect(
-    scaffoldReactNativeVersion({
-      reactNative: '0.85.3',
-      reactNativeCli: '20.0.0',
-      reactNativeWindowsSpec: '0.85.3',
-      nightly: false,
-    }),
+    scaffoldReactNativeVersion(
+      mctx('/no/repo', fakeRegistry({})),
+      {
+        reactNative: '0.85.3',
+        reactNativeCli: '20.0.0',
+        reactNativeWindowsSpec: '0.85.3',
+        nightly: false,
+      },
+      '0.63.0',
+    ),
   ).toBe('0.85.3');
+  expect(run).not.toHaveBeenCalled();
 });
 
 test('resolveBranchVersions: main reads the nightly from vnext, no rnw spec', async () => {
-  const repo = mkdtempSync(join(tmpdir(), 'warm-repo-'));
+  const repo = tempRepo();
   mkdirSync(join(repo, 'vnext'));
   writeFileSync(
     join(repo, 'vnext', 'package.json'),
@@ -135,7 +192,7 @@ test('resolveBranchVersions: main reads the nightly from vnext, no rnw spec', as
 });
 
 test('resolveBranchVersions: main derives the CLI even when reactNativeVersion is overridden', async () => {
-  const repo = mkdtempSync(join(tmpdir(), 'warm-repo-'));
+  const repo = tempRepo();
   mkdirSync(join(repo, 'vnext'));
   writeFileSync(
     join(repo, 'vnext', 'package.json'),
@@ -211,7 +268,7 @@ test('resolveBranchVersions: throws when the branch vnext pins no react-native',
 });
 
 test('readRnwWorkspaceSpecs warms only feed-published @react-native-windows/* pins', async () => {
-  const repo = mkdtempSync(join(tmpdir(), 'warm-repo-'));
+  const repo = tempRepo();
   mkdirSync(join(repo, 'vnext'));
   writeFileSync(
     join(repo, 'vnext', 'package.json'),
@@ -239,3 +296,159 @@ test('readRnwWorkspaceSpecs warms only feed-published @react-native-windows/* pi
     '@react-native-windows/codegen': '0.0.0-canary.133',
   });
 });
+
+function generatedScaffold(workDir: string, reactNativeVersion: string): void {
+  const projectDir = join(workDir, 'warmlib');
+  mkdirSync(join(projectDir, 'example'), {recursive: true});
+  writeFileSync(
+    join(projectDir, 'package.json'),
+    JSON.stringify({
+      peerDependencies: {'react-native': '*'},
+      devDependencies: {
+        'react-native': reactNativeVersion,
+        '@react-native/babel-preset': reactNativeVersion,
+        '@react-native-community/cli': '20.0.0',
+        react: '19.2.0',
+        'shared-tool': '1.0.0',
+      },
+    }),
+  );
+  writeFileSync(
+    join(projectDir, 'example', 'package.json'),
+    JSON.stringify({
+      dependencies: {
+        'react-native': reactNativeVersion,
+        '@react-native/new-app-screen': reactNativeVersion,
+        'shared-tool': '2.0.0',
+      },
+      devDependencies: {
+        '@react-native/metro-config': reactNativeVersion,
+        '@react-native-community/cli-platform-android': '20.0.0',
+        '@react-native-community/cli-platform-ios': '20.0.0',
+      },
+    }),
+  );
+}
+
+const scaffoldConfig = {
+  createLibraryVersion: '0.63.0',
+  branches: [
+    {
+      name: 'main',
+      nightly: true,
+      reactNativeVersion: '0.88.0-nightly-20260805-f2188610c',
+      reactNativeCliVersion: '21.0.0',
+    },
+    {
+      name: '0.85-stable',
+      reactNativeVersion: '0.85.3',
+      reactNativeCliVersion: '20.0.0',
+      reactNativeWindowsSpec: '0.85.3',
+    },
+  ],
+};
+
+test('the actual warmer generator commands use concrete versions and preserve both rewritten closures', async () => {
+  const repo = tempRepo();
+  mkdirSync(join(repo, 'vnext'));
+  writeFileSync(join(repo, 'vnext', 'package.json'), '{}');
+  const workDirs: string[] = [];
+  const run = jest
+    .spyOn(closure, 'runTool')
+    .mockImplementation((cmd, args, cwd) => {
+      if (cmd === 'node') return '0.85.0\n';
+      expect(cmd).toBe('npx');
+      workDirs.push(cwd);
+      generatedScaffold(cwd, args[args.indexOf('--react-native-version') + 1]);
+      return '';
+    });
+
+  const result = await createReactNativeLibraryModule.collectDepSpecs(
+    mctx(repo, fakeRegistry({})),
+    scaffoldConfig,
+  );
+  const commands = run.mock.calls.filter(([cmd]) => cmd === 'npx');
+  expect(commands).toHaveLength(2);
+  for (const [index, version] of ['0.85.0', '0.85.3'].entries()) {
+    const [, args, , env] = commands[index];
+    expect(args).toEqual(
+      expect.arrayContaining([
+        'create-react-native-library@0.63.0',
+        '--languages',
+        'kotlin-objc',
+        '--type',
+        'turbo-module',
+        '--tools=eslint',
+        '--tools=jest',
+        '--tools=lefthook',
+        '--tools=release-it',
+        '--tools=vite',
+        '--example',
+        'vanilla',
+      ]),
+    );
+    expect(args[args.indexOf('--react-native-version') + 1]).toBe(version);
+    expect(env.npm_config_registry).toBe('https://feed/npm/');
+  }
+  expect(result.failures).toEqual([]);
+  expect(result.sets.map(set => set.label)).toEqual([
+    'crnl:main:lib',
+    'crnl:main:example',
+    'crnl:0.85-stable:lib',
+    'crnl:0.85-stable:example',
+  ]);
+  expect(result.sets[0].specs).toEqual({
+    'react-native': scaffoldConfig.branches[0].reactNativeVersion,
+    '@react-native/babel-preset': scaffoldConfig.branches[0].reactNativeVersion,
+    '@react-native-community/cli': '21.0.0',
+    react: '19.2.0',
+    'shared-tool': '1.0.0',
+  });
+  expect(result.sets[1].specs).toEqual({
+    'react-native': scaffoldConfig.branches[0].reactNativeVersion,
+    '@react-native/new-app-screen':
+      scaffoldConfig.branches[0].reactNativeVersion,
+    '@react-native/metro-config': scaffoldConfig.branches[0].reactNativeVersion,
+    '@react-native-community/cli-platform-android': '21.0.0',
+    '@react-native-community/cli-platform-ios': '21.0.0',
+    'shared-tool': '2.0.0',
+  });
+  expect(result.sets[2].specs['react-native']).toBe('0.85.3');
+  expect(result.sets[2].specs['react-native-windows']).toBe('0.85.3');
+  expect(result.sets[3].specs['react-native']).toBe('0.85.3');
+  expect(workDirs.every(dir => !existsSync(dir))).toBe(true);
+});
+
+test.each(['node', 'npx'])(
+  'a %s failure records the failed branch but still collects the healthy stable closures',
+  async failingCommand => {
+    const context = mctx('/no/repo', fakeRegistry({}));
+    const logError = jest.spyOn(context.ctx.log, 'error');
+    const workDirs: string[] = [];
+    let failed = false;
+    jest.spyOn(closure, 'runTool').mockImplementation((cmd, args, cwd) => {
+      if (cmd === 'npx') workDirs.push(cwd);
+      if (cmd === failingCommand && !failed) {
+        failed = true;
+        throw new Error('scaffold lookup or generation failed');
+      }
+      if (cmd === 'node') return '0.85.0\n';
+      generatedScaffold(cwd, args[args.indexOf('--react-native-version') + 1]);
+      return '';
+    });
+
+    const result = await createReactNativeLibraryModule.collectDepSpecs(
+      context,
+      scaffoldConfig,
+    );
+    expect(result.failures).toEqual(['main']);
+    expect(result.sets.map(set => set.label)).toEqual([
+      'crnl:0.85-stable:lib',
+      'crnl:0.85-stable:example',
+    ]);
+    expect(logError).toHaveBeenCalledWith(
+      'cRNL: branch main failed: scaffold lookup or generation failed',
+    );
+    expect(workDirs.every(dir => !existsSync(dir))).toBe(true);
+  },
+);

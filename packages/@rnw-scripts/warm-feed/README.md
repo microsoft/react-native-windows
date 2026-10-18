@@ -96,6 +96,20 @@ from the working-tree `vnext/package.json`; for `0.NN-stable`, the exact
 scaffolds, and reads the generated manifests. Mirrors
 `vnext/Scripts/creaternwlib.cmd`.
 
+For a nightly library, both paths run
+`vnext/Scripts/GetReactNativeLibraryScaffoldVersion.js`. Its bootstrap is the
+generator's own supported React Native version: cRNL 0.63.0 declares
+`SUPPORTED_REACT_NATIVE_VERSION = 0.85.0`. The resolver checks that exact
+`react-native` and matching `@react-native-community/template` through the
+caller's configured npm registry; it never selects a dist-tag. A lookup failure
+stops that branch rather than falling back. When upgrading cRNL, update and
+smoke-test this bootstrap alongside the generator version in the CLI and config.
+Stable branches still scaffold their exact RN version. After a nightly scaffold,
+the library and example dependencies are rewritten to the requested RN/CLI before
+resolving their separate closures. The scaffold itself downloads the bootstrap
+generator/template through the same registry, so these must also be available to
+anonymous CI; authenticated warming remains an out-of-band maintainer operation.
+
 The second module, **`create-react-native-app`**, is the app counterpart: it
 reproduces the CLI-init *app* test, which scaffolds a standalone app with
 `@react-native-community/cli init` (pulling `@react-native-community/template`)

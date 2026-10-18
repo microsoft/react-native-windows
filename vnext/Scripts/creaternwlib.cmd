@@ -32,6 +32,7 @@ if "%RNW_ROOT%"=="" (
 set LIB_NAME=testlib
 set RN_TEMPLATE_TYPE=turbo-module
 set RNW_TEMPLATE_TYPE=cpp-lib
+set CRNL_VERSION=0.63.0
 
 set R_VERSION=
 set RN_VERSION=
@@ -121,13 +122,17 @@ for /f "delims=" %%a in ('npm show react@%R_VERSION% version') do @set R_VERSION
 
 set RN_SCAFFOLD_VERSION=%RN_VERSION%
 if not "x%RN_VERSION:nightly=%"=="x%RN_VERSION%" (
-  REM cRNL cannot scaffold a nightly before its matching stable RN release exists.
-  REM Use the latest published stable template, then rewrite dependencies below.
-  for /f "delims=" %%a in ('npm show react-native@latest version') do set RN_SCAFFOLD_VERSION=%%a
+  REM Bootstrap with cRNL's supported RN/template, then rewrite to the target nightly.
+  set RN_SCAFFOLD_VERSION=
+  for /f "delims=" %%a in ('node "%RNW_ROOT%\vnext\Scripts\GetReactNativeLibraryScaffoldVersion.js" %CRNL_VERSION%') do set RN_SCAFFOLD_VERSION=%%a
+)
+if "%RN_SCAFFOLD_VERSION%"=="" (
+  @echo creaternwlib.cmd: Unable to determine a compatible React Native library scaffold
+  exit /b 1
 )
 
-@echo creaternwlib.cmd Creating base RN library project with: npx --yes create-react-native-library@0.63.0 --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type %RN_TEMPLATE_TYPE% --tools=eslint --tools=jest --tools=lefthook --tools=release-it --tools=vite --react-native-version %RN_SCAFFOLD_VERSION% --example vanilla %LIB_NAME%
-call npx --yes create-react-native-library@0.63.0 --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type %RN_TEMPLATE_TYPE% --tools=eslint --tools=jest --tools=lefthook --tools=release-it --tools=vite --react-native-version %RN_SCAFFOLD_VERSION% --example vanilla %LIB_NAME%
+@echo creaternwlib.cmd Creating base RN library project with: npx --yes create-react-native-library@%CRNL_VERSION% --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type %RN_TEMPLATE_TYPE% --tools=eslint --tools=jest --tools=lefthook --tools=release-it --tools=vite --react-native-version %RN_SCAFFOLD_VERSION% --example vanilla %LIB_NAME%
+call npx --yes create-react-native-library@%CRNL_VERSION% --slug %LIB_NAME% --description %LIB_NAME% --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type %RN_TEMPLATE_TYPE% --tools=eslint --tools=jest --tools=lefthook --tools=release-it --tools=vite --react-native-version %RN_SCAFFOLD_VERSION% --example vanilla %LIB_NAME%
 
 if %ERRORLEVEL% neq 0 (
   @echo creaternwlib.cmd: Unable to create base RN library project
