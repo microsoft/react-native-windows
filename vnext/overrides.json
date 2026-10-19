@@ -63,10 +63,22 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/Instance.cpp",
+      "baseFile": "packages/react-native/ReactCommon/cxxreact/Instance.cpp",
+      "baseHash": "a751664d8b76e4326b3421f11e2c768e25b04433"
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/NativeToJsBridge.cpp",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/NativeToJsBridge.cpp",
       "baseHash": "79f9b18be17a0ba42d2d01dd28991ce27a75e1bb",
       "issue": 13172
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/NativeToJsBridge.h",
+      "baseFile": "packages/react-native/ReactCommon/cxxreact/NativeToJsBridge.h",
+      "baseHash": "fbf7a572050ca849f4b0762e7ad913123a946cda"
     },
     {
       "type": "patch",
