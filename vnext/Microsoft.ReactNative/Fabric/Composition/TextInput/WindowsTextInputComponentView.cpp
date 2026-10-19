@@ -1390,7 +1390,7 @@ void WindowsTextInputComponentView::updateState(
 
   // Avoid new-ing up a new AbiComponentState on every state change if we are not a custom component
   if (m_builder && m_builder->UpdateStateHandler()) {
-    m_builder->UpdateStateHandler()(*this, winrt::make<::Microsoft::ReactNative::AbiTextInputComponentState>(state));
+    m_builder->UpdateStateHandler()(*this, winrt::make<::Microsoft::ReactNative::AbiComponentState<::Microsoft::ReactNative::AbiTextInputStateData>>(state));
   }
 
   if (!m_state && !m_abistate) {
@@ -1412,8 +1412,15 @@ void WindowsTextInputComponentView::updateState(
     }
   }
 
-  if (m_builder ? m_mostRecentEventCount == m_abistate->getData().mostRecentEventCount
-                : m_mostRecentEventCount == m_state->getData().mostRecentEventCount) {
+  // Userdata-only updates must not replay potentially stale native text.
+  const bool textChanged = !m_builder || !oldState ||
+      m_abistate->getData().attributedStringBox !=
+          static_cast<const ::Microsoft::ReactNative::AbiTextInputShadowNode::ConcreteState *>(oldState.get())
+              ->getData()
+              .attributedStringBox;
+  if (textChanged &&
+      (m_builder ? m_mostRecentEventCount == m_abistate->getData().mostRecentEventCount
+                 : m_mostRecentEventCount == m_state->getData().mostRecentEventCount)) {
     m_comingFromState = true;
     {
       // DrawBlock defers DrawText() until after UpdateText completes

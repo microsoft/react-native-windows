@@ -47,7 +47,9 @@ std::shared_ptr<facebook::react::ShadowNode> AbiComponentDescriptor::createShado
     facebook::react::ShadowNodeFamily::Shared const &family) const {
   auto shadowNode = std::make_shared<ShadowNodeT>(fragment, family, getTraits());
 
-  shadowNode->Proxy(winrt::make<winrt::Microsoft::ReactNative::implementation::ShadowNode>(shadowNode));
+  shadowNode->Proxy(
+      winrt::make<winrt::Microsoft::ReactNative::implementation::ShadowNode<::Microsoft::ReactNative::AbiStateData>>(
+          shadowNode));
   winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
       ->CreateShadowNode(shadowNode->Proxy());
 
@@ -60,7 +62,9 @@ std::shared_ptr<facebook::react::ShadowNode> AbiComponentDescriptor::cloneShadow
     const facebook::react::ShadowNodeFragment &fragment) const {
   auto shadowNode = std::make_shared<ShadowNodeT>(sourceShadowNode, fragment);
 
-  shadowNode->Proxy(winrt::make<winrt::Microsoft::ReactNative::implementation::ShadowNode>(shadowNode));
+  shadowNode->Proxy(
+      winrt::make<winrt::Microsoft::ReactNative::implementation::ShadowNode<::Microsoft::ReactNative::AbiStateData>>(
+          shadowNode));
   winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
       ->CloneShadowNode(shadowNode->Proxy(), static_cast<const ShadowNodeT &>(sourceShadowNode).Proxy());
 

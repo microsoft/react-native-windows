@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "ReactCompositionViewComponentBuilder.h"
 #include <Fabric/AbiViewComponentDescriptor.h>
+#include <Fabric/AbiComponentDescriptor.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ContentIslandComponentView.h>
 #include <Fabric/Composition/PortalComponentView.h>

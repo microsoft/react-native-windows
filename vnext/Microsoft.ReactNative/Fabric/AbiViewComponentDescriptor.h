@@ -69,7 +69,9 @@ class ConcreteAbiViewComponentDescriptor : public BaseT {
       const facebook::react::ShadowNodeFragment &fragment,
       facebook::react::ShadowNodeFamily::Shared const &family) const override {
     auto shadowNode = std::make_shared<ShadowNodeT>(fragment, family, getTraits());
-    shadowNode->Proxy(winrt::make<winrt::Microsoft::ReactNative::implementation::YogaLayoutableShadowNode>(shadowNode));
+    shadowNode->Proxy(
+        winrt::make<winrt::Microsoft::ReactNative::implementation::YogaLayoutableShadowNode<ConcreteStateData>>(
+            shadowNode));
     winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
         ->CreateShadowNode(shadowNode->Proxy());
 
@@ -81,7 +83,9 @@ class ConcreteAbiViewComponentDescriptor : public BaseT {
       const facebook::react::ShadowNode &sourceShadowNode,
       const facebook::react::ShadowNodeFragment &fragment) const override {
     auto shadowNode = std::make_shared<ShadowNodeT>(sourceShadowNode, fragment);
-    shadowNode->Proxy(winrt::make<winrt::Microsoft::ReactNative::implementation::YogaLayoutableShadowNode>(shadowNode));
+    shadowNode->Proxy(
+        winrt::make<winrt::Microsoft::ReactNative::implementation::YogaLayoutableShadowNode<ConcreteStateData>>(
+            shadowNode));
     winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
         ->CloneShadowNode(shadowNode->Proxy(), static_cast<const ShadowNodeT &>(sourceShadowNode).Proxy());
 

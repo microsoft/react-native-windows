@@ -44,6 +44,23 @@ void RegisterCustomTextInputComponentView(
       winrt::SampleCustomComponent::CustomTextInputComponentView>(
       packageBuilder,
       [](const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder &builder) {
+        // Exercise userdata access during creation and cloning without replacing the native text state.
+        auto shadowNodeBuilder = builder.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>();
+        shadowNodeBuilder.SetInitialStateDataFactory(
+            [](const winrt::Microsoft::ReactNative::IComponentProps &) { return winrt::box_value(int32_t{0}); });
+        shadowNodeBuilder.SetCreateShadowNode([](const winrt::Microsoft::ReactNative::ShadowNode &shadowNode) {
+          winrt::check_bool(winrt::unbox_value<int32_t>(shadowNode.StateData()) == 0);
+          shadowNode.StateData(winrt::box_value(int32_t{1}));
+          winrt::check_bool(winrt::unbox_value<int32_t>(shadowNode.StateData()) == 1);
+        });
+        shadowNodeBuilder.SetShadowNodeCloner([](const winrt::Microsoft::ReactNative::ShadowNode &shadowNode,
+                                                 const winrt::Microsoft::ReactNative::ShadowNode &sourceShadowNode) {
+          auto sourceData = winrt::unbox_value<int32_t>(sourceShadowNode.StateData());
+          winrt::check_bool(sourceData > 0);
+          shadowNode.StateData(winrt::box_value(sourceData + 1));
+          winrt::check_bool(winrt::unbox_value<int32_t>(shadowNode.StateData()) == sourceData + 1);
+          winrt::check_bool(winrt::unbox_value<int32_t>(sourceShadowNode.StateData()) == sourceData);
+        });
         builder.SetTextInputComponentViewInitializer(
             [](const winrt::Microsoft::ReactNative::Composition::WindowsTextInputComponentView
                    &textInputView) noexcept {

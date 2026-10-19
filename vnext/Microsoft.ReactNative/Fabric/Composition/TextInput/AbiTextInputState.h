@@ -35,16 +35,4 @@ class AbiTextInputStateData : public facebook::react::WindowsTextInputState {
   winrt::Windows::Foundation::IInspectable userdata;
 };
 
-struct AbiTextInputComponentState
-    : winrt::implements<AbiTextInputComponentState, winrt::Microsoft::ReactNative::IComponentState> {
-  AbiTextInputComponentState(facebook::react::State::Shared const &state);
-
-  winrt::Windows::Foundation::IInspectable Data() noexcept;
-  void UpdateState(const winrt::Windows::Foundation::IInspectable &data) noexcept;
-  void UpdateStateWithMutation(const winrt::Microsoft::ReactNative::StateUpdateMutation &mutation) noexcept;
-
- private:
-  std::shared_ptr<facebook::react::ConcreteState<AbiTextInputStateData> const> m_state;
-};
-
 } // namespace Microsoft::ReactNative
