@@ -29,9 +29,11 @@ struct AbiComponentState
     return m_state->getData().userdata;
   }
   void UpdateState(const winrt::Windows::Foundation::IInspectable &data) noexcept {
-    TStateData state;
-    state.userdata = data;
-    m_state->updateState(std::move(state));
+    m_state->updateState([data](const TStateData &oldData) {
+      auto newData = oldData;
+      newData.userdata = data;
+      return std::make_shared<TStateData const>(std::move(newData));
+    });
   }
   void UpdateStateWithMutation(const winrt::Microsoft::ReactNative::StateUpdateMutation &mutation) noexcept {
     m_state->updateState([mutation](const TStateData &oldData) {
