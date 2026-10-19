@@ -1390,7 +1390,10 @@ void WindowsTextInputComponentView::updateState(
 
   // Avoid new-ing up a new AbiComponentState on every state change if we are not a custom component
   if (m_builder && m_builder->UpdateStateHandler()) {
-    m_builder->UpdateStateHandler()(*this, winrt::make<::Microsoft::ReactNative::AbiComponentState<::Microsoft::ReactNative::AbiTextInputStateData>>(state));
+    m_builder->UpdateStateHandler()(
+        *this,
+        winrt::make<::Microsoft::ReactNative::AbiComponentState<::Microsoft::ReactNative::AbiTextInputStateData>>(
+            state));
   }
 
   if (!m_state && !m_abistate) {
