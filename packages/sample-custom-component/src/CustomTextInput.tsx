@@ -97,6 +97,7 @@ const inputRef = React.useRef<React.ElementRef<
     <CustomTextInputSpec
       ref={setRef}
       {...rest}
+      editable={props.readOnly !== undefined ? !props.readOnly : props.editable}
       text={text}
       selection={selection ?? undefined}
       mostRecentEventCount={mostRecentEventCount}
