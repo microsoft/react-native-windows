@@ -12,6 +12,7 @@ import type {ElementRef} from 'react';
 
 // @ts-ignore
 import {TextInputViewSpec, TextInputProps, HostComponent} from 'react-native';
+import {type NativeSyntheticEvent} from 'react-native';
 
 // @ts-ignore
 const NativeComponentRegistry = require('react-native/Libraries/NativeComponent/NativeComponentRegistry');
@@ -41,7 +42,7 @@ const spec = {
 
 export interface CustomTextInputProps extends TextInputProps {
   test?: boolean;
-  onSomething?: (event: SomethingEvent) => void;
+  onSomething?: (event: NativeSyntheticEvent<SomethingEvent>) => void;
 }
 
 export interface NativeCustomTextInputProps

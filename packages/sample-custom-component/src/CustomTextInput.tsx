@@ -26,7 +26,7 @@ const CustomTextInput = React.forwardRef<
     onSelectionChange,
     ...rest
   } = props;
-const inputRef = React.useRef<React.ElementRef<
+  const inputRef = React.useRef<React.ElementRef<
     typeof CustomTextInputSpec
   > | null>(null);
   const [mostRecentEventCount, setMostRecentEventCount] = React.useState(0);
