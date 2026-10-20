@@ -79,7 +79,7 @@ const CustomTextInput = React.forwardRef<
       Commands.setTextAndSelection(
         inputRef.current,
         mostRecentEventCount,
-        text,
+        textChanged ? value : undefined,
         selection?.start ?? -1,
         selection?.end ?? -1,
       );

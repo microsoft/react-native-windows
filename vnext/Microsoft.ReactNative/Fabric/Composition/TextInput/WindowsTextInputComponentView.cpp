@@ -20,6 +20,7 @@
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.h>
 #include <mutex>
+#include <string_view>
 #include "../Composition.Input.h"
 #include "../CompositionHelpers.h"
 #include "../RootComponentView.h"
@@ -1440,7 +1441,7 @@ void WindowsTextInputComponentView::UpdateText(const facebook::react::Attributed
   DrawBlock db(*this);
   SETTEXTEX stt;
   memset(&stt, 0, sizeof(stt));
-  stt.flags = ST_DEFAULT;
+  stt.flags = 0x20 /*ST_PLAINTEXTONLY*/;
   stt.codepage = CP_UTF8;
   LRESULT res;
 
