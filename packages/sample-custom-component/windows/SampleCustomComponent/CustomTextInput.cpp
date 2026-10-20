@@ -325,15 +325,14 @@ struct CustomTextInputComponentView : public winrt::implements<CustomTextInputCo
     if (attributes.HasKey(L"strikethrough") &&
         FAILED(font.SetStrikeThrough(attributes.GetNamedBoolean(L"strikethrough") ? tomTrue : tomFalse)))
       return false;
-    if (attributes.HasKey(L"size") &&
-        FAILED(font.SetSize(static_cast<float>(attributes.GetNamedNumber(L"size")))))
+    if (attributes.HasKey(L"size") && FAILED(font.SetSize(static_cast<float>(attributes.GetNamedNumber(L"size")))))
       return false;
     if (attributes.HasKey(L"fontFamily")) {
       auto name = HStringToBSTR(attributes.GetNamedString(L"fontFamily"));
       if (FAILED(font.SetName(name.get())))
         return false;
     }
-    // TODO support color, highlight, subscriptAndSuperscript, 
+    // TODO support color, highlight, subscriptAndSuperscript,
     return true;
   }
 
