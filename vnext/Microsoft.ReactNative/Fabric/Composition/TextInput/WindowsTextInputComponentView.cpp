@@ -2139,6 +2139,12 @@ HRESULT WindowsTextInputComponentView::GetTextServices(ITextServices2 **textServ
   return S_OK;
 }
 
+HRESULT WindowsTextInputComponentView::GetTextHost(ITextHost **textHost) noexcept {
+  ensureTextHost();
+  m_textHost.copy_to(textHost);
+  return S_OK;
+}
+
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 WindowsTextInputComponentView::createVisual() noexcept {
   auto visual = m_compContext.CreateSpriteVisual();

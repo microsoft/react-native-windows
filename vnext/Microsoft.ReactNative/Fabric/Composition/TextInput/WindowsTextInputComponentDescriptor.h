@@ -140,9 +140,9 @@ virtual State::Shared createInitialState(
       }
     }
 
-    textInputShadowNode.dirtyLayout();
-
         */
+    // Native text and formatting updates change intrinsic size without changing Yoga props.
+    textInputShadowNode.dirtyLayout();
     textInputShadowNode.enableMeasurement();
 
     Super::adopt(shadowNode);

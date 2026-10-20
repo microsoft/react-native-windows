@@ -129,6 +129,9 @@ struct BaseCustomTextInput {
   // You must provide an implementation of this method to handle the "setLightOn" command
   virtual void HandleSetLightOnCommand(bool value) noexcept = 0;
 
+  // You must provide an implementation of this method to handle the "setFormattedText" command
+  virtual void HandleSetFormattedTextCommand(std::string json) noexcept = 0;
+
   void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
     auto userData = view.UserData().as<TUserData>();
     auto commandName = args.CommandName();
@@ -136,6 +139,13 @@ struct BaseCustomTextInput {
       bool value;
       winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), value);
       userData->HandleSetLightOnCommand(value);
+      return;
+    }
+
+    if (commandName == L"setFormattedText") {
+      std::string json;
+      winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), json);
+      userData->HandleSetFormattedTextCommand(json);
       return;
     }
   }

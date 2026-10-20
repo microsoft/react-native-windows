@@ -101,6 +101,7 @@ struct WindowsTextInputComponentView
 
   HRESULT GetTextDocument(ITextDocument2 **) noexcept;
   HRESULT GetTextServices(ITextServices2 **textServices) noexcept;
+  HRESULT GetTextHost(ITextHost **textHost) noexcept;
 
  private:
   struct DrawBlock {

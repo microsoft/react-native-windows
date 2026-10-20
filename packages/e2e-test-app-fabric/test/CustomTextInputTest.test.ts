@@ -20,6 +20,28 @@ afterEach(async () => {
 });
 
 describe('CustomTextInput', () => {
+  test('Remeasures native formatted text updates', async () => {
+    const input = await app.findElementByTestID(
+      'custom-textinput-set-formatted-text',
+    );
+    const initialHeight = (await input.getSize()).height;
+    const button = await app.findElementByTestID(
+      'custom-textinput-set-formatted-text-button',
+    );
+    await button.click();
+
+    await app.waitUntil(
+      async () => (await input.getSize()).height > initialHeight,
+      {
+        timeoutMsg:
+          'Native formatting with a larger font should increase the input height.',
+      },
+    );
+    expect(await input.getText()).toBe(
+      'Medium textLarge textAlmost large text',
+    );
+  });
+
   test('Maps initial value and defaultValue to native text', async () => {
     const controlled = await app.findElementByTestID('custom-textinput-1');
     const uncontrolled = await app.findElementByTestID(

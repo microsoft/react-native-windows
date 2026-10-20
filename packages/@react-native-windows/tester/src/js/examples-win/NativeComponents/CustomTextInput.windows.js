@@ -8,11 +8,12 @@
 'use strict';
 
 import React from 'react';
-import {View} from 'react-native';
-import {CustomTextInput} from '@rnw-scripts/sample-custom-component';
+import {Button, View} from 'react-native';
+import {CustomTextInput, CustomTextInputCommands} from '@rnw-scripts/sample-custom-component';
 import RNTesterText from '../../components/RNTesterText';
 
 const CustomTextInputExample = () => {
+  const inputRef = React.useRef(null);
   const [text, setText] = React.useState('hello');
   const [lastChange, setLastChange] = React.useState('');
   const [lastDefaultChange, setLastDefaultChange] = React.useState('');
@@ -49,6 +50,22 @@ const CustomTextInputExample = () => {
         accessible
         testID="custom-textinput-fixed"
         value="fixed"
+      />
+      <CustomTextInput
+        ref={inputRef}
+        style={{width: 500, borderWidth: 1}}
+        accessible
+        testID="custom-textinput-set-formatted-text"
+        defaultValue="set content with button"
+      />
+      <Button
+        testID="custom-textinput-set-formatted-text-button"
+        title="Set Formatted Text"
+        onPress={() => {
+          // Example JSON delta
+          const json = '{ "ops" : [ { "insert" : "Medium text", "attributes" : { "size" : 10 } }, { "insert" : "Large text", "attributes" : { "size" : 15 } }, { "insert" : "Almost large text", "attributes" : { "size" : 24 } } ] }';
+          inputRef.current && CustomTextInputCommands.setFormattedText(inputRef.current, json);
+        }}
       />
     </View>
   );

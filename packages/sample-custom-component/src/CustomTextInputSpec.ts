@@ -54,6 +54,7 @@ export interface NativeCustomTextInputProps
 }
 
 type CustomTextInputComponent = HostComponent<NativeCustomTextInputProps>;
+type IDelta = string;
 
 export default NativeComponentRegistry.get(nativeComponentName, () => {
   return spec;
@@ -74,6 +75,13 @@ export const Commands = {
       end,
     ]);
   },
+  setFormattedText(
+    viewRef: ElementRef<CustomTextInputComponent>,
+    json: IDelta,
+  ) {
+    dispatchCommand(viewRef, 'setFormattedText', [json]);
+  },
+
   setLightOn: function setLightOn(ref: any, value: boolean) {
     dispatchCommand(ref, 'setLightOn', [value]);
   },

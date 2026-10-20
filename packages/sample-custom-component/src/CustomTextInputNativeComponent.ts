@@ -17,6 +17,8 @@ export type SomethingEvent = {
   target: Int32,
 };
 
+export type IDelta = string;
+
 export interface CustomTextInputProps extends ViewProps {
   // Props
   test?: WithDefault<boolean, false>;
@@ -25,15 +27,18 @@ export interface CustomTextInputProps extends ViewProps {
   onSomething?: DirectEventHandler<SomethingEvent>,
 }
 
-
 type ComponentType = HostComponent<CustomTextInputProps>;
 
 interface NativeCommands {
   setLightOn: (viewRef: React.ElementRef<ComponentType>, value: boolean) => void;
+  setFormattedText: (
+    viewRef: React.ElementRef<ComponentType>,
+    json: IDelta,
+  ) => void;
 }
 
 export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
-  supportedCommands: ['setLightOn'],
+  supportedCommands: ['setLightOn', 'setFormattedText'],
 });
 
 export default codegenNativeComponent<CustomTextInputProps>('CustomTextInput');
