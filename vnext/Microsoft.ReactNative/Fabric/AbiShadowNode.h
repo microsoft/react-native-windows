@@ -33,17 +33,49 @@ class AbiProps final : public facebook::react::Props {
   winrt::Microsoft::ReactNative::IComponentProps m_componentProps{nullptr};
 };
 
-struct ShadowNode : ShadowNodeT<ShadowNode> {
-  ShadowNode(std::shared_ptr<const facebook::react::ShadowNode> shadowNode) noexcept;
+template <typename TStateData>
+struct ShadowNode : ShadowNodeT<ShadowNode<TStateData>> {
+  ShadowNode(std::shared_ptr<const facebook::react::ShadowNode> shadowNode) noexcept : m_shadowNode(shadowNode) {}
 
-  void EnsureUnsealed() noexcept;
-  winrt::Windows::Foundation::IInspectable Tag() const noexcept;
-  void Tag(winrt::Windows::Foundation::IInspectable tag) noexcept;
+  void EnsureUnsealed() noexcept {
+    if (auto shadowNode = m_shadowNode.lock()) {
+      shadowNode->ensureUnsealed();
+    }
+  }
 
-  winrt::Windows::Foundation::IInspectable StateData() const noexcept;
-  void StateData(winrt::Windows::Foundation::IInspectable tag) noexcept;
+  winrt::Windows::Foundation::IInspectable Tag() const noexcept {
+    return m_tag;
+  }
+  void Tag(winrt::Windows::Foundation::IInspectable tag) noexcept {
+    m_tag = tag;
+  }
 
-  winrt::Microsoft::ReactNative::EventEmitter EventEmitter() const noexcept;
+  winrt::Windows::Foundation::IInspectable StateData() const noexcept {
+    if (auto shadowNode = m_shadowNode.lock()) {
+      auto state = shadowNode->getState();
+      auto abiStateData = static_cast<const facebook::react::ConcreteState<TStateData> *>(state.get())->getData();
+      return abiStateData.userdata;
+    }
+    return nullptr;
+  }
+
+  void StateData(winrt::Windows::Foundation::IInspectable tag) noexcept {
+    if (auto shadowNode = m_shadowNode.lock()) {
+      shadowNode->ensureUnsealed();
+      auto &state = const_cast<facebook::react::State::Shared &>(shadowNode->getState());
+      auto data = static_cast<const facebook::react::ConcreteState<TStateData> *>(state.get())->getData();
+      data.userdata = tag;
+      state = std::make_shared<const facebook::react::ConcreteState<TStateData>>(
+          std::make_shared<const TStateData>(std::move(data)), *state);
+    }
+  }
+
+  winrt::Microsoft::ReactNative::EventEmitter EventEmitter() const noexcept {
+    if (auto shadowNode = m_shadowNode.lock()) {
+      return winrt::make<winrt::Microsoft::ReactNative::implementation::EventEmitter>(shadowNode->getEventEmitter());
+    }
+    return nullptr;
+  }
 
  protected:
   std::weak_ptr<const facebook::react::ShadowNode> m_shadowNode;

@@ -5,7 +5,6 @@
 #include "WindowsComponentDescriptorRegistry.h"
 
 #include <Fabric/AbiComponentDescriptor.h>
-#include <Fabric/AbiViewComponentDescriptor.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>

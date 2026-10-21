@@ -168,7 +168,8 @@ void ComponentView::updateState(
     facebook::react::State::Shared const &oldState) noexcept {
   // Avoid new-ing up a new AbiComponentState on every state change if we are not a custom component
   if (m_builder && m_builder->UpdateStateHandler()) {
-    m_builder->UpdateStateHandler()(*this, winrt::make<::Microsoft::ReactNative::AbiComponentState>(state));
+    m_builder->UpdateStateHandler()(
+        *this, winrt::make<::Microsoft::ReactNative::AbiComponentState<::Microsoft::ReactNative::AbiStateData>>(state));
   }
 }
 

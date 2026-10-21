@@ -1249,19 +1249,6 @@ exports.examples = [
     },
   },
   {
-    title: 'Error Handler',
-    render: function (): React.Node {
-      return (
-        <NetworkImageExample
-          testID="image-network-error"
-          source={{
-            uri: IMAGE1 + '_TYPO',
-          }}
-        />
-      );
-    },
-  },
-  {
     title: 'Error Handler for Large Images',
     render: function (): React.Node {
       return (
