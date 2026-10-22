@@ -1045,12 +1045,9 @@ void CompositionEventHandler::UpdateActiveTouch(
   activeTouch.touch.offsetPoint.x = ptLocal.x;
   activeTouch.touch.offsetPoint.y = ptLocal.y;
   // Restamp on every update; PanResponder ignores moves whose timestamp hasn't advanced.
-  activeTouch.touch.timestamp = facebook::react::HighResTimeStamp::now();
-  // The deprecated timestamp is in seconds and is a 32-bit float, so measure it from a recent origin to keep
-  // sub-millisecond precision.
-  static const auto s_timestampOrigin = facebook::react::HighResTimeStamp::now();
+  static const auto s_timestampOrigin = std::chrono::steady_clock::now();
   activeTouch.touch.timestamp = static_cast<facebook::react::Float>(
-      (activeTouch.touch.timestamp - s_timestampOrigin).toDOMHighResTimeStamp() / 1000.0);
+    std::chrono::duration<double>(std::chrono::steady_clock::now() - s_timestampOrigin).count());
   activeTouch.touch.force = 0;
   // activeTouch.touch.isBarrelButton = false;
   // activeTouch.touch.shiftKey = false;
