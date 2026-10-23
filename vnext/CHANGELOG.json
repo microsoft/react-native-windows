@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 23 Oct 2026 04:39:01 GMT",
+      "version": "0.81.38",
+      "tag": "react-native-windows_v0.81.38",
+      "comments": {
+        "patch": [
+          {
+            "author": "ryan.fowler@singlewire.com",
+            "package": "react-native-windows",
+            "commit": "28368546b805c9ccf6128f433bc1fb33e56a37b0",
+            "comment": "Fix single-line TextInput text drawn below center by measuring content with an unconstrained height"
+          },
+          {
+            "author": "tiagoma@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "28368546b805c9ccf6128f433bc1fb33e56a37b0",
+            "comment": "Don't flush a JS executor that the scheduled work destroyed"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "28368546b805c9ccf6128f433bc1fb33e56a37b0",
+            "comment": "Enable apps to create custom TextInput native components, support richtext in textinput"
+          },
+          {
+            "author": "ryan.fowler@singlewire.com",
+            "package": "react-native-windows",
+            "commit": "28368546b805c9ccf6128f433bc1fb33e56a37b0",
+            "comment": "Fix touch timestamps so PanResponder handles every move"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Sep 2026 23:44:42 GMT",
       "version": "0.81.37",
       "tag": "react-native-windows_v0.81.37",
