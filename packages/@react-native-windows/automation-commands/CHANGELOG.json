@@ -2,6 +2,33 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Fri, 23 Oct 2026 23:05:15 GMT",
+      "version": "0.0.0-canary.1062",
+      "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1062",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "6b40ef7b231ad88d3f6b0031c172273af19c7103",
+            "comment": "Normalize cache-busting Image URIs by query string instead of host so snapshots work against the E2E image fixture server"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "6b40ef7b231ad88d3f6b0031c172273af19c7103",
+            "comment": "Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.0-canary.1061",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Aug 2026 23:17:43 GMT",
       "version": "0.0.0-canary.1061",
       "tag": "@react-native-windows/automation-commands_v0.0.0-canary.1061",

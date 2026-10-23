@@ -1,8 +1,29 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Fri, 21 Aug 2026 16:35:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 23 Oct 2026 23:05:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.294
+
+Fri, 23 Oct 2026 23:05:15 GMT
+
+### Changes
+
+- Integrate React Native 0.87.0-nightly-20260704-e04ff69ab (July 4th)
+- Integrate React Native 0.86.0-nightly-20260408-8bac1df5a
+- Integrate React Native 0.87.0-nightly-20260519-58cd1bf58
+- Integrate React Native 0.87.0-nightly-20260604-63683f091 (June 4th)
+- Integrate React Native 0.86.0-nightly-20260310-621592d1f
+- Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)
+- Integrate React Native 0.86.0-nightly-20260430-118198599
+- Integrate React Native 0.86.0-nightly-20260325-d1809f0aa
+- Defer PowerShell discovery until a command or health check needs it so CLI configuration can load without Windows build tools. (14055146+shirakaba@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.134
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.3
+- Bump @react-native-windows/fs to v0.0.0-canary.73
+- Bump @react-native-windows/package-utils to v0.0.0-canary.99
+- Bump @react-native-windows/telemetry to v0.0.0-canary.135
 
 ## 0.0.0-canary.293
 

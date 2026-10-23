@@ -2,6 +2,27 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Fri, 23 Oct 2026 23:05:15 GMT",
+      "version": "0.0.0-canary.135",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.135",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/telemetry",
+            "commit": "6b40ef7b231ad88d3f6b0031c172273af19c7103",
+            "comment": "Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.73",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 May 2026 20:10:44 GMT",
       "version": "0.0.0-canary.134",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.134",

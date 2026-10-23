@@ -1,8 +1,36 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 21 Aug 2026 23:17:42 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 23 Oct 2026 23:05:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1061
+
+Fri, 23 Oct 2026 23:05:14 GMT
+
+### Changes
+
+- Integrate React Native 0.86.0-nightly-20260325-d1809f0aa
+- Integrate React Native 0.87.0-nightly-20260604-63683f091 (June 4th)
+- Fix use-after-free crash when an Image is destroyed while its download is still in flight (gordomacmaster@gmail.com)
+- Clamp Tooltip Position To Monitor (66076509+vineethkuttan@users.noreply.github.com)
+- Fix single-line TextInput text drawn below center by measuring content with an unconstrained height (ryan.fowler@singlewire.com)
+- Integrate React Native 0.86.0-nightly-20260408-8bac1df5a
+- Ensure that our CLI lib tests use Yarn v4 (vmorozov@microsoft.com)
+- Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)
+- Use the generator-supported bootstrap for nightly library scaffolding. (vmorozov@microsoft.com)
+- 0.81 to main pipelines sync (vmorozov@microsoft.com)
+- Raise UI Automation selection events when accessibilityState.selected changes. (anuagra@microsoft.com)
+- Integrate React Native 0.87.0-nightly-20260519-58cd1bf58
+- Integrate React Native 0.86.0-nightly-20260430-118198599
+- Integrate React Native 0.86.0-nightly-20260310-621592d1f
+- Fix Modal title bar contrast when the native window is inactive (anuagra@microsoft.com)
+- Fix touch timestamps so PanResponder handles every move (ryan.fowler@singlewire.com)
+- Integrate React Native 0.87.0-nightly-20260704-e04ff69ab (July 4th)
+- Bump @react-native-windows/cli to v0.0.0-canary.294
+- Bump @react-native-windows/codegen to v0.0.0-canary.134
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.3
+- Bump react-native-platform-override to v0.0.0-canary.1024
 
 ## 0.0.0-canary.1060
 
