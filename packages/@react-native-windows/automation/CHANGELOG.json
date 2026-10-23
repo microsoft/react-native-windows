@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Fri, 23 Oct 2026 22:21:24 GMT",
+      "version": "0.83.3",
+      "tag": "@react-native-windows/automation_v0.83.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/automation",
+            "commit": "0088f316d2276d4d2b902c0fb3190cc132ad6acf",
+            "comment": "Migrate package metadata to Yarn 4"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.83.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Jun 2026 09:54:40 GMT",
       "version": "0.83.2",
       "tag": "@react-native-windows/automation_v0.83.2",

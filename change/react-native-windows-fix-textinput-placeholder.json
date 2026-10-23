@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix placeholder layout constraints fed physical px instead of DIPs; fix no-op NaN fontSize guard in CreatePlaceholderLayout",
-  "packageName": "react-native-windows",
-  "email": "collindanielschneide@gmail.com",
-  "dependentChangeType": "patch"
-}
