@@ -2,6 +2,27 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Fri, 23 Oct 2026 23:05:15 GMT",
+      "version": "0.0.0-canary.102",
+      "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.102",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/find-repo-root",
+            "commit": "6b40ef7b231ad88d3f6b0031c172273af19c7103",
+            "comment": "Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.73",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2026 05:29:55 GMT",
       "version": "0.0.0-canary.101",
       "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.101",
