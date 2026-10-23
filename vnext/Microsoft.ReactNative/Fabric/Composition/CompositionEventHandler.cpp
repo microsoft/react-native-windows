@@ -1044,9 +1044,10 @@ void CompositionEventHandler::UpdateActiveTouch(
   activeTouch.touch.screenPoint.y = ptScaled.y;
   activeTouch.touch.offsetPoint.x = ptLocal.x;
   activeTouch.touch.offsetPoint.y = ptLocal.y;
+  // Restamp on every update; PanResponder ignores moves whose timestamp hasn't advanced.
+  static const auto s_timestampOrigin = std::chrono::steady_clock::now();
   activeTouch.touch.timestamp = static_cast<facebook::react::Float>(
-      std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())
-          .count());
+      std::chrono::duration<double>(std::chrono::steady_clock::now() - s_timestampOrigin).count());
   activeTouch.touch.force = 0;
   // activeTouch.touch.isBarrelButton = false;
   // activeTouch.touch.shiftKey = false;

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix touch timestamps so PanResponder handles every move",
+  "packageName": "react-native-windows",
+  "email": "ryan.fowler@singlewire.com",
+  "dependentChangeType": "patch"
+}
