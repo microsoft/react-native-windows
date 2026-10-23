@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 23 Oct 2026 22:21:23 GMT",
+      "version": "0.83.3",
+      "tag": "@react-native-windows/cli_v0.83.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "0088f316d2276d4d2b902c0fb3190cc132ad6acf",
+            "comment": "Sync pipeline and CLI test changes to 0.83-stable"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.83.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Jun 2026 09:54:41 GMT",
       "version": "0.83.2",
       "tag": "@react-native-windows/cli_v0.83.2",

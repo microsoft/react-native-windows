@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Tue, 16 Jun 2026 09:54:41 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 23 Oct 2026 22:21:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.83.2
+
+Fri, 23 Oct 2026 22:21:23 GMT
+
+### Patches
+
+- Migrate package metadata to Yarn 4 (vmorozov@microsoft.com)
 
 ## 0.83.1
 
