@@ -4,6 +4,7 @@
 #pragma once
 
 #include "IHttpResource.h"
+#include "OriginPolicy.h"
 
 #include "HttpSettings.g.h"
 #include <Modules/IHttpModuleProxy.h>
@@ -11,9 +12,11 @@
 #include "WinRTTypes.h"
 
 // Windows API
+#include <winrt/Windows.Networking.Connectivity.h>
 #include <winrt/Windows.Web.Http.h>
 
 // Standard Library
+#include <atomic>
 #include <mutex>
 
 namespace Microsoft::React::Networking {
@@ -22,7 +25,18 @@ class WinRTHttpResource : public IHttpResource,
                           public IHttpModuleProxy,
                           public IWinRTHttpRequestFactory,
                           public std::enable_shared_from_this<WinRTHttpResource> {
+  friend struct IHttpResource;
+
   winrt::Windows::Web::Http::IHttpClient m_client;
+  std::mutex m_clientMutex;
+  std::atomic_bool m_clientNeedsRefresh{false};
+  bool m_refreshClientOnNetworkChange{false};
+  winrt::hstring m_defaultUserAgent;
+  OriginPolicy m_originPolicy{OriginPolicy::None};
+  std::string m_globalOrigin;
+  winrt::Windows::Networking::Connectivity::NetworkInformation::NetworkStatusChanged_revoker
+      m_networkStatusChangedRevoker;
+
   std::mutex m_mutex;
   std::unordered_map<int64_t, ResponseOperation> m_responses;
 
@@ -45,6 +59,12 @@ class WinRTHttpResource : public IHttpResource,
 
   void UntrackResponse(int64_t requestId) noexcept;
 
+  winrt::Windows::Web::Http::IHttpClient CreateClient();
+
+  winrt::Windows::Web::Http::IHttpClient GetClient();
+
+  void InitializeNetworkStatusMonitoring();
+
   winrt::fire_and_forget PerformSendRequest(
       winrt::Windows::Web::Http::HttpMethod &&method,
       winrt::Windows::Foundation::Uri &&uri,
@@ -54,6 +74,8 @@ class WinRTHttpResource : public IHttpResource,
   WinRTHttpResource() noexcept;
 
   WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient &&client) noexcept;
+
+  WinRTHttpResource(winrt::hstring &&defaultUserAgent, OriginPolicy originPolicy, std::string &&globalOrigin) noexcept;
 
 #pragma region IWinRTHttpRequestFactory
 
@@ -84,8 +106,9 @@ class WinRTHttpResource : public IHttpResource,
   void SetOnRequestSuccess(std::function<void(int64_t requestId)> &&handler) noexcept override;
   void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept override;
   void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept override;
-  void SetOnData(std::function<void(int64_t requestId, winrt::Microsoft::ReactNative::JSValueObject &&responseData)>
-                     &&handler) noexcept override;
+  void SetOnData(
+      std::function<void(int64_t requestId, winrt::Microsoft::ReactNative::JSValueObject &&responseData)>
+          &&handler) noexcept override;
   void SetOnIncrementalData(
       std::function<void(int64_t requestId, std::string &&responseData, int64_t progress, int64_t total)>
           &&handler) noexcept override;
