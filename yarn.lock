@@ -5024,6 +5024,7 @@ __metadata:
     "@rnw-scripts/take-screenshot": "npm:*"
     "@rnw-scripts/unbroken": "npm:*"
     beachball: "npm:^2.20.0"
+    eslint-plugin-jest: "npm:^29.0.1"
     fast-glob: "npm:^3.2.11"
     husky: "npm:^4.2.5"
     lage: "npm:^2.7.1"
