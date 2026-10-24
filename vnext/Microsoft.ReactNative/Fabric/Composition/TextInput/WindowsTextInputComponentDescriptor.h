@@ -3,7 +3,16 @@
 
 #pragma once
 
+<<<<<<< Upstream
+#include <react/cxxstableapi/FrameworksGuard.h>
+
+#include "AndroidTextInputShadowNode.h"
+#include "AndroidTextInputState.h"
+
+#include <fbjni/fbjni.h>
+=======
 #include "WindowsTextInputShadowNode.h"
+>>>>>>> Override
 
 #include <yoga/YGEnums.h>
 #include <yoga/YGValue.h>

@@ -6,7 +6,10 @@
     "paths": {
       "react-native": [
         "../react-native-win32"
-      ] // this mapping is relative to "baseUrl"
+      ], // this mapping is relative to "baseUrl"
+      "react-native/types/*": [
+        "../../../node_modules/react-native/types_DEPRECATED/*"
+      ]
     },
     // Some code copied from react-native-win32 is not strict clean
     "noImplicitAny": false,

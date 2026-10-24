@@ -48,7 +48,7 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
 
     return (
       <RN.ViewWin32 {...viewProps}>
-        <RN.Text {...textProps}>{this.props.title}</RN.Text>
+        <RN.TextWin32 {...textProps}>{this.props.title}</RN.TextWin32>
       </RN.ViewWin32>
     );
   }

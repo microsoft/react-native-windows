@@ -59,6 +59,17 @@ struct SampleTurboModule {
   REACT_SYNC_METHOD(getValue)
   ::React::JSValue getValue(double x, std::string y, ::React::JSValue &&z) noexcept;
 
+  // ArrayBuffer is not yet a distinct JSValue type. These methods keep the
+  // generated spec valid; callers receive the JSON-like value the reader saw.
+  REACT_SYNC_METHOD(getArrayBuffer)
+  ::React::JSValue getArrayBuffer(::React::JSValue &&buffer) noexcept;
+
+  REACT_SYNC_METHOD(createNativeBuffer)
+  ::React::JSValue createNativeBuffer(double size) noexcept;
+
+  REACT_METHOD(processAsyncBuffer)
+  void processAsyncBuffer(::React::JSValue &&payload, ::React::ReactPromise<double> &&result) noexcept;
+
   REACT_METHOD(getValueWithCallback)
   void getValueWithCallback(std::function<void(std::string)> const &callback) noexcept;
 

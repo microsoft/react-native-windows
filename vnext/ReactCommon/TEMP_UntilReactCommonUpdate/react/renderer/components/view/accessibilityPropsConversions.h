@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <react/cxxstableapi/UmbrellaGuard.h>
+
 #include <glog/logging.h>
 #include <react/debug/react_native_assert.h>
 #include <react/debug/react_native_expect.h>
@@ -363,7 +365,7 @@ inline std::string toString(const AccessibilityRole &accessibilityRole)
     case AccessibilityRole::Timer:
       return "timer";
     case AccessibilityRole::List:
-      return "timer";
+      return "list";
     case AccessibilityRole::Toolbar:
       return "toolbar";
     case AccessibilityRole::Grid:
@@ -455,6 +457,8 @@ inline void fromRawValue(const PropsParserContext &context, const RawValue &valu
       result = AccessibilityRole::Tablist;
     } else if (string == "timer") {
       result = AccessibilityRole::Timer;
+    } else if (string == "list") {
+      result = AccessibilityRole::List;
     } else if (string == "toolbar") {
       result = AccessibilityRole::Toolbar;
     } else if (string == "grid") {

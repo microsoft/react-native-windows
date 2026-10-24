@@ -38,6 +38,7 @@ export type PressableInstance = HostInstance;
 
 export type {PressableAndroidRippleConfig};
 
+/** @build-types emit-as-interface react-native-web compatibility */
 export type PressableStateCallbackType = Readonly<{
   pressed: boolean,
 }>;
@@ -453,10 +454,10 @@ function usePressState(forcePressed: boolean): [boolean, (boolean) => void] {
   return [pressed || forcePressed, setPressed];
 }
 
-const MemoedPressable = memo(Pressable);
-MemoedPressable.displayName = 'Pressable';
-
-export default MemoedPressable as component(
+const MemoedPressable: component(
   ref?: React.RefSetter<PressableInstance>,
   ...props: PressableProps
-);
+) = memo(Pressable);
+MemoedPressable.displayName = 'Pressable';
+
+export default MemoedPressable;

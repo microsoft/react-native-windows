@@ -1,4 +1,35 @@
 [ignore]
+<<<<<<< Upstream
+; Ignore build cache folder
+packages/react-native/sdks/**
+
+; Ignore fb_internal modules
+packages/react-native/src/fb_internal/**
+
+; Ignore the codegen e2e tests
+packages/react-native-codegen/e2e/__test_fixtures__/modules/NativeEnumTurboModule.js
+
+; Ignore "BUCK" generated dirs
+.buckd/**
+
+; Ignore other platform suffixes
+**/*.macos.js
+**/*.windows.js
+
+**/node_modules/resolve/test/resolver/malformed_package_json/package.json
+
+; Checked-in build output
+packages/debugger-frontend/dist/**
+
+; Generated build output
+packages/*/dist/**
+
+; helloworld
+private/helloworld/ios/Pods/**
+
+; Ignore rn-tester Pods
+packages/rn-tester/Pods/**
+=======
 ; We fork some components by platform - ignore all platforms except windows
 .*/!(ProgressBarAndroid)[.]android.js
 .*/*[.]ios.js
@@ -99,6 +130,7 @@
 
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
+>>>>>>> Override
 
 [include]
 ; Need to include hoisted modules
@@ -172,4 +204,8 @@ untyped-import
 untyped-type-import
 
 [version]
+<<<<<<< Upstream
+^0.331.0
+=======
 ^0.316.0
+>>>>>>> Override

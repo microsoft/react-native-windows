@@ -103,6 +103,8 @@ export function translateFieldOrReturnType(
       return 'int';
     case 'BooleanTypeAnnotation':
       return 'bool';
+    case 'ArrayBufferTypeAnnotation':
+      return '::React::JSValue';
     case 'ArrayTypeAnnotation':
       if (type.elementType.type !== 'AnyTypeAnnotation') {
         return `std::vector<${translateFieldOrReturnType(

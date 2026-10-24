@@ -80,6 +80,22 @@ double SampleTurboModule::getRootTag(double arg) noexcept {
   };
 }
 
+::React::JSValue SampleTurboModule::getArrayBuffer(::React::JSValue &&buffer) noexcept {
+  return buffer.Copy();
+}
+
+::React::JSValue SampleTurboModule::createNativeBuffer(double /*size*/) noexcept {
+  // The Win32 reader has no ArrayBuffer kind yet, so this cannot allocate a
+  // real binary buffer. Return null until that marshalling exists.
+  return nullptr;
+}
+
+void SampleTurboModule::processAsyncBuffer(
+    ::React::JSValue && /*payload*/,
+    ::React::ReactPromise<double> &&result) noexcept {
+  result.Resolve(0);
+}
+
 void SampleTurboModule::getValueWithCallback(std::function<void(std::string)> const &callback) noexcept {
   callback("value from callback!");
 }

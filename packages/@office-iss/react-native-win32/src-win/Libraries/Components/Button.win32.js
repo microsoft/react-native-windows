@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @flow
+ * @flow strict-local
  * @format
  */
 
@@ -238,7 +238,7 @@ const Button: component(
   } = props;
   const buttonStyles: Array<ViewStyleProp> = [styles.button];
   const textStyles: Array<TextStyleProp> = [styles.text];
-  if (color) {
+  if (Boolean(color)) {
     if (Platform.OS === 'ios') {
       textStyles.push({color: color});
     } else {
@@ -264,7 +264,7 @@ const Button: component(
       ? {..._accessibilityState, disabled}
       : _accessibilityState;
 
-  if (disabled) {
+  if (disabled === true) {
     buttonStyles.push(styles.buttonDisabled);
     textStyles.push(styles.textDisabled);
   }
@@ -287,7 +287,10 @@ const Button: component(
       accessible={accessible}
       accessibilityActions={accessibilityActions}
       onAccessibilityAction={onAccessibilityAction}
-      accessibilityLabel={ariaLabel || accessibilityLabel}
+      accessibilityLabel={
+        // $FlowFixMe[sketchy-null-string]
+        ariaLabel || accessibilityLabel
+      }
       accessibilityHint={accessibilityHint}
       accessibilityLanguage={accessibilityLanguage}
       accessibilityRole="button"
