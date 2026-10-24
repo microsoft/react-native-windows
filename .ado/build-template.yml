@@ -196,7 +196,7 @@ extends:
               version: '24.x'
             displayName: Use Node.js 24.x
 
-          # CI is network-isolated; authenticate to the package feed before any npm/Yarn use.
+          # CI is network-isolated; acquire the feed token used by the Verdaccio uplink.
           - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
             - template: .ado/templates/auth-npm-feed.yml@self
 
@@ -600,4 +600,3 @@ extends:
           parameters:
             buildEnvironment: ${{ parameters.buildEnvironment }}
             AgentPool: ${{ parameters.AgentPool }}
-
