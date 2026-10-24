@@ -91,6 +91,7 @@ Here's what the contribution process looks like:
 1. Ensure your code passes linting checks:
     1. For C++ changes, you can run `yarn format` at the root of the repo to automatically reformat your code.
     1. For JavaScript/TypeScript, you can run `yarn lint:fix` at the root of the repo.
+       Keep `eslint-plugin-jest` in the root `devDependencies`: ESLint resolves plugins from each workspace, and the transitive dependency from `@react-native/eslint-config` may be installed in a nested directory.
 1. After you've created your commits, make sure to run `yarn change` at the root of the repo to create "change files":
     1. When prompted for `Change type`, the first option (usually `Prerelease` or `Patch`) is correct 99% of the time (don't select `None`).
     1. When prompted to `Describe changes`, please provide a descriptive message (defaults to your commit message).
