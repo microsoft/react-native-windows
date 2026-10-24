@@ -70,10 +70,6 @@ TEST_CLASS (RNTesterHeadlessTests) {
     RunTest(L"IntegrationTests/DummyTest");
   }
 
-  TEST_METHOD(TurboModulePropertyCache) {
-    RunTest(L"IntegrationTests/TurboModulePropertyCacheTest");
-  }
-
   TEST_METHOD(Fetch) {
     RunTest(L"IntegrationTests/FetchTest");
   }

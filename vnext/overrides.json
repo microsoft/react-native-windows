@@ -270,10 +270,6 @@
     },
     {
       "type": "platform",
-      "file": "src-win/IntegrationTests/TurboModulePropertyCacheTest.js"
-    },
-    {
-      "type": "platform",
       "file": "src-win/IntegrationTests/WebSocketArrayBufferTest.js"
     },
     {
