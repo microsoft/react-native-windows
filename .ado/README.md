@@ -81,16 +81,25 @@ All repository resources pin `ref: refs/tags/release`.
 ## Package feed and network isolation
 
 ISS agents run under 1ES **Network Isolation**, which blocks egress to public CDNs.
-The pipelines source packages only from the `ms/react-native-public` Azure Artifacts
-feed and neutralize three background egress attempts that green builds would
-otherwise hide:
+The pipelines use approved package feeds and neutralize three background egress
+attempts that green builds would otherwise hide:
 
-- **Feed registry:** `variables/shared.yml` points npm and Yarn at the
-  `ms/react-native-public` feed (`NPM_CONFIG_REGISTRY` / `YARN_NPM_REGISTRY_SERVER`).
-  On CI, `templates/auth-npm-feed.yml` mints a managed-identity token and writes it
-  to `~/.npmrc` and `~/.yarnrc.yml` before any install.
+- **NuGet restores:** the root `NuGet.Config` maps NuGet.org dependencies to
+  `https://packagefeedproxy.microsoft.io/nuget/v3/index.json` anonymously.
+  Only `ReactNative.V8Jsi.Windows*` and `Microsoft.JavaScript.V8*` use the
+  `ms/react-native-public` ADO feed, where these V8 packages are published.
+  CI imports this policy for generated apps/libraries and third-party configs;
+  CLI-init tests also retain their local feed for freshly built RNW packages.
+  NuGet 6.0 or later is required to enforce these source mappings.
+  BinSkim downloads use the same proxy instead of nuget.org.
+- **Package registries:** `variables/shared.yml` routes npm/npx and Yarn through
+  the anonymous PackageFeedProxy (`NPM_CONFIG_REGISTRY` /
+  `YARN_NPM_REGISTRY_SERVER`) in both PR and Continuous validation.
+  `templates/auth-npm-feed.yml` keeps the managed-identity token scoped to direct
+  Azure Artifacts requests in `~/.npmrc` and passes it to the Verdaccio uplink;
+  Yarn does not send the token to the proxy.
 - **Verdaccio (CLI init tests):** `verdaccio/generate-config.js` emits the config at
-  runtime, so the uplink targets the feed (with the CI token when present) while
+  runtime, so the uplink uses the proxy for PRs and the ADO feed with the CI token while
   local packages still publish offline. The former static `config.yaml` was removed.
 - **React Native DevTools:** `RNDT_DEV: 1` stops DevTools from fetching its
   standalone shell binary from a Facebook CDN when Metro starts. The debugger is
@@ -101,10 +110,11 @@ otherwise hide:
   reapplies the same policy per job as an interim belt until the updated image
   ships; it can be dropped once a rebuilt image is confirmed clean.
 
-Public PR builds read this feed **anonymously**, so they can only restore versions
-an authenticated identity has already saved. `warm-feed-pipeline.yml` (the
-`@rnw-scripts/warm-feed` tool) runs on a schedule to re-pull the latest patch of
-every npm/NuGet line already in the feed and keep those anonymous restores working.
+PackageFeedProxy restores are **anonymous** and do not depend on the RNW feed
+warm-up. The scheduled warm-up maintained on `main` still populates the ADO feed
+for its remaining consumers. Publishing and authenticated feed maintenance keep
+their existing endpoints; NuGet defaults shipped in generated apps/libraries
+are unchanged.
 
 ## SDL and Component Governance
 
