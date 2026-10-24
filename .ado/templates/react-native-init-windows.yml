@@ -124,9 +124,12 @@ steps:
         $configPaths += 'example\NuGet.config'
       }
 
+      [xml] $repoConfig = Get-Content -LiteralPath '$(Build.SourcesDirectory)\NuGet.Config'
       $sources = [ordered]@{
         TestFeed = '$(System.DefaultWorkingDirectory)\NugetTestFeed'
-        'react-native' = 'https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json'
+      }
+      foreach ($source in $repoConfig.configuration.packageSources.add) {
+        $sources[$source.key] = $source.value
       }
 
       foreach ($configPath in $configPaths) {
@@ -145,6 +148,18 @@ steps:
           $element.SetAttribute('value', $source.Value)
           [void] $packageSources.AppendChild($element)
         }
+        $existingMapping = $config.configuration.packageSourceMapping
+        if ($existingMapping) {
+          [void] $config.configuration.RemoveChild($existingMapping)
+        }
+        $mapping = $config.ImportNode($repoConfig.configuration.packageSourceMapping, $true)
+        $localSource = $config.CreateElement('packageSource')
+        $localSource.SetAttribute('key', 'TestFeed')
+        $pattern = $config.CreateElement('package')
+        $pattern.SetAttribute('pattern', '*')
+        [void] $localSource.AppendChild($pattern)
+        [void] $mapping.AppendChild($localSource)
+        [void] $config.configuration.AppendChild($mapping)
         $config.Save((Resolve-Path -LiteralPath $configPath))
         Write-Host "Updated $configPath"
       }
