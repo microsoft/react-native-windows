@@ -19,8 +19,8 @@ function Restore-Solution([string] $solution, [string[]] $extraArgs) {
 
 try {
     # Some node_modules packages ship a NuGet.Config that re-adds the public nuget.org feed. That
-    # breaks the repo's single-ADO-feed compliance and trips corporate network blocks on api.nuget.org.
-    # Strip any nuget.org source so restore only uses the repo's ADO feed.
+    # bypasses the approved source policy and trips corporate network blocks on api.nuget.org.
+    # Strip any nuget.org source so restore uses the approved sources and mappings in the root NuGet.Config.
     Get-ChildItem -File -Recurse -Path $RepoRoot -Filter NuGet.Config -ErrorAction SilentlyContinue |
         Where-Object { $_.FullName -match '\\node_modules\\' } | ForEach-Object {
             $configPath = $_.FullName

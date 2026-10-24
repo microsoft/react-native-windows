@@ -23,7 +23,7 @@ steps:
     displayName: Ensure npm directory for npx commands
     condition: eq(variables['Agent.OS'], 'Windows_NT')
 
-  # CI is network-isolated; authenticate to the package feed before install.
+  # CI is network-isolated; acquire the feed token used by the Verdaccio uplink.
   - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
     - template: auth-npm-feed.yml
 
