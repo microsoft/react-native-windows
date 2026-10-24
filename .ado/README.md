@@ -53,6 +53,13 @@ ISS agents run under 1ES **Network Isolation**, which blocks egress to public CD
 The pipelines route package requests through approved endpoints and neutralize
 three background egress attempts that green builds would otherwise hide:
 
+- **NuGet restores:** the root `NuGet.Config` maps NuGet.org dependencies to
+  `https://packagefeedproxy.microsoft.io/nuget/v3/index.json` anonymously.
+  Only `ReactNative.V8Jsi.Windows*` and `Microsoft.JavaScript.V8*` use the
+  `ms/react-native-public` ADO feed, where these V8 packages are published.
+  CI imports this policy for generated apps/libraries and third-party configs;
+  CLI-init tests also retain their local feed for freshly built RNW packages.
+  NuGet 6.0 or later is required to enforce these source mappings.
 - **Package registries:** `variables/shared.yml` routes npm/npx and Yarn through
   the anonymous PackageFeedProxy (`NPM_CONFIG_REGISTRY` /
   `YARN_NPM_REGISTRY_SERVER`). On CI, `templates/auth-npm-feed.yml` mints a
@@ -70,11 +77,12 @@ three background egress attempts that green builds would otherwise hide:
   CDN mid-build. This is an interim step; the durable fix is to bake it into the
   agent image.
 
-Public PR Verdaccio and NuGet restores read the Azure Artifacts feed
-**anonymously**, so they can only restore versions an authenticated identity has
-already saved. A scheduled feed warm-up (maintained on `main`, branch-agnostic)
-pre-populates the npm and NuGet dependency closures on the feed and keeps those
-anonymous restores working.
+Public PR npm requests to the Azure Artifacts feed, including the Verdaccio uplink,
+remain **anonymous** and can only restore versions an authenticated identity has
+already saved. The scheduled feed warm-up maintained on `main` keeps that feed
+populated. NuGet.org restores use PackageFeedProxy instead and do not depend on
+that warm-up. Publishing and authenticated feed maintenance keep their existing feed
+endpoints; NuGet defaults shipped in generated apps/libraries are unchanged.
 
 ## SDL and Component Governance
 
