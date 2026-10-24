@@ -45,6 +45,7 @@
     "@rnw-scripts/take-screenshot": "*",
     "@rnw-scripts/unbroken": "*",
     "beachball": "^2.20.0",
+    "eslint-plugin-jest": "^29.0.1",
     "fast-glob": "^3.2.11",
     "husky": "^4.2.5",
     "lage": "^2.7.1",
