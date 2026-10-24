@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fix TurboModule property wrapper leak",
+  "comment": "Revert TurboModule property caching and add opt-in native lifetime integration tests",
   "packageName": "react-native-windows",
   "email": "email not defined",
   "dependentChangeType": "patch"
