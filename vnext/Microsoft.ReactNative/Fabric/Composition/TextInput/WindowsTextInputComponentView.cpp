@@ -1373,7 +1373,10 @@ std::pair<float, float> WindowsTextInputComponentView::GetContentSize() const no
 
   SIZE extentHimetric = {
       static_cast<LONG>(availableWidth * scale * HIMETRIC_PER_INCH / dpi),
-      static_cast<LONG>(std::numeric_limits<LONG>::max() * HIMETRIC_PER_INCH / dpi)};
+      // -1 measures without zoom, matching how this host draws (TxGetExtent returns E_NOTIMPL).
+      // A positive extent is taken as a zoom reference; LONG_MAX scaled to HIMETRIC saturated to a
+      // huge positive value on ARM64 and shrank the natural height to about 0.
+      -1};
 
   SIZE naturalSize = {0, 0};
 
