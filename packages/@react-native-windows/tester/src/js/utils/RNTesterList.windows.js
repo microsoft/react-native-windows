@@ -520,8 +520,9 @@ const APIs: Array<RNTesterModuleInfo> = (
           },
         ]
       : []),
-    // Basic check to detect the availability of the ResizeObserver API.
-    // $FlowExpectedError[cannot-resolve-name]
+    // ResizeObserverIndex is not published in @react-native/tester for this nightly.
+    // Keep the entry commented until the example is vendored, matching other missing examples.
+    /*
     ...(typeof ResizeObserver === 'function'
       ? [
           {
@@ -531,6 +532,7 @@ const APIs: Array<RNTesterModuleInfo> = (
           },
         ]
       : []),
+    */
     // Basic check to detect the availability of the modern Performance API.
     ...(typeof performance.getEntries === 'function'
       ? [
