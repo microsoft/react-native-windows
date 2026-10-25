@@ -351,6 +351,8 @@ const Button: component(
         tabIndex={tabIndex}
         touchSoundDisabled={touchSoundDisabled}
         underlayColor={
+          // $FlowFixMe[sketchy-null-string]
+          // $FlowFixMe[sketchy-null-number]
           color
             ? PlatformColor('SolidBackgroundFillColorBaseBrush')
             : PlatformColor('ButtonBackgroundPressed')
@@ -362,6 +364,8 @@ const Button: component(
           setPressed(false);
         }}
         style={
+          // $FlowFixMe[sketchy-null-string]
+          // $FlowFixMe[sketchy-null-number]
           color
             ? {borderRadius: 3}
             : pressed
@@ -371,9 +375,11 @@ const Button: component(
                 : buttonStyles
         }
         onMouseEnter={() => {
+          // $FlowFixMe[sketchy-null-bool]
           if (!disabled) setHover(true);
         }}
         onMouseLeave={() => {
+          // $FlowFixMe[sketchy-null-bool]
           if (!disabled) setHover(false);
         }}
         // $FlowFixMe[incompatible-exact]
@@ -382,6 +388,8 @@ const Button: component(
         ref={ref}>
         <View
           style={
+            // $FlowFixMe[sketchy-null-string]
+            // $FlowFixMe[sketchy-null-number]
             color
               ? pressed
                 ? [buttonStyles, styles.buttonPressed]
@@ -390,6 +398,8 @@ const Button: component(
           }>
           <View
             style={
+              // $FlowFixMe[sketchy-null-string]
+              // $FlowFixMe[sketchy-null-number]
               color
                 ? hover
                   ? [
@@ -403,6 +413,8 @@ const Button: component(
             }>
             <Text
               style={
+                // $FlowFixMe[sketchy-null-string]
+                // $FlowFixMe[sketchy-null-number]
                 color
                   ? textStyles
                   : pressed

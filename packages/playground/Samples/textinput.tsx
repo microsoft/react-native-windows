@@ -18,7 +18,7 @@ import {
   Alert,
 } from 'react-native';
 
-import type {EventSubscription} from 'react-native/Libraries/vendor/emitter/EventEmitter';
+import type {EventSubscription} from 'react-native';
 
 export default class Bootstrap extends React.Component<{}, any> {
   didShowEmitterSubscription = {} as EventSubscription;

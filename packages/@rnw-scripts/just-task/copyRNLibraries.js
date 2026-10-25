@@ -60,10 +60,12 @@ exports.copyTask = baseDir => {
       dest: base('src'),
     }),
     copyTask({
-  paths: reactNative('src/private/webapis/performance/UserTimingExtensibility.js.flow'),
-  dest: base('src/private/webapis/performance'),
-  rename: 'UserTimingExtensibility.js', // Rename .js.flow to .js
-}),
+      paths: reactNative(
+        'src/private/webapis/performance/UserTimingExtensibility.js.flow',
+      ),
+      dest: base('src/private/webapis/performance'),
+      rename: 'UserTimingExtensibility.js', // Rename .js.flow to .js
+    }),
     copyTask({
       paths: reactNative('index.js', 'interface.js', 'rn-get-polyfills.js'),
       dest: base('.'),
@@ -79,14 +81,15 @@ exports.copyTask = baseDir => {
         "\n// Export platform specific types\nexport * from '../Libraries/platform-types';\n";
       fs.writeFileSync(typesPath, types);
       exports.applyWindowsTypeExtensions(baseDir);
+      exports.applyWindowsFlowFixes(baseDir);
     },
   );
 };
 
-// types_DEPRECATED is the public View surface, but it no longer carries the
-// Windows accessibility/focus extensions that live in src-win. Splice those
-// deltas into the copied declarations so `import {View} from 'react-native'`
-// (resolved to this package) accepts the Windows props.
+// types_DEPRECATED is the public component surface, but it no longer carries
+// the Windows accessibility/focus extensions that live in src-win. Splice
+// those deltas into the copied declarations so imports resolved to this
+// package accept the Windows props.
 exports.applyWindowsTypeExtensions = baseDir => {
   const viewA11y = path.join(
     baseDir,
@@ -134,7 +137,9 @@ exports.applyWindowsTypeExtensions = baseDir => {
       '  /** @platform windows */\n' +
       '  required?: boolean | undefined;\n}',
   );
-  if (!fs.readFileSync(viewA11y, 'utf8').includes('export type AnnotationType')) {
+  if (
+    !fs.readFileSync(viewA11y, 'utf8').includes('export type AnnotationType')
+  ) {
     fs.appendFileSync(
       viewA11y,
       '\n// [Windows]\n' +
@@ -179,6 +184,44 @@ exports.applyWindowsTypeExtensions = baseDir => {
     viewProps,
     '  tabIndex?: 0 | -1 | undefined;',
     '  tabIndex?: number | undefined; // Windows',
+  );
+
+  const buttonProps = path.join(
+    baseDir,
+    'types/Libraries/Components/Button.d.ts',
+  );
+  replaceOnce(
+    buttonProps,
+    "  | 'accessibilityState'\n  | 'hasTVPreferredFocus'\n",
+    "  | 'accessibilityState'\n  | 'accessibilityValue' // Windows\n  | 'hasTVPreferredFocus'\n",
+  );
+  replaceOnce(
+    buttonProps,
+    '  color?: ColorValue | undefined;\n}',
+    '  color?: ColorValue | undefined;\n\n  /** @platform windows */\n  onAccessibilityTap?: () => void;\n}',
+  );
+
+  const textProps = path.join(baseDir, 'types/Libraries/Text/Text.d.ts');
+  replaceOnce(
+    textProps,
+    'export interface TextProps\n  extends TextPropsIOS, TextPropsAndroid, AccessibilityProps {\n',
+    'export interface TextProps\n  extends TextPropsIOS, TextPropsAndroid, AccessibilityProps {\n  /**\n   * The tooltip to show when the text is clicked.\n   * @platform windows\n   */\n  tooltip?: string | undefined;\n\n',
+  );
+};
+
+// Flow's cloneElement overloads do not accept React.MixedElement. The copied
+// AnimatedScrollView hits that on both Windows packages, so suppress it here
+// rather than only in the generated file that yarn build deletes.
+exports.applyWindowsFlowFixes = baseDir => {
+  const animatedScrollView = path.join(
+    baseDir,
+    'Libraries/Animated/components/AnimatedScrollView.js',
+  );
+  replaceOnce(
+    animatedScrollView,
+    '    const refreshControl = cloneElement(props.refreshControl, {\n',
+    '    // $FlowFixMe[incompatible-type] Flow cloneElement overloads do not accept MixedElement.\n' +
+      '    const refreshControl = cloneElement(props.refreshControl, {\n',
   );
 };
 

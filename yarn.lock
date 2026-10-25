@@ -5136,7 +5136,7 @@ __metadata:
     eslint-config-prettier: "npm:^8.5.0"
     eslint-plugin-ft-flow: "npm:^2.0.1"
     eslint-plugin-jest: "npm:^29.0.1"
-    hermes-eslint: "npm:0.23.1"
+    hermes-eslint: "npm:0.37.0"
     prettier: "npm:^3.6.2"
     typescript: "npm:5.1.6"
   peerDependencies:
@@ -12000,14 +12000,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hermes-eslint@npm:0.23.1":
-  version: 0.23.1
-  resolution: "hermes-eslint@npm:0.23.1"
+"hermes-eslint@npm:0.37.0":
+  version: 0.37.0
+  resolution: "hermes-eslint@npm:0.37.0::__archiveUrl=https%3A%2F%2Fms-feed-2.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fhermes-eslint%2F-%2Fhermes-eslint-0.37.0.tgz"
   dependencies:
-    esrecurse: "npm:^4.3.0"
-    hermes-estree: "npm:0.23.1"
-    hermes-parser: "npm:0.23.1"
-  checksum: 10c0/2657e4916ea085fe8d3c52f7e8454e0c8652a483b8933b3e21f3ccd22bc0672ab5cfc1a528f74edefef29bc589a1690aebc237a92e4c9744448db0ac63c59722
+    hermes-estree: "npm:0.37.0"
+    hermes-parser: "npm:0.37.0"
+  peerDependencies:
+    eslint: ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0 || ^10.0.0
+  peerDependenciesMeta:
+    eslint:
+      optional: true
+  checksum: 10c0/5409bc01230169c5b08271bca3c9b52262e71b37b0c961154a5f3da5746b161751f646ac04b51382245d740bc8235063ae60f586d3e477f446afd9c2ed6ab885
   languageName: node
   linkType: hard
 
@@ -12015,13 +12019,6 @@ __metadata:
   version: 0.21.1
   resolution: "hermes-estree@npm:0.21.1"
   checksum: 10c0/b9bacf41ced8346e4e1d91519530a5facf8cde8662a4ed732b85bb989b11d596832d3fe743e6ccd212eb08ca160ad504d191895cc13b62932f5ba14edb27516f
-  languageName: node
-  linkType: hard
-
-"hermes-estree@npm:0.23.1":
-  version: 0.23.1
-  resolution: "hermes-estree@npm:0.23.1"
-  checksum: 10c0/59ca9f3980419fcf511a172f0ee9960d86c8ba44ea8bc13d3bd0b6208e9540db1a0a9e46b0e797151f11b0e8e33b2bf850907aef4a5c9ac42c53809cefefc405
   languageName: node
   linkType: hard
 
@@ -12045,15 +12042,6 @@ __metadata:
   dependencies:
     hermes-estree: "npm:0.21.1"
   checksum: 10c0/a3df443bfef835a982865da16a0b0bda5d86efa699791d5007e14b1b2731cb62cb9b1ac9157581602d35ff0ae437a345e701e03dd6330d9c552e8dafa9776436
-  languageName: node
-  linkType: hard
-
-"hermes-parser@npm:0.23.1":
-  version: 0.23.1
-  resolution: "hermes-parser@npm:0.23.1"
-  dependencies:
-    hermes-estree: "npm:0.23.1"
-  checksum: 10c0/56907e6136d2297543922dd9f8ee27378ef010c11dc1e0b4a0866faab2c527613b0edcda5e1ebc0daa0ca1ae6528734dfc479e18267aabe4dce0c7198217fd97
   languageName: node
   linkType: hard
 
