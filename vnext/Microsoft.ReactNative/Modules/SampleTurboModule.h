@@ -24,7 +24,7 @@ struct SampleTurboModule {
   std::function<void(ReactNativeSpecs::SampleTurboModuleSpec_ObjectStruct)> onChange;
 
   REACT_EVENT(onSubmit)
-  std::function<void(winrt::Microsoft::ReactNative::JSValueArray)> onSubmit;
+  std::function<void(std::vector<ReactNativeSpecs::SampleTurboModuleSpec_ObjectStruct>)> onSubmit;
 
   REACT_GET_CONSTANTS(GetConstants)
   ReactNativeSpecs::SampleTurboModuleSpec_Constants GetConstants() noexcept;
@@ -45,7 +45,7 @@ struct SampleTurboModule {
   std::string getString(std::string arg) noexcept;
 
   REACT_SYNC_METHOD(getArray)
-  ::React::JSValueArray getArray(::React::JSValueArray &&arg) noexcept;
+  std::vector<::React::JSValue> getArray(std::vector<::React::JSValue> arg) noexcept;
 
   REACT_SYNC_METHOD(getObject)
   ::React::JSValue getObject(::React::JSValue &&arg) noexcept;

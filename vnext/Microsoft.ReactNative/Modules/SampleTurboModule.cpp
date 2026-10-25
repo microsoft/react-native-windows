@@ -29,12 +29,7 @@ void SampleTurboModule::voidFunc() noexcept {
   ReactNativeSpecs::SampleTurboModuleSpec_ObjectStruct obj2;
   obj2.a = 3;
   obj2.b = "four";
-  auto writer = winrt::Microsoft::ReactNative::MakeJSValueTreeWriter();
-  writer.WriteArrayBegin();
-  winrt::Microsoft::ReactNative::WriteValue(writer, obj);
-  winrt::Microsoft::ReactNative::WriteValue(writer, obj2);
-  writer.WriteArrayEnd();
-  onSubmit(winrt::Microsoft::ReactNative::TakeJSValue(writer).MoveArray());
+  onSubmit({obj, obj2});
 }
 
 bool SampleTurboModule::getBool(bool arg) noexcept {
@@ -53,8 +48,8 @@ std::string SampleTurboModule::getString(std::string arg) noexcept {
   return std::string(arg);
 }
 
-::React::JSValueArray SampleTurboModule::getArray(::React::JSValueArray &&arg) noexcept {
-  return arg.Copy();
+std::vector<::React::JSValue> SampleTurboModule::getArray(std::vector<::React::JSValue> arg) noexcept {
+  return arg;
 }
 
 ::React::JSValue SampleTurboModule::getObject(::React::JSValue &&arg) noexcept {
