@@ -297,9 +297,6 @@ const Button: component(
       ? {..._accessibilityState, disabled}
       : _accessibilityState;
 
-<<<<<<< Upstream
-  if (disabled === true) {
-=======
   // [Windows
   let _accessibilityValue = {
     max: ariaValueMax ?? accessibilityValue?.max,
@@ -309,8 +306,7 @@ const Button: component(
   };
   // Windows]
 
-  if (disabled) {
->>>>>>> Override
+  if (disabled === true) {
     buttonStyles.push(styles.buttonDisabled);
     textStyles.push(styles.textDisabled);
   }
@@ -327,50 +323,15 @@ const Button: component(
     importantForAccessibility === 'no'
       ? 'no-hide-descendants'
       : importantForAccessibility;
-<<<<<<< Upstream
-
-  return (
-    <NativeTouchable
-      accessible={accessible}
-      accessibilityActions={accessibilityActions}
-      onAccessibilityAction={onAccessibilityAction}
-      accessibilityLabel={
-        // $FlowFixMe[sketchy-null-string]
-        ariaLabel || accessibilityLabel
-      }
-      accessibilityHint={accessibilityHint}
-      accessibilityLanguage={accessibilityLanguage}
-      accessibilityRole="button"
-      accessibilityState={_accessibilityState}
-      importantForAccessibility={_importantForAccessibility}
-      hasTVPreferredFocus={hasTVPreferredFocus}
-      nextFocusDown={nextFocusDown}
-      nextFocusForward={nextFocusForward}
-      nextFocusLeft={nextFocusLeft}
-      nextFocusRight={nextFocusRight}
-      nextFocusUp={nextFocusUp}
-      testID={testID}
-      disabled={disabled}
-      onPress={onPress}
-      touchSoundDisabled={touchSoundDisabled}
-      // $FlowFixMe[incompatible-exact]
-      // $FlowFixMe[prop-missing]
-      // $FlowFixMe[incompatible-type]
-      ref={ref}>
-      <View style={buttonStyles}>
-        <Text style={textStyles} disabled={disabled}>
-          {formattedTitle}
-        </Text>
-      </View>
-    </NativeTouchable>
-  );
-=======
   // [Windows
   if (Platform.OS === 'windows') {
     return (
       <Touchable
         accessible={accessible}
-        accessibilityLabel={ariaLabel || accessibilityLabel}
+        accessibilityLabel={
+          // $FlowFixMe[sketchy-null-string]
+          ariaLabel || accessibilityLabel
+        }
         accessibilityHint={accessibilityHint}
         accessibilityLanguage={accessibilityLanguage}
         accessibilityRole="button"
@@ -473,7 +434,10 @@ const Button: component(
         accessible={accessible}
         accessibilityActions={accessibilityActions}
         onAccessibilityAction={onAccessibilityAction}
-        accessibilityLabel={ariaLabel || accessibilityLabel}
+        accessibilityLabel={
+          // $FlowFixMe[sketchy-null-string]
+          ariaLabel || accessibilityLabel
+        }
         accessibilityHint={accessibilityHint}
         accessibilityLanguage={accessibilityLanguage}
         accessibilityRole="button"
@@ -502,7 +466,6 @@ const Button: component(
     );
   }
   // Windows]
->>>>>>> Override
 };
 
 Button.displayName = 'Button';

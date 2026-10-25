@@ -3,13 +3,6 @@
 
 #pragma once
 
-<<<<<<< Upstream
-#include <react/cxxstableapi/FrameworksGuard.h>
-
-#include "AndroidTextInputEventEmitter.h"
-#include "AndroidTextInputProps.h"
-#include "AndroidTextInputState.h"
-=======
 #include <react/renderer/textlayoutmanager/WindowsTextLayoutManager.h>
 #include "WindowsTextInputEventEmitter.h"
 #include "WindowsTextInputProps.h"
@@ -17,7 +10,6 @@
 
 #include <react/components/rnwcore/EventEmitters.h>
 #include <unordered_map>
->>>>>>> Override
 
 #include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>

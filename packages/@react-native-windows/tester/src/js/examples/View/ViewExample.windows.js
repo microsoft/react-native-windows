@@ -544,7 +544,6 @@ function BoxShadowExample(): React.Node {
   );
 }
 
-<<<<<<< Upstream
 function OutlineStyleExample({
   outlineStyle,
   borderRadius,
@@ -570,7 +569,8 @@ function OutlineStyleExample({
       <RNTesterText style={{fontSize: 11}}>{label}</RNTesterText>
     </View>
   );
-=======
+}
+
 class AccessibilityExample extends React.Component<
   $ReadOnly<{||}>,
   {|tap: number|},
@@ -636,7 +636,6 @@ class AccessibilityExample extends React.Component<
       </View>
     );
   }
->>>>>>> Override
 }
 
 function OutlineExample(): React.Node {

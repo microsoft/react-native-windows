@@ -108,7 +108,6 @@ const TextImpl: component(
     ...NativeTextProps,
   };
   const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-<<<<<<< Upstream
   const _accessibilityStateDisabled =
     ariaDisabled ?? accessibilityState?.disabled;
   const _disabled = disabled ?? _accessibilityStateDisabled;
@@ -120,7 +119,7 @@ const TextImpl: component(
     ((_disabled != null && _disabled !== false) ||
       (_accessibilityStateDisabled != null &&
         _accessibilityStateDisabled !== false));
-=======
+
   // #Win32 [
   const _accessibilityControls = ariaControls ?? accessibilityControls;
   const _accessibilityDescribedBy =
@@ -132,7 +131,6 @@ const TextImpl: component(
     ariaPosinset ?? accessibilityPositionInSet;
   const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize;
   // ] #Win32
->>>>>>> Override
 
   let _accessibilityState: ?TextProps['accessibilityState'] =
     accessibilityState;

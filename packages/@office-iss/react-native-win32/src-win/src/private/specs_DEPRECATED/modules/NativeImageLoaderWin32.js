@@ -27,13 +27,7 @@ export interface Spec extends TurboModule {
   // currently.
   readonly getSizeWithHeaders: (
     uri: string,
-<<<<<<< Upstream
     headers: UnsafeObject,
-  ) => Promise<ImageSize>;
-  readonly prefetchImage: (uri: string, requestId: number) => Promise<boolean>;
-  readonly queryCache: (uris: Array<string>) => Promise<UnsafeObject>;
-=======
-    headers: Object,
   ) => Promise<{
     width: number,
     height: number,
@@ -45,9 +39,8 @@ export interface Spec extends TurboModule {
     queryRootName: string,
     rootTag: RootTag,
   ) => Promise<boolean>;
-  readonly queryCache: (uris: Array<string>) => Promise<Object>;
+  readonly queryCache: (uris: Array<string>) => Promise<UnsafeObject>;
   // Win32]
->>>>>>> Override
 }
 
 export default TurboModuleRegistry.getEnforcing<Spec>('ImageLoader') as Spec;

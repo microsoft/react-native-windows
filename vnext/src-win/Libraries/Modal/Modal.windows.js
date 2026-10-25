@@ -31,15 +31,6 @@ const VirtualizedListContextResetter =
 
 export type ModalInstance = HostInstance;
 
-<<<<<<< Upstream
-=======
-const ModalEventEmitter =
-  (Platform.OS === 'ios' || Platform.OS === 'windows') && // [Windows]
-  NativeModalManager != null
-    ? new NativeEventEmitter<ModalEventDefinitions>(NativeModalManager)
-    : null;
-
->>>>>>> Override
 // In order to route onDismiss callbacks, we need to uniquely identifier each
 // <Modal> on screen. There can be different ones, either nested or as siblings.
 // We cannot pass the onDismiss callback to native as the view will be
@@ -273,13 +264,8 @@ class Modal extends React.Component<ModalProps, ModalState> {
   }
 
   componentWillUnmount() {
-<<<<<<< Upstream
     if (Platform.OS === 'ios') {
       this.setState({isRendered: false});
-=======
-    if (this._eventSubscription) {
-      this._eventSubscription.remove();
->>>>>>> Override
     }
   }
 
