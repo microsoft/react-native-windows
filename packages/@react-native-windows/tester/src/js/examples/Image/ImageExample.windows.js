@@ -53,7 +53,10 @@ const prefetchTask = Image.prefetch(IMAGE_PREFETCH_URL);
 // The Image Loading Events example reports this failure when it consumes the
 // task. Handle rejection immediately as the prefetch can finish before that
 // example mounts, which would otherwise produce an unhandled rejection.
-void prefetchTask.catch(() => {});
+// Image.prefetch is undefined when Jest imports this module outside the RN runtime.
+if (typeof prefetchTask?.catch === 'function') {
+  void prefetchTask.catch(() => {});
+}
 // Remote JPEG (RN OSS test fixture) used by the progressive example. Trusted by
 // the API 24 Android CI emulator and reachable on both platforms.
 const LARGE_JPEG =
