@@ -79,6 +79,7 @@ exports[`LegacyTextInputTest TextInput onChange before onSelectionChange 1`] = `
     "Name": "onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
+onSelectionChange range: 0,0
 onChange text: 
 onFocus
 onEndEditing text: abc
@@ -93,6 +94,7 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
+onSelectionChange range: 0,0
 onChange text: 
 onChange text: def
 onSelectionChange range: 3,3
@@ -103,6 +105,7 @@ onKeyPress key: e
 onChange text: d
 onSelectionChange range: 1,1
 onKeyPress key: d
+onSelectionChange range: 0,0
 onChange text: 
 onChange text: abc
 onSelectionChange range: 3,3
@@ -122,6 +125,7 @@ onFocus
     "TextRangePattern.GetText": "onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
+onSelectionChange range: 0,0
 onChange text: 
 onFocus
 onEndEditing text: abc
@@ -136,6 +140,7 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
+onSelectionChange range: 0,0
 onChange text: 
 onChange text: def
 onSelectionChange range: 3,3
@@ -146,6 +151,7 @@ onKeyPress key: e
 onChange text: d
 onSelectionChange range: 1,1
 onKeyPress key: d
+onSelectionChange range: 0,0
 onChange text: 
 onChange text: abc
 onSelectionChange range: 3,3
@@ -262,6 +268,7 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
+onSelectionChange range: 0,0
 onChange text: 
 onChange text: def
 onSelectionChange range: 3,3
@@ -272,6 +279,7 @@ onKeyPress key: e
 onChange text: d
 onSelectionChange range: 1,1
 onKeyPress key: d
+onSelectionChange range: 0,0
 onChange text: 
 onChange text: abc
 onSelectionChange range: 3,3
@@ -300,6 +308,7 @@ onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
+onSelectionChange range: 0,0
 onChange text: 
 onChange text: def
 onSelectionChange range: 3,3
@@ -310,6 +319,7 @@ onKeyPress key: e
 onChange text: d
 onSelectionChange range: 1,1
 onKeyPress key: d
+onSelectionChange range: 0,0
 onChange text: 
 onChange text: abc
 onSelectionChange range: 3,3

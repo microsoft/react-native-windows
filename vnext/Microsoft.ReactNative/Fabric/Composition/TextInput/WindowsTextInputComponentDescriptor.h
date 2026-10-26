@@ -8,8 +8,6 @@
 #include <yoga/YGEnums.h>
 #include <yoga/YGValue.h>
 
-#include <unordered_map>
-
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 
@@ -18,11 +16,15 @@ namespace facebook::react {
 /*
  * Descriptor for <WindowsTextInput> component.
  */
-class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescriptor<WindowsTextInputShadowNode> {
+template <typename TShadowNode>
+class ConcreteWindowsTextInputComponentDescriptor : public ConcreteComponentDescriptor<TShadowNode> {
+  using Super = ConcreteComponentDescriptor<TShadowNode>;
+  using Super::Super;
+
  public:
-  WindowsTextInputComponentDescriptor(const ComponentDescriptorParameters &parameters)
-      : ConcreteComponentDescriptor<WindowsTextInputShadowNode>(parameters),
-        textLayoutManager_(getManagerByName<TextLayoutManager>(contextContainer_, TextLayoutManagerKey)) {}
+  ConcreteWindowsTextInputComponentDescriptor(const ComponentDescriptorParameters &parameters)
+      : Super(parameters),
+        textLayoutManager_(getManagerByName<TextLayoutManager>(this->contextContainer_, TextLayoutManagerKey)) {}
 
   /*
 virtual State::Shared createInitialState(
@@ -60,7 +62,7 @@ virtual State::Shared createInitialState(
 
  protected:
   void adopt(ShadowNode &shadowNode) const override {
-    auto &textInputShadowNode = static_cast<WindowsTextInputShadowNode &>(shadowNode);
+    auto &textInputShadowNode = static_cast<TShadowNode &>(shadowNode);
 
     // `TextInputShadowNode` uses `TextLayoutManager` to measure text content
     // and communicate text rendering metrics to mounting layer.
@@ -122,12 +124,12 @@ virtual State::Shared createInitialState(
       }
     }
 
-    textInputShadowNode.dirtyLayout();
-
         */
+    // Native text and formatting updates change intrinsic size without changing Yoga props.
+    textInputShadowNode.dirtyLayout();
     textInputShadowNode.enableMeasurement();
 
-    ConcreteComponentDescriptor::adopt(shadowNode);
+    Super::adopt(shadowNode);
   }
 
  private:
@@ -138,11 +140,16 @@ virtual State::Shared createInitialState(
     float bottom{};
   };
 
-  // TODO T68526882: Unify with Binding::UIManagerJavaDescriptor
-  constexpr static auto UIManagerJavaDescriptor = "com/facebook/react/fabric/FabricUIManager";
+  const std::shared_ptr<const TextLayoutManager> textLayoutManager_;
+  // mutable std::unordered_map<int, ThemePadding> surfaceIdToThemePaddingMap_;
+};
 
-  const std::shared_ptr<TextLayoutManager> textLayoutManager_;
-  mutable std::unordered_map<int, ThemePadding> surfaceIdToThemePaddingMap_;
+class WindowsTextInputComponentDescriptor final
+    : public ConcreteWindowsTextInputComponentDescriptor<WindowsTextInputShadowNode> {
+  using Super = ConcreteWindowsTextInputComponentDescriptor<WindowsTextInputShadowNode>;
+
+ public:
+  WindowsTextInputComponentDescriptor(const ComponentDescriptorParameters &parameters) : Super(parameters) {}
 };
 
 } // namespace facebook::react

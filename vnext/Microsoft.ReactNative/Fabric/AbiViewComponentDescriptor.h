@@ -9,15 +9,20 @@
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <react/renderer/core/ComponentDescriptor.h>
 #include "AbiPortalShadowNode.h"
+#include "AbiTextInputShadowNode.h"
 #include "AbiViewProps.h"
 #include "AbiViewShadowNode.h"
+#include "Composition/TextInput/WindowsTextInputComponentDescriptor.h"
 #include "DynamicReader.h"
 #include "winrt/Microsoft.ReactNative.h"
 
 namespace Microsoft::ReactNative {
 
-template <typename ShadowNodeT>
-class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
+template <
+    typename ShadowNodeT,
+    typename AbiPropT = winrt::Microsoft::ReactNative::implementation::ViewProps,
+    typename BaseT = facebook::react::ComponentDescriptor>
+class ConcreteAbiViewComponentDescriptor : public BaseT {
  protected:
   using SharedShadowNodeT = std::shared_ptr<const ShadowNodeT>;
 
@@ -31,14 +36,16 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
   using ConcreteStateData = typename ShadowNodeT::ConcreteState::Data;
 
   ConcreteAbiViewComponentDescriptor(facebook::react::ComponentDescriptorParameters const &parameters)
-      : ComponentDescriptor(parameters) {
+      : BaseT(parameters) {
     auto flavor = std::static_pointer_cast<std::string const>(this->flavor_);
     m_builder = WindowsComponentDescriptorRegistry::FromProperties(
                     parameters.contextContainer->at<winrt::Microsoft::ReactNative::ReactContext>("MSRN.ReactContext")
                         .Properties())
                     ->GetDescriptor(flavor);
 
-    rawPropsParser_.prepare<ConcreteProps>();
+    if constexpr (std::is_same<BaseT, facebook::react::ComponentDescriptor>::value) {
+      BaseT::rawPropsParser_.template prepare<ConcreteProps>();
+    }
   }
   facebook::react::ComponentHandle getComponentHandle() const override {
     return reinterpret_cast<facebook::react::ComponentHandle>(getComponentName());
@@ -62,7 +69,9 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
       const facebook::react::ShadowNodeFragment &fragment,
       facebook::react::ShadowNodeFamily::Shared const &family) const override {
     auto shadowNode = std::make_shared<ShadowNodeT>(fragment, family, getTraits());
-    shadowNode->Proxy(winrt::make<winrt::Microsoft::ReactNative::implementation::YogaLayoutableShadowNode>(shadowNode));
+    shadowNode->Proxy(
+        winrt::make<winrt::Microsoft::ReactNative::implementation::YogaLayoutableShadowNode<ConcreteStateData>>(
+            shadowNode));
     winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
         ->CreateShadowNode(shadowNode->Proxy());
 
@@ -74,7 +83,9 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
       const facebook::react::ShadowNode &sourceShadowNode,
       const facebook::react::ShadowNodeFragment &fragment) const override {
     auto shadowNode = std::make_shared<ShadowNodeT>(sourceShadowNode, fragment);
-    shadowNode->Proxy(winrt::make<winrt::Microsoft::ReactNative::implementation::YogaLayoutableShadowNode>(shadowNode));
+    shadowNode->Proxy(
+        winrt::make<winrt::Microsoft::ReactNative::implementation::YogaLayoutableShadowNode<ConcreteStateData>>(
+            shadowNode));
     winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
         ->CloneShadowNode(shadowNode->Proxy(), static_cast<const ShadowNodeT &>(sourceShadowNode).Proxy());
 
@@ -107,17 +118,18 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
       ShadowNodeT::filterRawProps(rawProps);
     }
 
-    rawProps.parse(rawPropsParser_);
+    rawProps.parse(BaseT::rawPropsParser_);
 
     // Call old-style constructor
     // auto shadowNodeProps = std::make_shared<ShadowNodeT::Props>(context, rawProps, props);
-    auto shadowNodeProps = std::make_shared<AbiViewProps>(
-        context, props ? static_cast<AbiViewProps const &>(*props) : *ShadowNodeT::defaultSharedProps(), rawProps);
+    auto shadowNodeProps = std::make_shared<ConcreteProps>(
+        context, props ? static_cast<ConcreteProps const &>(*props) : *ShadowNodeT::defaultSharedProps(), rawProps);
     auto viewProps =
-        winrt::make<winrt::Microsoft::ReactNative::implementation::ViewProps>(shadowNodeProps, false /*holdRef*/);
+
+        winrt::make<AbiPropT>(shadowNodeProps, false /*holdRef*/);
     auto userProps =
         winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
-            ->CreateProps(viewProps, props ? static_cast<AbiViewProps const &>(*props).UserProps() : nullptr);
+            ->CreateProps(viewProps, props ? static_cast<ConcreteProps const &>(*props).UserProps() : nullptr);
     shadowNodeProps->SetUserProps(userProps, viewProps);
 
     const auto &dynamic = static_cast<folly::dynamic>(rawProps);
@@ -141,7 +153,7 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
 
     return std::make_shared<ConcreteState>(
         std::make_shared<ConcreteStateData const>(
-            ConcreteAbiViewComponentDescriptor<ShadowNodeT>::initialStateData(props, family, *this)),
+            ConcreteAbiViewComponentDescriptor<ShadowNodeT, AbiPropT, BaseT>::initialStateData(props, family, *this)),
         family);
   }
 
@@ -162,9 +174,10 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
   facebook::react::ShadowNodeFamily::Shared createFamily(
       facebook::react::ShadowNodeFamilyFragment const &fragment) const override {
     auto eventEmitter = std::make_shared<ConcreteEventEmitter>(
-        std::make_shared<facebook::react::EventTarget>(fragment.instanceHandle, fragment.surfaceId), eventDispatcher_);
+        std::make_shared<facebook::react::EventTarget>(fragment.instanceHandle, fragment.surfaceId),
+        BaseT::eventDispatcher_);
     return std::make_shared<facebook::react::ShadowNodeFamily>(
-        fragment, std::move(eventEmitter), eventDispatcher_, *this);
+        fragment, std::move(eventEmitter), BaseT::eventDispatcher_, *this);
   }
 
  protected:
@@ -183,7 +196,7 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
   virtual void adopt(facebook::react::ShadowNode &shadowNode) const {
     react_native_assert(shadowNode.getComponentHandle() == getComponentHandle());
 
-    auto &abiViewShadowNode = static_cast<AbiViewShadowNode &>(shadowNode);
+    auto &abiViewShadowNode = static_cast<ShadowNodeT &>(shadowNode);
 
     abiViewShadowNode.Builder(m_builder);
 
@@ -192,6 +205,10 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
       abiViewShadowNode.dirtyLayout();
       abiViewShadowNode.enableMeasurement();
     }
+
+    if constexpr (!(std::is_same<BaseT, facebook::react::ComponentDescriptor>::value)) {
+      BaseT::adopt(shadowNode);
+    }
   }
 
  private:
@@ -199,9 +216,11 @@ class ConcreteAbiViewComponentDescriptor : public facebook::react::ComponentDesc
       const facebook::react::Props::Shared &props,
       const facebook::react::ShadowNodeFamily::Shared & /*family*/,
       const facebook::react::ComponentDescriptor &componentDescriptor) noexcept {
-    return {winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(
-                static_cast<const ConcreteAbiViewComponentDescriptor<ShadowNodeT> &>(componentDescriptor).m_builder)
-                ->InitialStateData(std::static_pointer_cast<AbiViewProps const>(props)->UserProps())};
+    return {
+        winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(
+            static_cast<const ConcreteAbiViewComponentDescriptor<ShadowNodeT, AbiPropT, BaseT> &>(componentDescriptor)
+                .m_builder)
+            ->InitialStateData(std::static_pointer_cast<const ConcreteProps>(props)->UserProps())};
     return {};
   }
 
@@ -218,6 +237,21 @@ class AbiPortalComponentDescriptor : public ConcreteAbiViewComponentDescriptor<A
  public:
   AbiPortalComponentDescriptor(facebook::react::ComponentDescriptorParameters const &parameters)
       : ConcreteAbiViewComponentDescriptor<AbiPortalShadowNode>(parameters) {}
+};
+
+class AbiWindowsTextInputComponentDescriptor
+    : public ConcreteAbiViewComponentDescriptor<
+          AbiTextInputShadowNode,
+          winrt::Microsoft::ReactNative::implementation::TextInputProps,
+          facebook::react::ConcreteWindowsTextInputComponentDescriptor<AbiTextInputShadowNode>> {
+  using Super = ConcreteAbiViewComponentDescriptor<
+      AbiTextInputShadowNode,
+      winrt::Microsoft::ReactNative::implementation::TextInputProps,
+      facebook::react::ConcreteWindowsTextInputComponentDescriptor<AbiTextInputShadowNode>>;
+
+ public:
+  AbiWindowsTextInputComponentDescriptor(facebook::react::ComponentDescriptorParameters const &parameters)
+      : Super(parameters) {}
 };
 
 } // namespace Microsoft::ReactNative

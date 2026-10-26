@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix intrinsic measurement of custom TextInput formatted text, including large text in single-line inputs.",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
