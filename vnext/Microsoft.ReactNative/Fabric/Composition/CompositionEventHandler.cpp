@@ -224,6 +224,28 @@ void CompositionEventHandler::Initialize() noexcept {
           }
         });
 
+    // Issue #16047: when ScrollView calls VisualInteractionSource::TryRedirectForManipulation
+    // and the OS hands the pointer over to the InteractionTracker, WinAppSDK
+    // does not fire PointerCaptureLost on this source — but it does fire
+    // PointerRoutedAway. Treat it the same way as captureloss: cancel any
+    // active touch RN is tracking for this pointer so Pressables don't get
+    // stuck in their pressed state.
+    m_pointerRoutedAwayToken =
+        pointerSource.PointerRoutedAway([wkThis = weak_from_this()](
+                                            winrt::Microsoft::UI::Input::InputPointerSource const &,
+                                            winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
+          if (auto strongThis = wkThis.lock()) {
+            if (auto strongRootView = strongThis->m_wkRootView.get()) {
+              if (strongThis->SurfaceId() == -1)
+                return;
+
+              auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+                  args.CurrentPoint(), strongRootView.ScaleFactor());
+              strongThis->onPointerRoutedAway(pp, args.KeyModifiers());
+            }
+          }
+        });
+
     m_pointerWheelChangedToken =
         pointerSource.PointerWheelChanged([wkThis = weak_from_this()](
                                               winrt::Microsoft::UI::Input::InputPointerSource const &,
@@ -357,6 +379,7 @@ CompositionEventHandler::~CompositionEventHandler() {
       pointerSource.PointerReleased(m_pointerReleasedToken);
       pointerSource.PointerMoved(m_pointerMovedToken);
       pointerSource.PointerCaptureLost(m_pointerCaptureLostToken);
+      pointerSource.PointerRoutedAway(m_pointerRoutedAwayToken);
       pointerSource.PointerWheelChanged(m_pointerWheelChangedToken);
       auto keyboardSource = winrt::Microsoft::UI::Input::InputKeyboardSource::GetForIsland(island);
       keyboardSource.KeyDown(m_keyDownToken);
@@ -1063,6 +1086,31 @@ void CompositionEventHandler::onPointerCaptureLost(
     }
 
     m_pointerCapturingComponentTag = -1;
+  }
+}
+
+void CompositionEventHandler::onPointerRoutedAway(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+    winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
+  if (SurfaceId() == -1)
+    return;
+
+  // Issue #16047: WinAppSDK fires PointerRoutedAway when the OS hands the
+  // pointer to another InputPointerSource — most importantly for us, when
+  // ScrollView calls VisualInteractionSource::TryRedirectForManipulation and
+  // the InteractionTracker takes the gesture for scrolling. We never get
+  // PointerMoved / PointerReleased / PointerCaptureLost for that pointer
+  // afterwards, so without this cleanup m_activeTouches keeps a zombie entry
+  // and the originally-pressed Pressable stays stuck in its pressed state
+  // (later taps can then be attributed to that original target).
+  PointerId pointerId = pointerPoint.PointerId();
+  auto activeTouch = std::find_if(m_activeTouches.begin(), m_activeTouches.end(), [pointerId](const auto &pair) {
+    return pair.second.touch.identifier == pointerId;
+  });
+  if (activeTouch != m_activeTouches.end()) {
+    auto activeId = activeTouch->first;
+    DispatchTouchEvent(TouchEventType::Cancel, activeId, pointerPoint, keyModifiers);
+    m_activeTouches.erase(activeId);
   }
 }
 

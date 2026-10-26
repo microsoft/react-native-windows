@@ -65,6 +65,9 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   void onPointerCaptureLost(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
+  void onPointerRoutedAway(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
   void onKeyDown(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
   void onKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
   void onCharacterReceived(
@@ -171,6 +174,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   winrt::event_token m_pointerMovedToken;
   winrt::event_token m_pointerWheelChangedToken;
   winrt::event_token m_pointerCaptureLostToken;
+  winrt::event_token m_pointerRoutedAwayToken;
   winrt::event_token m_pointerExitedToken;
   winrt::event_token m_keyDownToken;
   winrt::event_token m_keyUpToken;

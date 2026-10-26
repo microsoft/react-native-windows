@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Backport #16140 (issue #16047) to 0.83-stable: cancel the active touch on InputPointerSource.PointerRoutedAway so Pressables inside a ScrollView are not left stuck after a touch-driven scroll, and convert ScrollView contentOffset from physical pixels to DIPs (plus push the settled offset on momentum-end) so taps register on non-100% display scales",
+  "packageName": "react-native-windows",
+  "email": "collindanielschneide@gmail.com",
+  "dependentChangeType": "patch"
+}
