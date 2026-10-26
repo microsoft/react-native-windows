@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix(fabric): touch-input reliability — dispatch touch contacts with W3C primary button (finger presses were ignored), always complete/cancel active touches on missed releases and capture loss, and self-heal leaked active-touch entries that wedged press recognition as phantom multi-touch",
+  "packageName": "react-native-windows",
+  "email": "collindanielschneide@gmail.com",
+  "dependentChangeType": "patch"
+}
