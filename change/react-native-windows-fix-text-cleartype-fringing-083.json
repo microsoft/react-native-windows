@@ -1,0 +1,1 @@
+{"packageName":"react-native-windows","comment":"Fix(text): draw Fabric text with grayscale antialiasing on transparent composition surfaces, preventing ClearType colour fringing on thin glyph stems","type":"patch","dependentChangeType":"patch","email":"collindanielschneide@gmail.com"}
