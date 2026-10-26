@@ -98,6 +98,14 @@ attempts that green builds would otherwise hide:
   `templates/auth-npm-feed.yml` keeps the managed-identity token scoped to direct
   Azure Artifacts requests in `~/.npmrc` and passes it to the Verdaccio uplink;
   Yarn does not send the token to the proxy.
+- **Dependabot:** `.github/dependabot.yml` configures the same anonymous proxy
+  separately; Dependabot does not inherit the pipeline variables. Its registry
+  declarations also allow the exact `ms-feed-*` hosts advertised by proxy
+  metadata for tarball downloads. Existing archive URLs in the main lockfile
+  also use proxy paths without changing dependency versions or checksums.
+  Major version updates are ignored before grouping. React, React Native, the
+  test renderer, and React types also ignore minor updates to stay on each
+  branch's selected release lines; exact versions remain manifest-controlled.
 - **Verdaccio (CLI init tests):** `verdaccio/generate-config.js` emits the config at
   runtime, so the uplink uses the proxy for PRs and the ADO feed with the CI token while
   local packages still publish offline. The former static `config.yaml` was removed.
