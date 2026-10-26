@@ -407,6 +407,17 @@ const APIs: Array<RNTesterModuleInfo> = (
           },
         ]
       : []),
+    // Basic check to detect the availability of the ResizeObserver API.
+    // $FlowExpectedError[cannot-resolve-name]
+    ...(typeof ResizeObserver === 'function'
+      ? [
+          {
+            key: 'ResizeObserver',
+            category: 'UI',
+            module: require('../examples/ResizeObserver/ResizeObserverIndex'),
+          },
+        ]
+      : []),
     // Basic check to detect the availability of the modern Performance API.
     ...(typeof performance.getEntries === 'function'
       ? [

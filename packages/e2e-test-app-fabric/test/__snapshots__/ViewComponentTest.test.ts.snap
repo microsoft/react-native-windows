@@ -4261,6 +4261,50 @@ exports[`View Tests Views can have outlines 1`] = `
     "AutomationId": "view-test-outline",
     "ControlType": 50026,
     "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "square solid",
+        "TextRangePattern.GetText": "square solid",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "square dashed",
+        "TextRangePattern.GetText": "square dashed",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "square dotted",
+        "TextRangePattern.GetText": "square dotted",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "rounded solid",
+        "TextRangePattern.GetText": "rounded solid",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "rounded dashed",
+        "TextRangePattern.GetText": "rounded dashed",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "rounded dotted",
+        "TextRangePattern.GetText": "rounded dotted",
+      },
+    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -4304,12 +4348,60 @@ exports[`View Tests Views can have outlines 1`] = `
         "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
         "_Props": {},
       },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
     ],
   },
   "Visual Tree": {
     "Comment": "view-test-outline",
     "Offset": "0, 0, 0",
-    "Size": "896, 70",
+    "Size": "896, 185",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5432,6 +5524,572 @@ exports[`View Tests Views can have outlines 1`] = `
                     "Visual Type": "SpriteVisual",
                   },
                 ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "699, 10, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(211, 211, 211, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-3, -3, 0",
+                "Size": "6, 6",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "3, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "3, 0, 0",
+                    "Size": "-6, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-3, 0, 0",
+                    "Size": "3, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-3, 3, 0",
+                    "Size": "3, -6",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-3, -3, 0",
+                    "Size": "3, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "3, -3, 0",
+                    "Size": "-6, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, -3, 0",
+                    "Size": "3, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 3, 0",
+                    "Size": "3, -6",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "695, 68, 0",
+        "Size": "59, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "59, 16",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "783, 10, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(211, 211, 211, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-3, -3, 0",
+                "Size": "6, 6",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "3, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "3, 0, 0",
+                    "Size": "-6, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-3, 0, 0",
+                    "Size": "3, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-3, 3, 0",
+                    "Size": "3, -6",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-3, -3, 0",
+                    "Size": "3, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "3, -3, 0",
+                    "Size": "-6, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, -3, 0",
+                    "Size": "3, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 3, 0",
+                    "Size": "3, -6",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "773, 68, 0",
+        "Size": "72, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "72, 16",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "19, 103, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(211, 211, 211, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-3, -3, 0",
+                "Size": "6, 6",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "3, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "3, 0, 0",
+                    "Size": "-6, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-3, 0, 0",
+                    "Size": "3, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-3, 3, 0",
+                    "Size": "3, -6",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-3, -3, 0",
+                    "Size": "3, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "3, -3, 0",
+                    "Size": "-6, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, -3, 0",
+                    "Size": "3, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 3, 0",
+                    "Size": "3, -6",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "10, 161, 0",
+        "Size": "69, 15",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "69, 15",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "107, 103, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(211, 211, 211, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-3, -3, 0",
+                "Size": "6, 6",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(128, 0, 128, 255)",
+                    },
+                    "Offset": "0, 0, 0",
+                    "Size": "18, 18",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(128, 0, 128, 255)",
+                    },
+                    "Offset": "18, 0, 0",
+                    "Size": "20, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(128, 0, 128, 255)",
+                    },
+                    "Offset": "-18, 0, 0",
+                    "Size": "18, 18",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(128, 0, 128, 255)",
+                    },
+                    "Offset": "-3, 18, 0",
+                    "Size": "3, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(128, 0, 128, 255)",
+                    },
+                    "Offset": "-18, -18, 0",
+                    "Size": "18, 18",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(128, 0, 128, 255)",
+                    },
+                    "Offset": "18, -3, 0",
+                    "Size": "20, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(128, 0, 128, 255)",
+                    },
+                    "Offset": "0, -18, 0",
+                    "Size": "18, 18",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(128, 0, 128, 255)",
+                    },
+                    "Offset": "0, 18, 0",
+                    "Size": "3, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "98, 161, 0",
+        "Size": "68, 15",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "68, 15",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "201, 103, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(211, 211, 211, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-3, -3, 0",
+                "Size": "6, 6",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "18, 18",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "18, 0, 0",
+                    "Size": "-36, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-18, 0, 0",
+                    "Size": "18, 18",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-3, 18, 0",
+                    "Size": "3, -36",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-18, -18, 0",
+                    "Size": "18, 18",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "18, -3, 0",
+                    "Size": "-36, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, -18, 0",
+                    "Size": "18, 18",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 18, 0",
+                    "Size": "3, -36",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "186, 161, 0",
+        "Size": "81, 15",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "81, 15",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "299, 103, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(211, 211, 211, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-3, -3, 0",
+                "Size": "6, 6",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "18, 18",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "18, 0, 0",
+                    "Size": "-36, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-18, 0, 0",
+                    "Size": "18, 18",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-3, 18, 0",
+                    "Size": "3, -36",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "-18, -18, 0",
+                    "Size": "18, 18",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "18, -3, 0",
+                    "Size": "-36, 3",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, -18, 0",
+                    "Size": "18, 18",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 18, 0",
+                    "Size": "3, -36",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "285, 161, 0",
+        "Size": "78, 15",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "78, 15",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
               },
             ],
           },

@@ -24,7 +24,10 @@ import type {TextInputNativeCommands} from './TextInputNativeCommands';
 
 import * as NativeComponentRegistry from '../../NativeComponent/NativeComponentRegistry';
 import codegenNativeCommands from '../../Utilities/codegenNativeCommands';
-import {colorAttribute} from '../View/ReactNativeStyleAttributes';
+import {
+  colorAttribute,
+  fontVariationSettingsAttribute,
+} from '../View/ReactNativeStyleAttributes';
 
 export type KeyboardType =
   // Cross Platform
@@ -615,6 +618,7 @@ export type NativeProps = Readonly<{
   includeFontPadding?: ?boolean,
   fontWeight?: ?string,
   fontFamily?: ?string,
+  fontVariationSettings?: ?string,
 
   /**
    * I cannot find where these are defined but JS complains without them.
@@ -760,6 +764,7 @@ export const __INTERNAL_VIEW_CONFIG: PartialViewConfig = {
     includeFontPadding: true,
     fontWeight: true,
     fontFamily: true,
+    fontVariationSettings: fontVariationSettingsAttribute,
     allowFontScaling: true,
     onSelectionChange: true,
     mostRecentEventCount: true,

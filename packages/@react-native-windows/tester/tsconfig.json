@@ -4,7 +4,8 @@
     "rootDir": "src",
     "outDir": ".",
     "paths": {
-      "react-native": ["../../../vnext"] // this mapping is relative to "baseUrl"
+      "react-native": ["../../../vnext"], // this mapping is relative to "baseUrl"
+      "react-native/types/*": ["../../../node_modules/react-native/types_DEPRECATED/*"]
     },
   },
   "include": ["src"],

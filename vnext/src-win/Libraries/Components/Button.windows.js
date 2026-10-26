@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @flow
+ * @flow strict-local
  * @format
  */
 
@@ -270,7 +270,7 @@ const Button: component(
   } = props;
   const buttonStyles: Array<ViewStyleProp> = [styles.button];
   const textStyles: Array<TextStyleProp> = [styles.text];
-  if (color) {
+  if (Boolean(color)) {
     if (Platform.OS === 'ios') {
       textStyles.push({color: color});
     } else {
@@ -306,7 +306,7 @@ const Button: component(
   };
   // Windows]
 
-  if (disabled) {
+  if (disabled === true) {
     buttonStyles.push(styles.buttonDisabled);
     textStyles.push(styles.textDisabled);
   }
@@ -328,7 +328,10 @@ const Button: component(
     return (
       <Touchable
         accessible={accessible}
-        accessibilityLabel={ariaLabel || accessibilityLabel}
+        accessibilityLabel={
+          // $FlowFixMe[sketchy-null-string]
+          ariaLabel || accessibilityLabel
+        }
         accessibilityHint={accessibilityHint}
         accessibilityLanguage={accessibilityLanguage}
         accessibilityRole="button"
@@ -348,6 +351,8 @@ const Button: component(
         tabIndex={tabIndex}
         touchSoundDisabled={touchSoundDisabled}
         underlayColor={
+          // $FlowFixMe[sketchy-null-string]
+          // $FlowFixMe[sketchy-null-number]
           color
             ? PlatformColor('SolidBackgroundFillColorBaseBrush')
             : PlatformColor('ButtonBackgroundPressed')
@@ -359,6 +364,8 @@ const Button: component(
           setPressed(false);
         }}
         style={
+          // $FlowFixMe[sketchy-null-string]
+          // $FlowFixMe[sketchy-null-number]
           color
             ? {borderRadius: 3}
             : pressed
@@ -368,9 +375,11 @@ const Button: component(
                 : buttonStyles
         }
         onMouseEnter={() => {
+          // $FlowFixMe[sketchy-null-bool]
           if (!disabled) setHover(true);
         }}
         onMouseLeave={() => {
+          // $FlowFixMe[sketchy-null-bool]
           if (!disabled) setHover(false);
         }}
         // $FlowFixMe[incompatible-exact]
@@ -379,6 +388,8 @@ const Button: component(
         ref={ref}>
         <View
           style={
+            // $FlowFixMe[sketchy-null-string]
+            // $FlowFixMe[sketchy-null-number]
             color
               ? pressed
                 ? [buttonStyles, styles.buttonPressed]
@@ -387,6 +398,8 @@ const Button: component(
           }>
           <View
             style={
+              // $FlowFixMe[sketchy-null-string]
+              // $FlowFixMe[sketchy-null-number]
               color
                 ? hover
                   ? [
@@ -400,6 +413,8 @@ const Button: component(
             }>
             <Text
               style={
+                // $FlowFixMe[sketchy-null-string]
+                // $FlowFixMe[sketchy-null-number]
                 color
                   ? textStyles
                   : pressed
@@ -431,7 +446,10 @@ const Button: component(
         accessible={accessible}
         accessibilityActions={accessibilityActions}
         onAccessibilityAction={onAccessibilityAction}
-        accessibilityLabel={ariaLabel || accessibilityLabel}
+        accessibilityLabel={
+          // $FlowFixMe[sketchy-null-string]
+          ariaLabel || accessibilityLabel
+        }
         accessibilityHint={accessibilityHint}
         accessibilityLanguage={accessibilityLanguage}
         accessibilityRole="button"

@@ -29,12 +29,7 @@ void SampleTurboModule::voidFunc() noexcept {
   ReactNativeSpecs::SampleTurboModuleSpec_ObjectStruct obj2;
   obj2.a = 3;
   obj2.b = "four";
-  auto writer = winrt::Microsoft::ReactNative::MakeJSValueTreeWriter();
-  writer.WriteArrayBegin();
-  winrt::Microsoft::ReactNative::WriteValue(writer, obj);
-  winrt::Microsoft::ReactNative::WriteValue(writer, obj2);
-  writer.WriteArrayEnd();
-  onSubmit(winrt::Microsoft::ReactNative::TakeJSValue(writer).MoveArray());
+  onSubmit({obj, obj2});
 }
 
 bool SampleTurboModule::getBool(bool arg) noexcept {
@@ -53,8 +48,8 @@ std::string SampleTurboModule::getString(std::string arg) noexcept {
   return std::string(arg);
 }
 
-::React::JSValueArray SampleTurboModule::getArray(::React::JSValueArray &&arg) noexcept {
-  return arg.Copy();
+std::vector<::React::JSValue> SampleTurboModule::getArray(std::vector<::React::JSValue> arg) noexcept {
+  return arg;
 }
 
 ::React::JSValue SampleTurboModule::getObject(::React::JSValue &&arg) noexcept {
@@ -78,6 +73,22 @@ double SampleTurboModule::getRootTag(double arg) noexcept {
       {"y", y},
       {"z", z.Copy()},
   };
+}
+
+::React::JSValue SampleTurboModule::getArrayBuffer(::React::JSValue &&buffer) noexcept {
+  return buffer.Copy();
+}
+
+::React::JSValue SampleTurboModule::createNativeBuffer(double /*size*/) noexcept {
+  // The Win32 reader has no ArrayBuffer kind yet, so this cannot allocate a
+  // real binary buffer. Return null until that marshalling exists.
+  return nullptr;
+}
+
+void SampleTurboModule::processAsyncBuffer(
+    ::React::JSValue && /*payload*/,
+    ::React::ReactPromise<double> &&result) noexcept {
+  result.Resolve(0);
 }
 
 void SampleTurboModule::getValueWithCallback(std::function<void(std::string)> const &callback) noexcept {
