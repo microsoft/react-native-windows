@@ -11382,6 +11382,220 @@ exports[`snapshotAllPages Dimensions 3`] = `
 </Text>
 `;
 
+exports[`snapshotAllPages Dimensions 4`] = `
+<View>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Invoke get('window')
+        </Text>
+      </View>
+    </View>
+  </View>
+  <Text
+    style={
+      [
+        {
+          "color": "#3c3c4399",
+        },
+        undefined,
+      ]
+    }
+  >
+    {
+  "fontScale": 2,
+  "height": 1334,
+  "scale": 2,
+  "width": 750
+}
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages Dimensions 5`] = `
+<View>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Invoke get('screen')
+        </Text>
+      </View>
+    </View>
+  </View>
+  <Text
+    style={
+      [
+        {
+          "color": "#3c3c4399",
+        },
+        undefined,
+      ]
+    }
+  >
+    {
+  "fontScale": 2,
+  "height": 1334,
+  "scale": 2,
+  "width": 750
+}
+  </Text>
+</View>
+`;
+
 exports[`snapshotAllPages Display: contents 1`] = `
 <View
   style={
@@ -37857,6 +38071,411 @@ exports[`snapshotAllPages PlatformColor 2`] = `
 `;
 
 exports[`snapshotAllPages PlatformColor 3`] = `
+<View
+  style={
+    {
+      "flex": 1,
+      "flexDirection": "column",
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Valid token '
+      systemBlue
+      ' (shows the system color)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "systemBlue",
+            ],
+          },
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Invalid token, NO fallback (miss → transparent, outlined below)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+            ],
+          },
+          "borderColor": "black",
+          "borderWidth": 1,
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Invalid token + fallback '#FF0000' → RED (backgroundColor)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+              {
+                "fallback": "#FF0000",
+              },
+            ],
+          },
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Invalid token + fallback '#FFFF00' → YELLOW (backgroundColor)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+              {
+                "fallback": "#FFFF00",
+              },
+            ],
+          },
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Invalid token + fallback '#00FF00' → GREEN (text color)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "flex": 0.25,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "color": {
+                "windowsbrush": [
+                  "nonExistentToken",
+                  {
+                    "fallback": "#00FF00",
+                  },
+                ],
+              },
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        GREEN
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Invalid token + fallback '#0000FF' → BLUE (borderColor)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "borderColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+              {
+                "fallback": "#0000FF",
+              },
+            ],
+          },
+          "borderWidth": 3,
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontStyle": "italic",
+          "paddingVertical": 8,
+        },
+      ]
+    }
+  >
+    The fallback is parsed by each platform's shared native CSS color parser, so hex (#RGB / #RRGGBB / #RRGGBBAA), rgb(), rgba(), hsl(), hsla() and named colors all resolve consistently on every platform. Only a representative subset is demoed below.
+  </Text>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      fallback 'rgb(255, 0, 128)' → PINK (backgroundColor)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+              {
+                "fallback": "rgb(255, 0, 128)",
+              },
+            ],
+          },
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      fallback 'rgba(0, 128, 255, 0.7)' → semi-transparent BLUE
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+              {
+                "fallback": "rgba(0, 128, 255, 0.7)",
+              },
+            ],
+          },
+          "borderColor": "black",
+          "borderWidth": 1,
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      fallback '#FF000080' (#RRGGBBAA) → 50% transparent RED
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+              {
+                "fallback": "#FF000080",
+              },
+            ],
+          },
+          "borderColor": "black",
+          "borderWidth": 1,
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages PlatformColor 4`] = `
 <Text
   style={
     [
@@ -37874,7 +38493,7 @@ exports[`snapshotAllPages PlatformColor 3`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages PlatformColor 4`] = `
+exports[`snapshotAllPages PlatformColor 5`] = `
 <View
   style={
     {
@@ -37919,7 +38538,7 @@ exports[`snapshotAllPages PlatformColor 4`] = `
 </View>
 `;
 
-exports[`snapshotAllPages PlatformColor 5`] = `
+exports[`snapshotAllPages PlatformColor 6`] = `
 <View
   style={
     {
@@ -83828,6 +84447,61 @@ exports[`snapshotAllPages TextInput 19`] = `
 
 exports[`snapshotAllPages TextInput 20`] = `
 <View>
+  <TextInput
+    multiline={false}
+    placeholder="This placeholder is too long to fit on a single line"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "height": 40,
+          "width": 200,
+        },
+      ]
+    }
+    testID="textinput-placeholder-singleline"
+  />
+  <TextInput
+    multiline={true}
+    placeholder="This placeholder is too long to fit on a single line"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "height": 60,
+          "width": 200,
+        },
+      ]
+    }
+    testID="textinput-placeholder-multiline"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 21`] = `
+<View>
   <Text
     style={
       [
@@ -83964,7 +84638,7 @@ exports[`snapshotAllPages TextInput 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 21`] = `
+exports[`snapshotAllPages TextInput 22`] = `
 <View
   style={
     {
@@ -84137,7 +84811,7 @@ exports[`snapshotAllPages TextInput 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 22`] = `
+exports[`snapshotAllPages TextInput 23`] = `
 <View>
   <TextInput
     experimental_acceptDragAndDropTypes={[]}
@@ -84238,7 +84912,7 @@ exports[`snapshotAllPages TextInput 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 23`] = `
+exports[`snapshotAllPages TextInput 24`] = `
 <View>
   <Text>
     Do not clear text on focus:
@@ -84294,7 +84968,7 @@ exports[`snapshotAllPages TextInput 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 24`] = `
+exports[`snapshotAllPages TextInput 25`] = `
 <View>
   <Text>
     Select text on focus:
@@ -84352,7 +85026,7 @@ exports[`snapshotAllPages TextInput 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 25`] = `
+exports[`snapshotAllPages TextInput 26`] = `
 <View>
   <TextInput
     defaultValue="Default color text"
@@ -84612,7 +85286,7 @@ exports[`snapshotAllPages TextInput 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 26`] = `
+exports[`snapshotAllPages TextInput 27`] = `
 <View>
   <TextInput
     defaultValue="Font Weight (default)"
@@ -84950,7 +85624,7 @@ exports[`snapshotAllPages TextInput 26`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 27`] = `
+exports[`snapshotAllPages TextInput 28`] = `
 <View
   testID="style-fontFamily"
 >
@@ -85178,7 +85852,7 @@ exports[`snapshotAllPages TextInput 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 28`] = `
+exports[`snapshotAllPages TextInput 29`] = `
 <TextInput
   placeholder="If you set height, beware of padding set from themes"
   style={
@@ -85206,7 +85880,7 @@ exports[`snapshotAllPages TextInput 28`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 29`] = `
+exports[`snapshotAllPages TextInput 30`] = `
 <View>
   <TextInput
     placeholder="letterSpacing = 0"
@@ -85323,7 +85997,7 @@ exports[`snapshotAllPages TextInput 29`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 30`] = `
+exports[`snapshotAllPages TextInput 31`] = `
 <View>
   <TextInput
     defaultValue="iloveturtles"
@@ -85382,7 +86056,7 @@ exports[`snapshotAllPages TextInput 30`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 31`] = `
+exports[`snapshotAllPages TextInput 32`] = `
 <TextInput
   defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
   editable={false}
@@ -85409,7 +86083,7 @@ exports[`snapshotAllPages TextInput 31`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 32`] = `
+exports[`snapshotAllPages TextInput 33`] = `
 <View>
   <TextInput
     autoCorrect={true}
@@ -85526,7 +86200,7 @@ exports[`snapshotAllPages TextInput 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 33`] = `
+exports[`snapshotAllPages TextInput 34`] = `
 <View>
   <TextInput
     editable={true}
@@ -85619,7 +86293,7 @@ exports[`snapshotAllPages TextInput 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 34`] = `
+exports[`snapshotAllPages TextInput 35`] = `
 <View
   style={
     {
@@ -85718,7 +86392,7 @@ exports[`snapshotAllPages TextInput 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 35`] = `
+exports[`snapshotAllPages TextInput 36`] = `
 <View>
   <Text>
     By default, text will respect Text Size accessibility setting on Android. It means that all font sizes will be increased or decreased depending on the value of the Text Size setting in the OS's Settings app.
@@ -85770,7 +86444,7 @@ exports[`snapshotAllPages TextInput 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 36`] = `
+exports[`snapshotAllPages TextInput 37`] = `
 <View
   testID="max-font-size-multiplier"
 >
@@ -85830,7 +86504,7 @@ exports[`snapshotAllPages TextInput 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 37`] = `
+exports[`snapshotAllPages TextInput 38`] = `
 <View
   style={
     {
@@ -85948,7 +86622,7 @@ exports[`snapshotAllPages TextInput 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 38`] = `
+exports[`snapshotAllPages TextInput 39`] = `
 <View>
   <TextInput
     autoComplete="country"
@@ -86314,7 +86988,7 @@ exports[`snapshotAllPages TextInput 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 39`] = `
+exports[`snapshotAllPages TextInput 40`] = `
 <View>
   <TextInput
     placeholder="returnKeyType: none"
@@ -86535,7 +87209,7 @@ exports[`snapshotAllPages TextInput 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 40`] = `
+exports[`snapshotAllPages TextInput 41`] = `
 <View>
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -86612,7 +87286,7 @@ exports[`snapshotAllPages TextInput 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 41`] = `
+exports[`snapshotAllPages TextInput 42`] = `
 <View>
   <TextInput
     style={
@@ -86642,7 +87316,7 @@ exports[`snapshotAllPages TextInput 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 42`] = `
+exports[`snapshotAllPages TextInput 43`] = `
 <View>
   <Text>
     accessibilityLabel prop
@@ -86693,7 +87367,7 @@ exports[`snapshotAllPages TextInput 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 43`] = `
+exports[`snapshotAllPages TextInput 44`] = `
 <View>
   <Text
     testID="textinput-state-display-in"
@@ -86760,7 +87434,7 @@ exports[`snapshotAllPages TextInput 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 44`] = `
+exports[`snapshotAllPages TextInput 45`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -86896,7 +87570,7 @@ exports[`snapshotAllPages TextInput 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 45`] = `
+exports[`snapshotAllPages TextInput 46`] = `
 [
   <View
     focusable={true}
@@ -86962,7 +87636,7 @@ exports[`snapshotAllPages TextInput 45`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 46`] = `
+exports[`snapshotAllPages TextInput 47`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -87011,7 +87685,7 @@ exports[`snapshotAllPages TextInput 46`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 47`] = `
+exports[`snapshotAllPages TextInput 48`] = `
 <View>
   <Text>
     CaretHidden
@@ -87043,7 +87717,7 @@ exports[`snapshotAllPages TextInput 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 48`] = `
+exports[`snapshotAllPages TextInput 49`] = `
 <View>
   <Text>
     Cursorcolor
@@ -87075,7 +87749,7 @@ exports[`snapshotAllPages TextInput 48`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 49`] = `
+exports[`snapshotAllPages TextInput 50`] = `
 <View>
   <Text>
     Shadow
@@ -87113,7 +87787,7 @@ exports[`snapshotAllPages TextInput 49`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 50`] = `
+exports[`snapshotAllPages TextInput 51`] = `
 <View
   accessible={true}
   testID="textinput-set"
@@ -87196,7 +87870,7 @@ exports[`snapshotAllPages TextInput 50`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 51`] = `
+exports[`snapshotAllPages TextInput 52`] = `
 <View
   accessible={true}
   testID="textinput-searchbox"
@@ -94065,6 +94739,222 @@ exports[`snapshotAllPages View 20`] = `
       ]
     }
   />
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "lightgray",
+          "borderRadius": 0,
+          "height": 50,
+          "outlineColor": "purple",
+          "outlineStyle": "solid",
+          "outlineWidth": 3,
+          "width": 50,
+        }
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
+      }
+    >
+      square solid
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "lightgray",
+          "borderRadius": 0,
+          "height": 50,
+          "outlineColor": "purple",
+          "outlineStyle": "dashed",
+          "outlineWidth": 3,
+          "width": 50,
+        }
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
+      }
+    >
+      square dashed
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "lightgray",
+          "borderRadius": 0,
+          "height": 50,
+          "outlineColor": "purple",
+          "outlineStyle": "dotted",
+          "outlineWidth": 3,
+          "width": 50,
+        }
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
+      }
+    >
+      square dotted
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "lightgray",
+          "borderRadius": 12,
+          "height": 50,
+          "outlineColor": "purple",
+          "outlineStyle": "solid",
+          "outlineWidth": 3,
+          "width": 50,
+        }
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
+      }
+    >
+      rounded solid
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "lightgray",
+          "borderRadius": 12,
+          "height": 50,
+          "outlineColor": "purple",
+          "outlineStyle": "dashed",
+          "outlineWidth": 3,
+          "width": 50,
+        }
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
+      }
+    >
+      rounded dashed
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "lightgray",
+          "borderRadius": 12,
+          "height": 50,
+          "outlineColor": "purple",
+          "outlineStyle": "dotted",
+          "outlineWidth": 3,
+          "width": 50,
+        }
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
+      }
+    >
+      rounded dotted
+    </Text>
+  </View>
 </View>
 `;
 
