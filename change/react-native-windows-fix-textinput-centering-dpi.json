@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix single-line TextInput text/caret sitting low and bottom-clipped at >100% display scale (GetContentSize DPI normalization)",
+  "packageName": "react-native-windows",
+  "email": "collindanielschneide@gmail.com",
+  "dependentChangeType": "patch"
+}
