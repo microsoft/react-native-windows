@@ -94,18 +94,17 @@ root `package.json`), so nothing is suppressed.
 
 ## Release publishing targets
 
-`release-pipeline.yml` publishes from ISS to all five destinations:
+`release-pipeline.yml` defines these publishing targets from ISS:
 
-- npm → npmjs.com via `EsrpRelease@11`
-- NuGet → `ms/react-native` (private) and `ms/react-native-public` (public) feeds
-- NuGet → nuget.org (API key from `OGX-JSHost-KV`)
+- npm → npmjs.com via `EsrpRelease@14`
+- npm and NuGet → `ms/react-native` (private) and `ms/react-native-public` (public) feeds
+- NuGet → nuget.org via `EsrpRelease@14`
 - PDB symbols → Microsoft Symbol Server (`templates/publish-symbols.yml`)
 
-The nuget.org publish runs 1ES Network Isolation in report-only mode
-(`settings.networkIsolationMode: Audit`): `Enforce` blocks `api.nuget.org`, and the
-per-domain allow-list is not plumbed for release jobs, so mode is the only
-in-pipeline lever. Returning to `Enforce` requires adding nuget.org to the
-`CFSClean` isolation policy for this pipeline (follow-up).
+NuGet.org publishing stages only `Microsoft.ReactNative.*.nupkg` from the CI
+`ReactWindows-final-nuget` artifact in a package-only ESRP submission folder.
+ESRP publishes centrally, without a NuGet.org API key or direct NuGet.org access
+from the release agent. Release jobs use 1ES Network Isolation in `Enforce` mode.
 
 One item remains deferred: a more authoritative npm publish-eligibility check (the
 current check reads the feed anonymously and sees only cached versions).
