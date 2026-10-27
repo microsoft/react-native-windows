@@ -29,6 +29,17 @@ jest.mock(
   {virtual: true},
 );
 
+// The tester copy calls TurboModuleRegistry.getEnforcing at import time.
+// snapshotPages and visitAllPages only need the module graph to load.
+jest.mock(
+  '@react-native-windows/tester/js/examples/TurboModule/NativeSampleTurboModule',
+  () => ({
+    __esModule: true,
+    EnumInt: {A: 23, B: 42},
+    default: {},
+  }),
+);
+
 // Jest ENV cannot resolve ..\..\relay.png since only relay@3.png exists
 jest.mock(
   '@react-native-windows/tester/js/examples/AnimatedGratuitousApp/AnExChained',
