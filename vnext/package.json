@@ -154,6 +154,7 @@
     "/react-private-interface.js",
     "/rn-get-polyfills.js",
     "/setup-env.js",
+    "/unstable-internals-do-not-use.js",
     "!packages*.lock.json"
   ],
   "promoteRelease": true,
