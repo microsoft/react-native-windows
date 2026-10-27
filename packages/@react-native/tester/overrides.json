@@ -854,7 +854,7 @@
       "issue": 4054
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
       "baseHash": "7a9a915c854aa5858ca962996dbd34b839d65a8f",
