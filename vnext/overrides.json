@@ -711,6 +711,10 @@
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativeAppTheme.js"
     },
     {
+      "type": "platform",
+      "file": "src-win/src/private/specs_DEPRECATED/modules/NativeSampleTurboModule.js"
+    },
+    {
       "type": "derived",
       "file": "src-win/src/private/specs_DEPRECATED/modules/NativeDialogManagerWindows.js",
       "baseFile": "packages/react-native/src/private/specs_DEPRECATED/modules/NativeDialogManagerAndroid.js",

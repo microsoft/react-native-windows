@@ -7,13 +7,22 @@
  */
 
 const cli = require('@react-native-windows/cli');
+// RN 0.89 nightlies no longer register the community `bundle` command.
+// Re-export it so RNW apps keep the MSBuild `cli bundle` invocation working.
+const {bundleCommand} = require('@react-native/community-cli-plugin');
 
 module.exports = {
   // **** This section defined commands and options on how to provide the Windows platform to external applications
-  commands: cli.commands.map(command => ({
-    ...command,
-    func: lazyInstallSourcemaps(command.func),
-  })),
+  commands: [
+    ...cli.commands.map(command => ({
+      ...command,
+      func: lazyInstallSourcemaps(command.func),
+    })),
+    {
+      ...bundleCommand,
+      func: lazyInstallSourcemaps(bundleCommand.func),
+    },
+  ],
   platforms: {
     windows: {
       linkConfig: () => null,
