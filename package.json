@@ -59,6 +59,9 @@
   },
   "resolutions": {
     "react": "19.2.3",
+    "browserslist@^4.24.0": "^4.28.7",
+    "browserslist@^4.28.1": "^4.28.7",
+    "ip-address@^10.0.1": "10.3.1",
     "convert-source-map": "^2.0.0",
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
