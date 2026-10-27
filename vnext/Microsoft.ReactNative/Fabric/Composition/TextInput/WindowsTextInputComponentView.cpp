@@ -1533,7 +1533,14 @@ void WindowsTextInputComponentView::UpdateText(const facebook::react::Attributed
     winrt::check_hresult(
         m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&finalSelection), &res));
     if (finalSelection.cpMin != cr.cpMin || finalSelection.cpMax != cr.cpMax) {
-      OnSelectionChanged(finalSelection.cpMin, finalSelection.cpMax);
+      if (m_eventEmitter)
+      {
+        auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+        facebook::react::WindowsTextInputEventEmitter::OnSelectionChange onSelectionChangeArgs;
+        onSelectionChangeArgs.selection.start = finalSelection.cpMin;
+        onSelectionChangeArgs.selection.end = finalSelection.cpMax;
+        emitter->onSelectionChange(onSelectionChangeArgs);
+      }
     }
   }
 }

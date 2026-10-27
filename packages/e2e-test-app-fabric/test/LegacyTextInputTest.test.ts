@@ -99,7 +99,7 @@ describe('LegacyTextInputTest', () => {
     */
   });
 
-  test('Clearing TextInput reports the clamped selection after the text change', async () => {
+  test('Clearing TextInput reports the clamped selection when the text changes', async () => {
     const textInput = await textInputField();
     await textInput.setValue('abc');
     await textInput.addValue('End');
