@@ -98,7 +98,7 @@ attempts that green builds would otherwise hide:
   Azure Artifacts requests in `~/.npmrc` and passes it to the Verdaccio uplink;
   Yarn does not send the token to the proxy.
 - **Verdaccio (CLI init tests):** `verdaccio/generate-config.js` emits the config at
-  runtime, so the uplink targets the feed (with the CI token when present) while
+  runtime, so the uplink uses the proxy for PRs and the ADO feed with the CI token while
   local packages still publish offline. The former static `config.yaml` was removed.
 - **React Native DevTools:** `RNDT_DEV: 1` stops DevTools from fetching its
   standalone shell binary from a Facebook CDN when Metro starts. The debugger is
@@ -109,12 +109,10 @@ attempts that green builds would otherwise hide:
   reapplies the same policy per job as an interim belt until the updated image
   ships; it can be dropped once a rebuilt image is confirmed clean.
 
-Public PR Verdaccio requests to the Azure Artifacts feed remain **anonymous** and
-can only restore versions an authenticated identity has already saved. The
-scheduled feed warm-up maintained on `main` keeps that feed populated.
-PackageFeedProxy restores do not depend on that warm-up. Publishing and
-authenticated feed maintenance keep their existing endpoints; NuGet defaults
-shipped in generated apps/libraries are unchanged.
+Public PR Verdaccio requests use the **anonymous** PackageFeedProxy and do not
+depend on the scheduled Azure Artifacts feed warm-up maintained on `main`.
+Publishing and authenticated feed maintenance keep their existing endpoints;
+NuGet defaults shipped in generated apps/libraries are unchanged.
 
 ## SDL and Component Governance
 
