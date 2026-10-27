@@ -27,7 +27,7 @@
     "lodash": "^4.17.15",
     "minimatch": "^10.0.3",
     "semver": "^7.6.3",
-    "simple-git": "^3.3.0",
+    "simple-git": "^4.0.2",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"
   },

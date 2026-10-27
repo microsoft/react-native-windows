@@ -35,7 +35,7 @@
     "node-fetch": "^2.6.7",
     "ora": "^3.4.0",
     "semver": "^7.3.2",
-    "simple-git": "^3.3.0",
+    "simple-git": "^4.0.2",
     "source-map-support": "^0.5.19",
     "upath": "^1.2.0",
     "yargs": "^16.2.0"
