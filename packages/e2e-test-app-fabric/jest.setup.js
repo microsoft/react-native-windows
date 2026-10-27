@@ -21,10 +21,12 @@ fs.mkdirSync(screenshotDir, {recursive: true});
 
 process.env.NODE_ENV = 'test';
 
-// Jest ENV does not have SampleTurboModule native module defined
+// Jest ENV does not have SampleTurboModule native module defined.
+// This nightly no longer publishes Libraries/TurboModule/samples/NativeSampleTurboModule.
 jest.mock(
   'react-native-windows/Libraries/TurboModule/samples/NativeSampleTurboModule',
   () => jest.fn(),
+  {virtual: true},
 );
 
 // Jest ENV cannot resolve ..\..\relay.png since only relay@3.png exists

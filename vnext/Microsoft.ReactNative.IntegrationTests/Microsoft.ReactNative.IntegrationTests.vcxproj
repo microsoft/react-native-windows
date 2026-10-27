@@ -134,8 +134,16 @@
   <ItemGroup>
     <ClCompile Include="ExecuteJsiTests.cpp" />
     <ClCompile Include="JsiRuntimeTests.cpp" />
-    <ClCompile Include="JsiSimpleTurboModuleTests.cpp" />
-    <ClCompile Include="JsiTurboModuleTests.cpp" />
+    <!--
+      folly F14Table.h narrows uint64_t to size_t. That is C4244 on x86 only,
+      and MSBuild /warnaserror promotes it. The conversion is third-party code.
+    -->
+    <ClCompile Include="JsiSimpleTurboModuleTests.cpp">
+      <DisableSpecificWarnings>4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
+    <ClCompile Include="JsiTurboModuleTests.cpp">
+      <DisableSpecificWarnings>4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+    </ClCompile>
     <ClCompile Include="ReactInstanceSettingsTests.cpp" />
     <ClCompile Include="ReactNonAbiValueTests.cpp" />
     <ClCompile Include="ReactNotificationServiceTests.cpp" />
