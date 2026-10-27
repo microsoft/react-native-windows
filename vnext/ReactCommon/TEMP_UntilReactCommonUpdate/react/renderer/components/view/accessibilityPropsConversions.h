@@ -196,6 +196,10 @@ inline std::string toString(const ImportantForAccessibility &importantForAccessi
       return "no";
     case ImportantForAccessibility::NoHideDescendants:
       return "no-hide-descendants";
+    default:
+      LOG(ERROR) << "Unsupported ImportantForAccessibility value: " << static_cast<int>(importantForAccessibility);
+      react_native_expect(false);
+      return "auto";
   }
 }
 
@@ -386,12 +390,12 @@ inline std::string toString(const AccessibilityRole &accessibilityRole)
       return "slidingdrawer";
     case AccessibilityRole::Iconmenu:
       return "iconmenu";
+    default:
+      LOG(ERROR) << "Unsupported AccessibilityRole value: " << static_cast<int>(accessibilityRole);
+      react_native_expect(false);
+      // sane default for prod
+      return "none";
   }
-
-  LOG(ERROR) << "Unsupported AccessibilityRole value";
-  react_native_expect(false);
-  // sane default for prod
-  return "none";
 }
 
 inline void fromRawValue(const PropsParserContext &context, const RawValue &value, AccessibilityRole &result)
@@ -627,12 +631,12 @@ inline std::string toString(const Role &role)
       return "treegrid";
     case Role::Treeitem:
       return "treeitem";
+    default:
+      LOG(ERROR) << "Unsupported Role value: " << static_cast<int>(role);
+      react_native_expect(false);
+      // sane default for prod
+      return "none";
   }
-
-  LOG(ERROR) << "Unsupported Role value";
-  react_native_expect(false);
-  // sane default for prod
-  return "none";
 }
 
 inline void fromRawValue(const PropsParserContext &context, const RawValue &value, Role &result)
@@ -794,6 +798,10 @@ inline std::string toString(AccessibilityLiveRegion accessibilityLiveRegion)
       return "polite";
     case AccessibilityLiveRegion::Assertive:
       return "assertive";
+    default:
+      LOG(ERROR) << "Unsupported AccessibilityLiveRegion value: " << static_cast<int>(accessibilityLiveRegion);
+      react_native_expect(false);
+      return "none";
   }
 }
 
@@ -808,6 +816,10 @@ inline std::string toString(AccessibilityState::CheckedState state)
     case AccessibilityState::Mixed:
       return "Mixed";
     case AccessibilityState::None:
+      return "None";
+    default:
+      LOG(ERROR) << "Unsupported AccessibilityState::CheckedState value: " << static_cast<int>(state);
+      react_native_expect(false);
       return "None";
   }
 }

@@ -10,7 +10,7 @@
 #pragma once
 
 #include <ReactCommon/TurboModule.h>
-#include <react/bridging/Bridging.h>
+#include <React/Bridging.h>
 
 namespace facebook::react {
 

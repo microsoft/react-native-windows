@@ -103,7 +103,7 @@ class TouchableHighlightImpl extends React.Component<
   TouchableHighlightProps,
   TouchableHighlightState,
 > {
-  _hideTimeout: ?TimeoutID;
+  _hideTimeout: ?ReturnType<typeof setTimeout>;
   _isMounted: boolean = false;
 
   state: TouchableHighlightState = {
@@ -299,7 +299,6 @@ class TouchableHighlightImpl extends React.Component<
         )}
         onLayout={this.props.onLayout}
         hitSlop={this.props.hitSlop}
-        hasTVPreferredFocus={this.props.hasTVPreferredFocus}
         nextFocusDown={this.props.nextFocusDown}
         nextFocusForward={this.props.nextFocusForward}
         nextFocusLeft={this.props.nextFocusLeft}

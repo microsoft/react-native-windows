@@ -133,4 +133,23 @@ void SampleTurboModule::getImageUrl(::React::ReactPromise<void> &&result) noexce
   // TODO: Proper impl
 }
 
+void SampleTurboModule::requestSamplePermission(::React::ReactPromise<bool> &&result) noexcept {
+  result.Resolve(false);
+}
+
+void SampleTurboModule::pickMedia(
+    std::optional<std::string> /*mimeType*/,
+    ::React::ReactPromise<void> &&result) noexcept {
+  result.Resolve();
+}
+
+void SampleTurboModule::pickMultipleMedia(
+    std::optional<std::string> /*mimeType*/,
+    double /*maxItems*/,
+    ::React::ReactPromise<std::vector<std::string>> &&result) noexcept {
+  result.Resolve(std::vector<std::string>{});
+}
+
+void SampleTurboModule::startSecondActivity() noexcept {}
+
 } // namespace Microsoft::ReactNative

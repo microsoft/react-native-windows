@@ -91,6 +91,12 @@ void BaseParagraphProps::setProp(
         paDefaults,
         value,
         paragraphAttributes,
+        textWidthMode,
+        "experimental_textWidthMode");
+    REBUILD_FIELD_SWITCH_CASE(
+        paDefaults,
+        value,
+        paragraphAttributes,
         adjustsFontSizeToFit,
         "adjustsFontSizeToFit");
     REBUILD_FIELD_SWITCH_CASE(
@@ -105,12 +111,6 @@ void BaseParagraphProps::setProp(
         paragraphAttributes,
         minimumFontSize,
         "minimumFontSize");
-    REBUILD_FIELD_SWITCH_CASE(
-        paDefaults,
-        value,
-        paragraphAttributes,
-        maximumFontSize,
-        "maximumFontSize");
     REBUILD_FIELD_SWITCH_CASE(
         paDefaults,
         value,

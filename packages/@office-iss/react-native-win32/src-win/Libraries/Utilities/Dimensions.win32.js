@@ -2,7 +2,7 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
- * @flow
+ * @flow strict-local
  * @format
  */
 
@@ -111,6 +111,8 @@ class Dimensions {
    */
   static addEventListener(
     type: 'change',
+    /* $FlowFixMe[unclear-type] Callers annotate the payload with assorted
+     * object shapes that any precise signature would reject. */
     handler: Function,
   ): EventSubscription {
     invariant(

@@ -97,6 +97,21 @@ struct SampleTurboModule {
   REACT_METHOD(getImageUrl)
   void getImageUrl(::React::ReactPromise<void> &&result) noexcept;
 
+  REACT_METHOD(requestSamplePermission)
+  void requestSamplePermission(::React::ReactPromise<bool> &&result) noexcept;
+
+  REACT_METHOD(pickMedia)
+  void pickMedia(std::optional<std::string> mimeType, ::React::ReactPromise<void> &&result) noexcept;
+
+  REACT_METHOD(pickMultipleMedia)
+  void pickMultipleMedia(
+      std::optional<std::string> mimeType,
+      double maxItems,
+      ::React::ReactPromise<std::vector<std::string>> &&result) noexcept;
+
+  REACT_METHOD(startSecondActivity)
+  void startSecondActivity() noexcept;
+
  private:
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
 };

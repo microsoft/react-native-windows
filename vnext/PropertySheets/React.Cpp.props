@@ -126,6 +126,7 @@
         BOOST_SYSTEM_SOURCE;
         GTEST_HAS_RTTI=0;
         WIN32_LEAN_AND_MEAN;
+        _USE_MATH_DEFINES;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(EnableWinRtLeanAndMean)' == 'true'">
@@ -166,6 +167,7 @@
         $(ReactNativeDir)\ReactCommon\react\utils\platform\cxx;
         $(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\platform\cxx;
         $(ReactNativeDir)\ReactCommon\runtimeexecutor\platform\cxx;
+        $(ReactNativeWindowsDir)include;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
     </ClCompile>

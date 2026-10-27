@@ -315,11 +315,10 @@ void WindowsTextLayoutManager::GetTextLayout(
   TextMeasurement::Attachments attachments;
   if (paragraphAttributes.adjustsFontSizeToFit) {
     auto minimumFontScale = 0.01f;
-    // Uncomment below part when minimumFontScale is available in ParagraphAttributes
-    // if (paragraphAttributes.minimumFontScale && paragraphAttributes.minimumFontScale >= 0.01f &&
-    //    paragraphAttributes.minimumFontScale <= 1.0f) {
-    //  minimumFontScale = paragraphAttributes.minimumFontScale;
-    //}
+    const auto requestedScale = paragraphAttributes.minimumFontScale;
+    if (requestedScale == requestedScale && requestedScale >= 0.01f && requestedScale <= 1.0f) {
+      minimumFontScale = requestedScale;
+    }
     GetTextLayoutByAdjustingFontSizeToFit(
         attributedStringBox, paragraphAttributes, layoutConstraints, spTextLayout, attachments, minimumFontScale);
   } else {
