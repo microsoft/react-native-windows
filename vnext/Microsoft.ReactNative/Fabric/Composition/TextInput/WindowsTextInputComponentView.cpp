@@ -1198,9 +1198,7 @@ void WindowsTextInputComponentView::OnCharacterReceived(
   LRESULT lresult;
   DrawBlock db(*this);
   const wchar_t newline[] = L"\r";
-  auto hr = args.KeyCode() == '\r' && windowsTextInputProps().multiline
-      ? m_textServices->TxSendMessage(EM_REPLACESEL, TRUE, reinterpret_cast<LPARAM>(newline), &lresult)
-      : m_textServices->TxSendMessage(WM_CHAR, wParam, lParam, &lresult);
+  auto hr = m_textServices->TxSendMessage(WM_CHAR, wParam, lParam, &lresult);
   if (hr >= 0) {
     args.Handled(true);
   }
