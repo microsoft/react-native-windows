@@ -95,11 +95,13 @@ attempts that green builds would otherwise hide:
   the anonymous PackageFeedProxy (`NPM_CONFIG_REGISTRY` /
   `YARN_NPM_REGISTRY_SERVER`) in both PR and Continuous validation.
   `templates/auth-npm-feed.yml` keeps the managed-identity token scoped to direct
-  Azure Artifacts requests in `~/.npmrc` and passes it to the Verdaccio uplink;
-  Yarn does not send the token to the proxy.
+  Azure Artifacts requests in `~/.npmrc` and passes it to the authenticated CI
+  Verdaccio uplink; Yarn does not send the token to the proxy.
 - **Verdaccio (CLI init tests):** `verdaccio/generate-config.js` emits the config at
-  runtime, so the uplink targets the feed (with the CI token when present) while
-  local packages still publish offline. The former static `config.yaml` was removed.
+  runtime. Public PRs use the anonymous proxy; authenticated CI retains the ADO
+  feed uplink. Local packages still publish offline. The file logger uses
+  Verdaccio's current `log` setting so failure artifacts include `verdaccio.log`.
+  The former static `config.yaml` was removed.
 - **React Native DevTools:** `RNDT_DEV: 1` stops DevTools from fetching its
   standalone shell binary from a Facebook CDN when Metro starts. The debugger is
   never opened in CI, so this has no effect on tests.
@@ -109,12 +111,11 @@ attempts that green builds would otherwise hide:
   reapplies the same policy per job as an interim belt until the updated image
   ships; it can be dropped once a rebuilt image is confirmed clean.
 
-Public PR Verdaccio requests to the Azure Artifacts feed remain **anonymous** and
-can only restore versions an authenticated identity has already saved. The
-scheduled feed warm-up maintained on `main` keeps that feed populated.
-PackageFeedProxy restores do not depend on that warm-up. Publishing and
-authenticated feed maintenance keep their existing endpoints; NuGet defaults
-shipped in generated apps/libraries are unchanged.
+PackageFeedProxy restores are **anonymous** and do not depend on the RNW feed
+warm-up. The scheduled warm-up maintained on `main` still populates the ADO feed
+for its remaining consumers. Publishing and authenticated feed maintenance keep
+their existing endpoints; NuGet defaults shipped in generated apps/libraries
+are unchanged.
 
 ## SDL and Component Governance
 
