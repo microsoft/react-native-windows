@@ -10,6 +10,7 @@ import fs from '@react-native-windows/fs';
 import globby from 'globby';
 import os from 'os';
 import path from 'path';
+import {simpleGit} from 'simple-git';
 
 import FileSystemRepository from '../FileSystemRepository';
 import GitReactFileRepository from '../GitReactFileRepository';
@@ -52,6 +53,8 @@ export async function acquireGitRepo(): Promise<
 > {
   const [dir, dispose] = await acquireScratchDirectory();
   const gitReactRepo = await GitReactFileRepository.createAndInit(dir);
+  // Keep conflict-marker assertions independent of the user's Git configuration.
+  await simpleGit(dir).addConfig('merge.conflictStyle', 'merge');
   return [gitReactRepo, dispose];
 }
 
