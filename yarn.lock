@@ -3587,13 +3587,13 @@ __metadata:
     flow-enums-runtime: "npm:^0.0.6"
     just-scripts: "npm:^1.3.3"
     prettier: "npm:^3.6.2"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-platform-override: "npm:0.0.0-canary.1023"
     typescript: "npm:5.1.6"
   peerDependencies:
     "@office-iss/react-native-win32": ^0.0.0-canary.312
-    react: 19.2.3
+    react: 19.3.0
     react-native: 0.89.0-nightly-20261002-cd2de187e
   languageName: unknown
   linkType: soft
@@ -3658,7 +3658,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     pretty-format: "npm:^29.7.0"
     promise: "npm:^8.3.0"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-clone-referenced-element: "npm:^1.0.1"
     react-devtools-core: "npm:^6.1.5"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
@@ -4215,7 +4215,7 @@ __metadata:
     just-scripts: "npm:^1.3.2"
     minimatch: "npm:^10.0.3"
     prettier: "npm:^3.6.2"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-windows: "npm:^0.0.0-canary.1060"
     typescript: "npm:5.1.6"
@@ -4315,7 +4315,7 @@ __metadata:
     ora: "npm:^3.4.0"
     prettier: "npm:^3.6.2"
     prompts: "npm:^2.4.1"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     semver: "npm:^7.3.2"
     shelljs: "npm:^0.8.4"
@@ -4522,14 +4522,14 @@ __metadata:
     flow-enums-runtime: "npm:^0.0.6"
     just-scripts: "npm:^1.3.3"
     prettier: "npm:^3.6.2"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-platform-override: "npm:0.0.0-canary.1023"
     react-native-windows: "npm:^0.0.0-canary.1060"
     typescript: "npm:5.1.6"
   peerDependencies:
     "@react-native-picker/picker": 2.11.0
-    react: 19.2.3
+    react: 19.3.0
     react-native: 0.89.0-nightly-20261002-cd2de187e
     react-native-windows: ^0.0.0-canary.1060
     react-native-xaml: ^0.0.80
@@ -4911,11 +4911,11 @@ __metadata:
     invariant: "npm:^2.2.4"
     listr2: "npm:^6.4.1"
     nullthrows: "npm:^1.1.1"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     rxjs: "npm:@react-native-community/rxjs@6.5.4-custom"
   peerDependencies:
-    react: 19.2.3
+    react: 19.3.0
     react-native: "*"
   languageName: unknown
   linkType: soft
@@ -5125,7 +5125,7 @@ __metadata:
     react: "npm:^19.3.0"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-windows: "npm:^0.0.0-canary.1060"
-    react-test-renderer: "npm:19.1.0"
+    react-test-renderer: "npm:19.3.0"
     sanitize-filename: "npm:^1.6.3"
     typescript: "npm:5.1.6"
   languageName: unknown
@@ -5241,7 +5241,7 @@ __metadata:
     lodash: "npm:^4.17.15"
     ora: "npm:^3.4.0"
     prettier: "npm:^3.6.2"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-platform-override: "npm:0.0.0-canary.1023"
     semver: "npm:^7.6.3"
@@ -5373,11 +5373,11 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.36.0"
     eslint: "npm:^8.19.0"
     prettier: "npm:^3.6.2"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     typescript: "npm:5.1.6"
   peerDependencies:
-    react: 19.2.3
+    react: 19.3.0
     react-native: "*"
   languageName: unknown
   linkType: soft
@@ -5410,7 +5410,7 @@ __metadata:
     react: "npm:^19.3.0"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-windows: "npm:^0.0.0-canary.1060"
-    react-test-renderer: "npm:19.1.0"
+    react-test-renderer: "npm:19.3.0"
     typescript: "npm:5.1.6"
   languageName: unknown
   linkType: soft
@@ -5486,7 +5486,7 @@ __metadata:
     lodash: "npm:^4.17.15"
     prettier: "npm:^3.6.2"
     prettier-plugin-hermes-parser: "npm:0.21.1"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-platform-override: "workspace:*"
     typescript: "npm:5.1.6"
@@ -5526,7 +5526,7 @@ __metadata:
     react: "npm:^19.3.0"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-windows: "npm:^0.0.0-canary.1060"
-    react-test-renderer: "npm:19.1.0"
+    react-test-renderer: "npm:19.3.0"
     typescript: "npm:5.1.6"
   languageName: unknown
   linkType: soft
@@ -16869,13 +16869,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:^19.1.0":
-  version: 19.2.4
-  resolution: "react-is@npm:19.2.4"
-  checksum: 10c0/477a7cfc900f24194606e315fa353856a3a13487ea8eca841678817cad4daef64339ea0d1e84e58459fc75dbe0d9ba00bb0cc626db3d07e0cf31edc64cb4fa37
-  languageName: node
-  linkType: hard
-
 "react-is@npm:^19.3.0":
   version: 19.3.1
   resolution: "react-is@npm:19.3.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Freact-is%2F-%2Freact-is-19.3.1.tgz"
@@ -16969,7 +16962,7 @@ __metadata:
     npm-registry-fetch: "npm:^11.0.0"
     prettier: "npm:^3.6.2"
     prompts: "npm:^2.4.1"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     semver: "npm:^7.3.2"
     source-map-support: "npm:^0.5.19"
@@ -17041,7 +17034,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     pretty-format: "npm:^29.7.0"
     promise: "npm:^8.3.0"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-devtools-core: "npm:^6.1.5"
     react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-platform-override: "npm:0.0.0-canary.1023"
@@ -17116,18 +17109,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-test-renderer@npm:19.1.0":
-  version: 19.1.0
-  resolution: "react-test-renderer@npm:19.1.0"
-  dependencies:
-    react-is: "npm:^19.1.0"
-    scheduler: "npm:^0.26.0"
-  peerDependencies:
-    react: ^19.1.0
-  checksum: 10c0/34ed4a37ba8b0beb96c048de6ff28574f018a18dd1042c24f8f46142d48eb5b27f82ff7c2823d082932fd3983c5a3529ab8cc8f15191d4306df0082f9f84678f
-  languageName: node
-  linkType: hard
-
 "react-test-renderer@npm:19.3.0":
   version: 19.3.0
   resolution: "react-test-renderer@npm:19.3.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Freact-test-renderer%2F-%2Freact-test-renderer-19.3.0.tgz"
@@ -17140,10 +17121,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:19.2.3":
-  version: 19.2.3
-  resolution: "react@npm:19.2.3"
-  checksum: 10c0/094220b3ba3a76c1b668f972ace1dd15509b157aead1b40391d1c8e657e720c201d9719537375eff08f5e0514748c0319063392a6f000e31303aafc4471f1436
+"react@npm:19.3.0":
+  version: 19.3.0
+  resolution: "react@npm:19.3.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Freact%2F-%2Freact-19.3.0.tgz"
+  checksum: 10c0/dd3099c3c43a7122bc01223bb26b0f8d5ba13cca569af6fb94a005fb54fa73223c9cb203bb226d40cfd49a82cbeef2e36ce84062a3a6d5b9fe8f4437694c7b52
   languageName: node
   linkType: hard
 
@@ -17727,13 +17708,6 @@ __metadata:
   version: 0.28.0
   resolution: "scheduler@npm:0.28.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fscheduler%2F-%2Fscheduler-0.28.0.tgz"
   checksum: 10c0/783c8e5ce89d41273a02ed6dc0e3d24bd60e05c9e8f7e3adfc6c82e7c69935500d90e343f1ee26d592fc7504e8a2532573c6368def3e93bfe812391fa53efaf4
-  languageName: node
-  linkType: hard
-
-"scheduler@npm:^0.26.0":
-  version: 0.26.0
-  resolution: "scheduler@npm:0.26.0"
-  checksum: 10c0/5b8d5bfddaae3513410eda54f2268e98a376a429931921a81b5c3a2873aab7ca4d775a8caac5498f8cbc7d0daeab947cf923dbd8e215d61671f9f4e392d34356
   languageName: node
   linkType: hard
 

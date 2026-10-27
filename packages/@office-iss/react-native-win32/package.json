@@ -93,7 +93,7 @@
     "jscodeshift": "^0.14.0",
     "just-scripts": "^1.3.3",
     "prettier": "^3.6.2",
-    "react": "19.2.3",
+    "react": "19.3.0",
     "react-native": "0.89.0-nightly-20261002-cd2de187e",
     "react-native-platform-override": "0.0.0-canary.1023",
     "typescript": "5.1.6"

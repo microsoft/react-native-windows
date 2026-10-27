@@ -33,7 +33,7 @@
     "nullthrows": "^1.1.1"
   },
   "peerDependencies": {
-    "react": "19.2.3",
+    "react": "19.3.0",
     "react-native": "*"
   },
   "codegenConfig": {
@@ -62,7 +62,7 @@
     "@react-native/core-cli-utils": "*",
     "commander": "^12.0.0",
     "listr2": "^6.4.1",
-    "react": "19.2.3",
+    "react": "19.3.0",
     "react-native": "0.89.0-nightly-20261002-cd2de187e",
     "rxjs": "npm:@react-native-community/rxjs@6.5.4-custom"
   },

@@ -64,7 +64,7 @@
     "jest-environment-node": "^29.7.0",
     "jest-image-snapshot": "^6.5.2",
     "prettier": "^3.6.2",
-    "react-test-renderer": "19.1.0",
+    "react-test-renderer": "19.3.0",
     "sanitize-filename": "^1.6.3",
     "typescript": "5.1.6"
   },

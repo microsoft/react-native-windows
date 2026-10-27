@@ -53,13 +53,13 @@
     "lodash": "^4.17.15",
     "prettier": "^3.6.2",
     "prettier-plugin-hermes-parser": "0.21.1",
-    "react": "19.2.3",
+    "react": "19.3.0",
     "react-native": "0.89.0-nightly-20261002-cd2de187e",
     "react-native-platform-override": "workspace:*",
     "typescript": "5.1.6"
   },
   "resolutions": {
-    "react": "19.2.3",
+    "react": "19.3.0",
     "convert-source-map": "^2.0.0",
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
