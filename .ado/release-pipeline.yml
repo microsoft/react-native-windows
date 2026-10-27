@@ -29,6 +29,11 @@ parameters:
     type: string
     default: 'Office-Hermes-Windows-Bot'
 
+variables:
+  # Only npm call is the publish-eligibility check (npm view) in PushNpm; keep it on the compliant feed.
+  - name: NPM_CONFIG_REGISTRY
+    value: https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/npm/registry/
+
 resources:
   pipelines:
   - pipeline: 'CI'
@@ -67,8 +72,8 @@ extends:
       suppression:
         suppressionFile: $(Build.SourcesDirectory)\.ado\guardian\sdl\.gdnsuppress
     settings:
-      # Report-only network isolation so nuget.org publishing can egress (Enforce blocks it).
-      networkIsolationMode: Audit
+      # ESRP publishes centrally; the release agent does not need NuGet.org access.
+      networkIsolationMode: Enforce
     stages:
     #
     # Gate stage — runs unconditionally for every trigger.
@@ -202,7 +207,7 @@ extends:
             script: node $(Pipeline.Workspace)/VersionEnvVars/versionEnvVars.js
         - script: dir /s "$(Pipeline.Workspace)\published-packages"
           displayName: Show npm packages before cleanup
-        - script: node "$(Pipeline.Workspace)\VersionEnvVars\npmPack.js" --no-pack --check-npm --registry https://registry.npmjs.org/ --no-color "$(Pipeline.Workspace)\published-packages"
+        - script: node "$(Pipeline.Workspace)\VersionEnvVars\npmPack.js" --no-pack --check-npm --no-color "$(Pipeline.Workspace)\published-packages"
           displayName: Remove already published packages
         - script: dir /s "$(Pipeline.Workspace)\published-packages"
           displayName: Show npm packages after cleanup
@@ -212,7 +217,7 @@ extends:
             Write-Host "Found $tgzCount .tgz files"
             Write-Host "##vso[task.setvariable variable=HasPackagesToPublish]$($tgzCount -gt 0)"
           displayName: Check if there are packages to publish
-        - task: 'EsrpRelease@11'
+        - task: 'EsrpRelease@14'
           displayName: 'ESRP Release to npmjs.com'
           condition: and(succeeded(), ne(variables['NpmDistTag'], ''), eq(variables['HasPackagesToPublish'], 'true'))
           inputs:
@@ -331,30 +336,42 @@ extends:
             artifactName: 'ReactWindows-final-nuget'
             targetPath: '$(Pipeline.Workspace)/ReactWindows-final-nuget'
         steps:
-        # nuget.org API key comes from OGX-JSHost-KV;
-        - task: AzureKeyVault@2
-          displayName: Fetch nuget.org API key from OGX-JSHost-KV
-          inputs:
-            azureSubscription: 'ESRP-JSHost3'
-            KeyVaultName: 'OGX-JSHost-KV'
-            SecretsFilter: 'OGX-JSHost-Nuget-org-API-key-Microsoft-JavaScript-NodeApi'
-
-        # Pass the key through an env var into SetApiKey so it never appears on a
-        # command line; the push below then needs no key argument.
-        - pwsh: nuget.exe SetApiKey "$env:NUGET_API_KEY"
-          displayName: NuGet SetApiKey (nuget.org)
-          workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
-          env:
-            NUGET_API_KEY: $(OGX-JSHost-Nuget-org-API-key-Microsoft-JavaScript-NodeApi)
-
-        - script: dir /S "$(Pipeline.Workspace)\ReactWindows-final-nuget"
+        - pwsh: |
+            Get-ChildItem -LiteralPath '$(Pipeline.Workspace)\ReactWindows-final-nuget' -Recurse
           displayName: Show directory contents
 
-        # -SkipDuplicate treats an existing version (HTTP 409) as success and
-        # fails on any other error, without reading package contents.
-        - script: nuget.exe push .\Microsoft.ReactNative.*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -NoSymbol -NonInteractive -Verbosity Detailed
-          displayName: NuGet push (nuget.org)
-          workingDirectory: $(Pipeline.Workspace)/ReactWindows-final-nuget
+        # ESRP uploads the whole folder; stage only the NuGet packages.
+        - task: CopyFiles@2
+          displayName: Stage NuGet packages for ESRP Release
+          inputs:
+            SourceFolder: '$(Pipeline.Workspace)\ReactWindows-final-nuget'
+            Contents: 'Microsoft.ReactNative.*.nupkg'
+            TargetFolder: '$(Agent.TempDirectory)\esrp-nuget\react-native-windows'
+
+        - pwsh: |
+            Get-ChildItem -LiteralPath '$(Agent.TempDirectory)\esrp-nuget\react-native-windows' -Recurse
+          displayName: Show ESRP submission directory contents
+
+        - task: EsrpRelease@14
+          displayName: ESRP Release to NuGet.org
+          inputs:
+            connectedservicename: 'ESRP-JSHost3'
+            usemanagedidentity: false
+            keyvaultname: 'OGX-JSHost-KV'
+            authcertname: 'OGX-JSHost-Auth4'
+            signcertname: 'OGX-JSHost-Sign3'
+            clientid: '0a35e01f-eadf-420a-a2bf-def002ba898d'
+            domaintenantid: 'cdc5aeea-15c5-4db6-b079-fcadd2505dc2'
+            intent: 'PackageDistribution'
+            contenttype: 'NuGet'
+            organizationname: 'react-native-windows'
+            contentsource: 'Folder'
+            folderlocation: '$(Agent.TempDirectory)\esrp-nuget\react-native-windows'
+            waitforreleasecompletion: true
+            owners: 'vmorozov@microsoft.com'
+            approvers: 'khosany@microsoft.com'
+            serviceendpointurl: 'https://api.esrp.microsoft.com'
+            mainpublisher: 'ESRPRELPACMAN'
 
       - job: PublishSymbols
         displayName: Publish PDB Symbols to Symbol Server
