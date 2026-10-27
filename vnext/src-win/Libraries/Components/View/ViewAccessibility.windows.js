@@ -384,11 +384,7 @@ export type AccessibilityPropsWindows = $ReadOnly<{
 }>;
 // Windows]
 
-/** @build-types emit-as-interface react-native-web compatibility */
-export type AccessibilityProps = Readonly<{
-  ...AccessibilityPropsAndroid,
-  ...AccessibilityPropsIOS,
-  ...AccessibilityPropsWindows, // [Windows]
+type AccessibilityPropsCore = Readonly<{
   /**
    * When `true`, indicates that the view is an accessibility element.
    * By default, all the touchable elements are accessible.
@@ -469,4 +465,12 @@ export type AccessibilityProps = Readonly<{
    * See https://reactnative.dev/docs/view#aria-hidden
    */
   'aria-hidden'?: ?boolean,
+}>;
+
+/** @build-types emit-as-interface react-native-web compatibility */
+export type AccessibilityProps = Readonly<{
+  ...AccessibilityPropsAndroid,
+  ...AccessibilityPropsIOS,
+  ...AccessibilityPropsWindows, // [Windows]
+  ...AccessibilityPropsCore,
 }>;

@@ -1,6 +1,6 @@
 {
   "name": "@react-native/tester",
-  "version": "0.88.0-nightly-20260908-3e897cfdf",
+  "version": "0.89.0-nightly-20261002-cd2de187e",
   "private": true,
   "description": "React Native tester app.",
   "license": "MIT",
@@ -26,14 +26,14 @@
     "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
-    "@react-native/new-app-screen": "0.88.0-nightly-20260908-3e897cfdf",
-    "@react-native/popup-menu-android": "0.88.0-nightly-20260908-3e897cfdf",
+    "@react-native/new-app-screen": "0.89.0-nightly-20261002-cd2de187e",
+    "@react-native/popup-menu-android": "0.89.0-nightly-20261002-cd2de187e",
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"
   },
   "peerDependencies": {
-    "react": "19.2.3",
+    "react": "19.3.0",
     "react-native": "*"
   },
   "codegenConfig": {
@@ -44,6 +44,11 @@
       "javaPackageName": "com.facebook.fbreact.specs"
     },
     "ios": {
+      "modules": {
+        "SampleTurboModule": {
+          "unstableRequiresMainQueueSetup": true
+        }
+      },
       "components": {
         "RNTMyNativeView": {
           "className": "RNTMyNativeViewComponentView"
@@ -52,14 +57,40 @@
     }
   },
   "devDependencies": {
-    "@react-native-community/cli": "20.2.0",
-    "@react-native-community/cli-platform-android": "20.2.0",
-    "@react-native-community/cli-platform-ios": "20.2.0",
+    "@react-native-community/cli": "21.0.0-alpha.1",
+    "@react-native/community-cli-plugin": "0.89.0-nightly-20261002-cd2de187e",
     "@react-native/core-cli-utils": "*",
     "commander": "^12.0.0",
     "listr2": "^6.4.1",
-    "react": "19.2.3",
-    "react-native": "0.88.0-nightly-20260908-3e897cfdf",
+    "react": "19.3.0",
+    "react-native": "0.89.0-nightly-20261002-cd2de187e",
     "rxjs": "npm:@react-native-community/rxjs@6.5.4-custom"
+  },
+  "swiftpmConfig": {
+    "modules": [
+      {
+        "name": "ReactCommonSamples",
+        "path": "../react-native/ReactCommon/react/nativemodule/samples/platform/ios"
+      },
+      {
+        "name": "ReactRCTPushNotification",
+        "path": "../react-native/Libraries/PushNotificationIOS",
+        "exclude": [
+          "React-RCTPushNotification.podspec"
+        ]
+      },
+      {
+        "name": "ScreenshotManager",
+        "path": "NativeModuleExample"
+      },
+      {
+        "name": "MyNativeView",
+        "path": "NativeComponentExample/ios"
+      },
+      {
+        "name": "NativeCxxModuleExample",
+        "path": "NativeCxxModuleExample"
+      }
+    ]
   }
 }

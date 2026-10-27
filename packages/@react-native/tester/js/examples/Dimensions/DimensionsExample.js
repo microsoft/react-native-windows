@@ -15,7 +15,7 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {Button, Dimensions, View, useWindowDimensions} from 'react-native';
 
-type Props = {dim: string};
+type Props = {dim: 'screen' | 'window'};
 
 function DimensionsSubscription(props: Props) {
   const [dims, setDims] = useState(() => Dimensions.get(props.dim));

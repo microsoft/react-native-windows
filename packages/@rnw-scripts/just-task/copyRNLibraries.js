@@ -192,8 +192,8 @@ exports.applyWindowsTypeExtensions = baseDir => {
   );
   replaceOnce(
     buttonProps,
-    "  | 'accessibilityState'\n  | 'hasTVPreferredFocus'\n",
-    "  | 'accessibilityState'\n  | 'accessibilityValue' // Windows\n  | 'hasTVPreferredFocus'\n",
+    "  | 'accessibilityState'\n  | 'nextFocusDown'\n",
+    "  | 'accessibilityState'\n  | 'accessibilityValue' // Windows\n  | 'nextFocusDown'\n",
   );
   replaceOnce(
     buttonProps,
@@ -222,6 +222,36 @@ exports.applyWindowsFlowFixes = baseDir => {
     '    const refreshControl = cloneElement(props.refreshControl, {\n',
     '    // $FlowFixMe[incompatible-type] Flow cloneElement overloads do not accept MixedElement.\n' +
       '    const refreshControl = cloneElement(props.refreshControl, {\n',
+  );
+
+  // Flow 0.316 flags extracting console methods. These files are recopied
+  // from React Native, so the suppression has to live in the copy step.
+  const logBox = path.join(baseDir, 'Libraries/LogBox/LogBox.js');
+  replaceOnce(
+    logBox,
+    '        originalConsoleWarn = console.warn.bind(console);\n',
+    '        // $FlowFixMe[method-unbinding]\n' +
+      '        originalConsoleWarn = console.warn.bind(console);\n',
+  );
+
+  const logError = path.join(baseDir, 'Libraries/Utilities/logError.js');
+  replaceOnce(
+    logError,
+    '    console.error.apply(console, args);\n',
+    '    // $FlowFixMe[method-unbinding]\n' +
+      '    console.error.apply(console, args);\n',
+  );
+
+  const localSetup = path.join(baseDir, 'jest/local-setup.js');
+  replaceOnce(
+    localSetup,
+    '// $FlowFixMe[incompatible-type]\nconst consoleError: (...data: ReadonlyArray<unknown>) => void = console.error;\n',
+    '// $FlowFixMe[incompatible-type]\n// $FlowFixMe[method-unbinding]\nconst consoleError: (...data: ReadonlyArray<unknown>) => void = console.error;\n',
+  );
+  replaceOnce(
+    localSetup,
+    '// $FlowFixMe[incompatible-type]\nconst consoleWarn: (...data: ReadonlyArray<unknown>) => void = console.warn;\n',
+    '// $FlowFixMe[incompatible-type]\n// $FlowFixMe[method-unbinding]\nconst consoleWarn: (...data: ReadonlyArray<unknown>) => void = console.warn;\n',
   );
 };
 

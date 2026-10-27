@@ -418,6 +418,7 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ThemeUtils.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\DevMenu.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\ColorComponents.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\fromRawValueShared.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Modern.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Legacy.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
@@ -431,6 +432,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\BackgroundImagePropsConversions.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\featureflags\ReactNativeFeatureFlags.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\featureflags\ReactNativeFeatureFlagsAccessor.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\featureflags\ReactNativePublicFeatureFlags.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\cdp\CdpJson.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ExecutionContext.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ExecutionContextManager.cpp" />

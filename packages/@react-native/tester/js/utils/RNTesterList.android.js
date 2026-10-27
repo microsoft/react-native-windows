@@ -206,6 +206,14 @@ const APIs: Array<RNTesterModuleInfo> = (
       category: 'Android',
       module: require('../examples/ContentURLAndroid/ContentURLAndroid'),
     },
+    // PhotoPickerAndroid is not published in @react-native/tester for this nightly.
+    /*
+    {
+      key: 'PhotoPickerAndroid',
+      category: 'Android',
+      module: require('../examples/PhotoPickerAndroid/PhotoPickerAndroid'),
+    },
+    */
     {
       key: 'URLExample',
       category: 'Basic',

@@ -307,14 +307,6 @@ export type ViewPropsAndroid = Readonly<{
   renderToHardwareTextureAndroid?: ?boolean,
 
   /**
-   * Whether to force the Android TV focus engine to move focus to this view.
-   *
-   * @platform android
-   * @deprecated Use `focusable` instead
-   */
-  hasTVPreferredFocus?: ?boolean,
-
-  /**
    * Designates the next view to receive focus when the user navigates down.
    * The value is the `nativeID` of the target view.
    *
@@ -390,14 +382,6 @@ export type TVViewPropsIOS = Readonly<{
    * @platform ios
    */
   isTVSelectable?: boolean,
-
-  /**
-   * *(Apple TV only)* May be set to true to force the Apple TV focus engine to move focus to this view.
-   *
-   * @platform ios
-   * @deprecated Use `focusable` instead
-   */
-  hasTVPreferredFocus?: boolean,
 
   /**
    * *(Apple TV only)* May be used to change the appearance of the Apple TV parallax effect when this view goes in or out of focus.  Defaults to 2.0.
@@ -512,6 +496,13 @@ type ViewBaseProps = Readonly<{
    * Rendering offscreen to preserve correct alpha behavior is extremely
    * expensive and hard to debug for non-native developers, which is why it is
    * not turned on by default.
+   *
+   * On Android, enable this on a view that sets `opacity` < 1 (directly or via
+   * an animation) and contains a descendant with `elevation`. Without it, the
+   * descendant's elevation shadow is composited per-primitive at reduced alpha,
+   * which renders the shadow as concentric bands with an over-opaque center
+   * instead of fading uniformly. Enabling this composites the subtree once, so
+   * the shadow fades correctly.
    *
    * @default `false`
    */

@@ -200,10 +200,6 @@ module.exports = {
     return require('./src/private/components/virtualcollection/row/VirtualRow')
       .default;
   },
-  get unstable_getScrollParent() {
-    return require('./src/private/components/virtualcollection/dom/getScrollParent')
-      .default;
-  },
   get unstable_DEFAULT_INITIAL_NUM_TO_RENDER() {
     return require('./src/private/components/virtualcollection/FlingConstants')
       .DEFAULT_INITIAL_NUM_TO_RENDER;
