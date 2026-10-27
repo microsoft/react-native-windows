@@ -78,6 +78,8 @@
     "esbuild": "^0.25.0",
     "@babel/core": "^7.29.6",
     "basic-ftp": "^5.2.0",
+    "browserslist@^4.24.0": "^4.28.7",
+    "browserslist@^4.25.1": "^4.28.7",
     "simple-git": "^3.32.3",
     "shell-quote": "^1.8.4",
     "form-data": "^4.0.6",
