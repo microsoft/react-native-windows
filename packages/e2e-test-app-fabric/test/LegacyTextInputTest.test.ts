@@ -111,7 +111,7 @@ describe('LegacyTextInputTest', () => {
       async () =>
         (
           await textLog.getText()
-        ).startsWith('onSelectionChange range: 0,0\nonChange text: \n'),
+        ).startsWith('onChange text: \nonSelectionChange range: 0,0\n'),
       {
         timeoutMsg:
           'Clearing text should report the final selection after the text change.',
