@@ -94,6 +94,7 @@ void ExpectReclaimed(Stats before, Stats after) {
 // Run this class alone in a test process: V8 counters are process-wide.
 TEST_CLASS (TurboModuleLifetimeTests) {
   TEST_METHOD_INITIALIZE(Initialize) {
+    winrt::uninit_apartment();
     winrt::init_apartment(winrt::apartment_type::multi_threaded);
   }
 
