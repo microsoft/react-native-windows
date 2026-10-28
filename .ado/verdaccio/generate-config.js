@@ -29,12 +29,11 @@ const lines = [
   '      maxFreeSockets: 10',
 ];
 
-// Keep feed credentials scoped to the authenticated Azure Artifacts uplink.
 if (process.env[TOKEN_ENV]) {
   lines.push('    auth:', '      type: bearer', `      token_env: ${TOKEN_ENV}`);
 }
 
-// Allow local packages to publish even when the upstream feed is unavailable.
+// Keep local package publication independent of uplink availability.
 lines.push('publish:', '  allow_offline: true');
 
 lines.push(
@@ -47,8 +46,11 @@ lines.push(
   '    access: $all',
   '    publish: $all',
   '    proxy: npmFeed',
-  'logs:',
-  '  - {type: file, path: verdaccio.log, format: pretty, level: debug}',
+  'log:',
+  '  type: file',
+  '  path: verdaccio.log',
+  '  format: pretty',
+  '  level: debug',
 );
 
 const outputPath = path.join(__dirname, 'config.generated.yaml');
