@@ -81,16 +81,33 @@ All repository resources pin `ref: refs/tags/release`.
 ## Package feed and network isolation
 
 ISS agents run under 1ES **Network Isolation**, which blocks egress to public CDNs.
-The pipelines source packages only from the `ms/react-native-public` Azure Artifacts
-feed and neutralize three background egress attempts that green builds would
-otherwise hide:
+The pipelines use approved package feeds and neutralize three background egress
+attempts that green builds would otherwise hide:
 
-- **Feed registry:** `variables/shared.yml` points npm and Yarn at the
-  `ms/react-native-public` feed (`NPM_CONFIG_REGISTRY` / `YARN_NPM_REGISTRY_SERVER`).
-  On CI, `templates/auth-npm-feed.yml` mints a managed-identity token and writes it
-  to `~/.npmrc` and `~/.yarnrc.yml` before any install.
+- **NuGet restores:** the root `NuGet.Config` maps NuGet.org dependencies to
+  `https://packagefeedproxy.microsoft.io/nuget/v3/index.json` anonymously.
+  Only `ReactNative.V8Jsi.Windows*` and `Microsoft.JavaScript.V8*` use the
+  `ms/react-native-public` ADO feed, where these V8 packages are published.
+  CI imports this policy for generated apps/libraries and third-party configs;
+  CLI-init tests also retain their local feed for freshly built RNW packages.
+  NuGet 6.0 or later is required to enforce these source mappings.
+  BinSkim downloads use the same proxy instead of nuget.org.
+- **Package registries:** `variables/shared.yml` routes npm/npx and Yarn through
+  the anonymous PackageFeedProxy (`NPM_CONFIG_REGISTRY` /
+  `YARN_NPM_REGISTRY_SERVER`) in both PR and Continuous validation.
+  `templates/auth-npm-feed.yml` keeps the managed-identity token scoped to direct
+  Azure Artifacts requests in `~/.npmrc` and passes it to the Verdaccio uplink;
+  Yarn does not send the token to the proxy.
+- **Dependabot:** `.github/dependabot.yml` configures the same anonymous proxy
+  separately; Dependabot does not inherit the pipeline variables. Its registry
+  declarations also allow the exact `ms-feed-*` hosts advertised by proxy
+  metadata for tarball downloads. Existing archive URLs in the main lockfile
+  also use proxy paths without changing dependency versions or checksums.
+  Major version updates are ignored before grouping. React, React Native, the
+  test renderer, and React types also ignore minor updates to stay on each
+  branch's selected release lines; exact versions remain manifest-controlled.
 - **Verdaccio (CLI init tests):** `verdaccio/generate-config.js` emits the config at
-  runtime, so the uplink targets the feed (with the CI token when present) while
+  runtime, so the uplink uses the proxy for PRs and the ADO feed with the CI token while
   local packages still publish offline. The former static `config.yaml` was removed.
 - **React Native DevTools:** `RNDT_DEV: 1` stops DevTools from fetching its
   standalone shell binary from a Facebook CDN when Metro starts. The debugger is
@@ -101,10 +118,11 @@ otherwise hide:
   reapplies the same policy per job as an interim belt until the updated image
   ships; it can be dropped once a rebuilt image is confirmed clean.
 
-Public PR builds read this feed **anonymously**, so they can only restore versions
-an authenticated identity has already saved. `warm-feed-pipeline.yml` (the
-`@rnw-scripts/warm-feed` tool) runs on a schedule to re-pull the latest patch of
-every npm/NuGet line already in the feed and keep those anonymous restores working.
+PackageFeedProxy restores are **anonymous** and do not depend on the RNW feed
+warm-up. The scheduled warm-up maintained on `main` still populates the ADO feed
+for its remaining consumers. Publishing and authenticated feed maintenance keep
+their existing endpoints; NuGet defaults shipped in generated apps/libraries
+are unchanged.
 
 ## SDL and Component Governance
 
@@ -116,18 +134,17 @@ root `package.json`), so nothing is suppressed.
 
 ## Release publishing targets
 
-`release-pipeline.yml` publishes from ISS to all five destinations:
+`release-pipeline.yml` defines these publishing targets from ISS:
 
-- npm → npmjs.com via `EsrpRelease@11`
-- NuGet → `ms/react-native` (private) and `ms/react-native-public` (public) feeds
-- NuGet → nuget.org (API key from `OGX-JSHost-KV`)
+- npm → npmjs.com via `EsrpRelease@14`
+- npm and NuGet → `ms/react-native` (private) and `ms/react-native-public` (public) feeds
+- NuGet → nuget.org via `EsrpRelease@14`
 - PDB symbols → Microsoft Symbol Server (`templates/publish-symbols.yml`)
 
-The nuget.org publish runs 1ES Network Isolation in report-only mode
-(`settings.networkIsolationMode: Audit`): `Enforce` blocks `api.nuget.org`, and the
-per-domain allow-list is not plumbed for release jobs, so mode is the only
-in-pipeline lever. Returning to `Enforce` requires adding nuget.org to the
-`CFSClean` isolation policy for this pipeline (follow-up).
+NuGet.org publishing stages only `Microsoft.ReactNative.*.nupkg` from the CI
+`ReactWindows-final-nuget` artifact in a package-only ESRP submission folder.
+ESRP publishes centrally, without a NuGet.org API key or direct NuGet.org access
+from the release agent. Release jobs use 1ES Network Isolation in `Enforce` mode.
 
 One item remains deferred: a more authoritative npm publish-eligibility check (the
 current check reads the feed anonymously and sees only cached versions).

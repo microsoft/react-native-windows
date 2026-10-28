@@ -24,7 +24,7 @@ struct SampleTurboModule {
   std::function<void(ReactNativeSpecs::SampleTurboModuleSpec_ObjectStruct)> onChange;
 
   REACT_EVENT(onSubmit)
-  std::function<void(winrt::Microsoft::ReactNative::JSValueArray)> onSubmit;
+  std::function<void(std::vector<ReactNativeSpecs::SampleTurboModuleSpec_ObjectStruct>)> onSubmit;
 
   REACT_GET_CONSTANTS(GetConstants)
   ReactNativeSpecs::SampleTurboModuleSpec_Constants GetConstants() noexcept;
@@ -45,7 +45,7 @@ struct SampleTurboModule {
   std::string getString(std::string arg) noexcept;
 
   REACT_SYNC_METHOD(getArray)
-  ::React::JSValueArray getArray(::React::JSValueArray &&arg) noexcept;
+  std::vector<::React::JSValue> getArray(std::vector<::React::JSValue> arg) noexcept;
 
   REACT_SYNC_METHOD(getObject)
   ::React::JSValue getObject(::React::JSValue &&arg) noexcept;
@@ -58,6 +58,17 @@ struct SampleTurboModule {
 
   REACT_SYNC_METHOD(getValue)
   ::React::JSValue getValue(double x, std::string y, ::React::JSValue &&z) noexcept;
+
+  // ArrayBuffer is not yet a distinct JSValue type. These methods keep the
+  // generated spec valid; callers receive the JSON-like value the reader saw.
+  REACT_SYNC_METHOD(getArrayBuffer)
+  ::React::JSValue getArrayBuffer(::React::JSValue &&buffer) noexcept;
+
+  REACT_SYNC_METHOD(createNativeBuffer)
+  ::React::JSValue createNativeBuffer(double size) noexcept;
+
+  REACT_METHOD(processAsyncBuffer)
+  void processAsyncBuffer(::React::JSValue &&payload, ::React::ReactPromise<double> &&result) noexcept;
 
   REACT_METHOD(getValueWithCallback)
   void getValueWithCallback(std::function<void(std::string)> const &callback) noexcept;
@@ -85,6 +96,21 @@ struct SampleTurboModule {
 
   REACT_METHOD(getImageUrl)
   void getImageUrl(::React::ReactPromise<void> &&result) noexcept;
+
+  REACT_METHOD(requestSamplePermission)
+  void requestSamplePermission(::React::ReactPromise<bool> &&result) noexcept;
+
+  REACT_METHOD(pickMedia)
+  void pickMedia(std::optional<std::string> mimeType, ::React::ReactPromise<void> &&result) noexcept;
+
+  REACT_METHOD(pickMultipleMedia)
+  void pickMultipleMedia(
+      std::optional<std::string> mimeType,
+      double maxItems,
+      ::React::ReactPromise<std::vector<std::string>> &&result) noexcept;
+
+  REACT_METHOD(startSecondActivity)
+  void startSecondActivity() noexcept;
 
  private:
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;

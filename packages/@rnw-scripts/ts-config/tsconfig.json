@@ -21,7 +21,8 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "react-native": ["../../../node_modules/react-native/types/index.d.ts"]
+      "react-native": ["../../../node_modules/react-native/types_DEPRECATED/index.d.ts"],
+      "react-native/types/*": ["../../../node_modules/react-native/types_DEPRECATED/*"]
     }
   }
 }

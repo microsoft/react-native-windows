@@ -501,6 +501,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/parser@npm:^7.29.9":
+  version: 7.29.9
+  resolution: "@babel/parser@npm:7.29.9::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40babel%2Fparser%2F-%2Fparser-7.29.9.tgz"
+  dependencies:
+    "@babel/types": "npm:^7.29.8"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: 10c0/171b16eb4527cdbbb72cb98710f91acb22356e2c40196ba3b7a1b84efa8c55d0b0992f399c8c675c3e17f67fd133676c5c4118e5f20db243f427c8b29b0c3f40
+  languageName: node
+  linkType: hard
+
 "@babel/plugin-bugfix-firefox-class-in-computed-class-key@npm:^7.29.7":
   version: 7.29.7
   resolution: "@babel/plugin-bugfix-firefox-class-in-computed-class-key@npm:7.29.7"
@@ -2048,14 +2059,14 @@ __metadata:
 
 "@electron-internal/extract-zip@npm:^1.0.1":
   version: 1.0.5
-  resolution: "@electron-internal/extract-zip@npm:1.0.5::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40electron-internal%2Fextract-zip%2F-%2Fextract-zip-1.0.5.tgz"
+  resolution: "@electron-internal/extract-zip@npm:1.0.5::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40electron-internal%2Fextract-zip%2F-%2Fextract-zip-1.0.5.tgz"
   checksum: 10c0/d3341937dcb37097fd4927b7e5dfb7cb6b1ba56a42b00d62a55a7a9bbd093545dd8c6711ab39b321b2696d968b2cc32c29ed9d60a1fa6aa1665588e03e60d4e1
   languageName: node
   linkType: hard
 
 "@electron/asar@npm:^4.0.0, @electron/asar@npm:^4.0.1":
   version: 4.3.0
-  resolution: "@electron/asar@npm:4.3.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40electron%2Fasar%2F-%2Fasar-4.3.0.tgz"
+  resolution: "@electron/asar@npm:4.3.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40electron%2Fasar%2F-%2Fasar-4.3.0.tgz"
   dependencies:
     glob: "npm:^13.0.2"
     minimatch: "npm:^10.0.1"
@@ -2070,7 +2081,7 @@ __metadata:
 
 "@electron/get@npm:^5.0.0":
   version: 5.1.0
-  resolution: "@electron/get@npm:5.1.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40electron%2Fget%2F-%2Fget-5.1.0.tgz"
+  resolution: "@electron/get@npm:5.1.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40electron%2Fget%2F-%2Fget-5.1.0.tgz"
   dependencies:
     debug: "npm:^4.1.1"
     env-paths: "npm:^3.0.0"
@@ -2088,7 +2099,7 @@ __metadata:
 
 "@electron/notarize@npm:^3.1.0":
   version: 3.1.1
-  resolution: "@electron/notarize@npm:3.1.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40electron%2Fnotarize%2F-%2Fnotarize-3.1.1.tgz"
+  resolution: "@electron/notarize@npm:3.1.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40electron%2Fnotarize%2F-%2Fnotarize-3.1.1.tgz"
   dependencies:
     debug: "npm:^4.4.0"
     promise-retry: "npm:^2.0.1"
@@ -2098,7 +2109,7 @@ __metadata:
 
 "@electron/osx-sign@npm:^2.2.0":
   version: 2.7.0
-  resolution: "@electron/osx-sign@npm:2.7.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40electron%2Fosx-sign%2F-%2Fosx-sign-2.7.0.tgz"
+  resolution: "@electron/osx-sign@npm:2.7.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40electron%2Fosx-sign%2F-%2Fosx-sign-2.7.0.tgz"
   dependencies:
     debug: "npm:^4.3.4"
     isbinaryfile: "npm:^4.0.8"
@@ -2113,7 +2124,7 @@ __metadata:
 
 "@electron/packager@npm:^20.0.0":
   version: 20.3.0
-  resolution: "@electron/packager@npm:20.3.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40electron%2Fpackager%2F-%2Fpackager-20.3.0.tgz"
+  resolution: "@electron/packager@npm:20.3.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40electron%2Fpackager%2F-%2Fpackager-20.3.0.tgz"
   dependencies:
     "@electron-internal/extract-zip": "npm:^1.0.1"
     "@electron/asar": "npm:^4.0.1"
@@ -2140,7 +2151,7 @@ __metadata:
 
 "@electron/universal@npm:^3.0.1":
   version: 3.0.6
-  resolution: "@electron/universal@npm:3.0.6::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40electron%2Funiversal%2F-%2Funiversal-3.0.6.tgz"
+  resolution: "@electron/universal@npm:3.0.6::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40electron%2Funiversal%2F-%2Funiversal-3.0.6.tgz"
   dependencies:
     "@electron/asar": "npm:^4.0.0"
     debug: "npm:^4.3.1"
@@ -2151,7 +2162,7 @@ __metadata:
 
 "@electron/windows-sign@npm:^2.0.2":
   version: 2.1.0
-  resolution: "@electron/windows-sign@npm:2.1.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40electron%2Fwindows-sign%2F-%2Fwindows-sign-2.1.0.tgz"
+  resolution: "@electron/windows-sign@npm:2.1.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40electron%2Fwindows-sign%2F-%2Fwindows-sign-2.1.0.tgz"
   dependencies:
     debug: "npm:^4.3.4"
     graceful-fs: "npm:^4.2.11"
@@ -2840,107 +2851,107 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jsonjoy.com/fs-core@npm:4.69.1":
-  version: 4.69.1
-  resolution: "@jsonjoy.com/fs-core@npm:4.69.1"
+"@jsonjoy.com/fs-core@npm:4.80.0":
+  version: 4.80.0
+  resolution: "@jsonjoy.com/fs-core@npm:4.80.0"
   dependencies:
-    "@jsonjoy.com/fs-node-builtins": "npm:4.69.1"
-    "@jsonjoy.com/fs-node-utils": "npm:4.69.1"
+    "@jsonjoy.com/fs-node-builtins": "npm:4.80.0"
+    "@jsonjoy.com/fs-node-utils": "npm:4.80.0"
     thingies: "npm:^2.5.0"
   peerDependencies:
     tslib: 2
-  checksum: 10c0/83b4302db0a485769b87d4c0bcb20a3da890ec12821051555ab75179629cb65e704db0e98e37da1f29b694fc0f67f64e6763377bdee8d128b32fa838bb305fe9
+  checksum: 10c0/dddfc154fd16ab6bab67916794d91c0aed4d267a02f8e3a1d3062bc2966d727cade1648f550280ea3a9f044aee01dfd1ce56e449682f50a34075be724615cfaa
   languageName: node
   linkType: hard
 
-"@jsonjoy.com/fs-fsa@npm:4.69.1":
-  version: 4.69.1
-  resolution: "@jsonjoy.com/fs-fsa@npm:4.69.1"
+"@jsonjoy.com/fs-fsa@npm:4.80.0":
+  version: 4.80.0
+  resolution: "@jsonjoy.com/fs-fsa@npm:4.80.0"
   dependencies:
-    "@jsonjoy.com/fs-core": "npm:4.69.1"
-    "@jsonjoy.com/fs-node-builtins": "npm:4.69.1"
-    "@jsonjoy.com/fs-node-utils": "npm:4.69.1"
+    "@jsonjoy.com/fs-core": "npm:4.80.0"
+    "@jsonjoy.com/fs-node-builtins": "npm:4.80.0"
+    "@jsonjoy.com/fs-node-utils": "npm:4.80.0"
     thingies: "npm:^2.5.0"
   peerDependencies:
     tslib: 2
-  checksum: 10c0/26be9b5a0846f635155380cbb23c905a77908b5ccd77bf3671e68063242d516a36275217f7bc869055944e0b5a0d5f6afa43e4622c71dd83431ee7e3df6e78da
+  checksum: 10c0/fc5ddfccae167cb79ba1de4bee1636d73a8289c00fe6978950bfff09c2244a802063d19d55e9f27b6945e70a981b75dfede1efd9ca022c1ed6180653a41611fa
   languageName: node
   linkType: hard
 
-"@jsonjoy.com/fs-node-builtins@npm:4.69.1":
-  version: 4.69.1
-  resolution: "@jsonjoy.com/fs-node-builtins@npm:4.69.1"
+"@jsonjoy.com/fs-node-builtins@npm:4.80.0":
+  version: 4.80.0
+  resolution: "@jsonjoy.com/fs-node-builtins@npm:4.80.0"
   peerDependencies:
     tslib: 2
-  checksum: 10c0/eb76b47ab4b3bc250d74e8e3a89e70d7196c4c543ef73e6fc560f00393a2cd16745ff2bbdf57458997c324074c0a11e42e9c7321bec56db1372686ac6a569338
+  checksum: 10c0/9324295979e8be14f64cf8ce54d9b49fe50a42f3ade9301ac00d7c7841da26ff25aa0c37f02edd8ca3247b07b6791db9e68d76e7f0d5dc51e8c2da090c514b3d
   languageName: node
   linkType: hard
 
-"@jsonjoy.com/fs-node-to-fsa@npm:4.69.1":
-  version: 4.69.1
-  resolution: "@jsonjoy.com/fs-node-to-fsa@npm:4.69.1"
+"@jsonjoy.com/fs-node-to-fsa@npm:4.80.0":
+  version: 4.80.0
+  resolution: "@jsonjoy.com/fs-node-to-fsa@npm:4.80.0"
   dependencies:
-    "@jsonjoy.com/fs-fsa": "npm:4.69.1"
-    "@jsonjoy.com/fs-node-builtins": "npm:4.69.1"
-    "@jsonjoy.com/fs-node-utils": "npm:4.69.1"
+    "@jsonjoy.com/fs-fsa": "npm:4.80.0"
+    "@jsonjoy.com/fs-node-builtins": "npm:4.80.0"
+    "@jsonjoy.com/fs-node-utils": "npm:4.80.0"
   peerDependencies:
     tslib: 2
-  checksum: 10c0/8c740984a40550b2f46d63c83365b207daa01fe4123884ea0004fabc3317d147d2a522a2bf8c9ef523d7ad1f8c72c440b2df161c4058bf816f26599a251865dd
+  checksum: 10c0/53eebb78689e18c851f31dc1f9cea4f427225f3314eca41eefef55fcd894f40bfef829b400f1873675e9823edc67cc9f678da4812b40ae87efed13f215c350c8
   languageName: node
   linkType: hard
 
-"@jsonjoy.com/fs-node-utils@npm:4.69.1":
-  version: 4.69.1
-  resolution: "@jsonjoy.com/fs-node-utils@npm:4.69.1"
+"@jsonjoy.com/fs-node-utils@npm:4.80.0":
+  version: 4.80.0
+  resolution: "@jsonjoy.com/fs-node-utils@npm:4.80.0"
   dependencies:
-    "@jsonjoy.com/fs-node-builtins": "npm:4.69.1"
-    glob-to-regex.js: "npm:^1.0.1"
+    "@jsonjoy.com/fs-node-builtins": "npm:4.80.0"
+    glob-to-regex.js: "npm:^1.3.1"
   peerDependencies:
     tslib: 2
-  checksum: 10c0/13a18aa6ab97e8cd7349448cb3a9ee7914959b99c22445d626ee28fa38ded2270c637e45e9486a0f870702c55519a2a9fc2c0b21d77fd266a49fcf2843d5057f
+  checksum: 10c0/718465fd60009a32a76fae8582e7e88eff2047cc613c764c9ae0a6aa74ad4319b062e35849bb2325d24cfdc5e5ff2894027bbc0a4a647c8334437d1db1db9920
   languageName: node
   linkType: hard
 
-"@jsonjoy.com/fs-node@npm:4.69.1":
-  version: 4.69.1
-  resolution: "@jsonjoy.com/fs-node@npm:4.69.1"
+"@jsonjoy.com/fs-node@npm:4.80.0":
+  version: 4.80.0
+  resolution: "@jsonjoy.com/fs-node@npm:4.80.0"
   dependencies:
-    "@jsonjoy.com/fs-core": "npm:4.69.1"
-    "@jsonjoy.com/fs-node-builtins": "npm:4.69.1"
-    "@jsonjoy.com/fs-node-utils": "npm:4.69.1"
-    "@jsonjoy.com/fs-print": "npm:4.69.1"
-    "@jsonjoy.com/fs-snapshot": "npm:4.69.1"
-    glob-to-regex.js: "npm:^1.0.0"
+    "@jsonjoy.com/fs-core": "npm:4.80.0"
+    "@jsonjoy.com/fs-node-builtins": "npm:4.80.0"
+    "@jsonjoy.com/fs-node-utils": "npm:4.80.0"
+    "@jsonjoy.com/fs-print": "npm:4.80.0"
+    "@jsonjoy.com/fs-snapshot": "npm:4.80.0"
+    glob-to-regex.js: "npm:^1.3.1"
     thingies: "npm:^2.5.0"
   peerDependencies:
     tslib: 2
-  checksum: 10c0/d87832573e0cb266bd544f38c487f30b4726d0e061967bf3625d5cc0202147dd5dab5ab0e6dc08de85d4f9f5c4043156dfdf0d592216bf4a138d44c4a7d1e4ff
+  checksum: 10c0/2b4583f2fb79643d6c6cb4d28b46d3ed2450e90b99d458c243d470d70446d16d967a63e4ea9a785cebe43c20f97fb0b2c522a2098c465e4817c6af8be848990c
   languageName: node
   linkType: hard
 
-"@jsonjoy.com/fs-print@npm:4.69.1":
-  version: 4.69.1
-  resolution: "@jsonjoy.com/fs-print@npm:4.69.1"
+"@jsonjoy.com/fs-print@npm:4.80.0":
+  version: 4.80.0
+  resolution: "@jsonjoy.com/fs-print@npm:4.80.0"
   dependencies:
-    "@jsonjoy.com/fs-node-utils": "npm:4.69.1"
+    "@jsonjoy.com/fs-node-utils": "npm:4.80.0"
     tree-dump: "npm:^1.1.0"
   peerDependencies:
     tslib: 2
-  checksum: 10c0/6f7d6713719876c9108d46212211a47bc9446ac1e46518fd4fcef417d407d327fecf594bce76e3b0173c566a449b67831c7d17ed8932ec5a6630374d369cfb11
+  checksum: 10c0/e76a353fe65d4037bc2620e684f76c749f001e40faf25b836fda8264824fff6f5d5c4a8ce4e705bc38a72950826f9f44b6a52027f561a93fc1953f085c4aa73e
   languageName: node
   linkType: hard
 
-"@jsonjoy.com/fs-snapshot@npm:4.69.1":
-  version: 4.69.1
-  resolution: "@jsonjoy.com/fs-snapshot@npm:4.69.1"
+"@jsonjoy.com/fs-snapshot@npm:4.80.0":
+  version: 4.80.0
+  resolution: "@jsonjoy.com/fs-snapshot@npm:4.80.0"
   dependencies:
     "@jsonjoy.com/buffers": "npm:^17.65.0"
-    "@jsonjoy.com/fs-node-utils": "npm:4.69.1"
+    "@jsonjoy.com/fs-node-utils": "npm:4.80.0"
     "@jsonjoy.com/json-pack": "npm:^17.65.0"
     "@jsonjoy.com/util": "npm:^17.65.0"
   peerDependencies:
     tslib: 2
-  checksum: 10c0/2136f94ed28b2da97cd02fcf3c0b73a095dfd609ebb7655c020864b98e50d31d3e1af4a09ab1ad9f714d9e6e4bddb8525d94bfb8eaed7abf699ebce3d13c9805
+  checksum: 10c0/d8e75a5c2fd205b5fc839c3c2516b1f7be07fa6c467855c9c856605964b3f74e23b3d915876648f95041010c21750e639862e96af19e3a46dddd318f294f0926
   languageName: node
   linkType: hard
 
@@ -3053,53 +3064,53 @@ __metadata:
   linkType: hard
 
 "@microsoft/1ds-core-js@npm:^4.3.0":
-  version: 4.4.3
-  resolution: "@microsoft/1ds-core-js@npm:4.4.3"
+  version: 4.4.5
+  resolution: "@microsoft/1ds-core-js@npm:4.4.5"
   dependencies:
-    "@microsoft/applicationinsights-core-js": "npm:3.4.3"
+    "@microsoft/applicationinsights-core-js": "npm:3.4.5"
     "@microsoft/applicationinsights-shims": "npm:3.0.1"
     "@microsoft/dynamicproto-js": "npm:^2.0.3"
     "@nevware21/ts-async": "npm:>= 0.5.5 < 0.6.0"
     "@nevware21/ts-utils": "npm:>= 0.14.0 < 2.x"
-  checksum: 10c0/5dd9457a7347e17b410dedfb75da90031ec41d67740034a1c43b40425a326ef4b90fc31c9c590e5280ac8e40c0f168b3b47333ba098ab939dbee808ba9addb59
+  checksum: 10c0/5258f3bd38dcf3c1ec917766531f015017aecdfd016dafd131e8c5869a8612d68c643194586bf30c065598e7b75b9b737731d2b9c36bc84298afacb3369829fb
   languageName: node
   linkType: hard
 
 "@microsoft/1ds-post-js@npm:^4.3.0":
-  version: 4.4.3
-  resolution: "@microsoft/1ds-post-js@npm:4.4.3"
+  version: 4.4.5
+  resolution: "@microsoft/1ds-post-js@npm:4.4.5"
   dependencies:
-    "@microsoft/applicationinsights-core-js": "npm:3.4.3"
+    "@microsoft/applicationinsights-core-js": "npm:3.4.5"
     "@microsoft/applicationinsights-shims": "npm:3.0.1"
     "@microsoft/dynamicproto-js": "npm:^2.0.3"
     "@nevware21/ts-async": "npm:>= 0.5.5 < 0.6.0"
     "@nevware21/ts-utils": "npm:>= 0.14.0 < 2.x"
-  checksum: 10c0/035edbf0d343f3ab767446129ae24eb64ed311478dab6c6fdf79eec3b90d270675146261c3afeffbc865d642ecd3c6f43024f20fc917e408200a8985357fc60d
+  checksum: 10c0/54b6d6b6394d10187570fdeddb98476262b5e3034a39a75adf6b61baf7d921d96b4684d00dcdd9620777063d8c37e7a16fb4076a05099d6863b1f7c41deab95a
   languageName: node
   linkType: hard
 
-"@microsoft/api-extractor-model@npm:7.33.11":
-  version: 7.33.11
-  resolution: "@microsoft/api-extractor-model@npm:7.33.11"
+"@microsoft/api-extractor-model@npm:7.33.15":
+  version: 7.33.15
+  resolution: "@microsoft/api-extractor-model@npm:7.33.15"
   dependencies:
-    "@microsoft/tsdoc": "npm:~0.16.0"
-    "@microsoft/tsdoc-config": "npm:~0.18.1"
-    "@rushstack/node-core-library": "npm:5.24.0"
-  checksum: 10c0/d36dd632a758c45d0c123f5e71b5d2e1244a2a52984471d0f171b8ea3af1651ebf93cb70208946ab0f64dc280b01affddc173c2a158f0cedff49033ec0f144e6
+    "@microsoft/tsdoc": "npm:~0.17.0"
+    "@microsoft/tsdoc-config": "npm:~0.18.2"
+    "@rushstack/node-core-library": "npm:5.25.1"
+  checksum: 10c0/7dce2166e3d5c0f562f99893f2b8a078e24121ed57a10970e3bcbf33cc13916dc4fd2523b685e60288d058a4b3557fa9759320cb529683a5ad743bb80e943a58
   languageName: node
   linkType: hard
 
 "@microsoft/api-extractor@npm:^7.52.2":
-  version: 7.59.0
-  resolution: "@microsoft/api-extractor@npm:7.59.0"
+  version: 7.59.4
+  resolution: "@microsoft/api-extractor@npm:7.59.4"
   dependencies:
-    "@microsoft/api-extractor-model": "npm:7.33.11"
-    "@microsoft/tsdoc": "npm:~0.16.0"
-    "@microsoft/tsdoc-config": "npm:~0.18.1"
-    "@rushstack/node-core-library": "npm:5.24.0"
-    "@rushstack/rig-package": "npm:0.7.3"
-    "@rushstack/terminal": "npm:0.24.3"
-    "@rushstack/ts-command-line": "npm:5.3.13"
+    "@microsoft/api-extractor-model": "npm:7.33.15"
+    "@microsoft/tsdoc": "npm:~0.17.0"
+    "@microsoft/tsdoc-config": "npm:~0.18.2"
+    "@rushstack/node-core-library": "npm:5.25.1"
+    "@rushstack/rig-package": "npm:0.7.4"
+    "@rushstack/terminal": "npm:0.24.7"
+    "@rushstack/ts-command-line": "npm:5.3.17"
     diff: "npm:~8.0.2"
     minimatch: "npm:10.2.3"
     resolve: "npm:~1.22.1"
@@ -3108,13 +3119,13 @@ __metadata:
     typescript: "npm:5.9.3"
   bin:
     api-extractor: bin/api-extractor
-  checksum: 10c0/c28291d6c3cc0a54dbb94f7ca6365ce9606dae407a099d341c4032fb3d2280abe7dc327ff61e9194dab2d7c94c1b82e7e7c451e61571dce48cc3647251424120
+  checksum: 10c0/2b805f72318edb8dab720a2b2eb2a6b82faebbb6a6b5b836fced38875e61d344b14c7edf63724a27ab091fed4df8ef9923141f579fb1ddc7679d48ce02301e96
   languageName: node
   linkType: hard
 
-"@microsoft/applicationinsights-core-js@npm:3.4.3":
-  version: 3.4.3
-  resolution: "@microsoft/applicationinsights-core-js@npm:3.4.3"
+"@microsoft/applicationinsights-core-js@npm:3.4.5":
+  version: 3.4.5
+  resolution: "@microsoft/applicationinsights-core-js@npm:3.4.5"
   dependencies:
     "@microsoft/applicationinsights-shims": "npm:3.0.1"
     "@microsoft/dynamicproto-js": "npm:^2.0.3"
@@ -3122,7 +3133,7 @@ __metadata:
     "@nevware21/ts-utils": "npm:>= 0.14.0 < 2.x"
   peerDependencies:
     tslib: ">= 1.0.0"
-  checksum: 10c0/e14dd230ca65fef48859679ddbdd4d700bc3c9465f7b40e023b8d788c99cd7b2014c503141c9db0177a12441cebfdd16cd9b896f8fec988d45f9efd8f052054d
+  checksum: 10c0/0696916a12b67b3191cd28ceea203ae60a20cec2d0577294801f9f89f5db20460f15458b055dd42ffbeeb15c8814f95d6f8e443dbf849547d5a4c7c856614a32
   languageName: node
   linkType: hard
 
@@ -3157,22 +3168,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/tsdoc-config@npm:~0.18.1":
-  version: 0.18.1
-  resolution: "@microsoft/tsdoc-config@npm:0.18.1"
+"@microsoft/tsdoc-config@npm:~0.18.2":
+  version: 0.18.3
+  resolution: "@microsoft/tsdoc-config@npm:0.18.3"
   dependencies:
-    "@microsoft/tsdoc": "npm:0.16.0"
+    "@microsoft/tsdoc": "npm:0.17.1"
     ajv: "npm:~8.18.0"
     jju: "npm:~1.4.0"
     resolve: "npm:~1.22.2"
-  checksum: 10c0/06507f7ced4fadf3e68368c60810c1e057403581f720e6cf96b4d6b6bc7a927232510da40425ffd67d5d918ec7cfba8baec56406687330f233f67eb11b9d8d65
+  checksum: 10c0/8a065caa452bb7f6aa6b0cf95acad970b7e10af39a856988ba5df7e19bc482444454f7dc48b86d98908b6600b009757c34a769ba302e3bc5ef04d1076ac71fc9
   languageName: node
   linkType: hard
 
-"@microsoft/tsdoc@npm:0.16.0, @microsoft/tsdoc@npm:~0.16.0":
-  version: 0.16.0
-  resolution: "@microsoft/tsdoc@npm:0.16.0"
-  checksum: 10c0/8883bb0ed22753af7360e9222687fda4eb448f0a574ea34b4596c11e320148b3ae0d24e00f8923df8ba7bc62a46a6f53b9343243a348640d923dfd55d52cd6bb
+"@microsoft/tsdoc@npm:0.17.1, @microsoft/tsdoc@npm:~0.17.0":
+  version: 0.17.1
+  resolution: "@microsoft/tsdoc@npm:0.17.1"
+  checksum: 10c0/a8d5dd60edc60a8f4de7b1b260cd0633205457a630316b75fd2afe0a633d3acd3389b4e483c047d681981da89cd6448e8f6e0387dc32533ecd63fbce3a580a92
   languageName: node
   linkType: hard
 
@@ -3564,7 +3575,7 @@ __metadata:
   resolution: "@office-iss/react-native-win32-tester@workspace:packages/@office-iss/react-native-win32-tester"
   dependencies:
     "@office-iss/react-native-win32": "npm:^0.0.0-canary.312"
-    "@react-native/tester": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/tester": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@rnw-scripts/babel-react-native-config": "npm:0.0.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -3576,14 +3587,14 @@ __metadata:
     flow-enums-runtime: "npm:^0.0.6"
     just-scripts: "npm:^1.3.3"
     prettier: "npm:^3.6.2"
-    react: "npm:19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-platform-override: "npm:0.0.0-canary.1023"
     typescript: "npm:5.1.6"
   peerDependencies:
     "@office-iss/react-native-win32": ^0.0.0-canary.312
-    react: 19.2.3
-    react-native: 0.88.0-nightly-20260805-f2188610c
+    react: 19.3.0
+    react-native: 0.89.0-nightly-20261002-cd2de187e
   languageName: unknown
   linkType: soft
 
@@ -3599,17 +3610,16 @@ __metadata:
     "@react-native-community/cli": "npm:20.0.0"
     "@react-native-community/cli-platform-android": "npm:20.0.0"
     "@react-native-community/cli-platform-ios": "npm:20.0.0"
-    "@react-native/asset-utils": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/asset-utils": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@react-native/assets": "npm:1.0.0"
-    "@react-native/assets-registry": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/codegen": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/community-cli-plugin": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/gradle-plugin": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/jest-preset": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/js-polyfills": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/metro-config": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/normalize-colors": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/virtualized-lists": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/codegen": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/community-cli-plugin": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/gradle-plugin": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/jest-preset": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/js-polyfills": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/metro-config": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/normalize-colors": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/virtualized-lists": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@rnw-scripts/babel-react-native-config": "npm:0.0.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "npm:^1.1.42"
@@ -3633,9 +3643,9 @@ __metadata:
     event-target-shim: "npm:^5.0.1"
     flow-bin: "npm:^0.316.0"
     flow-enums-runtime: "npm:^0.0.6"
-    flow-parser: "npm:0.325.0"
+    flow-parser: "npm:0.333.0"
     glob: "npm:^7.1.1"
-    hermes-compiler: "npm:260318099.0.1"
+    hermes-compiler: "npm:260318099.0.4"
     invariant: "npm:^2.2.4"
     jest-environment-node: "npm:^29.7.0"
     jscodeshift: "npm:^0.14.0"
@@ -3648,14 +3658,14 @@ __metadata:
     prettier: "npm:^3.6.2"
     pretty-format: "npm:^29.7.0"
     promise: "npm:^8.3.0"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-clone-referenced-element: "npm:^1.0.1"
     react-devtools-core: "npm:^6.1.5"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-platform-override: "npm:0.0.0-canary.1023"
     react-refresh: "npm:^0.14.0"
     regenerator-runtime: "npm:^0.13.2"
-    scheduler: "npm:0.27.0"
+    scheduler: "npm:0.28.0"
     semver: "npm:^7.1.3"
     stacktrace-parser: "npm:^0.1.10"
     tinyglobby: "npm:^0.2.15"
@@ -3664,10 +3674,10 @@ __metadata:
     ws: "npm:^7.5.10"
     yargs: "npm:^17.6.2"
   peerDependencies:
-    "@react-native/jest-preset": 0.88.0-nightly-20260805-f2188610c
+    "@react-native/jest-preset": 0.89.0-nightly-20261002-cd2de187e
     "@types/react": ^19.1.1
-    react: ^19.2.3
-    react-native: 0.88.0-nightly-20260805-f2188610c
+    react: ^19.3.0
+    react-native: 0.89.0-nightly-20261002-cd2de187e
   languageName: unknown
   linkType: soft
 
@@ -3825,15 +3835,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-clean@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@react-native-community/cli-clean@npm:20.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-clean%2F-%2Fcli-clean-20.2.0.tgz"
+"@react-native-community/cli-clean@npm:21.0.0-alpha.1":
+  version: 21.0.0-alpha.1
+  resolution: "@react-native-community/cli-clean@npm:21.0.0-alpha.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-clean%2F-%2Fcli-clean-21.0.0-alpha.1.tgz"
   dependencies:
-    "@react-native-community/cli-tools": "npm:20.2.0"
+    "@react-native-community/cli-tools": "npm:21.0.0-alpha.1"
     execa: "npm:^5.0.0"
     fast-glob: "npm:^3.3.2"
     picocolors: "npm:^1.1.1"
-  checksum: 10c0/217c0a17e69892d6042840a66bf179dfbb3b6b4dcf6e1f0401574e7eedbcb31c4ed92f6b052cf0ffe6ce6963b5af3d68bfba6a699c9837fe7a744a45a05dd622
+  checksum: 10c0/570bbe64de3bd0a265f4840f0669fce570386c073f0b7a653866d5ea38c576bc8f37a1213d18fb7c491289a1fbb9c3cfca74e4193302b54b616497d7e6c7e694
   languageName: node
   linkType: hard
 
@@ -3849,15 +3859,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-config-android@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@react-native-community/cli-config-android@npm:20.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-config-android%2F-%2Fcli-config-android-20.2.0.tgz"
+"@react-native-community/cli-config-android@npm:21.0.0-alpha.1":
+  version: 21.0.0-alpha.1
+  resolution: "@react-native-community/cli-config-android@npm:21.0.0-alpha.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-config-android%2F-%2Fcli-config-android-21.0.0-alpha.1.tgz"
   dependencies:
-    "@react-native-community/cli-tools": "npm:20.2.0"
+    "@react-native-community/cli-tools": "npm:21.0.0-alpha.1"
     fast-glob: "npm:^3.3.2"
     fast-xml-parser: "npm:^5.3.6"
     picocolors: "npm:^1.1.1"
-  checksum: 10c0/86dbdaf9a038a8e9f0a2a1f149e2f68eaa15379ad4119b3b4278d590f301a2e9314d2c449921abbfcd7fa174e5fb62d0f6971e4f40c285b49abc787d62cbf0ba
+  checksum: 10c0/befdb65c9a8a8ce6e77289aaca04d51f01e871b33a834a606d97475bf45985e945f1c195c3d2f1ae3f5cfd41d023598c3ae822f51c082078cc82804ea0f79611
   languageName: node
   linkType: hard
 
@@ -3873,15 +3883,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-config-apple@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@react-native-community/cli-config-apple@npm:20.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-config-apple%2F-%2Fcli-config-apple-20.2.0.tgz"
+"@react-native-community/cli-config-apple@npm:21.0.0-alpha.1":
+  version: 21.0.0-alpha.1
+  resolution: "@react-native-community/cli-config-apple@npm:21.0.0-alpha.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-config-apple%2F-%2Fcli-config-apple-21.0.0-alpha.1.tgz"
   dependencies:
-    "@react-native-community/cli-tools": "npm:20.2.0"
+    "@react-native-community/cli-tools": "npm:21.0.0-alpha.1"
     execa: "npm:^5.0.0"
     fast-glob: "npm:^3.3.2"
     picocolors: "npm:^1.1.1"
-  checksum: 10c0/193b3c55cb824e4ea86bdac596dfc1d13f8c9be894ba4b2770242e012ea7eb1f9dc56b232341ec988f7c5a3acbe24f3ec138c61769bd01e07e6cd14b8ef0b095
+  checksum: 10c0/fdcaa59d6f8838dd39d48414c1807b1c11dbbf9e9327014feb262c3eab622fe91f7b94b6193b60246e444092635366a9e1a892591ee97c7fe49274db17244fc2
   languageName: node
   linkType: hard
 
@@ -3899,17 +3909,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-config@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@react-native-community/cli-config@npm:20.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-config%2F-%2Fcli-config-20.2.0.tgz"
+"@react-native-community/cli-config@npm:21.0.0-alpha.1":
+  version: 21.0.0-alpha.1
+  resolution: "@react-native-community/cli-config@npm:21.0.0-alpha.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-config%2F-%2Fcli-config-21.0.0-alpha.1.tgz"
   dependencies:
-    "@react-native-community/cli-tools": "npm:20.2.0"
+    "@react-native-community/cli-tools": "npm:21.0.0-alpha.1"
     cosmiconfig: "npm:^9.0.0"
     deepmerge: "npm:^4.3.0"
     fast-glob: "npm:^3.3.2"
     joi: "npm:^17.2.1"
     picocolors: "npm:^1.1.1"
-  checksum: 10c0/bba382952b4ece338746ee8a5e415e67f438d5fb89ef89bd9b7146f564d9e438643a97b8ba5d36461af3a2b036a33a9d168605ecb2f42db4503fb4c7eb650dd8
+  checksum: 10c0/fba1d10e3c02bc8c9c185539d766dda5257a5cad15c8d83349655d2e317ae7ea3aec91deac86add7250db9834a03527a22f9e5056e57b6226772810778fa4e48
   languageName: node
   linkType: hard
 
@@ -3936,15 +3946,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-doctor@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@react-native-community/cli-doctor@npm:20.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-doctor%2F-%2Fcli-doctor-20.2.0.tgz"
+"@react-native-community/cli-doctor@npm:21.0.0-alpha.1":
+  version: 21.0.0-alpha.1
+  resolution: "@react-native-community/cli-doctor@npm:21.0.0-alpha.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-doctor%2F-%2Fcli-doctor-21.0.0-alpha.1.tgz"
   dependencies:
-    "@react-native-community/cli-config": "npm:20.2.0"
-    "@react-native-community/cli-platform-android": "npm:20.2.0"
-    "@react-native-community/cli-platform-apple": "npm:20.2.0"
-    "@react-native-community/cli-platform-ios": "npm:20.2.0"
-    "@react-native-community/cli-tools": "npm:20.2.0"
+    "@react-native-community/cli-config": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-platform-android": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-platform-apple": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-platform-ios": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-tools": "npm:21.0.0-alpha.1"
     command-exists: "npm:^1.2.8"
     deepmerge: "npm:^4.3.0"
     envinfo: "npm:^7.13.0"
@@ -3955,7 +3965,7 @@ __metadata:
     semver: "npm:^7.5.2"
     wcwidth: "npm:^1.0.1"
     yaml: "npm:^2.2.1"
-  checksum: 10c0/159e20b869ae7bc568f07f6d8c2e9a0559883a3f12b2f1ad5e5cc3c92e6138593d09a84dd894eeff3b2590cd8e8e9f1628c76e4ba0616afa61b4eb8827cfde40
+  checksum: 10c0/1d6e8f131fe465b72b70ea7a77083a8b7d9b3c8d192c903b000ee035ae775559d579a872ab9d70028db42b7f52e6d8165bb14bc58cece831af75f55d2d907022
   languageName: node
   linkType: hard
 
@@ -3972,16 +3982,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-platform-android@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@react-native-community/cli-platform-android@npm:20.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-platform-android%2F-%2Fcli-platform-android-20.2.0.tgz"
+"@react-native-community/cli-platform-android@npm:21.0.0-alpha.1":
+  version: 21.0.0-alpha.1
+  resolution: "@react-native-community/cli-platform-android@npm:21.0.0-alpha.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-platform-android%2F-%2Fcli-platform-android-21.0.0-alpha.1.tgz"
   dependencies:
-    "@react-native-community/cli-config-android": "npm:20.2.0"
-    "@react-native-community/cli-tools": "npm:20.2.0"
+    "@react-native-community/cli-config-android": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-tools": "npm:21.0.0-alpha.1"
     execa: "npm:^5.0.0"
     logkitty: "npm:^0.7.1"
     picocolors: "npm:^1.1.1"
-  checksum: 10c0/dd586892129b54ab6cd89fbfe9759ae00f93b89b802f50f178679186e50a99d2ad7642a6ea30c16df72a36452cf95b4abcaac473f97dc65a93d6b0cb1b3af247
+  checksum: 10c0/7415e0d995433982622866391bdd641fea2681a95b6fd8cdd921632a1efc7271f83141e54c8e825a6f08453c7a411793e9dec5cd98e49fcb2f3926ba49647271
   languageName: node
   linkType: hard
 
@@ -3998,16 +4008,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-platform-apple@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@react-native-community/cli-platform-apple@npm:20.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-platform-apple%2F-%2Fcli-platform-apple-20.2.0.tgz"
+"@react-native-community/cli-platform-apple@npm:21.0.0-alpha.1":
+  version: 21.0.0-alpha.1
+  resolution: "@react-native-community/cli-platform-apple@npm:21.0.0-alpha.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-platform-apple%2F-%2Fcli-platform-apple-21.0.0-alpha.1.tgz"
   dependencies:
-    "@react-native-community/cli-config-apple": "npm:20.2.0"
-    "@react-native-community/cli-tools": "npm:20.2.0"
+    "@react-native-community/cli-config-apple": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-tools": "npm:21.0.0-alpha.1"
     execa: "npm:^5.0.0"
     fast-xml-parser: "npm:^5.3.6"
     picocolors: "npm:^1.1.1"
-  checksum: 10c0/17c6ec29865a4bdbd31f9547c5857ed5cbed4fb5e2ef6a083e6915c684810006f0297ac36a35228736bdda108ece3a2269833dcbc487e39ef9054c28d3b9d1a8
+  checksum: 10c0/c5822ad7c44e7a139ddb3964e18aedf4e3afb3bdfb6cbd5f47f249e0871fca86f2e7867fed7a37c99ee6e4ba147d47c3ecb537e1d18510aa7a8cc692c70dcdea
   languageName: node
   linkType: hard
 
@@ -4020,12 +4030,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-platform-ios@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@react-native-community/cli-platform-ios@npm:20.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-platform-ios%2F-%2Fcli-platform-ios-20.2.0.tgz"
+"@react-native-community/cli-platform-ios@npm:21.0.0-alpha.1":
+  version: 21.0.0-alpha.1
+  resolution: "@react-native-community/cli-platform-ios@npm:21.0.0-alpha.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-platform-ios%2F-%2Fcli-platform-ios-21.0.0-alpha.1.tgz"
   dependencies:
-    "@react-native-community/cli-platform-apple": "npm:20.2.0"
-  checksum: 10c0/d78149cfee7c32c9c9048a8c06c5e8a06fd6259046d5ee95f1993c8d343afa463afac92edba3c9f109ff8a6deb6e8a4bc5fef5eb6c22ba9aed3fef4b1ee20eb6
+    "@react-native-community/cli-platform-apple": "npm:21.0.0-alpha.1"
+  checksum: 10c0/ecaf2decde10236648fdb54a641a5114a398a7d69dfb3157f7bb5adf7305c81f543b4d20952840edf1246d783930825241a76e8b4eb020e35ea15ae615eecbf4
   languageName: node
   linkType: hard
 
@@ -4047,11 +4057,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-server-api@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@react-native-community/cli-server-api@npm:20.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-server-api%2F-%2Fcli-server-api-20.2.0.tgz"
+"@react-native-community/cli-server-api@npm:21.0.0-alpha.1":
+  version: 21.0.0-alpha.1
+  resolution: "@react-native-community/cli-server-api@npm:21.0.0-alpha.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-server-api%2F-%2Fcli-server-api-21.0.0-alpha.1.tgz"
   dependencies:
-    "@react-native-community/cli-tools": "npm:20.2.0"
+    "@react-native-community/cli-tools": "npm:21.0.0-alpha.1"
     body-parser: "npm:^2.2.2"
     compression: "npm:^1.7.1"
     connect: "npm:^3.6.5"
@@ -4061,7 +4071,7 @@ __metadata:
     pretty-format: "npm:^29.7.0"
     serve-static: "npm:^1.13.1"
     ws: "npm:^6.2.3"
-  checksum: 10c0/c17d8580faf7aa5758e51fbd7bb57325dfb242cc5a26e98658fedb675f26801c4233c43e1e7aefc04da0afbf5188a9ccb6a69b48cc3cb96588b73573b1e355e0
+  checksum: 10c0/d5e6d7a7c79137eb46442437190394701f61e3efdabf9f4d1bbf8fbb71419f199b32ec99acae32dfcc0d4c94e3965c660b625650744a63677d5d894f52e5af70
   languageName: node
   linkType: hard
 
@@ -4083,9 +4093,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-tools@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@react-native-community/cli-tools@npm:20.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-tools%2F-%2Fcli-tools-20.2.0.tgz"
+"@react-native-community/cli-tools@npm:21.0.0-alpha.1":
+  version: 21.0.0-alpha.1
+  resolution: "@react-native-community/cli-tools@npm:21.0.0-alpha.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-tools%2F-%2Fcli-tools-21.0.0-alpha.1.tgz"
   dependencies:
     "@vscode/sudo-prompt": "npm:^9.0.0"
     appdirsjs: "npm:^1.2.4"
@@ -4097,7 +4107,7 @@ __metadata:
     picocolors: "npm:^1.1.1"
     prompts: "npm:^2.4.2"
     semver: "npm:^7.5.2"
-  checksum: 10c0/3c5056b6d6a7a967e44b55715c13b2a8de57c58cd1034eaa0cffacf99dc68cb2a903417ed2fe00d36bc8c9c25daa87d5aa874104cc0f7766a41c155af3662296
+  checksum: 10c0/c0dca66a26236d22f41f807d29f8dd03321d77d396961d527be9ad84a9627f5884ace70a1801468bc8cf17b5ef1e269c8f67750180ef03a321a7f899923bad5c
   languageName: node
   linkType: hard
 
@@ -4110,12 +4120,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli-types@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@react-native-community/cli-types@npm:20.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-types%2F-%2Fcli-types-20.2.0.tgz"
+"@react-native-community/cli-types@npm:21.0.0-alpha.1":
+  version: 21.0.0-alpha.1
+  resolution: "@react-native-community/cli-types@npm:21.0.0-alpha.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli-types%2F-%2Fcli-types-21.0.0-alpha.1.tgz"
   dependencies:
     joi: "npm:^17.2.1"
-  checksum: 10c0/8070361fa078b1d26b0a38238fe13616d5b21e298f544f0929f77c3539dcce93dfb23553662be906c6cfe2a750d3707b6b52bd3724c03eb454fbbd419aec80da
+  checksum: 10c0/852591ef6cda87c4d9868edb014a17e8b1f7c33d8b32602dfe24ee7427c419b4c70d1d01cb8ea9de4a7eaf39aa3003f810bae72cf7cbbfa8c515c9a24efb5cb3
   languageName: node
   linkType: hard
 
@@ -4144,16 +4154,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-community/cli@npm:20.2.0":
-  version: 20.2.0
-  resolution: "@react-native-community/cli@npm:20.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli%2F-%2Fcli-20.2.0.tgz"
+"@react-native-community/cli@npm:21.0.0-alpha.1":
+  version: 21.0.0-alpha.1
+  resolution: "@react-native-community/cli@npm:21.0.0-alpha.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native-community%2Fcli%2F-%2Fcli-21.0.0-alpha.1.tgz"
   dependencies:
-    "@react-native-community/cli-clean": "npm:20.2.0"
-    "@react-native-community/cli-config": "npm:20.2.0"
-    "@react-native-community/cli-doctor": "npm:20.2.0"
-    "@react-native-community/cli-server-api": "npm:20.2.0"
-    "@react-native-community/cli-tools": "npm:20.2.0"
-    "@react-native-community/cli-types": "npm:20.2.0"
+    "@react-native-community/cli-clean": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-config": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-doctor": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-platform-android": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-platform-ios": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-server-api": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-tools": "npm:21.0.0-alpha.1"
+    "@react-native-community/cli-types": "npm:21.0.0-alpha.1"
     commander: "npm:^9.4.1"
     deepmerge: "npm:^4.3.0"
     execa: "npm:^5.0.0"
@@ -4165,7 +4177,7 @@ __metadata:
     semver: "npm:^7.5.2"
   bin:
     rnc-cli: build/bin.js
-  checksum: 10c0/652e0bf9c746cef9b3126ebcf46a4a537fa98b9c67e4b8a1be2ec428197fe8aecb97a3c106e61faa7abdd04ad1860396ae3b48da7fc5373ed153516c6668bc74
+  checksum: 10c0/7178f18652cb4ecdbd75705f8d79d40298bf14aa87f2386af3bea54ba900443bf450dce054a362468975cb271fd32309a98d334c6a79ec39509cc934f08d698a
   languageName: node
   linkType: hard
 
@@ -4203,8 +4215,8 @@ __metadata:
     just-scripts: "npm:^1.3.2"
     minimatch: "npm:^10.0.3"
     prettier: "npm:^3.6.2"
-    react: "npm:19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-windows: "npm:^0.0.0-canary.1060"
     typescript: "npm:5.1.6"
   languageName: unknown
@@ -4303,8 +4315,8 @@ __metadata:
     ora: "npm:^3.4.0"
     prettier: "npm:^3.6.2"
     prompts: "npm:^2.4.1"
-    react: "npm:19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     semver: "npm:^7.3.2"
     shelljs: "npm:^0.8.4"
     typescript: "npm:5.1.6"
@@ -4448,7 +4460,7 @@ __metadata:
   peerDependencies:
     jest: ">=29.0.3"
     react: ">=18.0.0"
-    react-native: 0.88.0-nightly-20260805-f2188610c
+    react-native: 0.89.0-nightly-20261002-cd2de187e
     react-test-renderer: ">=18.0.0"
   peerDependenciesMeta:
     react-test-renderer:
@@ -4496,8 +4508,8 @@ __metadata:
   resolution: "@react-native-windows/tester@workspace:packages/@react-native-windows/tester"
   dependencies:
     "@react-native-picker/picker": "npm:2.11.0"
-    "@react-native/new-app-screen": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/tester": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/new-app-screen": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/tester": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@rnw-scripts/babel-react-native-config": "npm:0.0.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4510,15 +4522,15 @@ __metadata:
     flow-enums-runtime: "npm:^0.0.6"
     just-scripts: "npm:^1.3.3"
     prettier: "npm:^3.6.2"
-    react: "npm:19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-platform-override: "npm:0.0.0-canary.1023"
     react-native-windows: "npm:^0.0.0-canary.1060"
     typescript: "npm:5.1.6"
   peerDependencies:
     "@react-native-picker/picker": 2.11.0
-    react: 19.2.3
-    react-native: 0.88.0-nightly-20260805-f2188610c
+    react: 19.3.0
+    react-native: 0.89.0-nightly-20261002-cd2de187e
     react-native-windows: ^0.0.0-canary.1060
     react-native-xaml: ^0.0.80
   peerDependenciesMeta:
@@ -4529,19 +4541,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native/asset-utils@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/asset-utils@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fasset-utils%2F-%2Fasset-utils-0.88.0-nightly-20260805-f2188610c.tgz"
-  checksum: 10c0/232b58b0eecb2afcfd937464fdc000e3fc7aa3b9a933fc27f222b2bdc78eaa4ced3cb32cf5d2518ffa49eb6b8636d0e1ec8a818357266654ab1867e84f0b98e2
-  languageName: node
-  linkType: hard
-
-"@react-native/assets-registry@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/assets-registry@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fassets-registry%2F-%2Fassets-registry-0.88.0-nightly-20260805-f2188610c.tgz"
-  peerDependencies:
-    react-native: "*"
-  checksum: 10c0/0d41e78f71d926fd5738fec094a4b1ecb25f11ac8cd50e49f190e2c598d9b192a51099b5953c79e955fbd47f8e3e723cf2ec0b3090b776ba5d6ecfa57fed7eba
+"@react-native/asset-utils@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/asset-utils@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fasset-utils%2F-%2Fasset-utils-0.89.0-nightly-20261002-cd2de187e.tgz"
+  checksum: 10c0/636305db384d7ab19727b9f594353a526fbd148642aa4d4c6784e6855dbcff3a2bc4a21d599dd5ec0daefa4809e199d19f2436b0557fe7b2bf4b9f7222d35b4e
   languageName: node
   linkType: hard
 
@@ -4552,19 +4555,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native/babel-plugin-codegen@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/babel-plugin-codegen@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fbabel-plugin-codegen%2F-%2Fbabel-plugin-codegen-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/babel-plugin-codegen@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/babel-plugin-codegen@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fbabel-plugin-codegen%2F-%2Fbabel-plugin-codegen-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
     "@babel/traverse": "npm:^7.29.0"
-    "@react-native/codegen": "npm:0.88.0-nightly-20260805-f2188610c"
-  checksum: 10c0/9f55fb8cee7e78d9663d01289f04d4043143edea97aa8e64296d2b4fa75cb664814399ecaf9a712fb85ccdfcedf30860f6e68632dcc31574e145138442961835
+    "@react-native/codegen": "npm:0.89.0-nightly-20261002-cd2de187e"
+  checksum: 10c0/2f7941c627c3bf4bd66f0e03869312395a40cf93f82eab5cebf5ed610f2ff05e81164fc1ddb6cf0192e68a34f0c9aa2a15c9c59f6cc11276d779d8f53b70068d
   languageName: node
   linkType: hard
 
-"@react-native/babel-preset@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/babel-preset@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fbabel-preset%2F-%2Fbabel-preset-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/babel-preset@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/babel-preset@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fbabel-preset%2F-%2Fbabel-preset-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/plugin-proposal-export-default-from": "npm:^7.24.7"
@@ -4595,41 +4598,39 @@ __metadata:
     "@babel/plugin-transform-runtime": "npm:^7.24.7"
     "@babel/plugin-transform-typescript": "npm:^7.25.2"
     "@babel/plugin-transform-unicode-regex": "npm:^7.24.7"
-    "@react-native/babel-plugin-codegen": "npm:0.88.0-nightly-20260805-f2188610c"
-    babel-plugin-syntax-hermes-parser: "npm:0.37.0"
+    "@react-native/babel-plugin-codegen": "npm:0.89.0-nightly-20261002-cd2de187e"
     babel-plugin-transform-flow-enums: "npm:^0.0.2"
-    flow-parser: "npm:0.325.0"
+    flow-parser: "npm:0.333.0"
     react-refresh: "npm:^0.14.0"
   peerDependencies:
     "@babel/core": "*"
-  checksum: 10c0/b73b5a33dd09b143d5e696601522b56abe26f2b961df418fbba264172da975e3f4845187dfb84d1cce1170e05e30410dee83dd1dfcda610025ae9fa941e714d2
+  checksum: 10c0/1464719649e2c7300e134649054bd61b16e72a8a0e6fc83e4a946f44b260836eb39fa948f97490008938dd4d96475917a4712ef940a73ac5e4d67f295dde5071
   languageName: node
   linkType: hard
 
-"@react-native/codegen@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/codegen@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fcodegen%2F-%2Fcodegen-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/codegen@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/codegen@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fcodegen%2F-%2Fcodegen-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
     "@babel/core": "npm:^7.25.2"
-    "@babel/parser": "npm:^7.29.0"
-    flow-parser: "npm:0.325.0"
-    hermes-parser: "npm:0.37.0"
+    "@babel/parser": "npm:^7.29.9"
+    flow-parser: "npm:0.333.0"
     invariant: "npm:^2.2.4"
     nullthrows: "npm:^1.1.1"
     tinyglobby: "npm:^0.2.15"
     yargs: "npm:^17.6.2"
   peerDependencies:
     "@babel/core": "*"
-  checksum: 10c0/a37430642ae322e3a273801408de4bc9a8983c3d194ee331a46cdae50721342e1c6f76a3bb2279e83ded588a25b5964a141ff55c0139ede19be4d8e8ef9b8266
+  checksum: 10c0/0ebdfafea5391dae0eae5a173fb0041328a9848ab8c433119ea0014d2cfc598d2f4fe30e41f593c46a2ba7a8a5ad1041a289e3ad21ff9790cbe23ce72de26590
   languageName: node
   linkType: hard
 
-"@react-native/community-cli-plugin@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/community-cli-plugin@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fcommunity-cli-plugin%2F-%2Fcommunity-cli-plugin-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/community-cli-plugin@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/community-cli-plugin@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fcommunity-cli-plugin%2F-%2Fcommunity-cli-plugin-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
-    "@react-native/asset-utils": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/dev-middleware": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/asset-utils": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/dev-middleware": "npm:0.89.0-nightly-20261002-cd2de187e"
     commander: "npm:^12.0.0"
     debug: "npm:^4.4.0"
     invariant: "npm:^2.2.4"
@@ -4637,48 +4638,48 @@ __metadata:
     semver: "npm:^7.1.3"
   peerDependencies:
     "@react-native-community/cli": "*"
-    "@react-native/metro-config": 0.88.0-nightly-20260805-f2188610c
+    "@react-native/metro-config": 0.89.0-nightly-20261002-cd2de187e
   peerDependenciesMeta:
     "@react-native-community/cli":
       optional: true
     "@react-native/metro-config":
       optional: true
-  checksum: 10c0/b330266a289ee71eff1479fd562b0004e7466dc03dbcff5d26e55cbc3661271c1463bec87d301ff2a9c1bf4df598e686159561ab2c8c275c94241014000c6e05
+  checksum: 10c0/9f3401e58bcc3830773d9dc7ca460b2c894875e87631836d09b2854220eb9753033cae9d9bd5454d1d097f1c2041e9b37060d45349bddc0a6adbe314cf6e556a
   languageName: node
   linkType: hard
 
 "@react-native/core-cli-utils@npm:*":
   version: 0.86.3
-  resolution: "@react-native/core-cli-utils@npm:0.86.3::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fcore-cli-utils%2F-%2Fcore-cli-utils-0.86.3.tgz"
+  resolution: "@react-native/core-cli-utils@npm:0.86.3::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40react-native%2Fcore-cli-utils%2F-%2Fcore-cli-utils-0.86.3.tgz"
   checksum: 10c0/3d1b742e35e4ac15f4b48af16fcbc9738bff183e6700b5a4fd76b07b976b9380e924405aeb4a6c52936feb743f4541cb656269d0d9dc7090c3f6439e01931ecb
   languageName: node
   linkType: hard
 
-"@react-native/debugger-frontend@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/debugger-frontend@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fdebugger-frontend%2F-%2Fdebugger-frontend-0.88.0-nightly-20260805-f2188610c.tgz"
-  checksum: 10c0/d6d40f3eecd38d7cf12e8b27e157ed15d59396542aa101c3c3e4aca218b47a0be9d1d17f7f41020966fac9999975fe634e7a56b61f79b6ac47425b476fca29ec
+"@react-native/debugger-frontend@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/debugger-frontend@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fdebugger-frontend%2F-%2Fdebugger-frontend-0.89.0-nightly-20261002-cd2de187e.tgz"
+  checksum: 10c0/790f9c2c32b4c5239680cd9adf2ac5a7ff497c407f8b0ddfe53b23c2be974d1f43203455ba10377474159cae9b32e0cd596a8e52a3fcf2d2e733b219134ca22a
   languageName: node
   linkType: hard
 
-"@react-native/debugger-shell@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/debugger-shell@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fdebugger-shell%2F-%2Fdebugger-shell-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/debugger-shell@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/debugger-shell@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fdebugger-shell%2F-%2Fdebugger-shell-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
     cross-spawn: "npm:^7.0.6"
     debug: "npm:^4.4.0"
     fb-dotslash: "npm:0.5.8"
-  checksum: 10c0/2ffcdc4c89316ae697a0e25098f883db30b83afccc8b66decffbedf0081dfd9334b1ae9426fd70911b06ca73d86c96160c1f07c67921b415fea36288027a135b
+  checksum: 10c0/fa68814f9483ea53a1b2e2e5de69cbb2f39fb602e9621353c57ca9d4ed2bc7157777ea56af23cd541999bb581dcc3ccd4e0d6eac6a77ec5e24395a515ee1a845
   languageName: node
   linkType: hard
 
-"@react-native/dev-middleware@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/dev-middleware@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fdev-middleware%2F-%2Fdev-middleware-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/dev-middleware@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/dev-middleware@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fdev-middleware%2F-%2Fdev-middleware-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
     "@isaacs/ttlcache": "npm:^1.4.1"
-    "@react-native/debugger-frontend": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/debugger-shell": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/debugger-frontend": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/debugger-shell": "npm:0.89.0-nightly-20261002-cd2de187e"
     connect: "npm:^3.6.5"
     debug: "npm:^4.4.0"
     invariant: "npm:^2.2.4"
@@ -4686,22 +4687,22 @@ __metadata:
     open: "npm:^8.4.2"
     serve-static: "npm:^1.16.2"
     ws: "npm:^7.5.10"
-  checksum: 10c0/1784c6cd92fde2bff4654484cd6ac669d7b526a1872b364a727957c0a15b2ae1610296c2e4541b58f3abcb5c5b874f20f51df37a802417867e64f9f008b9f67b
+  checksum: 10c0/c62a8cf63da273559473c2810304e0b92c4c766d82c0776d2873832bbee900611b981e9a2a233de01c6ac6bee585a623c8797326d4a2f35399bd79d980cdc7d1
   languageName: node
   linkType: hard
 
-"@react-native/eslint-config@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/eslint-config@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Feslint-config%2F-%2Feslint-config-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/eslint-config@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/eslint-config@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Feslint-config%2F-%2Feslint-config-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/eslint-parser": "npm:^7.25.1"
-    "@react-native/eslint-plugin": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/eslint-plugin": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@typescript-eslint/eslint-plugin": "npm:^8.59.2"
     "@typescript-eslint/parser": "npm:^8.59.2"
     eslint-config-prettier: "npm:^8.5.0"
     eslint-plugin-eslint-comments: "npm:^3.2.0"
-    eslint-plugin-ft-flow: "npm:^2.0.1"
+    eslint-plugin-ft-flow: "npm:^3.0.11"
     eslint-plugin-jest: "npm:^29.0.1"
     eslint-plugin-react: "npm:^7.37.5"
     eslint-plugin-react-hooks: "npm:^7.0.1"
@@ -4709,70 +4710,72 @@ __metadata:
   peerDependencies:
     eslint: ^8.0.0 || ^9.0.0
     prettier: ">=2"
-  checksum: 10c0/dfd9f07d8fc375fcac1f586af0d079bf177275d9a4a9dbb2e46f842ad35fd6c58c6af324ad319a9b50fe9513be7a42bdfbee5ad68a05e153010d3eb8c751b433
+  checksum: 10c0/80918248d1fed156f76055dc9b6f238bc1274c277b15b7a6961ec392fa138c66114917c1d780a727e7177ff3cb3caeda7237ae234f2ef5ca089686942fc1f583
   languageName: node
   linkType: hard
 
-"@react-native/eslint-plugin@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/eslint-plugin@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Feslint-plugin%2F-%2Feslint-plugin-0.88.0-nightly-20260805-f2188610c.tgz"
-  checksum: 10c0/23cddd7241723fe7bbc8f4a2197a61b944183bd2414526dbe1866ee1a5238500db35c58cf0b40202b4145d074ed0b33e232ff87cfd50d38951bf97f58ff3b007
+"@react-native/eslint-plugin@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/eslint-plugin@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Feslint-plugin%2F-%2Feslint-plugin-0.89.0-nightly-20261002-cd2de187e.tgz"
+  checksum: 10c0/fc88c03f9d5fe001bebd61413469f205ece07bb29e943f6c939e3da13786e21b0048b778924f84270c8878e3ecc5ed2912f8a55a526ebee0430fd81375e2a445
   languageName: node
   linkType: hard
 
-"@react-native/gradle-plugin@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/gradle-plugin@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fgradle-plugin%2F-%2Fgradle-plugin-0.88.0-nightly-20260805-f2188610c.tgz"
-  checksum: 10c0/d64ce62a400d036cd6c741c360b67826a84dfc2aa642aa870e0f52b9711db06d902502db16cfc567af6e149c2dea9b69c96c02fbce475c5d6a64819dc530dd0a
+"@react-native/gradle-plugin@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/gradle-plugin@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fgradle-plugin%2F-%2Fgradle-plugin-0.89.0-nightly-20261002-cd2de187e.tgz"
+  checksum: 10c0/9bde94b304db100773f9f3e141a125b961b727dbe17107482fbc9798bd70e65d08b71095a509cdae3500e2aaaac1ddcafe40b2ef7d112e794b91e28936615614
   languageName: node
   linkType: hard
 
-"@react-native/jest-preset@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/jest-preset@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fjest-preset%2F-%2Fjest-preset-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/jest-preset@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/jest-preset@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fjest-preset%2F-%2Fjest-preset-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
+    "@babel/runtime": "npm:^7.25.0"
     "@jest/create-cache-key-function": "npm:^29.7.0"
-    "@react-native/js-polyfills": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/js-polyfills": "npm:0.89.0-nightly-20261002-cd2de187e"
     babel-jest: "npm:^29.7.0"
     jest-environment-node: "npm:^29.7.0"
     regenerator-runtime: "npm:^0.13.2"
   peerDependencies:
+    "@babel/core": ^7.25.2
     react: ^19.2.3
-  checksum: 10c0/5843eee3f1e6892931c14e917db46289bea8cb4a47d78422a1cf63b53aa3974722252db5fc3a14614bf0390180f88bcfe3df3a43d1736e334f58338dfab07e2f
+    react-native: 0.89.0-nightly-20261002-cd2de187e
+  checksum: 10c0/bfe404bea6f2709b290ad0165287f0a8b5fc9d0db4e10c1792bb8462b5915648c1f3ad9034fa8797c7b9cf5b8ffcd39fc599609f030e13c66ce0e796a0ef2f16
   languageName: node
   linkType: hard
 
-"@react-native/js-polyfills@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/js-polyfills@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fjs-polyfills%2F-%2Fjs-polyfills-0.88.0-nightly-20260805-f2188610c.tgz"
-  checksum: 10c0/cef3416870723cbb292632b14b3172bb48ea3323b5fc0f7878b9f31f2ed615e741efc593278797d4d331f8ceb8aa605da96ca0a7b57f9226185a1996ec7cc789
+"@react-native/js-polyfills@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/js-polyfills@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fjs-polyfills%2F-%2Fjs-polyfills-0.89.0-nightly-20261002-cd2de187e.tgz"
+  checksum: 10c0/f491835384e513cda28f4579bb6f9a2b0320391a760b9b1ad73924c0d9efaeedcb3acb28d8e77070502b274b33d16f090e6dad33814580857ef89e6eedda7eee
   languageName: node
   linkType: hard
 
-"@react-native/metro-babel-transformer@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/metro-babel-transformer@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fmetro-babel-transformer%2F-%2Fmetro-babel-transformer-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/metro-babel-transformer@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/metro-babel-transformer@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fmetro-babel-transformer%2F-%2Fmetro-babel-transformer-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
     "@babel/core": "npm:^7.25.2"
-    "@react-native/babel-preset": "npm:0.88.0-nightly-20260805-f2188610c"
-    flow-parser: "npm:0.325.0"
-    hermes-parser: "npm:0.37.0"
+    "@react-native/babel-preset": "npm:0.89.0-nightly-20261002-cd2de187e"
+    flow-parser: "npm:0.333.0"
     nullthrows: "npm:^1.1.1"
   peerDependencies:
     "@babel/core": "*"
-  checksum: 10c0/a5bc4c02d3c36ee3d8aa323eb575e9a1d410d1d1f85e0a605e27f886c8cccdeba51dba599f87d6cfdf6d0d784cef09a6d0675fe0fd57cdd5f19f4077c290adb9
+  checksum: 10c0/b052984617cc365f16ceb44a1630d4c9b834352c148160a7ed46ae2c097fc7cb40b0222107ccfe9504174225a1a454c64c36c2e1b0dc821505cbe9fc2eee8c68
   languageName: node
   linkType: hard
 
-"@react-native/metro-config@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/metro-config@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fmetro-config%2F-%2Fmetro-config-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/metro-config@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/metro-config@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fmetro-config%2F-%2Fmetro-config-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
-    "@react-native/js-polyfills": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/metro-babel-transformer": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/js-polyfills": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/metro-babel-transformer": "npm:0.89.0-nightly-20261002-cd2de187e"
     metro-config: "npm:^0.87.0"
     metro-runtime: "npm:^0.87.0"
-  checksum: 10c0/f160ac673103aab2ba213e56a89b40b684feb9e9ed0b45fba9c1ecca7d66d190783c668aac51e050829929ac1fa10432269b57fe76013be60832f6cb4396c5b9
+  checksum: 10c0/ce55472e45aadcc005c0d1cdacc13956043c16eda64dbd6804c13af802248c2ede8ba2c5cdde4db31452473605309530c59294c22efbe9520c23e8138bf4e751
   languageName: node
   linkType: hard
 
@@ -4790,20 +4793,19 @@ __metadata:
     "@electron/packager": "npm:^20.0.0"
     "@expo/spawn-async": "npm:^1.7.2"
     "@jest/create-cache-key-function": "npm:^29.7.0"
+    "@jest/test-sequencer": "npm:^29.7.0"
     "@microsoft/api-extractor": "npm:^7.52.2"
     "@octokit/rest": "npm:^22.0.0"
-    "@react-native/metro-babel-transformer": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/metro-config": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/metro-babel-transformer": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/metro-config": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@tsconfig/node22": "npm:22.0.2"
     "@types/react": "npm:^19.2.3"
     "@typescript-eslint/parser": "npm:^8.59.2"
     ansi-regex: "npm:^5.0.0"
     ansi-styles: "npm:^4.2.1"
     babel-plugin-minify-dead-code-elimination: "npm:^0.5.2"
-    babel-plugin-syntax-hermes-parser: "npm:0.37.0"
     babel-plugin-transform-define: "npm:^2.1.4"
     babel-plugin-transform-flow-enums: "npm:^0.0.2"
-    clang-format: "npm:^1.8.0"
     connect: "npm:^3.6.5"
     debug: "npm:^4.4.0"
     deep-equal: "npm:1.1.1"
@@ -4820,13 +4822,12 @@ __metadata:
     eslint-plugin-redundant-undefined: "npm:^0.4.0"
     eslint-plugin-relay: "npm:^1.8.3"
     fb-dotslash: "npm:0.5.8"
-    flow-api-translator: "npm:0.37.0"
-    flow-bin: "npm:^0.325.0"
-    flow-eslint: "npm:0.325.0"
-    flow-parser: "npm:0.325.0"
-    flow-transform: "npm:0.325.0"
-    hermes-eslint: "npm:0.37.0"
-    hermes-transform: "npm:0.37.0"
+    flow-api-translator: "npm:0.333.0"
+    flow-bin: "npm:^0.333.0"
+    flow-eslint: "npm:0.333.0"
+    flow-parser: "npm:0.333.0"
+    flow-transform: "npm:0.333.0"
+    google-java-format: "npm:1.4.0"
     ini: "npm:^5.0.0"
     inquirer: "npm:^7.1.0"
     jest: "npm:^29.7.0"
@@ -4835,6 +4836,7 @@ __metadata:
     jest-junit: "npm:^16.0.0"
     jest-snapshot: "npm:^29.7.0"
     jsonc-parser: "npm:2.2.1"
+    ktfmt: "npm:0.59.0"
     markdownlint-cli2: "npm:^0.17.2"
     markdownlint-rule-relative-links: "npm:^3.0.0"
     memfs: "npm:^4.38.2"
@@ -4844,8 +4846,8 @@ __metadata:
     node-fetch: "npm:^2.2.0"
     nullthrows: "npm:^1.1.1"
     prettier: "npm:3.9.4"
-    react: "npm:19.2.3"
-    react-test-renderer: "npm:19.2.3"
+    react: "npm:19.3.0"
+    react-test-renderer: "npm:19.3.0"
     rimraf: "npm:^3.0.2"
     shelljs: "npm:^0.8.5"
     signedsource: "npm:^2.0.0"
@@ -4858,81 +4860,80 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native/new-app-screen@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/new-app-screen@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fnew-app-screen%2F-%2Fnew-app-screen-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/new-app-screen@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/new-app-screen@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fnew-app-screen%2F-%2Fnew-app-screen-0.89.0-nightly-20261002-cd2de187e.tgz"
   peerDependencies:
     "@types/react": ^19.1.0
     react: "*"
-    react-native: 0.88.0-nightly-20260805-f2188610c
+    react-native: 0.89.0-nightly-20261002-cd2de187e
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/c390f3b42ac81efac2b111561853a0ae1c1a0e332ccb435bd10ac16f915f65519ab749e4007f7700794955a8ca453bf39149ec93c2d8857fe9ee9f4d09a997f1
+  checksum: 10c0/1c2ab5e18e637844651e6e83a0f2437f2456dd9351fbee2007e816d306dc44cfba0678e3a80f53a01512bf9207c575bdb75c480e6c1b77fd4eae20548d4ee47d
   languageName: node
   linkType: hard
 
-"@react-native/normalize-colors@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/normalize-colors@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fnormalize-colors%2F-%2Fnormalize-colors-0.88.0-nightly-20260805-f2188610c.tgz"
-  checksum: 10c0/dbb47d285a4659e221556c41f44af953b82a250f4cb115133d315a196daff5d388bbedfecf59f460fac16a755066dcfc83392e1f2734334232c77d9a2cd94b8b
+"@react-native/normalize-colors@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/normalize-colors@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fnormalize-colors%2F-%2Fnormalize-colors-0.89.0-nightly-20261002-cd2de187e.tgz"
+  checksum: 10c0/11763c4c3645684bc47cf5bd85ed81a9b6c21135c01ae1dc9a8202b8a6bcd6141d30496e8ea15701e33c39f2dee24eccc52f0b8b88fcc09a94656682ef928af4
   languageName: node
   linkType: hard
 
-"@react-native/popup-menu-android@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/popup-menu-android@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fpopup-menu-android%2F-%2Fpopup-menu-android-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/popup-menu-android@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/popup-menu-android@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fpopup-menu-android%2F-%2Fpopup-menu-android-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
     nullthrows: "npm:^1.1.1"
   peerDependencies:
     "@types/react": ^19.1.0
     react: "*"
-    react-native: 0.88.0-nightly-20260805-f2188610c
+    react-native: 0.89.0-nightly-20261002-cd2de187e
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/0a4157a57bcfe795397d62b3293060f99137a88b8b46449d81fa3beea52015e94ba4bf15b31d989a86ef9cfafc6f3d6438400fdea6349ad500631d572a72c21d
+  checksum: 10c0/cb8765d3053c455e173aea0d9e11a4ae6b4ce7e981f261ab81f90a0463ebd8d1b6bd940bfd68f4b265dcf4045ce44c53f352bdabba41834ce83cdcb8d5a834c3
   languageName: node
   linkType: hard
 
-"@react-native/tester@npm:0.88.0-nightly-20260805-f2188610c, @react-native/tester@workspace:packages/@react-native/tester":
+"@react-native/tester@npm:0.89.0-nightly-20261002-cd2de187e, @react-native/tester@workspace:packages/@react-native/tester":
   version: 0.0.0-use.local
   resolution: "@react-native/tester@workspace:packages/@react-native/tester"
   dependencies:
-    "@react-native-community/cli": "npm:20.2.0"
-    "@react-native-community/cli-platform-android": "npm:20.2.0"
-    "@react-native-community/cli-platform-ios": "npm:20.2.0"
+    "@react-native-community/cli": "npm:21.0.0-alpha.1"
+    "@react-native/community-cli-plugin": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@react-native/core-cli-utils": "npm:*"
-    "@react-native/new-app-screen": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/popup-menu-android": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/new-app-screen": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/popup-menu-android": "npm:0.89.0-nightly-20261002-cd2de187e"
     commander: "npm:^12.0.0"
     flow-enums-runtime: "npm:^0.0.6"
     invariant: "npm:^2.2.4"
     listr2: "npm:^6.4.1"
     nullthrows: "npm:^1.1.1"
-    react: "npm:19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     rxjs: "npm:@react-native-community/rxjs@6.5.4-custom"
   peerDependencies:
-    react: 19.2.3
+    react: 19.3.0
     react-native: "*"
   languageName: unknown
   linkType: soft
 
-"@react-native/virtualized-lists@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "@react-native/virtualized-lists@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fvirtualized-lists%2F-%2Fvirtualized-lists-0.88.0-nightly-20260805-f2188610c.tgz"
+"@react-native/virtualized-lists@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "@react-native/virtualized-lists@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40react-native%2Fvirtualized-lists%2F-%2Fvirtualized-lists-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
     invariant: "npm:^2.2.4"
     nullthrows: "npm:^1.1.1"
   peerDependencies:
     "@types/react": ^19.2.0
     react: "*"
-    react-native: 0.88.0-nightly-20260805-f2188610c
+    react-native: 0.89.0-nightly-20261002-cd2de187e
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 10c0/e3033950c2531de544ffd6d4ef94aeb1a2be56dba4bfff9b2cbef58694fc63199e5b81b5e5af1d2ea78e62a4dabd69277f3982a43c89cda5725696bb35699130
+  checksum: 10c0/49524e156fd3670a6616d52eb81921c84bd144a8917850e9321a087dc97a57fe17711e0f491c9465d4c207c36635a97c81fc06b7deb454557ce01498b5bf4544
   languageName: node
   linkType: hard
 
@@ -4962,7 +4963,7 @@ __metadata:
   resolution: "@rnw-scripts/babel-react-native-config@workspace:packages/@rnw-scripts/babel-react-native-config"
   dependencies:
     "@babel/core": "npm:^7.25.2"
-    "@react-native/babel-preset": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/babel-preset": "npm:0.89.0-nightly-20261002-cd2de187e"
     babel-plugin-transform-flow-enums: "npm:^0.0.2"
     eslint: "npm:^8.19.0"
     prettier: "npm:^3.6.2"
@@ -5015,7 +5016,7 @@ __metadata:
     minimatch: "npm:^10.0.3"
     prettier: "npm:^3.6.2"
     semver: "npm:^7.6.3"
-    simple-git: "npm:^3.3.0"
+    simple-git: "npm:^4.0.2"
     source-map-support: "npm:^0.5.19"
     typescript: "npm:5.1.6"
     yargs: "npm:^16.2.0"
@@ -5100,8 +5101,8 @@ __metadata:
     "@react-native-windows/fs": "npm:^0.0.0-canary.72"
     "@react-native-windows/perf-testing": "npm:0.0.0-canary.1039"
     "@react-native-windows/tester": "npm:0.0.1"
-    "@react-native/jest-preset": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/metro-config": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/jest-preset": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/metro-config": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@rnw-scripts/babel-node-config": "npm:2.3.3"
     "@rnw-scripts/babel-react-native-config": "npm:0.0.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
@@ -5121,10 +5122,10 @@ __metadata:
     jest-environment-node: "npm:^29.7.0"
     jest-image-snapshot: "npm:^6.5.2"
     prettier: "npm:^3.6.2"
-    react: "npm:^19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:^19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-windows: "npm:^0.0.0-canary.1060"
-    react-test-renderer: "npm:19.1.0"
+    react-test-renderer: "npm:19.3.0"
     sanitize-filename: "npm:^1.6.3"
     typescript: "npm:5.1.6"
   languageName: unknown
@@ -5138,12 +5139,12 @@ __metadata:
     "@babel/eslint-parser": "npm:^7.25.1"
     "@jest/globals": "npm:^29.7.0"
     "@microsoft/eslint-plugin-sdl": "npm:^0.2.0"
-    "@react-native/eslint-config": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/eslint-config": "npm:0.89.0-nightly-20261002-cd2de187e"
     eslint: "npm:^8.19.0"
     eslint-config-prettier: "npm:^8.5.0"
     eslint-plugin-ft-flow: "npm:^2.0.1"
     eslint-plugin-jest: "npm:^29.0.1"
-    hermes-eslint: "npm:0.23.1"
+    hermes-eslint: "npm:0.37.0"
     prettier: "npm:^3.6.2"
     typescript: "npm:5.1.6"
   peerDependencies:
@@ -5240,8 +5241,8 @@ __metadata:
     lodash: "npm:^4.17.15"
     ora: "npm:^3.4.0"
     prettier: "npm:^3.6.2"
-    react: "npm:19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-platform-override: "npm:0.0.0-canary.1023"
     semver: "npm:^7.6.3"
     source-map-support: "npm:^0.5.19"
@@ -5362,7 +5363,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/metro-dev-config@workspace:packages/@rnw-scripts/metro-dev-config"
   dependencies:
-    "@react-native/metro-config": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/metro-config": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnx-kit/metro-config": "npm:^2.2.3"
@@ -5372,11 +5373,11 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.36.0"
     eslint: "npm:^8.19.0"
     prettier: "npm:^3.6.2"
-    react: "npm:19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     typescript: "npm:5.1.6"
   peerDependencies:
-    react: 19.2.3
+    react: 19.3.0
     react-native: "*"
   languageName: unknown
   linkType: soft
@@ -5390,8 +5391,8 @@ __metadata:
     "@react-native-community/cli": "npm:20.0.0"
     "@react-native-picker/picker": "npm:2.11.0"
     "@react-native-windows/tester": "npm:0.0.1"
-    "@react-native/jest-preset": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/metro-config": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/jest-preset": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/metro-config": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@rnw-scripts/babel-react-native-config": "npm:0.0.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -5406,10 +5407,10 @@ __metadata:
     eslint: "npm:^8.19.0"
     just-scripts: "npm:^1.3.3"
     prettier: "npm:^3.6.2"
-    react: "npm:^19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:^19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-windows: "npm:^0.0.0-canary.1060"
-    react-test-renderer: "npm:19.1.0"
+    react-test-renderer: "npm:19.3.0"
     typescript: "npm:5.1.6"
   languageName: unknown
   linkType: soft
@@ -5455,7 +5456,7 @@ __metadata:
     eslint: "npm:^8.19.0"
     minimatch: "npm:^10.0.3"
     prettier: "npm:^3.6.2"
-    simple-git: "npm:^3.3.0"
+    simple-git: "npm:^4.0.2"
     source-map-support: "npm:^0.5.19"
     typescript: "npm:5.1.6"
     yargs: "npm:^16.2.0"
@@ -5485,8 +5486,8 @@ __metadata:
     lodash: "npm:^4.17.15"
     prettier: "npm:^3.6.2"
     prettier-plugin-hermes-parser: "npm:0.21.1"
-    react: "npm:19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-platform-override: "workspace:*"
     typescript: "npm:5.1.6"
   languageName: unknown
@@ -5503,9 +5504,9 @@ __metadata:
     "@babel/runtime": "npm:^7.20.0"
     "@jest/globals": "npm:^29.7.0"
     "@react-native-community/cli": "npm:20.0.0"
-    "@react-native/jest-preset": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/metro-config": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/new-app-screen": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/jest-preset": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/metro-config": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/new-app-screen": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@rnw-scripts/babel-node-config": "npm:2.3.3"
     "@rnw-scripts/babel-react-native-config": "npm:0.0.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
@@ -5522,10 +5523,10 @@ __metadata:
     jest: "npm:^29.7.0"
     just-scripts: "npm:^1.3.3"
     prettier: "npm:^3.6.2"
-    react: "npm:^19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:^19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-windows: "npm:^0.0.0-canary.1060"
-    react-test-renderer: "npm:19.1.0"
+    react-test-renderer: "npm:19.3.0"
     typescript: "npm:5.1.6"
   languageName: unknown
   linkType: soft
@@ -5540,8 +5541,8 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.8.3"
     "@babel/runtime": "npm:^7.20.0"
     "@react-native-community/cli": "npm:20.0.0"
-    "@react-native/jest-preset": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/metro-config": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/jest-preset": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/metro-config": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@rnw-scripts/babel-node-config": "npm:2.3.3"
     "@rnw-scripts/babel-react-native-config": "npm:0.0.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
@@ -5558,8 +5559,8 @@ __metadata:
     just-scripts: "npm:^1.3.3"
     minimatch: "npm:^10.0.3"
     prettier: "npm:^3.6.2"
-    react: "npm:^19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:^19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-windows: "npm:^0.0.0-canary.1060"
     typescript: "npm:5.1.6"
   languageName: unknown
@@ -5779,12 +5780,12 @@ __metadata:
   linkType: hard
 
 "@rnx-kit/metro-config@npm:^2.2.3":
-  version: 2.2.4
-  resolution: "@rnx-kit/metro-config@npm:2.2.4"
+  version: 2.2.6
+  resolution: "@rnx-kit/metro-config@npm:2.2.6"
   dependencies:
     "@rnx-kit/tools-node": "npm:^3.0.0"
     "@rnx-kit/tools-react-native": "npm:^2.3.1"
-    "@rnx-kit/tools-workspaces": "npm:^0.2.0"
+    "@rnx-kit/tools-workspaces": "npm:^0.2.6"
   peerDependencies:
     "@react-native/metro-config": "*"
     react: "*"
@@ -5792,7 +5793,7 @@ __metadata:
   peerDependenciesMeta:
     "@react-native/metro-config":
       optional: true
-  checksum: 10c0/e07553e1fa1dfaea7586e0aeb9f2af10157f7d8fdcb7e1a07d75a5ebb83a02117e44c7899491f8ccc46b2a49b45c55459adfa44378d8070a60b18b55311f5e2c
+  checksum: 10c0/b372f1b90b97b31b542e87ecd25d291c5218eecd27d086a0fb951b13c9acfe2d9a1e85bbaaeaa9a8d64d38453788e1a103eb1bc6f078c1ce42e37d4f36153fd3
   languageName: node
   linkType: hard
 
@@ -5991,7 +5992,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rnx-kit/tools-workspaces@npm:^0.2.0, @rnx-kit/tools-workspaces@npm:^0.2.1":
+"@rnx-kit/tools-workspaces@npm:^0.2.1":
   version: 0.2.3
   resolution: "@rnx-kit/tools-workspaces@npm:0.2.3"
   dependencies:
@@ -6001,6 +6002,19 @@ __metadata:
     read-yaml-file: "npm:^2.1.0"
     strip-json-comments: "npm:^3.1.1"
   checksum: 10c0/b9528f560092c8ba8eeafb818cef2363ba99ffd7b3f0e3738cfe0316b35211ab7b6aa08d9eb3ef555c02b6048c591adafdca2934e674066256c06860cb1cf668
+  languageName: node
+  linkType: hard
+
+"@rnx-kit/tools-workspaces@npm:^0.2.6":
+  version: 0.2.6
+  resolution: "@rnx-kit/tools-workspaces@npm:0.2.6"
+  dependencies:
+    fast-glob: "npm:^3.2.7"
+    find-up: "npm:^5.0.0"
+    js-yaml: "npm:^5.2.3"
+    micromatch: "npm:^4.0.0"
+    strip-json-comments: "npm:^3.1.1"
+  checksum: 10c0/7ee3e4c178c22ddbcb0f8e9c90d7dd0422ce51687741e6da034befd31de6e65bca444b16f52b8654ff59ad6951f83de8c0ee146e75de6971b2868ec450252d11
   languageName: node
   linkType: hard
 
@@ -6080,7 +6094,7 @@ __metadata:
 
 "@rtsao/scc@npm:^1.1.0":
   version: 1.1.0
-  resolution: "@rtsao/scc@npm:1.1.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40rtsao%2Fscc%2F-%2Fscc-1.1.0.tgz"
+  resolution: "@rtsao/scc@npm:1.1.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40rtsao%2Fscc%2F-%2Fscc-1.1.0.tgz"
   checksum: 10c0/b5bcfb0d87f7d1c1c7c0f7693f53b07866ed9fec4c34a97a8c948fb9a7c0082e416ce4d3b60beb4f5e167cbe04cdeefbf6771320f3ede059b9ce91188c409a5b
   languageName: node
   linkType: hard
@@ -6106,9 +6120,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/node-core-library@npm:5.24.0":
-  version: 5.24.0
-  resolution: "@rushstack/node-core-library@npm:5.24.0"
+"@rushstack/node-core-library@npm:5.25.1":
+  version: 5.25.1
+  resolution: "@rushstack/node-core-library@npm:5.25.1"
   dependencies:
     ajv: "npm:~8.20.0"
     ajv-draft-04: "npm:~1.0.0"
@@ -6123,7 +6137,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/e2c022544c12cc59804f2c48ac157e916b31166000285746cf8158127f281e4a63e985754eade9449e92fdcd6d1169bd0af85ed06a1e9e43b17123002ca646f0
+  checksum: 10c0/914fe8144516d4d2162ae734eb00772952245aa0c9ba861320f9165dd893e4283ace0ec2892e15a2418e0232155a64445d69ba886756bc33f4d1369dad776b85
   languageName: node
   linkType: hard
 
@@ -6148,21 +6162,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rushstack/rig-package@npm:0.7.3":
-  version: 0.7.3
-  resolution: "@rushstack/rig-package@npm:0.7.3"
+"@rushstack/rig-package@npm:0.7.4":
+  version: 0.7.4
+  resolution: "@rushstack/rig-package@npm:0.7.4"
   dependencies:
     jju: "npm:~1.4.0"
     resolve: "npm:~1.22.1"
-  checksum: 10c0/d28a0196366bb16d020504b135ea1affbf77d01877a806544c38d48b95ab5b3593af1cbb7b24b6853a89fa360009811dcafe2ed4cc1616d12a08db0029a67097
+  checksum: 10c0/0a279f10760e6b2f1252d69dc54b3912ee6e15c510f68185297c447994bfa7bb0ad5c59893b50ad3378efb0a00cd0470f537e559df2d34c60880f68ce3741d0b
   languageName: node
   linkType: hard
 
-"@rushstack/terminal@npm:0.24.3":
-  version: 0.24.3
-  resolution: "@rushstack/terminal@npm:0.24.3"
+"@rushstack/terminal@npm:0.24.7":
+  version: 0.24.7
+  resolution: "@rushstack/terminal@npm:0.24.7"
   dependencies:
-    "@rushstack/node-core-library": "npm:5.24.0"
+    "@rushstack/node-core-library": "npm:5.25.1"
     "@rushstack/problem-matcher": "npm:0.2.1"
     supports-color: "npm:~8.1.1"
   peerDependencies:
@@ -6170,19 +6184,19 @@ __metadata:
   peerDependenciesMeta:
     "@types/node":
       optional: true
-  checksum: 10c0/57a6348fa5d60a409ddec156fe23069a3e1f06efd4ee07606706a3b692278e107a6cecd82558e0df9413e97bcd650c489eb83c417334c17591247ef7cfbe6c61
+  checksum: 10c0/c47827b37bedb25bc572e1564b847a082ed6a6017d8ac73020e4cbd27ddbca298b5970f949026ae381755b12c531f0d9600e59fbd9a4b5373d5d9069b90a14f7
   languageName: node
   linkType: hard
 
-"@rushstack/ts-command-line@npm:5.3.13":
-  version: 5.3.13
-  resolution: "@rushstack/ts-command-line@npm:5.3.13"
+"@rushstack/ts-command-line@npm:5.3.17":
+  version: 5.3.17
+  resolution: "@rushstack/ts-command-line@npm:5.3.17"
   dependencies:
-    "@rushstack/terminal": "npm:0.24.3"
+    "@rushstack/terminal": "npm:0.24.7"
     "@types/argparse": "npm:1.0.38"
     argparse: "npm:~1.0.9"
     string-argv: "npm:~0.3.1"
-  checksum: 10c0/7b476141b352e1a6bea4a6764cb79e7f380a57dacc7178e130ed043d224fef187c954515213fe7d17e2051aa4a140dc8ab7a78e14f86ffc71cc93f7a5d587ac3
+  checksum: 10c0/ced54b17f9295a43ba57f2a999037a81cac0b05f5441de7c257f033085d8a8d1defec2d6c811f1fc4f0c1f95357d1b1f90c1408200b2fec3137926368e8f5cf9
   languageName: node
   linkType: hard
 
@@ -6209,19 +6223,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@simple-git/args-pathspec@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "@simple-git/args-pathspec@npm:1.0.3"
-  checksum: 10c0/91bfc99daa956df28e4efd683cd799f60c6d169fce6adf71a9efa80a6b5938fed4b03e55fa929cfd51aed64f3ada5c1e4edad45a3872dbd94d11924b3258b5bc
+"@simple-git/args-pathspec@npm:1.0.4, @simple-git/args-pathspec@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "@simple-git/args-pathspec@npm:1.0.4::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40simple-git%2Fargs-pathspec%2F-%2Fargs-pathspec-1.0.4.tgz"
+  checksum: 10c0/f62c09daf6a17734b2a13a186421bf0fdbdbd48782d1ca6d751027b2a9f515f11505da672489609f95335a0541d2fcf6d6fd6c2754919245109e92335e437b1b
   languageName: node
   linkType: hard
 
-"@simple-git/argv-parser@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "@simple-git/argv-parser@npm:1.1.1"
+"@simple-git/argv-parser@npm:2.0.1":
+  version: 2.0.1
+  resolution: "@simple-git/argv-parser@npm:2.0.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40simple-git%2Fargv-parser%2F-%2Fargv-parser-2.0.1.tgz"
   dependencies:
-    "@simple-git/args-pathspec": "npm:^1.0.3"
-  checksum: 10c0/2c21166f1bb7c4373e7b4e52bd0c7f333e58ea0ff5ac0b6c2d305835f4a2bcad1ef4bcce3cff63312ac55655ea7be3aba4c7c0c41e3ebcb8bee343f65bb92f5e
+    "@simple-git/args-pathspec": "npm:^1.0.4"
+  checksum: 10c0/7d2cd9852139ca3b524dcd91f6a887fa505cfb68c8813d7b849005566147365bb1e34f5450411c494fbd714a80c123058e65dc2ffc0b41d059e30bdc98e12223
   languageName: node
   linkType: hard
 
@@ -6304,9 +6318,9 @@ __metadata:
   linkType: hard
 
 "@types/async@npm:^3.2.5":
-  version: 3.2.25
-  resolution: "@types/async@npm:3.2.25"
-  checksum: 10c0/a71010702d991facb51cea59521268aa22c873a9c8f2db12b72261a4c44fccca9a7916b9b9449428aa2a1aad69d56313abdf4303b55e7f4b93f4b9b71b9beb3c
+  version: 3.2.26
+  resolution: "@types/async@npm:3.2.26"
+  checksum: 10c0/7a715d085c99c9e94de03ab1b397961b929d42c68234e037874a00b0fd67f9dcf66a6c63fbf6ed90ec2747acd2c71320087407b2db0214b4dd1444a3de63bb1f
   languageName: node
   linkType: hard
 
@@ -6500,7 +6514,7 @@ __metadata:
 
 "@types/json5@npm:^0.0.29":
   version: 0.0.29
-  resolution: "@types/json5@npm:0.0.29::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40types%2Fjson5%2F-%2Fjson5-0.0.29.tgz"
+  resolution: "@types/json5@npm:0.0.29::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40types%2Fjson5%2F-%2Fjson5-0.0.29.tgz"
   checksum: 10c0/6bf5337bc447b706bb5b4431d37686aa2ea6d07cfd6f79cc31de80170d6ff9b1c7384a9c0ccbc45b3f512bae9e9f75c2e12109806a15331dc94e8a8db6dbb4ac
   languageName: node
   linkType: hard
@@ -6522,9 +6536,9 @@ __metadata:
   linkType: hard
 
 "@types/lodash@npm:^4.14.168":
-  version: 4.17.25
-  resolution: "@types/lodash@npm:4.17.25"
-  checksum: 10c0/ca2049f16bf527e04d6e27702e3912a484faaff587de77a5c58e0d243b9292a655e1d7f7e5bdf2ffdf49a76da10673097f8dd4901990679058d47ccd99051877
+  version: 4.17.26
+  resolution: "@types/lodash@npm:4.17.26"
+  checksum: 10c0/7f8a95db94698f009e59c612deaba1ee98ac738156926f4c1c062853b9e46fe5fb3a7a34a15ad2f2c846f7c24b0e61e0109dfac2d9e4fa8eaa71330fd0862ea3
   languageName: node
   linkType: hard
 
@@ -6680,20 +6694,20 @@ __metadata:
   linkType: hard
 
 "@types/react-test-renderer@npm:^19.1.0":
-  version: 19.1.0
-  resolution: "@types/react-test-renderer@npm:19.1.0"
+  version: 19.3.0
+  resolution: "@types/react-test-renderer@npm:19.3.0"
   dependencies:
     "@types/react": "npm:*"
-  checksum: 10c0/799654e430df10aeaf267d71507fb64ec151359ead7e3774111bfd4abce7e0911dba461811195c06c22a6d17496ea92537d3185320ff4112fe29954cad1b9152
+  checksum: 10c0/37f5588f698a057a33c1f4d5fd28a042f3df7f29a3554ddebb7f9c8ecd3e5fba085e5b12d14b30734c30b51959ef17544650b2a9704d629d0af251f126d8ae73
   languageName: node
   linkType: hard
 
 "@types/react@npm:*, @types/react@npm:^19.0.0, @types/react@npm:^19.2.3":
-  version: 19.2.18
-  resolution: "@types/react@npm:19.2.18"
+  version: 19.3.0
+  resolution: "@types/react@npm:19.3.0"
   dependencies:
     csstype: "npm:^3.2.2"
-  checksum: 10c0/d04216172b4b4362b310017c210dfbe019fb4f4e7dffd0313e70b3acb3051d5c3e76e7e84e3cf4c6a3c824993ffadfe3949e589a6398a09d4200e7670e2962de
+  checksum: 10c0/fbcabf303f935ca9f36ed2dcf81751cf84744098c5a683c8a62a0fa7edd31714b48d5c46b12fd0014f7f2dfe4d9ec6de428a850748eec719a70294e51029551b
   languageName: node
   linkType: hard
 
@@ -6926,7 +6940,7 @@ __metadata:
 
 "@typescript-eslint/eslint-plugin@npm:^8.59.2":
   version: 8.68.0
-  resolution: "@typescript-eslint/eslint-plugin@npm:8.68.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40typescript-eslint%2Feslint-plugin%2F-%2Feslint-plugin-8.68.0.tgz"
+  resolution: "@typescript-eslint/eslint-plugin@npm:8.68.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40typescript-eslint%2Feslint-plugin%2F-%2Feslint-plugin-8.68.0.tgz"
   dependencies:
     "@eslint-community/regexpp": "npm:^4.12.2"
     "@typescript-eslint/scope-manager": "npm:8.68.0"
@@ -6996,7 +7010,7 @@ __metadata:
 
 "@typescript-eslint/parser@npm:^8.59.2":
   version: 8.68.0
-  resolution: "@typescript-eslint/parser@npm:8.68.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40typescript-eslint%2Fparser%2F-%2Fparser-8.68.0.tgz"
+  resolution: "@typescript-eslint/parser@npm:8.68.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40typescript-eslint%2Fparser%2F-%2Fparser-8.68.0.tgz"
   dependencies:
     "@typescript-eslint/scope-manager": "npm:8.68.0"
     "@typescript-eslint/types": "npm:8.68.0"
@@ -7038,7 +7052,7 @@ __metadata:
 
 "@typescript-eslint/project-service@npm:8.68.0":
   version: 8.68.0
-  resolution: "@typescript-eslint/project-service@npm:8.68.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40typescript-eslint%2Fproject-service%2F-%2Fproject-service-8.68.0.tgz"
+  resolution: "@typescript-eslint/project-service@npm:8.68.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40typescript-eslint%2Fproject-service%2F-%2Fproject-service-8.68.0.tgz"
   dependencies:
     "@typescript-eslint/tsconfig-utils": "npm:^8.68.0"
     "@typescript-eslint/types": "npm:^8.68.0"
@@ -7091,7 +7105,7 @@ __metadata:
 
 "@typescript-eslint/scope-manager@npm:8.68.0":
   version: 8.68.0
-  resolution: "@typescript-eslint/scope-manager@npm:8.68.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40typescript-eslint%2Fscope-manager%2F-%2Fscope-manager-8.68.0.tgz"
+  resolution: "@typescript-eslint/scope-manager@npm:8.68.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40typescript-eslint%2Fscope-manager%2F-%2Fscope-manager-8.68.0.tgz"
   dependencies:
     "@typescript-eslint/types": "npm:8.68.0"
     "@typescript-eslint/visitor-keys": "npm:8.68.0"
@@ -7119,7 +7133,7 @@ __metadata:
 
 "@typescript-eslint/tsconfig-utils@npm:8.68.0, @typescript-eslint/tsconfig-utils@npm:^8.68.0":
   version: 8.68.0
-  resolution: "@typescript-eslint/tsconfig-utils@npm:8.68.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40typescript-eslint%2Ftsconfig-utils%2F-%2Ftsconfig-utils-8.68.0.tgz"
+  resolution: "@typescript-eslint/tsconfig-utils@npm:8.68.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40typescript-eslint%2Ftsconfig-utils%2F-%2Ftsconfig-utils-8.68.0.tgz"
   peerDependencies:
     typescript: ">=4.8.4 <6.1.0"
   checksum: 10c0/7a3e025ed292ea11333f645b95ae60da9db38bded295ddccc1a66fb960b528f83c5abd5c0df54d2bd7eec8c05f83ed0b600379256129a0b594311b589ea31c74
@@ -7161,7 +7175,7 @@ __metadata:
 
 "@typescript-eslint/type-utils@npm:8.68.0":
   version: 8.68.0
-  resolution: "@typescript-eslint/type-utils@npm:8.68.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40typescript-eslint%2Ftype-utils%2F-%2Ftype-utils-8.68.0.tgz"
+  resolution: "@typescript-eslint/type-utils@npm:8.68.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40typescript-eslint%2Ftype-utils%2F-%2Ftype-utils-8.68.0.tgz"
   dependencies:
     "@typescript-eslint/types": "npm:8.68.0"
     "@typescript-eslint/typescript-estree": "npm:8.68.0"
@@ -7205,7 +7219,7 @@ __metadata:
 
 "@typescript-eslint/types@npm:8.68.0, @typescript-eslint/types@npm:^8.68.0":
   version: 8.68.0
-  resolution: "@typescript-eslint/types@npm:8.68.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40typescript-eslint%2Ftypes%2F-%2Ftypes-8.68.0.tgz"
+  resolution: "@typescript-eslint/types@npm:8.68.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40typescript-eslint%2Ftypes%2F-%2Ftypes-8.68.0.tgz"
   checksum: 10c0/c7e64094de90ff81a53572651e670f7566163df8a14ffd6c5822212d8412db590976a9a2aaed965b390cefe389e9ec3d498862127212ca840a4a80527dae6972
   languageName: node
   linkType: hard
@@ -7288,7 +7302,7 @@ __metadata:
 
 "@typescript-eslint/typescript-estree@npm:8.68.0":
   version: 8.68.0
-  resolution: "@typescript-eslint/typescript-estree@npm:8.68.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40typescript-eslint%2Ftypescript-estree%2F-%2Ftypescript-estree-8.68.0.tgz"
+  resolution: "@typescript-eslint/typescript-estree@npm:8.68.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40typescript-eslint%2Ftypescript-estree%2F-%2Ftypescript-estree-8.68.0.tgz"
   dependencies:
     "@typescript-eslint/project-service": "npm:8.68.0"
     "@typescript-eslint/tsconfig-utils": "npm:8.68.0"
@@ -7336,7 +7350,7 @@ __metadata:
 
 "@typescript-eslint/utils@npm:8.68.0":
   version: 8.68.0
-  resolution: "@typescript-eslint/utils@npm:8.68.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40typescript-eslint%2Futils%2F-%2Futils-8.68.0.tgz"
+  resolution: "@typescript-eslint/utils@npm:8.68.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40typescript-eslint%2Futils%2F-%2Futils-8.68.0.tgz"
   dependencies:
     "@eslint-community/eslint-utils": "npm:^4.9.1"
     "@typescript-eslint/scope-manager": "npm:8.68.0"
@@ -7409,7 +7423,7 @@ __metadata:
 
 "@typescript-eslint/visitor-keys@npm:8.68.0":
   version: 8.68.0
-  resolution: "@typescript-eslint/visitor-keys@npm:8.68.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2F%40typescript-eslint%2Fvisitor-keys%2F-%2Fvisitor-keys-8.68.0.tgz"
+  resolution: "@typescript-eslint/visitor-keys@npm:8.68.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2F%40typescript-eslint%2Fvisitor-keys%2F-%2Fvisitor-keys-8.68.0.tgz"
   dependencies:
     "@typescript-eslint/types": "npm:8.68.0"
     eslint-visitor-keys: "npm:^5.0.0"
@@ -7873,7 +7887,7 @@ __metadata:
 
 "array-includes@npm:^3.1.9":
   version: 3.2.0
-  resolution: "array-includes@npm:3.2.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Farray-includes%2F-%2Farray-includes-3.2.0.tgz"
+  resolution: "array-includes@npm:3.2.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Farray-includes%2F-%2Farray-includes-3.2.0.tgz"
   dependencies:
     call-bind: "npm:^1.0.9"
     call-bound: "npm:^1.0.4"
@@ -7926,7 +7940,7 @@ __metadata:
 
 "array.prototype.findlastindex@npm:^1.2.6":
   version: 1.2.6
-  resolution: "array.prototype.findlastindex@npm:1.2.6::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Farray.prototype.findlastindex%2F-%2Farray.prototype.findlastindex-1.2.6.tgz"
+  resolution: "array.prototype.findlastindex@npm:1.2.6::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Farray.prototype.findlastindex%2F-%2Farray.prototype.findlastindex-1.2.6.tgz"
   dependencies:
     call-bind: "npm:^1.0.8"
     call-bound: "npm:^1.0.4"
@@ -7953,7 +7967,7 @@ __metadata:
 
 "array.prototype.flat@npm:^1.3.3":
   version: 1.3.3
-  resolution: "array.prototype.flat@npm:1.3.3::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Farray.prototype.flat%2F-%2Farray.prototype.flat-1.3.3.tgz"
+  resolution: "array.prototype.flat@npm:1.3.3::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Farray.prototype.flat%2F-%2Farray.prototype.flat-1.3.3.tgz"
   dependencies:
     call-bind: "npm:^1.0.8"
     define-properties: "npm:^1.2.1"
@@ -8287,7 +8301,7 @@ __metadata:
 
 "babel-plugin-syntax-hermes-parser@npm:0.37.0":
   version: 0.37.0
-  resolution: "babel-plugin-syntax-hermes-parser@npm:0.37.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fbabel-plugin-syntax-hermes-parser%2F-%2Fbabel-plugin-syntax-hermes-parser-0.37.0.tgz"
+  resolution: "babel-plugin-syntax-hermes-parser@npm:0.37.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fbabel-plugin-syntax-hermes-parser%2F-%2Fbabel-plugin-syntax-hermes-parser-0.37.0.tgz"
   dependencies:
     hermes-parser: "npm:0.37.0"
   checksum: 10c0/2a33607eddebb2471c93d2ffbdf81a06b05748cdf70dd18e35c022baa1fcf5938ebca62487e31e97352af22247b5737090ae9c4e0827caab52874bd56cfa21ac
@@ -8382,12 +8396,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"baseline-browser-mapping@npm:^2.10.12":
-  version: 2.10.16
-  resolution: "baseline-browser-mapping@npm:2.10.16"
+"baseline-browser-mapping@npm:^2.11.26":
+  version: 2.11.29
+  resolution: "baseline-browser-mapping@npm:2.11.29::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fbaseline-browser-mapping%2F-%2Fbaseline-browser-mapping-2.11.29.tgz"
   bin:
     baseline-browser-mapping: dist/cli.cjs
-  checksum: 10c0/9947243bb8f16db3f8e05397c5c3e7a91243dcf2d1ec6a681ad5ffabeadee36c1061cd18e5f0432088df6798fa0689890ba26db173b9ad23c5650709b7b2e7cf
+  checksum: 10c0/da4394fe1fdb3902de73542ce892aa4278ddd345a39eed1568092919a267881268c9e55d4f25ae7ca5fc3ad320f933c880fc7c49a343a195339c96ce5caffec1
   languageName: node
   linkType: hard
 
@@ -8465,7 +8479,7 @@ __metadata:
 
 "body-parser@npm:^2.2.2":
   version: 2.3.0
-  resolution: "body-parser@npm:2.3.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fbody-parser%2F-%2Fbody-parser-2.3.0.tgz"
+  resolution: "body-parser@npm:2.3.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fbody-parser%2F-%2Fbody-parser-2.3.0.tgz"
   dependencies:
     bytes: "npm:^3.1.2"
     content-type: "npm:^2.0.0"
@@ -8510,7 +8524,7 @@ __metadata:
 
 "brace-expansion@npm:^5.0.8":
   version: 5.0.9
-  resolution: "brace-expansion@npm:5.0.9::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fbrace-expansion%2F-%2Fbrace-expansion-5.0.9.tgz"
+  resolution: "brace-expansion@npm:5.0.9::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fbrace-expansion%2F-%2Fbrace-expansion-5.0.9.tgz"
   dependencies:
     balanced-match: "npm:^4.0.2"
   checksum: 10c0/3dea38884a1c3c8b1c9c44a7402a0c76fca460f70cffb3127242b0b4cbf4472019e022ade021eec44838ff19f1dac2625dfd11dd459d7e1e055b0698a8d52fec
@@ -8526,18 +8540,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist@npm:^4.24.0, browserslist@npm:^4.28.1":
-  version: 4.28.2
-  resolution: "browserslist@npm:4.28.2"
+"browserslist@npm:^4.28.7":
+  version: 4.29.3
+  resolution: "browserslist@npm:4.29.3::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fbrowserslist%2F-%2Fbrowserslist-4.29.3.tgz"
   dependencies:
-    baseline-browser-mapping: "npm:^2.10.12"
-    caniuse-lite: "npm:^1.0.30001782"
-    electron-to-chromium: "npm:^1.5.328"
-    node-releases: "npm:^2.0.36"
-    update-browserslist-db: "npm:^1.2.3"
+    baseline-browser-mapping: "npm:^2.11.26"
+    caniuse-lite: "npm:^1.0.30001813"
+    electron-to-chromium: "npm:^1.5.439"
+    node-releases: "npm:^2.0.57"
+    update-browserslist-db: "npm:^1.3.3"
   bin:
     browserslist: cli.js
-  checksum: 10c0/c0228b6330f785b7fa59d2d360124ec6d9322f96ed9f3ee1f873e33ecc9503a6f0ffc3b71191a28c4ff6e930b753b30043da1c33844a9548f3018d491f09ce60
+  checksum: 10c0/6e1a1fcae77369260e936fe63e7994105f04c6b7aea4f2139fdf3ecccfcb1eb24d4522c2828c6ed48ef71206a33f4346e11cf714c5aac0f7496cead06bb66bac
   languageName: node
   linkType: hard
 
@@ -8599,7 +8613,7 @@ __metadata:
 
 "bytes@npm:^3.1.2":
   version: 3.1.2
-  resolution: "bytes@npm:3.1.2::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fbytes%2F-%2Fbytes-3.1.2.tgz"
+  resolution: "bytes@npm:3.1.2::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fbytes%2F-%2Fbytes-3.1.2.tgz"
   checksum: 10c0/76d1c43cbd602794ad8ad2ae94095cddeb1de78c5dddaa7005c51af10b0176c69971a6d88e805a90c2b6550d76636e43c40d8427a808b8645ede885de4a0358e
   languageName: node
   linkType: hard
@@ -8694,7 +8708,7 @@ __metadata:
 
 "call-bind@npm:^1.0.9":
   version: 1.0.9
-  resolution: "call-bind@npm:1.0.9::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fcall-bind%2F-%2Fcall-bind-1.0.9.tgz"
+  resolution: "call-bind@npm:1.0.9::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fcall-bind%2F-%2Fcall-bind-1.0.9.tgz"
   dependencies:
     call-bind-apply-helpers: "npm:^1.0.2"
     es-define-property: "npm:^1.0.1"
@@ -8735,10 +8749,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001782":
-  version: 1.0.30001786
-  resolution: "caniuse-lite@npm:1.0.30001786"
-  checksum: 10c0/9895f0add1991eefb91cfae98e7baa9daffc6b862b0996c983d30e6be90ef679b6aef32dcb6eca312977fb67c2636ee575820f101213e69c1e0dbffd6ee8e09e
+"caniuse-lite@npm:^1.0.30001813":
+  version: 1.0.30001816
+  resolution: "caniuse-lite@npm:1.0.30001816::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fcaniuse-lite%2F-%2Fcaniuse-lite-1.0.30001816.tgz"
+  checksum: 10c0/5d39f36f73181906fd25d0cd61030308540d38ed1162eb730d4e69dc75ab94434a5977ab08d4721351bd855f99d19eb5fc488c58ec49272484868c0f3bc97243
   languageName: node
   linkType: hard
 
@@ -8901,7 +8915,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"clang-format@npm:^1.7.0, clang-format@npm:^1.8.0":
+"clang-format@npm:^1.7.0":
   version: 1.8.0
   resolution: "clang-format@npm:1.8.0"
   dependencies:
@@ -9245,7 +9259,7 @@ __metadata:
 
 "content-type@npm:^2.0.0":
   version: 2.1.0
-  resolution: "content-type@npm:2.1.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fcontent-type%2F-%2Fcontent-type-2.1.0.tgz"
+  resolution: "content-type@npm:2.1.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fcontent-type%2F-%2Fcontent-type-2.1.0.tgz"
   checksum: 10c0/f5d420f55fd0c7a7f7cbae9637777ce67a074aa79b489d8d9fee8599089592b5f8bb194e1d6885741fee20271034baca0d68d5419535b52d070c4f7e39f4b448
   languageName: node
   linkType: hard
@@ -9468,7 +9482,7 @@ __metadata:
 
 "debug@npm:^3.2.7":
   version: 3.2.7
-  resolution: "debug@npm:3.2.7::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fdebug%2F-%2Fdebug-3.2.7.tgz"
+  resolution: "debug@npm:3.2.7::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fdebug%2F-%2Fdebug-3.2.7.tgz"
   dependencies:
     ms: "npm:^2.1.1"
   checksum: 10c0/37d96ae42cbc71c14844d2ae3ba55adf462ec89fd3a999459dec3833944cd999af6007ff29c780f1c61153bcaaf2c842d1e4ce1ec621e4fc4923244942e4a02a
@@ -9477,7 +9491,7 @@ __metadata:
 
 "debug@npm:^4.4.1":
   version: 4.4.3
-  resolution: "debug@npm:4.4.3::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fdebug%2F-%2Fdebug-4.4.3.tgz"
+  resolution: "debug@npm:4.4.3::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fdebug%2F-%2Fdebug-4.4.3.tgz"
   dependencies:
     ms: "npm:^2.1.3"
   peerDependenciesMeta:
@@ -9581,7 +9595,7 @@ __metadata:
 
 "define-lazy-prop@npm:^2.0.0":
   version: 2.0.0
-  resolution: "define-lazy-prop@npm:2.0.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fdefine-lazy-prop%2F-%2Fdefine-lazy-prop-2.0.0.tgz"
+  resolution: "define-lazy-prop@npm:2.0.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fdefine-lazy-prop%2F-%2Fdefine-lazy-prop-2.0.0.tgz"
   checksum: 10c0/db6c63864a9d3b7dc9def55d52764968a5af296de87c1b2cc71d8be8142e445208071953649e0386a8cc37cfcf9a2067a47207f1eb9ff250c2a269658fdae422
   languageName: node
   linkType: hard
@@ -9771,10 +9785,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-to-chromium@npm:^1.5.328":
-  version: 1.5.331
-  resolution: "electron-to-chromium@npm:1.5.331"
-  checksum: 10c0/a7687f3bb4df4640bfeac08d1586531624917452bbbbeb67ccf2b07f111e584321e60945da080df664cbb57f272307d7867c8b93e279150ce8385f13d5178c96
+"electron-to-chromium@npm:^1.5.439":
+  version: 1.5.459
+  resolution: "electron-to-chromium@npm:1.5.459::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Felectron-to-chromium%2F-%2Felectron-to-chromium-1.5.459.tgz"
+  checksum: 10c0/5fd2539dbd55dd7992a43990fa1891c1e8c13f35d6b6a3178044f60351ac4e0b5dc40d6c055fc5009afa776e3baebb72fe3b08cca01f87614d16943b276d8fe9
   languageName: node
   linkType: hard
 
@@ -9847,7 +9861,7 @@ __metadata:
 
 "env-paths@npm:^3.0.0":
   version: 3.0.0
-  resolution: "env-paths@npm:3.0.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fenv-paths%2F-%2Fenv-paths-3.0.0.tgz"
+  resolution: "env-paths@npm:3.0.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fenv-paths%2F-%2Fenv-paths-3.0.0.tgz"
   checksum: 10c0/76dec878cee47f841103bacd7fae03283af16f0702dad65102ef0a556f310b98a377885e0f32943831eb08b5ab37842a323d02529f3dfd5d0a40ca71b01b435f
   languageName: node
   linkType: hard
@@ -9960,7 +9974,7 @@ __metadata:
 
 "es-abstract@npm:^1.24.2":
   version: 1.24.2
-  resolution: "es-abstract@npm:1.24.2::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fes-abstract%2F-%2Fes-abstract-1.24.2.tgz"
+  resolution: "es-abstract@npm:1.24.2::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fes-abstract%2F-%2Fes-abstract-1.24.2.tgz"
   dependencies:
     array-buffer-byte-length: "npm:^1.0.2"
     arraybuffer.prototype.slice: "npm:^1.0.4"
@@ -10070,7 +10084,7 @@ __metadata:
 
 "es-object-atoms@npm:^1.1.2":
   version: 1.1.2
-  resolution: "es-object-atoms@npm:1.1.2::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fes-object-atoms%2F-%2Fes-object-atoms-1.1.2.tgz"
+  resolution: "es-object-atoms@npm:1.1.2::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fes-object-atoms%2F-%2Fes-object-atoms-1.1.2.tgz"
   dependencies:
     es-errors: "npm:^1.3.0"
   checksum: 10c0/1772861f094f739d6f41b579cfb9a18579daffeb434552a370a5fbef50a32d22227e27b63fdbb757b7ddd429d1b42fe52ccae7966d9302a2ec221b6f1b41bbc4
@@ -10100,7 +10114,7 @@ __metadata:
 
 "es-shim-unscopables@npm:^1.1.0":
   version: 1.1.0
-  resolution: "es-shim-unscopables@npm:1.1.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fes-shim-unscopables%2F-%2Fes-shim-unscopables-1.1.0.tgz"
+  resolution: "es-shim-unscopables@npm:1.1.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fes-shim-unscopables%2F-%2Fes-shim-unscopables-1.1.0.tgz"
   dependencies:
     hasown: "npm:^2.0.2"
   checksum: 10c0/1b9702c8a1823fc3ef39035a4e958802cf294dd21e917397c561d0b3e195f383b978359816b1732d02b255ccf63e1e4815da0065b95db8d7c992037be3bbbcdb
@@ -10262,7 +10276,7 @@ __metadata:
 
 "eslint-import-resolver-node@npm:^0.3.9":
   version: 0.3.10
-  resolution: "eslint-import-resolver-node@npm:0.3.10::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Feslint-import-resolver-node%2F-%2Feslint-import-resolver-node-0.3.10.tgz"
+  resolution: "eslint-import-resolver-node@npm:0.3.10::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Feslint-import-resolver-node%2F-%2Feslint-import-resolver-node-0.3.10.tgz"
   dependencies:
     debug: "npm:^3.2.7"
     is-core-module: "npm:^2.16.1"
@@ -10273,7 +10287,7 @@ __metadata:
 
 "eslint-module-utils@npm:^2.12.1":
   version: 2.14.0
-  resolution: "eslint-module-utils@npm:2.14.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Feslint-module-utils%2F-%2Feslint-module-utils-2.14.0.tgz"
+  resolution: "eslint-module-utils@npm:2.14.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Feslint-module-utils%2F-%2Feslint-module-utils-2.14.0.tgz"
   dependencies:
     debug: "npm:^3.2.7"
   peerDependenciesMeta:
@@ -10331,9 +10345,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-ft-flow@npm:^3.0.11":
+  version: 3.0.11
+  resolution: "eslint-plugin-ft-flow@npm:3.0.11::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Feslint-plugin-ft-flow%2F-%2Feslint-plugin-ft-flow-3.0.11.tgz"
+  dependencies:
+    lodash: "npm:^4.17.21"
+    string-natural-compare: "npm:^3.0.1"
+  peerDependencies:
+    eslint: ^8.56.0 || ^9.0.0
+    hermes-eslint: ">=0.15.0"
+  checksum: 10c0/025b3736d99d2831c6d493421fbfa880b0aeef9752d3b677972c7100e5ba424368525bc15b34604f02d18807bfa7b1bcaa2c3f37552381f2ce45283faa5989d5
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-import@npm:^2.32.0":
   version: 2.32.0
-  resolution: "eslint-plugin-import@npm:2.32.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Feslint-plugin-import%2F-%2Feslint-plugin-import-2.32.0.tgz"
+  resolution: "eslint-plugin-import@npm:2.32.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Feslint-plugin-import%2F-%2Feslint-plugin-import-2.32.0.tgz"
   dependencies:
     "@rtsao/scc": "npm:^1.1.0"
     array-includes: "npm:^3.1.9"
@@ -10361,8 +10388,8 @@ __metadata:
   linkType: hard
 
 "eslint-plugin-jest@npm:^29.0.1":
-  version: 29.16.6
-  resolution: "eslint-plugin-jest@npm:29.16.6"
+  version: 29.16.11
+  resolution: "eslint-plugin-jest@npm:29.16.11"
   dependencies:
     "@typescript-eslint/utils": "npm:^8.0.0"
   peerDependencies:
@@ -10377,7 +10404,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10c0/c483057f6b7c6500c6208eb965b61fe3a81dbd86123dd1a129584ed8c490336275a8815196922c20bd4895761a7d5b993f7b37869c69d57594b522fe318def8d
+  checksum: 10c0/455c041a4e696bea936b66ddc7276ea982b20b67664e61023334d8b5391ef0daab2dd3b41a611f95b0dabe5219cd0b4c32e9c29238c31f284294c620e983369e
   languageName: node
   linkType: hard
 
@@ -10934,7 +10961,7 @@ __metadata:
 
 "fast-xml-parser@npm:^5.3.6":
   version: 5.11.1
-  resolution: "fast-xml-parser@npm:5.11.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Ffast-xml-parser%2F-%2Ffast-xml-parser-5.11.1.tgz"
+  resolution: "fast-xml-parser@npm:5.11.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Ffast-xml-parser%2F-%2Ffast-xml-parser-5.11.1.tgz"
   dependencies:
     "@nodable/entities": "npm:^3.0.0"
     fast-xml-builder: "npm:^1.2.0"
@@ -11042,14 +11069,14 @@ __metadata:
 
 "filename-reserved-regex@npm:^3.0.0":
   version: 3.0.0
-  resolution: "filename-reserved-regex@npm:3.0.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Ffilename-reserved-regex%2F-%2Ffilename-reserved-regex-3.0.0.tgz"
+  resolution: "filename-reserved-regex@npm:3.0.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Ffilename-reserved-regex%2F-%2Ffilename-reserved-regex-3.0.0.tgz"
   checksum: 10c0/2b1df851a37f84723f9d8daf885ddfadd3dea2a124474db405295962abc1a01d6c9b6b27edec33bad32ef601e1a220f8a34d34f30ca5a911709700e2b517e268
   languageName: node
   linkType: hard
 
 "filenamify@npm:^6.0.0":
   version: 6.0.0
-  resolution: "filenamify@npm:6.0.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Ffilenamify%2F-%2Ffilenamify-6.0.0.tgz"
+  resolution: "filenamify@npm:6.0.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Ffilenamify%2F-%2Ffilenamify-6.0.0.tgz"
   dependencies:
     filename-reserved-regex: "npm:^3.0.0"
   checksum: 10c0/6798be1f7eea9eddb4517527a890a9d1b97083a6392b0ca392b79034d02d92411830d1b0e29f85ebfcb5cd4f8494388c7f9975fbada9d5f4088fc8474fdf20ae
@@ -11168,47 +11195,47 @@ __metadata:
 
 "flora-colossus@npm:^3.0.2":
   version: 3.0.2
-  resolution: "flora-colossus@npm:3.0.2::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflora-colossus%2F-%2Fflora-colossus-3.0.2.tgz"
+  resolution: "flora-colossus@npm:3.0.2::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fflora-colossus%2F-%2Fflora-colossus-3.0.2.tgz"
   dependencies:
     debug: "npm:^4.4.1"
   checksum: 10c0/1b56ca02d75b6eb5b0d70123b0f71ef320a8cb2bfd8def952de854121b7a8ea67fb2fa6e75e2bbef61a753b31c117a4405cd9b2597f54ca714bafa4ca3ef9504
   languageName: node
   linkType: hard
 
-"flow-api-translator@npm:0.37.0":
-  version: 0.37.0
-  resolution: "flow-api-translator@npm:0.37.0::__archiveUrl=https%3A%2F%2Fms-feed-12.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-api-translator%2F-%2Fflow-api-translator-0.37.0.tgz"
+"flow-api-translator@npm:0.333.0":
+  version: 0.333.0
+  resolution: "flow-api-translator@npm:0.333.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-api-translator%2F-%2Fflow-api-translator-0.333.0.tgz"
   dependencies:
     "@babel/code-frame": "npm:^7.16.0"
     "@typescript-eslint/parser": "npm:8.38.0"
     "@typescript-eslint/visitor-keys": "npm:8.38.0"
     flow-enums-runtime: "npm:^0.0.6"
-    hermes-eslint: "npm:0.37.0"
-    hermes-estree: "npm:0.37.0"
-    hermes-parser: "npm:0.37.0"
-    hermes-transform: "npm:0.37.0"
+    flow-eslint: "npm:0.333.0"
+    flow-estree: "npm:0.333.0"
+    flow-parser: "npm:0.333.0"
+    flow-transform: "npm:0.333.0"
     typescript: "npm:5.3.2"
   peerDependencies:
     prettier: ^3.0.0
-  checksum: 10c0/e70adbe3586223376bd6a8c9d925216b77f6b5fb888e1e4e9e4cc952114694961b8d304ccb9848fcb85b80f10f44eecc0459f3d33a1f2f200359872dc0365431
+  checksum: 10c0/5b3d8bf22f7338b847b7f2a40c05ce7f79db4a4d8d321bc42f9830dea963d832bd372d73c24f4d796fb7970ba5fefe52e8b3b19384775b1a01d5810b7f3518b3
   languageName: node
   linkType: hard
 
 "flow-bin@npm:^0.316.0":
   version: 0.316.0
-  resolution: "flow-bin@npm:0.316.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-bin%2F-%2Fflow-bin-0.316.0.tgz"
+  resolution: "flow-bin@npm:0.316.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fflow-bin%2F-%2Fflow-bin-0.316.0.tgz"
   bin:
     flow: cli.js
   checksum: 10c0/28428f43e2e654940c748261c59c3cee0b5f97b7f9a3f017c240e1b37ff3d5d7027802283e33b472fbdca1cab6d96592c50c88045f56891b322aa014a6c43be9
   languageName: node
   linkType: hard
 
-"flow-bin@npm:^0.325.0":
-  version: 0.325.0
-  resolution: "flow-bin@npm:0.325.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-bin%2F-%2Fflow-bin-0.325.0.tgz"
+"flow-bin@npm:^0.333.0":
+  version: 0.333.0
+  resolution: "flow-bin@npm:0.333.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-bin%2F-%2Fflow-bin-0.333.0.tgz"
   bin:
     flow: cli.js
-  checksum: 10c0/446c0677b010bf4ab625098283312d919962c1c252688c00a074ed195534a0149409422db3a444d50ff5e153c5beb495a38934c31af172dd8065308ec0d21d08
+  checksum: 10c0/a2059a8d6aa13361c6b6fe4407cbca5a54e0d688b3725f38b14686e00d6a88de41fe0aea3ac66a3cc168cb33c6048fa2af84cfd8ed7aa42c30584f28e628438f
   languageName: node
   linkType: hard
 
@@ -11219,28 +11246,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flow-eslint@npm:0.325.0":
-  version: 0.325.0
-  resolution: "flow-eslint@npm:0.325.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-eslint%2F-%2Fflow-eslint-0.325.0.tgz"
+"flow-eslint@npm:0.333.0":
+  version: 0.333.0
+  resolution: "flow-eslint@npm:0.333.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-eslint%2F-%2Fflow-eslint-0.333.0.tgz"
   dependencies:
     esrecurse: "npm:^4.3.0"
-    flow-estree: "npm:0.325.0"
-    flow-parser: "npm:0.325.0"
-  checksum: 10c0/0cc070baccd4b76e2c2bf3b949efff7b6de6cbe072faa6d8a86e23f528f7b08534ae3d50c4350acc11fb5e6e54fa919c12f57eebb62afcca38457ae28bd743ce
-  languageName: node
-  linkType: hard
-
-"flow-estree@npm:0.325.0":
-  version: 0.325.0
-  resolution: "flow-estree@npm:0.325.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-estree%2F-%2Fflow-estree-0.325.0.tgz"
-  checksum: 10c0/48bf59b8500ae6ccc3072ec3844af6d8598724bdc49c7253405f0cf1fa065950d8209441c33620734e5dc1856bf9dd6b847c287b8e701a4ca83466ce3571850b
+    flow-estree: "npm:0.333.0"
+    flow-parser: "npm:0.333.0"
+  checksum: 10c0/c93d6a7b453415a6ba52dab63a216518f7b07a57fe38fb6283741e50ab5d23831f3fe46a0eccb54ae693d50894ac13d2c5aea91a762a363c08490429425b7b53
   languageName: node
   linkType: hard
 
 "flow-estree@npm:0.331.0":
   version: 0.331.0
-  resolution: "flow-estree@npm:0.331.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-estree%2F-%2Fflow-estree-0.331.0.tgz"
+  resolution: "flow-estree@npm:0.331.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fflow-estree%2F-%2Fflow-estree-0.331.0.tgz"
   checksum: 10c0/3e967611d5e4f83a4fde886d90cffe48078702b51258eddcc2f6c2e5d8bca37986df5d890b9f787b0760bb35886bcc3aecd7db6f7db1fff0f9f2ef7b216cd281
+  languageName: node
+  linkType: hard
+
+"flow-estree@npm:0.333.0":
+  version: 0.333.0
+  resolution: "flow-estree@npm:0.333.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-estree%2F-%2Fflow-estree-0.333.0.tgz"
+  checksum: 10c0/6f662c1cf6589e65a6bf0cb47dbbbb32003d8546e31b587e5b80848688faaf1116ae94b1b4a0e2d6b8fcb8957479514484af82482a52b9ddcb30c926ca3edf7e
   languageName: node
   linkType: hard
 
@@ -11251,38 +11278,38 @@ __metadata:
   languageName: node
   linkType: hard
 
-"flow-parser@npm:0.325.0":
-  version: 0.325.0
-  resolution: "flow-parser@npm:0.325.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-parser%2F-%2Fflow-parser-0.325.0.tgz"
-  dependencies:
-    flow-estree: "npm:0.325.0"
-  checksum: 10c0/530ee905f0c3a622e36171d6189accc10f41107dd1d2607fd8fe705eb05acecd27525b7e78b64a155b62cac5c3e6d173edc353031a20660e12797e333afda6f2
-  languageName: node
-  linkType: hard
-
 "flow-parser@npm:0.331.0":
   version: 0.331.0
-  resolution: "flow-parser@npm:0.331.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-parser%2F-%2Fflow-parser-0.331.0.tgz"
+  resolution: "flow-parser@npm:0.331.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fflow-parser%2F-%2Fflow-parser-0.331.0.tgz"
   dependencies:
     flow-estree: "npm:0.331.0"
   checksum: 10c0/bfeb7652a3f82c6689b7290ec2e40973c0a665990a199fd160e16854f6f163449e348c296df218cebe303f5e547665a32131e4598a4eeba821ac72fd415e7134
   languageName: node
   linkType: hard
 
-"flow-transform@npm:0.325.0":
-  version: 0.325.0
-  resolution: "flow-transform@npm:0.325.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-transform%2F-%2Fflow-transform-0.325.0.tgz"
+"flow-parser@npm:0.333.0":
+  version: 0.333.0
+  resolution: "flow-parser@npm:0.333.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-parser%2F-%2Fflow-parser-0.333.0.tgz"
+  dependencies:
+    flow-estree: "npm:0.333.0"
+  checksum: 10c0/9ad86818fd777dca9503923a3595f6e295b4a539c2a47a395bbc48e0b88598e0ecfd90236b9dbe8dfb6539128d00858d43285d72c548d5ed458137cf04eeff3f
+  languageName: node
+  linkType: hard
+
+"flow-transform@npm:0.333.0":
+  version: 0.333.0
+  resolution: "flow-transform@npm:0.333.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fflow-transform%2F-%2Fflow-transform-0.333.0.tgz"
   dependencies:
     "@babel/code-frame": "npm:^7.16.0"
     esquery: "npm:^1.4.0"
     flow-enums-runtime: "npm:^0.0.6"
-    flow-eslint: "npm:0.325.0"
-    flow-estree: "npm:0.325.0"
-    flow-parser: "npm:0.325.0"
+    flow-eslint: "npm:0.333.0"
+    flow-estree: "npm:0.333.0"
+    flow-parser: "npm:0.333.0"
     string-width: "npm:4.2.3"
   peerDependencies:
     prettier: ^3.0.0
-  checksum: 10c0/b513df28f3167a8df37caa6bf08de21e751a3b6e3935b0257772dbdfbf442a0d2bd2bd91416ccefb3b365029481952318c8a941e9bbde1d9b97c4dcdcd7230ad
+  checksum: 10c0/771669aa83001da3492d16d068ccd6ef81eb45a2a0340459d99c4cdf2239b50b290deba60b523961276d09d634c1d66d902cb8bdea466534aa0b88ccd52ba99e
   languageName: node
   linkType: hard
 
@@ -11478,7 +11505,7 @@ __metadata:
 
 "galactus@npm:^2.0.2":
   version: 2.0.2
-  resolution: "galactus@npm:2.0.2::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fgalactus%2F-%2Fgalactus-2.0.2.tgz"
+  resolution: "galactus@npm:2.0.2::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fgalactus%2F-%2Fgalactus-2.0.2.tgz"
   dependencies:
     debug: "npm:^4.4.1"
     flora-colossus: "npm:^3.0.2"
@@ -11706,12 +11733,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob-to-regex.js@npm:^1.0.0, glob-to-regex.js@npm:^1.0.1":
-  version: 1.2.0
-  resolution: "glob-to-regex.js@npm:1.2.0"
+"glob-to-regex.js@npm:^1.3.1":
+  version: 1.3.1
+  resolution: "glob-to-regex.js@npm:1.3.1"
   peerDependencies:
     tslib: 2
-  checksum: 10c0/011c81ae2a4d7ac5fd617038209fd9639d54c76211cc88fe8dd85d1a0850bc683a63cf5b1eae370141fca7dd2c834dfb9684dfdd8bf7472f2c1e4ef6ab6e34f9
+  checksum: 10c0/0a4d8824c911a119b2cc7cbc2dd85287e899a5a4d16c26fee2cb0cac6d599a8273d29d04af47192116574212b63ada07f7af1c1369ba8417c75e1c3727b1c266
   languageName: node
   linkType: hard
 
@@ -11744,7 +11771,7 @@ __metadata:
 
 "glob@npm:^13.0.2":
   version: 13.0.6
-  resolution: "glob@npm:13.0.6::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fglob%2F-%2Fglob-13.0.6.tgz"
+  resolution: "glob@npm:13.0.6::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fglob%2F-%2Fglob-13.0.6.tgz"
   dependencies:
     minimatch: "npm:^10.2.2"
     minipass: "npm:^7.1.3"
@@ -11764,6 +11791,19 @@ __metadata:
     once: "npm:^1.3.0"
     path-is-absolute: "npm:^1.0.0"
   checksum: 10c0/65676153e2b0c9095100fe7f25a778bf45608eeb32c6048cf307f579649bcc30353277b3b898a3792602c65764e5baa4f643714dfbdfd64ea271d210c7a425fe
+  languageName: node
+  linkType: hard
+
+"glob@npm:^8.1.0":
+  version: 8.1.0
+  resolution: "glob@npm:8.1.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fglob%2F-%2Fglob-8.1.0.tgz"
+  dependencies:
+    fs.realpath: "npm:^1.0.0"
+    inflight: "npm:^1.0.4"
+    inherits: "npm:2"
+    minimatch: "npm:^5.0.1"
+    once: "npm:^1.3.0"
+  checksum: 10c0/cb0b5cab17a59c57299376abe5646c7070f8acb89df5595b492dba3bfb43d301a46c01e5695f01154e6553168207cb60d4eaf07d3be4bc3eb9b0457c5c561d0f
   languageName: node
   linkType: hard
 
@@ -11835,6 +11875,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"google-java-format@npm:1.4.0":
+  version: 1.4.0
+  resolution: "google-java-format@npm:1.4.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fgoogle-java-format%2F-%2Fgoogle-java-format-1.4.0.tgz"
+  dependencies:
+    async: "npm:^3.2.4"
+    glob: "npm:^8.1.0"
+    resolve: "npm:^1.22.8"
+  bin:
+    google-java-format: index.js
+  checksum: 10c0/d92700e8b975e076b65e99fe0635169b1be3024b01c2b46114d27e25f9a83421ef761198109db26a3514c633127eeb9bbc2627a0cd660517fa06b20bdb1947a1
+  languageName: node
+  linkType: hard
+
 "gopd@npm:^1.0.1, gopd@npm:^1.2.0":
   version: 1.2.0
   resolution: "gopd@npm:1.2.0"
@@ -11870,7 +11923,7 @@ __metadata:
 
 "graceful-fs@npm:^4.2.11":
   version: 4.2.11
-  resolution: "graceful-fs@npm:4.2.11::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fgraceful-fs%2F-%2Fgraceful-fs-4.2.11.tgz"
+  resolution: "graceful-fs@npm:4.2.11::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fgraceful-fs%2F-%2Fgraceful-fs-4.2.11.tgz"
   checksum: 10c0/386d011a553e02bc594ac2ca0bd6d9e4c22d7fa8cfbfc448a6d148c59ea881b092db9dbe3547ae4b88e55f1b01f7c4a2ecc53b310c042793e63aa44cf6c257f2
   languageName: node
   linkType: hard
@@ -11987,27 +12040,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hermes-compiler@npm:260318099.0.1":
-  version: 260318099.0.1
-  resolution: "hermes-compiler@npm:260318099.0.1::__archiveUrl=https%3A%2F%2Fms-feed-12.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fhermes-compiler%2F-%2Fhermes-compiler-260318099.0.1.tgz"
-  checksum: 10c0/ac83e12ebfe509722805556819b67daf469cdc279d7ba0e61623ca8ce0d09660f470e52ddc816f9a9aa570611ed84c6ba29c3f013f6afa37a9007e884444b01d
-  languageName: node
-  linkType: hard
-
-"hermes-eslint@npm:0.23.1":
-  version: 0.23.1
-  resolution: "hermes-eslint@npm:0.23.1"
-  dependencies:
-    esrecurse: "npm:^4.3.0"
-    hermes-estree: "npm:0.23.1"
-    hermes-parser: "npm:0.23.1"
-  checksum: 10c0/2657e4916ea085fe8d3c52f7e8454e0c8652a483b8933b3e21f3ccd22bc0672ab5cfc1a528f74edefef29bc589a1690aebc237a92e4c9744448db0ac63c59722
+"hermes-compiler@npm:260318099.0.4":
+  version: 260318099.0.4
+  resolution: "hermes-compiler@npm:260318099.0.4::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fhermes-compiler%2F-%2Fhermes-compiler-260318099.0.4.tgz"
+  checksum: 10c0/27814371102c540d10e4d3768ec9e53bd18fd8c448f63d648513ded595594bdc9a332123b56e8a8e534b05b23a34eafb4db61e49e29b7b8c4d6016ce7c537145
   languageName: node
   linkType: hard
 
 "hermes-eslint@npm:0.37.0":
   version: 0.37.0
-  resolution: "hermes-eslint@npm:0.37.0::__archiveUrl=https%3A%2F%2Fms-feed-2.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fhermes-eslint%2F-%2Fhermes-eslint-0.37.0.tgz"
+  resolution: "hermes-eslint@npm:0.37.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fhermes-eslint%2F-%2Fhermes-eslint-0.37.0.tgz"
   dependencies:
     hermes-estree: "npm:0.37.0"
     hermes-parser: "npm:0.37.0"
@@ -12027,13 +12069,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hermes-estree@npm:0.23.1":
-  version: 0.23.1
-  resolution: "hermes-estree@npm:0.23.1"
-  checksum: 10c0/59ca9f3980419fcf511a172f0ee9960d86c8ba44ea8bc13d3bd0b6208e9540db1a0a9e46b0e797151f11b0e8e33b2bf850907aef4a5c9ac42c53809cefefc405
-  languageName: node
-  linkType: hard
-
 "hermes-estree@npm:0.25.1":
   version: 0.25.1
   resolution: "hermes-estree@npm:0.25.1"
@@ -12043,7 +12078,7 @@ __metadata:
 
 "hermes-estree@npm:0.37.0":
   version: 0.37.0
-  resolution: "hermes-estree@npm:0.37.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fhermes-estree%2F-%2Fhermes-estree-0.37.0.tgz"
+  resolution: "hermes-estree@npm:0.37.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fhermes-estree%2F-%2Fhermes-estree-0.37.0.tgz"
   checksum: 10c0/9da99ec854e4d7b0b7840c5452d3788b3dce5d56a174537cd164f7fb2bc1f07a6ee0e030b0652c0cfd7ab1e2a596de290ef35b2d37f3e75d60144b1d6d8e7833
   languageName: node
   linkType: hard
@@ -12057,18 +12092,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hermes-parser@npm:0.23.1":
-  version: 0.23.1
-  resolution: "hermes-parser@npm:0.23.1"
-  dependencies:
-    hermes-estree: "npm:0.23.1"
-  checksum: 10c0/56907e6136d2297543922dd9f8ee27378ef010c11dc1e0b4a0866faab2c527613b0edcda5e1ebc0daa0ca1ae6528734dfc479e18267aabe4dce0c7198217fd97
-  languageName: node
-  linkType: hard
-
 "hermes-parser@npm:0.37.0":
   version: 0.37.0
-  resolution: "hermes-parser@npm:0.37.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fhermes-parser%2F-%2Fhermes-parser-0.37.0.tgz"
+  resolution: "hermes-parser@npm:0.37.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fhermes-parser%2F-%2Fhermes-parser-0.37.0.tgz"
   dependencies:
     hermes-estree: "npm:0.37.0"
   checksum: 10c0/568be1f4cdffc8e0471e917c49ed7ebde4309c222e1a0bfaee883a4146f21274ffaba2f7ebf697e8a20316e73e76d4fbff768d27233e63187478f120218affca
@@ -12081,23 +12107,6 @@ __metadata:
   dependencies:
     hermes-estree: "npm:0.25.1"
   checksum: 10c0/3abaa4c6f1bcc25273f267297a89a4904963ea29af19b8e4f6eabe04f1c2c7e9abd7bfc4730ddb1d58f2ea04b6fee74053d8bddb5656ec6ebf6c79cc8d14202c
-  languageName: node
-  linkType: hard
-
-"hermes-transform@npm:0.37.0":
-  version: 0.37.0
-  resolution: "hermes-transform@npm:0.37.0::__archiveUrl=https%3A%2F%2Fms-feed-12.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fhermes-transform%2F-%2Fhermes-transform-0.37.0.tgz"
-  dependencies:
-    "@babel/code-frame": "npm:^7.16.0"
-    esquery: "npm:^1.4.0"
-    flow-enums-runtime: "npm:^0.0.6"
-    hermes-eslint: "npm:0.37.0"
-    hermes-estree: "npm:0.37.0"
-    hermes-parser: "npm:0.37.0"
-    string-width: "npm:4.2.3"
-  peerDependencies:
-    prettier: ^3.0.0
-  checksum: 10c0/dc7e907d08aa3785ea24e6cb52d4ca6e8c03c44c1274644e4906eed85604a9689acc2dec0048d1a89408f7db520588951940b8432a1e9d34020afe6b4ad1f538
   languageName: node
   linkType: hard
 
@@ -12126,7 +12135,7 @@ __metadata:
 
 "http-errors@npm:^2.0.1":
   version: 2.0.1
-  resolution: "http-errors@npm:2.0.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fhttp-errors%2F-%2Fhttp-errors-2.0.1.tgz"
+  resolution: "http-errors@npm:2.0.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fhttp-errors%2F-%2Fhttp-errors-2.0.1.tgz"
   dependencies:
     depd: "npm:~2.0.0"
     inherits: "npm:~2.0.4"
@@ -12291,7 +12300,7 @@ __metadata:
 
 "iconv-lite@npm:~0.7.0":
   version: 0.7.3
-  resolution: "iconv-lite@npm:0.7.3::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Ficonv-lite%2F-%2Ficonv-lite-0.7.3.tgz"
+  resolution: "iconv-lite@npm:0.7.3::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Ficonv-lite%2F-%2Ficonv-lite-0.7.3.tgz"
   dependencies:
     safer-buffer: "npm:>= 2.1.2 < 3.0.0"
   checksum: 10c0/be2fd2414f7e94be3a63063fa0ad5919c16bc7b6e00c77eea0765ced6db405739f38dd51016583058fba25cc1d0106ba30b83fbb7a7e32f824d4db76f23d8d33
@@ -12575,7 +12584,16 @@ __metadata:
 
 "is-core-module@npm:^2.16.2":
   version: 2.17.0
-  resolution: "is-core-module@npm:2.17.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fis-core-module%2F-%2Fis-core-module-2.17.0.tgz"
+  resolution: "is-core-module@npm:2.17.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fis-core-module%2F-%2Fis-core-module-2.17.0.tgz"
+  dependencies:
+    hasown: "npm:^2.0.4"
+  checksum: 10c0/3dc7c15ea42f846180cd2cdd57af62270e0a8d0ed31c17c85735d554089d39975e2e82e65fc7c8280a3c476ca3d0d09992d0860b4998abb769a277341feb6698
+  languageName: node
+  linkType: hard
+
+"is-core-module@npm:^2.17.0":
+  version: 2.17.0
+  resolution: "is-core-module@npm:2.17.0"
   dependencies:
     hasown: "npm:^2.0.4"
   checksum: 10c0/3dc7c15ea42f846180cd2cdd57af62270e0a8d0ed31c17c85735d554089d39975e2e82e65fc7c8280a3c476ca3d0d09992d0860b4998abb769a277341feb6698
@@ -12621,7 +12639,7 @@ __metadata:
 
 "is-docker@npm:^2.1.1":
   version: 2.2.1
-  resolution: "is-docker@npm:2.2.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fis-docker%2F-%2Fis-docker-2.2.1.tgz"
+  resolution: "is-docker@npm:2.2.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fis-docker%2F-%2Fis-docker-2.2.1.tgz"
   bin:
     is-docker: cli.js
   checksum: 10c0/e828365958d155f90c409cdbe958f64051d99e8aedc2c8c4cd7c89dcf35329daed42f7b99346f7828df013e27deb8f721cf9408ba878c76eb9e8290235fbcdcc
@@ -13544,16 +13562,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"joi@npm:^17.2.1":
-  version: 17.13.3
-  resolution: "joi@npm:17.13.3"
+"joi@npm:^17.13.7":
+  version: 17.13.8
+  resolution: "joi@npm:17.13.8::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fjoi%2F-%2Fjoi-17.13.8.tgz"
   dependencies:
     "@hapi/hoek": "npm:^9.3.0"
     "@hapi/topo": "npm:^5.1.0"
     "@sideway/address": "npm:^4.1.5"
     "@sideway/formula": "npm:^3.0.1"
     "@sideway/pinpoint": "npm:^2.0.0"
-  checksum: 10c0/9262aef1da3f1bec5b03caf50c46368899fe03b8ff26cbe3d53af4584dd1049079fc97230bbf1500b6149db7cc765b9ee45f0deb24bb6fc3fa06229d7148c17f
+  checksum: 10c0/7fe2b38d26dfcbcf1836892384ba2f42f83058795f32dcb3733de4c3b97cac923a8b9053738f10701663872a994f77af351c71e1428117a20bbfc1f94768f648
   languageName: node
   linkType: hard
 
@@ -13564,26 +13582,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^3.15.0":
-  version: 3.15.0
-  resolution: "js-yaml@npm:3.15.0"
+"js-yaml@npm:^3.15.2":
+  version: 3.15.2
+  resolution: "js-yaml@npm:3.15.2::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fjs-yaml%2F-%2Fjs-yaml-3.15.2.tgz"
   dependencies:
     argparse: "npm:^1.0.7"
     esprima: "npm:^4.0.0"
   bin:
     js-yaml: bin/js-yaml.js
-  checksum: 10c0/ca966bd354ac5b1b7a4694ebdba46526796aa3a6a99529fa540af2abf85918bd155a50ccc0166b413130a00622999973754458ec01e7095bc902177bfdbd5b64
+  checksum: 10c0/e341df211dece9d4b784849647ad7568b5b6a58a9ee58ead750482316d83276387343649fe4b71522705dc6c76acf97718588f23dc19443833ef3e75033af967
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^4.2.0":
-  version: 4.3.0
-  resolution: "js-yaml@npm:4.3.0"
+"js-yaml@npm:^4.3.2":
+  version: 4.3.2
+  resolution: "js-yaml@npm:4.3.2::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fjs-yaml%2F-%2Fjs-yaml-4.3.2.tgz"
   dependencies:
     argparse: "npm:^2.0.1"
   bin:
     js-yaml: bin/js-yaml.js
-  checksum: 10c0/058b30473d6915ca5b4feb11e2f7d4d97242f98d00a798ed48dd90b46b7c640398afe9128c5db22c5300f8c6528fe2a174b9a93f351a70ebc28c6203938d8bff
+  checksum: 10c0/dedd34c2e8fef1d504687f1bc94ed0ee1311a1f78770fa2800352c6d59c635ccf555009d74e9afe529ae62199da2b1ccef30e53dc84dcd8d2d8187c22574bc97
+  languageName: node
+  linkType: hard
+
+"js-yaml@npm:^5.2.3":
+  version: 5.4.3
+  resolution: "js-yaml@npm:5.4.3"
+  dependencies:
+    argparse: "npm:^2.0.1"
+  bin:
+    js-yaml: bin/js-yaml.mjs
+  checksum: 10c0/7180bf35feef9815a06cb2f8845c1196f1e4264430a04623884d87c3d21475de7d46a86c9c5142dcc1646c788bc0e676eb09ba817810707e0b4e984f7cf93a5f
   languageName: node
   linkType: hard
 
@@ -13685,7 +13714,7 @@ __metadata:
 
 "json5@npm:^1.0.2":
   version: 1.0.2
-  resolution: "json5@npm:1.0.2::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fjson5%2F-%2Fjson5-1.0.2.tgz"
+  resolution: "json5@npm:1.0.2::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fjson5%2F-%2Fjson5-1.0.2.tgz"
   dependencies:
     minimist: "npm:^1.2.0"
   bin:
@@ -13770,7 +13799,7 @@ __metadata:
 
 "junk@npm:^4.0.1":
   version: 4.0.1
-  resolution: "junk@npm:4.0.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fjunk%2F-%2Fjunk-4.0.1.tgz"
+  resolution: "junk@npm:4.0.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fjunk%2F-%2Fjunk-4.0.1.tgz"
   checksum: 10c0/091117a5dcf65b19a3e4b8506d95d6ab152b5b5fe6f10e8998de950b0f9d689f14d9b63bb07863b8c86c18511fd1b9a21e9a16e686246436558338ed2e8a4548
   languageName: node
   linkType: hard
@@ -13904,6 +13933,17 @@ __metadata:
     knip: bin/knip.js
     knip-bun: bin/knip-bun.js
   checksum: 10c0/79a34e1d8e5bf5ead2b98a83159ce897e87c0de136a30eebe34ac61c6c465a61d0f6d1177cd76f69bda7939248d5c56611f8c52e8bcb5400d93964b908968ced
+  languageName: node
+  linkType: hard
+
+"ktfmt@npm:0.59.0":
+  version: 0.59.0
+  resolution: "ktfmt@npm:0.59.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fktfmt%2F-%2Fktfmt-0.59.0.tgz"
+  peerDependencies:
+    typescript: ^5
+  bin:
+    ktfmt: bin/ktfmt.js
+  checksum: 10c0/627dd2f0bb5e049ab1a9fa4be8b23975af66bc70b80aaf91d12c75d9d5692f0a8c13f189fdc25811682f66048c5326f0d04378e38ff6819d4a3d662acd0f4ba1
   languageName: node
   linkType: hard
 
@@ -14507,7 +14547,7 @@ __metadata:
 
 "media-typer@npm:^1.1.0":
   version: 1.1.1
-  resolution: "media-typer@npm:1.1.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmedia-typer%2F-%2Fmedia-typer-1.1.1.tgz"
+  resolution: "media-typer@npm:1.1.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmedia-typer%2F-%2Fmedia-typer-1.1.1.tgz"
   checksum: 10c0/924644de220c3107fc53ec0299b7c1488503470265d32f1492535bd798cc369ba7ceaf9c2a4533361590dcf7208d1cc7b7032dbc1a5918773f5f5d912cab5211
   languageName: node
   linkType: hard
@@ -14535,24 +14575,24 @@ __metadata:
   linkType: hard
 
 "memfs@npm:^4.38.2":
-  version: 4.69.1
-  resolution: "memfs@npm:4.69.1"
+  version: 4.80.0
+  resolution: "memfs@npm:4.80.0"
   dependencies:
-    "@jsonjoy.com/fs-core": "npm:4.69.1"
-    "@jsonjoy.com/fs-fsa": "npm:4.69.1"
-    "@jsonjoy.com/fs-node": "npm:4.69.1"
-    "@jsonjoy.com/fs-node-builtins": "npm:4.69.1"
-    "@jsonjoy.com/fs-node-to-fsa": "npm:4.69.1"
-    "@jsonjoy.com/fs-node-utils": "npm:4.69.1"
-    "@jsonjoy.com/fs-print": "npm:4.69.1"
-    "@jsonjoy.com/fs-snapshot": "npm:4.69.1"
+    "@jsonjoy.com/fs-core": "npm:4.80.0"
+    "@jsonjoy.com/fs-fsa": "npm:4.80.0"
+    "@jsonjoy.com/fs-node": "npm:4.80.0"
+    "@jsonjoy.com/fs-node-builtins": "npm:4.80.0"
+    "@jsonjoy.com/fs-node-to-fsa": "npm:4.80.0"
+    "@jsonjoy.com/fs-node-utils": "npm:4.80.0"
+    "@jsonjoy.com/fs-print": "npm:4.80.0"
+    "@jsonjoy.com/fs-snapshot": "npm:4.80.0"
     "@jsonjoy.com/json-pack": "npm:^1.11.0"
     "@jsonjoy.com/util": "npm:^1.9.0"
-    glob-to-regex.js: "npm:^1.0.1"
+    glob-to-regex.js: "npm:^1.3.1"
     thingies: "npm:^2.5.0"
     tree-dump: "npm:^1.0.3"
     tslib: "npm:^2.0.0"
-  checksum: 10c0/00fb712f5103c460752754700c92ac56ee7ef61d73146d4d94d5dae3160f1ef7b98c58d15c4f17350d079b41e73e248adea8b862f8482c03d318c363e57d0e85
+  checksum: 10c0/0946dcbef734094cacc41c186c55ac85e94cbc413d81bdbb0db0db4a9dfb612f08852a0f89f1eaa29aaa19c70dce20dcf6b90fa4eae70c7d51d524782b28001b
   languageName: node
   linkType: hard
 
@@ -14579,7 +14619,7 @@ __metadata:
 
 "metro-babel-register@npm:^0.87.0":
   version: 0.87.1
-  resolution: "metro-babel-register@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-babel-register%2F-%2Fmetro-babel-register-0.87.1.tgz"
+  resolution: "metro-babel-register@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-babel-register%2F-%2Fmetro-babel-register-0.87.1.tgz"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/plugin-proposal-export-namespace-from": "npm:^7.18.9"
@@ -14598,7 +14638,7 @@ __metadata:
 
 "metro-babel-transformer@npm:0.87.1":
   version: 0.87.1
-  resolution: "metro-babel-transformer@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-babel-transformer%2F-%2Fmetro-babel-transformer-0.87.1.tgz"
+  resolution: "metro-babel-transformer@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-babel-transformer%2F-%2Fmetro-babel-transformer-0.87.1.tgz"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     flow-enums-runtime: "npm:^0.0.6"
@@ -14611,7 +14651,7 @@ __metadata:
 
 "metro-cache-key@npm:0.87.1":
   version: 0.87.1
-  resolution: "metro-cache-key@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-cache-key%2F-%2Fmetro-cache-key-0.87.1.tgz"
+  resolution: "metro-cache-key@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-cache-key%2F-%2Fmetro-cache-key-0.87.1.tgz"
   dependencies:
     flow-enums-runtime: "npm:^0.0.6"
   checksum: 10c0/2da75b15e9242fb3faebfc72574d5bd73c6873f80d3da0bece2fe1d4082d7d1977d59ad3a8c4f67627e85e93ea2a82edb2f53acae6c14d5791ad69d34e4c1742
@@ -14620,7 +14660,7 @@ __metadata:
 
 "metro-cache@npm:0.87.1":
   version: 0.87.1
-  resolution: "metro-cache@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-cache%2F-%2Fmetro-cache-0.87.1.tgz"
+  resolution: "metro-cache@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-cache%2F-%2Fmetro-cache-0.87.1.tgz"
   dependencies:
     exponential-backoff: "npm:^3.1.1"
     flow-enums-runtime: "npm:^0.0.6"
@@ -14632,7 +14672,7 @@ __metadata:
 
 "metro-config@npm:0.87.1, metro-config@npm:^0.87.0":
   version: 0.87.1
-  resolution: "metro-config@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-config%2F-%2Fmetro-config-0.87.1.tgz"
+  resolution: "metro-config@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-config%2F-%2Fmetro-config-0.87.1.tgz"
   dependencies:
     connect: "npm:^3.6.5"
     flow-enums-runtime: "npm:^0.0.6"
@@ -14647,7 +14687,7 @@ __metadata:
 
 "metro-core@npm:0.87.1":
   version: 0.87.1
-  resolution: "metro-core@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-core%2F-%2Fmetro-core-0.87.1.tgz"
+  resolution: "metro-core@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-core%2F-%2Fmetro-core-0.87.1.tgz"
   dependencies:
     flow-enums-runtime: "npm:^0.0.6"
     lodash.throttle: "npm:^4.1.1"
@@ -14658,7 +14698,7 @@ __metadata:
 
 "metro-file-map@npm:0.87.1":
   version: 0.87.1
-  resolution: "metro-file-map@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-file-map%2F-%2Fmetro-file-map-0.87.1.tgz"
+  resolution: "metro-file-map@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-file-map%2F-%2Fmetro-file-map-0.87.1.tgz"
   dependencies:
     debug: "npm:^4.4.0"
     fb-watchman: "npm:^2.0.0"
@@ -14674,7 +14714,7 @@ __metadata:
 
 "metro-minify-terser@npm:0.87.1":
   version: 0.87.1
-  resolution: "metro-minify-terser@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-minify-terser%2F-%2Fmetro-minify-terser-0.87.1.tgz"
+  resolution: "metro-minify-terser@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-minify-terser%2F-%2Fmetro-minify-terser-0.87.1.tgz"
   dependencies:
     flow-enums-runtime: "npm:^0.0.6"
     terser: "npm:^5.15.0"
@@ -14684,7 +14724,7 @@ __metadata:
 
 "metro-resolver@npm:0.87.1":
   version: 0.87.1
-  resolution: "metro-resolver@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-resolver%2F-%2Fmetro-resolver-0.87.1.tgz"
+  resolution: "metro-resolver@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-resolver%2F-%2Fmetro-resolver-0.87.1.tgz"
   dependencies:
     flow-enums-runtime: "npm:^0.0.6"
   checksum: 10c0/1218f9a3a2b94d00bf256dd8963460900dad6570f5b4859ac03bf966570c500303576ad47d4616ae9226ce438abb285fcd5cd282862b16d7c2c2b8a22ab7dc44
@@ -14693,7 +14733,7 @@ __metadata:
 
 "metro-runtime@npm:0.87.1, metro-runtime@npm:^0.87.0":
   version: 0.87.1
-  resolution: "metro-runtime@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-runtime%2F-%2Fmetro-runtime-0.87.1.tgz"
+  resolution: "metro-runtime@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-runtime%2F-%2Fmetro-runtime-0.87.1.tgz"
   dependencies:
     "@babel/runtime": "npm:^7.25.0"
     flow-enums-runtime: "npm:^0.0.6"
@@ -14703,7 +14743,7 @@ __metadata:
 
 "metro-source-map@npm:0.87.1, metro-source-map@npm:^0.87.0":
   version: 0.87.1
-  resolution: "metro-source-map@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-source-map%2F-%2Fmetro-source-map-0.87.1.tgz"
+  resolution: "metro-source-map@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-source-map%2F-%2Fmetro-source-map-0.87.1.tgz"
   dependencies:
     "@babel/traverse": "npm:^7.29.0"
     "@babel/types": "npm:^7.29.0"
@@ -14720,7 +14760,7 @@ __metadata:
 
 "metro-symbolicate@npm:0.87.1":
   version: 0.87.1
-  resolution: "metro-symbolicate@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-symbolicate%2F-%2Fmetro-symbolicate-0.87.1.tgz"
+  resolution: "metro-symbolicate@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-symbolicate%2F-%2Fmetro-symbolicate-0.87.1.tgz"
   dependencies:
     flow-enums-runtime: "npm:^0.0.6"
     invariant: "npm:^2.2.4"
@@ -14736,7 +14776,7 @@ __metadata:
 
 "metro-transform-plugins@npm:0.87.1, metro-transform-plugins@npm:^0.87.0":
   version: 0.87.1
-  resolution: "metro-transform-plugins@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-transform-plugins%2F-%2Fmetro-transform-plugins-0.87.1.tgz"
+  resolution: "metro-transform-plugins@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-transform-plugins%2F-%2Fmetro-transform-plugins-0.87.1.tgz"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/generator": "npm:^7.29.1"
@@ -14750,7 +14790,7 @@ __metadata:
 
 "metro-transform-worker@npm:0.87.1":
   version: 0.87.1
-  resolution: "metro-transform-worker@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro-transform-worker%2F-%2Fmetro-transform-worker-0.87.1.tgz"
+  resolution: "metro-transform-worker@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro-transform-worker%2F-%2Fmetro-transform-worker-0.87.1.tgz"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/generator": "npm:^7.29.1"
@@ -14771,7 +14811,7 @@ __metadata:
 
 "metro@npm:0.87.1, metro@npm:^0.87.0":
   version: 0.87.1
-  resolution: "metro@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fmetro%2F-%2Fmetro-0.87.1.tgz"
+  resolution: "metro@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fmetro%2F-%2Fmetro-0.87.1.tgz"
   dependencies:
     "@babel/code-frame": "npm:^7.29.0"
     "@babel/core": "npm:^7.25.2"
@@ -15248,7 +15288,7 @@ __metadata:
 
 "minimatch@npm:^10.0.1":
   version: 10.2.6
-  resolution: "minimatch@npm:10.2.6::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fminimatch%2F-%2Fminimatch-10.2.6.tgz"
+  resolution: "minimatch@npm:10.2.6::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fminimatch%2F-%2Fminimatch-10.2.6.tgz"
   dependencies:
     brace-expansion: "npm:^5.0.8"
   checksum: 10c0/4559a836243b98bd4d17ea9f7edae698717c76399eea7be374f3737f33164e4907f19e9726891ddeb122f750a5a7fa80d2ac43e851d6e5984dc4ff42ec127d3a
@@ -15273,6 +15313,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^5.0.1":
+  version: 5.1.9
+  resolution: "minimatch@npm:5.1.9::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fminimatch%2F-%2Fminimatch-5.1.9.tgz"
+  dependencies:
+    brace-expansion: "npm:^2.0.1"
+  checksum: 10c0/4202718683815a7288b13e470160a4f9560cf392adef4f453927505817e01ef6b3476ecde13cfcaed17e7326dd3b69ad44eb2daeb19a217c5500f9277893f1d6
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:^5.1.0":
   version: 5.1.9
   resolution: "minimatch@npm:5.1.9"
@@ -15293,7 +15342,7 @@ __metadata:
 
 "minimist@npm:^1.2.0":
   version: 1.2.8
-  resolution: "minimist@npm:1.2.8::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fminimist%2F-%2Fminimist-1.2.8.tgz"
+  resolution: "minimist@npm:1.2.8::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fminimist%2F-%2Fminimist-1.2.8.tgz"
   checksum: 10c0/19d3fcdca050087b84c2029841a093691a91259a47def2f18222f41e7645a0b7c44ef4b40e88a1e58a40c84d2ef0ee6047c55594d298146d0eb3f6b737c20ce6
   languageName: node
   linkType: hard
@@ -15484,7 +15533,7 @@ __metadata:
 
 "ms@npm:^2.1.1":
   version: 2.1.3
-  resolution: "ms@npm:2.1.3::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fms%2F-%2Fms-2.1.3.tgz"
+  resolution: "ms@npm:2.1.3::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fms%2F-%2Fms-2.1.3.tgz"
   checksum: 10c0/d924b57e7312b3b63ad21fc5b3dc0af5e78d61a1fc7cfb5457edaf26326bf62be5307cc87ffb6862ef1c2b33b0233cdb5d4f01c4c958cc0d660948b65a287a48
   languageName: node
   linkType: hard
@@ -15643,10 +15692,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-releases@npm:^2.0.36":
-  version: 2.0.37
-  resolution: "node-releases@npm:2.0.37"
-  checksum: 10c0/306df89190b3225d0cb001260de52f0befd225a782ec85311ce97b0aa3b2e22f5e4e4c00395c6dc9bc9ef440c64723f6205fe1e27d32b8dd1d140891fbadf901
+"node-releases@npm:^2.0.57":
+  version: 2.0.59
+  resolution: "node-releases@npm:2.0.59::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fnode-releases%2F-%2Fnode-releases-2.0.59.tgz"
+  checksum: 10c0/c7fdc6c55b7e5c5fccd6274edf8afc7ab1320d7c01353cde8e60653cfd9488d4d0a5224bb4efd6d77877338f26976ae9dbcf6fb0fad75a37f37b9c22f71c9796
   languageName: node
   linkType: hard
 
@@ -15743,7 +15792,7 @@ __metadata:
 
 "ob1@npm:0.87.1":
   version: 0.87.1
-  resolution: "ob1@npm:0.87.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fob1%2F-%2Fob1-0.87.1.tgz"
+  resolution: "ob1@npm:0.87.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fob1%2F-%2Fob1-0.87.1.tgz"
   dependencies:
     flow-enums-runtime: "npm:^0.0.6"
   checksum: 10c0/e75cfd9508668aefd23420f167f7305646f8515d71a8fa8d571f77f7c2b5b5862dd6171bf53d05be6061c32424306092bb8aeb359fa49e633d7d9fe40e6155da
@@ -15821,7 +15870,7 @@ __metadata:
 
 "object.groupby@npm:^1.0.3":
   version: 1.0.3
-  resolution: "object.groupby@npm:1.0.3::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fobject.groupby%2F-%2Fobject.groupby-1.0.3.tgz"
+  resolution: "object.groupby@npm:1.0.3::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fobject.groupby%2F-%2Fobject.groupby-1.0.3.tgz"
   dependencies:
     call-bind: "npm:^1.0.7"
     define-properties: "npm:^1.2.1"
@@ -15855,7 +15904,7 @@ __metadata:
 
 "on-finished@npm:^2.4.1":
   version: 2.4.1
-  resolution: "on-finished@npm:2.4.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fon-finished%2F-%2Fon-finished-2.4.1.tgz"
+  resolution: "on-finished@npm:2.4.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fon-finished%2F-%2Fon-finished-2.4.1.tgz"
   dependencies:
     ee-first: "npm:1.1.1"
   checksum: 10c0/46fb11b9063782f2d9968863d9cbba33d77aa13c17f895f56129c274318b86500b22af3a160fe9995aa41317efcd22941b6eba747f718ced08d9a73afdb087b4
@@ -15934,7 +15983,7 @@ __metadata:
 
 "open@npm:^8.4.2":
   version: 8.4.2
-  resolution: "open@npm:8.4.2::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fopen%2F-%2Fopen-8.4.2.tgz"
+  resolution: "open@npm:8.4.2::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fopen%2F-%2Fopen-8.4.2.tgz"
   dependencies:
     define-lazy-prop: "npm:^2.0.0"
     is-docker: "npm:^2.1.1"
@@ -16561,7 +16610,7 @@ __metadata:
 
 "prettier@npm:3.9.4":
   version: 3.9.4
-  resolution: "prettier@npm:3.9.4::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fprettier%2F-%2Fprettier-3.9.4.tgz"
+  resolution: "prettier@npm:3.9.4::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fprettier%2F-%2Fprettier-3.9.4.tgz"
   bin:
     prettier: ./bin/prettier.cjs
   checksum: 10c0/dc6ec13d692745c6b7e7bf39beda9eb1b3b76c619118319bce393928c392264b1273337c75f80499695e165affefc7b3a9d2ebb18983af0a8f4dfbb2f45f6ff3
@@ -16767,7 +16816,7 @@ __metadata:
 
 "raw-body@npm:^3.0.2":
   version: 3.0.2
-  resolution: "raw-body@npm:3.0.2::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fraw-body%2F-%2Fraw-body-3.0.2.tgz"
+  resolution: "raw-body@npm:3.0.2::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fraw-body%2F-%2Fraw-body-3.0.2.tgz"
   dependencies:
     bytes: "npm:~3.1.2"
     http-errors: "npm:~2.0.1"
@@ -16820,10 +16869,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-is@npm:^19.1.0, react-is@npm:^19.2.3":
-  version: 19.2.4
-  resolution: "react-is@npm:19.2.4"
-  checksum: 10c0/477a7cfc900f24194606e315fa353856a3a13487ea8eca841678817cad4daef64339ea0d1e84e58459fc75dbe0d9ba00bb0cc626db3d07e0cf31edc64cb4fa37
+"react-is@npm:^19.3.0":
+  version: 19.3.1
+  resolution: "react-is@npm:19.3.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Freact-is%2F-%2Freact-is-19.3.1.tgz"
+  checksum: 10c0/428e02d986d56f1859c57756084489f6d2900fd686905003c405b32f1168738b78772bfa4bb6c706f5ac821199171522c28bf6434281f524f901459390a19606
   languageName: node
   linkType: hard
 
@@ -16870,7 +16919,7 @@ __metadata:
     ora: "npm:^3.4.0"
     prettier: "npm:^3.6.2"
     semver: "npm:^7.3.2"
-    simple-git: "npm:^3.3.0"
+    simple-git: "npm:^4.0.2"
     source-map-support: "npm:^0.5.19"
     typescript: "npm:5.1.6"
     upath: "npm:^1.2.0"
@@ -16913,8 +16962,8 @@ __metadata:
     npm-registry-fetch: "npm:^11.0.0"
     prettier: "npm:^3.6.2"
     prompts: "npm:^2.4.1"
-    react: "npm:19.2.3"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react: "npm:19.3.0"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     semver: "npm:^7.3.2"
     source-map-support: "npm:^0.5.19"
     typescript: "npm:5.1.6"
@@ -16939,18 +16988,17 @@ __metadata:
     "@react-native-windows/cli": "npm:0.0.0-canary.293"
     "@react-native-windows/codegen": "npm:0.0.0-canary.133"
     "@react-native-windows/find-dotnet-tools": "npm:0.0.0-canary.2"
-    "@react-native/asset-utils": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/asset-utils": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@react-native/assets": "npm:1.0.0"
-    "@react-native/assets-registry": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/codegen": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/community-cli-plugin": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/gradle-plugin": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/jest-preset": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/js-polyfills": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/metro-config": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/new-app-screen": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/normalize-colors": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/virtualized-lists": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/codegen": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/community-cli-plugin": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/gradle-plugin": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/jest-preset": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/js-polyfills": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/metro-config": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/new-app-screen": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/normalize-colors": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/virtualized-lists": "npm:0.89.0-nightly-20261002-cd2de187e"
     "@rnw-scripts/babel-react-native-config": "npm:0.0.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "npm:^1.1.42"
@@ -16971,9 +17019,9 @@ __metadata:
     event-target-shim: "npm:^5.0.1"
     flow-bin: "npm:^0.316.0"
     flow-enums-runtime: "npm:^0.0.6"
-    flow-parser: "npm:0.325.0"
+    flow-parser: "npm:0.333.0"
     glob: "npm:^7.1.1"
-    hermes-compiler: "npm:260318099.0.1"
+    hermes-compiler: "npm:260318099.0.4"
     invariant: "npm:^2.2.4"
     jest-environment-node: "npm:^29.7.0"
     jscodeshift: "npm:^0.14.0"
@@ -16986,13 +17034,13 @@ __metadata:
     prettier: "npm:^3.6.2"
     pretty-format: "npm:^29.7.0"
     promise: "npm:^8.3.0"
-    react: "npm:19.2.3"
+    react: "npm:19.3.0"
     react-devtools-core: "npm:^6.1.5"
-    react-native: "npm:0.88.0-nightly-20260805-f2188610c"
+    react-native: "npm:0.89.0-nightly-20261002-cd2de187e"
     react-native-platform-override: "npm:0.0.0-canary.1023"
     react-refresh: "npm:^0.14.0"
     regenerator-runtime: "npm:^0.13.2"
-    scheduler: "npm:0.27.0"
+    scheduler: "npm:0.28.0"
     semver: "npm:^7.1.3"
     source-map-support: "npm:^0.5.19"
     stacktrace-parser: "npm:^0.1.10"
@@ -17002,30 +17050,29 @@ __metadata:
     ws: "npm:^7.5.10"
     yargs: "npm:^17.6.2"
   peerDependencies:
-    "@react-native/jest-preset": 0.88.0-nightly-20260805-f2188610c
+    "@react-native/jest-preset": 0.89.0-nightly-20261002-cd2de187e
     "@types/react": ^19.1.1
-    react: ^19.2.3
-    react-native: 0.88.0-nightly-20260805-f2188610c
+    react: ^19.3.0
+    react-native: 0.89.0-nightly-20261002-cd2de187e
   languageName: unknown
   linkType: soft
 
-"react-native@npm:0.88.0-nightly-20260805-f2188610c":
-  version: 0.88.0-nightly-20260805-f2188610c
-  resolution: "react-native@npm:0.88.0-nightly-20260805-f2188610c::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Freact-native%2F-%2Freact-native-0.88.0-nightly-20260805-f2188610c.tgz"
+"react-native@npm:0.89.0-nightly-20261002-cd2de187e":
+  version: 0.89.0-nightly-20261002-cd2de187e
+  resolution: "react-native@npm:0.89.0-nightly-20261002-cd2de187e::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Freact-native%2F-%2Freact-native-0.89.0-nightly-20261002-cd2de187e.tgz"
   dependencies:
-    "@react-native/asset-utils": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/codegen": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/community-cli-plugin": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/gradle-plugin": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/normalize-colors": "npm:0.88.0-nightly-20260805-f2188610c"
-    "@react-native/virtualized-lists": "npm:0.88.0-nightly-20260805-f2188610c"
+    "@react-native/asset-utils": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/codegen": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/community-cli-plugin": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/gradle-plugin": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/normalize-colors": "npm:0.89.0-nightly-20261002-cd2de187e"
+    "@react-native/virtualized-lists": "npm:0.89.0-nightly-20261002-cd2de187e"
     anser: "npm:^1.4.9"
     ansi-regex: "npm:^5.0.0"
-    babel-plugin-syntax-hermes-parser: "npm:0.37.0"
     base64-js: "npm:^1.5.1"
     flow-enums-runtime: "npm:^0.0.6"
-    flow-parser: "npm:0.325.0"
-    hermes-compiler: "npm:260318099.0.1"
+    flow-parser: "npm:0.333.0"
+    hermes-compiler: "npm:260318099.0.4"
     invariant: "npm:^2.2.4"
     memoize-one: "npm:^5.0.0"
     metro-runtime: "npm:^0.87.0"
@@ -17036,7 +17083,7 @@ __metadata:
     react-devtools-core: "npm:^6.1.5"
     react-refresh: "npm:^0.14.0"
     regenerator-runtime: "npm:^0.13.2"
-    scheduler: "npm:0.27.0"
+    scheduler: "npm:0.28.0"
     semver: "npm:^7.1.3"
     stacktrace-parser: "npm:^0.1.10"
     tinyglobby: "npm:^0.2.15"
@@ -17045,13 +17092,13 @@ __metadata:
     yargs: "npm:^17.6.2"
   peerDependencies:
     "@types/react": ^19.1.1
-    react: ^19.2.3
+    react: ^19.3.0
   peerDependenciesMeta:
     "@types/react":
       optional: true
   bin:
     react-native: cli.js
-  checksum: 10c0/fc1a5e13e511c242eb6cd409755feeaade5b23e5f4012b67319cc94511907188340149d33f8a60e50c12a05a29e60542dc1e1dbb5545e98bdca358fa4400fd0c
+  checksum: 10c0/d7a4f9d3ec5925ffff9322582bd754848b1b1aa146b25627b5d523edcf0fbe1bc51b489e8a1d1020e1a97c546a1a994d431f9623ef4f88aab34d56cb5edb6708
   languageName: node
   linkType: hard
 
@@ -17062,34 +17109,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-test-renderer@npm:19.1.0":
-  version: 19.1.0
-  resolution: "react-test-renderer@npm:19.1.0"
+"react-test-renderer@npm:19.3.0":
+  version: 19.3.0
+  resolution: "react-test-renderer@npm:19.3.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Freact-test-renderer%2F-%2Freact-test-renderer-19.3.0.tgz"
   dependencies:
-    react-is: "npm:^19.1.0"
-    scheduler: "npm:^0.26.0"
+    react-is: "npm:^19.3.0"
+    scheduler: "npm:^0.28.0"
   peerDependencies:
-    react: ^19.1.0
-  checksum: 10c0/34ed4a37ba8b0beb96c048de6ff28574f018a18dd1042c24f8f46142d48eb5b27f82ff7c2823d082932fd3983c5a3529ab8cc8f15191d4306df0082f9f84678f
+    react: ^19.3.0
+  checksum: 10c0/40b64160bbc42d72e9ab60327cc3646865656f314a28a31a7496460d19a1a1af89c0785573010fe758f2deeca362185cec6304b15e22c4770fde3736f56716fe
   languageName: node
   linkType: hard
 
-"react-test-renderer@npm:19.2.3":
-  version: 19.2.3
-  resolution: "react-test-renderer@npm:19.2.3"
-  dependencies:
-    react-is: "npm:^19.2.3"
-    scheduler: "npm:^0.27.0"
-  peerDependencies:
-    react: ^19.2.3
-  checksum: 10c0/842b82239dbddbc536083a6260c3e1b0507c02a3400bd05879fc19160468fd0f8ab79fec5dceffa6113b131835cc7621212f8415b46ea5156ab66bbfd7e24297
-  languageName: node
-  linkType: hard
-
-"react@npm:19.2.3":
-  version: 19.2.3
-  resolution: "react@npm:19.2.3"
-  checksum: 10c0/094220b3ba3a76c1b668f972ace1dd15509b157aead1b40391d1c8e657e720c201d9719537375eff08f5e0514748c0319063392a6f000e31303aafc4471f1436
+"react@npm:19.3.0":
+  version: 19.3.0
+  resolution: "react@npm:19.3.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Freact%2F-%2Freact-19.3.0.tgz"
+  checksum: 10c0/dd3099c3c43a7122bc01223bb26b0f8d5ba13cca569af6fb94a005fb54fa73223c9cb203bb226d40cfd49a82cbeef2e36ce84062a3a6d5b9fe8f4437694c7b52
   languageName: node
   linkType: hard
 
@@ -17306,7 +17341,7 @@ __metadata:
 
 "resedit@npm:^2.0.3":
   version: 2.0.3
-  resolution: "resedit@npm:2.0.3::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fresedit%2F-%2Fresedit-2.0.3.tgz"
+  resolution: "resedit@npm:2.0.3::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fresedit%2F-%2Fresedit-2.0.3.tgz"
   dependencies:
     pe-library: "npm:^1.0.1"
   checksum: 10c0/d9ec8fc3900f3bf8fe818260149fdd6180b45d42f08d8bdf098a7a841d995363f44fd2d633948889e300a3ad8e7860b2d92fff9afcdcea21999994f5f526ffb0
@@ -17351,38 +17386,36 @@ __metadata:
   linkType: hard
 
 "resolve@npm:^1.1.6, resolve@npm:^1.10.1, resolve@npm:^1.14.2, resolve@npm:^1.19.0, resolve@npm:^1.20.0, resolve@npm:^1.22.11, resolve@npm:~1.22.1, resolve@npm:~1.22.2":
-  version: 1.22.12
-  resolution: "resolve@npm:1.22.12"
+  version: 1.22.13
+  resolution: "resolve@npm:1.22.13"
   dependencies:
     es-errors: "npm:^1.3.0"
-    is-core-module: "npm:^2.16.1"
+    is-core-module: "npm:^2.17.0"
     path-parse: "npm:^1.0.7"
     supports-preserve-symlinks-flag: "npm:^1.0.0"
   bin:
     resolve: bin/resolve
-  checksum: 10c0/b16dc9b537c02e8c3388f7d3dcff9741d3071625f9a97ac1c885f2b0ca51e78df22328fb6d6ef214dd9101fb7cfc19aa2836fe3410402a94f3f7b8639c7149bf
+  checksum: 10c0/8dac5b33a1f9f241500fcaf42f9033cdcaf3738c908a60a50a976ff2f6129063cbc5368b4092e42d2d264ad22aa94aaff207f3efa8d0185c68454439b11a1973
   languageName: node
   linkType: hard
 
-"resolve@npm:^2.0.0-next.4, resolve@npm:^2.0.0-next.5":
-  version: 2.0.0-next.6
-  resolution: "resolve@npm:2.0.0-next.6"
+"resolve@npm:^1.22.8":
+  version: 1.22.13
+  resolution: "resolve@npm:1.22.13::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fresolve%2F-%2Fresolve-1.22.13.tgz"
   dependencies:
     es-errors: "npm:^1.3.0"
-    is-core-module: "npm:^2.16.1"
-    node-exports-info: "npm:^1.6.0"
-    object-keys: "npm:^1.1.1"
+    is-core-module: "npm:^2.17.0"
     path-parse: "npm:^1.0.7"
     supports-preserve-symlinks-flag: "npm:^1.0.0"
   bin:
-    resolve: bin/resolve
-  checksum: 10c0/4e44cb84aa9a3c7c82d4a98e8111879671150496160a53ca6cdbed6101bf239f19105f8b8b84e40c0b76d46b0d9626813510b19a80e01f4ae18692e9d0b47749
+    resolve: ./bin/resolve
+  checksum: 10c0/8dac5b33a1f9f241500fcaf42f9033cdcaf3738c908a60a50a976ff2f6129063cbc5368b4092e42d2d264ad22aa94aaff207f3efa8d0185c68454439b11a1973
   languageName: node
   linkType: hard
 
-"resolve@npm:^2.0.0-next.6":
+"resolve@npm:^2.0.0-next.4, resolve@npm:^2.0.0-next.5, resolve@npm:^2.0.0-next.6":
   version: 2.0.0-next.7
-  resolution: "resolve@npm:2.0.0-next.7::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fresolve%2F-%2Fresolve-2.0.0-next.7.tgz"
+  resolution: "resolve@npm:2.0.0-next.7"
   dependencies:
     es-errors: "npm:^1.3.0"
     is-core-module: "npm:^2.16.2"
@@ -17391,44 +17424,42 @@ __metadata:
     path-parse: "npm:^1.0.7"
     supports-preserve-symlinks-flag: "npm:^1.0.0"
   bin:
-    resolve: ./bin/resolve
+    resolve: bin/resolve
   checksum: 10c0/8c6fa17ccdb826a3a52387ed8c42bf705dbc19d5494da52a86661b124b5b88fad5d8edbbb4434a1b563ecf7768368b7da9fb9489e20f36e02f7551a4ea87d707
   languageName: node
   linkType: hard
 
 "resolve@patch:resolve@npm%3A^1.1.6#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.1#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.14.2#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.19.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.20.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.22.11#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A~1.22.1#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A~1.22.2#optional!builtin<compat/resolve>":
-  version: 1.22.12
-  resolution: "resolve@patch:resolve@npm%3A1.22.12#optional!builtin<compat/resolve>::version=1.22.12&hash=c3c19d"
+  version: 1.22.13
+  resolution: "resolve@patch:resolve@npm%3A1.22.13#optional!builtin<compat/resolve>::version=1.22.13&hash=c3c19d"
   dependencies:
     es-errors: "npm:^1.3.0"
-    is-core-module: "npm:^2.16.1"
+    is-core-module: "npm:^2.17.0"
     path-parse: "npm:^1.0.7"
     supports-preserve-symlinks-flag: "npm:^1.0.0"
   bin:
     resolve: bin/resolve
-  checksum: 10c0/fc6519984ae1f894d877c0060ba8b1f5ba3bc0e85a02f74e141929c118c23d74d9735619a9cc2965397387e514884245c65d72a40731dcb6cfc84c7bcdc8321e
+  checksum: 10c0/6f10a5245bc8203b5c4d42528c2e221d32b6d3d9f07bb6c264205459ef7dae8318783f0f06a0add8b5e23a9101fdbd2e56267324bf3cb151578e91cf2e00febb
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@npm%3A^2.0.0-next.4#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^2.0.0-next.5#optional!builtin<compat/resolve>":
-  version: 2.0.0-next.6
-  resolution: "resolve@patch:resolve@npm%3A2.0.0-next.6#optional!builtin<compat/resolve>::version=2.0.0-next.6&hash=c3c19d"
+"resolve@patch:resolve@npm%3A^1.22.8#optional!builtin<compat/resolve>":
+  version: 1.22.13
+  resolution: "resolve@patch:resolve@npm%3A1.22.13%3A%3A__archiveUrl=https%253A%252F%252Fms-feed-25.pkgs.visualstudio.com%252F1es-public%252F_packaging%252Fnpm-public%252Fnpm%252Fregistry%252Fresolve%252F-%252Fresolve-1.22.13.tgz#optional!builtin<compat/resolve>::version=1.22.13&hash=c3c19d"
   dependencies:
     es-errors: "npm:^1.3.0"
-    is-core-module: "npm:^2.16.1"
-    node-exports-info: "npm:^1.6.0"
-    object-keys: "npm:^1.1.1"
+    is-core-module: "npm:^2.17.0"
     path-parse: "npm:^1.0.7"
     supports-preserve-symlinks-flag: "npm:^1.0.0"
   bin:
-    resolve: bin/resolve
-  checksum: 10c0/dca533e38820b0d8d636f269824cef3b7435802ab7401211c6f10af03be0e2f7e216047234e1623046c0a6791577079767e0c04f0d36e42c7f567b1bff7b0742
+    resolve: ./bin/resolve
+  checksum: 10c0/6f10a5245bc8203b5c4d42528c2e221d32b6d3d9f07bb6c264205459ef7dae8318783f0f06a0add8b5e23a9101fdbd2e56267324bf3cb151578e91cf2e00febb
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@npm%3A^2.0.0-next.6#optional!builtin<compat/resolve>":
+"resolve@patch:resolve@npm%3A^2.0.0-next.4#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^2.0.0-next.5#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^2.0.0-next.6#optional!builtin<compat/resolve>":
   version: 2.0.0-next.7
-  resolution: "resolve@patch:resolve@npm%3A2.0.0-next.7%3A%3A__archiveUrl=https%253A%252F%252Fms-feed-25.pkgs.visualstudio.com%252F1es-public%252F_packaging%252Fnpm-public%252Fnpm%252Fregistry%252Fresolve%252F-%252Fresolve-2.0.0-next.7.tgz#optional!builtin<compat/resolve>::version=2.0.0-next.7&hash=c3c19d"
+  resolution: "resolve@patch:resolve@npm%3A2.0.0-next.7#optional!builtin<compat/resolve>::version=2.0.0-next.7&hash=c3c19d"
   dependencies:
     es-errors: "npm:^1.3.0"
     is-core-module: "npm:^2.16.2"
@@ -17437,7 +17468,7 @@ __metadata:
     path-parse: "npm:^1.0.7"
     supports-preserve-symlinks-flag: "npm:^1.0.0"
   bin:
-    resolve: ./bin/resolve
+    resolve: bin/resolve
   checksum: 10c0/6bb6f1d8a1789f7a5b4e35d950e76bc0ba632ff7d51fe86b6f34fb5f41e1ce0f7b884ec166828cfc0728ddffeaee49527711d752d12398297f90c51acd22195e
   languageName: node
   linkType: hard
@@ -17673,26 +17704,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:0.27.0, scheduler@npm:^0.27.0":
-  version: 0.27.0
-  resolution: "scheduler@npm:0.27.0"
-  checksum: 10c0/4f03048cb05a3c8fddc45813052251eca00688f413a3cee236d984a161da28db28ba71bd11e7a3dd02f7af84ab28d39fb311431d3b3772fed557945beb00c452
-  languageName: node
-  linkType: hard
-
-"scheduler@npm:^0.26.0":
-  version: 0.26.0
-  resolution: "scheduler@npm:0.26.0"
-  checksum: 10c0/5b8d5bfddaae3513410eda54f2268e98a376a429931921a81b5c3a2873aab7ca4d775a8caac5498f8cbc7d0daeab947cf923dbd8e215d61671f9f4e392d34356
+"scheduler@npm:0.28.0, scheduler@npm:^0.28.0":
+  version: 0.28.0
+  resolution: "scheduler@npm:0.28.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fscheduler%2F-%2Fscheduler-0.28.0.tgz"
+  checksum: 10c0/783c8e5ce89d41273a02ed6dc0e3d24bd60e05c9e8f7e3adfc6c82e7c69935500d90e343f1ee26d592fc7504e8a2532573c6368def3e93bfe812391fa53efaf4
   languageName: node
   linkType: hard
 
 "screenshot-desktop@npm:^1.12.2":
-  version: 1.15.6
-  resolution: "screenshot-desktop@npm:1.15.6"
+  version: 1.15.7
+  resolution: "screenshot-desktop@npm:1.15.7"
   dependencies:
     temp: "npm:^0.9.4"
-  checksum: 10c0/9e0c3818363e1677b4398e15f61506a5c7ce008c434c0ce9414f343c85c9716f77fd60702a446454cd2fcceca0ca70423ed9060d89eb294f17821ef6c1e964fb
+  checksum: 10c0/6132feb815a3415d692b0170f639fc81cd90e1354f6c72155726ebaf897258043a8b1aff592ce81336d7e8aa7e7c12387f1612879fd9376f87bfa7cd6681d9a1
   languageName: node
   linkType: hard
 
@@ -17739,7 +17763,7 @@ __metadata:
 
 "semver@npm:^7.7.1, semver@npm:^7.7.2":
   version: 7.8.5
-  resolution: "semver@npm:7.8.5::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fsemver%2F-%2Fsemver-7.8.5.tgz"
+  resolution: "semver@npm:7.8.5::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fsemver%2F-%2Fsemver-7.8.5.tgz"
   bin:
     semver: bin/semver.js
   checksum: 10c0/b1f3127a5be8125a94f37188b361c212466c292c6910adce3ec106cff5dc211ccaedc4739c11bb70fda59d6fc1f040a9bca289f4e093451521a2372e5231fe0c
@@ -17908,9 +17932,9 @@ __metadata:
   linkType: hard
 
 "shell-quote@npm:^1.6.1, shell-quote@npm:^1.8.1, shell-quote@npm:^1.8.4":
-  version: 1.10.0
-  resolution: "shell-quote@npm:1.10.0"
-  checksum: 10c0/46ee59bfd972ce6a45500c44ed130dff2d0a7d6fbac9841e59d548518cad8060a06393c9a5dcbc0cede294ad80b2a2cd8c904679e09265f53efc0a0879f30961
+  version: 1.12.0
+  resolution: "shell-quote@npm:1.12.0"
+  checksum: 10c0/1605a4ed6a758bf13de7cb8197a4184d8015f7a4dbdcd6cd4a717d5b30b3ae7666300cc4ae7f3155cf80ace9739e9e82061ee5aa1a648f53f5fab31a220816d0
   languageName: node
   linkType: hard
 
@@ -18019,16 +18043,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"simple-git@npm:^3.3.0":
-  version: 3.36.0
-  resolution: "simple-git@npm:3.36.0"
+"simple-git@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "simple-git@npm:4.0.2::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fsimple-git%2F-%2Fsimple-git-4.0.2.tgz"
   dependencies:
     "@kwsites/file-exists": "npm:^1.1.1"
     "@kwsites/promise-deferred": "npm:^1.1.1"
-    "@simple-git/args-pathspec": "npm:^1.0.3"
-    "@simple-git/argv-parser": "npm:^1.1.0"
+    "@simple-git/args-pathspec": "npm:1.0.4"
+    "@simple-git/argv-parser": "npm:2.0.1"
     debug: "npm:^4.4.0"
-  checksum: 10c0/4c22e57107535168f354e5abbbf6e618a7b39d76491ca225c70588520fbe86891f3b9a5c4f8a3fc0137e669aad2f0e11f6c6e677bfec07169cd18f29bf23cb77
+  checksum: 10c0/d028927258fa286d9d8e462f29ec6a37a32398acd7e53cef7fc81e70636c149d7359a542d1a4f8490b342d40d98e341c35c718734aec448fc24fdee88566e981
   languageName: node
   linkType: hard
 
@@ -18088,10 +18112,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"smol-toml@npm:^1.5.2":
-  version: 1.6.1
-  resolution: "smol-toml@npm:1.6.1"
-  checksum: 10c0/511a78722f99c7616fdb46af708de3d7e81434b5a3d58061166da73f28bfc6cae4f0cd04683f60515b9c490cd10152fce72287c960b337419c0299cc1f0f2a22
+"smol-toml@npm:^1.7.1":
+  version: 1.9.1
+  resolution: "smol-toml@npm:1.9.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fsmol-toml%2F-%2Fsmol-toml-1.9.1.tgz"
+  checksum: 10c0/8acccf7bbc063f29405f58f5014ab39bf4eb9d7f0e000e5e3f140f7d4d6ead5696681a7c15260d1f2910213012c0af43b31a05bf94f704b0bdf39989fba08c02
   languageName: node
   linkType: hard
 
@@ -18484,7 +18508,7 @@ __metadata:
 
 "strnum@npm:^2.4.2":
   version: 2.4.2
-  resolution: "strnum@npm:2.4.2::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fstrnum%2F-%2Fstrnum-2.4.2.tgz"
+  resolution: "strnum@npm:2.4.2::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fstrnum%2F-%2Fstrnum-2.4.2.tgz"
   dependencies:
     anynum: "npm:^1.0.1"
   checksum: 10c0/71a94dcc12cf3187e10089ed2ddcf7c289fed168ce4a33ee393bbd009a9199c237e3ef71597f3c91fac4203dd1e675c090eb4131226fd70af6fa2a31b0175de2
@@ -18775,8 +18799,8 @@ __metadata:
   linkType: hard
 
 "ts-jest@npm:^29.0.3":
-  version: 29.4.12
-  resolution: "ts-jest@npm:29.4.12"
+  version: 29.4.14
+  resolution: "ts-jest@npm:29.4.14"
   dependencies:
     bs-logger: "npm:^0.2.6"
     fast-json-stable-stringify: "npm:^2.1.0"
@@ -18788,7 +18812,7 @@ __metadata:
     type-fest: "npm:^4.41.0"
     yargs-parser: "npm:^21.1.1"
   peerDependencies:
-    "@babel/core": ">=7.0.0-beta.0 <8"
+    "@babel/core": ">=7.0.0-beta.0 <9"
     "@jest/transform": ^29.0.0 || ^30.0.0
     "@jest/types": ^29.0.0 || ^30.0.0
     babel-jest: ^29.0.0 || ^30.0.0
@@ -18810,13 +18834,13 @@ __metadata:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: 10c0/cf08cf4b417085578db038b525c8b22cf6af689601eab697fe84a46fa07bddcd506bd961c607c8f25c705e90ea8ac8ecf258fc200161f4e0882d0d7db4db9ec9
+  checksum: 10c0/58780804871e5752d7f42e69a38ea0716d0a6330272f3a253cf10dbf8c59390f64f2da6fff3d93dcb1bc514d8fa5d02963d8ef6d062fdfa96113b3aad0fd9331
   languageName: node
   linkType: hard
 
 "tsconfig-paths@npm:^3.15.0":
   version: 3.15.0
-  resolution: "tsconfig-paths@npm:3.15.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Ftsconfig-paths%2F-%2Ftsconfig-paths-3.15.0.tgz"
+  resolution: "tsconfig-paths@npm:3.15.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Ftsconfig-paths%2F-%2Ftsconfig-paths-3.15.0.tgz"
   dependencies:
     "@types/json5": "npm:^0.0.29"
     json5: "npm:^1.0.2"
@@ -18904,7 +18928,7 @@ __metadata:
 
 "type-is@npm:^2.1.0":
   version: 2.1.0
-  resolution: "type-is@npm:2.1.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Ftype-is%2F-%2Ftype-is-2.1.0.tgz"
+  resolution: "type-is@npm:2.1.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Ftype-is%2F-%2Ftype-is-2.1.0.tgz"
   dependencies:
     content-type: "npm:^2.0.0"
     media-typer: "npm:^1.1.0"
@@ -18978,7 +19002,7 @@ __metadata:
 
 "typescript@npm:5.1.6":
   version: 5.1.6
-  resolution: "typescript@npm:5.1.6::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Ftypescript%2F-%2Ftypescript-5.1.6.tgz"
+  resolution: "typescript@npm:5.1.6::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Ftypescript%2F-%2Ftypescript-5.1.6.tgz"
   bin:
     tsc: ./bin/tsc
     tsserver: ./bin/tsserver
@@ -19018,7 +19042,7 @@ __metadata:
 
 "typescript@npm:^6.0.3":
   version: 6.0.3
-  resolution: "typescript@npm:6.0.3::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Ftypescript%2F-%2Ftypescript-6.0.3.tgz"
+  resolution: "typescript@npm:6.0.3::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Ftypescript%2F-%2Ftypescript-6.0.3.tgz"
   bin:
     tsc: ./bin/tsc
     tsserver: ./bin/tsserver
@@ -19028,7 +19052,7 @@ __metadata:
 
 "typescript@patch:typescript@npm%3A5.1.6#optional!builtin<compat/typescript>":
   version: 5.1.6
-  resolution: "typescript@patch:typescript@npm%3A5.1.6%3A%3A__archiveUrl=https%253A%252F%252Fms-feed-25.pkgs.visualstudio.com%252F1es-public%252F_packaging%252Fnpm-public%252Fnpm%252Fregistry%252Ftypescript%252F-%252Ftypescript-5.1.6.tgz#optional!builtin<compat/typescript>::version=5.1.6&hash=5da071"
+  resolution: "typescript@patch:typescript@npm%3A5.1.6%3A%3A__archiveUrl=https%253A%252F%252Fpackagefeedproxy.microsoft.io%252Fnpm%252Ftypescript%252F-%252Ftypescript-5.1.6.tgz#optional!builtin<compat/typescript>::version=5.1.6&hash=5da071"
   bin:
     tsc: ./bin/tsc
     tsserver: ./bin/tsserver
@@ -19068,7 +19092,7 @@ __metadata:
 
 "typescript@patch:typescript@npm%3A^6.0.3#optional!builtin<compat/typescript>":
   version: 6.0.3
-  resolution: "typescript@patch:typescript@npm%3A6.0.3%3A%3A__archiveUrl=https%253A%252F%252Fms-feed-25.pkgs.visualstudio.com%252F1es-public%252F_packaging%252Fnpm-public%252Fnpm%252Fregistry%252Ftypescript%252F-%252Ftypescript-6.0.3.tgz#optional!builtin<compat/typescript>::version=6.0.3&hash=5786d5"
+  resolution: "typescript@patch:typescript@npm%3A6.0.3%3A%3A__archiveUrl=https%253A%252F%252Fpackagefeedproxy.microsoft.io%252Fnpm%252Ftypescript%252F-%252Ftypescript-6.0.3.tgz#optional!builtin<compat/typescript>::version=6.0.3&hash=5786d5"
   bin:
     tsc: ./bin/tsc
     tsserver: ./bin/tsserver
@@ -19165,7 +19189,7 @@ __metadata:
 
 "undici@npm:^7.24.4":
   version: 7.29.1
-  resolution: "undici@npm:7.29.1::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fundici%2F-%2Fundici-7.29.1.tgz"
+  resolution: "undici@npm:7.29.1::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fundici%2F-%2Fundici-7.29.1.tgz"
   checksum: 10c0/5a419b1364531071ebdfd93748f7f2392d4eb6d68dd99814e1020f8fc6a517e3298129004c871516ee204bac68aba93541f587200b04a7449b8d45683a7d86f6
   languageName: node
   linkType: hard
@@ -19275,9 +19299,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"update-browserslist-db@npm:^1.2.3":
-  version: 1.2.3
-  resolution: "update-browserslist-db@npm:1.2.3"
+"update-browserslist-db@npm:^1.3.3":
+  version: 1.3.4
+  resolution: "update-browserslist-db@npm:1.3.4::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fupdate-browserslist-db%2F-%2Fupdate-browserslist-db-1.3.4.tgz"
   dependencies:
     escalade: "npm:^3.2.0"
     picocolors: "npm:^1.1.1"
@@ -19285,7 +19309,7 @@ __metadata:
     browserslist: ">= 4.21.0"
   bin:
     update-browserslist-db: cli.js
-  checksum: 10c0/13a00355ea822388f68af57410ce3255941d5fb9b7c49342c4709a07c9f230bbef7f7499ae0ca7e0de532e79a82cc0c4edbd125f1a323a1845bf914efddf8bec
+  checksum: 10c0/5c0769472715b57371208c3146cc07a4f0917c1d18cc34f60325bc4234f4a28f332e50b99f675999ff311315231ff19beb22a815dfe04ccc1e798e1d389514d7
   languageName: node
   linkType: hard
 
@@ -19881,7 +19905,7 @@ __metadata:
 
 "yargs-parser@npm:^22.0.0":
   version: 22.0.0
-  resolution: "yargs-parser@npm:22.0.0::__archiveUrl=https%3A%2F%2Fms-feed-25.pkgs.visualstudio.com%2F1es-public%2F_packaging%2Fnpm-public%2Fnpm%2Fregistry%2Fyargs-parser%2F-%2Fyargs-parser-22.0.0.tgz"
+  resolution: "yargs-parser@npm:22.0.0::__archiveUrl=https%3A%2F%2Fpackagefeedproxy.microsoft.io%2Fnpm%2Fyargs-parser%2F-%2Fyargs-parser-22.0.0.tgz"
   checksum: 10c0/cb7ef81759c4271cb1d96b9351dbbc9a9ce35d3e1122d2b739bf6c432603824fa02c67cc12dcef6ea80283379d63495686e8f41cc7b06c6576e792aba4d33e1c
   languageName: node
   linkType: hard

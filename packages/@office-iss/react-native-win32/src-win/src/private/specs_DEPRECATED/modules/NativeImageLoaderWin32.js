@@ -4,12 +4,13 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @flow
+ * @flow strict-local
  * @format
  */
 
 import type {RootTag} from '../../../../Libraries/TurboModule/RCTExport';
 import type {TurboModule} from '../../../../Libraries/TurboModule/RCTExport';
+import type {UnsafeObject} from '../../../../Libraries/Types/CodegenTypes';
 
 import * as TurboModuleRegistry from '../../../../Libraries/TurboModule/TurboModuleRegistry';
 
@@ -26,7 +27,7 @@ export interface Spec extends TurboModule {
   // currently.
   readonly getSizeWithHeaders: (
     uri: string,
-    headers: Object,
+    headers: UnsafeObject,
   ) => Promise<{
     width: number,
     height: number,
@@ -38,7 +39,7 @@ export interface Spec extends TurboModule {
     queryRootName: string,
     rootTag: RootTag,
   ) => Promise<boolean>;
-  readonly queryCache: (uris: Array<string>) => Promise<Object>;
+  readonly queryCache: (uris: Array<string>) => Promise<UnsafeObject>;
   // Win32]
 }
 

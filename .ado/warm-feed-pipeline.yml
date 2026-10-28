@@ -34,7 +34,7 @@ schedules:
         - main
     always: true
 
-# Route npm/Yarn/NuGet through the ms/react-native-public feed (matches CI) under network isolation.
+# Bootstrap npm/Yarn through the proxy; warm-feed keeps its explicit ADO maintenance endpoints.
 variables:
   - template: variables/shared.yml
 
@@ -79,7 +79,7 @@ extends:
                 inputs:
                   version: '24.x'
 
-              # Authenticate npm/Yarn to the feed before install (same MI as CI).
+              # Acquire the ADO-scoped token without changing the proxy used for bootstrap installs.
               - template: .ado/templates/auth-npm-feed.yml@self
 
               - script: yarn install --immutable

@@ -3211,16 +3211,24 @@ exports[`snapshotAllPages Animated 1`] = `
     </Text>
   </View>
   <View
-    collapsable={false}
     style={
       {
-        "backgroundColor": "blue",
-        "height": 100,
-        "transform": [],
-        "width": 100,
+        "isolation": "isolate",
       }
     }
-  />
+  >
+    <View
+      collapsable={false}
+      style={
+        {
+          "backgroundColor": "blue",
+          "height": 100,
+          "transform": [],
+          "width": 100,
+        }
+      }
+    />
+  </View>
   <View
     style={
       {
@@ -11190,6 +11198,220 @@ exports[`snapshotAllPages Dimensions 3`] = `
   "width": 750
 }
 </Text>
+`;
+
+exports[`snapshotAllPages Dimensions 4`] = `
+<View>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Invoke get('window')
+        </Text>
+      </View>
+    </View>
+  </View>
+  <Text
+    style={
+      [
+        {
+          "color": "#3c3c4399",
+        },
+        undefined,
+      ]
+    }
+  >
+    {
+  "fontScale": 2,
+  "height": 1334,
+  "scale": 2,
+  "width": 750
+}
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages Dimensions 5`] = `
+<View>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Invoke get('screen')
+        </Text>
+      </View>
+    </View>
+  </View>
+  <Text
+    style={
+      [
+        {
+          "color": "#3c3c4399",
+        },
+        undefined,
+      ]
+    }
+  >
+    {
+  "fontScale": 2,
+  "height": 1334,
+  "scale": 2,
+  "width": 750
+}
+  </Text>
+</View>
 `;
 
 exports[`snapshotAllPages Display: contents 1`] = `
@@ -19173,6 +19395,7 @@ exports[`snapshotAllPages FlatList 6`] = `
       "flex": 1,
     }
   }
+  testID="flat-list-viewability-vertical-wait"
 >
   <View
     style={
@@ -21450,6 +21673,7 @@ exports[`snapshotAllPages FlatList 10`] = `
       "flex": 1,
     }
   }
+  testID="flat-list-viewability-vertical-wait"
 >
   <View
     style={
@@ -22240,6 +22464,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       "flex": 1,
     }
   }
+  testID="flat-list-viewability-vertical-no-wait"
 >
   <View
     style={
@@ -23030,6 +23255,7 @@ exports[`snapshotAllPages FlatList 12`] = `
       "flex": 1,
     }
   }
+  testID="flat-list-viewability-horizontal-wait"
 >
   <View
     style={
@@ -23891,6 +24117,7 @@ exports[`snapshotAllPages FlatList 13`] = `
       "flex": 1,
     }
   }
+  testID="flat-list-viewability-horizontal-no-wait"
 >
   <View
     style={
@@ -24752,6 +24979,7 @@ exports[`snapshotAllPages FlatList 14`] = `
       "flex": 1,
     }
   }
+  testID="flat-list-viewability-vertical-wait"
 >
   <View
     style={
@@ -25549,6 +25777,7 @@ exports[`snapshotAllPages FlatList 15`] = `
       "flex": 1,
     }
   }
+  testID="flat-list-viewability-horizontal-wait"
 >
   <View
     style={
@@ -37667,6 +37896,411 @@ exports[`snapshotAllPages PlatformColor 2`] = `
 `;
 
 exports[`snapshotAllPages PlatformColor 3`] = `
+<View
+  style={
+    {
+      "flex": 1,
+      "flexDirection": "column",
+    }
+  }
+>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Valid token '
+      systemBlue
+      ' (shows the system color)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "systemBlue",
+            ],
+          },
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Invalid token, NO fallback (miss → transparent, outlined below)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+            ],
+          },
+          "borderColor": "black",
+          "borderWidth": 1,
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Invalid token + fallback '#FF0000' → RED (backgroundColor)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+              {
+                "fallback": "#FF0000",
+              },
+            ],
+          },
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Invalid token + fallback '#FFFF00' → YELLOW (backgroundColor)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+              {
+                "fallback": "#FFFF00",
+              },
+            ],
+          },
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Invalid token + fallback '#00FF00' → GREEN (text color)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "flex": 0.25,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "color": {
+                "windowsbrush": [
+                  "nonExistentToken",
+                  {
+                    "fallback": "#00FF00",
+                  },
+                ],
+              },
+              "fontWeight": "bold",
+            },
+          ]
+        }
+      >
+        GREEN
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      Invalid token + fallback '#0000FF' → BLUE (borderColor)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "borderColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+              {
+                "fallback": "#0000FF",
+              },
+            ],
+          },
+          "borderWidth": 3,
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontStyle": "italic",
+          "paddingVertical": 8,
+        },
+      ]
+    }
+  >
+    The fallback is parsed by each platform's shared native CSS color parser, so hex (#RGB / #RRGGBB / #RRGGBBAA), rgb(), rgba(), hsl(), hsla() and named colors all resolve consistently on every platform. Only a representative subset is demoed below.
+  </Text>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      fallback 'rgb(255, 0, 128)' → PINK (backgroundColor)
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+              {
+                "fallback": "rgb(255, 0, 128)",
+              },
+            ],
+          },
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      fallback 'rgba(0, 128, 255, 0.7)' → semi-transparent BLUE
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+              {
+                "fallback": "rgba(0, 128, 255, 0.7)",
+              },
+            ],
+          },
+          "borderColor": "black",
+          "borderWidth": 1,
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flex": 0.75,
+        "flexDirection": "row",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
+      }
+    >
+      fallback '#FF000080' (#RRGGBBAA) → 50% transparent RED
+    </Text>
+    <View
+      style={
+        {
+          "alignItems": "stretch",
+          "backgroundColor": {
+            "windowsbrush": [
+              "nonExistentToken",
+              {
+                "fallback": "#FF000080",
+              },
+            ],
+          },
+          "borderColor": "black",
+          "borderWidth": 1,
+          "flex": 0.25,
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages PlatformColor 4`] = `
 <Text
   style={
     [
@@ -37684,7 +38318,7 @@ exports[`snapshotAllPages PlatformColor 3`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages PlatformColor 4`] = `
+exports[`snapshotAllPages PlatformColor 5`] = `
 <View
   style={
     {
@@ -37729,7 +38363,7 @@ exports[`snapshotAllPages PlatformColor 4`] = `
 </View>
 `;
 
-exports[`snapshotAllPages PlatformColor 5`] = `
+exports[`snapshotAllPages PlatformColor 6`] = `
 <View
   style={
     {
@@ -63369,6 +64003,7 @@ exports[`snapshotAllPages SectionList 3`] = `
       "flex": 1,
     }
   }
+  testID="section-list-viewability-vertical-no-wait"
 >
   <View
     style={
@@ -65889,6 +66524,7 @@ exports[`snapshotAllPages SectionList 7`] = `
       "flex": 1,
     }
   }
+  testID="section-list-viewability-vertical-no-wait"
 >
   <View
     style={
@@ -66442,6 +67078,7 @@ exports[`snapshotAllPages SectionList 8`] = `
       "flex": 1,
     }
   }
+  testID="section-list-viewability-vertical-wait"
 >
   <View
     style={
@@ -66995,6 +67632,7 @@ exports[`snapshotAllPages SectionList 9`] = `
       "flex": 1,
     }
   }
+  testID="section-list-viewability-horizontal-no-wait"
 >
   <View
     style={
@@ -67619,6 +68257,7 @@ exports[`snapshotAllPages SectionList 10`] = `
       "flex": 1,
     }
   }
+  testID="section-list-viewability-horizontal-wait"
 >
   <View
     style={
@@ -68243,6 +68882,7 @@ exports[`snapshotAllPages SectionList 11`] = `
       "flex": 1,
     }
   }
+  testID="section-list-viewability-horizontal-no-wait"
 >
   <View
     style={
@@ -68874,6 +69514,7 @@ exports[`snapshotAllPages SectionList 12`] = `
       "flex": 1,
     }
   }
+  testID="section-list-viewability-vertical-no-wait"
 >
   <View
     style={
@@ -70815,6 +71456,43 @@ exports[`snapshotAllPages Switch 7`] = `
 `;
 
 exports[`snapshotAllPages Switch 8`] = `
+<View>
+  <RCTSwitch
+    accessibilityRole="switch"
+    accessible={true}
+    focusable={true}
+    onChange={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "height": 31,
+        "width": 51,
+      }
+    }
+    thumbTintColor="transparent"
+    value={true}
+  />
+  <RCTSwitch
+    accessibilityRole="switch"
+    accessible={true}
+    focusable={true}
+    onChange={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "height": 31,
+        "width": 51,
+      }
+    }
+    thumbTintColor="#FF000000"
+    value={true}
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Switch 9`] = `
 <View
   accessible={true}
   testID="accessibility-switch"
@@ -70926,6 +71604,241 @@ exports[`snapshotAllPages Switch 8`] = `
 
 exports[`snapshotAllPages Text 1`] = `
 <View
+  accessible={true}
+  style={
+    {
+      "gap": 24,
+    }
+  }
+  testID="text-width-mode-example"
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#3c3c4399",
+        },
+        undefined,
+      ]
+    }
+  >
+    Auto width
+  </Text>
+  <RCTScrollView
+    contentContainerStyle={
+      {
+        "alignItems": "flex-start",
+        "flexDirection": "row",
+        "gap": 16,
+      }
+    }
+    horizontal={true}
+    showsHorizontalScrollIndicator={false}
+    testID="text-width-mode-auto"
+  >
+    <View>
+      <View
+        style={
+          {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "flexShrink": 1,
+            "maxWidth": 120,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "backgroundColor": "#ff8a80",
+                "color": "#111111",
+                "flexShrink": 1,
+                "fontSize": 12,
+              },
+              {
+                "experimental_textWidthMode": "auto",
+              },
+            ]
+          }
+        >
+          Comfort: Moderate
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "flexShrink": 1,
+            "maxWidth": 120,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "backgroundColor": "#ff8a80",
+                "color": "#111111",
+                "flexShrink": 1,
+                "fontSize": 12,
+              },
+              {
+                "experimental_textWidthMode": "auto",
+              },
+            ]
+          }
+        >
+          Sitting, Standing, Roomscale
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "flexShrink": 1,
+            "maxWidth": 120,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "backgroundColor": "#ff8a80",
+                "color": "#111111",
+                "flexShrink": 1,
+                "fontSize": 12,
+              },
+              {
+                "experimental_textWidthMode": "auto",
+              },
+            ]
+          }
+        >
+          Touch Controllers
+        </Text>
+      </View>
+    </View>
+  </RCTScrollView>
+  <Text
+    style={
+      [
+        {
+          "color": "#3c3c4399",
+        },
+        undefined,
+      ]
+    }
+  >
+    Longest rendered line
+  </Text>
+  <RCTScrollView
+    contentContainerStyle={
+      {
+        "alignItems": "flex-start",
+        "flexDirection": "row",
+        "gap": 16,
+      }
+    }
+    horizontal={true}
+    showsHorizontalScrollIndicator={false}
+    testID="text-width-mode-longest-line"
+  >
+    <View>
+      <View
+        style={
+          {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "flexShrink": 1,
+            "maxWidth": 120,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "backgroundColor": "#ff8a80",
+                "color": "#111111",
+                "flexShrink": 1,
+                "fontSize": 12,
+              },
+              {
+                "experimental_textWidthMode": "longest-line",
+              },
+            ]
+          }
+        >
+          Comfort: Moderate
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "flexShrink": 1,
+            "maxWidth": 120,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "backgroundColor": "#ff8a80",
+                "color": "#111111",
+                "flexShrink": 1,
+                "fontSize": 12,
+              },
+              {
+                "experimental_textWidthMode": "longest-line",
+              },
+            ]
+          }
+        >
+          Sitting, Standing, Roomscale
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "flexShrink": 1,
+            "maxWidth": 120,
+          }
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "backgroundColor": "#ff8a80",
+                "color": "#111111",
+                "flexShrink": 1,
+                "fontSize": 12,
+              },
+              {
+                "experimental_textWidthMode": "longest-line",
+              },
+            ]
+          }
+        >
+          Touch Controllers
+        </Text>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
+exports[`snapshotAllPages Text 2`] = `
+<View
   testID="background-border-width"
 >
   <Text
@@ -71023,7 +71936,7 @@ exports[`snapshotAllPages Text 1`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 2`] = `
+exports[`snapshotAllPages Text 3`] = `
 <View
   testID="text-ellipsize"
 >
@@ -71215,7 +72128,7 @@ exports[`snapshotAllPages Text 2`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 3`] = `
+exports[`snapshotAllPages Text 4`] = `
 [
   <View>
     <View
@@ -71531,7 +72444,7 @@ exports[`snapshotAllPages Text 3`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 4`] = `
+exports[`snapshotAllPages Text 5`] = `
 <Text
   style={
     [
@@ -71549,7 +72462,7 @@ exports[`snapshotAllPages Text 4`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 5`] = `
+exports[`snapshotAllPages Text 6`] = `
 [
   <Text
     android_hyphenationFrequency="normal"
@@ -71641,7 +72554,7 @@ exports[`snapshotAllPages Text 5`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 6`] = `
+exports[`snapshotAllPages Text 7`] = `
 <Text
   style={
     [
@@ -71659,7 +72572,338 @@ exports[`snapshotAllPages Text 6`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 7`] = `
+exports[`snapshotAllPages Text 8`] = `
+<View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignSelf": "flex-start",
+          "borderColor": "#ccc",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "marginBottom": 8,
+          "maxWidth": "48%",
+          "padding": 8,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          {
+            "fontFamily": "cursive",
+            "fontSize": 18,
+            "lineHeight": 27,
+          }
+        }
+      >
+        Enjoy your
+        <Text
+          style={
+            {
+              "color": "green",
+            }
+          }
+        >
+           f
+        </Text>
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignSelf": "flex-start",
+          "borderColor": "#ccc",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "marginBottom": 8,
+          "maxWidth": "48%",
+          "padding": 8,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          {
+            "fontSize": 18,
+            "lineHeight": 27,
+          }
+        }
+      >
+        Enjoy your
+        <Text
+          style={
+            {
+              "color": "green",
+            }
+          }
+        >
+           f
+        </Text>
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignSelf": "flex-start",
+          "borderColor": "#ccc",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "marginBottom": 8,
+          "maxWidth": "48%",
+          "padding": 8,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          {
+            "fontFamily": "cursive",
+            "fontSize": 18,
+            "lineHeight": 27,
+          }
+        }
+      >
+        Enjoy your coffee
+        <Text
+          style={
+            {
+              "color": "green",
+            }
+          }
+        >
+           f
+        </Text>
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignSelf": "flex-start",
+          "borderColor": "#ccc",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "marginBottom": 8,
+          "maxWidth": "48%",
+          "padding": 8,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          {
+            "fontSize": 18,
+            "lineHeight": 27,
+          }
+        }
+      >
+        Enjoy your coffee
+        <Text
+          style={
+            {
+              "color": "green",
+            }
+          }
+        >
+           f
+        </Text>
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignSelf": "flex-start",
+          "borderColor": "#ccc",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "marginBottom": 8,
+          "maxWidth": "48%",
+          "padding": 8,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          {
+            "fontFamily": "cursive",
+            "fontSize": 18,
+            "lineHeight": 27,
+          }
+        }
+      >
+        Enjoy your coffee, my
+        <Text
+          style={
+            {
+              "color": "green",
+            }
+          }
+        >
+           f
+        </Text>
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignSelf": "flex-start",
+          "borderColor": "#ccc",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "marginBottom": 8,
+          "maxWidth": "48%",
+          "padding": 8,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          {
+            "fontSize": 18,
+            "lineHeight": 27,
+          }
+        }
+      >
+        Enjoy your coffee, my
+        <Text
+          style={
+            {
+              "color": "green",
+            }
+          }
+        >
+           f
+        </Text>
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignSelf": "flex-start",
+          "borderColor": "#ccc",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "marginBottom": 8,
+          "maxWidth": "48%",
+          "padding": 8,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          {
+            "fontFamily": "cursive",
+            "fontSize": 18,
+            "lineHeight": 27,
+          }
+        }
+      >
+        Enjoy your morning coffee, my friend
+        <Text
+          style={
+            {
+              "color": "green",
+            }
+          }
+        >
+           f
+        </Text>
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignSelf": "flex-start",
+          "borderColor": "#ccc",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "marginBottom": 8,
+          "maxWidth": "48%",
+          "padding": 8,
+        }
+      }
+    >
+      <Text
+        allowFontScaling={false}
+        style={
+          {
+            "fontSize": 18,
+            "lineHeight": 27,
+          }
+        }
+      >
+        Enjoy your morning coffee, my friend
+        <Text
+          style={
+            {
+              "color": "green",
+            }
+          }
+        >
+           f
+        </Text>
+      </Text>
+    </View>
+  </View>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "marginTop": 8,
+        },
+      ]
+    }
+  >
+    Left: cursive (overhangs). Right: default font (control). A missing green f on the left is the bug.
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages Text 9`] = `
 <View>
   <Text
     onPress={[Function]}
@@ -73284,7 +74528,7 @@ exports[`snapshotAllPages Text 7`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 8`] = `
+exports[`snapshotAllPages Text 10`] = `
 <View
   testID="text-font-family"
 >
@@ -73393,7 +74637,7 @@ exports[`snapshotAllPages Text 8`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 9`] = `
+exports[`snapshotAllPages Text 11`] = `
 <View
   style={
     {
@@ -73620,7 +74864,7 @@ exports[`snapshotAllPages Text 9`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 10`] = `
+exports[`snapshotAllPages Text 12`] = `
 <View
   style={
     {
@@ -73761,7 +75005,7 @@ exports[`snapshotAllPages Text 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 11`] = `
+exports[`snapshotAllPages Text 13`] = `
 <View
   testID="text-font-size"
 >
@@ -73797,7 +75041,7 @@ exports[`snapshotAllPages Text 11`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 12`] = `
+exports[`snapshotAllPages Text 14`] = `
 <View
   testID="text-test-color"
 >
@@ -73823,7 +75067,7 @@ exports[`snapshotAllPages Text 12`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 13`] = `
+exports[`snapshotAllPages Text 15`] = `
 <View
   testID="text-font-weight"
 >
@@ -74110,7 +75354,7 @@ exports[`snapshotAllPages Text 13`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 14`] = `
+exports[`snapshotAllPages Text 16`] = `
 <View
   testID="text-font-style"
 >
@@ -74159,7 +75403,7 @@ exports[`snapshotAllPages Text 14`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 15`] = `
+exports[`snapshotAllPages Text 17`] = `
 <Text
   style={
     [
@@ -74177,7 +75421,7 @@ exports[`snapshotAllPages Text 15`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 16`] = `
+exports[`snapshotAllPages Text 18`] = `
 <View
   testID="text-text-decoration"
 >
@@ -74450,7 +75694,7 @@ exports[`snapshotAllPages Text 16`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 17`] = `
+exports[`snapshotAllPages Text 19`] = `
 <View
   testID="text-test-nested"
 >
@@ -74791,7 +76035,7 @@ exports[`snapshotAllPages Text 17`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 18`] = `
+exports[`snapshotAllPages Text 20`] = `
 <View
   testID="text-align"
 >
@@ -74880,7 +76124,7 @@ exports[`snapshotAllPages Text 18`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 19`] = `
+exports[`snapshotAllPages Text 21`] = `
 <View
   testID="text-unicode"
 >
@@ -74963,7 +76207,7 @@ exports[`snapshotAllPages Text 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 20`] = `
+exports[`snapshotAllPages Text 22`] = `
 <Text
   style={
     [
@@ -74983,7 +76227,7 @@ exports[`snapshotAllPages Text 20`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 21`] = `
+exports[`snapshotAllPages Text 23`] = `
 [
   <Text
     style={
@@ -75137,7 +76381,7 @@ exports[`snapshotAllPages Text 21`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 22`] = `
+exports[`snapshotAllPages Text 24`] = `
 <View
   testID="text-letter-spacing"
 >
@@ -75274,7 +76518,7 @@ exports[`snapshotAllPages Text 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 23`] = `
+exports[`snapshotAllPages Text 25`] = `
 <View
   testID="text-with-toggle-attributes"
 >
@@ -75374,7 +76618,7 @@ exports[`snapshotAllPages Text 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 24`] = `
+exports[`snapshotAllPages Text 26`] = `
 <View
   testID="text-bg-color-attr"
 >
@@ -75478,7 +76722,7 @@ exports[`snapshotAllPages Text 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 25`] = `
+exports[`snapshotAllPages Text 27`] = `
 [
   <View
     style={
@@ -75549,7 +76793,7 @@ exports[`snapshotAllPages Text 25`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 26`] = `
+exports[`snapshotAllPages Text 28`] = `
 <View
   testID="number-of-lines"
 >
@@ -75654,7 +76898,7 @@ exports[`snapshotAllPages Text 26`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 27`] = `
+exports[`snapshotAllPages Text 29`] = `
 [
   <Text
     style={
@@ -75722,7 +76966,7 @@ exports[`snapshotAllPages Text 27`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 28`] = `
+exports[`snapshotAllPages Text 30`] = `
 <View
   testID="max-font-size-multiplier"
 >
@@ -75777,7 +77021,7 @@ exports[`snapshotAllPages Text 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 29`] = `
+exports[`snapshotAllPages Text 31`] = `
 <Text
   selectable={true}
   style={
@@ -75794,7 +77038,7 @@ exports[`snapshotAllPages Text 29`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 30`] = `
+exports[`snapshotAllPages Text 32`] = `
 <Text
   selectable={true}
   selectionColor="orange"
@@ -75812,7 +77056,7 @@ exports[`snapshotAllPages Text 30`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 31`] = `
+exports[`snapshotAllPages Text 33`] = `
 <View
   testID="text-text-shadow"
 >
@@ -75840,7 +77084,7 @@ exports[`snapshotAllPages Text 31`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 32`] = `
+exports[`snapshotAllPages Text 34`] = `
 <View
   testID="text-ellipsize-mode"
 >
@@ -75910,7 +77154,7 @@ exports[`snapshotAllPages Text 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 33`] = `
+exports[`snapshotAllPages Text 35`] = `
 <View
   testID="text-font-variants"
 >
@@ -76053,7 +77297,7 @@ exports[`snapshotAllPages Text 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 34`] = `
+exports[`snapshotAllPages Text 36`] = `
 [
   <View
     style={
@@ -76165,7 +77409,7 @@ exports[`snapshotAllPages Text 34`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 35`] = `
+exports[`snapshotAllPages Text 37`] = `
 <View
   testID="text-transform"
 >
@@ -76425,7 +77669,7 @@ exports[`snapshotAllPages Text 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 36`] = `
+exports[`snapshotAllPages Text 38`] = `
 [
   <Text
     dataDetectorType="phoneNumber"
@@ -76495,7 +77739,7 @@ exports[`snapshotAllPages Text 36`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 37`] = `
+exports[`snapshotAllPages Text 39`] = `
 <View>
   <Text
     style={
@@ -76917,7 +78161,7 @@ exports[`snapshotAllPages Text 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 38`] = `
+exports[`snapshotAllPages Text 40`] = `
 <View>
   <Text
     style={
@@ -76936,7 +78180,7 @@ exports[`snapshotAllPages Text 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 39`] = `
+exports[`snapshotAllPages Text 41`] = `
 <View>
   <Text
     style={
@@ -77005,7 +78249,7 @@ exports[`snapshotAllPages Text 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 40`] = `
+exports[`snapshotAllPages Text 42`] = `
 <View>
   <Text
     style={
@@ -77030,7 +78274,7 @@ exports[`snapshotAllPages Text 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 41`] = `
+exports[`snapshotAllPages Text 43`] = `
 <View>
   <Text
     style={
@@ -77051,7 +78295,7 @@ exports[`snapshotAllPages Text 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 42`] = `
+exports[`snapshotAllPages Text 44`] = `
 <View>
   <Text
     disabled={true}
@@ -77070,7 +78314,7 @@ exports[`snapshotAllPages Text 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 43`] = `
+exports[`snapshotAllPages Text 45`] = `
 <Text
   style={
     [
@@ -77087,7 +78331,7 @@ exports[`snapshotAllPages Text 43`] = `
 />
 `;
 
-exports[`snapshotAllPages Text 44`] = `
+exports[`snapshotAllPages Text 46`] = `
 <View
   style={
     {
@@ -77665,7 +78909,7 @@ exports[`snapshotAllPages Text 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 45`] = `
+exports[`snapshotAllPages Text 47`] = `
 <View
   style={
     {
@@ -78040,7 +79284,7 @@ exports[`snapshotAllPages Text 45`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 46`] = `
+exports[`snapshotAllPages Text 48`] = `
 <View
   style={
     {
@@ -78227,7 +79471,7 @@ exports[`snapshotAllPages Text 46`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 47`] = `
+exports[`snapshotAllPages Text 49`] = `
 <View
   testID="text-with-link-role"
 >
@@ -78310,7 +79554,7 @@ exports[`snapshotAllPages Text 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 48`] = `
+exports[`snapshotAllPages Text 50`] = `
 <View>
   <View
     style={
@@ -78448,7 +79692,7 @@ exports[`snapshotAllPages Text 48`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 49`] = `
+exports[`snapshotAllPages Text 51`] = `
 <View
   accessible={true}
   testID="text-accessibility"
@@ -78466,7 +79710,7 @@ exports[`snapshotAllPages Text 49`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 50`] = `
+exports[`snapshotAllPages Text 52`] = `
 <View
   accessibilityLabel="Border Example"
   accessible={true}
@@ -78543,7 +79787,7 @@ exports[`snapshotAllPages Text 50`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 51`] = `
+exports[`snapshotAllPages Text 53`] = `
 <View
   accessibilityLabel="Advanced Border Example"
   accessible={true}
@@ -78599,7 +79843,7 @@ exports[`snapshotAllPages Text 51`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 52`] = `
+exports[`snapshotAllPages Text 54`] = `
 <View
   testID="text-opacity"
 >
@@ -78706,7 +79950,7 @@ exports[`snapshotAllPages Text 52`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 53`] = `
+exports[`snapshotAllPages Text 55`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -78724,7 +79968,7 @@ exports[`snapshotAllPages Text 53`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 54`] = `
+exports[`snapshotAllPages Text 56`] = `
 <View>
   <Text
     style={
@@ -80673,137 +81917,6 @@ exports[`snapshotAllPages TextInput 8`] = `
 
 exports[`snapshotAllPages TextInput 9`] = `
 <View>
-  <TextInput
-    blurOnSubmit={false}
-    onSubmitEditing={[Function]}
-    placeholder="blurOnSubmit = false"
-    returnKeyType="next"
-    style={
-      [
-        {
-          "backgroundColor": "#ffffffff",
-          "borderColor": "#3c3c432d",
-          "color": "#000000ff",
-        },
-        {
-          "borderWidth": 1,
-          "flexGrow": 1,
-          "flexShrink": 1,
-          "fontSize": 13,
-          "padding": 4,
-        },
-        {
-          "fontSize": 16,
-        },
-      ]
-    }
-  />
-  <TextInput
-    blurOnSubmit={false}
-    keyboardType="email-address"
-    onSubmitEditing={[Function]}
-    placeholder="blurOnSubmit = false"
-    returnKeyType="next"
-    style={
-      [
-        {
-          "backgroundColor": "#ffffffff",
-          "borderColor": "#3c3c432d",
-          "color": "#000000ff",
-        },
-        {
-          "borderWidth": 1,
-          "flexGrow": 1,
-          "flexShrink": 1,
-          "fontSize": 13,
-          "padding": 4,
-        },
-        {
-          "fontSize": 16,
-        },
-      ]
-    }
-  />
-  <TextInput
-    blurOnSubmit={false}
-    keyboardType="url"
-    onSubmitEditing={[Function]}
-    placeholder="blurOnSubmit = false"
-    returnKeyType="next"
-    style={
-      [
-        {
-          "backgroundColor": "#ffffffff",
-          "borderColor": "#3c3c432d",
-          "color": "#000000ff",
-        },
-        {
-          "borderWidth": 1,
-          "flexGrow": 1,
-          "flexShrink": 1,
-          "fontSize": 13,
-          "padding": 4,
-        },
-        {
-          "fontSize": 16,
-        },
-      ]
-    }
-  />
-  <TextInput
-    blurOnSubmit={false}
-    keyboardType="numeric"
-    onSubmitEditing={[Function]}
-    placeholder="blurOnSubmit = false"
-    style={
-      [
-        {
-          "backgroundColor": "#ffffffff",
-          "borderColor": "#3c3c432d",
-          "color": "#000000ff",
-        },
-        {
-          "borderWidth": 1,
-          "flexGrow": 1,
-          "flexShrink": 1,
-          "fontSize": 13,
-          "padding": 4,
-        },
-        {
-          "fontSize": 16,
-        },
-      ]
-    }
-  />
-  <TextInput
-    keyboardType="numbers-and-punctuation"
-    placeholder="blurOnSubmit = true"
-    returnKeyType="done"
-    style={
-      [
-        {
-          "backgroundColor": "#ffffffff",
-          "borderColor": "#3c3c432d",
-          "color": "#000000ff",
-        },
-        {
-          "borderWidth": 1,
-          "flexGrow": 1,
-          "flexShrink": 1,
-          "fontSize": 13,
-          "padding": 4,
-        },
-        {
-          "fontSize": 16,
-        },
-      ]
-    }
-  />
-</View>
-`;
-
-exports[`snapshotAllPages TextInput 10`] = `
-<View>
   <View
     style={
       {
@@ -81192,7 +82305,7 @@ exports[`snapshotAllPages TextInput 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 11`] = `
+exports[`snapshotAllPages TextInput 10`] = `
 <View>
   <TextInput
     onSubmitEditing={[Function]}
@@ -81260,50 +82373,6 @@ exports[`snapshotAllPages TextInput 11`] = `
     }
   />
   <TextInput
-    blurOnSubmit={true}
-    onSubmitEditing={[Function]}
-    placeholder="single line blurOnSubmit true"
-    style={
-      [
-        {
-          "backgroundColor": "#ffffffff",
-          "borderColor": "#3c3c432d",
-          "color": "#000000ff",
-        },
-        {
-          "borderWidth": 1,
-          "flexGrow": 1,
-          "flexShrink": 1,
-          "fontSize": 13,
-          "padding": 4,
-        },
-        undefined,
-      ]
-    }
-  />
-  <TextInput
-    blurOnSubmit={false}
-    onSubmitEditing={[Function]}
-    placeholder="single line blurOnSubmit false"
-    style={
-      [
-        {
-          "backgroundColor": "#ffffffff",
-          "borderColor": "#3c3c432d",
-          "color": "#000000ff",
-        },
-        {
-          "borderWidth": 1,
-          "flexGrow": 1,
-          "flexShrink": 1,
-          "fontSize": 13,
-          "padding": 4,
-        },
-        undefined,
-      ]
-    }
-  />
-  <TextInput
     multiline={true}
     onSubmitEditing={[Function]}
     placeholder="multiline submit"
@@ -81348,51 +82417,6 @@ exports[`snapshotAllPages TextInput 11`] = `
       ]
     }
     submitBehavior="blurAndSubmit"
-  />
-  <TextInput
-    blurOnSubmit={true}
-    multiline={true}
-    onSubmitEditing={[Function]}
-    placeholder="multiline blurOnSubmit true"
-    style={
-      [
-        {
-          "backgroundColor": "#ffffffff",
-          "borderColor": "#3c3c432d",
-          "color": "#000000ff",
-        },
-        {
-          "borderWidth": 1,
-          "flexGrow": 1,
-          "flexShrink": 1,
-          "fontSize": 13,
-          "padding": 4,
-        },
-        undefined,
-      ]
-    }
-  />
-  <TextInput
-    blurOnSubmit={false}
-    multiline={true}
-    placeholder="multiline blurOnSubmit false"
-    style={
-      [
-        {
-          "backgroundColor": "#ffffffff",
-          "borderColor": "#3c3c432d",
-          "color": "#000000ff",
-        },
-        {
-          "borderWidth": 1,
-          "flexGrow": 1,
-          "flexShrink": 1,
-          "fontSize": 13,
-          "padding": 4,
-        },
-        undefined,
-      ]
-    }
   />
   <TextInput
     multiline={true}
@@ -81531,7 +82555,7 @@ exports[`snapshotAllPages TextInput 11`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 12`] = `
+exports[`snapshotAllPages TextInput 11`] = `
 <View>
   <TextInput
     autoCapitalize="none"
@@ -81598,7 +82622,7 @@ exports[`snapshotAllPages TextInput 12`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 13`] = `
+exports[`snapshotAllPages TextInput 12`] = `
 <View>
   <TextInput
     placeholder="Custom fonts like sans-serif are supported"
@@ -81741,7 +82765,7 @@ exports[`snapshotAllPages TextInput 13`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 14`] = `
+exports[`snapshotAllPages TextInput 13`] = `
 <View
   style={
     {
@@ -81793,7 +82817,7 @@ exports[`snapshotAllPages TextInput 14`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 15`] = `
+exports[`snapshotAllPages TextInput 14`] = `
 <View>
   <View>
     <View
@@ -82059,7 +83083,7 @@ can also be changed"
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 16`] = `
+exports[`snapshotAllPages TextInput 15`] = `
 <View>
   <View>
     <View
@@ -82313,7 +83337,7 @@ can also be changed imperatively"
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 17`] = `
+exports[`snapshotAllPages TextInput 16`] = `
 <TextInput
   defaultValue="Hello World!"
   onBlur={[Function]}
@@ -82339,7 +83363,7 @@ exports[`snapshotAllPages TextInput 17`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 18`] = `
+exports[`snapshotAllPages TextInput 17`] = `
 <View>
   <View
     accessibilityState={
@@ -83576,7 +84600,7 @@ exports[`snapshotAllPages TextInput 18`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 19`] = `
+exports[`snapshotAllPages TextInput 18`] = `
 <View>
   <View
     style={
@@ -83633,6 +84657,61 @@ exports[`snapshotAllPages TextInput 19`] = `
       />
     </View>
   </View>
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 19`] = `
+<View>
+  <TextInput
+    multiline={false}
+    placeholder="This placeholder is too long to fit on a single line"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "height": 40,
+          "width": 200,
+        },
+      ]
+    }
+    testID="textinput-placeholder-singleline"
+  />
+  <TextInput
+    multiline={true}
+    placeholder="This placeholder is too long to fit on a single line"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "height": 60,
+          "width": 200,
+        },
+      ]
+    }
+    testID="textinput-placeholder-multiline"
+  />
 </View>
 `;
 
@@ -93875,6 +94954,222 @@ exports[`snapshotAllPages View 20`] = `
       ]
     }
   />
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "lightgray",
+          "borderRadius": 0,
+          "height": 50,
+          "outlineColor": "purple",
+          "outlineStyle": "solid",
+          "outlineWidth": 3,
+          "width": 50,
+        }
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
+      }
+    >
+      square solid
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "lightgray",
+          "borderRadius": 0,
+          "height": 50,
+          "outlineColor": "purple",
+          "outlineStyle": "dashed",
+          "outlineWidth": 3,
+          "width": 50,
+        }
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
+      }
+    >
+      square dashed
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "lightgray",
+          "borderRadius": 0,
+          "height": 50,
+          "outlineColor": "purple",
+          "outlineStyle": "dotted",
+          "outlineWidth": 3,
+          "width": 50,
+        }
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
+      }
+    >
+      square dotted
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "lightgray",
+          "borderRadius": 12,
+          "height": 50,
+          "outlineColor": "purple",
+          "outlineStyle": "solid",
+          "outlineWidth": 3,
+          "width": 50,
+        }
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
+      }
+    >
+      rounded solid
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "lightgray",
+          "borderRadius": 12,
+          "height": 50,
+          "outlineColor": "purple",
+          "outlineStyle": "dashed",
+          "outlineWidth": 3,
+          "width": 50,
+        }
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
+      }
+    >
+      rounded dashed
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "gap": 8,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "lightgray",
+          "borderRadius": 12,
+          "height": 50,
+          "outlineColor": "purple",
+          "outlineStyle": "dotted",
+          "outlineWidth": 3,
+          "width": 50,
+        }
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
+      }
+    >
+      rounded dotted
+    </Text>
+  </View>
 </View>
 `;
 
