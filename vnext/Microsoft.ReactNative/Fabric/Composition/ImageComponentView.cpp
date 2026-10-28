@@ -164,6 +164,17 @@ void ImageComponentView::updateProps(
   Super::updateProps(props, oldProps);
 }
 
+void ImageComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
+  Super::FinalizeUpdates(updateMask);
+
+  // Recreate invalidated surfaces after both props and layout metrics are current.
+  if ((updateMask & winrt::Microsoft::ReactNative::ComponentViewUpdateMask::Props) !=
+          winrt::Microsoft::ReactNative::ComponentViewUpdateMask::None &&
+      !m_drawingSurface) {
+    ensureDrawingSurface();
+  }
+}
+
 void ImageComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {

@@ -30,6 +30,7 @@ import {
 } from 'react-native';
 
 const ALPHA_PNG_ASSET = require('../../assets/alpha-hotdog.png');
+const TINT_UPDATE_ASSET = require('../../assets/uie_thumb_normal.png');
 
 // Base URL the remote Image examples load their assets from. The Windows E2E
 // test app overrides it (see packages/e2e-test-app-fabric/imageFixtureConfig.js)
@@ -1164,6 +1165,72 @@ function BlurRadiusPrefetchExample(): React.Node {
   );
 }
 
+function TintColorUpdateExample(): React.Node {
+  const [step, setStep] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(false);
+  const tintColor = [undefined, '#ff0000', '#0000ff'][step];
+  const tintLabel = ['none (original colors)', 'red', 'blue'][step];
+
+  return (
+    <View testID="image-tint-color-update">
+      <RNTesterText style={styles.sectionText}>
+        Cycle the tint after loading. The mounted image should always match the
+        newly mounted reference, including when the tint is removed.
+      </RNTesterText>
+      <View style={styles.horizontal}>
+        <View>
+          <RNTesterText>Mounted image</RNTesterText>
+          <View style={styles.tintUpdateBackground}>
+            <Image
+              testID="image-tint-color-update-mounted"
+              source={TINT_UPDATE_ASSET}
+              style={styles.base}
+              tintColor={tintColor}
+              onLoad={() => setLoaded(true)}
+              onError={() => setError(true)}
+            />
+          </View>
+        </View>
+        <View style={styles.leftMargin}>
+          <RNTesterText>New reference</RNTesterText>
+          <View style={styles.tintUpdateBackground}>
+            {/* Only the reference remounts; the image under test stays mounted. */}
+            <Image
+              key={step}
+              testID="image-tint-color-update-reference"
+              source={TINT_UPDATE_ASSET}
+              style={styles.base}
+              tintColor={tintColor}
+              onError={() => setError(true)}
+            />
+          </View>
+        </View>
+      </View>
+      <View style={styles.horizontal}>
+        <View
+          style={[
+            styles.tintUpdateSwatch,
+            {backgroundColor: tintColor ?? 'transparent'},
+          ]}
+        />
+        <RNTesterText testID="image-tint-color-update-state">
+          Expected tint: {tintLabel}
+        </RNTesterText>
+      </View>
+      {error ? (
+        <RNTesterText>Unable to load the tint test image.</RNTesterText>
+      ) : loaded ? (
+        <RNTesterButton onPress={() => setStep(current => (current + 1) % 3)}>
+          Cycle tint: none → red → blue → none
+        </RNTesterButton>
+      ) : (
+        <RNTesterText>Loading images…</RNTesterText>
+      )}
+    </View>
+  );
+}
+
 function WideGamutTransparencyExample(): React.Node {
   const [alphaStatus, setAlphaStatus] = useState('loading');
   const [srgbStatus, setSrgbStatus] = useState('loading');
@@ -1227,6 +1294,17 @@ const styles = StyleSheet.create({
   },
   leftMargin: {
     marginLeft: 10,
+  },
+  tintUpdateBackground: {
+    alignSelf: 'flex-start',
+    backgroundColor: 'white',
+  },
+  tintUpdateSwatch: {
+    width: 20,
+    height: 20,
+    marginRight: 8,
+    borderWidth: 1,
+    borderColor: '#888888',
   },
   background: {
     backgroundColor: '#222222',
@@ -1965,10 +2043,7 @@ exports.examples = [
     name: 'nesting-content',
     render: function (): React.Node {
       return (
-        <View
-          style={styles.base}
-          testID="image-nesting-content"
-          accessible>
+        <View style={styles.base} testID="image-nesting-content" accessible>
           <Image style={{...StyleSheet.absoluteFill}} source={fullImage} />
           <Text style={styles.nestedText}>React</Text>
         </View>
@@ -2141,6 +2216,13 @@ exports.examples = [
         </View>
       );
     },
+  },
+  {
+    title: 'Updating Tint Color',
+    name: 'tint-color-update',
+    description:
+      'Change and remove tintColor without changing the source or remounting the image.',
+    render: (): React.Node => <TintColorUpdateExample />,
   },
   {
     title: 'Object Fit',

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Redraw Fabric images after tint and other drawing properties change.",
+  "packageName": "react-native-windows",
+  "email": "rileyksay@gmail.com",
+  "dependentChangeType": "patch"
+}
