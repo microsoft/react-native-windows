@@ -59,6 +59,9 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
 });
 
 export default codegenNativeComponent<SwitchNativeProps>('Switch', {
+  // @testing-library/react-native (as of 13.3.3) only recognizes a host
+  // component named `RCTSwitch` as a switch, so renaming this breaks every
+  // `*ByRole('switch')` query and `toBeChecked()` assertion in Jest.
   paperComponentName: 'RCTSwitch',
   excludedPlatforms: ['android'],
   //#Windows->15582   interfaceOnly: true,

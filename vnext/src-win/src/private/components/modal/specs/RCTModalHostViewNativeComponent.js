@@ -158,6 +158,5 @@ export default codegenNativeComponent<RCTModalHostViewNativeProps>(
   'ModalHostView',
   {
     interfaceOnly: true,
-    paperComponentName: 'RCTModalHostView',
   },
 ) as HostComponent<RCTModalHostViewNativeProps>;

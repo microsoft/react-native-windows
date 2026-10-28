@@ -16,13 +16,17 @@
 #include <cxxreact/TraceSection.h>
 #include <react/debug/react_native_assert.h>
 #include <react/featureflags/ReactNativeFeatureFlags.h>
+#include <react/renderer/consistency/ShadowTreeRevisionConsistencyManager.h>
 #include <react/renderer/core/DynamicPropsUtilities.h>
 #include <react/renderer/core/PropsParserContext.h>
 #include <react/renderer/core/ShadowNodeFragment.h>
+#include <react/renderer/leakchecker/LeakChecker.h>
 #include <react/renderer/uimanager/AppRegistryBinding.h>
 #include <react/renderer/uimanager/UIManagerBinding.h>
 #include <react/renderer/uimanager/UIManagerCommitHook.h>
 #include <react/renderer/uimanager/UIManagerMountHook.h>
+#include <react/renderer/uimanager/consistency/LazyShadowTreeRevisionConsistencyManager.h>
+#include <react/renderer/uimanager/consistency/ShadowTreeRevisionProvider.h>
 
 #include <glog/logging.h>
 
@@ -239,8 +243,8 @@ void UIManager::setIsJSResponder(
 
 void UIManager::startSurface(
     ShadowTree::Unique&& shadowTree,
-    const std::string& moduleName,
-    const folly::dynamic& props,
+    std::string moduleName,
+    folly::dynamic props,
     DisplayMode displayMode) const noexcept {
   TraceSection s("UIManager::startSurface");
 
@@ -254,7 +258,10 @@ void UIManager::startSurface(
         }
       });
 
-  runtimeExecutor_([=](jsi::Runtime& runtime) {
+  runtimeExecutor_([surfaceId,
+                    moduleName = std::move(moduleName),
+                    props = std::move(props),
+                    displayMode](jsi::Runtime& runtime) {
     TraceSection s("UIManager::startSurface::onRuntime");
     AppRegistryBinding::startSurface(
         runtime, surfaceId, moduleName, props, displayMode);
@@ -269,12 +276,15 @@ void UIManager::startEmptySurface(
 
 void UIManager::setSurfaceProps(
     SurfaceId surfaceId,
-    const std::string& moduleName,
-    const folly::dynamic& props,
+    std::string moduleName,
+    folly::dynamic props,
     DisplayMode displayMode) const noexcept {
   TraceSection s("UIManager::setSurfaceProps");
 
-  runtimeExecutor_([=](jsi::Runtime& runtime) {
+  runtimeExecutor_([surfaceId,
+                    moduleName = std::move(moduleName),
+                    props = std::move(props),
+                    displayMode](jsi::Runtime& runtime) {
     AppRegistryBinding::setSurfaceProps(
         runtime, surfaceId, moduleName, props, displayMode);
   });
@@ -665,13 +675,6 @@ void UIManager::shadowTreeDidFinishReactCommit(
     const ShadowTree& shadowTree) const {
   if (delegate_ != nullptr) {
     delegate_->uiManagerDidFinishReactCommit(shadowTree);
-  }
-}
-
-void UIManager::shadowTreeDidPromoteReactRevision(
-    const ShadowTree& shadowTree) const {
-  if (delegate_ != nullptr) {
-    delegate_->uiManagerDidPromoteReactRevision(shadowTree);
   }
 }
 

@@ -267,6 +267,15 @@ class ContainerBackgroundColorStyleExample extends React.Component<
   }
 }
 
+function TransparentExample() {
+  return (
+    <View>
+      <Switch value thumbColor="transparent" />
+      <Switch value thumbColor="#FF000000" />
+    </View>
+  );
+}
+
 type AccessibilitySwitchExampleState = $ReadOnly<{|
   switchValue: boolean,
   noFocusableValue: boolean,
@@ -388,6 +397,13 @@ exports.examples = [
     title: "The container's background color can be set",
     render(): React.MixedElement {
       return <ContainerBackgroundColorStyleExample />;
+    },
+  },
+  {
+    title: 'The switch thumb renders transparent',
+    name: 'transparent-thumb-color',
+    render(): React.MixedElement {
+      return <TransparentExample />;
     },
   },
   {

@@ -7,6 +7,8 @@
 
 #pragma once
 
+#include <react/cxxstableapi/UmbrellaGuard.h>
+
 #include <optional>
 
 #include <react/renderer/core/PropsParserContext.h>
@@ -16,6 +18,11 @@
 namespace facebook::react {
 
 #ifdef RN_SERIALIZABLE_STATE
+
+inline folly::dynamic toDynamic(uint32_t value)
+{
+  return value;
+}
 
 inline folly::dynamic toDynamic(const std::vector<bool> &arrayValue)
 {

@@ -624,7 +624,7 @@ facebook::react::ParagraphAttributes CreateLoadingParagraphAttributes() noexcept
   facebook::react::ParagraphAttributes pa;
   pa.adjustsFontSizeToFit = true;
   pa.minimumFontSize = loadingBarMinFontSize;
-  pa.maximumFontSize = loadingBarFontSize;
+  pa.minimumFontScale = loadingBarMinFontSize / loadingBarFontSize;
   return pa;
 }
 

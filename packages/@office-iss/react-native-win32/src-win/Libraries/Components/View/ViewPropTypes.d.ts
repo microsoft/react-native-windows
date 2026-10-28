@@ -19,6 +19,7 @@ import {
   PointerEvents,
   MouseEvent, // Win32
   NativeSyntheticEvent, // Win32
+  GestureResponderEvent, // Win32
 } from '../../Types/CoreEventTypes';
 import {Touchable} from 'react-native/Libraries/Components/Touchable/Touchable';
 import {AccessibilityProps} from './ViewAccessibility';
@@ -34,14 +35,6 @@ export interface TVViewPropsIOS {
    * @platform ios
    */
   isTVSelectable?: boolean | undefined;
-
-  /**
-   * *(Apple TV only)* May be set to true to force the Apple TV focus engine to move focus to this view.
-   *
-   * @platform ios
-   * @deprecated Use `focusable` instead
-   */
-  hasTVPreferredFocus?: boolean | undefined;
 
   /**
    * *(Apple TV only)* May be used to change the appearance of the Apple TV parallax effect when this view goes in or out of focus.  Defaults to 2.0.
@@ -189,6 +182,17 @@ export interface ViewPropsWin32 {
 
   onMouseLeave?: ?((event: MouseEvent) => void);
   onMouseEnter?: ?((event: MouseEvent) => void);
+
+  // The deprecated RN declarations dropped these from GestureResponderHandlers.
+  // Win32 views still emit them; keep them aligned with ViewPropTypes.win32.js.
+  onTouchCancel?: ((event: GestureResponderEvent) => void) | undefined;
+  onTouchCancelCapture?: ((event: GestureResponderEvent) => void) | undefined;
+  onTouchEnd?: ((event: GestureResponderEvent) => void) | undefined;
+  onTouchEndCapture?: ((event: GestureResponderEvent) => void) | undefined;
+  onTouchMove?: ((event: GestureResponderEvent) => void) | undefined;
+  onTouchMoveCapture?: ((event: GestureResponderEvent) => void) | undefined;
+  onTouchStart?: ((event: GestureResponderEvent) => void) | undefined;
+  onTouchStartCapture?: ((event: GestureResponderEvent) => void) | undefined;
 
   /**
    * Specifies the Tooltip for the view

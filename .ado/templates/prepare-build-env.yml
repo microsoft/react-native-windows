@@ -44,11 +44,37 @@ steps:
       Get-Process -Name BackgroundDownload -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
     displayName: Disable VS Installer background download
 
-  # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
+  # NuGet 6.0 or later is required to enforce package source mappings.
   - task: NuGetToolInstaller@1
     displayName: Set NuGet version
     inputs:
-      versionSpec: ">=5.8.0"
+      versionSpec: ">=6.0.0"
+
+  # Third-party configs must retain the repository's sources and mappings under network isolation.
+  - pwsh: |
+      [xml] $repoConfig = Get-Content -LiteralPath '$(Build.SourcesDirectory)\NuGet.Config'
+      $root = Join-Path '$(Build.SourcesDirectory)' 'node_modules'
+      $globs = @((Join-Path $root '*\windows\NuGet.Config'), (Join-Path $root '@*\*\windows\NuGet.Config'))
+      $configs = Get-ChildItem -Path $globs -File -ErrorAction SilentlyContinue |
+        Where-Object { Select-String -Path $_.FullName -Pattern 'api\.nuget\.org' -Quiet -ErrorAction SilentlyContinue }
+      if (-not $configs) {
+        Write-Host 'No non-compliant node_modules NuGet.Config files found.'
+        return
+      }
+      foreach ($file in $configs) {
+        [xml] $config = Get-Content -LiteralPath $file.FullName
+        if (-not $config.configuration.packageSources) { continue }
+        foreach ($name in @('packageSources', 'packageSourceMapping')) {
+          $existing = $config.configuration.SelectSingleNode($name)
+          if ($existing) {
+            [void] $config.configuration.RemoveChild($existing)
+          }
+          [void] $config.configuration.AppendChild($config.ImportNode($repoConfig.configuration.SelectSingleNode($name), $true))
+        }
+        $config.Save($file.FullName)
+        Write-Host "Rewrote $($file.FullName) to use the approved NuGet source mappings."
+      }
+    displayName: Enforce compliant NuGet feed in node_modules
 
   - template: set-appx-platforms.yml
     parameters:
