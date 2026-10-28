@@ -10852,7 +10852,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"extract-zip@npm:^2.0.0":
+"extract-zip@npm:2.0.1":
   version: 2.0.1
   resolution: "extract-zip@npm:2.0.1"
   dependencies:
@@ -10866,6 +10866,23 @@ __metadata:
   bin:
     extract-zip: cli.js
   checksum: 10c0/9afbd46854aa15a857ae0341a63a92743a7b89c8779102c3b4ffc207516b2019337353962309f85c66ee3d9092202a83cdc26dbf449a11981272038443974aee
+  languageName: node
+  linkType: hard
+
+"extract-zip@patch:extract-zip@npm%3A2.0.1#~/.yarn/patches/extract-zip-npm-2.0.1-92a28e392b.patch":
+  version: 2.0.1
+  resolution: "extract-zip@patch:extract-zip@npm%3A2.0.1#~/.yarn/patches/extract-zip-npm-2.0.1-92a28e392b.patch::version=2.0.1&hash=36f090"
+  dependencies:
+    "@types/yauzl": "npm:^2.9.1"
+    debug: "npm:^4.1.1"
+    get-stream: "npm:^5.1.0"
+    yauzl: "npm:^2.10.0"
+  dependenciesMeta:
+    "@types/yauzl":
+      optional: true
+  bin:
+    extract-zip: cli.js
+  checksum: 10c0/d72c96d673e23217db91411fad2b2e341fd7d5d45e117739465001d29358bf0efec1bd37365fa4757fc8f41d63b219cb7e804ba4afed0bbb3cf4fe0f90469988
   languageName: node
   linkType: hard
 

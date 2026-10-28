@@ -124,13 +124,34 @@ for its remaining consumers. Publishing and authenticated feed maintenance keep
 their existing endpoints; NuGet defaults shipped in generated apps/libraries
 are unchanged.
 
+## Temporary extract-zip mitigation
+
+The root Yarn resolutions apply `.yarn/patches/extract-zip-npm-2.0.1-92a28e392b.patch`
+to the repository's `extract-zip` consumers for
+[CVE-2026-19693](https://github.com/advisories/GHSA-7pqw-9j4j-h8q3).
+It rejects a regular archive entry whose destination is already a symbolic link,
+including dangling links, before opening the write stream. Ordinary file overwrites
+and legitimate symbolic-link archive entries are preserved; writes through even
+an in-directory symbolic-link leaf are intentionally rejected.
+
+`yarn test` runs `.ado/tests/extract-zip.test.cjs` before the package suites.
+Real symlink tests require Windows Developer Mode or symlink privileges; the
+mocked leaf/error checks run regardless. macOS can run the real symlink cases
+without that Windows requirement.
+
+There is no patched upstream release as of October 28, 2026. This is a
+repository-local mitigation, not a version upgrade or an alert suppression.
+It does not propagate to consumers installing published RNW packages through npm.
+CG may continue reporting version 2.0.1; track scanner disposition separately.
+Replace the patch with an upstream release once available and validated.
+
 ## SDL and Component Governance
 
 The Office template runs SDL (CredScan, BinSkim, CodeQL, Component Governance,
 ESLint). PREfast, SpotBugs, and Bandit are disabled (no actionable findings for
-this repo). `guardian/sdl/.gdnsuppress` is an **empty** suppression set: all
-Component Governance alerts are fixed at the source (dependency `resolutions` in the
-root `package.json`), so nothing is suppressed.
+this repo). `guardian/sdl/.gdnsuppress` is an **empty** suppression set.
+Dependency remediations, including root `package.json` resolutions, do not by
+themselves establish scanner clearance; track the corresponding CG alerts separately.
 
 ## Release publishing targets
 
