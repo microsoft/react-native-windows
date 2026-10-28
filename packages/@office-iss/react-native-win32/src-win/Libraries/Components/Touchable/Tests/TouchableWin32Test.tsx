@@ -1,7 +1,7 @@
 'use strict';
 
 import React from 'react'
-import {NativeSyntheticEvent, StyleSheet, Text, ViewStyle } from 'react-native';
+import {NativeSyntheticEvent, StyleSheet, Text, TextWin32, ViewStyle } from 'react-native';
 import {Insets} from 'react-native/types/public/Insets';
 import { ViewWin32 } from '../../View/ViewWin32';
 import { IViewWin32Props, IKeyboardEvent } from '../../View/ViewPropTypes';
@@ -383,9 +383,9 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
             <TouchableWin32Highlight style={styles.innerTouch} onPress={this._onPress} children={this._getChildrenOfInnerTouchable} />
           </ViewWin32>
         </TouchableWin32Highlight>
-        <Text style={{ color: 'red' }} textStyle="None">
+        <TextWin32 style={{ color: 'red' }} textStyle="None">
           {'Number of Recognized Presses: ' + this.state.numberOfPresses}
-        </Text>
+        </TextWin32>
       </ViewWin32>
     );
   }
@@ -404,7 +404,7 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
           width: 70,
         }}
       >
-        <Text
+        <TextWin32
           style={{
             color: this._pickColor(state.isHovered, state.isPressed),
             fontSize: state.isFocused ? 8 : 10,
@@ -412,7 +412,7 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
           textStyle="None"
         >
           Press Me!
-        </Text>
+        </TextWin32>
       </ViewWin32>
     );
   };

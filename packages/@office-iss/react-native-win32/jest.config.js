@@ -41,6 +41,8 @@ config.moduleNameMapper = {
   '^react-native/react-private-interface$':
     '<rootDir>/src/react-private-interface.js',
   '^react-native/setup-env$': '<rootDir>/src/setup-env.js',
+  '^react-native/unstable-internals-do-not-use$':
+    '<rootDir>/src/unstable-internals-do-not-use.js',
   ...config.moduleNameMapper,
 };
 

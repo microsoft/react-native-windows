@@ -8,7 +8,10 @@
     // Not clean
     "strict": false,
     "paths": {
-      "react-native": ["."] // this mapping is relative to "baseUrl"
+      "react-native": ["."], // this mapping is relative to "baseUrl"
+      "react-native/types/*": [
+        "../../../node_modules/react-native/types_DEPRECATED/*"
+      ]
     }
   },
   "include": ["src-win"],

@@ -297,6 +297,14 @@ const APIs: Array<RNTesterModuleInfo> = (
       category: 'Android',
       module: require('../examples/ContentURLAndroid/ContentURLAndroid'),
     },
+    // PhotoPickerAndroid is not published in @react-native/tester for this nightly.
+    /*
+    {
+      key: 'PhotoPickerAndroid',
+      category: 'Android',
+      module: require('../examples/PhotoPickerAndroid/PhotoPickerAndroid'),
+    },
+    */
     {
       key: 'URLExample',
       category: 'Basic',
@@ -524,6 +532,19 @@ const APIs: Array<RNTesterModuleInfo> = (
           },
         ]
       : []),
+    // ResizeObserverIndex is not published in @react-native/tester for this nightly.
+    // Keep the entry commented until the example is vendored, matching other missing examples.
+    /*
+    ...(typeof ResizeObserver === 'function'
+      ? [
+          {
+            key: 'ResizeObserver',
+            category: 'UI',
+            module: require('../examples/ResizeObserver/ResizeObserverIndex'),
+          },
+        ]
+      : []),
+    */
     // Basic check to detect the availability of the modern Performance API.
     ...(typeof performance.getEntries === 'function'
       ? [

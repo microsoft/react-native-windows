@@ -21,6 +21,10 @@
     <NodeApiJsiSrcDir Condition="'$(NodeApiJsiSrcDir)' == '' AND '$(NodeApiJsiLocal)' != 'true'">$(NodeApiJsiDir)src\</NodeApiJsiSrcDir>
     <NodeApiJsiSrcDir Condition="'$(NodeApiJsiSrcDir)' == ''">$(MSBuildThisFileDirectory)</NodeApiJsiSrcDir>
     <NodeApiDir Condition="'$(NodeApiDir)' == ''">$(NodeApiJsiDir)node-api\</NodeApiDir>
+    <!-- Vendored public headers include inert cxxstableapi guards that live in ReactCommon. -->
+    <ReactCommonIncludeDir Condition="'$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon;</ReactCommonIncludeDir>
+    <!-- Forwarders for upstream <React/*.h> umbrella headers. Module directories are not added directly because their loose headers collide. -->
+    <ReactUmbrellaIncludeDir Condition="'$(ReactNativeWindowsDir)' != ''">$(ReactNativeWindowsDir)include;</ReactUmbrellaIncludeDir>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -33,6 +37,8 @@
         $(GLog_IncludeDir);
         $(NodeApiDir);
         $(NodeApiJsiSrcDir);
+        $(ReactCommonIncludeDir)
+        $(ReactUmbrellaIncludeDir)
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
       <PreprocessorDefinitions>JSI_VERSION=21;%(PreprocessorDefinitions)</PreprocessorDefinitions>

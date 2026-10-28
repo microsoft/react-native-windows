@@ -29,12 +29,7 @@ void SampleTurboModule::voidFunc() noexcept {
   ReactNativeSpecs::SampleTurboModuleSpec_ObjectStruct obj2;
   obj2.a = 3;
   obj2.b = "four";
-  auto writer = winrt::Microsoft::ReactNative::MakeJSValueTreeWriter();
-  writer.WriteArrayBegin();
-  winrt::Microsoft::ReactNative::WriteValue(writer, obj);
-  winrt::Microsoft::ReactNative::WriteValue(writer, obj2);
-  writer.WriteArrayEnd();
-  onSubmit(winrt::Microsoft::ReactNative::TakeJSValue(writer).MoveArray());
+  onSubmit({obj, obj2});
 }
 
 bool SampleTurboModule::getBool(bool arg) noexcept {
@@ -53,8 +48,8 @@ std::string SampleTurboModule::getString(std::string arg) noexcept {
   return std::string(arg);
 }
 
-::React::JSValueArray SampleTurboModule::getArray(::React::JSValueArray &&arg) noexcept {
-  return arg.Copy();
+std::vector<::React::JSValue> SampleTurboModule::getArray(std::vector<::React::JSValue> arg) noexcept {
+  return arg;
 }
 
 ::React::JSValue SampleTurboModule::getObject(::React::JSValue &&arg) noexcept {
@@ -78,6 +73,22 @@ double SampleTurboModule::getRootTag(double arg) noexcept {
       {"y", y},
       {"z", z.Copy()},
   };
+}
+
+::React::JSValue SampleTurboModule::getArrayBuffer(::React::JSValue &&buffer) noexcept {
+  return buffer.Copy();
+}
+
+::React::JSValue SampleTurboModule::createNativeBuffer(double /*size*/) noexcept {
+  // The Win32 reader has no ArrayBuffer kind yet, so this cannot allocate a
+  // real binary buffer. Return null until that marshalling exists.
+  return nullptr;
+}
+
+void SampleTurboModule::processAsyncBuffer(
+    ::React::JSValue && /*payload*/,
+    ::React::ReactPromise<double> &&result) noexcept {
+  result.Resolve(0);
 }
 
 void SampleTurboModule::getValueWithCallback(std::function<void(std::string)> const &callback) noexcept {
@@ -121,5 +132,24 @@ void SampleTurboModule::promiseAssert(::React::ReactPromise<void> &&result) noex
 void SampleTurboModule::getImageUrl(::React::ReactPromise<void> &&result) noexcept {
   // TODO: Proper impl
 }
+
+void SampleTurboModule::requestSamplePermission(::React::ReactPromise<bool> &&result) noexcept {
+  result.Resolve(false);
+}
+
+void SampleTurboModule::pickMedia(
+    std::optional<std::string> /*mimeType*/,
+    ::React::ReactPromise<void> &&result) noexcept {
+  result.Resolve();
+}
+
+void SampleTurboModule::pickMultipleMedia(
+    std::optional<std::string> /*mimeType*/,
+    double /*maxItems*/,
+    ::React::ReactPromise<std::vector<std::string>> &&result) noexcept {
+  result.Resolve(std::vector<std::string>{});
+}
+
+void SampleTurboModule::startSecondActivity() noexcept {}
 
 } // namespace Microsoft::ReactNative

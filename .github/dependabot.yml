@@ -1,21 +1,55 @@
 version: 2
-# cooldown.default-days: 8 holds lockfile bumps until a version has cleared the
-# ms/react-native-public feed's 7-day upstream quarantine (8 = 7 + 1d margin); newer
-# versions 404 in CI under network isolation. Overrides Dependabot's 3-day default.
+registries:
+  packagefeedproxy:
+    type: npm-registry
+    url: https://packagefeedproxy.microsoft.io/npm/
+    replaces-base: true
+  # PackageFeedProxy metadata advertises these anonymous tarball download hosts.
+  # They do not replace the registry used to check for updates.
+  npm-public-2:
+    type: npm-registry
+    url: https://ms-feed-2.pkgs.visualstudio.com/1es-public/_packaging/npm-public/npm/registry/
+  npm-public-12:
+    type: npm-registry
+    url: https://ms-feed-12.pkgs.visualstudio.com/1es-public/_packaging/npm-public/npm/registry/
+  npm-public-25:
+    type: npm-registry
+    url: https://ms-feed-25.pkgs.visualstudio.com/1es-public/_packaging/npm-public/npm/registry/
+# Keep the existing 8-day cooldown aligned with npmMinimalAgeGate in .yarnrc.yml.
 updates:
 # main branch - all dependency updates (minor + patch), daily
 - package-ecosystem: npm
   directory: "/"
   target-branch: "main"
+  registries: ["*"]
   cooldown:
     default-days: 8
   groups:
     all-dependencies:
       patterns:
         - '*'
+  ignore:
+    # Filter majors before grouping; group update-types checks the latest version,
+    # not the compatible version selected by lockfile-only.
+    - dependency-name: "*"
       update-types:
-        - 'minor'
-        - 'patch'
+        - "version-update:semver-major"
+    # Keep the RN and React release lines selected by integration; manifests pin exact versions.
+    - dependency-name: "react"
+      update-types:
+        - "version-update:semver-minor"
+    - dependency-name: "react-native"
+      update-types:
+        - "version-update:semver-minor"
+    - dependency-name: "react-test-renderer"
+      update-types:
+        - "version-update:semver-minor"
+    - dependency-name: "@types/react"
+      update-types:
+        - "version-update:semver-minor"
+    - dependency-name: "@types/react-dom"
+      update-types:
+        - "version-update:semver-minor"
   schedule:
     interval: daily
     time: "05:00"
@@ -33,37 +67,33 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   target-branch: "0.81-stable"
+  registries: ["*"]
   cooldown:
     default-days: 8
   groups:
     all-dependencies:
       patterns:
         - '*'
-      update-types:
-        - 'minor'
-        - 'patch'
   ignore:
-    # Pin react + react-native + react-test-renderer + @types/react* to the React 19.1 minor used by this branch.
+    - dependency-name: "*"
+      update-types:
+        - "version-update:semver-major"
+    # Keep RN on 0.81.x and React/renderers/types on 19.1.x; manifests pin exact versions.
     - dependency-name: "react"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "react-native"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "react-test-renderer"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "@types/react"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "@types/react-dom"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
   schedule:
     interval: weekly
     time: "05:00"
@@ -79,37 +109,33 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   target-branch: "0.83-stable"
+  registries: ["*"]
   cooldown:
     default-days: 8
   groups:
     all-dependencies:
       patterns:
         - '*'
-      update-types:
-        - 'minor'
-        - 'patch'
   ignore:
-    # Pin react + react-native + react-test-renderer + @types/react* to the React 19.2 minor used by this branch.
+    - dependency-name: "*"
+      update-types:
+        - "version-update:semver-major"
+    # Keep RN on 0.83.x and React/renderers/types on 19.2.x; manifests pin exact versions.
     - dependency-name: "react"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "react-native"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "react-test-renderer"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "@types/react"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "@types/react-dom"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
   schedule:
     interval: weekly
     time: "05:00"
@@ -125,37 +151,33 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   target-branch: "0.84-stable"
+  registries: ["*"]
   cooldown:
     default-days: 8
   groups:
     all-dependencies:
       patterns:
         - '*'
-      update-types:
-        - 'minor'
-        - 'patch'
   ignore:
-    # Pin react + react-native + react-test-renderer + @types/react* to the React 19.2 minor used by this branch.
+    - dependency-name: "*"
+      update-types:
+        - "version-update:semver-major"
+    # Keep RN on 0.84.x and React/renderers/types on 19.2.x; manifests pin exact versions.
     - dependency-name: "react"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "react-native"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "react-test-renderer"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "@types/react"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "@types/react-dom"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
   schedule:
     interval: weekly
     time: "05:00"
@@ -171,37 +193,33 @@ updates:
 - package-ecosystem: npm
   directory: "/"
   target-branch: "0.85-stable"
+  registries: ["*"]
   cooldown:
     default-days: 8
   groups:
     all-dependencies:
       patterns:
         - '*'
-      update-types:
-        - 'minor'
-        - 'patch'
   ignore:
-    # Pin react + react-native + react-test-renderer + @types/react* to the React 19.2 minor used by this branch.
+    - dependency-name: "*"
+      update-types:
+        - "version-update:semver-major"
+    # Keep RN on 0.85.x and React/renderers/types on 19.2.x; manifests pin exact versions.
     - dependency-name: "react"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "react-native"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "react-test-renderer"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "@types/react"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
     - dependency-name: "@types/react-dom"
       update-types:
         - "version-update:semver-minor"
-        - "version-update:semver-major"
   schedule:
     interval: weekly
     time: "05:00"

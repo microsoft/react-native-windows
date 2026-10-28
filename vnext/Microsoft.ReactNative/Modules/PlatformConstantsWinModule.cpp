@@ -5,7 +5,7 @@
 #include "PlatformConstantsWinModule.h"
 
 #include <VersionHelpers.h>
-#include <cxxreact/ReactNativeVersion.h>
+#include <react/utils/ReactNativeVersion.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 
 namespace Microsoft::ReactNative {

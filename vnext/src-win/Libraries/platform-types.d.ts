@@ -10,6 +10,11 @@ export {Glyph, GlyphProps, GlyphStyle} from './Components/Glyph/Glyph';
 export {IPopupProps, Popup} from './Components/Popup/Popup';
 export * from './Components/Keyboard/KeyboardExt';
 export * from './Components/Keyboard/KeyboardExtProps';
+export {
+  HandledEventPhase,
+  type IHandledKeyboardEvent,
+  type IKeyboardEvent,
+} from './Components/View/ViewPropTypes';
 import type {ViewProps} from './Components/View/ViewPropTypes';
 export type IViewWindowsProps = ViewProps;
 import {View} from './Components/View/View';

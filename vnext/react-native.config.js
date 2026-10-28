@@ -7,13 +7,30 @@
  */
 
 const cli = require('@react-native-windows/cli');
+// RN 0.89 nightlies no longer ship a react-native.config.js, so the community
+// `bundle` and `start` commands are not registered unless this package
+// re-exports them. Apps and run-windows still invoke both.
+const {
+  bundleCommand,
+  startCommand,
+} = require('@react-native/community-cli-plugin');
 
 module.exports = {
   // **** This section defined commands and options on how to provide the Windows platform to external applications
-  commands: cli.commands.map(command => ({
-    ...command,
-    func: lazyInstallSourcemaps(command.func),
-  })),
+  commands: [
+    ...cli.commands.map(command => ({
+      ...command,
+      func: lazyInstallSourcemaps(command.func),
+    })),
+    {
+      ...bundleCommand,
+      func: lazyInstallSourcemaps(bundleCommand.func),
+    },
+    {
+      ...startCommand,
+      func: lazyInstallSourcemaps(startCommand.func),
+    },
+  ],
   platforms: {
     windows: {
       linkConfig: () => null,

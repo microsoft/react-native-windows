@@ -126,6 +126,9 @@ Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\Reac
 New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\debug -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\debug\flags.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\debug\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\debug\react_native_assert.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\debug\
+# Vendored public headers include inert cxxstableapi guards. NuGet consumers do not have React Native's ReactCommon on the include path.
+New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\cxxstableapi -Force
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\cxxstableapi\*.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\cxxstableapi\
 New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\stubs\glog -Force
 Copy-Item -Force -Path $ReactWindowsRoot\stubs\glog\logging.h -Destination $MSRNCxxTargetRoot\stubs\glog\
 

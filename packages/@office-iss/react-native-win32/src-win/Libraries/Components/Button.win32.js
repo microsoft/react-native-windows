@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @flow
+ * @flow strict-local
  * @format
  */
 
@@ -28,8 +28,7 @@ import View from './View/View';
 import invariant from 'invariant';
 import * as React from 'react';
 
-/** @build-types emit-as-interface Uniwind compatibility */
-export type ButtonProps = Readonly<{
+type ButtonPropsCore = Readonly<{
   /**
    * Text to display inside the button. On Android the given title will be
    * converted to the uppercased form.
@@ -57,16 +56,6 @@ export type ButtonProps = Readonly<{
    * @default {@platform ios} `'#007AFF'`
    */
   color?: ?ColorValue,
-
-  /**
-   * TV preferred focus.
-   *
-   * @platform tv
-   *
-   * @default `false`
-   * @deprecated Use `focusable` instead
-   */
-  hasTVPreferredFocus?: ?boolean,
 
   /**
    * Designates the next view to receive focus when the user navigates down. See
@@ -170,6 +159,9 @@ export type ButtonProps = Readonly<{
   accessibilityLanguage?: ?Stringish,
 }>;
 
+/** @build-types emit-as-interface Uniwind compatibility */
+export type ButtonProps = ButtonPropsCore;
+
 const NativeTouchable:
   typeof TouchableNativeFeedback | typeof TouchableOpacity =
   Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
@@ -223,7 +215,6 @@ const Button: component(
     onPress,
     touchSoundDisabled,
     title,
-    hasTVPreferredFocus,
     nextFocusDown,
     nextFocusForward,
     nextFocusLeft,
@@ -238,7 +229,7 @@ const Button: component(
   } = props;
   const buttonStyles: Array<ViewStyleProp> = [styles.button];
   const textStyles: Array<TextStyleProp> = [styles.text];
-  if (color) {
+  if (color != null) {
     if (Platform.OS === 'ios') {
       textStyles.push({color: color});
     } else {
@@ -264,7 +255,7 @@ const Button: component(
       ? {..._accessibilityState, disabled}
       : _accessibilityState;
 
-  if (disabled) {
+  if (disabled === true) {
     buttonStyles.push(styles.buttonDisabled);
     textStyles.push(styles.textDisabled);
   }
@@ -287,13 +278,15 @@ const Button: component(
       accessible={accessible}
       accessibilityActions={accessibilityActions}
       onAccessibilityAction={onAccessibilityAction}
-      accessibilityLabel={ariaLabel || accessibilityLabel}
+      accessibilityLabel={
+        // $FlowFixMe[sketchy-null-string]
+        ariaLabel || accessibilityLabel
+      }
       accessibilityHint={accessibilityHint}
       accessibilityLanguage={accessibilityLanguage}
       accessibilityRole="button"
       accessibilityState={_accessibilityState}
       importantForAccessibility={_importantForAccessibility}
-      hasTVPreferredFocus={hasTVPreferredFocus}
       nextFocusDown={nextFocusDown}
       nextFocusForward={nextFocusForward}
       nextFocusLeft={nextFocusLeft}

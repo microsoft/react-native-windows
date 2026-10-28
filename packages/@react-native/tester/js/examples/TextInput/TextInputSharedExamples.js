@@ -212,62 +212,6 @@ class RewriteInvalidCharactersAndClearExample extends React.Component<
 
 type ExampleRef = {current: null | React.ElementRef<typeof ExampleTextInput>};
 
-class BlurOnSubmitExample extends React.Component<{...}> {
-  ref1: ExampleRef = createRef();
-  ref2: ExampleRef = createRef();
-  ref3: ExampleRef = createRef();
-  ref4: ExampleRef = createRef();
-  ref5: ExampleRef = createRef();
-
-  render(): React.Node {
-    return (
-      <View>
-        <ExampleTextInput
-          ref={this.ref1}
-          style={styles.singleLine}
-          placeholder="blurOnSubmit = false"
-          returnKeyType="next"
-          blurOnSubmit={false}
-          onSubmitEditing={() => this.ref2.current?.focus()}
-        />
-        <ExampleTextInput
-          ref={this.ref2}
-          style={styles.singleLine}
-          keyboardType="email-address"
-          placeholder="blurOnSubmit = false"
-          returnKeyType="next"
-          blurOnSubmit={false}
-          onSubmitEditing={() => this.ref3.current?.focus()}
-        />
-        <ExampleTextInput
-          ref={this.ref3}
-          style={styles.singleLine}
-          keyboardType="url"
-          placeholder="blurOnSubmit = false"
-          returnKeyType="next"
-          blurOnSubmit={false}
-          onSubmitEditing={() => this.ref4.current?.focus()}
-        />
-        <ExampleTextInput
-          ref={this.ref4}
-          style={styles.singleLine}
-          keyboardType="numeric"
-          placeholder="blurOnSubmit = false"
-          blurOnSubmit={false}
-          onSubmitEditing={() => this.ref5.current?.focus()}
-        />
-        <ExampleTextInput
-          ref={this.ref5}
-          style={styles.singleLine}
-          keyboardType="numbers-and-punctuation"
-          placeholder="blurOnSubmit = true"
-          returnKeyType="done"
-        />
-      </View>
-    );
-  }
-}
-
 class SubmitBehaviorExample extends React.Component<{...}> {
   state = {
     submitCount: 0,
@@ -286,10 +230,6 @@ class SubmitBehaviorExample extends React.Component<{...}> {
   ref5: ExampleRef = createRef();
   ref6: ExampleRef = createRef();
   ref7: ExampleRef = createRef();
-  ref8: ExampleRef = createRef();
-  ref9: ExampleRef = createRef();
-  ref10: ExampleRef = createRef();
-  ref11: ExampleRef = createRef();
 
   render(): React.Node {
     return (
@@ -313,51 +253,26 @@ class SubmitBehaviorExample extends React.Component<{...}> {
         />
         <ExampleTextInput
           ref={this.ref4}
-          blurOnSubmit
-          placeholder="single line blurOnSubmit true"
+          multiline
+          placeholder="multiline submit"
+          submitBehavior="submit"
           onSubmitEditing={() => this.ref5.current?.focus()}
         />
         <ExampleTextInput
           ref={this.ref5}
-          blurOnSubmit={false}
-          placeholder="single line blurOnSubmit false"
+          multiline
+          placeholder="multiline blurAndSubmit"
+          submitBehavior="blurAndSubmit"
           onSubmitEditing={() => this.ref6.current?.focus()}
         />
         <ExampleTextInput
           ref={this.ref6}
           multiline
-          placeholder="multiline submit"
-          submitBehavior="submit"
-          onSubmitEditing={() => this.ref7.current?.focus()}
-        />
-        <ExampleTextInput
-          ref={this.ref7}
-          multiline
-          placeholder="multiline blurAndSubmit"
-          submitBehavior="blurAndSubmit"
-          onSubmitEditing={() => this.ref8.current?.focus()}
-        />
-        <ExampleTextInput
-          ref={this.ref8}
-          multiline
-          blurOnSubmit
-          placeholder="multiline blurOnSubmit true"
-          onSubmitEditing={() => this.ref9.current?.focus()}
-        />
-        <ExampleTextInput
-          ref={this.ref9}
-          multiline
-          blurOnSubmit={false}
-          placeholder="multiline blurOnSubmit false"
-        />
-        <ExampleTextInput
-          ref={this.ref10}
-          multiline
           placeholder="multiline newline"
           submitBehavior="newline"
         />
         <ExampleTextInput
-          ref={this.ref11}
+          ref={this.ref7}
           multiline
           placeholder="multiline default"
         />
@@ -633,7 +548,9 @@ class SelectionExample extends React.Component<
             onChangeText={value => this.setState({value})}
             // $FlowFixMe[method-unbinding] added when improving typing for this parameters
             onSelectionChange={this.onSelectionChange.bind(this)}
-            ref={textInput => (this._textInput = textInput)}
+            ref={textInput => {
+              this._textInput = textInput;
+            }}
             selection={this.props.imperative ? undefined : this.state.selection}
             style={this.props.style}
             value={this.state.value}
@@ -1118,12 +1035,6 @@ module.exports = [
     },
   },
   {
-    title: 'Blur on submit',
-    render: function (): React.MixedElement {
-      return <BlurOnSubmitExample />;
-    },
-  },
-  {
     title: 'enterKeyHint modes',
     name: 'enterKeyHintTypes',
     render: function (): React.Node {
@@ -1266,6 +1177,31 @@ module.exports = [
           <WithLabel label="showSoftInputOnFocus: false">
             <ExampleTextInput showSoftInputOnFocus={false} />
           </WithLabel>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Placeholder ellipsizing',
+    name: 'placeholderEllipsizing',
+    render: function (): React.Node {
+      const placeholder =
+        'This placeholder is too long to fit on a single line';
+
+      return (
+        <View>
+          <ExampleTextInput
+            multiline={false}
+            placeholder={placeholder}
+            style={{height: 40, width: 200}}
+            testID="textinput-placeholder-singleline"
+          />
+          <ExampleTextInput
+            multiline={true}
+            placeholder={placeholder}
+            style={{height: 60, width: 200}}
+            testID="textinput-placeholder-multiline"
+          />
         </View>
       );
     },

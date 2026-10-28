@@ -229,6 +229,10 @@ function translateParam(
       return translateFunction(param, aliases, baseAliasName, target, options);
     case 'ArrayTypeAnnotation':
       return translateArray(param, aliases, baseAliasName, target, options);
+    case 'ArrayBufferTypeAnnotation':
+      // RN 0.88 nightlies added ArrayBuffer params. The Win32 reader is still
+      // JSON-like, so carry the value as JSValue until a binary reader exists.
+      return decorateType('::React::JSValue', target);
     case 'GenericObjectTypeAnnotation':
       return decorateType('::React::JSValue', target);
     case 'ObjectTypeAnnotation':

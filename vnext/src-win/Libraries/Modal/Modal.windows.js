@@ -13,10 +13,8 @@ import type {ViewProps} from '../Components/View/ViewPropTypes';
 import type {RootTag} from '../ReactNative/RootTag';
 import type {DirectEventHandler} from '../Types/CodegenTypes';
 
-import NativeEventEmitter from '../EventEmitter/NativeEventEmitter';
 import {type ColorValue} from '../StyleSheet/StyleSheet';
-import {type EventSubscription} from '../vendor/emitter/EventEmitter';
-import NativeModalManager from './NativeModalManager';
+import Platform from '../Utilities/Platform';
 import RCTModalHostView from './RCTModalHostViewNativeComponent';
 import VirtualizedLists from '@react-native/virtualized-lists';
 import * as React from 'react';
@@ -27,22 +25,11 @@ const AppContainer = require('../ReactNative/AppContainer').default;
 const I18nManager = require('../ReactNative/I18nManager').default;
 const {RootTagContext} = require('../ReactNative/RootTag');
 const StyleSheet = require('../StyleSheet/StyleSheet').default;
-const Platform = require('../Utilities/Platform').default;
 
 const VirtualizedListContextResetter =
   VirtualizedLists.VirtualizedListContextResetter;
 
-type ModalEventDefinitions = {
-  modalDismissed: [{modalID: number}],
-};
-
 export type ModalInstance = HostInstance;
-
-const ModalEventEmitter =
-  (Platform.OS === 'ios' || Platform.OS === 'windows') && // [Windows]
-  NativeModalManager != null
-    ? new NativeEventEmitter<ModalEventDefinitions>(NativeModalManager)
-    : null;
 
 // In order to route onDismiss callbacks, we need to uniquely identifier each
 // <Modal> on screen. There can be different ones, either nested or as siblings.
@@ -54,8 +41,7 @@ type OrientationChangeEvent = Readonly<{
   orientation: 'portrait' | 'landscape',
 }>;
 
-/** @build-types emit-as-interface Uniwind compatibility */
-export type ModalBaseProps = {
+type ModalBasePropsCore = {
   /**
    * Controls how the modal animates. `'slide'` slides in from the bottom,
    * `'fade'` fades into view, `'none'` appears without animation.
@@ -104,6 +90,9 @@ export type ModalBaseProps = {
    */
   modalRef?: React.RefSetter<ModalInstance>,
 };
+
+/** @build-types emit-as-interface Uniwind compatibility */
+export type ModalBaseProps = ModalBasePropsCore;
 
 export type ModalPropsIOS = {
   /**
@@ -264,7 +253,6 @@ class Modal extends React.Component<ModalProps, ModalState> {
   static contextType: React.Context<RootTag> = RootTagContext;
 
   _identifier: number;
-  _eventSubscription: ?EventSubscription;
 
   constructor(props: ModalProps) {
     super(props);
@@ -277,25 +265,9 @@ class Modal extends React.Component<ModalProps, ModalState> {
     };
   }
 
-  componentDidMount() {
-    // 'modalDismissed' is for the old renderer in iOS only
-    if (ModalEventEmitter) {
-      this._eventSubscription = ModalEventEmitter.addListener(
-        'modalDismissed',
-        event => {
-          this.setState({isRendered: false}, () => {
-            if (event.modalID === this._identifier && this.props.onDismiss) {
-              this.props.onDismiss();
-            }
-          });
-        },
-      );
-    }
-  }
-
   componentWillUnmount() {
-    if (this._eventSubscription) {
-      this._eventSubscription.remove();
+    if (Platform.OS === 'ios') {
+      this.setState({isRendered: false});
     }
   }
 
@@ -384,6 +356,8 @@ class Modal extends React.Component<ModalProps, ModalState> {
         identifier={this._identifier}
         style={styles.modal}
         // $FlowFixMe[method-unbinding] added when improving typing for this parameters
+        /* $FlowFixMe[incompatible-type] Error exposed after fixing this typing
+         * unsoundness in flow */
         onStartShouldSetResponder={this._shouldSetResponder}
         supportedOrientations={this.props.supportedOrientations}
         onOrientationChange={this.props.onOrientationChange}

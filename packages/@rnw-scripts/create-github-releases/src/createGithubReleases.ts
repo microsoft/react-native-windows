@@ -14,7 +14,7 @@ import chalk from 'chalk';
 import fs from '@react-native-windows/fs';
 import path from 'path';
 import semver from 'semver';
-import simplegit from 'simple-git';
+import {simpleGit as simplegit} from 'simple-git';
 import util from 'util';
 import yargs from 'yargs';
 

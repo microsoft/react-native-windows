@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  *
- * @flow
+ * @flow strict-local
  * @format
  */
 
@@ -25,6 +25,7 @@ export type AlertButtonStyle = 'default' | 'cancel' | 'destructive';
 
 export type AlertButton = {
   text?: string,
+  // $FlowFixMe[unclear-type]
   onPress?: ?((value?: string) => any) | ?Function,
   isPreferred?: boolean,
   style?: AlertButtonStyle,
@@ -107,8 +108,8 @@ class Alert {
       cancelable: false,
     };
 
-    if (options && options.cancelable) {
-      config.cancelable = options.cancelable;
+    if (options != null && options.cancelable === true) {
+      config.cancelable = true;
     }
     // At most three buttons (neutral, negative, positive). Ignore rest.
     // The text 'OK' should be probably localized. iOS Alert does that in native.
@@ -141,7 +142,10 @@ class Alert {
       config.buttonNegative = buttonNegative.text || '';
     }
     if (buttonPositive) {
-      config.buttonPositive = buttonPositive.text || defaultPositiveText;
+      config.buttonPositive =
+        buttonPositive.text != null && buttonPositive.text !== ''
+          ? buttonPositive.text
+          : defaultPositiveText;
     }
 
     /* $FlowFixMe[missing-local-annot] The type annotation(s) required by

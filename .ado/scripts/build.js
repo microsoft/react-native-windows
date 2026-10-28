@@ -16,7 +16,7 @@ const sourcesPath = path.resolve(__dirname, "..", "..");
 
 const binskimPackageName = "Microsoft.CodeAnalysis.BinSkim";
 const binskimVersion = "4.4.9";
-const binskimNuGetSource = "https://api.nuget.org/v3/index.json";
+const binskimNuGetSource = "https://packagefeedproxy.microsoft.io/nuget/v3/index.json";
 
 const options = {
   help:          { type: "boolean", default: false },

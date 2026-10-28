@@ -6,8 +6,7 @@ variables:
   NPM_CONFIG_YES: false
   NPM_CONFIG_CACHE: $(Agent.TempDirectory)/.npmCache
 
-  # Pull-request builds do not have a feed token, so use the anonymous proxy by default.
-  # Continuous builds switch to the authenticated feed in auth-npm-feed.yml.
+  # Route npm and Yarn through the anonymous proxy so validation does not require feed authentication.
   NPM_CONFIG_REGISTRY: https://packagefeedproxy.microsoft.io/npm/
   YARN_NPM_REGISTRY_SERVER: https://packagefeedproxy.microsoft.io/npm/
 

@@ -9,7 +9,6 @@
  */
 
 import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
-import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 import RNTesterText from '../../components/RNTesterText';
 import ScrollViewPressableStickyHeaderExample from './ScrollViewPressableStickyHeaderExample';
@@ -26,6 +25,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
+type ViewStyleProp = NonNullable<React.PropOf<View, 'style'>>;
 
 class EnableDisableList extends React.Component<{}, {scrollEnabled: boolean}> {
   state: {scrollEnabled: boolean} = {
@@ -64,9 +65,9 @@ class EnableDisableList extends React.Component<{}, {scrollEnabled: boolean}> {
 let AppendingListItemCount = 6;
 class AppendingList extends React.Component<
   {},
-  {items: Array<ExactReactElement_DEPRECATED<Class<Item>>>},
+  {items: ReadonlyArray<React.MixedElement>},
 > {
-  state: {items: Array<ExactReactElement_DEPRECATED<Class<Item>>>} = {
+  state: {items: ReadonlyArray<React.MixedElement>} = {
     items: [...Array(AppendingListItemCount)].map((_, ii) => (
       <Item msg={`Item ${ii}`} />
     )),

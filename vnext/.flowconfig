@@ -18,7 +18,6 @@
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/Touchable.js
-<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableBounce.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableHighlight.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableOpacity.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableWithoutFeedback.js
@@ -44,9 +43,13 @@
 <PROJECT_ROOT>/IntegrationTests/ImageCachePolicyTest.js
 <PROJECT_ROOT>/IntegrationTests/LayoutEventsTest.js
 <PROJECT_ROOT>/IntegrationTests/IntegrationTestsApp.js
+<PROJECT_ROOT>/IntegrationTests/PromiseTest.js
+<PROJECT_ROOT>/IntegrationTests/TimersTest.js
 <PROJECT_ROOT>/ReactCopies/IntegrationTests/ImageCachePolicyTest.js
 <PROJECT_ROOT>/ReactCopies/IntegrationTests/LayoutEventsTest.js
 <PROJECT_ROOT>/ReactCopies/IntegrationTests/IntegrationTestsApp.js
+<PROJECT_ROOT>/ReactCopies/IntegrationTests/PromiseTest.js
+<PROJECT_ROOT>/ReactCopies/IntegrationTests/TimersTest.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
