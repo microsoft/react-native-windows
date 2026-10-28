@@ -42,3 +42,4 @@
 .editorconfig text eol=lf
 .gitattributes text eol=lf
 package.json text eol=lf
+/.yarn/patches/*.patch text eol=lf
