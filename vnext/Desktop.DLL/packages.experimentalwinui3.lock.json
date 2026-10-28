@@ -26,9 +26,9 @@
       },
       "ReactNative.V8Jsi.Windows": {
         "type": "Direct",
-        "requested": "[0.71.8, )",
-        "resolved": "0.71.8",
-        "contentHash": "ksHjshj05AMAQ/v7Wet5Dwcwn9Up2BTOIrTv1yEW7+D23FQX0yILW5Zw0bmlWtV8MEtdY611z+06U3Xvu2ygSA=="
+        "requested": "[0.79.5, )",
+        "resolved": "0.79.5",
+        "contentHash": "vALvfthnspzQRibFCGk+MgaYroVt0VHFAajjFuBIrPrLjjUp/7qynU3sJPjBoYecQVZh9YG3w1PGQUwJlxJD8w=="
       },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
@@ -164,7 +164,7 @@
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.WindowsAppSDK": "[2.0.0-experimental3, )",
           "ReactCommon": "[1.0.0, )",
-          "ReactNative.V8Jsi.Windows": "[0.71.8, )",
+          "ReactNative.V8Jsi.Windows": "[0.79.5, )",
           "boost": "[1.84.0, )"
         }
       },
