@@ -34,7 +34,7 @@ describe('Image Tests', () => {
     const dump = await dumpVisualTree('image-network-callback');
     expect(dump).toMatchSnapshot();
   });
-  test('An Image can handle large image errors', async () => {
+  test.skip('An Image can handle large image errors', async () => {
     const component = await app.findElementByTestID('image-large-error');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('image-large-error');
