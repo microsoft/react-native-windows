@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update @xmldom/xmldom to ^0.8.15 for XML serialization security fixes.",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "anuagra@microsoft.com",
-  "dependentChangeType": "patch"
-}
