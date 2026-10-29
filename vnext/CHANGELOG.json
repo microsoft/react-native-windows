@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 29 Oct 2026 20:00:22 GMT",
+      "version": "0.83.3",
+      "tag": "react-native-windows_v0.83.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "c684233c95e6cd4ca59f85cdcb24b770577d506f",
+            "comment": "Fix placeholder layout constraints fed physical px instead of DIPs; fix no-op NaN fontSize guard in CreatePlaceholderLayout"
+          },
+          {
+            "author": "dlucas@seabird.com",
+            "package": "react-native-windows",
+            "commit": "c684233c95e6cd4ca59f85cdcb24b770577d506f",
+            "comment": "Fixes misalignment with TextInput on different display scales"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c684233c95e6cd4ca59f85cdcb24b770577d506f",
+            "comment": "Sync pipeline, tooling, and vendored dependency changes to 0.83-stable"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c684233c95e6cd4ca59f85cdcb24b770577d506f",
+            "comment": "Route repository and CI package restores through PackageFeedProxy"
+          },
+          {
+            "author": "collindanielschneide@gmail.com",
+            "package": "react-native-windows",
+            "commit": "c684233c95e6cd4ca59f85cdcb24b770577d506f",
+            "comment": "fix(pointer): null-check the capturing component view before notifying OnPointerCaptureLost (crash when the capturing component was unmounted)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.83.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.83.2",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.83.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Jun 2026 09:54:41 GMT",
       "version": "0.83.2",
       "tag": "react-native-windows_v0.83.2",
