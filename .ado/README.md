@@ -83,14 +83,17 @@ ISS agents run under 1ES **Network Isolation**, which blocks egress to public CD
 The pipelines use approved package feeds and neutralize three background egress
 attempts that green builds would otherwise hide:
 
-- **NuGet restores:** the root `NuGet.Config` maps NuGet.org dependencies to
-  `https://packagefeedproxy.microsoft.io/nuget/v3/index.json` anonymously.
-  Only `ReactNative.V8Jsi.Windows*` and `Microsoft.JavaScript.V8*` use the
-  `ms/react-native-public` ADO feed, where these V8 packages are published.
+- **NuGet restores:** the root `NuGet.Config` maps all packages to the
+  `ms/react-native-public` ADO feed, which has NuGet.org as an upstream and also
+  hosts the V8 packages. A single upstream-enabled source avoids Secure Supply
+  Chain Analysis's multiple-feed rejection without disabling the scanner.
+  Anonymous restores require versions already saved in the feed. Feed warm-up
+  runs from `main`; newly introduced versions on this branch may need a one-off
+  warm using the pipeline's `packages` parameter.
   CI imports this policy for generated apps/libraries and third-party configs;
   CLI-init tests also retain their local feed for freshly built RNW packages.
   NuGet 6.0 or later is required to enforce these source mappings.
-  BinSkim downloads use the same proxy instead of nuget.org.
+  BinSkim downloads still use PackageFeedProxy instead of nuget.org.
 - **Package registries:** `variables/shared.yml` routes npm/npx and Yarn through
   the anonymous PackageFeedProxy (`NPM_CONFIG_REGISTRY` /
   `YARN_NPM_REGISTRY_SERVER`) in both PR and Continuous validation.
@@ -111,11 +114,11 @@ attempts that green builds would otherwise hide:
   reapplies the same policy per job as an interim belt until the updated image
   ships; it can be dropped once a rebuilt image is confirmed clean.
 
-PackageFeedProxy restores are **anonymous** and do not depend on the RNW feed
-warm-up. The scheduled warm-up maintained on `main` still populates the ADO feed
-for its remaining consumers. Publishing and authenticated feed maintenance keep
-their existing endpoints; NuGet defaults shipped in generated apps/libraries
-are unchanged.
+npm/Yarn restores through PackageFeedProxy are **anonymous** and do not depend on
+the RNW feed warm-up. Anonymous NuGet restores and the authenticated CI Verdaccio
+uplink use the ADO feed, which the scheduled warm-up maintained on `main` populates.
+Publishing and authenticated feed maintenance keep their existing endpoints;
+NuGet defaults shipped in generated apps/libraries are unchanged.
 
 ## SDL and Component Governance
 
