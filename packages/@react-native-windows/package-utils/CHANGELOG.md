@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/package-utils
 
-<!-- This log was last generated on Tue, 07 Apr 2026 05:29:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 29 Oct 2026 05:31:44 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.99
+
+Thu, 29 Oct 2026 05:31:44 GMT
+
+### Changes
+
+- Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.102
+- Bump @react-native-windows/fs to v0.0.0-canary.73
 
 ## 0.0.0-canary.98
 

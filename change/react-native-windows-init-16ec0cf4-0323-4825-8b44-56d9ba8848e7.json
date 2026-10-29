@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate React Native 0.86.0-nightly-20260430-118198599",
-  "packageName": "react-native-windows-init",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

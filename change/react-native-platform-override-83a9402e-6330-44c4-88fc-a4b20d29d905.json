@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update simple-git to include fixed unsafe-operation and editor guards.",
-  "packageName": "react-native-platform-override",
-  "email": "anuagra@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,19 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Mon, 20 Jul 2026 21:19:50 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 29 Oct 2026 05:31:44 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1024
+
+Thu, 29 Oct 2026 05:31:44 GMT
+
+### Changes
+
+- Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)
+- Update simple-git to include fixed unsafe-operation and editor guards. (anuagra@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.73
+- Bump @react-native-windows/package-utils to v0.0.0-canary.99
 
 ## 0.0.0-canary.1023
 
