@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix single-line TextInput text drawn below center by measuring content with an unconstrained height",
-  "packageName": "react-native-windows",
-  "email": "ryan.fowler@singlewire.com",
-  "dependentChangeType": "patch"
-}

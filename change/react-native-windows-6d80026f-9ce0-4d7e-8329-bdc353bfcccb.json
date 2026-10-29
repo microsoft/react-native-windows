@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate React Native 0.89.0-nightly-20261002-cd2de187e (Oct 2nd)",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

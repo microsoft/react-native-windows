@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/automation-commands
 
-<!-- This log was last generated on Fri, 21 Aug 2026 23:17:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 29 Oct 2026 05:31:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1062
+
+Thu, 29 Oct 2026 05:31:45 GMT
+
+### Changes
+
+- Normalize cache-busting Image URIs by query string instead of host so snapshots work against the E2E image fixture server (anuagra@microsoft.com)
+- Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)
+- Bump @react-native-windows/automation-channel to v0.0.0-canary.1061
 
 ## 0.0.0-canary.1061
 

@@ -2,6 +2,33 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 29 Oct 2026 05:31:45 GMT",
+      "version": "0.0.0-canary.134",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.134",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/codegen",
+            "commit": "36a4425edd1667e38e7ba5a14cefce1a034567f3",
+            "comment": "Integrate RN nightly 0.88.0-nightly-20260908-3e897cfdf (Sep 8th)"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/codegen",
+            "commit": "36a4425edd1667e38e7ba5a14cefce1a034567f3",
+            "comment": "Integrate RN nightly 0.88.0-nightly-20260805-f2188610c (Aug 5th)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.73",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Apr 2026 23:42:38 GMT",
       "version": "0.0.0-canary.133",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.133",

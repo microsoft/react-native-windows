@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use the generator-supported bootstrap for nightly library scaffolding.",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
