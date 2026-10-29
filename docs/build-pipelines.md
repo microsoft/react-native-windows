@@ -6,9 +6,11 @@ React Native Windows uses three Azure DevOps pipelines built on the Office and g
 
 | Pipeline | File | Template | Trigger |
 |----------|------|----------|---------|
-| **CI** | `.ado/ci-pipeline.yml` | Office Official | Push to `main`, `*-stable` |
-| **PR** | `.ado/pr-pipeline.yml` | 1ES Unofficial | PRs to `main`, `*-stable` |
+| **CI** | `.ado/ci-pipeline.yml` | Office Official | Push to a supported branch |
+| **PR** | `.ado/pr-pipeline.yml` | 1ES Unofficial | PRs to a supported branch |
 | **Release** | `.ado/release-pipeline.yml` | Office Official | Triggered by successful CI run |
+
+The supported branches are listed in [`.ado/README.md`](../.ado/README.md#supported-branches).
 
 CI and PR share a single `build-template.yml` that contains all build, test, and packaging logic. The `buildEnvironment` parameter (`Continuous` or `PullRequest`) controls what runs:
 
