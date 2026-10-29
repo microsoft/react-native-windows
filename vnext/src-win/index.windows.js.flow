@@ -545,6 +545,8 @@ export {HandledEventPhase} from './Libraries/Components/View/ViewPropTypes';
 
 export {default as ViewWindows} from './Libraries/Components/View/View';
 export {AppTheme} from './Libraries/AppTheme/AppTheme';
+
+export {__INTERNAL_VIEW_CONFIG as TextInputViewSpec} from './Libraries/Components/TextInput/WindowsTextInputNativeComponent';
 // End Windows Specific exports
 
 // #endregion

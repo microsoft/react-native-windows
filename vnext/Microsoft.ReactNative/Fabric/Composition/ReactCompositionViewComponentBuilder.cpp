@@ -3,10 +3,12 @@
 
 #include "pch.h"
 #include "ReactCompositionViewComponentBuilder.h"
+#include <Fabric/AbiComponentDescriptor.h>
 #include <Fabric/AbiViewComponentDescriptor.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ContentIslandComponentView.h>
 #include <Fabric/Composition/PortalComponentView.h>
+#include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <strsafe.h>
 #include "CompositionContextHelper.h"
 #include "DynamicWriter.h"
@@ -130,6 +132,26 @@ void ReactCompositionViewComponentBuilder::SetPortalComponentViewInitializer(
   m_descriptorConstructorFactory = []() {
     return &facebook::react::concreteComponentDescriptorConstructor<
         ::Microsoft::ReactNative::AbiPortalComponentDescriptor>;
+  };
+}
+
+void ReactCompositionViewComponentBuilder::SetTextInputComponentViewInitializer(
+    const TextInputComponentViewInitializer &initializer) noexcept {
+  m_fnCreateView = [initializer](
+                       const IReactContext &reactContext,
+                       int32_t tag,
+                       const Experimental::ICompositionContext &context,
+                       ComponentViewFeatures /*features*/,
+                       ReactCompositionViewComponentBuilder &builder)
+      -> winrt::Microsoft::ReactNative::Composition::WindowsTextInputComponentView {
+    auto view = winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>(
+        context, tag, reactContext, &builder);
+    initializer(view);
+    return view;
+  };
+  m_descriptorConstructorFactory = []() {
+    return &facebook::react::concreteComponentDescriptorConstructor<
+        ::Microsoft::ReactNative::AbiWindowsTextInputComponentDescriptor>;
   };
 }
 

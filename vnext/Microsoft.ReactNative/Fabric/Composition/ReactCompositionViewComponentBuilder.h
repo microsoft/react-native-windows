@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include <Fabric/AbiComponentDescriptor.h>
+#include <Fabric/AbiViewProps.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProvider.h>
 #include <react/renderer/core/ReactPrimitives.h>
 #include <optional>
@@ -54,6 +54,7 @@ struct ReactCompositionViewComponentBuilder
   void SetIVisualToMountChildrenIntoHandler(
       winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate impl) noexcept;
   void SetUpdateLayoutMetricsHandler(UpdateLayoutMetricsDelegate impl) noexcept;
+  void SetTextInputComponentViewInitializer(const TextInputComponentViewInitializer &initializer) noexcept;
 
  public:
   IComponentProps CreateProps(ViewProps props, const IComponentProps &cloneFrom) noexcept;

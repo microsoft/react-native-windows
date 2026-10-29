@@ -13,6 +13,7 @@
 #include <react/renderer/attributedstring/ParagraphAttributes.h>
 #include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 
+#include <Fabric/AbiState.h>
 #include <folly/dynamic.h>
 #include <react/renderer/mapbuffer/MapBuffer.h>
 #include <react/renderer/mapbuffer/MapBufferBuilder.h> // [windows]
@@ -22,7 +23,7 @@ namespace facebook::react {
 /*
  * State for <TextInput> component.
  */
-class WindowsTextInputState final {
+class WindowsTextInputState {
  public:
   WindowsTextInputState() = default;
 

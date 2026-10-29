@@ -98,6 +98,26 @@ describe('LegacyTextInputTest', () => {
     ]);
     */
   });
+
+  test('Clearing TextInput reports the clamped selection when the text changes', async () => {
+    const textInput = await textInputField();
+    await textInput.setValue('abc');
+    await textInput.addValue('End');
+    expect(await textInput.getText()).toBe('abc');
+
+    const textLog = await app.findElementByTestID('textinput-log');
+    await textInput.clearValue();
+    await app.waitUntil(
+      async () =>
+        (
+          await textLog.getText()
+        ).startsWith('onChange text: \nonSelectionChange range: 0,0\n'),
+      {
+        timeoutMsg:
+          'Clearing text should report the final selection after the text change.',
+      },
+    );
+  });
 });
 
 async function textInputField() {

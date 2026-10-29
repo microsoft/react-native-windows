@@ -439,6 +439,11 @@ module.exports = {
   get AppTheme() {
     return require('./Libraries/AppTheme/AppTheme').AppTheme;
   },
+  // Export this to allow custom native textinput components to provide a full view spec
+  get TextInputViewSpec() {
+    return require('./Libraries/Components/TextInput/WindowsTextInputNativeComponent')
+      .__INTERNAL_VIEW_CONFIG;
+  },
 } as ReactNativePublicAPI;
 
 // `Touchable` has been removed from the public API types, but remains

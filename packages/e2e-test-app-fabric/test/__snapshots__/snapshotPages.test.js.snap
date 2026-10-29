@@ -10964,6 +10964,196 @@ exports[`snapshotAllPages Custom Native Accessibility Example 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Custom TextInput component Example 1`] = `
+<View
+  accessibilityLabel="example root"
+  accessible={true}
+  testID="custom-textinput-root-1"
+>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
+    The below text input is a custom text input component
+  </Text>
+  <CustomTextInput
+    accessibilityLabel="Custom TextInput"
+    accessible={true}
+    focusable={true}
+    mostRecentEventCount={0}
+    onChange={[Function]}
+    onSelectionChange={[Function]}
+    style={
+      {
+        "borderWidth": 1,
+        "width": 500,
+      }
+    }
+    testID="custom-textinput-1"
+    text="hello"
+  />
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="custom-textinput-change"
+  />
+  <CustomTextInput
+    accessible={true}
+    focusable={true}
+    mostRecentEventCount={0}
+    onChange={[Function]}
+    onSelectionChange={[Function]}
+    style={
+      {
+        "borderWidth": 1,
+        "width": 500,
+      }
+    }
+    testID="custom-textinput-default"
+    text="default value"
+  />
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+    testID="custom-textinput-default-change"
+  />
+  <CustomTextInput
+    accessible={true}
+    focusable={true}
+    mostRecentEventCount={0}
+    onChange={[Function]}
+    onSelectionChange={[Function]}
+    style={
+      {
+        "borderWidth": 1,
+        "width": 500,
+      }
+    }
+    testID="custom-textinput-fixed"
+    text="fixed"
+  />
+  <CustomTextInput
+    accessible={true}
+    focusable={true}
+    mostRecentEventCount={0}
+    onChange={[Function]}
+    onSelectionChange={[Function]}
+    style={
+      {
+        "borderWidth": 1,
+        "width": 500,
+      }
+    }
+    testID="custom-textinput-set-formatted-text"
+    text="set content with button"
+  />
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+    testID="custom-textinput-set-formatted-text-button"
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Set Formatted Text
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`snapshotAllPages DevSettings 1`] = `
 <View
   accessibilityRole="button"

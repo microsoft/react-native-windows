@@ -10,6 +10,7 @@
 #include "CalendarView.h"
 #include "ComboBox.h"
 #include "CustomAccessibility.h"
+#include "CustomTextInput.h"
 #include "DrawingIsland.h"
 #include "MovingLight.h"
 
@@ -26,6 +27,7 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
   RegisterCalendarViewComponentView(packageBuilder);
   RegisterCustomAccessibilityComponentView(packageBuilder);
   RegisterComboBoxComponentView(packageBuilder);
+  RegisterCustomTextInputComponentView(packageBuilder);
 #endif // #ifdef RNW_NEW_ARCH
 }
 

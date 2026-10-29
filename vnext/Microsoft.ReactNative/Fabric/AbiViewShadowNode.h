@@ -48,10 +48,22 @@ struct LayoutContext : LayoutContextT<LayoutContext> {
   facebook::react::LayoutContext m_layoutContext;
 };
 
-struct YogaLayoutableShadowNode : YogaLayoutableShadowNodeT<YogaLayoutableShadowNode, implementation::ShadowNode> {
-  YogaLayoutableShadowNode(std::shared_ptr<const facebook::react::ShadowNode> shadowNode) noexcept;
+template <typename TStateData /* = ::Microsoft::ReactNative::AbiStateData */>
+struct YogaLayoutableShadowNode
+    : YogaLayoutableShadowNodeT<YogaLayoutableShadowNode<TStateData>, implementation::ShadowNode<TStateData>> {
+  using Super = YogaLayoutableShadowNodeT<YogaLayoutableShadowNode<TStateData>, implementation::ShadowNode<TStateData>>;
+  YogaLayoutableShadowNode(std::shared_ptr<const facebook::react::ShadowNode> shadowNode) noexcept
+      : Super(shadowNode) {}
 
-  void Layout(winrt::Microsoft::ReactNative::LayoutContext layoutContext) noexcept;
+  void Layout(winrt::Microsoft::ReactNative::LayoutContext layoutContext) noexcept {
+    if (auto shadowNode = Super::m_shadowNode.lock()) {
+      std::const_pointer_cast<facebook::react::YogaLayoutableShadowNode>(
+          std::dynamic_pointer_cast<const facebook::react::YogaLayoutableShadowNode>(shadowNode))
+          ->facebook::react::YogaLayoutableShadowNode::layout(
+              winrt::get_self<winrt::Microsoft::ReactNative::implementation::LayoutContext>(layoutContext)
+                  ->m_layoutContext);
+    }
+  }
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

@@ -89,6 +89,10 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples-win/NativeComponents/CustomAccessibility'),
   },
   {
+    key: 'Custom TextInput',
+    module: require('../examples-win/NativeComponents/CustomTextInput'),
+  },
+  {
     key: 'Native Component',
     module: require('../examples-win/NativeComponents/NativeComponent'),
   },

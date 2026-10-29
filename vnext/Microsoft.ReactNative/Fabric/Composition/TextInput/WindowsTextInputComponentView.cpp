@@ -6,6 +6,7 @@
 #include "WindowsTextInputComponentView.h"
 
 #include <AutoDraw.h>
+#include <Fabric/AbiTextInputProps.h>
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Fabric/platform/react/renderer/graphics/PlatformColorUtils.h>
 #include <Utils/ThemeUtils.h>
@@ -19,6 +20,7 @@
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.h>
 #include <mutex>
+#include <string_view>
 #include "../Composition.Input.h"
 #include "../CompositionHelpers.h"
 #include "../RootComponentView.h"
@@ -543,28 +545,118 @@ AutoCorrectOffCallback(LANGID langid, const WCHAR *pszBefore, WCHAR *pszAfter, L
 }
 
 facebook::react::AttributedString WindowsTextInputComponentView::getAttributedString() const {
-  // Use BaseTextShadowNode to get attributed string from children
-
   auto attributedString = facebook::react::AttributedString{};
-  // auto attachments = facebook::react::BaseTextShadowNode::Attachments{};
+  const auto &props = windowsTextInputProps();
+  auto baseTextAttributes = facebook::react::TextAttributes::defaultTextAttributes();
+  baseTextAttributes.fontSizeMultiplier = m_fontSizeMultiplier;
+  baseTextAttributes.apply(props.textAttributes);
+  baseTextAttributes.allowFontScaling = baseTextAttributes.allowFontScaling.value_or(props.allowFontScaling);
+  baseTextAttributes.foregroundColor = props.textAttributes.foregroundColor;
+  baseTextAttributes.backgroundColor = facebook::react::clearColor();
+  attributedString.setBaseTextAttributes(baseTextAttributes);
 
-  // BaseTextShadowNode only gets children. We must detect and prepend text
-  // value attributes manually.
-  auto text = GetTextFromRichEdit();
-  if (!text.empty()) {
-    auto textAttributes = facebook::react::TextAttributes::defaultTextAttributes();
-    textAttributes.fontSizeMultiplier = m_fontSizeMultiplier;
-    textAttributes.apply(windowsTextInputProps().textAttributes);
+  if (!m_textServices) {
+    return attributedString;
+  }
+
+  winrt::com_ptr<::IUnknown> richEditOle;
+  LRESULT result;
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_GETOLEINTERFACE, 0, reinterpret_cast<LPARAM>(richEditOle.put()), &result));
+  winrt::check_bool(richEditOle != nullptr);
+  auto document = richEditOle.as<ITextDocument>();
+  winrt::com_ptr<ITextRange> range;
+  winrt::check_hresult(document->Range(0, 0, range.put()));
+  LONG storyLength;
+  winrt::check_hresult(range->GetStoryLength(&storyLength));
+  LRESULT textMode{};
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_GETTEXTMODE, 0, 0, &textMode));
+  // Only rich-text stories include a final paragraph mark outside the TextInput's value.
+  const LONG textLength = storyLength - ((textMode & TM_RICHTEXT) ? 1 : 0);
+
+  float fontSizeMultiplier = 1.0f;
+  if (*baseTextAttributes.allowFontScaling) {
+    auto maxFontSizeMultiplier = baseTextAttributes.maxFontSizeMultiplier;
+    fontSizeMultiplier = (maxFontSizeMultiplier >= 1.0f)
+        ? std::min(maxFontSizeMultiplier, baseTextAttributes.fontSizeMultiplier)
+        : baseTextAttributes.fontSizeMultiplier;
+  }
+  winrt::check_bool(fontSizeMultiplier > 0);
+
+  for (LONG position = 0; position < textLength;) {
+    winrt::check_hresult(range->SetRange(position, position));
+    LONG delta;
+    winrt::check_hresult(range->EndOf(tomCharFormat, tomExtend, &delta));
+    LONG end;
+    winrt::check_hresult(range->GetEnd(&end));
+    end = std::min(end, textLength);
+    winrt::check_bool(end > position);
+    winrt::check_hresult(range->SetRange(position, end));
+
     auto fragment = facebook::react::AttributedString::Fragment{};
-    fragment.string = text;
-    // fragment.string = m_props->text;
-    fragment.textAttributes = textAttributes;
-    // If the TextInput opacity is 0 < n < 1, the opacity of the TextInput and
-    // text value's background will stack. This is a hack/workaround to prevent
-    // that effect.
-    fragment.textAttributes.backgroundColor = facebook::react::clearColor();
-    // fragment.parentShadowView = facebook::react::ShadowView(*this);
-    attributedString.prependFragment(std::move(fragment));
+    BSTR text = nullptr;
+    winrt::check_hresult(range->GetText(&text));
+    auto bstrToString = [](BSTR value) {
+      auto converted = value ? winrt::to_string(std::wstring_view{value, SysStringLen(value)}) : std::string{};
+      SysFreeString(value);
+      return converted;
+    };
+    fragment.string = bstrToString(text);
+    auto &textAttributes = fragment.textAttributes;
+    textAttributes = baseTextAttributes;
+
+    winrt::com_ptr<ITextFont> font;
+    winrt::check_hresult(range->GetFont(font.put()));
+    BSTR fontName = nullptr;
+    winrt::check_hresult(font->GetName(&fontName));
+    textAttributes.fontFamily = bstrToString(fontName);
+    float fontSize;
+    winrt::check_hresult(font->GetSize(&fontSize));
+    // TOM reports rendered points; store unscaled DIPs so UpdateText does not scale them twice.
+    textAttributes.fontSize = fontSize * (4.0f / 3.0f) / fontSizeMultiplier;
+    LONG weight;
+    winrt::check_hresult(font->GetWeight(&weight));
+    textAttributes.fontWeight = static_cast<facebook::react::FontWeight>(weight);
+    LONG italic;
+    winrt::check_hresult(font->GetItalic(&italic));
+    textAttributes.fontStyle =
+        italic == tomTrue ? facebook::react::FontStyle::Italic : facebook::react::FontStyle::Normal;
+    float spacing;
+    winrt::check_hresult(font->GetSpacing(&spacing));
+    textAttributes.letterSpacing = spacing;
+
+    LONG underline;
+    LONG strikethrough;
+    winrt::check_hresult(font->GetUnderline(&underline));
+    winrt::check_hresult(font->GetStrikeThrough(&strikethrough));
+    const bool hasUnderline = underline != tomNone;
+    const bool hasStrikethrough = strikethrough == tomTrue;
+    textAttributes.textDecorationLineType = hasUnderline
+        ? (hasStrikethrough ? facebook::react::TextDecorationLineType::UnderlineStrikethrough
+                            : facebook::react::TextDecorationLineType::Underline)
+        : (hasStrikethrough ? facebook::react::TextDecorationLineType::Strikethrough
+                            : facebook::react::TextDecorationLineType::None);
+
+    LONG foreground;
+    LONG background;
+    winrt::check_hresult(font->GetForeColor(&foreground));
+    winrt::check_hresult(font->GetBackColor(&background));
+    if (foreground != tomAutoColor) {
+      textAttributes.foregroundColor =
+          facebook::react::colorFromRGBA(GetRValue(foreground), GetGValue(foreground), GetBValue(foreground), 255);
+    }
+    if (background != tomAutoColor) {
+      textAttributes.backgroundColor =
+          facebook::react::colorFromRGBA(GetRValue(background), GetGValue(background), GetBValue(background), 255);
+    }
+
+    auto &fragments = attributedString.getFragments();
+    if (!fragments.empty() && fragments.back().textAttributes == textAttributes) {
+      fragments.back().string += fragment.string;
+    } else {
+      attributedString.appendFragment(std::move(fragment));
+    }
+    position = end;
   }
 
   return attributedString;
@@ -573,13 +665,15 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
 WindowsTextInputComponentView::WindowsTextInputComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
-    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+    winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder *builder)
     : Super(
           WindowsTextInputComponentView::defaultProps(),
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {}
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
+          builder) {}
 
 WindowsTextInputComponentView::~WindowsTextInputComponentView() {
   // Release text services first to prevent further callbacks into CompTextHost.
@@ -589,6 +683,17 @@ WindowsTextInputComponentView::~WindowsTextInputComponentView() {
   if (m_textHost) {
     winrt::get_self<CompTextHost>(m_textHost)->Detach();
   }
+}
+
+winrt::Microsoft::ReactNative::ViewProps WindowsTextInputComponentView::ViewPropsInner() noexcept {
+  // During initialization, even custom text inputs still have native default props.
+  if (auto abiProps = dynamic_cast<const ::Microsoft::ReactNative::AbiTextInputProps *>(viewProps().get())) {
+    if (auto props = abiProps->ViewProps()) {
+      return props;
+    }
+  }
+
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::TextInputProps>(viewProps());
 }
 
 void WindowsTextInputComponentView::HandleCommand(
@@ -608,7 +713,9 @@ void WindowsTextInputComponentView::HandleCommand(
       {
         if (text.has_value()) {
           DrawBlock db(*this);
-          UpdateText(winrt::to_string(text.value()));
+          facebook::react::AttributedString attributedString;
+          attributedString.appendFragment({winrt::to_string(text.value()), windowsTextInputProps().textAttributes, {}});
+          UpdateText(attributedString);
         }
 
         SELCHANGE sc;
@@ -1091,9 +1198,7 @@ void WindowsTextInputComponentView::OnCharacterReceived(
   LRESULT lresult;
   DrawBlock db(*this);
   const wchar_t newline[] = L"\r";
-  auto hr = args.KeyCode() == '\r' && windowsTextInputProps().multiline
-      ? m_textServices->TxSendMessage(EM_REPLACESEL, TRUE, reinterpret_cast<LPARAM>(newline), &lresult)
-      : m_textServices->TxSendMessage(WM_CHAR, wParam, lParam, &lresult);
+  auto hr = m_textServices->TxSendMessage(WM_CHAR, wParam, lParam, &lresult);
   if (hr >= 0) {
     args.Handled(true);
   }
@@ -1181,6 +1286,12 @@ void WindowsTextInputComponentView::updateCursorColor(
   const auto &props = windowsTextInputProps();
   auto caretColor = ::Microsoft::ReactNative::GetCaretColor(cursorColor, foregroundColor, props.backgroundColor);
   m_caretVisual.Brush(theme()->Brush(*caretColor));
+}
+
+const winrt::Microsoft::ReactNative::IComponentProps WindowsTextInputComponentView::userProps(
+    facebook::react::Props::Shared const &props) noexcept {
+  const auto &textInputProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiTextInputProps>(props);
+  return textInputProps.UserProps();
 }
 
 void WindowsTextInputComponentView::updateProps(
@@ -1293,15 +1404,28 @@ void WindowsTextInputComponentView::updateProps(
 void WindowsTextInputComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
-  m_state = std::static_pointer_cast<facebook::react::WindowsTextInputShadowNode::ConcreteState const>(state);
+  if (m_builder) {
+    m_abistate = std::static_pointer_cast<::Microsoft::ReactNative::AbiTextInputShadowNode::ConcreteState const>(state);
+  } else {
+    m_state = std::static_pointer_cast<facebook::react::WindowsTextInputShadowNode::ConcreteState const>(state);
+  }
 
-  if (!m_state) {
+  // Avoid new-ing up a new AbiComponentState on every state change if we are not a custom component
+  if (m_builder && m_builder->UpdateStateHandler()) {
+    m_builder->UpdateStateHandler()(
+        *this,
+        winrt::make<::Microsoft::ReactNative::AbiComponentState<::Microsoft::ReactNative::AbiTextInputStateData>>(
+            state));
+  }
+
+  if (!m_state && !m_abistate) {
     assert(false && "State is `null` for <TextInput> component.");
     return;
   }
 
   if (!oldState) {
-    m_mostRecentEventCount = m_state->getData().mostRecentEventCount;
+    m_mostRecentEventCount =
+        m_builder ? m_abistate->getData().mostRecentEventCount : m_state->getData().mostRecentEventCount;
   }
 
   if (auto root = rootComponentView()) {
@@ -1313,22 +1437,32 @@ void WindowsTextInputComponentView::updateState(
     }
   }
 
-  if (m_mostRecentEventCount == m_state->getData().mostRecentEventCount) {
+  // Userdata-only updates must not replay potentially stale native text.
+  const bool textChanged = !m_builder || !oldState ||
+      m_abistate->getData().attributedStringBox !=
+          static_cast<const ::Microsoft::ReactNative::AbiTextInputShadowNode::ConcreteState *>(oldState.get())
+              ->getData()
+              .attributedStringBox;
+  if (textChanged &&
+      (m_builder ? m_mostRecentEventCount == m_abistate->getData().mostRecentEventCount
+                 : m_mostRecentEventCount == m_state->getData().mostRecentEventCount)) {
     m_comingFromState = true;
-    auto &fragments = m_state->getData().attributedStringBox.getValue().getFragments();
     {
       // DrawBlock defers DrawText() until after UpdateText completes
       DrawBlock db(*this);
-      UpdateText(fragments.size() ? fragments[0].string : "");
+      UpdateText(
+          m_builder ? m_abistate->getData().attributedStringBox.getValue()
+                    : m_state->getData().attributedStringBox.getValue());
     }
     m_comingFromState = false;
   }
 }
 
-void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept {
+void WindowsTextInputComponentView::UpdateText(const facebook::react::AttributedString &attributedString) noexcept {
+  DrawBlock db(*this);
   SETTEXTEX stt;
   memset(&stt, 0, sizeof(stt));
-  stt.flags = ST_DEFAULT;
+  stt.flags = 0x20 /*ST_PLAINTEXTONLY*/;
   stt.codepage = CP_UTF8;
   LRESULT res;
 
@@ -1336,8 +1470,51 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
   cr.cpMin = cr.cpMax = 0;
   winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
 
+  // Formatting uses temporary selections and must not publish intermediate text or selection changes.
+  LRESULT eventMask;
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_GETEVENTMASK, 0, 0, &eventMask));
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETEVENTMASK, 0, eventMask & ~(ENM_CHANGE | ENM_SELCHANGE), &res));
+
+  auto text = attributedString.getString();
   winrt::check_hresult(m_textServices->TxSendMessage(
-      EM_SETTEXTEX, reinterpret_cast<WPARAM>(&stt), reinterpret_cast<LPARAM>(str.c_str()), &res));
+      EM_SETTEXTEX, reinterpret_cast<WPARAM>(&stt), reinterpret_cast<LPARAM>(text.c_str()), &res));
+
+  auto baseTextAttributes = windowsTextInputProps().textAttributes;
+  baseTextAttributes.apply(attributedString.getBaseTextAttributes());
+  auto charFormat = GetCharFormat(baseTextAttributes);
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETCHARFORMAT, SCF_ALL, reinterpret_cast<LPARAM>(&charFormat), &res));
+  winrt::check_bool(res != 0);
+
+  // Richedit in password mode does not support per-fragment formatting, so we only apply it when not in secureTextEntry
+  // mode.
+  if (!windowsTextInputProps().secureTextEntry) {
+    LONG position = 0;
+    bool previousWasCR = false;
+    for (const auto &fragment : attributedString.getFragments()) {
+      auto fragmentText = ::Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string);
+      LONG end = position;
+      for (auto character : fragmentText) {
+        // RichEdit positions count UTF-16 code units, with CRLF normalized to a single paragraph mark.
+        if (character != L'\n' || !previousWasCR) {
+          ++end;
+        }
+        previousWasCR = character == L'\r';
+      }
+
+      if (end != position) {
+        auto textAttributes = baseTextAttributes;
+        textAttributes.apply(fragment.textAttributes);
+        charFormat = GetCharFormat(textAttributes);
+        winrt::check_hresult(m_textServices->TxSendMessage(EM_SETSEL, position, end, &res));
+        winrt::check_hresult(m_textServices->TxSendMessage(
+            EM_SETCHARFORMAT, SCF_SELECTION, reinterpret_cast<LPARAM>(&charFormat), &res));
+        winrt::check_bool(res != 0);
+      }
+      position = end;
+    }
+  }
 
   winrt::check_hresult(
       m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(cr.cpMin), static_cast<LPARAM>(cr.cpMax), &res));
@@ -1345,6 +1522,26 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
   // enable colored emojis
   winrt::check_hresult(
       m_textServices->TxSendMessage(EM_SETTYPOGRAPHYOPTIONS, 0x1000 | 0x2000, 0x1000 | 0x2000, nullptr));
+
+  m_recalculateContentVerticalOffset = true;
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEVENTMASK, 0, eventMask, &res));
+  if ((eventMask & ENM_CHANGE) && !m_comingFromState) {
+    OnTextUpdated();
+  }
+  if (eventMask & ENM_SELCHANGE) {
+    CHARRANGE finalSelection;
+    winrt::check_hresult(
+        m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&finalSelection), &res));
+    if (finalSelection.cpMin != cr.cpMin || finalSelection.cpMax != cr.cpMax) {
+      if (m_eventEmitter) {
+        auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+        facebook::react::WindowsTextInputEventEmitter::OnSelectionChange onSelectionChangeArgs;
+        onSelectionChangeArgs.selection.start = finalSelection.cpMin;
+        onSelectionChangeArgs.selection.end = finalSelection.cpMax;
+        emitter->onSelectionChange(onSelectionChangeArgs);
+      }
+    }
+  }
 }
 
 void WindowsTextInputComponentView::updateLayoutMetrics(
@@ -1434,14 +1631,22 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   const auto eventCount = m_eventEmitter && !m_comingFromJS ? ++m_nativeEventCount : m_nativeEventCount;
   m_mostRecentEventCount = eventCount;
 
-  auto data = m_state->getData();
-  // auto newAttributedString = getAttributedString();
-  // if (data.attributedString == newAttributedString)
-  //    return;
-  data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
-  data.mostRecentEventCount = eventCount;
-
-  m_state->updateState(std::move(data));
+  if (m_builder) {
+    auto attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
+    const auto eventCount = m_nativeEventCount;
+    m_abistate->updateState([attributedStringBox = std::move(attributedStringBox),
+                             eventCount](const ::Microsoft::ReactNative::AbiTextInputStateData &oldData) {
+      auto data = oldData;
+      data.attributedStringBox = attributedStringBox;
+      data.mostRecentEventCount = eventCount;
+      return std::make_shared<const ::Microsoft::ReactNative::AbiTextInputStateData>(std::move(data));
+    });
+  } else {
+    auto data = m_state->getData();
+    data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
+    data.mostRecentEventCount = m_nativeEventCount;
+    m_state->updateState(std::move(data));
+  }
 
   if (m_eventEmitter && !m_comingFromJS) {
     // call onChange event
@@ -1578,7 +1783,9 @@ void WindowsTextInputComponentView::setAcccessiblityValue(std::string &&value) n
     value = ::Microsoft::Common::Unicode::Utf16ToUtf8(uppercaseValue);
   }
   m_comingFromState = true;
-  UpdateText(value);
+  facebook::react::AttributedString attributedString;
+  attributedString.appendFragment({std::move(value), windowsTextInputProps().textAttributes, {}});
+  UpdateText(attributedString);
   m_comingFromState = false;
   OnTextUpdated();
 }
@@ -1597,6 +1804,11 @@ const facebook::react::WindowsTextInputProps &WindowsTextInputComponentView::win
 }
 
 void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
+  m_cf = GetCharFormat(windowsTextInputProps().textAttributes);
+}
+
+CHARFORMAT2W WindowsTextInputComponentView::GetCharFormat(
+    const facebook::react::TextAttributes &textAttributes) noexcept {
   CHARFORMAT2W cfNew = {0};
   // Set CHARFORMAT structure
   cfNew.cbSize = sizeof(CHARFORMAT2W);
@@ -1610,15 +1822,18 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   //    m_crText = RemoveAlpha(fontDetails.FontColor);
   //  }
 
-  const auto &props = windowsTextInputProps();
   float fontSize =
-      (std::isnan(props.textAttributes.fontSize) ? facebook::react::TextAttributes::defaultTextAttributes().fontSize
-                                                 : props.textAttributes.fontSize);
+      (std::isnan(textAttributes.fontSize) ? facebook::react::TextAttributes::defaultTextAttributes().fontSize
+                                           : textAttributes.fontSize);
 
   // Apply maxFontSizeMultiplier if specified
-  auto maxFontSizeMultiplier = windowsTextInputProps().textAttributes.maxFontSizeMultiplier;
-  fontSize *=
-      (maxFontSizeMultiplier >= 1.0f) ? std::min(maxFontSizeMultiplier, m_fontSizeMultiplier) : m_fontSizeMultiplier;
+  if (textAttributes.allowFontScaling.value_or(windowsTextInputProps().allowFontScaling)) {
+    auto fontSizeMultiplier =
+        std::isnan(textAttributes.fontSizeMultiplier) ? m_fontSizeMultiplier : textAttributes.fontSizeMultiplier;
+    auto maxFontSizeMultiplier = textAttributes.maxFontSizeMultiplier;
+    fontSize *=
+        (maxFontSizeMultiplier >= 1.0f) ? std::min(maxFontSizeMultiplier, fontSizeMultiplier) : fontSizeMultiplier;
+  }
 
   cfNew.dwMask |= CFM_SIZE;
   // set font size -- 15 to convert twips to pt
@@ -1626,20 +1841,19 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
 
   // set bold
   cfNew.dwMask |= CFM_WEIGHT;
-  cfNew.wWeight =
-      props.textAttributes.fontWeight ? static_cast<WORD>(*props.textAttributes.fontWeight) : DWRITE_FONT_WEIGHT_NORMAL;
+  cfNew.wWeight = textAttributes.fontWeight ? static_cast<WORD>(*textAttributes.fontWeight) : DWRITE_FONT_WEIGHT_NORMAL;
 
   // set font style (italic)
   cfNew.dwMask |= CFM_ITALIC;
-  if (props.textAttributes.fontStyle == facebook::react::FontStyle::Italic ||
-      props.textAttributes.fontStyle == facebook::react::FontStyle::Oblique) {
+  if (textAttributes.fontStyle == facebook::react::FontStyle::Italic ||
+      textAttributes.fontStyle == facebook::react::FontStyle::Oblique) {
     cfNew.dwEffects |= CFE_ITALIC;
   }
 
   // set text decoration (underline and strikethrough)
   cfNew.dwMask |= (CFM_UNDERLINE | CFM_STRIKEOUT);
-  if (props.textAttributes.textDecorationLineType.has_value()) {
-    auto decorationType = *props.textAttributes.textDecorationLineType;
+  if (textAttributes.textDecorationLineType.has_value()) {
+    auto decorationType = *textAttributes.textDecorationLineType;
     if (decorationType == facebook::react::TextDecorationLineType::Underline ||
         decorationType == facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
       cfNew.dwEffects |= CFE_UNDERLINE;
@@ -1651,11 +1865,10 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   }
 
   // set font family
-  if (!props.textAttributes.fontFamily.empty()) {
+  if (!textAttributes.fontFamily.empty()) {
     cfNew.dwMask |= CFM_FACE;
-    std::wstring fontFamily =
-        std::wstring(props.textAttributes.fontFamily.begin(), props.textAttributes.fontFamily.end());
-    wcsncpy_s(cfNew.szFaceName, fontFamily.c_str(), LF_FACESIZE);
+    auto fontFamily = ::Microsoft::Common::Unicode::Utf8ToUtf16(textAttributes.fontFamily);
+    wcsncpy_s(cfNew.szFaceName, fontFamily.c_str(), _TRUNCATE);
   } else {
     cfNew.dwMask |= CFM_FACE;
     wcsncpy_s(cfNew.szFaceName, L"Segoe UI\0", LF_FACESIZE);
@@ -1667,17 +1880,29 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   cfNew.yOffset = 0;
 
   // set letter spacing
-  float letterSpacing = props.textAttributes.letterSpacing;
-  if (!std::isnan(letterSpacing)) {
-    cfNew.dwMask |= CFM_SPACING;
-    cfNew.sSpacing = static_cast<SHORT>(letterSpacing * 20); // Convert to TWIPS
+  float letterSpacing = textAttributes.letterSpacing;
+  cfNew.dwMask |= CFM_SPACING;
+  cfNew.sSpacing = std::isnan(letterSpacing) ? 0 : static_cast<SHORT>(letterSpacing * 20); // Convert to TWIPS
+
+  cfNew.dwMask |= CFM_COLOR | CFM_BACKCOLOR;
+  cfNew.dwEffects |= CFE_AUTOCOLOR | CFE_AUTOBACKCOLOR;
+  if (textAttributes.foregroundColor &&
+      textAttributes.foregroundColor != windowsTextInputProps().textAttributes.foregroundColor) {
+    auto color = theme()->Color(*textAttributes.foregroundColor);
+    cfNew.crTextColor = RGB(color.R, color.G, color.B);
+    cfNew.dwEffects &= ~CFE_AUTOCOLOR;
+  }
+  if (facebook::react::isColorMeaningful(textAttributes.backgroundColor)) {
+    auto color = theme()->Color(*textAttributes.backgroundColor);
+    cfNew.crBackColor = RGB(color.R, color.G, color.B);
+    cfNew.dwEffects &= ~CFE_AUTOBACKCOLOR;
   }
 
   // set charset
   cfNew.dwMask |= CFM_CHARSET;
   cfNew.bCharSet = DEFAULT_CHARSET;
 
-  m_cf = cfNew;
+  return cfNew;
 }
 
 void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
@@ -1928,21 +2153,50 @@ void WindowsTextInputComponentView::DrawText() noexcept {
   m_needsRedraw = false;
 }
 
+void WindowsTextInputComponentView::ensureTextHost() noexcept {
+  if (!m_textHost) {
+    winrt::check_hresult(HrEnsureRichEd20Loaded());
+    m_textHost = winrt::make<CompTextHost>(this);
+    winrt::com_ptr<::IUnknown> spUnk;
+    winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
+    spUnk.as(m_textServices);
+    winrt::check_bool(m_textServices != nullptr);
+
+    // Enable TSF support
+    winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEDITSTYLE, SES_USECTF, SES_USECTF, nullptr));
+    winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_RICHTEXT, 0, nullptr));
+  }
+}
+
+HRESULT WindowsTextInputComponentView::GetTextDocument(ITextDocument2 **textDocument) noexcept {
+  winrt::com_ptr<IUnknown> spUnk;
+  winrt::com_ptr<ITextDocument2> spTextDoc;
+  ensureTextHost();
+
+  // initialize TOM
+  LRESULT res;
+  m_textServices->TxSendMessage(EM_GETOLEINTERFACE, 0, reinterpret_cast<LPARAM>(spUnk.put()), &res);
+  HRESULT hr = spUnk->QueryInterface(__uuidof(ITextDocument2), reinterpret_cast<void **>(spTextDoc.put()));
+  spTextDoc.copy_to(textDocument);
+  return hr;
+}
+
+HRESULT WindowsTextInputComponentView::GetTextServices(ITextServices2 **textServices) noexcept {
+  ensureTextHost();
+  m_textServices.copy_to(textServices);
+  return S_OK;
+}
+
+HRESULT WindowsTextInputComponentView::GetTextHost(ITextHost **textHost) noexcept {
+  ensureTextHost();
+  m_textHost.copy_to(textHost);
+  return S_OK;
+}
+
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 WindowsTextInputComponentView::createVisual() noexcept {
-  HrEnsureRichEd20Loaded();
   auto visual = m_compContext.CreateSpriteVisual();
-  m_textHost = winrt::make<CompTextHost>(this);
-  winrt::com_ptr<::IUnknown> spUnk;
-  winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
-  spUnk.as(m_textServices);
-  winrt::check_bool(m_textServices != nullptr);
-
-  LRESULT res;
-  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETTEXTMODE, TM_PLAINTEXT, 0, &res));
-
-  // Enable TSF support
-  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEDITSTYLE, SES_USECTF, SES_USECTF, nullptr));
+  ensureTextHost();
 
   m_caretVisual = m_compContext.CreateCaretVisual();
   visual.InsertAt(m_caretVisual.InnerVisual(), 0);
