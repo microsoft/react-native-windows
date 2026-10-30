@@ -30,23 +30,27 @@ branches, all driven from YAML. Keep the branch lists in `ci-pipeline.yml`,
 |--------|--------|
 | `main` | Active development |
 | `0.81-stable` | LTS — last release supporting both Fabric and Paper UI |
-| `0.83-stable` | Latest release − 1 |
-| `0.84-stable` | Current release |
-| `0.85-stable` | Preview |
-| `0.86-stable` | In upstream React Native, not yet integrated |
-| `0.87-stable` | In upstream React Native, not yet integrated |
+| `0.85-stable` | Current release |
 
-`0.82-stable` is deprecated and removed from all pipelines. `0.80-stable` and
-earlier are not built.
+`0.82-stable` is deprecated and removed from all pipelines. `0.83-stable` and
+`0.84-stable` are retired: pushes to them no longer run CI, release preparation, or
+Release, and Dependabot no longer updates them. Their own YAML still validates PRs
+into them, so an emergency fix can be reviewed. `0.80-stable` and earlier are not
+built.
+
+Azure Pipelines reads push triggers from the pushed branch and PR triggers from the
+PR's source branch, so retiring a branch also requires a change on that branch. To
+add a new stable branch, add it to this table and to those branch lists on `main`
+before cutting it, so the new branch inherits them.
 
 Feed warm-up (`warm-feed-pipeline.yml`, scheduled on `main`) has two passes: the
 latest-patch enumeration is branch-agnostic (feed-centric), while the closure pass
-reproduces the `create-react-native-library` CLI-init graph **per built release
-branch**. That branch list lives in
+reproduces the CLI-init library and app graphs **per supported branch**. Those
+branch lists live in
 [`warm-feed.config.json`](../packages/@rnw-scripts/warm-feed/warm-feed.config.json)
-(`closure.modules.create-react-native-library.branches`) — keep it in sync with the
-built branches above (it omits the not-yet-integrated ones). Branch *creation* is
-governed separately by the ruleset in
+(`closure.modules.create-react-native-library.branches` and
+`closure.modules.create-react-native-app.branches`) — keep both in sync with the
+table above. Branch *creation* is governed separately by the ruleset in
 [`repo-rules/`](./repo-rules/README.md).
 
 ## Template-repository wiring (per-entry `PipelineTemplates` alias)
