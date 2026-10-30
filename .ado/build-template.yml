@@ -112,57 +112,22 @@ extends:
           pool: ${{ parameters.AgentPool.Medium }}
           timeoutInMinutes: 60 # CodeQL requires 3x usual build timeout
           steps:
-          # 1. Detect whether this is a release build or a developer build
-          - pwsh: |
-              $param = '${{ parameters.isReleaseBuild }}'
-              $buildReason = $env:BUILD_REASON
-              $sourceMessage = $env:SOURCE_MESSAGE
-              $prSourceBranch = $env:PR_SOURCE_BRANCH
-
-              if ($param -eq 'true') {
-                $isRelease = $true
-                Write-Host "Release build forced by parameter"
-              }
-              elseif ($param -eq 'false') {
-                $isRelease = $false
-                Write-Host "Developer build forced by parameter"
-              }
-              else {
-                # Auto-detect
-                if ($buildReason -eq 'PullRequest') {
-                  # PR: check source branch
-                  $isRelease = $prSourceBranch.StartsWith('prepare-release/')
-                  Write-Host "PR source branch: $prSourceBranch -> isRelease=$isRelease"
-                }
-                else {
-                  # CI/Manual: check commit message
-                  $firstLine = ($sourceMessage -split "`n")[0].Trim()
-                  $isRelease = $firstLine.StartsWith("RELEASE:")
-                  Write-Host "Commit message first line: $firstLine -> isRelease=$isRelease"
-                }
-              }
-
-              Write-Host "RESULT: isReleaseBuild=$isRelease"
-              Write-Host "##vso[task.setvariable variable=isReleaseBuild;isOutput=true]$isRelease"
-              Write-Host "##vso[task.setvariable variable=isReleaseBuild]$isRelease"
-            name: detectScenario
-            displayName: Detect build scenario
-            env:
-              BUILD_REASON: $(Build.Reason)
-              SOURCE_MESSAGE: $(Build.SourceVersionMessage)
-              PR_SOURCE_BRANCH: $(System.PullRequest.SourceBranch)
-
-          # 2. Full checkout (needed for beachball bump on developer builds;
+          # 1. Full checkout (needed for beachball bump on developer builds;
           #    harmless ~1 min overhead on release builds where bump is skipped)
           - template: .ado/templates/checkout-full.yml@self
             parameters:
               persistCredentials: true
 
-          # 3. Node.js (always needed — setVersionEnvVars.js requires it)
+          # 2. Node.js (always needed — setVersionEnvVars.js requires it)
           - task: UseNode@1
             inputs:
               version: '24.x'
             displayName: Use Node.js 24.x
+
+          # 3. Detect before any developer-build version bump
+          - pwsh: node .ado/scripts/detectReleaseBuild.js '${{ parameters.isReleaseBuild }}'
+            name: detectScenario
+            displayName: Detect build scenario
 
           # CI is network-isolated; acquire the feed token used by the Verdaccio uplink.
           - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
@@ -421,7 +386,10 @@ extends:
         # Create NuGet packages
         - job: RNWNuget
           displayName: Pack NuGet
-          variables: [template: .ado/variables/shared.yml@self]
+          variables:
+            - template: .ado/variables/shared.yml@self
+            - name: isReleaseCommit
+              value: $[stageDependencies.Setup.Setup.outputs['detectScenario.isReleaseCommit']]
           dependsOn:
             - RnwNpmPack
             - Linting
@@ -499,7 +467,7 @@ extends:
                 git -c http.extraheader="$authHeader" tag $tag "$(Build.SourceVersion)"
                 git -c http.extraheader="$authHeader" push origin $tag
               displayName: Tag release sources
-              condition: and(succeeded(), startsWith(variables['Build.SourceVersionMessage'], 'RELEASE:'))
+              condition: and(succeeded(), eq(variables['IsReleaseBuild'], 'True'), eq(variables['isReleaseCommit'], 'True'))
               env:
                 SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 

@@ -15,7 +15,7 @@
     "release-notes": "yarn workspace @rnw-scripts/generate-release-notes release-notes",
     "warm-feed": "yarn workspace @rnw-scripts/warm-feed warm-feed",
     "spellcheck": "npx cspell",
-    "test": "node --test .ado/tests/extract-zip.test.cjs && lage test --verbose --passWithNoTests",
+    "test": "node --test .ado/tests/extract-zip.test.cjs .ado/tests/detect-release-build.test.cjs && lage test --verbose --passWithNoTests",
     "validate-overrides": "react-native-platform-override validate",
     "fork-sync": "node packages/@rnw-scripts/fork-sync/lib-commonjs/sync.js",
     "fork-sync:status": "yarn fork-sync --dep fmt --status"

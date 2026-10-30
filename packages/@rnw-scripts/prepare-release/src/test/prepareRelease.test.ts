@@ -20,6 +20,8 @@ import * as summary from '../releaseSummary';
 import {formatReleasePRTitle, main} from '../prepareRelease';
 
 const pr = {number: 42, url: 'https://github.com/owner/repo/pull/42'};
+const commitMessage =
+  'RELEASE: Releasing 1 package(s) (0.85-stable)\n\nRNW-Release-Branch: 0.85-stable';
 const sentinel = new Error('process.exit sentinel');
 const argv = process.argv;
 function setupMocks() {
@@ -108,11 +110,12 @@ for (const [branch, count, alias] of [
 
 // New/existing PRs must share the title in live and dry-run paths.
 for (const existing of [false, true]) {
-  void it(`creates or refreshes without changing commits (existing=${existing})`, async () => {
+  void it(`creates or refreshes with full target branch metadata (existing=${existing})`, async () => {
     const {git, findPR, createPR, updatePR, exit} = mocks;
     findPR.mock.mockImplementation(async () => (existing ? pr : null));
     await main();
-    calledWith(git.commit, 'RELEASE: Releasing 1 package(s) (0.85-stable)');
+    calledWith(git.commit, commitMessage);
+    assert.equal(git.commit.mock.callCount(), 1);
     calledWith(git.push, 'upstream', 'prepare-release/0.85-stable', {
       force: true,
     });
@@ -140,9 +143,11 @@ for (const existing of [false, true]) {
     const output = calls(log).flat().join('\n');
     assert.ok(output.includes('🚀 [0.85]: Release 1 package";'));
     assert.ok(output.includes('label: release'));
+    assert.equal(output.split(commitMessage).length - 1, 1);
     calledWith(log, 'PR body');
     assert.equal(bumpVersions.mock.callCount(), 1);
-    calledWith(git.commit, 'RELEASE: Releasing 1 package(s) (0.85-stable)');
+    calledWith(git.commit, commitMessage);
+    assert.equal(git.commit.mock.callCount(), 1);
     for (const fn of [git.push, createPR, updatePR]) {
       assert.equal(fn.mock.callCount(), 0);
     }

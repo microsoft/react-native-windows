@@ -28,7 +28,14 @@ Setup ──┬── Build ──── CLI
 
 ### Setup
 
-Detects whether this is a **release build** (commit message starts with `RELEASE:`) or a **developer build**. For developer builds, runs beachball to bump versions. Publishes version variables for all downstream stages.
+In auto mode, CI detects a **release build** from a commit body line
+`RNW-Release-Branch: <branch>` matching the built branch, or a `RELEASE:` first
+line for older commits without a marker; otherwise it is a **developer build**.
+A malformed, duplicate, or branch-mismatched marker fails Setup, including when
+manually queuing CI on `prepare-release/<target>`. PR builds instead use the
+`prepare-release/` source-branch rule. The `isReleaseBuild` parameter can force
+either scenario. Developer builds run beachball to bump versions. Setup
+publishes version variables for downstream stages.
 
 ### Build
 
@@ -81,10 +88,12 @@ PREfast, SpotBugs, and Bandit are disabled (no actionable findings for this repo
 1. Developer merges a PR to `main`
 2. **CI pipeline** runs: build, test, sign, pack
 3. On success, a separate **prepare-release-bot** pipeline creates/updates a release PR (e.g., `prepare-release/main`)
-4. When the release PR is merged (commit message: `RELEASE: ...`), CI runs again as a **release build**:
+4. After merging a release PR, CI runs as a **release build** in auto mode with
+   matching marker metadata (or the legacy `RELEASE:` first line):
    - Skips beachball bump (versions already committed)
    - Builds, tests, signs, packs
-   - Tags the source commit (`react-native-windows_v<version>`)
+   - Tags the source commit (`react-native-windows_v<version>`) only when RNWNuget
+     succeeds, IsReleaseBuild is True, and the commit itself is a release commit.
 5. **Release pipeline** triggers on successful CI, publishing packages to npm and NuGet feeds
 
 ## Key Files
