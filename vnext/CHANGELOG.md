@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 15 Oct 2026 20:50:56 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 30 Oct 2026 21:33:54 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.85.1
+
+Fri, 30 Oct 2026 21:33:54 GMT
+
+### Patches
+
+- Upgrade to V8/JSI 0.79.5
+- Route repository and CI package restores through PackageFeedProxy (vmorozov@microsoft.com)
 
 ## 0.85.0
 
