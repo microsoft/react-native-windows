@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 29 Oct 2026 17:13:26 GMT",
+      "version": "0.81.5",
+      "tag": "@react-native-windows/telemetry_v0.81.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "ccb36ddd863f089338b00f6735c742d2bdf4e88f",
+            "comment": "Update @xmldom/xmldom to ^0.8.15 for XML serialization security fixes."
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Aug 2026 02:25:43 GMT",
       "version": "0.81.4",
       "tag": "@react-native-windows/telemetry_v0.81.4",
