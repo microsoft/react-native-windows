@@ -321,7 +321,7 @@ export async function main(): Promise<void> {
       console.log(generateConsoleSummary(bumpedPackages));
 
       // 13. Stage all + commit
-      const commitMessage = `RELEASE: Releasing ${bumpedPackages.length} package(s) (${targetBranch})`;
+      const commitMessage = `RELEASE: Releasing ${bumpedPackages.length} package(s) (${targetBranch})\n\nRNW-Release-Branch: ${targetBranch}`;
       console.log(colorize(`Committing: "${commitMessage}"...`, ansi.dim));
       await git.stageAll();
       await git.commit(commitMessage);
