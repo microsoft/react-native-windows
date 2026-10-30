@@ -38,6 +38,10 @@ jobs:
       - ${{ else }}:
         - template: ../templates/checkout-shallow.yml
 
+      # Runs before the install so a recorded download URL fails fast.
+      - script: node .ado/scripts/checkYarnLock.js
+        displayName: Check yarn.lock for download URLs
+
       - template: ../templates/prepare-js-env.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
