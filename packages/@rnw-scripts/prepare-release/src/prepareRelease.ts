@@ -160,7 +160,9 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
 
 export function formatReleasePRTitle(branch: string, count: number): string {
   const alias = branch.replace(/-stable$/, '');
-  return `🚀 [${alias}]: Release ${count} ${count === 1 ? 'package' : 'packages'}`;
+  return `🚀 [${alias}]: Release ${count} ${
+    count === 1 ? 'package' : 'packages'
+  }`;
 }
 
 export async function main(): Promise<void> {
@@ -321,7 +323,7 @@ export async function main(): Promise<void> {
       console.log(generateConsoleSummary(bumpedPackages));
 
       // 13. Stage all + commit
-      const commitMessage = `RELEASE: Releasing ${bumpedPackages.length} package(s) (${targetBranch})`;
+      const commitMessage = `RELEASE: Releasing ${bumpedPackages.length} package(s) (${targetBranch})\n\nRNW-Release-Branch: ${targetBranch}`;
       console.log(colorize(`Committing: "${commitMessage}"...`, ansi.dim));
       await git.stageAll();
       await git.commit(commitMessage);
