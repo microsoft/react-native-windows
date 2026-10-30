@@ -8,4 +8,9 @@
  */
 
 require('source-map-support').install();
-require('./lib-commonjs/prepareRelease');
+require('./lib-commonjs/prepareRelease')
+  .main()
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
