@@ -150,6 +150,9 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\Desktop.IntegrationTests\TurboModuleLifetimeTestHooks.cpp" Condition="'$(EnableV8LifetimeTests)' == 'true'">
+      <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative;$(ReactNativeWindowsDir)Common;$(IntDir)..\React.Windows.Desktop\Generated Files;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
