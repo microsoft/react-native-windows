@@ -85,6 +85,21 @@ export async function writeFeedNpmrc(
 }
 
 /**
+ * `process.env` with `overrides` applied, dropping inherited names that differ from
+ * an override only in letter case: on Windows, Node passes just the
+ * lexicographically first spelling (so `NPM_CONFIG_REGISTRY` beats
+ * `npm_config_registry`), and npm reads `npm_config_*` names case-insensitively.
+ */
+function childEnv(overrides: Record<string, string>): NodeJS.ProcessEnv {
+  const names = new Set(Object.keys(overrides).map(name => name.toUpperCase()));
+  const env: NodeJS.ProcessEnv = {};
+  for (const [name, value] of Object.entries(process.env)) {
+    if (!names.has(name.toUpperCase())) env[name] = value;
+  }
+  return {...env, ...overrides};
+}
+
+/**
  * Run a Node CLI (npm/npx) with feed config injected via `npm_config_*` env vars
  * (so no registry/userconfig paths land on the command line, avoiding Windows
  * quoting). `shell` is required to launch the `.cmd` shims on Windows.
@@ -99,7 +114,7 @@ export function runTool(
   const res = spawnSync(cmd, args, {
     cwd,
     encoding: 'utf8',
-    env: {...process.env, ...extraEnv},
+    env: childEnv(extraEnv),
     shell: true,
     maxBuffer: 128 * 1024 * 1024,
   });

@@ -8,7 +8,7 @@
 import {mkdtempSync, readFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join} from 'node:path';
-import {parseNpmLock, writeFeedNpmrc} from '../closure';
+import {parseNpmLock, runTool, writeFeedNpmrc} from '../closure';
 import type {Auth} from '../types';
 
 const fakeAuth: Auth = {
@@ -117,6 +117,26 @@ test('writeFeedNpmrc attaches the token only to an Azure DevOps feed host', asyn
   expect(foreign).toContain('registry=https://registry.npmjs.org/');
   expect(foreign).not.toContain('_authToken');
   expect(foreign).not.toContain('SECRET-TOKEN');
+});
+
+test('runTool gives the child its npm registry over an inherited NPM_CONFIG_REGISTRY', () => {
+  const previousEnv = process.env;
+  try {
+    process.env = {
+      ...previousEnv,
+      NPM_CONFIG_REGISTRY: 'https://inherited.invalid/npm/',
+    };
+    const registry = runTool(
+      `"${process.execPath}"`,
+      ['-p', 'process.env.npm_config_registry'],
+      tmpdir(),
+      {npm_config_registry: 'https://feed.invalid/npm/'},
+      'print npm registry',
+    );
+    expect(registry.trim()).toBe('https://feed.invalid/npm/');
+  } finally {
+    process.env = previousEnv;
+  }
 });
 
 test('writeFeedNpmrc normalizes a missing trailing slash so the auth key matches', async () => {
