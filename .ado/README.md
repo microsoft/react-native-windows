@@ -6,6 +6,14 @@ high-level tour of the stages and release flow, see
 `.ado`-specific wiring that isn't obvious from the YAML: the Office/ISS template
 setup and the network-isolation workarounds.
 
+## Branch status
+
+`0.84-stable` is retired. Pushes to it no longer run CI, release preparation, or
+Release, so merged changes are not built or published. The PR pipeline still
+validates PRs into this branch so that an emergency fix can be reviewed. See the
+[supported branches](https://github.com/microsoft/react-native-windows/blob/main/.ado/README.md#supported-branches)
+on `main`.
+
 ## Entry points
 
 | Pipeline | Entry file | ADO project | 1ES template | Notes |

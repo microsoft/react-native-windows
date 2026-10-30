@@ -11,11 +11,7 @@ trigger:
     # Supported branches
     - main
     - '0.81-stable'
-    - '0.83-stable'
-    - '0.84-stable'
     - '0.85-stable'
-    - '0.86-stable'
-    - '0.87-stable'
 pr: none
 
 schedules:
