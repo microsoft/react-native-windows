@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade to V8/JSI 0.79.5",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}
