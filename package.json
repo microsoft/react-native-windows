@@ -14,7 +14,7 @@
     "postinstall": "yarn build",
     "release-notes": "yarn workspace @rnw-scripts/generate-release-notes release-notes",
     "spellcheck": "npx cspell",
-    "test": "lage test --verbose --passWithNoTests",
+    "test": "node --test .ado/tests/extract-zip.test.cjs && lage test --verbose --passWithNoTests",
     "validate-overrides": "react-native-platform-override validate",
     "fork-sync": "node packages/@rnw-scripts/fork-sync/lib-commonjs/sync.js",
     "fork-sync:status": "yarn fork-sync --dep fmt --status"
@@ -78,7 +78,8 @@
     "js-yaml@^4.0.0": "^4.3.2",
     "js-yaml@^4.1.0": "^4.3.2",
     "js-yaml@^4.1.1": "^4.3.2",
-    "js-yaml@^3.13.1": "^3.15.2"
+    "js-yaml@^3.13.1": "^3.15.2",
+    "extract-zip@npm:^2.0.0": "patch:extract-zip@npm%3A2.0.1#~/.yarn/patches/extract-zip-npm-2.0.1-92a28e392b.patch"
   },
   "packageManager": "yarn@4.13.0"
 }
