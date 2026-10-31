@@ -53,10 +53,13 @@ ISS agents run under 1ES **Network Isolation**, which blocks egress to public CD
 The pipelines use approved package feeds and neutralize three background egress
 attempts that green builds would otherwise hide:
 
-- **NuGet restores:** the root `NuGet.Config` maps NuGet.org dependencies to
-  `https://packagefeedproxy.microsoft.io/nuget/v3/index.json` anonymously.
-  Only `ReactNative.V8Jsi.Windows*` and `Microsoft.JavaScript.V8*` use the
-  `ms/react-native-public` ADO feed, where these V8 packages are published.
+- **NuGet restores:** the root `NuGet.Config` maps all packages to the
+  `ms/react-native-public` ADO feed, which has NuGet.org as an upstream and also
+  hosts the V8 packages. A single upstream-enabled source avoids Secure Supply
+  Chain Analysis's multiple-feed rejection without disabling the scanner.
+  Anonymous restores require versions already saved in the feed. Feed warm-up
+  runs from `main`; newly introduced versions on this branch may need a one-off
+  warm using the pipeline's `packages` parameter.
   CI imports this policy for generated apps/libraries and third-party configs;
   CLI-init tests also retain their local feed for freshly built RNW packages.
   NuGet 6.0 or later is required to enforce these source mappings.
@@ -77,12 +80,12 @@ attempts that green builds would otherwise hide:
   CDN mid-build. This is an interim step; the durable fix is to bake it into the
   agent image.
 
-Public PR Verdaccio requests to the Azure Artifacts feed remain **anonymous** and
-can only restore versions an authenticated identity has already saved. The
+Anonymous NuGet restores and public PR Verdaccio requests to the Azure Artifacts
+feed can only restore versions an authenticated identity has already saved. The
 scheduled feed warm-up maintained on `main` keeps that feed populated.
-PackageFeedProxy restores do not depend on that warm-up. Publishing and
-authenticated feed maintenance keep their existing endpoints; NuGet defaults
-shipped in generated apps/libraries are unchanged.
+npm/Yarn restores through PackageFeedProxy do not depend on that warm-up.
+Publishing and authenticated feed maintenance keep their existing endpoints;
+NuGet defaults shipped in generated apps/libraries are unchanged.
 
 ## Temporary extract-zip mitigation
 

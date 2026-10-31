@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 11 Sep 2026 23:44:42 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 29 Oct 2026 17:13:26 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.38
+
+Thu, 29 Oct 2026 17:13:26 GMT
+
+### Patches
+
+- Enable apps to create custom TextInput native components, support richtext in textinput (30809111+acoates-ms@users.noreply.github.com)
+- Route repository and CI package restores through PackageFeedProxy (vmorozov@microsoft.com)
+- Fix touch timestamps so PanResponder handles every move (ryan.fowler@singlewire.com)
+- Fix single-line TextInput text drawn below center by measuring content with an unconstrained height (ryan.fowler@singlewire.com)
+- Don't flush a JS executor that the scheduled work destroyed (tiagoma@microsoft.com)
+- Bump @react-native-windows/cli to v0.81.11
 
 ## 0.81.37
 
