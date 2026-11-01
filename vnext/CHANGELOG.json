@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 01 Nov 2026 17:50:57 GMT",
+      "version": "0.81.39",
+      "tag": "react-native-windows_v0.81.39",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "546a2598c7508e13f8b0d329e789847c6658cefe",
+            "comment": "Upgrade to V8/JSI 0.79.5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Oct 2026 17:13:26 GMT",
       "version": "0.81.38",
       "tag": "react-native-windows_v0.81.38",
