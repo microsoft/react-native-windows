@@ -204,6 +204,24 @@ for (const existing of [false, true]) {
     }
   });
 }
+// gh can fail after GitHub created the PR (e.g. a lost response); the rerun
+// must find that PR and refresh it instead of creating a second one.
+void it('refreshes a PR that was created before gh failed', async () => {
+  const {findPR, createPR, updatePR, exit} = mocks;
+  findPR.mock.mockImplementationOnce(async () => pr, 1);
+  createPR.mock.mockImplementationOnce(async () => {
+    throw new Error('lost response');
+  });
+  await assert.rejects(main(), err => err === sentinel);
+  assert.deepEqual(calls(exit)[0], [1]);
+  await main();
+  assert.equal(findPR.mock.callCount(), 2);
+  assert.equal(createPR.mock.callCount(), 1);
+  assert.deepEqual(
+    updatePR.mock.calls.map(({arguments: [opts]}) => opts!.number),
+    [42],
+  );
+});
 void it('keeps the no-changes exit successful', async () => {
   mocks.git.statusPorcelain.mock.mockImplementation(async () => '');
   await assert.rejects(main(), err => err === sentinel);

@@ -41,7 +41,10 @@ function detectReleaseBuild(env, override, message = '') {
     rule = `PR source branch: ${env.SYSTEM_PULLREQUEST_SOURCEBRANCH}`;
   } else {
     const lines = message.split(/\r?\n/);
-    const markers = lines.filter(line => line.startsWith('RNW-Release-Branch'));
+    // The marker is a body line; the subject never counts as one.
+    const markers = lines
+      .slice(1)
+      .filter(line => line.startsWith('RNW-Release-Branch'));
     if (markers.length) {
       const branch = env.BUILD_SOURCEBRANCH.replace(/^refs\/heads\//, '');
       const match = /^RNW-Release-Branch: (\S+)$/.exec(markers[0]);

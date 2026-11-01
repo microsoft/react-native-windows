@@ -49,6 +49,8 @@ for (const [message, expected, branch = env.BUILD_SOURCEBRANCH] of [
     '* RNW-Release-Branch: main',
     ' RNW-Release-Branch: main',
   ].map(text => [`ordinary\n${text}`, false]),
+  [marker, false],
+  [`${marker}\n\nordinary body`, false],
 ]) {
   test(`classifies message ${JSON.stringify(message.slice(0, 65))}`, () => {
     const result = classify(message, 'auto', {
