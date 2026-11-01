@@ -90,7 +90,7 @@ export async function createPR(opts: {
     const result = await exec(
       `gh pr create --head "${opts.head}" --base "${opts.base}"` +
         ` --title "${escapeForShell(opts.title)}"` +
-        ` --body-file "${bodyFile}"${repoFlag}`,
+        ` --body-file "${bodyFile}"${repoFlag} --label release`,
       {cwd: opts.cwd},
     );
 
@@ -104,7 +104,7 @@ export async function createPR(opts: {
 }
 
 /**
- * Update an existing pull request's body text.
+ * Update an existing pull request's title, body and release label.
  *
  * Uses --body-file with a temp file to avoid shell escaping issues
  * with multiline markdown content on Windows cmd.exe.
@@ -120,7 +120,7 @@ export async function updatePR(opts: {
     const repoFlag = opts.repo ? ` --repo "${opts.repo}"` : '';
     await exec(
       `gh pr edit ${opts.number} --title "${escapeForShell(opts.title)}"` +
-        ` --body-file "${bodyFile}"${repoFlag}`,
+        ` --body-file "${bodyFile}"${repoFlag} --add-label release`,
       {cwd: opts.cwd},
     );
   });
