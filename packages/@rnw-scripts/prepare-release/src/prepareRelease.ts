@@ -158,7 +158,12 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
 // Main
 // ---------------------------------------------------------------------------
 
-(async () => {
+export function formatReleasePRTitle(branch: string, count: number): string {
+  const alias = branch.replace(/-stable$/, '');
+  return `🚀 [${alias}]: Release ${count} ${count === 1 ? 'package' : 'packages'}`;
+}
+
+export async function main(): Promise<void> {
   // 1. Parse CLI arguments
   const {values} = parseArgs({
     options: {
@@ -316,7 +321,7 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
       console.log(generateConsoleSummary(bumpedPackages));
 
       // 13. Stage all + commit
-      const commitMessage = `RELEASE: Releasing ${bumpedPackages.length} package(s) (${targetBranch})`;
+      const commitMessage = `RELEASE: Releasing ${bumpedPackages.length} package(s) (${targetBranch})\n\nRNW-Release-Branch: ${targetBranch}`;
       console.log(colorize(`Committing: "${commitMessage}"...`, ansi.dim));
       await git.stageAll();
       await git.commit(commitMessage);
@@ -352,14 +357,14 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
       }
 
       // 15. Create or update PR
-      const prTitle = `RELEASE: Releasing ${bumpedPackages.length} package(s) (${targetBranch})`;
+      const prTitle = formatReleasePRTitle(targetBranch, bumpedPackages.length);
       const prBody = generatePRBody(targetBranch, bumpedPackages);
 
       if (existingPR) {
         if (dryRun) {
           console.log(
             colorize(
-              `[DRY RUN] Would update PR #${existingPR.number}`,
+              `[DRY RUN] Would update PR #${existingPR.number}: "${prTitle}"; add label: release`,
               ansi.yellow,
             ),
           );
@@ -381,7 +386,10 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
       } else {
         if (dryRun) {
           console.log(
-            colorize(`[DRY RUN] Would create PR: "${prTitle}"`, ansi.yellow),
+            colorize(
+              `[DRY RUN] Would create PR: "${prTitle}"; label: release`,
+              ansi.yellow,
+            ),
           );
         } else {
           console.log(colorize('Creating pull request...', ansi.dim));
@@ -419,4 +427,4 @@ async function detectRemote(git: GitRepo, repoUrl: string): Promise<string> {
     console.error(`${colorize('Error:', ansi.red)} ${message}`);
     process.exit(1);
   }
-})();
+}
