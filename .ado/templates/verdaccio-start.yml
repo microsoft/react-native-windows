@@ -38,7 +38,7 @@ steps:
     - script: node .ado/scripts/npmPack.js --clean --no-color
       displayName: Pack all workspace packages
 
-    - script: node .ado/scripts/npmPack.js --no-pack --check-npm --no-color
+    - script: node .ado/scripts/npmPack.js --no-pack --check-npm --registry http://localhost:4873 --no-color
       displayName: Remove already published packages
 
     - script: |
