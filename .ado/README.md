@@ -72,6 +72,9 @@ attempts that green builds would otherwise hide:
 - **Verdaccio (CLI init tests):** `verdaccio/generate-config.js` emits the config at
   runtime, so the uplink targets the feed (with the CI token when present) while
   local packages still publish offline. The former static `config.yaml` was removed.
+  Before publishing, CLI init checks for existing versions through the same local
+  Verdaccio registry, not the default proxy. This sees versions published directly
+  to the authenticated CI feed and prevents duplicate-publish conflicts.
 - **React Native DevTools:** `RNDT_DEV: 1` stops DevTools from fetching its
   standalone shell binary from a Facebook CDN when Metro starts. The debugger is
   never opened in CI, so this has no effect on tests.
