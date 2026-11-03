@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Restrict RichEdit library load to the system folder and validate dev server bundle header length",
+  "packageName": "react-native-windows",
+  "email": "anuagra@microsoft.com",
+  "dependentChangeType": "patch"
+}
