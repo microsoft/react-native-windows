@@ -156,7 +156,7 @@ std::unique_ptr<const jsi::Buffer> LocalFileSimpleBufferStore::getBuffer(const s
     }
   } else {
     // Treat buffer id as the relative path fragment.
-    std::ifstream file(storeDirectory_ + bufferId, std::ios::binary | std::ios::ate);
+    std::ifstream file(winrt::to_hstring(storeDirectory_ + bufferId).c_str(), std::ios::binary | std::ios::ate);
 
     if (!file) {
       return nullptr;
@@ -182,7 +182,7 @@ bool LocalFileSimpleBufferStore::persistBuffer(
     std::terminate();
 
   std::ofstream file;
-  file.open(storeDirectory_ + relativeUrl, std::ios::binary | std::ios::trunc);
+  file.open(winrt::to_hstring(storeDirectory_ + relativeUrl).c_str(), std::ios::binary | std::ios::trunc);
   if (!file)
     return false;
 
@@ -244,6 +244,11 @@ std::shared_ptr<const jsi::Buffer> BasePreparedScriptStoreImpl::tryGetPreparedSc
   auto buffer = bufferStore_->getBuffer(preparedScriptFilePath);
 
   if (!buffer) {
+    return nullptr;
+  }
+
+  if (buffer->size() < sizeof(PreparedScriptPrefix) + sizeof(PreparedScriptSuffix)) {
+    // Too small to contain the prefix and suffix. The file is truncated or corrupted.
     return nullptr;
   }
 

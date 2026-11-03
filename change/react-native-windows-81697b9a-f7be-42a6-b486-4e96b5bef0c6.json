@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Store the Hermes bytecode cache in an app-specific folder",
+  "packageName": "react-native-windows",
+  "email": "anuagra@microsoft.com",
+  "dependentChangeType": "patch"
+}
