@@ -16,6 +16,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::Windows::Web::Http;
 
+using Microsoft::React::Networking::IWinRTHttpRequestFactory;
 using Microsoft::React::Networking::RedirectHttpFilter;
 using Microsoft::React::Networking::ResponseOperation;
 using winrt::Windows::Foundation::Uri;
@@ -32,6 +33,101 @@ std::wstring ToString<HttpStatusCode>(const HttpStatusCode &status) {
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
 namespace Microsoft::React::Test {
+
+namespace {
+
+// Mimics WinRTHttpResource::CreateRequest, which rebuilds every header and the body from the original request
+// arguments on each redirect hop.
+struct RebuildingRequestFactory : IWinRTHttpRequestFactory {
+  winrt::Windows::Foundation::IAsyncOperation<HttpRequestMessage> CreateRequest(
+      HttpMethod &&method,
+      Uri &&uri,
+      winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable>
+          props) noexcept override {
+    auto request = HttpRequestMessage{std::move(method), std::move(uri)};
+    for (auto prop : props) {
+      request.Properties().Insert(prop.Key(), prop.Value());
+    }
+    request.Headers().TryAppendWithoutValidation(L"Authorization", L"Bearer abc123");
+    request.Headers().Append(L"Cookie", L"name=value");
+    request.Headers().Append(L"X-Custom", L"custom");
+    request.Content(HttpStringContent{L"body"});
+
+    co_return request;
+  }
+};
+
+struct ObservedRequest {
+  std::wstring Host;
+  std::wstring Method;
+  bool HasAuthorization{false};
+  bool HasCookie{false};
+  bool HasCustom{false};
+  bool HasContent{false};
+};
+
+ObservedRequest Observe(HttpRequestMessage const &request) {
+  ObservedRequest result;
+  result.Host = request.RequestUri().Host().c_str();
+  result.Method = request.Method().Method().c_str();
+  result.HasAuthorization = request.Headers().HasKey(L"Authorization");
+  result.HasCookie = request.Headers().HasKey(L"Cookie");
+  result.HasCustom = request.Headers().HasKey(L"X-Custom");
+  result.HasContent = request.Content() != nullptr;
+
+  return result;
+}
+
+// Sends a request through a RedirectHttpFilter. Each entry of `hops` is {status, location} returned for the
+// corresponding request; the request following the last hop gets 200 OK.
+std::vector<ObservedRequest> RunRedirects(
+    HttpMethod const &method,
+    wchar_t const *initialUrl,
+    std::vector<std::pair<HttpStatusCode, wchar_t const *>> const &hops,
+    bool useFactory) {
+  auto observed = std::make_shared<std::vector<ObservedRequest>>();
+  auto handler = [observed, hops](HttpRequestMessage const &request) -> ResponseOperation {
+    auto index = observed->size();
+    observed->push_back(Observe(request));
+
+    HttpResponseMessage response;
+    if (index < hops.size()) {
+      response.StatusCode(hops[index].first);
+      response.Headers().Location(Uri{hops[index].second});
+    } else {
+      response.StatusCode(HttpStatusCode::Ok);
+    }
+    response.Content(HttpStringContent{L""});
+
+    co_return response;
+  };
+
+  auto mockFilter1 = winrt::make<MockHttpBaseFilter>();
+  auto mockFilter2 = winrt::make<MockHttpBaseFilter>();
+  mockFilter1.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync = handler;
+  mockFilter2.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync = handler;
+
+  auto filter = winrt::make<RedirectHttpFilter>(std::move(mockFilter1), std::move(mockFilter2), winrt::hstring{});
+  auto factory = std::make_shared<RebuildingRequestFactory>();
+  if (useFactory) {
+    filter.as<RedirectHttpFilter>()->SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactory>{factory});
+  }
+
+  auto request = HttpRequestMessage{method, Uri{initialUrl}};
+  request.Headers().TryAppendWithoutValidation(L"Authorization", L"Bearer abc123");
+  request.Headers().Append(L"Cookie", L"name=value");
+  request.Headers().Append(L"X-Custom", L"custom");
+  if (method.Method() != L"GET") {
+    request.Content(HttpStringContent{L"body"});
+  }
+
+  auto response = filter.SendRequestAsync(request).get();
+  Assert::AreEqual(HttpStatusCode::Ok, response.StatusCode());
+
+  return *observed;
+}
+
+} // namespace
 
 TEST_CLASS (RedirectHttpFilterUnitTest) {
   TEST_CLASS_INITIALIZE(Initialize) {
@@ -216,6 +312,108 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
 
   TEST_METHOD(TooManyRedirectsFails) {
     TestRedirectCount(2, 3);
+  }
+
+  void TestCrossOriginRemovesCredentials(bool useFactory) {
+    // a -> b -> b -> a: Authorization/Cookie are dropped from the first cross-origin hop onward.
+    auto requests = RunRedirects(
+        HttpMethod::Get(),
+        L"https://a.test/",
+        {{HttpStatusCode::Found, L"https://b.test/1"},
+         {HttpStatusCode::Found, L"https://b.test/2"},
+         {HttpStatusCode::Found, L"https://a.test/3"}},
+        useFactory);
+
+    Assert::AreEqual(size_t{4}, requests.size());
+    Assert::IsTrue(requests[0].HasAuthorization);
+    Assert::IsTrue(requests[0].HasCookie);
+    for (size_t i = 1; i < requests.size(); ++i) {
+      Assert::IsFalse(requests[i].HasAuthorization);
+      Assert::IsFalse(requests[i].HasCookie);
+      Assert::IsTrue(requests[i].HasCustom);
+    }
+    Assert::AreEqual(L"b.test", requests[1].Host.c_str());
+    Assert::AreEqual(L"b.test", requests[2].Host.c_str());
+    Assert::AreEqual(L"a.test", requests[3].Host.c_str());
+  }
+
+  TEST_METHOD(CrossOriginRedirectRemovesCredentials) {
+    TestCrossOriginRemovesCredentials(true);
+  }
+
+  TEST_METHOD(CrossOriginRedirectRemovesCredentialsWithoutFactory) {
+    TestCrossOriginRemovesCredentials(false);
+  }
+
+  TEST_METHOD(CrossOriginPortOrSchemeRemovesCredentials) {
+    auto requests =
+        RunRedirects(HttpMethod::Get(), L"http://a.test/", {{HttpStatusCode::Found, L"http://a.test:8080/"}}, true);
+    Assert::IsFalse(requests[1].HasAuthorization);
+
+    requests = RunRedirects(HttpMethod::Get(), L"http://a.test/", {{HttpStatusCode::Found, L"https://a.test/"}}, true);
+    Assert::IsFalse(requests[1].HasAuthorization);
+  }
+
+  TEST_METHOD(SameOriginRedirectKeepsCredentials) {
+    auto requests = RunRedirects(
+        HttpMethod::Get(),
+        L"https://a.test/",
+        {{HttpStatusCode::MovedPermanently, L"https://A.TEST/1"}, {HttpStatusCode::Found, L"https://a.test:443/2"}},
+        true);
+
+    Assert::AreEqual(size_t{3}, requests.size());
+    for (auto &request : requests) {
+      Assert::IsTrue(request.HasAuthorization);
+      Assert::IsTrue(request.HasCookie);
+    }
+  }
+
+  void TestMethod(
+      HttpMethod const &method,
+      HttpStatusCode status,
+      wchar_t const *expectedMethod,
+      bool expectedContent,
+      bool useFactory) {
+    auto requests = RunRedirects(method, L"https://a.test/", {{status, L"https://a.test/next"}}, useFactory);
+
+    Assert::AreEqual(size_t{2}, requests.size());
+    Assert::AreEqual(method.Method().c_str(), requests[0].Method.c_str());
+    Assert::AreEqual(expectedMethod, requests[1].Method.c_str());
+    Assert::AreEqual(expectedContent, requests[1].HasContent);
+  }
+
+  void TestMethodRules(bool useFactory) {
+    TestMethod(HttpMethod::Post(), HttpStatusCode::MovedPermanently, L"GET", false, useFactory);
+    TestMethod(HttpMethod::Post(), HttpStatusCode::Found, L"GET", false, useFactory);
+    TestMethod(HttpMethod::Post(), HttpStatusCode::SeeOther, L"GET", false, useFactory);
+    TestMethod(HttpMethod::Post(), HttpStatusCode::TemporaryRedirect, L"POST", true, useFactory);
+    TestMethod(HttpMethod::Post(), HttpStatusCode::PermanentRedirect, L"POST", true, useFactory);
+    TestMethod(HttpMethod::Put(), HttpStatusCode::Found, L"PUT", true, useFactory);
+    TestMethod(HttpMethod::Put(), HttpStatusCode::SeeOther, L"GET", false, useFactory);
+    TestMethod(HttpMethod::Put(), HttpStatusCode::TemporaryRedirect, L"PUT", true, useFactory);
+    TestMethod(HttpMethod::Delete(), HttpStatusCode::MovedPermanently, L"DELETE", true, useFactory);
+    TestMethod(HttpMethod::Head(), HttpStatusCode::SeeOther, L"HEAD", true, useFactory);
+  }
+
+  TEST_METHOD(RedirectMethodRulesFollowFetchSpec) {
+    TestMethodRules(true);
+  }
+
+  TEST_METHOD(RedirectMethodRulesFollowFetchSpecWithoutFactory) {
+    TestMethodRules(false);
+  }
+
+  TEST_METHOD(RedirectToGetStaysGetWithoutBody) {
+    // POST -302-> GET, then 307 must keep GET and must not restore the body.
+    auto requests = RunRedirects(
+        HttpMethod::Post(),
+        L"https://a.test/",
+        {{HttpStatusCode::Found, L"https://a.test/1"}, {HttpStatusCode::TemporaryRedirect, L"https://a.test/2"}},
+        true);
+
+    Assert::AreEqual(size_t{3}, requests.size());
+    Assert::AreEqual(L"GET", requests[2].Method.c_str());
+    Assert::IsFalse(requests[2].HasContent);
   }
 };
 

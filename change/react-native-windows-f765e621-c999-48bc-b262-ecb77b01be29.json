@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Follow the Fetch standard when handling HTTP redirects",
+  "packageName": "react-native-windows",
+  "email": "anuagra@microsoft.com",
+  "dependentChangeType": "patch"
+}

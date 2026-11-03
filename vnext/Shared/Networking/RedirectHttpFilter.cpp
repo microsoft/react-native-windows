@@ -21,6 +21,22 @@
 
 namespace {
 constexpr size_t DefaultMaxRedirects = 20;
+
+bool IsSameOrigin(winrt::Windows::Foundation::Uri const &u1, winrt::Windows::Foundation::Uri const &u2) noexcept {
+  return u1 && u2 && _wcsicmp(u1.SchemeName().c_str(), u2.SchemeName().c_str()) == 0 &&
+      _wcsicmp(u1.Host().c_str(), u2.Host().c_str()) == 0 && u1.Port() == u2.Port();
+}
+
+bool IsMethod(winrt::Windows::Web::Http::HttpMethod const &method, wchar_t const *name) noexcept {
+  return method && _wcsicmp(method.Method().c_str(), name) == 0;
+}
+
+void RemoveHeader(winrt::Windows::Web::Http::HttpRequestMessage const &request, wchar_t const *name) {
+  auto headers = request.Headers();
+  if (headers.HasKey(name)) {
+    headers.Remove(name);
+  }
+}
 } // namespace
 
 using winrt::Windows::Foundation::Uri;
@@ -221,6 +237,12 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
   auto coEventSrc = m_redirEventSrc;
 
   method = coRequest.Method();
+  auto originalUri = coRequest.RequestUri();
+
+  // Per the Fetch standard, Authorization/Cookie headers are dropped once a redirect changes origin. This applies to
+  // every later hop too, because each hop may rebuild the request from the original arguments.
+  bool removeCredentials = false;
+  bool removeBody = false;
 
   do {
     // Set User-Agent
@@ -253,16 +275,12 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
       break;
     }
 
-    if (auto requestFactory = coRequestFactory.lock()) {
-      coRequest =
-          co_await requestFactory->CreateRequest(HttpMethod{method}, coRequest.RequestUri(), coRequest.Properties());
-
-      if (!coRequest) {
-        throw winrt::hresult_error{E_INVALIDARG, L"Invalid request handle"};
-      }
+    auto location = response.Headers().Location();
+    if (!location) {
+      break;
     }
 
-    auto redirectUri = Uri{response.Headers().Location().AbsoluteUri()};
+    auto redirectUri = Uri{location.AbsoluteUri()};
     if (!redirectUri) {
       break;
     }
@@ -276,17 +294,41 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
       break;
     }
 
-    /// See https://github.com/dotnet/corefx/blob/v3.1.28/src/System.Net.Http/src/uap/System/Net/HttpClientHandler.cs
-    // Follow HTTP RFC 7231 rules. In general, 3xx responses
-    // except for 307 and 308 will keep verb except POST becomes GET.
-    // 307 and 308 responses have all verbs stay the same.
-    // https://tools.ietf.org/html/rfc7231#section-6.4
-    if (response.StatusCode() != HttpStatusCode::TemporaryRedirect &&
-        response.StatusCode() != HttpStatusCode::PermanentRedirect && method != HttpMethod::Post()) {
+    // See https://fetch.spec.whatwg.org/#http-redirect-fetch
+    // 301/302 change POST to GET; 303 changes any method other than GET/HEAD to GET.
+    // 307/308 (and other redirect statuses) keep the method and body.
+    auto status = response.StatusCode();
+    if (((status == HttpStatusCode::MovedPermanently || status == HttpStatusCode::Found) &&
+         IsMethod(method, L"POST")) ||
+        (status == HttpStatusCode::SeeOther && !IsMethod(method, L"GET") && !IsMethod(method, L"HEAD"))) {
       method = HttpMethod::Get();
+      removeBody = true;
     }
 
-    coRequest.RequestUri(redirectUri);
+    if (!IsSameOrigin(originalUri, redirectUri)) {
+      removeCredentials = true;
+    }
+
+    if (auto requestFactory = coRequestFactory.lock()) {
+      coRequest = co_await requestFactory->CreateRequest(HttpMethod{method}, Uri{redirectUri}, coRequest.Properties());
+
+      if (!coRequest) {
+        throw winrt::hresult_error{E_INVALIDARG, L"Invalid request handle"};
+      }
+    } else {
+      coRequest.Method(method);
+      coRequest.RequestUri(redirectUri);
+    }
+
+    if (removeBody) {
+      coRequest.Content(nullptr);
+    }
+
+    if (removeCredentials) {
+      RemoveHeader(coRequest, L"Authorization");
+      RemoveHeader(coRequest, L"Cookie");
+      RemoveHeader(coRequest, L"Cookie2");
+    }
   } while (coAllowAutoRedirect);
 
   response.RequestMessage(coRequest);
