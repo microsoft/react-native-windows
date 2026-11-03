@@ -448,9 +448,8 @@ std::wstring GetUnpackagedAppCacheFolderName() noexcept {
   return name;
 }
 
-// The Hermes prepared script (bytecode) cache must live in an app-private folder. Cached bytecode is executed
-// without re-compiling the source, so a folder shared with other apps or users (such as %TEMP%) would let them
-// replace the code the app runs, and would let different apps overwrite each other's cache entries.
+// The Hermes prepared script (bytecode) cache lives in an app-specific folder so that different apps don't
+// overwrite each other's cache entries.
 std::wstring GetPreparedScriptStoreDirectory() noexcept {
   try {
     std::filesystem::path directory;
