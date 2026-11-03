@@ -48,8 +48,8 @@ struct RebuildingRequestFactory : IWinRTHttpRequestFactory {
     for (auto prop : props) {
       request.Properties().Insert(prop.Key(), prop.Value());
     }
-    request.Headers().TryAppendWithoutValidation(L"Authorization", L"Bearer secret");
-    request.Headers().Append(L"Cookie", L"session=secret");
+    request.Headers().TryAppendWithoutValidation(L"Authorization", L"Bearer abc123");
+    request.Headers().Append(L"Cookie", L"name=value");
     request.Headers().Append(L"X-Custom", L"custom");
     request.Content(HttpStringContent{L"body"});
 
@@ -114,8 +114,8 @@ std::vector<ObservedRequest> RunRedirects(
   }
 
   auto request = HttpRequestMessage{method, Uri{initialUrl}};
-  request.Headers().TryAppendWithoutValidation(L"Authorization", L"Bearer secret");
-  request.Headers().Append(L"Cookie", L"session=secret");
+  request.Headers().TryAppendWithoutValidation(L"Authorization", L"Bearer abc123");
+  request.Headers().Append(L"Cookie", L"name=value");
   request.Headers().Append(L"X-Custom", L"custom");
   if (method.Method() != L"GET") {
     request.Content(HttpStringContent{L"body"});
@@ -315,7 +315,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
   }
 
   void TestCrossOriginRemovesCredentials(bool useFactory) {
-    // a -> b -> b -> a: credentials must not reach b, and stay removed once removed.
+    // a -> b -> b -> a: Authorization/Cookie are dropped from the first cross-origin hop onward.
     auto requests = RunRedirects(
         HttpMethod::Get(),
         L"https://a.test/",

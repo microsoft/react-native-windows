@@ -239,8 +239,8 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
   method = coRequest.Method();
   auto originalUri = coRequest.RequestUri();
 
-  // Once a redirect leaves the original origin, credentials stay removed for every later hop (including hops back to
-  // the original origin), since each hop may rebuild the request from the original arguments.
+  // Per the Fetch standard, Authorization/Cookie headers are dropped once a redirect changes origin. This applies to
+  // every later hop too, because each hop may rebuild the request from the original arguments.
   bool removeCredentials = false;
   bool removeBody = false;
 
