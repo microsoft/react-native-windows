@@ -27,5 +27,9 @@ test('Widget', async () => {
 });
 ```
 
+Fabric image sources use a stable `<localOrBundlerUri>` prefix instead of the
+local bundle path, for both legacy underscore and Metro `@@/` asset paths. Set
+`removeGuidsFromImageSources: false` to keep the original image URIs.
+
 #### Options
 **TBD**

@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Normalize bundled image source URIs with Metro escape markers",
+  "packageName": "@react-native-windows/automation-commands",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

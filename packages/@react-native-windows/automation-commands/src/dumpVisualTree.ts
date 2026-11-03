@@ -140,16 +140,15 @@ function removeGuidsFromImageSourcesHelper(node: ComponentNode) {
           source.Uri =
             'https://raw.githubusercontent.com/microsoft/react-native-windows/main/packages/@react-native/tester/js/assets/flowers.png?hash=<some_hash_here>';
         } else {
-          // When getting files from a prebuilt bundle the uri is going to include a local path, which would make snapshots inconsistent,
-          // This logic replaces the local path so that we get consistent results.
-          // file://E:\\repos\\react-native-windows\\packages\\e2e-test-app-fabric\\windows\\RNTesterApp-Fabric.Package\\bin\\x64\\Release\\AppX\\RNTesterApp-Fabric\\Bundle\\@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png
-          // becomes
-          // <localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png
+          // Strip machine-specific bundle paths, supporting both legacy underscores
+          // and Metro's escaped parent-directory markers.
           const packagesPath = require('path')
             .resolve(__dirname, '../../..')
             .replace(/\\/g, '\\\\');
           source.Uri = source.Uri.replace(
-            new RegExp(`file://${packagesPath}.*\\\\Bundle\\\\assets/_+`),
+            new RegExp(
+              `file://${packagesPath}.*\\\\Bundle\\\\assets/(?:_+|(?:@@/)+)`,
+            ),
             '<localOrBundlerUri>',
           );
 
