@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add setup-module-windows command with cpp-app template support",
+  "packageName": "@react-native-windows/cli",
+  "email": "copilot@github.com",
+  "dependentChangeType": "patch"
+}
