@@ -44,7 +44,6 @@
     "@react-native-community/cli": "20.0.0",
     "@react-native-windows/automation": "0.0.0-canary.1061",
     "@react-native-windows/automation-commands": "0.0.0-canary.1062",
-    "@react-native-windows/fs": "^0.0.0-canary.73",
     "@react-native-windows/perf-testing": "0.0.0-canary.1040",
     "@react-native/metro-config": "0.89.0-nightly-20261002-cd2de187e",
     "@rnw-scripts/babel-node-config": "2.3.3",

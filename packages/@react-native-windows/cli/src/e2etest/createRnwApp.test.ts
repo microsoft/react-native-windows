@@ -4,7 +4,7 @@
  * @format
  */
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import * as path from 'path';
 import {execSync} from 'child_process';
 

@@ -18,9 +18,6 @@
   },
   "main": "lib-commonjs/unbroken.js",
   "bin": "./bin.js",
-  "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.73"
-  },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.38",
     "@rnw-scripts/just-task": "2.3.58",

@@ -7,7 +7,7 @@
  * @format
  */
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 
 // REVIEW: Does jest have a more suitable logging facility?
 

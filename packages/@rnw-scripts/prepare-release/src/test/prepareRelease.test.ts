@@ -6,12 +6,11 @@
  */
 
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import fs from 'node:fs';
 import {afterEach, beforeEach, it, mock} from 'node:test';
 import {isDeepStrictEqual} from 'node:util';
 import path from 'path';
 import {runInNewContext} from 'vm';
-import fs from '@react-native-windows/fs';
 import * as repoRoot from '@react-native-windows/find-repo-root';
 import {GitRepo} from '../git';
 import * as github from '../github';
@@ -24,6 +23,8 @@ const commitMessage =
   'RELEASE: Releasing 1 package(s) (0.85-stable)\n\nRNW-Release-Branch: 0.85-stable';
 const sentinel = new Error('process.exit sentinel');
 const argv = process.argv;
+const rootPackageJsonPath = path.join('repo root', 'package.json');
+const realReadFileSync = fs.readFileSync;
 function setupMocks() {
   const git = GitRepo.prototype;
   return {
@@ -33,9 +34,15 @@ function setupMocks() {
     log: mock.method(console, 'log', () => {}),
     error: mock.method(console, 'error', () => {}),
     root: mock.method(repoRoot, 'default', async () => 'repo root'),
-    read: mock.method(fs, 'readFileSync', () =>
-      JSON.stringify({repository: {url: 'https://github.com/owner/repo'}}),
-    ),
+    // The real fs module is shared with Node's module loader, so only the
+    // root package.json read is faked.
+    read: mock.method(fs, 'readFileSync', ((
+      file: fs.PathOrFileDescriptor,
+      options?: Parameters<typeof fs.readFileSync>[1],
+    ) =>
+      file === rootPackageJsonPath
+        ? JSON.stringify({repository: {url: 'https://github.com/owner/repo'}})
+        : realReadFileSync(file, options)) as typeof fs.readFileSync),
     git: {
       remoteList: mock.method(
         git,
@@ -260,11 +267,14 @@ void it('bin installs source maps, invokes main, and reports rejection with exit
   const requireMock = mock.fn((name: string) =>
     name === 'source-map-support' ? {install} : {main: invoke},
   );
-  runInNewContext(readFileSync(path.join(__dirname, '../../bin.js'), 'utf8'), {
-    require: requireMock,
-    console,
-    process,
-  });
+  runInNewContext(
+    fs.readFileSync(path.join(__dirname, '../../bin.js'), 'utf8'),
+    {
+      require: requireMock,
+      console,
+      process,
+    },
+  );
   assert.ok(completion);
   await assert.rejects(completion, err => err === sentinel);
   assert.deepEqual(calls(requireMock), [
