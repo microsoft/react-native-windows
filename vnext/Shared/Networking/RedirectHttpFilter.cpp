@@ -265,6 +265,12 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
       break;
     }
 
+    // A redirect status without a Location header is a final response; return it as is.
+    auto location = response.Headers().Location();
+    if (!location) {
+      break;
+    }
+
     redirectCount++;
     if (redirectCount > coMaxRedirects) {
       throw winrt::hresult_error{HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_FAILED), L"Too many redirects"};
@@ -272,11 +278,6 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
 
     // Call event source's OnRedirecting before modifying request parameters.
     if (coEventSrc && !coEventSrc->OnRedirecting(coRequest, response)) {
-      break;
-    }
-
-    auto location = response.Headers().Location();
-    if (!location) {
       break;
     }
 
@@ -310,7 +311,8 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
     }
 
     if (auto requestFactory = coRequestFactory.lock()) {
-      coRequest = co_await requestFactory->CreateRequest(HttpMethod{method}, Uri{redirectUri}, coRequest.Properties());
+      coRequest = co_await requestFactory->CreateRequest(
+          HttpMethod{method}, Uri{redirectUri}, coRequest.Properties(), /*includeContent*/ !removeBody);
 
       if (!coRequest) {
         throw winrt::hresult_error{E_INVALIDARG, L"Invalid request handle"};
