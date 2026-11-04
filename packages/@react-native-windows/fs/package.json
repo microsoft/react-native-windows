@@ -17,7 +17,7 @@
     "directory": "packages/@react-native-windows/fs"
   },
   "dependencies": {
-    "graceful-fs": "^4.2.8",
+    "graceful-fs": "npm:@stackline/graceful-fs@1.0.3",
     "minimatch": "^10.0.3"
   },
   "devDependencies": {

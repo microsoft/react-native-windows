@@ -4412,7 +4412,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^8.36.0"
     "@typescript-eslint/parser": "npm:^8.36.0"
     eslint: "npm:^8.19.0"
-    graceful-fs: "npm:^4.2.8"
+    graceful-fs: "npm:@stackline/graceful-fs@1.0.3"
     minimatch: "npm:^10.0.3"
     prettier: "npm:^3.6.2"
     typescript: "npm:5.1.6"
@@ -11871,7 +11871,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.3, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.11, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.8, graceful-fs@npm:^4.2.9":
+"graceful-fs@npm:@stackline/graceful-fs@1.0.3":
+  version: 1.0.3
+  resolution: "@stackline/graceful-fs@npm:1.0.3"
+  checksum: 10c0/61e73ac5ac629a9f83fa079ca0e87fe6628c61fbe57d24fed55ea66e2d84242f72276a33a6ffc9d9916e31fa3728defa0b6fdc0a029227264cb7106cd50987b0
+  languageName: node
+  linkType: hard
+
+"graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.3, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.11, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9":
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: 10c0/386d011a553e02bc594ac2ca0bd6d9e4c22d7fa8cfbfc448a6d148c59ea881b092db9dbe3547ae4b88e55f1b01f7c4a2ecc53b310c042793e63aa44cf6c257f2

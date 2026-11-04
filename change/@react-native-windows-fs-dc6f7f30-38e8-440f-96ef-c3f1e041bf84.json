@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use @stackline/graceful-fs 1.0.3 through the existing graceful-fs dependency key.",
+  "packageName": "@react-native-windows/fs",
+  "email": "42686990+alexandroit@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
