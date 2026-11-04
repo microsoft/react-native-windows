@@ -50,10 +50,11 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // JS Entry file to use when loading from Metro:
   settings.DebugBundlePath(L"index");
 
-#if BUNDLE
+#if BUNDLE || !defined(_DEBUG)
   // Disable hot reload - bundle will be loaded from prebuilt bundle file.
   settings.UseFastRefresh(false);
 #else
+  // For Debug builds without a bundle:
   // Enable hot reload - load the JS bundle from Metro
   settings.UseFastRefresh(true);
 #endif
