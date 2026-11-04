@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 04 Nov 2026 19:50:01 GMT",
+      "version": "0.0.0-canary.1062",
+      "tag": "react-native-windows_v0.0.0-canary.1062",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4ef33ee9365b3d74c5598d70e29c23f1e38b9d21",
+            "comment": "Follow the Fetch standard when handling HTTP redirects"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4ef33ee9365b3d74c5598d70e29c23f1e38b9d21",
+            "comment": "Store the Hermes bytecode cache in an app-specific folder"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.295",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.135",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.4",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1025",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Oct 2026 05:31:43 GMT",
       "version": "0.0.0-canary.1061",
       "tag": "react-native-windows_v0.0.0-canary.1061",

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/find-dotnet-tools",
   "entries": [
     {
+      "date": "Wed, 04 Nov 2026 19:50:01 GMT",
+      "version": "0.0.0-canary.4",
+      "tag": "@react-native-windows/find-dotnet-tools_v0.0.0-canary.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/find-dotnet-tools",
+            "commit": "4ef33ee9365b3d74c5598d70e29c23f1e38b9d21",
+            "comment": "Remove @react-native-windows/fs and use Node's built-in fs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Oct 2026 05:31:45 GMT",
       "version": "0.0.0-canary.3",
       "tag": "@react-native-windows/find-dotnet-tools_v0.0.0-canary.3",

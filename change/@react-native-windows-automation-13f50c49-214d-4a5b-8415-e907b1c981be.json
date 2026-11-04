@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove @react-native-windows/fs and use Node's built-in fs",
-  "packageName": "@react-native-windows/automation",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
