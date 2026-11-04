@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 29 Oct 2026 17:13:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 04 Nov 2026 20:05:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.39
+
+Wed, 04 Nov 2026 20:05:53 GMT
+
+### Patches
+
+- Upgrade to V8/JSI 0.79.5
 
 ## 0.81.38
 
