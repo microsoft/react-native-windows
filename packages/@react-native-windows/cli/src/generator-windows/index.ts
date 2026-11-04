@@ -9,7 +9,7 @@ import path from 'path';
 import username from 'username';
 import childProcess from 'child_process';
 import crypto from 'crypto';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import semver from 'semver';
 import _ from 'lodash';
 import findUp from 'find-up';
@@ -148,7 +148,9 @@ export async function copyProjectTemplateAndReplace(
   let mainComponentName = newProjectName;
   const appJsonPath = await findUp('app.json', {cwd: destPath});
   if (appJsonPath) {
-    const appJson = await fs.readJsonFile<{name: string}>(appJsonPath);
+    const appJson: {name: string} = JSON.parse(
+      await fs.promises.readFile(appJsonPath, 'utf8'),
+    );
     mainComponentName = appJson.name;
   }
 

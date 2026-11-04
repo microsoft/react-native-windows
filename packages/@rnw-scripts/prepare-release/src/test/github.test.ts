@@ -7,7 +7,7 @@
 
 import assert from 'node:assert/strict';
 import {afterEach, it, mock} from 'node:test';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import {createPR, updatePR} from '../github';
 import * as proc from '../proc';
 

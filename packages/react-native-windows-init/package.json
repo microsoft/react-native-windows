@@ -19,7 +19,6 @@
   },
   "bin": "./bin.js",
   "dependencies": {
-    "@react-native-windows/fs": "0.0.0-canary.73",
     "@react-native-windows/telemetry": "0.0.0-canary.135",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",

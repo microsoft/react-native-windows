@@ -11,7 +11,7 @@
 
 import _ from 'lodash';
 import chalk from 'chalk';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs/promises';
 import path from 'path';
 import semver from 'semver';
 import {simpleGit as simplegit} from 'simple-git';
@@ -146,7 +146,7 @@ async function readChangelogs(): Promise<Changelog[]> {
   return Promise.all(
     changelogs.map(async changelog => {
       const fullPath = path.join(repoRoot, changelog);
-      return await fs.readJsonFile<Changelog>(fullPath);
+      return JSON.parse(await fs.readFile(fullPath, 'utf8')) as Changelog;
     }),
   );
 }

@@ -20,7 +20,6 @@
   "dependencies": {
     "@react-native-community/template": "0.86.0",
     "@react-native-windows/find-repo-root": "^0.0.0-canary.102",
-    "@react-native-windows/fs": "^0.0.0-canary.73",
     "@react-native-windows/package-utils": "^0.0.0-canary.99",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",

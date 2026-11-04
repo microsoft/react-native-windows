@@ -10,7 +10,7 @@
 
 import * as path from 'path';
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 
 function yellowBold(text: string): string {
   return `\x1b[1m\x1b[33m${text}\x1b[0m`;
@@ -87,7 +87,7 @@ export class Checker {
     dirPath: string,
     callback: {(path: string): Promise<void>},
   ) {
-    const files = await fs.readdir(dirPath);
+    const files = (await fs.promises.readdir(dirPath)).sort();
     await asyncForEach(
       files,
       async (file: string) => {

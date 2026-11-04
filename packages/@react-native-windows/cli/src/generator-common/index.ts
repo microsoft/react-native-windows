@@ -4,7 +4,7 @@
  * @format
  */
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import chalk from 'chalk';
 import prompts from 'prompts';
 import path from 'path';

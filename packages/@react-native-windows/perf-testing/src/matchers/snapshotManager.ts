@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import * as path from 'path';
 import * as os from 'os';
 import type {PerfMetrics} from '../interfaces/PerfMetrics';

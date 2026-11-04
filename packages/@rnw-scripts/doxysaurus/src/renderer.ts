@@ -12,7 +12,7 @@
 import mustache from 'mustache';
 import path from 'path';
 import {log} from './logger';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs/promises';
 import {Config} from './config';
 import {DocModel} from './doc-model';
 
