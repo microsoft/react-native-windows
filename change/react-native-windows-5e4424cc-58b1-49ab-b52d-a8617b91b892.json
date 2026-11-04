@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Only load the JS bundle from Metro in Debug builds of the cpp-app template",
+  "packageName": "react-native-windows",
+  "email": "anuagra@microsoft.com",
+  "dependentChangeType": "patch"
+}
