@@ -6,6 +6,7 @@
  */
 
 import fs from 'graceful-fs';
+import type {PathLike} from 'node:fs';
 
 const importedMethods = [
   'accessSync',
@@ -80,7 +81,7 @@ type ExtraMethods = {
    * @param options.flag File access flags
    */
   readJsonFileSync: <T = Record<string, unknown>>(
-    path: fs.PathLike | number,
+    path: PathLike | number,
     options?: {encoding?: null | BufferEncoding; flag?: string | undefined},
   ) => T;
 };
@@ -91,7 +92,7 @@ const syncMethods: SyncMethods = {
   ...importMethods(),
 
   readJsonFileSync: (
-    path: fs.PathLike | number,
+    path: PathLike | number,
     options?: {encoding?: null | BufferEncoding; flag?: string | undefined},
   ) => {
     const opts = {

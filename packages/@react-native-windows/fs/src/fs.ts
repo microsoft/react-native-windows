@@ -8,6 +8,7 @@
 import asyncMethods, {AsyncMethods} from './asyncMethods';
 import syncMethods, {SyncMethods} from './syncMethods';
 import fs from 'graceful-fs';
+import type {PathLike} from 'node:fs';
 
 export interface ReactNativeWindowsFs extends AsyncMethods, SyncMethods {
   constants: typeof fs.constants;
@@ -16,7 +17,7 @@ export interface ReactNativeWindowsFs extends AsyncMethods, SyncMethods {
    * `renameSync` should not be used, as it can cause EPERM issues on Windows
    * @deprecated
    */
-  renameSync(oldPath: fs.PathLike, newPath: fs.PathLike): void;
+  renameSync(oldPath: PathLike, newPath: PathLike): void;
 }
 
 const rnwFs: ReactNativeWindowsFs = {

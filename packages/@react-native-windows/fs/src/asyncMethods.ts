@@ -6,6 +6,7 @@
  */
 
 import fs from 'graceful-fs';
+import type {PathLike} from 'node:fs';
 import util from 'util';
 
 const importedMethods = [
@@ -82,7 +83,7 @@ type ExtraMethods = {
    * file-system.
    * @param path A path to a file or directory.
    */
-  exists: (path: fs.PathLike) => Promise<boolean>;
+  exists: (path: PathLike) => Promise<boolean>;
 
   /**
    * Asynchronously reads the contents of a file, then parses it as JSON.
@@ -100,7 +101,7 @@ type ExtraMethods = {
    * @param options.flag File access flags
    */
   readJsonFile: <T = Record<string, unknown>>(
-    path: fs.PathLike | number,
+    path: PathLike | number,
     options?: {encoding?: null | BufferEncoding; flag?: string | undefined},
   ) => Promise<T>;
 };
@@ -110,7 +111,7 @@ export type AsyncMethods = PromisifedMethods & ExtraMethods;
 const asyncMethods: AsyncMethods = {
   ...promisifyImportedMethods(),
 
-  exists: (path: fs.PathLike) =>
+  exists: (path: PathLike) =>
     new Promise(resolve => {
       fs.access(path, fs.constants.F_OK, err =>
         err ? resolve(false) : resolve(true),
@@ -118,7 +119,7 @@ const asyncMethods: AsyncMethods = {
     }),
 
   readJsonFile: async (
-    path: fs.PathLike | number,
+    path: PathLike | number,
     options?: {encoding?: null | BufferEncoding; flag?: string | undefined},
   ) => {
     const opts = {

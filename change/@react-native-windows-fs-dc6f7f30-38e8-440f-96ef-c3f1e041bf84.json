@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Use @stackline/graceful-fs 1.0.3 through the existing graceful-fs dependency key.",
+  "comment": "Use @stackline/graceful-fs 1.0.3 through the existing graceful-fs dependency key and import PathLike from Node fs for compatible declarations.",
   "packageName": "@react-native-windows/fs",
   "email": "42686990+alexandroit@users.noreply.github.com",
   "dependentChangeType": "patch"
