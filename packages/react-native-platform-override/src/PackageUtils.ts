@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs/promises';
 import {findThisPackage} from './FileSearch';
 
 let npmPackage: any = null;
@@ -34,7 +34,7 @@ export async function getNpmPackage(): Promise<any> {
   }
 
   const npmPackagePath = await findThisPackage();
-  npmPackage = await fs.readJsonFile(npmPackagePath);
+  npmPackage = JSON.parse(await fs.readFile(npmPackagePath, 'utf8'));
 
   return npmPackage;
 }
