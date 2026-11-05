@@ -6,7 +6,7 @@
  */
 
 import path from 'path';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import globby from 'globby';
 import type {CppStringTypes} from './generators/GenerateNM2';
 import {createNM2Generator} from './generators/GenerateNM2';

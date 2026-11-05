@@ -4056,7 +4056,6 @@ __metadata:
     "@jest/types": "npm:^29.2.1"
     "@react-native-windows/automation-channel": "npm:0.85.0"
     "@react-native-windows/find-dotnet-tools": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4086,7 +4085,6 @@ __metadata:
     "@react-native-community/cli-types": "npm:20.0.0"
     "@react-native-windows/codegen": "npm:0.85.0"
     "@react-native-windows/find-dotnet-tools": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@react-native-windows/package-utils": "npm:0.85.0"
     "@react-native-windows/telemetry": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
@@ -4140,7 +4138,6 @@ __metadata:
   resolution: "@react-native-windows/codegen@workspace:packages/@react-native-windows/codegen"
   dependencies:
     "@babel/core": "npm:^7.25.2"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4173,7 +4170,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-windows/find-dotnet-tools@workspace:packages/@react-native-windows/find-dotnet-tools"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4190,7 +4186,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-windows/find-repo-root@workspace:packages/@react-native-windows/find-repo-root"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4206,31 +4201,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/fs@npm:0.85.0, @react-native-windows/fs@workspace:packages/@react-native-windows/fs":
-  version: 0.0.0-use.local
-  resolution: "@react-native-windows/fs@workspace:packages/@react-native-windows/fs"
-  dependencies:
-    "@rnw-scripts/eslint-config": "npm:1.2.38"
-    "@rnw-scripts/just-task": "npm:2.3.58"
-    "@rnw-scripts/ts-config": "npm:2.0.6"
-    "@types/graceful-fs": "npm:^4.1.5"
-    "@types/node": "npm:^22.14.0"
-    "@typescript-eslint/eslint-plugin": "npm:^8.36.0"
-    "@typescript-eslint/parser": "npm:^8.36.0"
-    eslint: "npm:^8.19.0"
-    graceful-fs: "npm:^4.2.8"
-    minimatch: "npm:^10.0.3"
-    prettier: "npm:^3.6.2"
-    typescript: "npm:5.0.4"
-  languageName: unknown
-  linkType: soft
-
 "@react-native-windows/package-utils@npm:0.85.0, @react-native-windows/package-utils@workspace:packages/@react-native-windows/package-utils":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/package-utils@workspace:packages/@react-native-windows/package-utils"
   dependencies:
     "@react-native-windows/find-repo-root": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4251,7 +4226,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@react-native-windows/perf-testing@workspace:packages/@react-native-windows/perf-testing"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4281,7 +4255,6 @@ __metadata:
     "@babel/core": "npm:^7.25.2"
     "@microsoft/1ds-core-js": "npm:^4.3.0"
     "@microsoft/1ds-post-js": "npm:^4.3.0"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4808,7 +4781,6 @@ __metadata:
   dependencies:
     "@octokit/rest": "npm:^18.5.3"
     "@react-native-windows/find-repo-root": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4841,7 +4813,6 @@ __metadata:
   resolution: "@rnw-scripts/debug-test@workspace:packages/debug-test"
   dependencies:
     "@react-native-windows/automation": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/ts-config": "npm:2.0.6"
     "@types/jest": "npm:^29.2.2"
@@ -4865,7 +4836,6 @@ __metadata:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/preset-typescript": "npm:^7.8.3"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4909,7 +4879,6 @@ __metadata:
     "@react-native-windows/automation": "npm:0.85.0"
     "@react-native-windows/automation-channel": "npm:0.85.0"
     "@react-native-windows/automation-commands": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@react-native-windows/perf-testing": "npm:0.85.0"
     "@react-native-windows/tester": "npm:0.0.1"
     "@react-native/jest-preset": "npm:0.85.3"
@@ -5030,7 +4999,6 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.8.3"
     "@react-native-community/template": "npm:0.84.1"
     "@react-native-windows/find-repo-root": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@react-native-windows/package-utils": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
@@ -5231,7 +5199,6 @@ __metadata:
   resolution: "@rnw-scripts/prepare-release@workspace:packages/@rnw-scripts/prepare-release"
   dependencies:
     "@react-native-windows/find-repo-root": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@react-native-windows/package-utils": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -5253,7 +5220,6 @@ __metadata:
   resolution: "@rnw-scripts/promote-release@workspace:packages/@rnw-scripts/promote-release"
   dependencies:
     "@react-native-windows/find-repo-root": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@react-native-windows/package-utils": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -5381,7 +5347,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/stamp-version@workspace:packages/@rnw-scripts/stamp-version"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0"
     "@react-native-windows/package-utils": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -5412,7 +5377,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/take-screenshot@workspace:packages/@rnw-scripts/take-screenshot"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -5442,7 +5406,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/unbroken@workspace:packages/@rnw-scripts/unbroken"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -6222,7 +6185,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/graceful-fs@npm:^4.1.3, @types/graceful-fs@npm:^4.1.5":
+"@types/graceful-fs@npm:^4.1.3":
   version: 4.1.9
   resolution: "@types/graceful-fs@npm:4.1.9"
   dependencies:
@@ -11294,7 +11257,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.3, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.8, graceful-fs@npm:^4.2.9":
+"graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.3, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9":
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: 10c0/386d011a553e02bc594ac2ca0bd6d9e4c22d7fa8cfbfc448a6d148c59ea881b092db9dbe3547ae4b88e55f1b01f7c4a2ecc53b310c042793e63aa44cf6c257f2
@@ -16403,7 +16366,6 @@ __metadata:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/preset-typescript": "npm:^7.8.3"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@react-native-windows/package-utils": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
@@ -16457,7 +16419,6 @@ __metadata:
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@react-native-windows/cli": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@react-native-windows/telemetry": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"

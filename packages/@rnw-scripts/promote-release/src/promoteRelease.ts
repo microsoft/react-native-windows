@@ -14,7 +14,7 @@
 
 import chalk from 'chalk';
 import child_process from 'child_process';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs/promises';
 import path from 'path';
 import simplegit from 'simple-git';
 import yargs from 'yargs';

@@ -5,7 +5,7 @@
  */
 
 import {spawn, execFileSync, SpawnOptions} from 'child_process';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import http from 'http';
 import path from 'path';
 import glob from 'glob';

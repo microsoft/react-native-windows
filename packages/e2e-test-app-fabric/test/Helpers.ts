@@ -11,7 +11,7 @@ import { AutomationClient } from '@react-native-windows/automation-channel';
 import { createScreenshot } from '@react-native-windows/automation-commands';
 import { tmpdir } from 'os';
 import { join } from 'path';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 
 declare global {
   const automationClient: AutomationClient | undefined;

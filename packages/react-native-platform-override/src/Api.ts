@@ -10,7 +10,7 @@
 
 import * as Serialized from './Serialized';
 import _ from 'lodash';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs/promises';
 import path from 'path';
 
 import OverrideFactory, {OverrideFactoryImpl} from './OverrideFactory';

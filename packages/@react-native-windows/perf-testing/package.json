@@ -17,9 +17,6 @@
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch"
   },
-  "dependencies": {
-    "@react-native-windows/fs": "0.85.0"
-  },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.38",
     "@rnw-scripts/just-task": "2.3.58",

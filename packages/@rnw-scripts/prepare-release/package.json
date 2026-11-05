@@ -20,7 +20,6 @@
   "bin": "./bin.js",
   "dependencies": {
     "@react-native-windows/find-repo-root": "0.85.0",
-    "@react-native-windows/fs": "0.85.0",
     "@react-native-windows/package-utils": "0.85.0",
     "source-map-support": "^0.5.19"
   },
