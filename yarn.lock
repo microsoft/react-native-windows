@@ -3606,7 +3606,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-windows/automation-channel@npm:0.81.38, @react-native-windows/automation-channel@workspace:packages/@react-native-windows/automation-channel":
+"@react-native-windows/automation-channel@npm:0.81.39, @react-native-windows/automation-channel@workspace:packages/@react-native-windows/automation-channel":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation-channel@workspace:packages/@react-native-windows/automation-channel"
   dependencies:
@@ -3624,18 +3624,18 @@ __metadata:
     prettier: "npm:2.8.8"
     react: "npm:19.1.4"
     react-native: "npm:0.81.6"
-    react-native-windows: "npm:0.81.38"
+    react-native-windows: "npm:0.81.39"
     typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/automation-commands@npm:0.81.38, @react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands":
+"@react-native-windows/automation-commands@npm:0.81.39, @react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@jest/types": "npm:^29.2.1"
-    "@react-native-windows/automation-channel": "npm:0.81.38"
+    "@react-native-windows/automation-channel": "npm:0.81.39"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.56"
@@ -3652,14 +3652,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/automation@npm:0.81.38, @react-native-windows/automation@workspace:packages/@react-native-windows/automation":
+"@react-native-windows/automation@npm:0.81.39, @react-native-windows/automation@workspace:packages/@react-native-windows/automation":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation@workspace:packages/@react-native-windows/automation"
   dependencies:
     "@jest/create-cache-key-function": "npm:^29.2.1"
     "@jest/environment": "npm:^29.3.0"
     "@jest/types": "npm:^29.2.1"
-    "@react-native-windows/automation-channel": "npm:0.81.38"
+    "@react-native-windows/automation-channel": "npm:0.81.39"
     "@react-native-windows/find-dotnet-tools": "npm:0.0.0-canary.3"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.56"
@@ -3871,13 +3871,13 @@ __metadata:
     just-scripts: "npm:^1.3.3"
     react-native: "npm:0.81.6"
     react-native-platform-override: "npm:0.81.3"
-    react-native-windows: "npm:0.81.38"
+    react-native-windows: "npm:0.81.39"
     typescript: "npm:5.0.4"
   peerDependencies:
     "@react-native-picker/picker": 2.11.0
     react: 19.1.4
     react-native: ^0.81.0
-    react-native-windows: 0.81.38
+    react-native-windows: 0.81.39
     react-native-xaml: ^0.0.80
   languageName: unknown
   linkType: soft
@@ -4350,7 +4350,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/debug-test@workspace:packages/debug-test"
   dependencies:
-    "@react-native-windows/automation": "npm:0.81.38"
+    "@react-native-windows/automation": "npm:0.81.39"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/ts-config": "npm:2.0.6"
     "@types/jest": "npm:^29.2.2"
@@ -4685,7 +4685,7 @@ __metadata:
     prettier: "npm:2.8.8"
     react: "npm:19.1.4"
     react-native: "npm:0.81.6"
-    react-native-windows: "npm:0.81.38"
+    react-native-windows: "npm:0.81.39"
     react-test-renderer: "npm:19.1.4"
   languageName: unknown
   linkType: soft
@@ -4791,7 +4791,7 @@ __metadata:
     prettier: "npm:2.8.8"
     react: "npm:19.1.4"
     react-native: "npm:0.81.6"
-    react-native-windows: "npm:0.81.38"
+    react-native-windows: "npm:0.81.39"
     react-test-renderer: "npm:19.1.4"
     typescript: "npm:5.0.4"
   languageName: unknown
@@ -4825,7 +4825,7 @@ __metadata:
     prettier: "npm:2.8.8"
     react: "npm:19.1.4"
     react-native: "npm:0.81.6"
-    react-native-windows: "npm:0.81.38"
+    react-native-windows: "npm:0.81.39"
     typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
@@ -9252,9 +9252,9 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.8.3"
     "@babel/runtime": "npm:^7.20.0"
     "@react-native-community/cli": "npm:17.0.0"
-    "@react-native-windows/automation": "npm:0.81.38"
-    "@react-native-windows/automation-channel": "npm:0.81.38"
-    "@react-native-windows/automation-commands": "npm:0.81.38"
+    "@react-native-windows/automation": "npm:0.81.39"
+    "@react-native-windows/automation-channel": "npm:0.81.39"
+    "@react-native-windows/automation-commands": "npm:0.81.39"
     "@react-native-windows/tester": "npm:0.0.1"
     "@react-native/metro-config": "npm:0.81.6"
     "@rnw-scripts/babel-node-config": "npm:2.3.3"
@@ -9276,7 +9276,7 @@ __metadata:
     prettier: "npm:2.8.8"
     react: "npm:19.1.4"
     react-native: "npm:0.81.6"
-    react-native-windows: "npm:0.81.38"
+    react-native-windows: "npm:0.81.39"
     react-test-renderer: "npm:19.1.4"
     sanitize-filename: "npm:^1.6.3"
     typescript: "npm:5.0.4"
@@ -9294,9 +9294,9 @@ __metadata:
     "@babel/runtime": "npm:^7.20.0"
     "@react-native-community/cli": "npm:17.0.0"
     "@react-native-picker/picker": "npm:^2.5.1"
-    "@react-native-windows/automation": "npm:0.81.38"
-    "@react-native-windows/automation-channel": "npm:0.81.38"
-    "@react-native-windows/automation-commands": "npm:0.81.38"
+    "@react-native-windows/automation": "npm:0.81.39"
+    "@react-native-windows/automation-channel": "npm:0.81.39"
+    "@react-native-windows/automation-commands": "npm:0.81.39"
     "@react-native-windows/tester": "npm:0.0.1"
     "@react-native/metro-config": "npm:0.81.6"
     "@rnw-scripts/babel-node-config": "npm:2.3.3"
@@ -9317,7 +9317,7 @@ __metadata:
     prettier: "npm:2.8.8"
     react: "npm:19.1.4"
     react-native: "npm:0.81.6"
-    react-native-windows: "npm:0.81.38"
+    react-native-windows: "npm:0.81.39"
     react-native-xaml: "npm:^0.0.80"
     react-test-renderer: "npm:19.1.4"
     sanitize-filename: "npm:^1.6.3"
@@ -12002,7 +12002,7 @@ __metadata:
     "@babel/traverse": "npm:^7.11.5"
     "@babel/types": "npm:^7.11.5"
     "@react-native-community/cli": "npm:17.0.0"
-    "@react-native-windows/automation-channel": "npm:0.81.38"
+    "@react-native-windows/automation-channel": "npm:0.81.39"
     "@react-native/metro-config": "npm:0.81.6"
     "@rnw-scripts/babel-node-config": "npm:2.3.3"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
@@ -12025,7 +12025,7 @@ __metadata:
     prettier: "npm:2.8.8"
     react: "npm:19.1.4"
     react-native: "npm:0.81.6"
-    react-native-windows: "npm:0.81.38"
+    react-native-windows: "npm:0.81.39"
     typescript: "npm:5.0.4"
     walkdir: "npm:^0.4.1"
     ws: "npm:^7.4.6"
@@ -16680,7 +16680,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"react-native-windows@npm:0.81.38, react-native-windows@workspace:vnext":
+"react-native-windows@npm:0.81.39, react-native-windows@workspace:vnext":
   version: 0.0.0-use.local
   resolution: "react-native-windows@workspace:vnext"
   dependencies:
@@ -17507,7 +17507,7 @@ __metadata:
     prettier: "npm:2.8.8"
     react: "npm:19.1.4"
     react-native: "npm:0.81.6"
-    react-native-windows: "npm:0.81.38"
+    react-native-windows: "npm:0.81.39"
     react-test-renderer: "npm:19.1.4"
   languageName: unknown
   linkType: soft
