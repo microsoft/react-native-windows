@@ -1146,8 +1146,7 @@ void WindowsTextInputComponentView::OnCharacterReceived(
     return;
   }
 
-  if (m_eventEmitter)
-    {
+  if (m_eventEmitter) {
     // convert keyCode to std::string
     wchar_t key[2] = L" ";
     key[0] = static_cast<wchar_t>(args.KeyCode());
