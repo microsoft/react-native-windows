@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import path from 'path';
 import semver from 'semver';
 import yargs from 'yargs';
@@ -96,7 +96,7 @@ async function enumerateOverridePackages(): Promise<WritableNpmPackage[]> {
  * Whether the NPM package is subject to override validation
  */
 async function isOverridePackage(pkg: NpmPackage): Promise<boolean> {
-  return await fs.exists(path.join(pkg.path, 'overrides.json'));
+  return fs.existsSync(path.join(pkg.path, 'overrides.json'));
 }
 
 /**

@@ -4,7 +4,7 @@
  * @format
  */
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import path from 'path';
 import chalk from 'chalk';
 import {glob as globFunc} from 'glob';
@@ -110,12 +110,14 @@ export class InitWindows {
     }
     type PackageJson = {name: string};
 
-    let name = fs.readJsonFileSync<PackageJson>(pkgJsonPath).name;
+    let name = (JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8')) as PackageJson)
+      .name;
     if (!name) {
       const appJsonPath = path.join(projectDir, 'app.json');
       if (fs.existsSync(appJsonPath)) {
         this.verboseMessage('Looking for project name in app.json...');
-        name = fs.readJsonFileSync<PackageJson>(pkgJsonPath).name;
+        name = (JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8')) as PackageJson)
+          .name;
       }
     }
 
@@ -251,8 +253,8 @@ export class InitWindows {
           path.dirname(fileMapping.to),
         );
 
-        if (!(await fs.exists(targetDir))) {
-          await fs.mkdir(targetDir, {recursive: true});
+        if (!fs.existsSync(targetDir)) {
+          await fs.promises.mkdir(targetDir, {recursive: true});
         }
 
         await copyAndReplaceWithChangedCallback(

@@ -11,7 +11,7 @@
 import {parseArgs} from 'node:util';
 import * as path from 'path';
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 
 import {Checker, Options} from './checker';
 

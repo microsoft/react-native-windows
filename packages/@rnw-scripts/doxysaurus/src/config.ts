@@ -10,7 +10,7 @@
  */
 
 import path from 'path';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 
 /** Doxysaurus project configuration. */
 export interface Config {
@@ -60,7 +60,7 @@ export async function* getProjectConfigs(
         config.configDir,
         path.join(project, 'doxysaurus.json'),
       );
-      if (await fs.exists(projectConfigPath)) {
+      if (fs.existsSync(projectConfigPath)) {
         for await (const projectConfig of getProjectConfigs(
           projectConfigPath,
           outputDir,
@@ -82,7 +82,9 @@ async function loadConfig(
   configPath: string,
   parentConfig?: LoadedConfig,
 ): Promise<LoadedConfig> {
-  const config = await fs.readJsonFile<Partial<Config>>(configPath);
+  const config: Partial<Config> = JSON.parse(
+    await fs.promises.readFile(configPath, 'utf8'),
+  );
   const configDir = path.dirname(configPath);
   if (parentConfig) {
     return {

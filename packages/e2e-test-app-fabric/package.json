@@ -44,7 +44,6 @@
     "@react-native-community/cli": "20.0.0",
     "@react-native-windows/automation": "0.85.0",
     "@react-native-windows/automation-commands": "0.85.0",
-    "@react-native-windows/fs": "0.85.0",
     "@react-native-windows/perf-testing": "0.85.0",
     "@react-native/metro-config": "0.85.3",
     "@rnw-scripts/babel-node-config": "2.3.3",

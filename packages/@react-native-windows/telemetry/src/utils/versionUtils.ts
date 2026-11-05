@@ -5,7 +5,7 @@
  */
 
 import envinfo from 'envinfo';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs/promises';
 import path from 'path';
 import {DOMParser} from '@xmldom/xmldom';
 import xpath from 'xpath';
@@ -71,8 +71,8 @@ export async function getVersionOfNpmPackage(
     const pkgJsonPath = require.resolve(`${pkgName.trim()}/package.json`, {
       paths: [process.cwd(), __dirname],
     });
-    const pkgJson = await fs.readJsonFile<{name: string; version: string}>(
-      pkgJsonPath,
+    const pkgJson: {name: string; version: string} = JSON.parse(
+      await fs.readFile(pkgJsonPath, 'utf8'),
     );
     if (pkgJson.name === pkgName) {
       return pkgJson.version;

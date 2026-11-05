@@ -13,7 +13,7 @@
  */
 
 import {parseArgs} from 'node:util';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import path from 'path';
 
 import findRepoRoot from '@react-native-windows/find-repo-root';
