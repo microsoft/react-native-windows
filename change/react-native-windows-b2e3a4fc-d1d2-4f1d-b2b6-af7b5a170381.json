@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use C++20 standard coroutines without the legacy /await flag",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
