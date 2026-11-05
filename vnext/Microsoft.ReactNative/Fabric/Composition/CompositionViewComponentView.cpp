@@ -1425,7 +1425,7 @@ void ViewComponentView::OnKeyUp(
       ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down);
 
-  if (m_eventEmitter args.OriginalSource() == Tag()) {
+  if (m_eventEmitter && args.OriginalSource() == Tag()) {
     facebook::react::KeyEvent event;
     event.shiftKey = fShift;
     event.ctrlKey = fCtrl;
