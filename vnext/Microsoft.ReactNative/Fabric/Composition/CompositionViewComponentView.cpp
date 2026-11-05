@@ -366,7 +366,8 @@ void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentView
 void ComponentView::onLostFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   if (args.OriginalSource() == Tag()) {
-    m_eventEmitter->onBlur();
+    if (m_eventEmitter)
+      m_eventEmitter->onBlur();
 
     if (m_componentHostingFocusVisual) {
       auto s = get_strong();
@@ -414,7 +415,8 @@ winrt::com_ptr<ComponentView> ComponentView::focusVisualRoot(const facebook::rea
 void ComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   if (args.OriginalSource() == Tag()) {
-    m_eventEmitter->onFocus();
+    if (m_eventEmitter)
+      m_eventEmitter->onFocus();
     if (viewProps()->enableFocusRing &&
         rootComponentView()->focusState() == winrt::Microsoft::ReactNative::FocusState::Keyboard) {
       facebook::react::Rect focusRect = m_layoutMetrics.frame;
@@ -1380,7 +1382,7 @@ void ViewComponentView::OnKeyDown(
       ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down);
 
-  if (args.OriginalSource() == Tag() && !args.Handled()) {
+  if (m_eventEmitter && args.OriginalSource() == Tag() && !args.Handled()) {
     facebook::react::KeyEvent event;
     event.shiftKey = fShift;
     event.ctrlKey = fCtrl;
@@ -1427,7 +1429,7 @@ void ViewComponentView::OnKeyUp(
       ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down);
 
-  if (args.OriginalSource() == Tag()) {
+  if (m_eventEmitter && args.OriginalSource() == Tag()) {
     facebook::react::KeyEvent event;
     event.shiftKey = fShift;
     event.ctrlKey = fCtrl;
