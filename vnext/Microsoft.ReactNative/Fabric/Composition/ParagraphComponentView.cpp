@@ -356,7 +356,8 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
       DWRITE_TEXT_METRICS metrics;
       winrt::check_hresult(m_textLayout->GetMetrics(&metrics));
 
-      if (metrics.width == 0 || metrics.height == 0) {
+      if (metrics.width == 0 || metrics.height == 0 || m_layoutMetrics.frame.size.width == 0 ||
+          m_layoutMetrics.frame.size.height == 0) {
         m_drawingSurface = nullptr;
         return;
       }
