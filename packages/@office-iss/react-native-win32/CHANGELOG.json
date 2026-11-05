@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 04 Nov 2026 19:50:02 GMT",
+      "version": "0.0.0-canary.314",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.314",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1025",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Oct 2026 05:31:45 GMT",
       "version": "0.0.0-canary.313",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.313",

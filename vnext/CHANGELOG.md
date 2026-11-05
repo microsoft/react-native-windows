@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 29 Oct 2026 05:31:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 04 Nov 2026 19:50:01 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1062
+
+Wed, 04 Nov 2026 19:50:01 GMT
+
+### Changes
+
+- Follow the Fetch standard when handling HTTP redirects (anuagra@microsoft.com)
+- Store the Hermes bytecode cache in an app-specific folder (anuagra@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.295
+- Bump @react-native-windows/codegen to v0.0.0-canary.135
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.4
+- Bump react-native-platform-override to v0.0.0-canary.1025
 
 ## 0.0.0-canary.1061
 

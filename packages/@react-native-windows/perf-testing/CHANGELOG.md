@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/perf-testing
 
-<!-- This log was last generated on Thu, 29 Oct 2026 05:31:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 04 Nov 2026 19:50:01 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1041
+
+Wed, 04 Nov 2026 19:50:01 GMT
+
+### Changes
+
+- Remove @react-native-windows/fs and use Node's built-in fs (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.1040
 

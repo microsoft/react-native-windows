@@ -2,6 +2,27 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Wed, 04 Nov 2026 19:50:01 GMT",
+      "version": "0.0.0-canary.100",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.100",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "4ef33ee9365b3d74c5598d70e29c23f1e38b9d21",
+            "comment": "Remove @react-native-windows/fs and use Node's built-in fs"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.103",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Oct 2026 05:31:44 GMT",
       "version": "0.0.0-canary.99",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.99",
