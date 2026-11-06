@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Return redirect responses without Location as final and skip rebuilding dropped request bodies",
+  "packageName": "react-native-windows",
+  "email": "anuagra@microsoft.com",
+  "dependentChangeType": "patch"
+}

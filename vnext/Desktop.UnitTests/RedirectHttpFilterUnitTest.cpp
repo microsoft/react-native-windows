@@ -42,8 +42,10 @@ struct RebuildingRequestFactory : IWinRTHttpRequestFactory {
   winrt::Windows::Foundation::IAsyncOperation<HttpRequestMessage> CreateRequest(
       HttpMethod &&method,
       Uri &&uri,
-      winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable>
-          props) noexcept override {
+      winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable> props,
+      bool includeContent) noexcept override {
+    IncludeContentCalls.push_back(includeContent);
+
     auto request = HttpRequestMessage{std::move(method), std::move(uri)};
     for (auto prop : props) {
       request.Properties().Insert(prop.Key(), prop.Value());
@@ -51,10 +53,23 @@ struct RebuildingRequestFactory : IWinRTHttpRequestFactory {
     request.Headers().TryAppendWithoutValidation(L"Authorization", L"Bearer abc123");
     request.Headers().Append(L"Cookie", L"name=value");
     request.Headers().Append(L"X-Custom", L"custom");
-    request.Content(HttpStringContent{L"body"});
+    if (includeContent) {
+      request.Content(HttpStringContent{L"body"});
+    }
 
     co_return request;
   }
+
+  std::vector<bool> IncludeContentCalls;
+};
+
+struct CountingRedirectEventSource : Microsoft::React::Networking::IRedirectEventSource {
+  bool OnRedirecting(HttpRequestMessage const &, HttpResponseMessage const &) noexcept override {
+    ++Calls;
+    return true;
+  }
+
+  int Calls{0};
 };
 
 struct ObservedRequest {
@@ -84,7 +99,8 @@ std::vector<ObservedRequest> RunRedirects(
     HttpMethod const &method,
     wchar_t const *initialUrl,
     std::vector<std::pair<HttpStatusCode, wchar_t const *>> const &hops,
-    bool useFactory) {
+    bool useFactory,
+    std::vector<bool> *includeContentCalls = nullptr) {
   auto observed = std::make_shared<std::vector<ObservedRequest>>();
   auto handler = [observed, hops](HttpRequestMessage const &request) -> ResponseOperation {
     auto index = observed->size();
@@ -123,6 +139,10 @@ std::vector<ObservedRequest> RunRedirects(
 
   auto response = filter.SendRequestAsync(request).get();
   Assert::AreEqual(HttpStatusCode::Ok, response.StatusCode());
+
+  if (includeContentCalls) {
+    *includeContentCalls = factory->IncludeContentCalls;
+  }
 
   return *observed;
 }
@@ -414,6 +434,62 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
     Assert::AreEqual(size_t{3}, requests.size());
     Assert::AreEqual(L"GET", requests[2].Method.c_str());
     Assert::IsFalse(requests[2].HasContent);
+  }
+
+  TEST_METHOD(DroppedBodyIsNotRebuilt) {
+    // POST -302-> GET -307-> GET: once the body is dropped, the factory is not asked to rebuild it.
+    std::vector<bool> includeContentCalls;
+    RunRedirects(
+        HttpMethod::Post(),
+        L"https://a.test/",
+        {{HttpStatusCode::Found, L"https://a.test/1"}, {HttpStatusCode::TemporaryRedirect, L"https://a.test/2"}},
+        true,
+        &includeContentCalls);
+    Assert::AreEqual(size_t{2}, includeContentCalls.size());
+    Assert::IsFalse(includeContentCalls[0]);
+    Assert::IsFalse(includeContentCalls[1]);
+
+    // POST -307-> POST keeps the body.
+    RunRedirects(
+        HttpMethod::Post(),
+        L"https://a.test/",
+        {{HttpStatusCode::TemporaryRedirect, L"https://a.test/1"}},
+        true,
+        &includeContentCalls);
+    Assert::AreEqual(size_t{1}, includeContentCalls.size());
+    Assert::IsTrue(includeContentCalls[0]);
+  }
+
+  TEST_METHOD(RedirectStatusWithoutLocationIsReturned) {
+    for (auto status : {HttpStatusCode::MultipleChoices, HttpStatusCode::Found, HttpStatusCode::PermanentRedirect}) {
+      int sendCount = 0;
+      auto handler = [&sendCount, status](HttpRequestMessage const &) -> ResponseOperation {
+        ++sendCount;
+        HttpResponseMessage response;
+        response.StatusCode(status);
+        response.Content(HttpStringContent{L"Final"});
+        co_return response;
+      };
+
+      auto mockFilter1 = winrt::make<MockHttpBaseFilter>();
+      auto mockFilter2 = winrt::make<MockHttpBaseFilter>();
+      mockFilter1.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync = handler;
+      mockFilter2.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync = handler;
+
+      // With a limit of 0 redirects, any counted redirect would throw "Too many redirects".
+      auto filter =
+          winrt::make<RedirectHttpFilter>(size_t{0}, std::move(mockFilter1), std::move(mockFilter2), winrt::hstring{});
+      auto eventSource = winrt::make_self<CountingRedirectEventSource>();
+      winrt::com_ptr<Microsoft::React::Networking::IRedirectEventSource> eventSourceBase;
+      eventSourceBase.copy_from(eventSource.get());
+      filter.as<RedirectHttpFilter>()->SetRedirectSource(eventSourceBase);
+
+      auto response = filter.SendRequestAsync(HttpRequestMessage{HttpMethod::Get(), Uri{L"https://a.test/"}}).get();
+
+      Assert::AreEqual(status, response.StatusCode());
+      Assert::AreEqual(1, sendCount);
+      Assert::AreEqual(0, eventSource->Calls);
+    }
   }
 };
 
