@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 05 Nov 2026 22:12:49 GMT",
+      "version": "0.0.0-canary.1063",
+      "tag": "react-native-windows_v0.0.0-canary.1063",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bfa7a8ec7f2dc906ad292e790c3461b0ec0efce9",
+            "comment": "Use C++20 standard coroutines without the legacy /await flag"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Nov 2026 19:50:01 GMT",
       "version": "0.0.0-canary.1062",
       "tag": "react-native-windows_v0.0.0-canary.1062",
