@@ -7,6 +7,7 @@
 #include <eventWaitHandle/eventWaitHandle.h>
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Storage.Streams.h>
+#include <coroutine>
 #include "IWebSocketResource.h"
 
 namespace Microsoft::React::Networking {
@@ -21,12 +22,7 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
     void operator=(const TaskSequencer &) = delete;
 
    private:
-// `experimental` is deprecated starting Visual Studio 2026
-#if _MSC_VER >= 1951
     using CoroHandle = std::coroutine_handle<>;
-#else
-    using CoroHandle = std::experimental::coroutine_handle<>;
-#endif
     struct Suspender {
       CoroHandle m_handle;
 

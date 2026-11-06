@@ -90,12 +90,10 @@
       <WarningLevel>Level4</WarningLevel>
       <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <!--
-        /await  -
         /bigobj -
         /FS     - Force Synchronous PDB writes. Useful when setting MultiProcCL.
       -->
       <AdditionalOptions>%(AdditionalOptions) /bigobj /FS</AdditionalOptions>
-      <AdditionalOptions Condition="$(PlatformToolsetVersion)&lt;145">%(AdditionalOptions) /await</AdditionalOptions>
       <ConformanceMode>true</ConformanceMode>
       <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
