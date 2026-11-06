@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 05 Nov 2026 22:12:49 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 06 Nov 2026 13:44:04 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1064
+
+Fri, 06 Nov 2026 13:44:04 GMT
+
+### Changes
+
+- Return redirect responses without Location as final and skip rebuilding dropped request bodies (anuagra@microsoft.com)
+- Fix crash when rendering zero sized text (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1063
 
