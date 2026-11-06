@@ -4,7 +4,7 @@
  * @format
  */
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs/promises';
 import path from 'path';
 
 import {

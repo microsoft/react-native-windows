@@ -5,7 +5,7 @@
  */
 
 import {totalmem, EOL} from 'os';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import path from 'path';
 import child_process from 'child_process';
 import chalk from 'chalk';
@@ -163,7 +163,7 @@ export default class MSBuildTools {
         const origCodedError = e as CodedError;
         if (origCodedError.type === 'MSBuildError') {
           // Try to parse msbuild errors from errorLog
-          const errorLogContents = (await fs.readFile(errorLog))
+          const errorLogContents = (await fs.promises.readFile(errorLog))
             .toString()
             .split(EOL)
             .filter(s => s)
@@ -184,8 +184,8 @@ export default class MSBuildTools {
       throw error;
     }
     // If we have no errors, delete the error log when we're done
-    if ((await fs.stat(errorLog)).size === 0) {
-      await fs.unlink(errorLog);
+    if ((await fs.promises.stat(errorLog)).size === 0) {
+      await fs.promises.unlink(errorLog);
     }
   }
 

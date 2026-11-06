@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs/promises';
 import mustache from 'mustache';
 import path from 'path';
 import semver from 'semver';
