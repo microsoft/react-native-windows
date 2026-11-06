@@ -17,6 +17,8 @@
     ```
 Note that react-native-windows is a monorepo and relies on monorepo tools like yarn and lage.  See [this page](monorepo.md) for more details.
 
+Native builds use C++20 standard coroutines. Do not enable the legacy MSVC `/await` (Coroutines TS) flag.
+
 # Running the Playground app
   There are two ways to run the app.  In a fully managed easy way, or by manually running all the required steps:
 

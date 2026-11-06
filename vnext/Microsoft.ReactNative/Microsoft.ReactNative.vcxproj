@@ -97,7 +97,6 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>%(AdditionalOptions) /bigobj /ZH:SHA_256</AdditionalOptions>
-      <AdditionalOptions Condition="'$(PlatformToolsetVersion)' != '' And $(PlatformToolsetVersion)&lt;145">%(AdditionalOptions) /await</AdditionalOptions>
       <AdditionalIncludeDirectories>
         $(ExternalDir)fmt\include;
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
