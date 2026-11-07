@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 05 Nov 2026 01:38:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Nov 2026 00:51:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.85.2
+
+Sat, 07 Nov 2026 00:51:03 GMT
+
+### Patches
+
+- Use C++20 standard coroutines without the legacy /await flag (vmorozov@microsoft.com)
 
 ## 0.85.1
 

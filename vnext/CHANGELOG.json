@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 07 Nov 2026 00:51:03 GMT",
+      "version": "0.85.2",
+      "tag": "react-native-windows_v0.85.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3e0429e4392f1ed9bba72059d76382bbf398b9f4",
+            "comment": "Use C++20 standard coroutines without the legacy /await flag"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Nov 2026 01:38:55 GMT",
       "version": "0.85.1",
       "tag": "react-native-windows_v0.85.1",
