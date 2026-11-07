@@ -19,6 +19,12 @@ Note that react-native-windows is a monorepo and relies on monorepo tools like y
 
 Native builds use C++20 standard coroutines. Do not enable the legacy MSVC `/await` (Coroutines TS) flag.
 
+Desktop builds use Spectre-mitigated MSVC runtime libraries. Install the matching
+**MSVC Libs for Spectre** components through the Visual Studio Installer.
+UWP builds retain `/Qspectre` compilation but use standard runtime libraries,
+because Microsoft does not provide Spectre-mitigated UWP runtimes. Do not set
+`SpectreMitigation` globally when building both Desktop and UWP projects.
+
 # Running the Playground app
   There are two ways to run the app.  In a fully managed easy way, or by manually running all the required steps:
 

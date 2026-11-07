@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Use Spectre-mitigated MSVC runtime libraries for Desktop builds without changing UWP runtime selection.",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
