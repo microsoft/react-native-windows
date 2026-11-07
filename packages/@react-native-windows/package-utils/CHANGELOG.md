@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/package-utils
 
-<!-- This log was last generated on Wed, 19 Aug 2026 02:25:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Nov 2026 00:51:44 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.3
+
+Sat, 07 Nov 2026 00:51:44 GMT
+
+### Patches
+
+- Remove @react-native-windows/fs and use Node's built-in fs (vmorozov@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.81.3
 
 ## 0.81.2
 

@@ -2,6 +2,33 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Sat, 07 Nov 2026 00:51:44 GMT",
+      "version": "0.81.12",
+      "tag": "react-native-windows-init_v0.81.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "94c5a3f4f6f208b63fc2d1c548ea23e95a31b7de",
+            "comment": "Remove @react-native-windows/fs and use Node's built-in fs"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.81.6",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.81.12",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Oct 2026 17:13:26 GMT",
       "version": "0.81.11",
       "tag": "react-native-windows-init_v0.81.11",

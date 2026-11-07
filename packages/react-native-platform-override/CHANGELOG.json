@@ -2,6 +2,27 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Sat, 07 Nov 2026 00:51:44 GMT",
+      "version": "0.81.4",
+      "tag": "react-native-platform-override_v0.81.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "94c5a3f4f6f208b63fc2d1c548ea23e95a31b7de",
+            "comment": "Remove @react-native-windows/fs and use Node's built-in fs"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/package-utils to v0.81.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Aug 2026 02:25:43 GMT",
       "version": "0.81.3",
       "tag": "react-native-platform-override_v0.81.3",

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/find-dotnet-tools
 
-<!-- This log was last generated on Thu, 29 Oct 2026 17:13:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Nov 2026 00:51:44 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.4
+
+Sat, 07 Nov 2026 00:51:44 GMT
+
+### Changes
+
+- Remove @react-native-windows/fs and use Node's built-in fs (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.3
 
