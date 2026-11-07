@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation",
-  "version": "0.81.39",
+  "version": "0.81.40",
   "description": "UI Automation Suite for React Native Windows Applications",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,8 +17,8 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "0.81.39",
-    "@react-native-windows/find-dotnet-tools": "0.0.0-canary.3",
+    "@react-native-windows/automation-channel": "0.81.40",
+    "@react-native-windows/find-dotnet-tools": "0.0.0-canary.4",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
     "chalk": "^4.1.2",

@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 07 Nov 2026 00:51:44 GMT",
+      "version": "0.81.40",
+      "tag": "react-native-windows_v0.81.40",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "94c5a3f4f6f208b63fc2d1c548ea23e95a31b7de",
+            "comment": "Use C++20 standard coroutines without the legacy /await flag"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "94c5a3f4f6f208b63fc2d1c548ea23e95a31b7de",
+            "comment": "Protect against null eventemitters"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.81.12",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.81.8",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.81.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Nov 2026 20:05:53 GMT",
       "version": "0.81.39",
       "tag": "react-native-windows_v0.81.39",

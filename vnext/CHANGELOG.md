@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 04 Nov 2026 20:05:53 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Nov 2026 00:51:44 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.40
+
+Sat, 07 Nov 2026 00:51:44 GMT
+
+### Patches
+
+- Use C++20 standard coroutines without the legacy /await flag (vmorozov@microsoft.com)
+- Protect against null eventemitters (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.81.12
+- Bump @react-native-windows/codegen to v0.81.8
+- Bump react-native-platform-override to v0.81.4
 
 ## 0.81.39
 

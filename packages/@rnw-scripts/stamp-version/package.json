@@ -13,7 +13,7 @@
   },
   "bin": "./bin.js",
   "dependencies": {
-    "@react-native-windows/package-utils": "0.81.2",
+    "@react-native-windows/package-utils": "0.81.3",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
     "mustache": "^4.0.1",
