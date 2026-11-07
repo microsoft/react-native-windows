@@ -103,6 +103,8 @@
   <PropertyGroup Label="MSVC">
     <CppStandard Condition="'$(CppStandard)'==''">stdcpp20</CppStandard>
     <MultiProcCL Condition="'$(MultiProcCL)'==''">true</MultiProcCL>
+    <!-- UWP has no Spectre-mitigated runtime libraries. -->
+    <SpectreMitigation Condition="'$(ApplicationType)' != 'Windows Store'">Spectre</SpectreMitigation>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
