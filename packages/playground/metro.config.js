@@ -205,8 +205,18 @@ const originalGetModulesRunBeforeMainModule =
 baseConfig.serializer = {
   ...baseConfig.serializer,
   getModulesRunBeforeMainModule: (...args) => {
-    return originalGetModulesRunBeforeMainModule(...args).map(p =>
-      normalizePathDrive(fs.realpathSync(p)),
+    // The dev resolver maps setup-env to src/setup-env.js, not the package-root
+    // shim. Run the module present in the bundle graph before the sample entry.
+    const setupEnv = tryResolveDevAbsoluteImport('react-native/setup-env');
+    if (!setupEnv) {
+      throw new Error('Unable to resolve the Playground React Native environment.');
+    }
+    return Array.from(
+      new Set(
+        [...originalGetModulesRunBeforeMainModule(...args), setupEnv].map(p =>
+          normalizePathDrive(fs.realpathSync(p)),
+        ),
+      ),
     );
   },
 };

@@ -6,6 +6,7 @@
     "start": "react-native rnx-start",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
+    "test": "node --test metro.config.test.js",
     "windows": "react-native run-windows"
   },
   "dependencies": {
