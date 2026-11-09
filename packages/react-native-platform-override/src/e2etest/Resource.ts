@@ -6,7 +6,7 @@
  */
 
 import crypto from 'crypto';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs/promises';
 import globby from 'globby';
 import os from 'os';
 import path from 'path';
@@ -30,7 +30,7 @@ export async function acquireScratchDirectory(): Promise<
     crypto.randomBytes(16).toString('hex'),
   );
   await fs.mkdir(dir, {recursive: true});
-  return [dir, async () => fs.rmdir(dir, {recursive: true})];
+  return [dir, async () => fs.rm(dir, {recursive: true})];
 }
 
 /**

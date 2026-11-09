@@ -2,6 +2,21 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Thu, 05 Nov 2026 01:38:55 GMT",
+      "version": "0.85.1",
+      "tag": "@react-native-windows/find-repo-root_v0.85.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/find-repo-root",
+            "commit": "683e2b9e829ec590d400833467f959a1d0d82835",
+            "comment": "Remove @react-native-windows/fs and use Node's built-in fs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 15 Oct 2026 20:50:56 GMT",
       "version": "0.85.0",
       "tag": "@react-native-windows/find-repo-root_v0.85.0",

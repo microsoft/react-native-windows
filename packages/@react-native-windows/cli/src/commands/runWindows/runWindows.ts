@@ -6,7 +6,7 @@
 
 /* eslint-disable complexity */
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import path from 'path';
 
 import {Telemetry, CodedError} from '@react-native-windows/telemetry';
@@ -259,7 +259,7 @@ async function runWindowsInternal(
         if (verbose) {
           newInfo('Loading properties from msbuildproperties.g.json');
         }
-        return fs.readJsonFileSync(msBuildPropertiesJsonPath);
+        return JSON.parse(fs.readFileSync(msBuildPropertiesJsonPath, 'utf8'));
       }
 
       if (verbose) {

@@ -65,8 +65,8 @@ __metadata:
   linkType: hard
 
 "@babel/eslint-parser@npm:^7.25.1":
-  version: 7.29.7
-  resolution: "@babel/eslint-parser@npm:7.29.7"
+  version: 7.29.9
+  resolution: "@babel/eslint-parser@npm:7.29.9"
   dependencies:
     "@nicolo-ribaudo/eslint-scope-5-internals": "npm:5.1.1-v1"
     eslint-visitor-keys: "npm:^2.1.0"
@@ -74,20 +74,20 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.11.0
     eslint: ^7.5.0 || ^8.0.0 || ^9.0.0
-  checksum: 10c0/c24dcd941b0a149b197a9e9c3297a01d621775ac71cdf2e1134b1097c1691b46ce969355e1be3676d83b88f62c43ed33cf3a499da21ea11a5eb07339ce64ac20
+  checksum: 10c0/f97d9eb23ad53e9263235e9efe204908494922fb89a4cf623e174d7e62a112c52850990cc19b9ef5043af6e2ca87b1772f998175571ac8cb9967689d6e036bd8
   languageName: node
   linkType: hard
 
 "@babel/generator@npm:^7.25.0, @babel/generator@npm:^7.29.0, @babel/generator@npm:^7.29.1, @babel/generator@npm:^7.29.7, @babel/generator@npm:^7.7.2":
-  version: 7.29.7
-  resolution: "@babel/generator@npm:7.29.7"
+  version: 7.29.8
+  resolution: "@babel/generator@npm:7.29.8"
   dependencies:
-    "@babel/parser": "npm:^7.29.7"
-    "@babel/types": "npm:^7.29.7"
+    "@babel/parser": "npm:^7.29.8"
+    "@babel/types": "npm:^7.29.8"
     "@jridgewell/gen-mapping": "npm:^0.3.12"
     "@jridgewell/trace-mapping": "npm:^0.3.28"
     jsesc: "npm:^3.0.2"
-  checksum: 10c0/9bf72b01b5bd0ea5b1288a0e37dbd360bff2f2b1ce73342c0d40fb3db2ec3dc004ada5ffa925c5e12939a416eed59e600d562b8ecd938ce0d27dfd0eb6c6c2b7
+  checksum: 10c0/7b896696314a659652393b76d78276e236acd0f7fae40a9a1af7f01c76aeafc630dd0966aad6f9386d35d7c674a8e6e2d8e217c44d25fb11460e68afa9ba8441
   languageName: node
   linkType: hard
 
@@ -487,6 +487,17 @@ __metadata:
   bin:
     parser: ./bin/babel-parser.js
   checksum: 10c0/65133038f80b54a714d6027cb77cee3f9a6b5c4c6842ce674301e13947cbcbfa8055e63acaf1b84c085d34226a14425b2c2b97b829e0e226d2e8f1299942a51d
+  languageName: node
+  linkType: hard
+
+"@babel/parser@npm:^7.29.8":
+  version: 7.29.9
+  resolution: "@babel/parser@npm:7.29.9"
+  dependencies:
+    "@babel/types": "npm:^7.29.8"
+  bin:
+    parser: ./bin/babel-parser.js
+  checksum: 10c0/171b16eb4527cdbbb72cb98710f91acb22356e2c40196ba3b7a1b84efa8c55d0b0992f399c8c675c3e17f67fd133676c5c4118e5f20db243f427c8b29b0c3f40
   languageName: node
   linkType: hard
 
@@ -1601,13 +1612,13 @@ __metadata:
   linkType: hard
 
 "@babel/plugin-transform-regenerator@npm:^7.24.7, @babel/plugin-transform-regenerator@npm:^7.29.7":
-  version: 7.29.7
-  resolution: "@babel/plugin-transform-regenerator@npm:7.29.7"
+  version: 7.29.8
+  resolution: "@babel/plugin-transform-regenerator@npm:7.29.8"
   dependencies:
     "@babel/helper-plugin-utils": "npm:^7.29.7"
   peerDependencies:
     "@babel/core": ^7.0.0-0
-  checksum: 10c0/b991ab501c1c2c323398054211f8cd992f1db438b5b5d548d63dc74ff9591d52a50385160fdba2b62aae4f9610a321355a8ff911f1c4bd80dc74b555cad61468
+  checksum: 10c0/768da9bc3c8cbb0c591bc7db050215b8cea44df9df525d5cd6034aa179b091c2321a745b68139b3fc70b4493f2df1fc99a57acd4029c6d355d32a8ed8bd69f82
   languageName: node
   linkType: hard
 
@@ -1933,9 +1944,9 @@ __metadata:
   linkType: hard
 
 "@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.20.0, @babel/runtime@npm:^7.25.0":
-  version: 7.29.7
-  resolution: "@babel/runtime@npm:7.29.7"
-  checksum: 10c0/ca11572f7146b21e0bde6a9ed4bb6a89eafbee5f0944c7eb54d0d8a2dac962c33638a1d611e14faa71dfbb92b4b5f9236232208568a6b7d5c6f3f39ddb91771e
+  version: 7.29.10
+  resolution: "@babel/runtime@npm:7.29.10"
+  checksum: 10c0/32f975da8e9c2cae6b33e1a477f8fe8bbff6722c982b5ce35f99affaf3a7a1b612c8272b43afa0e51d3000928d6f3ba38f9296301115db5640264907c027b0cd
   languageName: node
   linkType: hard
 
@@ -2008,6 +2019,16 @@ __metadata:
     "@babel/helper-string-parser": "npm:^7.29.7"
     "@babel/helper-validator-identifier": "npm:^7.29.7"
   checksum: 10c0/b6623994c69717fa27294f5fa46d59140338e2d86c6c1c13085c84ef7d53086ee357fbf4fe9abe3dd3da75734dc77c4c0df2f90fb29e667558bb3b3fb705e88f
+  languageName: node
+  linkType: hard
+
+"@babel/types@npm:^7.29.8":
+  version: 7.29.8
+  resolution: "@babel/types@npm:7.29.8"
+  dependencies:
+    "@babel/helper-string-parser": "npm:^7.29.7"
+    "@babel/helper-validator-identifier": "npm:^7.29.7"
+  checksum: 10c0/be7c279f0abf2a086c633e21b49c7ca80275d05283cc5a268b67a708c9914bd0c944f1422b3eb3cb37682a2af5d560abf520ccf9b01b53ecbfe6b71fbc3fdde6
   languageName: node
   linkType: hard
 
@@ -3074,8 +3095,8 @@ __metadata:
   linkType: hard
 
 "@microsoft/api-extractor@npm:^7.52.2":
-  version: 7.59.4
-  resolution: "@microsoft/api-extractor@npm:7.59.4"
+  version: 7.60.0
+  resolution: "@microsoft/api-extractor@npm:7.60.0"
   dependencies:
     "@microsoft/api-extractor-model": "npm:7.33.15"
     "@microsoft/tsdoc": "npm:~0.17.0"
@@ -3089,10 +3110,10 @@ __metadata:
     resolve: "npm:~1.22.1"
     semver: "npm:~7.7.4"
     source-map: "npm:~0.6.1"
-    typescript: "npm:5.9.3"
+    typescript: "npm:6.0.3"
   bin:
     api-extractor: bin/api-extractor
-  checksum: 10c0/2b805f72318edb8dab720a2b2eb2a6b82faebbb6a6b5b836fced38875e61d344b14c7edf63724a27ab091fed4df8ef9923141f579fb1ddc7679d48ce02301e96
+  checksum: 10c0/4c04c881cbd482a0c11d000d8e3bb301fe486d6e3ee49b07c75bcce145fe16a6ea10bd1662e757c7aa54d43836a98f8a9973e93790be2d806e56b3cf596479c2
   languageName: node
   linkType: hard
 
@@ -3540,7 +3561,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@office-iss/react-native-win32-tester@workspace:packages/@office-iss/react-native-win32-tester"
   dependencies:
-    "@office-iss/react-native-win32": "npm:0.85.0"
+    "@office-iss/react-native-win32": "npm:0.85.1"
     "@react-native/tester": "npm:0.85.3"
     "@rnw-scripts/babel-react-native-config": "npm:0.0.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
@@ -3555,16 +3576,16 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:19.2.3"
     react-native: "npm:0.85.3"
-    react-native-platform-override: "npm:0.85.0"
+    react-native-platform-override: "npm:0.85.1"
     typescript: "npm:5.0.4"
   peerDependencies:
-    "@office-iss/react-native-win32": 0.85.0
+    "@office-iss/react-native-win32": 0.85.1
     react: 19.2.3
     react-native: ^0.85.0
   languageName: unknown
   linkType: soft
 
-"@office-iss/react-native-win32@npm:0.85.0, @office-iss/react-native-win32@workspace:packages/@office-iss/react-native-win32":
+"@office-iss/react-native-win32@npm:0.85.1, @office-iss/react-native-win32@workspace:packages/@office-iss/react-native-win32":
   version: 0.0.0-use.local
   resolution: "@office-iss/react-native-win32@workspace:packages/@office-iss/react-native-win32"
   dependencies:
@@ -3627,7 +3648,7 @@ __metadata:
     react-clone-referenced-element: "npm:^1.0.1"
     react-devtools-core: "npm:^6.1.5"
     react-native: "npm:0.85.3"
-    react-native-platform-override: "npm:0.85.0"
+    react-native-platform-override: "npm:0.85.1"
     react-refresh: "npm:^0.14.0"
     regenerator-runtime: "npm:^0.13.2"
     scheduler: "npm:0.27.0"
@@ -3983,7 +4004,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native-windows/automation-channel@npm:0.85.0, @react-native-windows/automation-channel@workspace:packages/@react-native-windows/automation-channel":
+"@react-native-windows/automation-channel@npm:0.85.1, @react-native-windows/automation-channel@workspace:packages/@react-native-windows/automation-channel":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation-channel@workspace:packages/@react-native-windows/automation-channel"
   dependencies:
@@ -4002,17 +4023,17 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:19.2.3"
     react-native: "npm:0.85.3"
-    react-native-windows: "npm:0.85.0"
+    react-native-windows: "npm:0.85.1"
     typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/automation-commands@npm:0.85.0, @react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands":
+"@react-native-windows/automation-commands@npm:0.85.1, @react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation-commands@workspace:packages/@react-native-windows/automation-commands"
   dependencies:
     "@jest/types": "npm:^29.2.1"
-    "@react-native-windows/automation-channel": "npm:0.85.0"
+    "@react-native-windows/automation-channel": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4026,16 +4047,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/automation@npm:0.85.0, @react-native-windows/automation@workspace:packages/@react-native-windows/automation":
+"@react-native-windows/automation@npm:0.85.1, @react-native-windows/automation@workspace:packages/@react-native-windows/automation":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/automation@workspace:packages/@react-native-windows/automation"
   dependencies:
     "@jest/create-cache-key-function": "npm:^29.2.1"
     "@jest/environment": "npm:^29.3.0"
     "@jest/types": "npm:^29.2.1"
-    "@react-native-windows/automation-channel": "npm:0.85.0"
-    "@react-native-windows/find-dotnet-tools": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
+    "@react-native-windows/automation-channel": "npm:0.85.1"
+    "@react-native-windows/find-dotnet-tools": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4056,18 +4076,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/cli@npm:0.85.0, @react-native-windows/cli@workspace:packages/@react-native-windows/cli":
+"@react-native-windows/cli@npm:0.85.1, @react-native-windows/cli@workspace:packages/@react-native-windows/cli":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/cli@workspace:packages/@react-native-windows/cli"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@react-native-community/cli-doctor": "npm:20.0.0"
     "@react-native-community/cli-types": "npm:20.0.0"
-    "@react-native-windows/codegen": "npm:0.85.0"
-    "@react-native-windows/find-dotnet-tools": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
-    "@react-native-windows/package-utils": "npm:0.85.0"
-    "@react-native-windows/telemetry": "npm:0.85.0"
+    "@react-native-windows/codegen": "npm:0.85.1"
+    "@react-native-windows/find-dotnet-tools": "npm:0.85.1"
+    "@react-native-windows/package-utils": "npm:0.85.1"
+    "@react-native-windows/telemetry": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4114,12 +4133,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/codegen@npm:0.85.0, @react-native-windows/codegen@workspace:packages/@react-native-windows/codegen":
+"@react-native-windows/codegen@npm:0.85.1, @react-native-windows/codegen@workspace:packages/@react-native-windows/codegen":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/codegen@workspace:packages/@react-native-windows/codegen"
   dependencies:
     "@babel/core": "npm:^7.25.2"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4148,11 +4166,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/find-dotnet-tools@npm:0.85.0, @react-native-windows/find-dotnet-tools@workspace:packages/@react-native-windows/find-dotnet-tools":
+"@react-native-windows/find-dotnet-tools@npm:0.85.1, @react-native-windows/find-dotnet-tools@workspace:packages/@react-native-windows/find-dotnet-tools":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/find-dotnet-tools@workspace:packages/@react-native-windows/find-dotnet-tools"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4165,11 +4182,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/find-repo-root@npm:0.85.0, @react-native-windows/find-repo-root@workspace:packages/@react-native-windows/find-repo-root":
+"@react-native-windows/find-repo-root@npm:0.85.1, @react-native-windows/find-repo-root@workspace:packages/@react-native-windows/find-repo-root":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/find-repo-root@workspace:packages/@react-native-windows/find-repo-root"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4185,31 +4201,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/fs@npm:0.85.0, @react-native-windows/fs@workspace:packages/@react-native-windows/fs":
-  version: 0.0.0-use.local
-  resolution: "@react-native-windows/fs@workspace:packages/@react-native-windows/fs"
-  dependencies:
-    "@rnw-scripts/eslint-config": "npm:1.2.38"
-    "@rnw-scripts/just-task": "npm:2.3.58"
-    "@rnw-scripts/ts-config": "npm:2.0.6"
-    "@types/graceful-fs": "npm:^4.1.5"
-    "@types/node": "npm:^22.14.0"
-    "@typescript-eslint/eslint-plugin": "npm:^8.36.0"
-    "@typescript-eslint/parser": "npm:^8.36.0"
-    eslint: "npm:^8.19.0"
-    graceful-fs: "npm:^4.2.8"
-    minimatch: "npm:^10.0.3"
-    prettier: "npm:^3.6.2"
-    typescript: "npm:5.0.4"
-  languageName: unknown
-  linkType: soft
-
-"@react-native-windows/package-utils@npm:0.85.0, @react-native-windows/package-utils@workspace:packages/@react-native-windows/package-utils":
+"@react-native-windows/package-utils@npm:0.85.1, @react-native-windows/package-utils@workspace:packages/@react-native-windows/package-utils":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/package-utils@workspace:packages/@react-native-windows/package-utils"
   dependencies:
-    "@react-native-windows/find-repo-root": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
+    "@react-native-windows/find-repo-root": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4226,11 +4222,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/perf-testing@npm:0.85.0, @react-native-windows/perf-testing@workspace:packages/@react-native-windows/perf-testing":
+"@react-native-windows/perf-testing@npm:0.85.1, @react-native-windows/perf-testing@workspace:packages/@react-native-windows/perf-testing":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/perf-testing@workspace:packages/@react-native-windows/perf-testing"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4253,14 +4248,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@react-native-windows/telemetry@npm:0.85.0, @react-native-windows/telemetry@workspace:packages/@react-native-windows/telemetry":
+"@react-native-windows/telemetry@npm:0.85.1, @react-native-windows/telemetry@workspace:packages/@react-native-windows/telemetry":
   version: 0.0.0-use.local
   resolution: "@react-native-windows/telemetry@workspace:packages/@react-native-windows/telemetry"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@microsoft/1ds-core-js": "npm:^4.3.0"
     "@microsoft/1ds-post-js": "npm:^4.3.0"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4309,14 +4303,14 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:19.2.3"
     react-native: "npm:0.85.3"
-    react-native-platform-override: "npm:0.85.0"
-    react-native-windows: "npm:0.85.0"
+    react-native-platform-override: "npm:0.85.1"
+    react-native-windows: "npm:0.85.1"
     typescript: "npm:5.0.4"
   peerDependencies:
     "@react-native-picker/picker": 2.11.0
     react: 19.2.3
     react-native: ^0.85.0
-    react-native-windows: 0.85.0
+    react-native-windows: 0.85.1
     react-native-xaml: ^0.0.80
   peerDependenciesMeta:
     "@react-native-picker/picker":
@@ -4764,7 +4758,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/beachball-config@workspace:packages/@rnw-scripts/beachball-config"
   dependencies:
-    "@react-native-windows/package-utils": "npm:0.85.0"
+    "@react-native-windows/package-utils": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/generated-beachball-config": "npm:0.0.0"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4786,8 +4780,7 @@ __metadata:
   resolution: "@rnw-scripts/create-github-releases@workspace:packages/@rnw-scripts/create-github-releases"
   dependencies:
     "@octokit/rest": "npm:^18.5.3"
-    "@react-native-windows/find-repo-root": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
+    "@react-native-windows/find-repo-root": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -4819,8 +4812,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/debug-test@workspace:packages/debug-test"
   dependencies:
-    "@react-native-windows/automation": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
+    "@react-native-windows/automation": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/ts-config": "npm:2.0.6"
     "@types/jest": "npm:^29.2.2"
@@ -4844,7 +4836,6 @@ __metadata:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/preset-typescript": "npm:^7.8.3"
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -4885,11 +4876,10 @@ __metadata:
     "@babel/preset-typescript": "npm:^7.8.3"
     "@babel/runtime": "npm:^7.20.0"
     "@react-native-community/cli": "npm:20.0.0"
-    "@react-native-windows/automation": "npm:0.85.0"
-    "@react-native-windows/automation-channel": "npm:0.85.0"
-    "@react-native-windows/automation-commands": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
-    "@react-native-windows/perf-testing": "npm:0.85.0"
+    "@react-native-windows/automation": "npm:0.85.1"
+    "@react-native-windows/automation-channel": "npm:0.85.1"
+    "@react-native-windows/automation-commands": "npm:0.85.1"
+    "@react-native-windows/perf-testing": "npm:0.85.1"
     "@react-native-windows/tester": "npm:0.0.1"
     "@react-native/jest-preset": "npm:0.85.3"
     "@react-native/metro-config": "npm:0.85.3"
@@ -4914,7 +4904,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.85.3"
-    react-native-windows: "npm:0.85.0"
+    react-native-windows: "npm:0.85.1"
     react-test-renderer: "npm:19.1.0"
     sanitize-filename: "npm:^1.6.3"
     typescript: "npm:5.0.4"
@@ -5008,9 +4998,8 @@ __metadata:
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/preset-typescript": "npm:^7.8.3"
     "@react-native-community/template": "npm:0.84.1"
-    "@react-native-windows/find-repo-root": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
-    "@react-native-windows/package-utils": "npm:0.85.0"
+    "@react-native-windows/find-repo-root": "npm:0.85.1"
+    "@react-native-windows/package-utils": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -5033,7 +5022,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:19.2.3"
     react-native: "npm:0.85.3"
-    react-native-platform-override: "npm:0.85.0"
+    react-native-platform-override: "npm:0.85.1"
     semver: "npm:^7.6.3"
     source-map-support: "npm:^0.5.19"
     typescript: "npm:5.0.4"
@@ -5199,7 +5188,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.85.3"
-    react-native-windows: "npm:0.85.0"
+    react-native-windows: "npm:0.85.1"
     react-test-renderer: "npm:19.1.0"
     typescript: "npm:5.0.4"
   languageName: unknown
@@ -5209,9 +5198,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/prepare-release@workspace:packages/@rnw-scripts/prepare-release"
   dependencies:
-    "@react-native-windows/find-repo-root": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
-    "@react-native-windows/package-utils": "npm:0.85.0"
+    "@react-native-windows/find-repo-root": "npm:0.85.1"
+    "@react-native-windows/package-utils": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -5231,9 +5219,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/promote-release@workspace:packages/@rnw-scripts/promote-release"
   dependencies:
-    "@react-native-windows/find-repo-root": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
-    "@react-native-windows/package-utils": "npm:0.85.0"
+    "@react-native-windows/find-repo-root": "npm:0.85.1"
+    "@react-native-windows/package-utils": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -5315,7 +5302,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.85.3"
-    react-native-windows: "npm:0.85.0"
+    react-native-windows: "npm:0.85.1"
     react-test-renderer: "npm:19.1.0"
     typescript: "npm:5.0.4"
   languageName: unknown
@@ -5351,7 +5338,7 @@ __metadata:
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.3"
     react-native: "npm:0.85.3"
-    react-native-windows: "npm:0.85.0"
+    react-native-windows: "npm:0.85.1"
     typescript: "npm:5.0.4"
   languageName: unknown
   linkType: soft
@@ -5360,8 +5347,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/stamp-version@workspace:packages/@rnw-scripts/stamp-version"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0"
-    "@react-native-windows/package-utils": "npm:0.85.0"
+    "@react-native-windows/package-utils": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -5391,7 +5377,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/take-screenshot@workspace:packages/@rnw-scripts/take-screenshot"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -5421,7 +5406,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@rnw-scripts/unbroken@workspace:packages/@rnw-scripts/unbroken"
   dependencies:
-    "@react-native-windows/fs": "npm:0.85.0"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/just-task": "npm:2.3.58"
     "@rnw-scripts/ts-config": "npm:2.0.6"
@@ -6201,7 +6185,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/graceful-fs@npm:^4.1.3, @types/graceful-fs@npm:^4.1.5":
+"@types/graceful-fs@npm:^4.1.3":
   version: 4.1.9
   resolution: "@types/graceful-fs@npm:4.1.9"
   dependencies:
@@ -6333,11 +6317,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 25.9.2
-  resolution: "@types/node@npm:25.9.2"
+  version: 26.6.5
+  resolution: "@types/node@npm:26.6.5"
   dependencies:
-    undici-types: "npm:>=7.24.0 <7.24.7"
-  checksum: 10c0/f14c0d56361febb985eccc45cf0834ee6e2f07c4389a636f3e1a55ebde320077a80bface18c9afd3092f5fa295925502c1a9d55f805efa813f634aa9c941cbac
+    undici-types: "npm:~8.9.0"
+  checksum: 10c0/4f791f69466ace7842c09e7bef96cb1ddbb65cf3db916ef7e84f0e2b2a17220b6b816dc7539d01520cadfb17ed7169b8214910900493e0a83be8bc7d124ec20a
   languageName: node
   linkType: hard
 
@@ -6349,11 +6333,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^22.0.0, @types/node@npm:^22.14.0":
-  version: 22.19.20
-  resolution: "@types/node@npm:22.19.20"
+  version: 22.20.5
+  resolution: "@types/node@npm:22.20.5"
   dependencies:
     undici-types: "npm:~6.21.0"
-  checksum: 10c0/933d4466f1a498dd7c8e173af7265a53e9d410cab4a827ccc348414d5065a9a40ba7a7c994a71b3ee651188111db3b43573b830dc30a61a7489f3e6efc537bf7
+  checksum: 10c0/0cf61a89c6a69917ab49f976a6bb11a29e3b348a6ae19f5827ceb91d3ade781faab58dcf3b8fa625f975f5d7536b9166ff94e8250c29272c667164f77c28fa88
   languageName: node
   linkType: hard
 
@@ -11290,7 +11274,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.3, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.8, graceful-fs@npm:^4.2.9":
+"graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.3, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.0, graceful-fs@npm:^4.2.4, graceful-fs@npm:^4.2.6, graceful-fs@npm:^4.2.9":
   version: 4.2.11
   resolution: "graceful-fs@npm:4.2.11"
   checksum: 10c0/386d011a553e02bc594ac2ca0bd6d9e4c22d7fa8cfbfc448a6d148c59ea881b092db9dbe3547ae4b88e55f1b01f7c4a2ecc53b310c042793e63aa44cf6c257f2
@@ -11318,11 +11302,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"handlebars@npm:^4.7.9":
-  version: 4.7.9
-  resolution: "handlebars@npm:4.7.9"
+"handlebars@npm:^4.7.10":
+  version: 4.7.10
+  resolution: "handlebars@npm:4.7.10"
   dependencies:
-    minimist: "npm:^1.2.5"
+    minimist: "npm:^1.2.8"
     neo-async: "npm:^2.6.2"
     source-map: "npm:^0.6.1"
     uglify-js: "npm:^3.1.4"
@@ -11332,7 +11316,7 @@ __metadata:
       optional: true
   bin:
     handlebars: bin/handlebars
-  checksum: 10c0/22f8105a7e68e81aff2662bb434edf05f757d21d850731d71cec886d69c10cd33d3c43e34b2892968ec62de8241611851d3d0674c8ef324ea3e01dc66262faa9
+  checksum: 10c0/9b5573584ae5836172ae3f1502d9819568ba1b92ee83b81b18223beeb4c07486595e7b0fa633102beabc66ed06fe6e7da1dd9a9ea8c7072b9550b9a88809165c
   languageName: node
   linkType: hard
 
@@ -14799,7 +14783,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.2.5, minimist@npm:^1.2.6, minimist@npm:^1.2.8":
+"minimist@npm:^1.2.6, minimist@npm:^1.2.8":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
   checksum: 10c0/19d3fcdca050087b84c2029841a093691a91259a47def2f18222f41e7645a0b7c44ef4b40e88a1e58a40c84d2ef0ee6047c55594d298146d0eb3f6b737c20ce6
@@ -16392,15 +16376,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-platform-override@npm:0.85.0, react-native-platform-override@workspace:*, react-native-platform-override@workspace:packages/react-native-platform-override":
+"react-native-platform-override@npm:0.85.1, react-native-platform-override@workspace:*, react-native-platform-override@workspace:packages/react-native-platform-override":
   version: 0.0.0-use.local
   resolution: "react-native-platform-override@workspace:packages/react-native-platform-override"
   dependencies:
     "@babel/core": "npm:^7.25.2"
     "@babel/preset-env": "npm:^7.25.3"
     "@babel/preset-typescript": "npm:^7.8.3"
-    "@react-native-windows/fs": "npm:0.85.0"
-    "@react-native-windows/package-utils": "npm:0.85.0"
+    "@react-native-windows/package-utils": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -16452,9 +16435,8 @@ __metadata:
   resolution: "react-native-windows-init@workspace:packages/react-native-windows-init"
   dependencies:
     "@babel/core": "npm:^7.25.2"
-    "@react-native-windows/cli": "npm:0.85.0"
-    "@react-native-windows/fs": "npm:0.85.0"
-    "@react-native-windows/telemetry": "npm:0.85.0"
+    "@react-native-windows/cli": "npm:0.85.1"
+    "@react-native-windows/telemetry": "npm:0.85.1"
     "@rnw-scripts/eslint-config": "npm:1.2.38"
     "@rnw-scripts/jest-unittest-config": "npm:1.5.12"
     "@rnw-scripts/just-task": "npm:2.3.58"
@@ -16490,7 +16472,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"react-native-windows@npm:0.85.0, react-native-windows@workspace:vnext":
+"react-native-windows@npm:0.85.1, react-native-windows@workspace:vnext":
   version: 0.0.0-use.local
   resolution: "react-native-windows@workspace:vnext"
   dependencies:
@@ -16501,9 +16483,9 @@ __metadata:
     "@react-native-community/cli": "npm:20.0.0"
     "@react-native-community/cli-platform-android": "npm:20.0.0"
     "@react-native-community/cli-platform-ios": "npm:20.0.0"
-    "@react-native-windows/cli": "npm:0.85.0"
-    "@react-native-windows/codegen": "npm:0.85.0"
-    "@react-native-windows/find-dotnet-tools": "npm:0.85.0"
+    "@react-native-windows/cli": "npm:0.85.1"
+    "@react-native-windows/codegen": "npm:0.85.1"
+    "@react-native-windows/find-dotnet-tools": "npm:0.85.1"
     "@react-native/assets": "npm:1.0.0"
     "@react-native/assets-registry": "npm:0.85.3"
     "@react-native/codegen": "npm:0.85.3"
@@ -16552,7 +16534,7 @@ __metadata:
     react: "npm:19.2.3"
     react-devtools-core: "npm:^6.1.5"
     react-native: "npm:0.85.3"
-    react-native-platform-override: "npm:0.85.0"
+    react-native-platform-override: "npm:0.85.1"
     react-refresh: "npm:^0.14.0"
     regenerator-runtime: "npm:^0.13.2"
     scheduler: "npm:0.27.0"
@@ -18378,12 +18360,12 @@ __metadata:
   linkType: hard
 
 "ts-jest@npm:^29.0.3":
-  version: 29.4.14
-  resolution: "ts-jest@npm:29.4.14"
+  version: 29.4.15
+  resolution: "ts-jest@npm:29.4.15"
   dependencies:
     bs-logger: "npm:^0.2.6"
     fast-json-stable-stringify: "npm:^2.1.0"
-    handlebars: "npm:^4.7.9"
+    handlebars: "npm:^4.7.10"
     json5: "npm:^2.2.3"
     lodash.memoize: "npm:^4.1.2"
     make-error: "npm:^1.3.6"
@@ -18413,7 +18395,7 @@ __metadata:
       optional: true
   bin:
     ts-jest: cli.js
-  checksum: 10c0/58780804871e5752d7f42e69a38ea0716d0a6330272f3a253cf10dbf8c59390f64f2da6fff3d93dcb1bc514d8fa5d02963d8ef6d062fdfa96113b3aad0fd9331
+  checksum: 10c0/99f8f71c0ee07adc036cf8917eadb29a2a5e002ed695e568c464a51661352a042bf69539d29a3e2c43773fc4e7525d47eae6dfabef45277b3a85a6d2a28a1071
   languageName: node
   linkType: hard
 
@@ -18593,13 +18575,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.9.3":
-  version: 5.9.3
-  resolution: "typescript@npm:5.9.3"
+"typescript@npm:6.0.3":
+  version: 6.0.3
+  resolution: "typescript@npm:6.0.3"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/6bd7552ce39f97e711db5aa048f6f9995b53f1c52f7d8667c1abdc1700c68a76a308f579cd309ce6b53646deb4e9a1be7c813a93baaf0a28ccd536a30270e1c5
+  checksum: 10c0/4a25ff5045b984370f48f196b3a0120779b1b343d40b9a68d114ea5e5fff099809b2bb777576991a63a5cd59cf7bffd96ff6fe10afcefbcb8bd6fb96ad4b6606
   languageName: node
   linkType: hard
 
@@ -18643,13 +18625,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>":
-  version: 5.9.3
-  resolution: "typescript@patch:typescript@npm%3A5.9.3#optional!builtin<compat/typescript>::version=5.9.3&hash=5786d5"
+"typescript@patch:typescript@npm%3A6.0.3#optional!builtin<compat/typescript>":
+  version: 6.0.3
+  resolution: "typescript@patch:typescript@npm%3A6.0.3#optional!builtin<compat/typescript>::version=6.0.3&hash=5786d5"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 10c0/ad09fdf7a756814dce65bc60c1657b40d44451346858eea230e10f2e95a289d9183b6e32e5c11e95acc0ccc214b4f36289dcad4bf1886b0adb84d711d336a430
+  checksum: 10c0/2f25c74e65663c248fa1ade2b8459d9ce5372ff9dad07067310f132966ebec1d93f6c42f0baf77a6b6a7a91460463f708e6887013aaade22111037457c6b25df
   languageName: node
   linkType: hard
 
@@ -18736,17 +18718,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:>=7.24.0 <7.24.7":
-  version: 7.24.6
-  resolution: "undici-types@npm:7.24.6"
-  checksum: 10c0/d9cd8befb643ac904615c280a095ba4240531f6bb4a5e75a22a7483630ca8d3f1016d2ab6ace6ceda1f63b3a2db2fe037fafe121d6917a0187573aa548ff78ca
-  languageName: node
-  linkType: hard
-
 "undici-types@npm:~6.21.0":
   version: 6.21.0
   resolution: "undici-types@npm:6.21.0"
   checksum: 10c0/c01ed51829b10aa72fc3ce64b747f8e74ae9b60eafa19a7b46ef624403508a54c526ffab06a14a26b3120d055e1104d7abe7c9017e83ced038ea5cf52f8d5e04
+  languageName: node
+  linkType: hard
+
+"undici-types@npm:~8.9.0":
+  version: 8.9.0
+  resolution: "undici-types@npm:8.9.0"
+  checksum: 10c0/51c712c20c087368f62c6fc0f2bc49fa76bfe5dec28ff01584bb677ff29b0622569783c02d43e151143808c48c0503f804093bd2c491b10f2a830138034cb451
   languageName: node
   linkType: hard
 
@@ -19286,17 +19268,17 @@ __metadata:
   linkType: hard
 
 "ws@npm:^6.2.3":
-  version: 6.2.4
-  resolution: "ws@npm:6.2.4"
+  version: 6.2.6
+  resolution: "ws@npm:6.2.6"
   dependencies:
     async-limiter: "npm:~1.0.0"
-  checksum: 10c0/5c2b9474164f9cb68c7776a1d10b0461c186f3a69bffb1028fca33eba5ab7206a09173fb0b311d6c5a81c8cf148406f8deb0b7d899542ab8ca67407d99717dad
+  checksum: 10c0/24245efc3c09b6175df32ddb4a06f85432c4c88abb0e75f43f2551c1d5de456218b1b6c7685c414b8e03a68a167488e4aadf04a895681c8e01502025ce505742
   languageName: node
   linkType: hard
 
 "ws@npm:^7, ws@npm:^7.5.10":
-  version: 7.5.11
-  resolution: "ws@npm:7.5.11"
+  version: 7.5.13
+  resolution: "ws@npm:7.5.13"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ^5.0.2
@@ -19305,13 +19287,13 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 10c0/7972670b676fb1ccba73b0899ca3c2e04e8c2075629c2614cced7f556536f96a672bbf4619fc5a06c8b8720bb839a47ca88c69c95dc14c9c61a99fbecba1c866
+  checksum: 10c0/e223726bbda5768ed58ec9252d04eda7018ef380ea122bb94e595a4d7a02b5baeb423933936576fddb8fa51b642375f7ae814bf0f6f5d9a3ce290566578a8c5a
   languageName: node
   linkType: hard
 
 "ws@npm:^8.17.1":
-  version: 8.21.0
-  resolution: "ws@npm:8.21.0"
+  version: 8.22.0
+  resolution: "ws@npm:8.22.0"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -19320,7 +19302,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 10c0/ef4a243476283fc49bc7550966c4af4aa0eef56273837211e700de3b664e08604a760cdddcb5ba43c049140e74ccfec5b0ee0bb439e08c2adf9138902fdde5f9
+  checksum: 10c0/7304d14ef38898dd366a528a85e2da389c4eebf30f4ce8a007bd2dce6025f9b619cefe44fe2354f0bad0ec541b1c9a4da06a3f3e046ab56f01fd52d5784ecfb2
   languageName: node
   linkType: hard
 
