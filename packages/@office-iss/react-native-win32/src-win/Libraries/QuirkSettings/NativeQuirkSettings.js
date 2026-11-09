@@ -11,7 +11,7 @@ import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
 import type {Quirks} from './Quirks';
 
 export interface Spec extends TurboModule {
-  +getConstants: () => Quirks;
+  readonly getConstants: () => Quirks;
 }
 
-export default (TurboModuleRegistry.get<Spec>('QuirkSettings'): ?Spec);
+export default TurboModuleRegistry.get<Spec>('QuirkSettings') as ?Spec;

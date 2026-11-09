@@ -15,11 +15,11 @@ import type {
 
 import {codegenNativeComponent} from 'react-native';
 
-type DismissEvent = $ReadOnly<{
+type DismissEvent = Readonly<{
   isOpen?: boolean,
 }>;
 
-type NativeProps = $ReadOnly<{
+type NativeProps = Readonly<{
   ...ViewProps,
 
   // Props
@@ -45,6 +45,6 @@ type NativeProps = $ReadOnly<{
 
 type NativeType = HostComponent<NativeProps>;
 // $FlowFixMe[nonpolymorphic-type-arg]
-export default (codegenNativeComponent<NativeProps>('RCTFlyout', {
+export default codegenNativeComponent<NativeProps>('RCTFlyout', {
   interfaceOnly: true,
-}): NativeType);
+}) as NativeType;

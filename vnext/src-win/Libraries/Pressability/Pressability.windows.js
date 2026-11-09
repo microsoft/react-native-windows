@@ -100,12 +100,12 @@ export type PressabilityConfig = Readonly<{
   /*
    * Called after a key down event is detected.
    */
-  onKeyDown?: ?(event: KeyDownEvent) => mixed,
+  onKeyDown?: ?(event: KeyDownEvent) => unknown,
 
   /*
    * Called after a key up event is detected.
    */
-  onKeyUp?: ?(event: KeyUpEvent) => mixed,
+  onKeyUp?: ?(event: KeyUpEvent) => unknown,
 
   /**
    * Called when the hover is activated to provide visual feedback.
@@ -154,14 +154,14 @@ export type PressabilityConfig = Readonly<{
    * events. This is to preserve compatibility with pre-0.62 behavior which
    * allowed attaching mouse event handlers to Touchables
    */
-  onMouseEnter?: ?(event: MouseEvent) => mixed,
+  onMouseEnter?: ?(event: MouseEvent) => unknown,
 
   /**
    * Raw handler for onMouseLeave that will be preferred if set over hover
    * events. This is to preserve compatibility with pre-0.62 behavior which
    * allowed attaching mouse event handlers to Touchables
    */
-  onMouseLeave?: ?(event: MouseEvent) => mixed,
+  onMouseLeave?: ?(event: MouseEvent) => unknown,
   // Windows]
 }>;
 
@@ -639,11 +639,16 @@ export default class Pressability {
         onPointerEnter: undefined as void | (PointerEvent => void),
         onPointerLeave: undefined as void | (PointerEvent => void),
       };
-      const {onHoverIn, onHoverOut} = this._config;
-      if (onHoverIn != null) {
+      // Whether to attach these at all is necessarily decided once: their
+      // presence is what makes the host view listen for pointer enter/leave.
+      // The callbacks themselves are read from `this._config` at invocation,
+      // as every other handler here does, so that `configure` is observed.
+      const configAtCreation = this._config;
+      if (configAtCreation.onHoverIn != null) {
         hoverPointerEvents.onPointerEnter = (event: PointerEvent) => {
           this._isHovered = true;
           this._cancelHoverOutDelayTimeout();
+          const {onHoverIn} = this._config;
           if (onHoverIn != null) {
             const delayHoverIn = normalizeDelay(this._config.delayHoverIn);
             if (delayHoverIn > 0) {
@@ -657,11 +662,12 @@ export default class Pressability {
           }
         };
       }
-      if (onHoverOut != null) {
+      if (configAtCreation.onHoverOut != null) {
         hoverPointerEvents.onPointerLeave = (event: PointerEvent) => {
           if (this._isHovered) {
             this._isHovered = false;
             this._cancelHoverInDelayTimeout();
+            const {onHoverOut} = this._config;
             if (onHoverOut != null) {
               const delayHoverOut = normalizeDelay(this._config.delayHoverOut);
               if (delayHoverOut > 0) {

@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.89.0-nightly-20261002-cd2de187e",
+  "baseVersion": "0.89.0-nightly-20261102-47a9917ac",
   "overrides": [
     {
       "type": "copy",
@@ -43,7 +43,7 @@
       "type": "patch",
       "file": "src/js/examples/FlatList/BaseFlatListExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/BaseFlatListExample.js",
-      "baseHash": "be4a94c009e40a31ab8a3c6eee5f9e4082849864",
+      "baseHash": "6da51f1cc68929e5bc21649f4c0e1aca534259c2",
       "issue": 12869
     },
     {
@@ -104,20 +104,20 @@
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "b8a25360dfe8ca7412862756624ce298aed07dde",
+      "baseHash": "ffada5e799c95ac06616e10b3e3ff471958e87e9",
       "issue": 6240
     },
     {
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "0add5ab062eab8011d70c832f90c42af366ea23a"
+      "baseHash": "64de0a3eac1601500f8f8baa3512d8e220a77b13"
     },
     {
       "type": "patch",
       "file": "src/js/examples/Text/TextSharedExamples.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextSharedExamples.js",
-      "baseHash": "e8f9b0c28f2629ca040807c1b0405e2191158607",
+      "baseHash": "3e061344f8c8f9f60c790ee113eeb89040d13d70",
       "issue": 15125
     },
     {
@@ -156,7 +156,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "7a9a915c854aa5858ca962996dbd34b839d65a8f"
+      "baseHash": "195ec451f2ca26536b522480e85700b42f566810"
     }
   ]
 }

@@ -23,6 +23,7 @@ import type {
   LayoutRectangle,
   MouseEvent,
   PointerEvent,
+  SafeAreaInsetsChangeEvent,
   KeyEvent, // [Windows]
 } from '../../Types/CoreEventTypes';
 import type {
@@ -63,6 +64,27 @@ type DirectEventProps = Readonly<{
    * See https://reactnative.dev/docs/view#onlayout
    */
   onLayout?: ?(event: LayoutChangeEvent) => unknown,
+
+  /**
+   * Invoked when this view's safe-area insets change, with:
+   *
+   * `{nativeEvent: {insets: {top, right, bottom, left}}}`
+   *
+   * `insets` measure how far the view extends into the unsafe area, in points
+   * on iOS and dp on Android, not display pixels. Content padding does not
+   * affect them.
+   *
+   * Android measures full rendered bounds when the combined transform is
+   * translation/scaling; partial clipping does not change them. Other transforms
+   * or unavailable geometry emit no update, not zeros.
+   *
+   * Dispatched synchronously so rendering updates apply in the same frame.
+   *
+   * @experimental
+   */
+  experimental_onSafeAreaInsetsChange?: ?(
+    event: SafeAreaInsetsChangeEvent,
+  ) => unknown,
 
   /**
    * When `accessible` is `true`, the system will invoke this function when the
@@ -595,11 +617,11 @@ type ViewPropsWindows = Readonly<{|
    */
   onKeyUp?: ?(e: KeyUpEvent) => void,
   onKeyUpCapture?: ?(e: KeyUpEvent) => void,
-  keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+  keyUpEvents?: ?ReadonlyArray<HandledKeyboardEvent>,
 
   onKeyDown?: ?(e: KeyDownEvent) => void,
   onKeyDownCapture?: ?(e: KeyDownEvent) => void,
-  keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+  keyDownEvents?: ?ReadonlyArray<HandledKeyboardEvent>,
   /**
    * Specifies the Tooltip for the view
    * @platform windows
@@ -628,10 +650,10 @@ type ViewPropsWindows = Readonly<{|
    */
   enableFocusRing?: ?boolean,
 
-  onFocus?: ?(event: FocusEvent) => mixed,
-  onBlur?: ?(event: FocusEvent) => mixed,
-  onMouseLeave?: ?(event: MouseEvent) => mixed,
-  onMouseEnter?: ?(event: MouseEvent) => mixed,
+  onFocus?: ?(event: FocusEvent) => unknown,
+  onBlur?: ?(event: FocusEvent) => unknown,
+  onMouseLeave?: ?(event: MouseEvent) => unknown,
+  onMouseEnter?: ?(event: MouseEvent) => unknown,
 |}>;
 // Windows]
 

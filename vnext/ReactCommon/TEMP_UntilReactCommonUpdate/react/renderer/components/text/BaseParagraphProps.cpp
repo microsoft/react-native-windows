@@ -71,7 +71,7 @@ void BaseParagraphProps::setProp(
   // of these fields together, and because there are some collisions between
   // propnames parsed here and outside of ParagraphAttributes.
   // This code is also duplicated in AndroidTextInput.
-  static auto paDefaults = ParagraphAttributes{};
+  static constinit auto paDefaults = ParagraphAttributes{};
   switch (hash) {
     REBUILD_FIELD_SWITCH_CASE(
         paDefaults,
@@ -123,6 +123,10 @@ void BaseParagraphProps::setProp(
         paragraphAttributes,
         android_hyphenationFrequency,
         "android_hyphenationFrequency");
+    REBUILD_FIELD_SWITCH_CASE(
+        paDefaults, value, paragraphAttributes, lineBreak, "lineBreak");
+    REBUILD_FIELD_SWITCH_CASE(
+        paDefaults, value, paragraphAttributes, wordBreak, "wordBreak");
     REBUILD_FIELD_SWITCH_CASE(
         paDefaults,
         value,

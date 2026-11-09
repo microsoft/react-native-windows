@@ -9,6 +9,7 @@
  */
 
 import type {HostInstance} from '../../../src/private/types/HostInstance';
+import type {SafeAreaInsetsChangeEvent} from '../../Types/CoreEventTypes';
 import type {ViewProps} from './ViewPropTypes';
 
 import TextAncestorContext from '../../Text/TextAncestorContext';
@@ -18,6 +19,13 @@ import invariant from 'invariant'; // [Windows]
 // [Windows
 import type {KeyUpEvent, KeyDownEvent} from '../../Types/CoreEventTypes';
 // Windows]
+
+const warnOnRepeatedSafeAreaInsetsChanges: (
+  onSafeAreaInsetsChange: (event: SafeAreaInsetsChangeEvent) => unknown,
+) => (event: SafeAreaInsetsChangeEvent) => unknown = __DEV__
+  ? require('../../../src/private/components/view/warnOnRepeatedSafeAreaInsetsChanges')
+      .default
+  : onSafeAreaInsetsChange => onSafeAreaInsetsChange;
 
 export type ViewInstance = HostInstance;
 
@@ -61,6 +69,7 @@ const View: component(
       'aria-labelledby': ariaLabelledBy,
       'aria-level': ariaLevel, // Win32
       'aria-live': ariaLive,
+      'aria-modal': ariaModal,
       'aria-multiselectable': ariaMultiselectable, // Win32
       'aria-posinset': ariaPosinset, // Win32
       'aria-required': ariaRequired, // Win32
@@ -81,6 +90,15 @@ const View: component(
   ) => {
     const _accessibilityLabelledBy =
       ariaLabelledBy?.split(/\s*,\s*/g) ?? accessibilityLabelledBy;
+
+    if (__DEV__) {
+      const onSafeAreaInsetsChange =
+        otherProps.experimental_onSafeAreaInsetsChange;
+      if (onSafeAreaInsetsChange != null) {
+        otherProps.experimental_onSafeAreaInsetsChange =
+          warnOnRepeatedSafeAreaInsetsChanges(onSafeAreaInsetsChange);
+      }
+    }
 
     const _accessibilityState =
       accessibilityState != null ||
@@ -260,6 +278,9 @@ const View: component(
               }
               accessibilityLabelledBy={_accessibilityLabelledBy}
               accessibilityValue={_accessibilityValue}
+              accessibilityViewIsModal={
+                ariaModal ?? otherProps.accessibilityViewIsModal
+              }
               importantForAccessibility={
                 ariaHidden === true
                   ? 'no-hide-descendants'

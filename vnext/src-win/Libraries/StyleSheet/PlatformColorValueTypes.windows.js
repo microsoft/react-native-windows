@@ -22,7 +22,7 @@ export const PlatformColor = (...names: Array<string>): ColorValue => {
   /* $FlowExpectedError[incompatible-return]
    * LocalNativeColorValue is the actual type of the opaque NativeColorValue on Windows platform */
   // $FlowExpectedError[incompatible-type]
-  return ({windowsbrush: names}: LocalNativeColorValue);
+  return {windowsbrush: names} as LocalNativeColorValue;
 };
 
 export const normalizeColorObject = (
@@ -31,7 +31,7 @@ export const normalizeColorObject = (
   /* $FlowExpectedError[incompatible-cast]
    * LocalNativeColorValue is the actual type of the opaque NativeColorValue on Windows platform */
   // $FlowExpectedError[incompatible-type]
-  if ('windowsbrush' in (color: LocalNativeColorValue)) {
+  if ('windowsbrush' in (color as LocalNativeColorValue)) {
     return color;
   }
   return null;

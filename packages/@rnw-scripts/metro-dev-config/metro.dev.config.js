@@ -14,7 +14,6 @@ const {
   DuplicateDependencies,
 } = require('@rnx-kit/metro-plugin-duplicates-checker');
 
-// eslint-disable-next-line @react-native/no-deep-imports
 const reactNativePackage = require('react-native/package.json');
 
 function resolveReactNativeExport(moduleName) {

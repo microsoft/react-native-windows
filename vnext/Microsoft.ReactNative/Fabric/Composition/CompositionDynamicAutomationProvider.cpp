@@ -329,15 +329,16 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   if (compositionView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
+  const auto role = props->role.value_or(facebook::react::Role::None);
   auto hr = S_OK;
 
   switch (propertyId) {
     case UIA_ControlTypePropertyId: {
       pRetVal->vt = VT_I4;
-      pRetVal->lVal = props->role == facebook::react::Role::None ? props->accessibilityRole.empty()
+      pRetVal->lVal = role == facebook::react::Role::None ? props->accessibilityRole.empty()
               ? GetControlTypeFromString(compositionView->DefaultControlType())
               : GetControlTypeFromString(props->accessibilityRole)
-                                                                 : GetControlTypeFromRole(props->role);
+                                                          : GetControlTypeFromRole(role);
       break;
     }
     case UIA_AutomationIdPropertyId: {
@@ -382,7 +383,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
           props->importantForAccessibility == facebook::react::ImportantForAccessibility::NoHideDescendants ||
           IsHiddenByParent(strongView);
       pRetVal->boolVal = (!isHidden && props->accessible &&
-                          (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
+                          (props->accessibilityRole != "none" || role != facebook::react::Role::None))
           ? VARIANT_TRUE
           : VARIANT_FALSE;
       break;
@@ -395,7 +396,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
           props->importantForAccessibility == facebook::react::ImportantForAccessibility::NoHideDescendants ||
           IsHiddenByParent(strongView);
       pRetVal->boolVal = (!isHidden && props->accessible &&
-                          (props->accessibilityRole != "none" || props->role != facebook::react::Role::None))
+                          (props->accessibilityRole != "none" || role != facebook::react::Role::None))
           ? VARIANT_TRUE
           : VARIANT_FALSE;
       break;
@@ -483,7 +484,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_HeadingLevelPropertyId: {
       pRetVal->vt = VT_I4;
-      pRetVal->lVal = GetHeadingLevel(props->accessibilityLevel, props->accessibilityRole, props->role);
+      pRetVal->lVal = GetHeadingLevel(props->accessibilityLevel, props->accessibilityRole, role);
       break;
     }
   }

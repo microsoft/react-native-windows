@@ -518,7 +518,7 @@ export type TextInputWindowsProps = Readonly<{|
    * Configures keys that can be used to submit editing for the TextInput.
    * @platform windows
    */
-  submitKeyEvents?: ?$ReadOnlyArray<SubmitKeyEvent>,
+  submitKeyEvents?: ?ReadonlyArray<SubmitKeyEvent>,
 
   /**
    * Specifies the Tooltip for the view
@@ -550,8 +550,8 @@ export type TextInputWindowsProps = Readonly<{|
   onKeyUp?: (args: KeyUpEvent) => void,
   onKeyUpCapture?: (args: KeyDownEvent) => void,
 
-  keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
-  keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+  keyDownEvents?: ?ReadonlyArray<HandledKeyboardEvent>,
+  keyUpEvents?: ?ReadonlyArray<HandledKeyboardEvent>,
 |}>;
 
 // Windows]

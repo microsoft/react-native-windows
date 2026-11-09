@@ -11,7 +11,7 @@ import {codegenNativeComponent} from 'react-native';
 import type {HostComponent} from '../../../src/private/types/HostComponent';
 import type {ViewProps} from '../View/ViewPropTypes';
 
-type NativeProps = $ReadOnly<{|
+type NativeProps = Readonly<{|
   ...ViewProps,
 
   // Props
@@ -26,6 +26,6 @@ type NativeProps = $ReadOnly<{|
 
 type NativeType = HostComponent<NativeProps>;
 // $FlowFixMe[nonpolymorphic-type-arg]
-export default (codegenNativeComponent<NativeProps>('PLYIcon', {
+export default codegenNativeComponent<NativeProps>('PLYIcon', {
   interfaceOnly: true,
-}): NativeType);
+}) as NativeType;

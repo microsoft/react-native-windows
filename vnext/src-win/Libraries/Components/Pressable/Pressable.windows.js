@@ -157,32 +157,32 @@ type PressableBaseProps = Readonly<{
   /**
    * Called after the element loses focus.
    */
-  onBlur?: ?(event: BlurEvent) => mixed,
+  onBlur?: ?(event: BlurEvent) => unknown,
 
   /**
    * Called after the element is focused.
    */
-  onFocus?: ?(event: FocusEvent) => mixed,
+  onFocus?: ?(event: FocusEvent) => unknown,
 
   /*
    * Called after a key down event is detected.
    */
-  onKeyDown?: ?(event: KeyDownEvent) => mixed,
+  onKeyDown?: ?(event: KeyDownEvent) => unknown,
 
   /*
    * Called after a key up event is detected.
    */
-  onKeyUp?: ?(event: KeyUpEvent) => mixed,
+  onKeyUp?: ?(event: KeyUpEvent) => unknown,
 
   /*
    * List of keys handled only by JS.
    */
-  keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+  keyDownEvents?: ?ReadonlyArray<HandledKeyboardEvent>,
 
   /*
    * List of keys to be handled only by JS.
    */
-  keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
+  keyUpEvents?: ?ReadonlyArray<HandledKeyboardEvent>,
 
   /*
    * Called in the tunneling phase after a key up event is detected.
@@ -335,7 +335,7 @@ function Pressable({
     ariaLive === 'off' ? 'none' : ariaLive ?? props.accessibilityLiveRegion;
 
   const accessibilityLabel = ariaLabel ?? props.accessibilityLabel;
-  const restPropsWithDefaults: React.ElementConfig<typeof View> = {
+  const restPropsWithDefaults: React.ComponentProps<typeof View> = {
     ...restProps,
     ...android_rippleConfig?.viewProps,
     accessible: accessible !== false,

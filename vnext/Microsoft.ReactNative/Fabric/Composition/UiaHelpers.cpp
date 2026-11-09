@@ -254,10 +254,10 @@ void UpdateUiaPropertiesForAnnotation(
   UpdateUiaProperty(provider, UIA_AnnotationDateTimePropertyId, old_annotation.dateTime, new_annotation.dateTime);
 }
 
-long GetLiveSetting(const std::string &liveRegion) noexcept {
-  if (liveRegion == "polite") {
+long GetLiveSetting(facebook::react::AccessibilityLiveRegion liveRegion) noexcept {
+  if (liveRegion == facebook::react::AccessibilityLiveRegion::Polite) {
     return LiveSetting::Polite;
-  } else if (liveRegion == "assertive") {
+  } else if (liveRegion == facebook::react::AccessibilityLiveRegion::Assertive) {
     return LiveSetting::Assertive;
   }
   return LiveSetting::Off;

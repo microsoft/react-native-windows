@@ -120,6 +120,10 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples-win/Keyboard/KeyboardExtensionExample'),
   },
   {
+    key: 'SafeAreaInsetsExample',
+    module: require('../examples/SafeAreaInsets/SafeAreaInsetsExample'),
+  },
+  {
     key: 'ScrollViewExample',
     category: 'Basic',
     module: require('../examples/ScrollView/ScrollViewExample'),

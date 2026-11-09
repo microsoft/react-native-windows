@@ -1,111 +1,126 @@
 [ignore]
 ; We fork some components by platform - ignore all platforms except win32
-.*/*[.]android.js
-.*/*[.]ios.js
-.*/*[.]macos.js
-.*/*[.]windesktop.js
+**/*.android.js
+**/*.ios.js
+**/*.macos.js
+**/*.windesktop.js
 
 ; Ignore fb_internal modules
-<PROJECT_ROOT>/packages/react-native/src/fb_internal/.*
+packages/react-native/src/fb_internal/**
 
 ; These modules have base components and win32 versions.
 ; Ideally we'd delete the base versions of files that had .win32 overrides as part of the
 ; initRNLibraries build step
-<PROJECT_ROOT>/index.js
-<PROJECT_ROOT>/Libraries/Alert/Alert.js
-<PROJECT_ROOT>/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js
-<PROJECT_ROOT>/Libraries/Components/Button.js
-<PROJECT_ROOT>/Libraries/Components/Pressable/Pressable.js
-<PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
-<PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
-<PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
-<PROJECT_ROOT>/Libraries/Components/Touchable/Touchable.js
-<PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
-<PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
-<PROJECT_ROOT>/Libraries/Components/View/View.js
-<PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
-<PROJECT_ROOT>/Libraries/Image/Image.js
-<PROJECT_ROOT>/Libraries/Inspector/Inspector.js
-<PROJECT_ROOT>/Libraries/Inspector/InspectorOverlay.js
-<PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
-<PROJECT_ROOT>/Libraries/Pressability/Pressability.js
-<PROJECT_ROOT>/Libraries/Pressability/HoverState.js
-<PROJECT_ROOT>/Libraries/Renderer/shims/ReactNativeTypes.js
-<PROJECT_ROOT>/Libraries/StyleSheet/PlatformColorValueTypes.js
-<PROJECT_ROOT>/Libraries/Text/TextProps.js
-<PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
-<PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
-<PROJECT_ROOT>/Libraries/Utilities/Platform.flow.js
-<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js
-<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorHeader.js
-<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js
-<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
-<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxStyle.js
+index.js
+Libraries/Alert/Alert.js
+Libraries/Components/AccessibilityInfo/AccessibilityInfo.js
+Libraries/Components/Button.js
+Libraries/Components/Pressable/Pressable.js
+Libraries/Components/SafeAreaView/SafeAreaView.js
+Libraries/Components/TextInput/TextInput.js
+Libraries/Components/TextInput/TextInputState.js
+Libraries/Components/Touchable/Touchable.js
+Libraries/Components/Touchable/TouchableNativeFeedback.js
+Libraries/Components/View/ViewAccessibility.js
+Libraries/Components/View/View.js
+Libraries/Components/View/ViewPropTypes.js
+Libraries/Image/Image.js
+Libraries/Inspector/Inspector.js
+Libraries/Inspector/InspectorOverlay.js
+Libraries/Network/RCTNetworking.js
+Libraries/Pressability/Pressability.js
+Libraries/Pressability/HoverState.js
+Libraries/Renderer/shims/ReactNativeTypes.js
+Libraries/StyleSheet/PlatformColorValueTypes.js
+Libraries/Text/TextProps.js
+Libraries/Types/CoreEventTypes.js
+Libraries/Utilities/Dimensions.js
+Libraries/Utilities/Platform.flow.js
+Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js
+Libraries/LogBox/UI/LogBoxInspectorHeader.js
+Libraries/LogBox/UI/LogBoxInspectorStackFrame.js
+Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
+Libraries/LogBox/UI/LogBoxStyle.js
 
-<PROJECT_ROOT>/IntegrationTests/ImageCachePolicyTest.js
-<PROJECT_ROOT>/IntegrationTests/LayoutEventsTest.js
-<PROJECT_ROOT>/IntegrationTests/IntegrationTestsApp.js
-<PROJECT_ROOT>/IntegrationTests/PromiseTest.js
-<PROJECT_ROOT>/IntegrationTests/TimersTest.js
+IntegrationTests/ImageCachePolicyTest.js
+IntegrationTests/LayoutEventsTest.js
+IntegrationTests/IntegrationTestsApp.js
+IntegrationTests/PromiseTest.js
+IntegrationTests/TimersTest.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
-.*/node_modules/react-native/.*
+**/node_modules/react-native/**
+../../../node_modules/react-native/**
+
+; Hoisted workspace links resolve to source directories outside this Flow project.
+../../../vnext/**
+../../../packages/@react-native/**
+../../../packages/@react-native-windows/**
+../../../packages/@rnw-scripts/**
+../react-native-win32-tester/**
+../../react-native-platform-override/**
 
 ; Ignore all flow directory contents in node_modules
-.*/flow/.*
+**/flow/**
 
 ; Ignore react-native-windows' build output. Flow is not compiled with long path support and after running unittests these folders have long paths
-.*/node_modules/react-native-windows/build/.*
-.*/node_modules/react-native-windows/target/.*
-.*/node_modules/react-native-windows/Microsoft.ReactNative.Managed.CodeGen.UnitTests/.*
-.*/node_modules/react-native-windows/Microsoft.ReactNative.Managed.UnitTests/.*
+**/node_modules/react-native-windows/build/**
+**/node_modules/react-native-windows/target/**
+**/node_modules/react-native-windows/Microsoft.ReactNative.Managed.CodeGen.UnitTests/**
+**/node_modules/react-native-windows/Microsoft.ReactNative.Managed.UnitTests/**
 
 ; These files dont need to be checked and just increase the build time
-.*/node_modules/e2etest/.*
-.*/node_modules/playground/.*
+**/node_modules/e2etest/**
+**/node_modules/playground/**
 
-<PROJECT_ROOT>/packages/react-native/sdks/.*
+packages/react-native/sdks/**
 
 ; Ignore the codegen e2e tests
-<PROJECT_ROOT>/packages/react-native-codegen/e2e/__test_fixtures__/modules/NativeEnumTurboModule.js
+packages/react-native-codegen/e2e/__test_fixtures__/modules/NativeEnumTurboModule.js
 
 ; Ignore "BUCK" generated dirs
-<PROJECT_ROOT>/\.buckd/
+.buckd/**
 
 ; Ignore cache files
-.*/node_modules/.cache*
+**/node_modules/.cache*/**
 
 ; Ignore the src-win folder - flow files are combined with ones from react-native into the root Libraries folder
-.*/react-native-win32/src-win/.*
+src-win/**
 
 ; Ignore the private __tests__ (until this is fixed: https://github.com/facebook/react-native/issues/43242)
-.*/react-native-win32/src/private/.*/__tests__/.*
+src/private/**/__tests__/**
 
 ; Ignore files with flow typing issues #9223
-.*/react-native-win32/Libraries/Core/ReactNativeVersionCheck.js
+Libraries/Core/ReactNativeVersionCheck.js
 
-.*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
+**/node_modules/resolve/test/resolver/malformed_package_json/package.json
+**/node_modules/invariant/**
+../../../node_modules/invariant/**
 
 ; Checked-in build output
-<PROJECT_ROOT>/packages/debugger-frontend/dist/
+packages/debugger-frontend/dist/**
 
 ; Generated build output
-<PROJECT_ROOT>/packages/.*/dist
+packages/*/dist/**
 
 ; helloworld
-<PROJECT_ROOT>/private/helloworld/ios/Pods/
+private/helloworld/ios/Pods/**
 
 ; Ignore rn-tester Pods
-<PROJECT_ROOT>/packages/rn-tester/Pods/
+packages/rn-tester/Pods/**
 
 [untyped]
-.*/node_modules/@react-native-community/cli/.*/.*
+**/node_modules/@react-native-community/cli/**
+../../../node_modules/@react-native-community/cli/**
 ; Should work out how to do this properly
-.*/react-native-win32/Libraries/Image/resolveAssetSource.win32.js
+Libraries/Image/resolveAssetSource.win32.js
+
+[declarations]
+.*/node_modules/.*
 
 [include]
 ; Need to include hoisted modules
-../../../node_modules/
+../../../node_modules/**
 
 [libs]
 interface.js
@@ -115,15 +130,9 @@ interface.js
 src/types/
 
 [options]
-enums=true
-experimental.pattern_matching=true
-experimental.allow_variance_keywords=true
-casting_syntax=both
-component_syntax=true
+builtin_lib=core-only
 
 emoji=true
-
-exact_by_default=true
 
 format.bracket_spacing=false
 
@@ -153,8 +162,6 @@ react.runtime=automatic
 
 ban_spread_key_props=true
 
-sharedmemory.hash_table_pow=21
-
 [lints]
 sketchy-null-number=warn
 sketchy-null-mixed=warn
@@ -176,4 +183,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.316.0
+^0.338.0

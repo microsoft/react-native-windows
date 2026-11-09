@@ -198,6 +198,9 @@ const directEventTypes = {
   topLayout: {
     registrationName: 'onLayout',
   },
+  topSafeAreaInsetsChange: {
+    registrationName: 'experimental_onSafeAreaInsetsChange',
+  },
   onGestureHandlerEvent: DynamicallyInjectedByGestureHandler({
     registrationName: 'onGestureHandlerEvent',
   }),
@@ -416,6 +419,7 @@ const validAttributesForNonEventProps = {
 const validAttributesForEventProps = {
   // Windows]
   onLayout: true,
+  experimental_onSafeAreaInsetsChange: true,
   onMagicTap: true,
 
   // Accessibility
