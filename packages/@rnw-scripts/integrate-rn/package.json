@@ -20,7 +20,6 @@
   "dependencies": {
     "@react-native-community/template": "0.81.0-nightly-202578-011c586",
     "@react-native-windows/find-repo-root": "0.81.2",
-    "@react-native-windows/fs": "0.81.2",
     "@react-native-windows/package-utils": "0.81.2",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",

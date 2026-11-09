@@ -17,7 +17,7 @@ import {
 import {testLog} from './TestLog';
 import {formatDateTime} from './Utilities';
 import {pid} from 'process';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 
 // jest does not appear to support custom command-line arguments; making do with environment variables.
 
@@ -25,7 +25,7 @@ if (process.env.DEBUGTEST_LOGFOLDER) {
   if (!fs.existsSync(process.env.DEBUGTEST_LOGFOLDER)) {
     (async () => {
       try {
-        await fs.mkdir(process.env.DEBUGTEST_LOGFOLDER!);
+        await fs.promises.mkdir(process.env.DEBUGTEST_LOGFOLDER!);
       } catch (e) {
         console.log(e);
       }

@@ -1146,21 +1146,23 @@ void WindowsTextInputComponentView::OnCharacterReceived(
     return;
   }
 
-  // convert keyCode to std::string
-  wchar_t key[2] = L" ";
-  key[0] = static_cast<wchar_t>(args.KeyCode());
-  std::string keyString = ::Microsoft::Common::Unicode::Utf16ToUtf8(key, 1);
-  // Call onKeyPress event
-  auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-  facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
-  if (keyString.compare("\r") == 0) {
-    onKeyPressArgs.key = "Enter";
-  } else if (keyString.compare("\b") == 0) {
-    onKeyPressArgs.key = "Backspace";
-  } else {
-    onKeyPressArgs.key = keyString;
+  if (m_eventEmitter) {
+    // convert keyCode to std::string
+    wchar_t key[2] = L" ";
+    key[0] = static_cast<wchar_t>(args.KeyCode());
+    std::string keyString = ::Microsoft::Common::Unicode::Utf16ToUtf8(key, 1);
+    // Call onKeyPress event
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
+    if (keyString.compare("\r") == 0) {
+      onKeyPressArgs.key = "Enter";
+    } else if (keyString.compare("\b") == 0) {
+      onKeyPressArgs.key = "Backspace";
+    } else {
+      onKeyPressArgs.key = keyString;
+    }
+    emitter->onKeyPress(onKeyPressArgs);
   }
-  emitter->onKeyPress(onKeyPressArgs);
 
   WPARAM wParam = static_cast<WPARAM>(args.KeyCode());
 

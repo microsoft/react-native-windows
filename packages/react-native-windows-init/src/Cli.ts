@@ -6,7 +6,7 @@
  */
 
 import yargs from 'yargs';
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs';
 import semver from 'semver';
 import {execSync} from 'child_process';
 import validUrl from 'valid-url';
@@ -154,12 +154,14 @@ function getReactNativeProjectName(): string {
   }
   type PackageJson = {name: string};
 
-  let name = fs.readJsonFileSync<PackageJson>(pkgJsonPath).name;
+  let name = (JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8')) as PackageJson)
+    .name;
   if (!name) {
     const appJsonPath = findUp.sync('app.json', {cwd});
     if (appJsonPath) {
       console.log('Reading project name from app.json...');
-      name = fs.readJsonFileSync<PackageJson>(pkgJsonPath).name;
+      name = (JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8')) as PackageJson)
+        .name;
     }
   }
   if (!name) {

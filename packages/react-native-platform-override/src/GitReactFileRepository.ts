@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from '@react-native-windows/fs';
+import fs from 'node:fs/promises';
 import os from 'os';
 import path from 'path';
 import simplegit, {SimpleGit, ResetMode} from 'simple-git';

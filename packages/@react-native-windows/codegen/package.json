@@ -21,7 +21,6 @@
     "react-native-windows-codegen": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "0.81.2",
     "chalk": "^4.1.0",
     "globby": "^11.1.0",
     "mustache": "^4.0.1",
