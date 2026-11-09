@@ -402,7 +402,10 @@ extends:
           timeoutInMinutes: 60 # Protect against the long CodeSign task
 
           steps:
+          # GitHub tag pushes need checkout credentials, not System.AccessToken.
           - template: .ado/templates/checkout-shallow.yml@self
+            parameters:
+              persistCredentials: ${{ eq(parameters.buildEnvironment, 'Continuous') }}
 
           - template: .ado/templates/prepare-js-env.yml@self
             parameters:
@@ -463,14 +466,13 @@ extends:
             - pwsh: |
                 $tag = "react-native-windows_v$(npmVersion)"
                 Write-Host "Creating tag $tag on $(Build.SourceVersion)"
-                $authHeader = "AUTHORIZATION: bearer $env:SYSTEM_ACCESSTOKEN"
-                Write-Host "##vso[task.setsecret]$authHeader"
-                git -c http.extraheader="$authHeader" tag $tag "$(Build.SourceVersion)"
-                git -c http.extraheader="$authHeader" push origin $tag
+                git tag $tag "$(Build.SourceVersion)"
+                git push origin $tag
               displayName: Tag release sources
               condition: and(succeeded(), eq(variables['IsReleaseBuild'], 'True'), eq(variables['isReleaseCommit'], 'True'))
               env:
-                SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+                GIT_TERMINAL_PROMPT: '0'
+                GCM_INTERACTIVE: Never
 
           templateContext:
             sdl:
