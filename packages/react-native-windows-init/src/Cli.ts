@@ -136,9 +136,8 @@ const yargsParser = yargs
   .options(windowsInitOptions)
   .strict(true);
 
-function getReactNativeProjectName(): string {
+export function getReactNativeProjectName(cwd = process.cwd()): string {
   console.log('Reading project name from package.json...');
-  const cwd = process.cwd();
   const pkgJsonPath = findUp.sync('package.json', { cwd });
   if (!pkgJsonPath) {
     throw new CodedError(
@@ -154,7 +153,7 @@ function getReactNativeProjectName(): string {
     const appJsonPath = findUp.sync('app.json', { cwd });
     if (appJsonPath) {
       console.log('Reading project name from app.json...');
-      name = (JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8')) as PackageJson)
+      name = (JSON.parse(fs.readFileSync(appJsonPath, 'utf8')) as PackageJson)
         .name;
     }
   }

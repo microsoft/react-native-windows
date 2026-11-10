@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Read the project name from app.json when package.json has none",
+  "packageName": "react-native-windows-init",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
