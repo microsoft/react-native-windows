@@ -22,7 +22,7 @@
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
     "chalk": "^4.1.0",
-    "simple-git": "^3.3.0",
+    "simple-git": "^4.0.2",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"
   },
