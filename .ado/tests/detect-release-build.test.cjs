@@ -200,7 +200,7 @@ test('CLI reads exact SHA, emits safe exact outputs, and fails closed', () => {
   }
 });
 
-test('pipeline maps metadata across stages and tags only successful releases', () => {
+test('pipeline tags only successful releases using GitHub checkout credentials', () => {
   const yaml = readFileSync(
     path.resolve(__dirname, '../build-template.yml'),
     'utf8',
@@ -235,4 +235,17 @@ test('pipeline maps metadata across stages and tags only successful releases', (
     nuget,
     /if eq\(parameters.buildEnvironment, 'Continuous'\).*\n.*- pwsh: \|\n.*\$tag =/,
   );
+  assert.match(
+    nuget,
+    /checkout-shallow\.yml@self\s+parameters:\s+persistCredentials: \$\{\{ eq\(parameters.buildEnvironment, 'Continuous'\) \}\}/,
+  );
+  assert.match(
+    nuget,
+    /git tag \$tag "\$\(Build.SourceVersion\)"\n\s+git push origin \$tag/,
+  );
+  assert.match(
+    nuget,
+    /GIT_TERMINAL_PROMPT: '0'\n\s+GCM_INTERACTIVE: Never/,
+  );
+  assert.doesNotMatch(nuget, /SYSTEM_ACCESSTOKEN|http\.extraheader/);
 });
