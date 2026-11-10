@@ -4,14 +4,45 @@
  * @format
  */
 
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'path';
+import type {Config} from '@react-native-community/cli-types';
 import {commanderNameToOptionName} from '@react-native-windows/telemetry';
 
+import {InitWindows} from '../commands/initWindows/initWindows';
 import {
   initOptions,
   InitOptions,
 } from '../commands/initWindows/initWindowsOptions';
 
 import * as nameHelpers from '../utils/nameHelpers';
+
+class TestInitWindows extends InitWindows {
+  projectNameFor(projectDir: string): string {
+    return this.getReactNativeProjectName(projectDir);
+  }
+}
+
+function withProjectFiles(
+  files: Record<string, unknown>,
+  run: (projectDir: string) => void,
+) {
+  const projectDir = fs.mkdtempSync(path.join(os.tmpdir(), 'rnw-init-'));
+  try {
+    for (const [name, content] of Object.entries(files)) {
+      fs.writeFileSync(path.join(projectDir, name), JSON.stringify(content));
+    }
+    run(projectDir);
+  } finally {
+    fs.rmSync(projectDir, {recursive: true, force: true});
+  }
+}
+
+const initWindows = new TestInitWindows(
+  {root: __dirname, project: {}} as Config,
+  {},
+);
 
 function validateOptionName(
   name: string,
@@ -59,6 +90,32 @@ test('initOptions - validate options', () => {
       validateOptionName(commandOption.name, optionName as keyof InitOptions),
     ).toBe(true);
   }
+});
+
+test('getReactNativeProjectName - uses package.json name', () => {
+  withProjectFiles(
+    {'package.json': {name: 'pkgName'}, 'app.json': {name: 'appName'}},
+    projectDir => {
+      expect(initWindows.projectNameFor(projectDir)).toBe('pkgName');
+    },
+  );
+});
+
+test('getReactNativeProjectName - falls back to app.json name', () => {
+  withProjectFiles(
+    {'package.json': {}, 'app.json': {name: 'appName'}},
+    projectDir => {
+      expect(initWindows.projectNameFor(projectDir)).toBe('appName');
+    },
+  );
+});
+
+test('getReactNativeProjectName - throws without any name', () => {
+  withProjectFiles({'package.json': {}, 'app.json': {}}, projectDir => {
+    expect(() => initWindows.projectNameFor(projectDir)).toThrow(
+      'Please specify name in package.json or app.json',
+    );
+  });
 });
 
 test('nameHelpers - cleanName', () => {

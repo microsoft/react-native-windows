@@ -116,7 +116,7 @@ export class InitWindows {
       const appJsonPath = path.join(projectDir, 'app.json');
       if (fs.existsSync(appJsonPath)) {
         this.verboseMessage('Looking for project name in app.json...');
-        name = (JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8')) as PackageJson)
+        name = (JSON.parse(fs.readFileSync(appJsonPath, 'utf8')) as PackageJson)
           .name;
       }
     }

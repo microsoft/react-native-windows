@@ -5,7 +5,32 @@
  * @format
  */
 
-import {windowsInitOptions, WindowsInitOptions} from '../Cli';
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'path';
+
+import {
+  getReactNativeProjectName,
+  windowsInitOptions,
+  WindowsInitOptions,
+} from '../Cli';
+
+function withProjectFiles(
+  files: Record<string, unknown>,
+  run: (projectDir: string) => void,
+) {
+  const projectDir = fs.mkdtempSync(path.join(os.tmpdir(), 'rnw-init-'));
+  const log = jest.spyOn(console, 'log').mockImplementation(() => {});
+  try {
+    for (const [name, content] of Object.entries(files)) {
+      fs.writeFileSync(path.join(projectDir, name), JSON.stringify(content));
+    }
+    run(projectDir);
+  } finally {
+    log.mockRestore();
+    fs.rmSync(projectDir, { recursive: true, force: true });
+  }
+}
 
 function validateOptionName(
   name: string,
@@ -73,4 +98,22 @@ test('windowsInitOptions - validate options', () => {
       validateOptionName(optionName, optionName as keyof WindowsInitOptions),
     ).toBe(true);
   }
+});
+
+test('getReactNativeProjectName - uses package.json name', () => {
+  withProjectFiles(
+    { 'package.json': { name: 'pkgName' }, 'app.json': { name: 'appName' } },
+    projectDir => {
+      expect(getReactNativeProjectName(projectDir)).toBe('pkgName');
+    },
+  );
+});
+
+test('getReactNativeProjectName - falls back to app.json name', () => {
+  withProjectFiles(
+    { 'package.json': {}, 'app.json': { name: 'appName' } },
+    projectDir => {
+      expect(getReactNativeProjectName(projectDir)).toBe('appName');
+    },
+  );
 });
