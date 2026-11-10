@@ -87,7 +87,7 @@ jobs:
 
           variables: [template: ../variables/windows.yml]
           pool: ${{ parameters.AgentPool.Medium }}
-          timeoutInMinutes: 60
+          timeoutInMinutes: 120 # CodeQL requires 3x usual build timeout
           cancelTimeoutInMinutes: 5
 
           steps:
