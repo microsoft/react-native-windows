@@ -32,7 +32,7 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to bottom butto
   "Visual Tree": {
     "Comment": "scroll_to_bottom_button",
     "Offset": "0, 0, 0",
-    "Size": "906, 29",
+    "Size": "508, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -45,7 +45,7 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to bottom butto
         "Visual Type": "SpriteVisual",
       },
       {
-        "Offset": "402, 5, 0",
+        "Offset": "203, 5, 0",
         "Size": "102, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -100,7 +100,7 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to end button 1
   "Visual Tree": {
     "Comment": "scroll_to_end_button",
     "Offset": "0, 0, 0",
-    "Size": "906, 29",
+    "Size": "508, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -113,7 +113,7 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to end button 1
         "Visual Type": "SpriteVisual",
       },
       {
-        "Offset": "414, 5, 0",
+        "Offset": "215, 5, 0",
         "Size": "78, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -168,7 +168,7 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to start button
   "Visual Tree": {
     "Comment": "scroll_to_start_button",
     "Offset": "0, 0, 0",
-    "Size": "906, 29",
+    "Size": "508, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -181,7 +181,7 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to start button
         "Visual Type": "SpriteVisual",
       },
       {
-        "Offset": "412, 5, 0",
+        "Offset": "213, 5, 0",
         "Size": "82, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -236,7 +236,7 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to top button 1
   "Visual Tree": {
     "Comment": "scroll_to_top_button",
     "Offset": "0, 0, 0",
-    "Size": "906, 29",
+    "Size": "508, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -249,7 +249,7 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to top button 1
         "Visual Type": "SpriteVisual",
       },
       {
-        "Offset": "415, 5, 0",
+        "Offset": "216, 5, 0",
         "Size": "76, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -479,7 +479,7 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
   "Visual Tree": {
     "Comment": "scroll_horizontal",
     "Offset": "0, 0, 0",
-    "Size": "916, 106",
+    "Size": "518, 106",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -488,7 +488,7 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
           "Color": "rgba(238, 238, 238, 255)",
         },
         "Offset": "0, 0, 0",
-        "Size": "916, 106",
+        "Size": "518, 106",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -1060,7 +1060,7 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
           {
             "Offset": "3, -12, 0",
             "Opacity": 0,
-            "Size": "910, 12",
+            "Size": "512, 12",
             "Visual Type": "Visual",
           },
           {
@@ -1077,7 +1077,7 @@ exports[`ScrollView Tests ScrollViews can scroll an item list horizontally 1`] =
           },
           {
             "Offset": "16, -5, 0",
-            "Size": "637, 6",
+            "Size": "198, 6",
             "Visual Type": "Visual",
           },
         ],
@@ -1119,7 +1119,7 @@ exports[`ScrollView Tests ScrollViews has flash scroll indicators 1`] = `
   "Visual Tree": {
     "Comment": "flash_scroll_indicators_button",
     "Offset": "0, 0, 0",
-    "Size": "906, 28",
+    "Size": "508, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1132,7 +1132,7 @@ exports[`ScrollView Tests ScrollViews has flash scroll indicators 1`] = `
         "Visual Type": "SpriteVisual",
       },
       {
-        "Offset": "387, 5, 0",
+        "Offset": "188, 5, 0",
         "Size": "132, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [

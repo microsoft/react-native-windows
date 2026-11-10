@@ -156,7 +156,7 @@ exports[`Accessibility Tests Components can store range data by setting the min,
   "Visual Tree": {
     "Comment": "accessibilityValue-number",
     "Offset": "0, 0, 0",
-    "Size": "916, 50",
+    "Size": "518, 50",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -170,12 +170,12 @@ exports[`Accessibility Tests Components can store range data by setting the min,
       },
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 19",
+        "Size": "518, 38",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "518, 38",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -225,7 +225,7 @@ exports[`Accessibility Tests Components can store value data by setting the text
   "Visual Tree": {
     "Comment": "accessibilityValue-text",
     "Offset": "0, 0, 0",
-    "Size": "916, 50",
+    "Size": "518, 50",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -239,12 +239,12 @@ exports[`Accessibility Tests Components can store value data by setting the text
       },
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 20",
+        "Size": "518, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "518, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -535,17 +535,17 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
   "Visual Tree": {
     "Comment": "selection-container",
     "Offset": "0, 0, 0",
-    "Size": "916, 150",
+    "Size": "518, 150",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 150",
+        "Size": "518, 150",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 150",
+            "Size": "518, 150",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -554,7 +554,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                   "Color": "rgba(0, 0, 0, 0)",
                 },
                 "Offset": "0, 0, 0",
-                "Size": "916, 150",
+                "Size": "518, 150",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
@@ -563,17 +563,17 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                       "Color": "rgba(0, 0, 0, 0)",
                     },
                     "Offset": "0, 0, 0",
-                    "Size": "916, 150",
+                    "Size": "518, 150",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
                         "Offset": "0, 0, 0",
-                        "Size": "916, 150",
+                        "Size": "518, 150",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
                             "Offset": "0, 0, 0",
-                            "Size": "916, 150",
+                            "Size": "518, 150",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
                               {
@@ -751,7 +751,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                   {
                     "Offset": "3, -12, 0",
                     "Opacity": 0,
-                    "Size": "910, 12",
+                    "Size": "512, 12",
                     "Visual Type": "Visual",
                   },
                   {
@@ -768,7 +768,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                   },
                   {
                     "Offset": "16, -5, 0",
-                    "Size": "884, 6",
+                    "Size": "486, 6",
                     "Visual Type": "Visual",
                   },
                 ],

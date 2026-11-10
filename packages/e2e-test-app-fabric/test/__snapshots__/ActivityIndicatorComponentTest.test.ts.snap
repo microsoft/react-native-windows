@@ -56,11 +56,11 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors 1`]
   "Visual Tree": {
     "Comment": "activity-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 36",
+    "Size": "518, 36",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "111, 8, 0",
+        "Offset": "61, 8, 0",
         "Size": "20, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -91,7 +91,7 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors 1`]
         ],
       },
       {
-        "Offset": "336, 8, 0",
+        "Offset": "186, 8, 0",
         "Size": "20, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -122,7 +122,7 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors 1`]
         ],
       },
       {
-        "Offset": "561, 8, 0",
+        "Offset": "312, 8, 0",
         "Size": "20, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -153,7 +153,7 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors 1`]
         ],
       },
       {
-        "Offset": "786, 8, 0",
+        "Offset": "437, 8, 0",
         "Size": "20, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -244,11 +244,11 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors and
   "Visual Tree": {
     "Comment": "activity-large-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 52",
+    "Size": "518, 52",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "103, 8, 0",
+        "Offset": "53, 8, 0",
         "Size": "36, 36",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -279,7 +279,7 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors and
         ],
       },
       {
-        "Offset": "328, 8, 0",
+        "Offset": "178, 8, 0",
         "Size": "36, 36",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -310,7 +310,7 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors and
         ],
       },
       {
-        "Offset": "553, 8, 0",
+        "Offset": "304, 8, 0",
         "Size": "36, 36",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -341,7 +341,7 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors and
         ],
       },
       {
-        "Offset": "778, 8, 0",
+        "Offset": "429, 8, 0",
         "Size": "36, 36",
         "Visual Type": "SpriteVisual",
         "__Children": [

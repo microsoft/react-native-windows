@@ -85,12 +85,18 @@ describe('Text Tests', () => {
     const component = await app.findElementByTestID('text-selectable');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-selectable');
+    expect(dump['Component Tree'].Type).toBe(
+      'Microsoft.ReactNative.Composition.ParagraphComponentView',
+    );
     expect(dump).toMatchSnapshot();
   });
   test('Text can have a customized selection color', async () => {
     const component = await app.findElementByTestID('text-selection-color');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('text-selection-color');
+    expect(dump['Component Tree'].Type).toBe(
+      'Microsoft.ReactNative.Composition.ParagraphComponentView',
+    );
     expect(dump).toMatchSnapshot();
   });
   test('Text can have shadows', async () => {

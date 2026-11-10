@@ -435,6 +435,10 @@
       "issue": 7074
     },
     {
+      "type": "platform",
+      "file": "src-win/Libraries/Text/__tests__/TextNativeComponentWin32-test.js"
+    },
+    {
       "type": "derived",
       "file": "src-win/Libraries/Text/TextProps.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextProps.js",

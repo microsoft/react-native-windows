@@ -267,6 +267,7 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
   "Automation Tree": {
     "AutomationId": "disabled-initial-off",
     "ControlType": 50000,
+    "IsEnabled": false,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
   },
@@ -304,6 +305,7 @@ exports[`SwitchTests Switches can be disabled, initial false 2`] = `
   "Automation Tree": {
     "AutomationId": "disabled-initial-off",
     "ControlType": 50000,
+    "IsEnabled": false,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
   },
@@ -341,6 +343,7 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
   "Automation Tree": {
     "AutomationId": "disabled-initial-on",
     "ControlType": 50000,
+    "IsEnabled": false,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "TogglePattern.ToggleState": "On",
@@ -576,7 +579,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
   "Visual Tree": {
     "Comment": "accessibility-switch",
     "Offset": "0, 0, 0",
-    "Size": "916, 82",
+    "Size": "518, 82",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -606,7 +609,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         ],
       },
       {
-        "Offset": "865, 0, 0",
+        "Offset": "467, 0, 0",
         "Size": "51, 31",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -658,7 +661,7 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         ],
       },
       {
-        "Offset": "865, 41, 0",
+        "Offset": "467, 41, 0",
         "Size": "51, 31",
         "Visual Type": "SpriteVisual",
         "__Children": [

@@ -270,6 +270,11 @@ class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatur
     return true;
   }
 
+  bool enablePreparedTextLayout() override {
+    // Windows implements selectable text in RCTText, not RCTSelectableText.
+    return false;
+  }
+
   bool fuseboxEnabledRelease() override {
     return true; // Enable Fusebox (modern CDP backend) by default for React Native Windows
   }

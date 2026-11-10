@@ -13,7 +13,6 @@ import type {ProcessedColorValue} from '../StyleSheet/processColor';
 import type {GestureResponderEvent} from '../Types/CoreEventTypes';
 import type {TextProps} from './TextProps';
 
-import {enablePreparedTextLayout} from '../../src/private/featureflags/ReactNativeFeatureFlags';
 import {createViewConfig} from '../NativeComponent/ViewConfig';
 import UIManager from '../ReactNative/UIManager';
 import createReactNativeComponentClass from '../Renderer/shims/createReactNativeComponentClass';
@@ -129,15 +128,4 @@ export const NativeVirtualText: HostComponent<NativeTextProps> =
         // $FlowFixMe[unclear-type]
       ) as any);
 
-export const NativeSelectableText: HostComponent<NativeTextProps> =
-  enablePreparedTextLayout()
-    ? (createReactNativeComponentClass(
-        'RCTSelectableText',
-        () =>
-          createViewConfig({
-            ...textViewConfig,
-            uiViewClassName: 'RCTSelectableText',
-          }),
-        // $FlowFixMe[unclear-type]
-      ) as any)
-    : NativeText;
+export const NativeSelectableText: HostComponent<NativeTextProps> = NativeText; // [Windows] RCTText already implements selectable text.
