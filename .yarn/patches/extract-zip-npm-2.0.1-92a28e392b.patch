@@ -1,0 +1,22 @@
+diff --git a/index.js b/index.js
+index 23384ea16bb848616886f356d8d69f94325535bf..c259da451d5d3c4269b0afe46898dd4897927460 100644
+--- a/index.js
++++ b/index.js
+@@ -121,6 +121,17 @@ class Extractor {
+     await fs.mkdir(destDir, mkdirOptions)
+     if (isDir) return
+ 
++    if (!symlink) {
++      try {
++        const existing = await fs.lstat(dest)
++        if (existing.isSymbolicLink()) {
++          throw new Error(`Refusing to overwrite symbolic link "${dest}" while processing file ${entry.fileName}`)
++        }
++      } catch (err) {
++        if (err.code !== 'ENOENT') throw err
++      }
++    }
++
+     debug('opening read stream', dest)
+     const readStream = await promisify(this.zipfile.openReadStream.bind(this.zipfile))(entry)
+ 
