@@ -387,6 +387,10 @@
       "issue": 4578
     },
     {
+      "type": "platform",
+      "file": "src-win/Libraries/Components/AccessibilityInfo/__tests__/AccessibilityInfoWindows-test.js"
+    },
+    {
       "type": "copy",
       "file": "src-win/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",

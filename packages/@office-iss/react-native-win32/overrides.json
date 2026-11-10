@@ -50,6 +50,10 @@
       "baseHash": "5ca2e219d1870e10afb377da5686e2b30a8b7006"
     },
     {
+      "type": "platform",
+      "file": "src-win/Libraries/Components/AccessibilityInfo/__tests__/AccessibilityInfoWin32-test.js"
+    },
+    {
       "type": "copy",
       "file": "src-win/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",

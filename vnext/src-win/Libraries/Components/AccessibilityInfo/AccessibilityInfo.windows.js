@@ -310,7 +310,7 @@ const AccessibilityInfo = {
    * @platform ios
    */
   isShowBordersEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android') {
+    if (Platform.OS === 'android' || Platform.OS === 'windows') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
