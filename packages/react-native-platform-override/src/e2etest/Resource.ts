@@ -10,7 +10,7 @@ import fs from 'node:fs/promises';
 import globby from 'globby';
 import os from 'os';
 import path from 'path';
-import simplegit from 'simple-git';
+import {simpleGit as simplegit} from 'simple-git';
 
 import FileSystemRepository from '../FileSystemRepository';
 import GitReactFileRepository from '../GitReactFileRepository';
