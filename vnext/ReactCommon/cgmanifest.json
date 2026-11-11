@@ -6,7 +6,7 @@
                 "Type": "git",
                 "Git": {
                   "RepositoryUrl": "https://github.com/microsoft/node-api-jsi",
-                  "CommitHash": "4b8a4a59c4e1b7b988b809dedffd89a7662aa785"
+                  "CommitHash": "9f2fdfa2a923784a73cc97da9b369edaf4c6c243"
                 }
             },
             "DevelopmentDependency": false
