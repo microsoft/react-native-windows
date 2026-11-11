@@ -85,7 +85,7 @@ static PCreateTextServices g_pfnCreateTextServices;
 HRESULT HrEnsureRichEd20Loaded() noexcept {
   HRESULT hr = S_OK;
   std::call_once(g_richEditLoadedFlag, [&hr]() {
-    g_hInstRichEdit = LoadLibrary(L"Msftedit.dll");
+    g_hInstRichEdit = LoadLibraryExW(L"Msftedit.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
     if (!g_hInstRichEdit) {
       hr = E_FAIL;
       return;
