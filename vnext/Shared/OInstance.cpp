@@ -14,6 +14,7 @@
 #include <folly/json.h>
 #include <jsi/jsi.h>
 #include <jsireact/JSIExecutor.h>
+#include <cstring>
 #include <filesystem>
 #include "OInstance.h"
 #include "Unicode.h"
@@ -77,15 +78,13 @@ namespace Microsoft::ReactNative {
 bool isHBCBundle(const std::string &bundle) {
   static uint32_t constexpr HBCBundleMagicNumber = 0xffe7c3c3;
 
-  // Note:: Directly access the pointer to avoid copy/length-check. It matters as this string contains the bundle which
-  // can be potentially huge.
-  // https://herbsutter.com/2008/04/07/cringe-not-vectors-are-guaranteed-to-be-contiguous/#comment-483
-  auto header = reinterpret_cast<const facebook::react::BundleHeader *>(&bundle[0]);
-  if (HBCBundleMagicNumber == header->magic32.value) {
-    return true;
-  } else {
+  // Only the leading magic number is needed; copy just those bytes rather than the whole (potentially huge) bundle.
+  uint32_t magic = 0;
+  if (bundle.size() < sizeof(magic)) {
     return false;
   }
+  std::memcpy(&magic, bundle.data(), sizeof(magic));
+  return magic == HBCBundleMagicNumber;
 }
 
 void LoadRemoteUrlScript(
@@ -136,7 +135,13 @@ void LoadRemoteUrlScript(
   // This code is based on the HBC Bundle integration on Android
   // Ref:
   // https://github.com/facebook/react-native/blob/24d91268b64c7abbd4b26547ffcc663dc90ec5e7/ReactAndroid/src/main/jni/react/jni/CatalystInstanceImpl.cpp#L231
-  if (isHBCBundle(jsBundleString)) {
+  // Bytecode bundles are only requested from the dev server when USE_HERMES and ENABLE_DEVSERVER_HBCBUNDLES are
+  // defined.
+  bool isBytecodeBundle = false;
+#if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
+  isBytecodeBundle = isHBCBundle(jsBundleString);
+#endif
+  if (isBytecodeBundle) {
     auto script = std::make_unique<facebook::react::JSBigStdString>(jsBundleString, false);
     const char *buffer = script->c_str();
     uint32_t bufferLength = (uint32_t)script->size();
