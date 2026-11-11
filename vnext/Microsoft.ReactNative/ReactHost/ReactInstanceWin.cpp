@@ -139,6 +139,11 @@ struct LoadedCallbackGuard {
   LoadedCallbackGuard(LoadedCallbackGuard &&other) = default;
   LoadedCallbackGuard &operator=(LoadedCallbackGuard &&other) = default;
 
+  // Stops the destructor from reporting cancellation.
+  void Dismiss() noexcept {
+    m_reactInstance = nullptr;
+  }
+
   ~LoadedCallbackGuard() noexcept {
     if (m_reactInstance) {
       m_reactInstance->OnReactInstanceLoaded(Mso::CancellationErrorProvider().MakeErrorCode(true));
@@ -624,12 +629,19 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
   winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager::Install(
       ReactPropertyBag(m_reactContext->Properties()), m_options.UriImageManager);
 
-  m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}]() noexcept {
+  // The app's UI queue, or the native queue, can destroy an initialization task without running it.
+  // Office, for example, cancels its UI queue when it starts to shut down. The load would then never
+  // complete, and ReactHost would never unload the instance, so the host could never close.
+  // The guard fails the load in that case. The native task dismisses it; the tasks that load the
+  // bundle carry their own guards.
+  auto loadGuard = std::make_shared<LoadedCallbackGuard>(*this);
+  m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}, loadGuard]() noexcept {
     // Objects that must be created on the UI thread
     if (auto strongThis = weakThis.GetStrongPtr()) {
       InitUIDependentCalls();
 
-      strongThis->Queue().Post([this, weakThis]() noexcept {
+      strongThis->Queue().Post([this, weakThis, loadGuard]() noexcept {
+        loadGuard->Dismiss();
         if (auto strongThis = weakThis.GetStrongPtr()) {
           auto devSettings = strongThis->CreateDevSettings();
 
@@ -797,11 +809,14 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
       ReactPropertyBag(m_reactContext->Properties()), m_options.UriImageManager);
 #endif
 
-  m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}]() noexcept {
+  // See InitializeBridgeless for why the initialization tasks carry a LoadedCallbackGuard.
+  auto loadGuard = std::make_shared<LoadedCallbackGuard>(*this);
+  m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}, loadGuard]() noexcept {
     // Objects that must be created on the UI thread
     if (auto strongThis = weakThis.GetStrongPtr()) {
       InitUIDependentCalls();
-      strongThis->Queue().Post([this, weakThis]() noexcept {
+      strongThis->Queue().Post([this, weakThis, loadGuard]() noexcept {
+        loadGuard->Dismiss();
         if (auto strongThis = weakThis.GetStrongPtr()) {
           auto devSettings = strongThis->CreateDevSettings();
 
@@ -1075,7 +1090,9 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
   AbandonJSCallQueue();
 
   // Make sure that the instance is not destroyed yet
+  bool completesOnJSQueue = false;
   if (auto instance = m_instance.Exchange(nullptr)) {
+    completesOnJSQueue = true;
     {
       // Release the JSI runtime
       std::scoped_lock lock{m_mutex};
@@ -1091,6 +1108,7 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
 
 #ifdef USE_FABRIC
   if (m_bridgelessReactInstance) {
+    completesOnJSQueue = true;
     if (auto jsMessageThread = m_jsMessageThread.Exchange(nullptr)) {
       jsMessageThread->runOnQueueSync([&]() noexcept {
         // Unregister from inspector BEFORE shutting down JS thread
@@ -1118,6 +1136,12 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
     }
   }
 #endif
+
+  if (!completesOnJSQueue) {
+    // Initialization never created the instance that runs on the JS queue, for example because a queue
+    // dropped its initialization task. No JS queue work item will complete m_whenDestroyed.
+    m_whenDestroyed.TrySetValue();
+  }
 
   return m_whenDestroyedResult;
 }

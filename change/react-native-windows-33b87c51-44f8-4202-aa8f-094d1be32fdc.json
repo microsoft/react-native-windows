@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fail the load when a queue drops ReactInstanceWin's initialization task",
+  "packageName": "react-native-windows",
+  "email": "tiagoma@microsoft.com",
+  "dependentChangeType": "patch"
+}
