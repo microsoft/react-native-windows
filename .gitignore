@@ -176,6 +176,7 @@ x86/
 bld/
 [Ll]og/
 *.binlog
+*.gdn.sarif
 *.err
 *.wrn
 
