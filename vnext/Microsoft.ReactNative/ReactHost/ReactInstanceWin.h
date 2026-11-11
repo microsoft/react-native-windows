@@ -149,6 +149,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   void OnDebuggerAttach() noexcept;
 
   friend struct LoadedCallbackGuard;
+  friend struct InitTaskGuard;
   void OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) noexcept;
 
   void DrainJSCallQueue() noexcept;
@@ -182,6 +183,8 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   std::atomic<bool> m_isLoaded{false};
   std::atomic<bool> m_isDestroyed{false};
   std::atomic<bool> m_isRekaInitialized{false};
+  // Set on the native queue when the initialization task that runs there starts.
+  std::atomic<bool> m_isNativeInitStarted{false};
 
  private: // fields controlled by mutex
   mutable std::mutex m_mutex;

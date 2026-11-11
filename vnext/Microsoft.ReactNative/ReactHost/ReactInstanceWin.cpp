@@ -139,14 +139,38 @@ struct LoadedCallbackGuard {
   LoadedCallbackGuard(LoadedCallbackGuard &&other) = default;
   LoadedCallbackGuard &operator=(LoadedCallbackGuard &&other) = default;
 
-  // Stops the destructor from reporting cancellation.
+  ~LoadedCallbackGuard() noexcept {
+    if (m_reactInstance) {
+      m_reactInstance->OnReactInstanceLoaded(Mso::CancellationErrorProvider().MakeErrorCode(true));
+    }
+  }
+
+ private:
+  Mso::CntPtr<ReactInstanceWin> m_reactInstance;
+};
+
+//=============================================================================================
+// InitTaskGuard fails the load if an initialization task is destroyed without running.
+// It reports the failure in the native queue. ReactHost's load action stays pending until then,
+// so ReactHost cannot be released while the instance reports the error to it.
+//=============================================================================================
+
+struct InitTaskGuard {
+  InitTaskGuard(ReactInstanceWin &reactInstance) noexcept : m_reactInstance{&reactInstance} {}
+
+  InitTaskGuard(const InitTaskGuard &other) = delete;
+  InitTaskGuard &operator=(const InitTaskGuard &other) = delete;
+
   void Dismiss() noexcept {
     m_reactInstance = nullptr;
   }
 
-  ~LoadedCallbackGuard() noexcept {
-    if (m_reactInstance) {
-      m_reactInstance->OnReactInstanceLoaded(Mso::CancellationErrorProvider().MakeErrorCode(true));
+  ~InitTaskGuard() noexcept {
+    if (auto reactInstance = std::move(m_reactInstance)) {
+      Mso::DispatchQueue queue = reactInstance->Queue();
+      queue.InvokeElsePost([instance = std::move(reactInstance)]() noexcept {
+        instance->OnReactInstanceLoaded(Mso::CancellationErrorProvider().MakeErrorCode(true));
+      });
     }
   }
 
@@ -634,7 +658,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
   // complete, and ReactHost would never unload the instance, so the host could never close.
   // The guard fails the load in that case. The native task dismisses it; the tasks that load the
   // bundle carry their own guards.
-  auto loadGuard = std::make_shared<LoadedCallbackGuard>(*this);
+  auto loadGuard = std::make_shared<InitTaskGuard>(*this);
   m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}, loadGuard]() noexcept {
     // Objects that must be created on the UI thread
     if (auto strongThis = weakThis.GetStrongPtr()) {
@@ -643,6 +667,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
       strongThis->Queue().Post([this, weakThis, loadGuard]() noexcept {
         loadGuard->Dismiss();
         if (auto strongThis = weakThis.GetStrongPtr()) {
+          m_isNativeInitStarted = true;
           auto devSettings = strongThis->CreateDevSettings();
 
           try {
@@ -809,8 +834,8 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
       ReactPropertyBag(m_reactContext->Properties()), m_options.UriImageManager);
 #endif
 
-  // See InitializeBridgeless for why the initialization tasks carry a LoadedCallbackGuard.
-  auto loadGuard = std::make_shared<LoadedCallbackGuard>(*this);
+  // See InitializeBridgeless for why the initialization tasks carry an InitTaskGuard.
+  auto loadGuard = std::make_shared<InitTaskGuard>(*this);
   m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}, loadGuard]() noexcept {
     // Objects that must be created on the UI thread
     if (auto strongThis = weakThis.GetStrongPtr()) {
@@ -818,6 +843,7 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
       strongThis->Queue().Post([this, weakThis, loadGuard]() noexcept {
         loadGuard->Dismiss();
         if (auto strongThis = weakThis.GetStrongPtr()) {
+          m_isNativeInitStarted = true;
           auto devSettings = strongThis->CreateDevSettings();
 
           auto getBoolProperty = [properties = ReactPropertyBag{m_options.Properties}](
@@ -1101,7 +1127,12 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
     }
     // Release the message queues before the ui manager and instance.
     m_nativeMessageThread.Exchange(nullptr);
-    m_jsMessageThread.Exchange(nullptr);
+    auto jsMessageThread = m_jsMessageThread.Exchange(nullptr);
+    if (!m_isNativeInitStarted && jsMessageThread) {
+      // A queue dropped the initialization task, so the bridge was never created. Destroying the bridge is
+      // what quits the JS queue and completes m_whenDestroyed, so quit the queue here instead.
+      jsMessageThread->quitSynchronous();
+    }
     m_instanceWrapper.Exchange(nullptr);
     m_jsDispatchQueue.Exchange(nullptr);
   }
