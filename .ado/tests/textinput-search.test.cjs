@@ -31,16 +31,19 @@ async function runSearch({
   partialFirstAttempt = false,
   rejectInput = false,
   diagnostics = [],
+  inputProgress,
 } = {}) {
   let text = 'Submit behavior';
   let focused = false;
   let attempts = 0;
+  let pendingText = [];
   const calls = [];
   const element = {
     async clearValue() {
       calls.push('clear');
       text = '';
       focused = false;
+      pendingText = [];
     },
     async click() {
       calls.push('click');
@@ -50,7 +53,12 @@ async function runSearch({
       calls.push('type');
       attempts++;
       if (focused && !rejectInput) {
-        text += partialFirstAttempt && attempts === 1 ? value.slice(1) : value;
+        if (inputProgress) {
+          pendingText = [...inputProgress];
+        } else {
+          text +=
+            partialFirstAttempt && attempts === 1 ? value.slice(1) : value;
+        }
       }
     },
     async setValue(value) {
@@ -59,6 +67,9 @@ async function runSearch({
       await this.addValue(value);
     },
     async getText() {
+      if (pendingText.length) {
+        text = pendingText.shift();
+      }
       return text;
     },
     async getAttribute(name) {
@@ -99,7 +110,7 @@ test('TextInput search restores focus after autoFocus remounts without clearing 
   assert.deepEqual(await runSearch(), ['clear', 'click', 'type']);
 });
 
-test('TextInput search retries from an empty value instead of appending to partial input', async () => {
+test('TextInput search clears incorrect text before retrying instead of appending', async () => {
   assert.deepEqual(await runSearch({partialFirstAttempt: true}), [
     'clear',
     'click',
@@ -108,6 +119,26 @@ test('TextInput search retries from an empty value instead of appending to parti
     'click',
     'type',
   ]);
+});
+
+for (const inputProgress of [
+  ['onPr', 'onPress', 'onPressIn'],
+  ['', 'onPr', 'onPressIn'],
+]) {
+  test(`TextInput search does not interrupt pending input starting with ${JSON.stringify(inputProgress[0])}`, async () => {
+    assert.deepEqual(await runSearch({inputProgress}), [
+      'clear',
+      'click',
+      'type',
+    ]);
+  });
+}
+
+test('TextInput search does not accept a permanently truncated prefix', async () => {
+  await assert.rejects(
+    runSearch({inputProgress: ['onPr']}),
+    /Unable to enter correct search text/,
+  );
 });
 
 test('TextInput search still fails when the requested text cannot be entered', async () => {
