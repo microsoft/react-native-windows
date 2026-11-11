@@ -14,7 +14,7 @@
     <!-- If your project is using glog, then GLog_IncludeDir could be set to include the actual location of glog -->
     <GLog_IncludeDir Condition="'$(GLog_IncludeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)stubs\glog\logging.h')">$(MSBuildThisFileDirectory)stubs</GLog_IncludeDir>
 
-    <NodeApiJsiCommitHash>4b8a4a59c4e1b7b988b809dedffd89a7662aa785</NodeApiJsiCommitHash>
+    <NodeApiJsiCommitHash>9f2fdfa2a923784a73cc97da9b369edaf4c6c243</NodeApiJsiCommitHash>
     <NodeApiJsiLocal Condition="Exists('$(MSBuildThisFileDirectory)NodeApiJsiRuntime.cpp')">true</NodeApiJsiLocal>
     <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND '$(NodeApiJsiLocal)' == 'true'">$(MSBuildThisFileDirectory)</NodeApiJsiDir>
     <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\..\..\node_modules\.node-api-jsi\node-api-jsi-$(NodeApiJsiCommitHash)\</NodeApiJsiDir>
