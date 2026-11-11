@@ -8,7 +8,7 @@
 import fs from 'node:fs/promises';
 import os from 'os';
 import path from 'path';
-import simplegit, {SimpleGit, ResetMode} from 'simple-git';
+import {simpleGit as simplegit, SimpleGit, ResetMode} from 'simple-git';
 
 import BatchingQueue from './BatchingQueue';
 import FileSystemRepository from './FileSystemRepository';

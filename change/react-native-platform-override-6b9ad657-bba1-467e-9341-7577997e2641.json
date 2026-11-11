@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update simple-git to 4.0.2",
+  "packageName": "react-native-platform-override",
+  "email": "anuagra@microsoft.com",
+  "dependentChangeType": "patch"
+}
