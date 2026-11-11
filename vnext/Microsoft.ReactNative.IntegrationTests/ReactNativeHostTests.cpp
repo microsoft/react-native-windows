@@ -3,6 +3,8 @@
 
 #include "pch.h"
 #include <NativeModules.h>
+#include <mutex>
+#include <vector>
 #include "MockReactPackageProvider.h"
 #include "TestEventService.h"
 #include "TestReactNativeHostHolder.h"
@@ -43,6 +45,40 @@ struct TestPackageProvider : winrt::implements<TestPackageProvider, IReactPackag
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
     TryAddAttributedModule(packageBuilder, L"TestHostModule", true);
   }
+};
+
+// A UI dispatcher whose queue shuts down while tasks are still pending, as an app's UI queue can when the app closes.
+// Shutdown() destroys the pending tasks without running them, and so does every Post() after it.
+struct DroppingUIDispatcher : winrt::implements<DroppingUIDispatcher, IReactDispatcher> {
+  bool HasThreadAccess() noexcept {
+    return false;
+  }
+
+  void Post(ReactDispatcherCallback const &callback) noexcept {
+    {
+      std::scoped_lock lock{m_mutex};
+      if (m_isShutdown) {
+        return;
+      }
+      m_tasks.push_back(callback);
+    }
+    TestNotificationService::Set("DroppingUIDispatcher::Post");
+  }
+
+  void Shutdown() noexcept {
+    std::vector<ReactDispatcherCallback> tasks;
+    {
+      std::scoped_lock lock{m_mutex};
+      m_isShutdown = true;
+      tasks.swap(m_tasks);
+    }
+    // The pending tasks are destroyed here, outside the lock, without running.
+  }
+
+ private:
+  std::mutex m_mutex;
+  bool m_isShutdown{false};
+  std::vector<ReactDispatcherCallback> m_tasks;
 };
 
 } // namespace
@@ -197,6 +233,46 @@ TEST_CLASS (ReactNativeHostTests) {
 #else
     TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Canceled", nullptr}});
 #endif
+  }
+
+  // The UI queue destroys ReactInstanceWin's initialization task without running it. The load must fail instead of
+  // staying pending forever, and the instance must still unload. Fabric builds run this with the bridgeless instance,
+  // the other builds with the bridge.
+  TEST_METHOD(ReloadInstance_UIQueueDropsInitTask_CancelsAndUnloads) {
+    TestEventService::Initialize();
+    TestNotificationService::Initialize();
+
+    auto uiDispatcher = winrt::make_self<DroppingUIDispatcher>();
+    auto options = TestReactNativeHostHolder::Options{};
+    options.LoadInstance = false;
+    auto reactNativeHost = TestReactNativeHostHolder(
+        L"ReactNativeHostTests",
+        [uiDispatcher](ReactNativeHost const &host) noexcept {
+          host.InstanceSettings().UIDispatcher(uiDispatcher.as<IReactDispatcher>());
+          host.ReloadInstance().Completed([](auto const &, winrt::Windows::Foundation::AsyncStatus status) noexcept {
+            TestEventService::LogEvent(
+                status == winrt::Windows::Foundation::AsyncStatus::Canceled ? "ReloadInstance::Canceled"
+                                                                            : "ReloadInstance::NotCanceled",
+                nullptr);
+          });
+        },
+        std::move(options));
+
+    // Shut the UI queue down once ReactInstanceWin has posted UI work to it.
+    TestNotificationService::Wait("DroppingUIDispatcher::Post");
+    uiDispatcher->Shutdown();
+
+    TestEventService::ObserveEvents({TestEvent{"ReloadInstance::Canceled", nullptr}});
+
+    reactNativeHost.Host().UnloadInstance().Completed(
+        [](auto const &, winrt::Windows::Foundation::AsyncStatus status) noexcept {
+          TestEventService::LogEvent(
+              status == winrt::Windows::Foundation::AsyncStatus::Completed ? "UnloadInstance::Completed"
+                                                                           : "UnloadInstance::NotCompleted",
+              nullptr);
+        });
+
+    TestEventService::ObserveEvents({TestEvent{"UnloadInstance::Completed", nullptr}});
   }
 };
 
