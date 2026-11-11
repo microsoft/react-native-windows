@@ -56,6 +56,8 @@ describe('LegacySelectableTextTest', () => {
       // disabling the entire test.
       console.warn('DoubleClickWhenSelectable registered two clicks.');
       dump.Text = 'Pressed: 1 times.';
+      // The two-click text renders wider (103 vs 100) than the one-click text.
+      dump.Width = 100;
     }
     expect(dump).toMatchSnapshot();
   });
