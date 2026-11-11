@@ -12,7 +12,7 @@ import GlyphNativeComponent from './GlyphNativeComponent';
 import type {ViewProps} from '../View/ViewPropTypes';
 import useMergeRefs from '../../Utilities/useMergeRefs';
 
-export type Props = $ReadOnly<{|
+export type Props = Readonly<{|
   ...ViewProps,
 
   emSize?: number,

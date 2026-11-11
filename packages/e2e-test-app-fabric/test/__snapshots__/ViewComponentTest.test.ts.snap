@@ -58,17 +58,17 @@ exports[`View Tests View box sizing 1`] = `
   "Visual Tree": {
     "Comment": "view-test-box-sizing",
     "Offset": "0, 0, 0",
-    "Size": "916, 147",
+    "Size": "518, 147",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 20",
+        "Size": "518, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "518, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -168,12 +168,12 @@ exports[`View Tests View box sizing 1`] = `
       },
       {
         "Offset": "0, 83, 0",
-        "Size": "916, 19",
+        "Size": "518, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "518, 19",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -344,17 +344,17 @@ exports[`View Tests Views can have a nativeid 1`] = `
   "Visual Tree": {
     "Comment": "nativeid",
     "Offset": "0, 0, 0",
-    "Size": "916, 18",
+    "Size": "518, 18",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 20",
+        "Size": "518, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "518, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -471,7 +471,7 @@ exports[`View Tests Views can have a z-index 1`] = `
   "Visual Tree": {
     "Comment": "z-index-button",
     "Offset": "0, 0, 0",
-    "Size": "916, 198",
+    "Size": "518, 198",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -518,12 +518,12 @@ exports[`View Tests Views can have a z-index 1`] = `
       },
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 30",
+        "Size": "518, 30",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 30",
+            "Size": "518, 30",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -699,7 +699,7 @@ exports[`View Tests Views can have aria-labels 1`] = `
   "Visual Tree": {
     "Comment": "view-test-aria-label",
     "Offset": "0, 0, 0",
-    "Size": "916, 24",
+    "Size": "518, 24",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -713,12 +713,12 @@ exports[`View Tests Views can have aria-labels 1`] = `
       },
       {
         "Offset": "5, 5, 0",
-        "Size": "906, 16",
+        "Size": "508, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "906, 16",
+            "Size": "508, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -841,17 +841,17 @@ exports[`View Tests Views can have backface visibility 1`] = `
   "Visual Tree": {
     "Comment": "view-test-backface-visibility",
     "Offset": "0, 0, 0",
-    "Size": "916, 367",
+    "Size": "518, 367",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 29",
+        "Size": "518, 29",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 29",
+            "Size": "518, 29",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -864,7 +864,7 @@ exports[`View Tests Views can have backface visibility 1`] = `
         ],
       },
       {
-        "Offset": "383, 29, 0",
+        "Offset": "184, 29, 0",
         "Size": "150, 150",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -887,7 +887,7 @@ exports[`View Tests Views can have backface visibility 1`] = `
         ],
       },
       {
-        "Offset": "441, 94, 0",
+        "Offset": "242, 94, 0",
         "Size": "34, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -906,7 +906,7 @@ exports[`View Tests Views can have backface visibility 1`] = `
         ],
       },
       {
-        "Offset": "383, 29, 0",
+        "Offset": "184, 29, 0",
         "Size": "150, 150",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -949,12 +949,12 @@ exports[`View Tests Views can have backface visibility 1`] = `
       },
       {
         "Offset": "0, 178, 0",
-        "Size": "916, 40",
+        "Size": "518, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 40",
+            "Size": "518, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -967,7 +967,7 @@ exports[`View Tests Views can have backface visibility 1`] = `
         ],
       },
       {
-        "Offset": "383, 217, 0",
+        "Offset": "184, 217, 0",
         "Size": "150, 150",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -990,7 +990,7 @@ exports[`View Tests Views can have backface visibility 1`] = `
         ],
       },
       {
-        "Offset": "391, 273, 0",
+        "Offset": "192, 273, 0",
         "Size": "134, 38",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1009,7 +1009,7 @@ exports[`View Tests Views can have backface visibility 1`] = `
         ],
       },
       {
-        "Offset": "383, 217, 0",
+        "Offset": "184, 217, 0",
         "Size": "150, 150",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1032,7 +1032,7 @@ exports[`View Tests Views can have backface visibility 1`] = `
         ],
       },
       {
-        "Offset": "443, 282, 0",
+        "Offset": "244, 282, 0",
         "Size": "30, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1088,7 +1088,7 @@ exports[`View Tests Views can have background color 1`] = `
   "Visual Tree": {
     "Comment": "view-test-background-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 24",
+    "Size": "518, 24",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1102,12 +1102,12 @@ exports[`View Tests Views can have background color 1`] = `
       },
       {
         "Offset": "5, 5, 0",
-        "Size": "906, 16",
+        "Size": "508, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "906, 16",
+            "Size": "508, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1175,17 +1175,17 @@ exports[`View Tests Views can have border styles 1`] = `
   "Visual Tree": {
     "Comment": "border-style-button",
     "Offset": "0, 0, 0",
-    "Size": "916, 58",
+    "Size": "518, 58",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 26",
+        "Size": "518, 26",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 26",
+            "Size": "518, 26",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1234,12 +1234,12 @@ exports[`View Tests Views can have border styles 1`] = `
       },
       {
         "Offset": "6, 6, 0",
-        "Size": "904, 16",
+        "Size": "506, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "904, 16",
+            "Size": "506, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1253,12 +1253,12 @@ exports[`View Tests Views can have border styles 1`] = `
       },
       {
         "Offset": "0, 32, 0",
-        "Size": "916, 27",
+        "Size": "518, 27",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 27",
+            "Size": "518, 27",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1307,12 +1307,12 @@ exports[`View Tests Views can have border styles 1`] = `
       },
       {
         "Offset": "6, 38, 0",
-        "Size": "904, 15",
+        "Size": "506, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "904, 15",
+            "Size": "506, 15",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1362,7 +1362,7 @@ exports[`View Tests Views can have borders 1`] = `
   "Visual Tree": {
     "Comment": "view-test-border",
     "Offset": "0, 0, 0",
-    "Size": "916, 44",
+    "Size": "518, 44",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1407,12 +1407,12 @@ exports[`View Tests Views can have borders 1`] = `
       },
       {
         "Offset": "15, 15, 0",
-        "Size": "886, 16",
+        "Size": "488, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "886, 16",
+            "Size": "488, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1515,17 +1515,17 @@ exports[`View Tests Views can have customized accessibility 1`] = `
   "Visual Tree": {
     "Comment": "accessibility",
     "Offset": "0, 0, 0",
-    "Size": "916, 74",
+    "Size": "518, 93",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 20",
+        "Size": "518, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "518, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1539,12 +1539,12 @@ exports[`View Tests Views can have customized accessibility 1`] = `
       },
       {
         "Offset": "0, 18, 0",
-        "Size": "916, 19",
+        "Size": "518, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "518, 19",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1558,22 +1558,22 @@ exports[`View Tests Views can have customized accessibility 1`] = `
       },
       {
         "Offset": "0, 37, 0",
-        "Size": "916, 18",
+        "Size": "518, 18",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 18",
+            "Size": "518, 18",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "518, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "518, 20",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -1591,22 +1591,22 @@ exports[`View Tests Views can have customized accessibility 1`] = `
       },
       {
         "Offset": "0, 56, 0",
-        "Size": "916, 19",
+        "Size": "518, 38",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "518, 38",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "518, 38",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "518, 38",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -1774,28 +1774,28 @@ exports[`View Tests Views can have customized opacity 1`] = `
   "Visual Tree": {
     "Comment": "view-test-opacity",
     "Offset": "0, 0, 0",
-    "Size": "916, 130",
+    "Size": "518, 130",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 18",
+        "Size": "518, 18",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Opacity": 0,
-            "Size": "916, 18",
+            "Size": "518, 18",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "518, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "518, 20",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -1813,23 +1813,23 @@ exports[`View Tests Views can have customized opacity 1`] = `
       },
       {
         "Offset": "0, 19, 0",
-        "Size": "916, 19",
+        "Size": "518, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Opacity": 0.10000000149011612,
-            "Size": "916, 19",
+            "Size": "518, 19",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 19",
+                "Size": "518, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 19",
+                    "Size": "518, 19",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -1847,23 +1847,23 @@ exports[`View Tests Views can have customized opacity 1`] = `
       },
       {
         "Offset": "0, 37, 0",
-        "Size": "916, 18",
+        "Size": "518, 18",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Opacity": 0.30000001192092896,
-            "Size": "916, 18",
+            "Size": "518, 18",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "518, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "518, 20",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -1881,23 +1881,23 @@ exports[`View Tests Views can have customized opacity 1`] = `
       },
       {
         "Offset": "0, 56, 0",
-        "Size": "916, 19",
+        "Size": "518, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Opacity": 0.5,
-            "Size": "916, 19",
+            "Size": "518, 19",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "518, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "518, 20",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -1915,23 +1915,23 @@ exports[`View Tests Views can have customized opacity 1`] = `
       },
       {
         "Offset": "0, 74, 0",
-        "Size": "916, 19",
+        "Size": "518, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Opacity": 0.699999988079071,
-            "Size": "916, 19",
+            "Size": "518, 19",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 19",
+                "Size": "518, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 19",
+                    "Size": "518, 19",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -1949,23 +1949,23 @@ exports[`View Tests Views can have customized opacity 1`] = `
       },
       {
         "Offset": "0, 93, 0",
-        "Size": "916, 18",
+        "Size": "518, 18",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Opacity": 0.8999999761581421,
-            "Size": "916, 18",
+            "Size": "518, 18",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "518, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "518, 20",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -1983,12 +1983,12 @@ exports[`View Tests Views can have customized opacity 1`] = `
       },
       {
         "Offset": "0, 112, 0",
-        "Size": "916, 19",
+        "Size": "518, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "518, 19",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2083,7 +2083,7 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
   "Visual Tree": {
     "Comment": "view-test-padding-margin",
     "Offset": "0, 0, 0",
-    "Size": "916, 105",
+    "Size": "518, 105",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2128,12 +2128,12 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
       },
       {
         "Offset": "1, 1, 0",
-        "Size": "915, 27",
+        "Size": "517, 27",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "915, 27",
+            "Size": "517, 27",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2191,12 +2191,12 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
       },
       {
         "Offset": "7, 7, 0",
-        "Size": "903, 15",
+        "Size": "505, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "903, 15",
+            "Size": "505, 15",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2210,12 +2210,12 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
       },
       {
         "Offset": "6, 32, 0",
-        "Size": "905, 16",
+        "Size": "507, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "905, 16",
+            "Size": "507, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2273,12 +2273,12 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
       },
       {
         "Offset": "7, 33, 0",
-        "Size": "903, 16",
+        "Size": "505, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "903, 16",
+            "Size": "505, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2428,17 +2428,17 @@ exports[`View Tests Views can have display: none 1`] = `
   "Visual Tree": {
     "Comment": "display-none-button",
     "Offset": "0, 0, 0",
-    "Size": "916, 28",
+    "Size": "518, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 30",
+        "Size": "518, 30",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 30",
+            "Size": "518, 30",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2519,7 +2519,7 @@ exports[`View Tests Views can have flexgap 1`] = `
   "Visual Tree": {
     "Comment": "view-test-flexgap",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "518, 82",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2770,7 +2770,7 @@ exports[`View Tests Views can have flexgap 1`] = `
         ],
       },
       {
-        "Offset": "541, 1, 0",
+        "Offset": "1, 51, 0",
         "Size": "30, 30",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -2793,7 +2793,7 @@ exports[`View Tests Views can have flexgap 1`] = `
         ],
       },
       {
-        "Offset": "601, 1, 0",
+        "Offset": "61, 51, 0",
         "Size": "30, 30",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -2973,17 +2973,17 @@ exports[`View Tests Views can have insets 1`] = `
   "Visual Tree": {
     "Comment": "view-test-insets",
     "Offset": "0, 0, 0",
-    "Size": "916, 310",
+    "Size": "518, 310",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 40",
+        "Size": "518, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 40",
+            "Size": "518, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3032,12 +3032,12 @@ exports[`View Tests Views can have insets 1`] = `
       },
       {
         "Offset": "6, 6, 0",
-        "Size": "904, 28",
+        "Size": "506, 28",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "904, 28",
+            "Size": "506, 28",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3055,12 +3055,12 @@ exports[`View Tests Views can have insets 1`] = `
       },
       {
         "Offset": "11, 11, 0",
-        "Size": "894, 16",
+        "Size": "496, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "894, 16",
+            "Size": "496, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3074,12 +3074,12 @@ exports[`View Tests Views can have insets 1`] = `
       },
       {
         "Offset": "0, 45, 0",
-        "Size": "916, 40",
+        "Size": "518, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 40",
+            "Size": "518, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3170,12 +3170,12 @@ exports[`View Tests Views can have insets 1`] = `
       },
       {
         "Offset": "0, 90, 0",
-        "Size": "916, 40",
+        "Size": "518, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 40",
+            "Size": "518, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3266,12 +3266,12 @@ exports[`View Tests Views can have insets 1`] = `
       },
       {
         "Offset": "0, 135, 0",
-        "Size": "916, 40",
+        "Size": "518, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 40",
+            "Size": "518, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3362,12 +3362,12 @@ exports[`View Tests Views can have insets 1`] = `
       },
       {
         "Offset": "0, 180, 0",
-        "Size": "916, 40",
+        "Size": "518, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 40",
+            "Size": "518, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3416,12 +3416,12 @@ exports[`View Tests Views can have insets 1`] = `
       },
       {
         "Offset": "6, 181, 0",
-        "Size": "904, 24",
+        "Size": "506, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "904, 24",
+            "Size": "506, 24",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3439,12 +3439,12 @@ exports[`View Tests Views can have insets 1`] = `
       },
       {
         "Offset": "11, 186, 0",
-        "Size": "894, 16",
+        "Size": "496, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "894, 16",
+            "Size": "496, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3458,12 +3458,12 @@ exports[`View Tests Views can have insets 1`] = `
       },
       {
         "Offset": "0, 225, 0",
-        "Size": "916, 40",
+        "Size": "518, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 40",
+            "Size": "518, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3511,7 +3511,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "823, 226, 0",
+        "Offset": "425, 226, 0",
         "Size": "87, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -3534,7 +3534,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "828, 231, 0",
+        "Offset": "430, 231, 0",
         "Size": "77, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -3554,12 +3554,12 @@ exports[`View Tests Views can have insets 1`] = `
       },
       {
         "Offset": "0, 270, 0",
-        "Size": "916, 40",
+        "Size": "518, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 40",
+            "Size": "518, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3724,17 +3724,17 @@ exports[`View Tests Views can have logical border colors 1`] = `
   "Visual Tree": {
     "Comment": "view-test-logical-border-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 125",
+    "Size": "518, 125",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 50",
+        "Size": "518, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 50",
+            "Size": "518, 50",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3783,12 +3783,12 @@ exports[`View Tests Views can have logical border colors 1`] = `
       },
       {
         "Offset": "11, 11, 0",
-        "Size": "894, 28",
+        "Size": "496, 28",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "894, 28",
+            "Size": "496, 28",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3837,12 +3837,12 @@ exports[`View Tests Views can have logical border colors 1`] = `
       },
       {
         "Offset": "16, 16, 0",
-        "Size": "884, 16",
+        "Size": "486, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "884, 16",
+            "Size": "486, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3856,12 +3856,12 @@ exports[`View Tests Views can have logical border colors 1`] = `
       },
       {
         "Offset": "0, 60, 0",
-        "Size": "916, 65",
+        "Size": "518, 65",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 65",
+            "Size": "518, 65",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3910,12 +3910,12 @@ exports[`View Tests Views can have logical border colors 1`] = `
       },
       {
         "Offset": "11, 71, 0",
-        "Size": "894, 43",
+        "Size": "496, 43",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "894, 43",
+            "Size": "496, 43",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3964,12 +3964,12 @@ exports[`View Tests Views can have logical border colors 1`] = `
       },
       {
         "Offset": "16, 76, 0",
-        "Size": "884, 16",
+        "Size": "486, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "884, 16",
+            "Size": "486, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3983,12 +3983,12 @@ exports[`View Tests Views can have logical border colors 1`] = `
       },
       {
         "Offset": "16, 90, 0",
-        "Size": "884, 15",
+        "Size": "486, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "884, 15",
+            "Size": "486, 15",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -4083,17 +4083,17 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
   "Visual Tree": {
     "Comment": "offscreen-alpha-compositing-button",
     "Offset": "0, 0, 0",
-    "Size": "916, 215",
+    "Size": "518, 215",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 30",
+        "Size": "518, 30",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 30",
+            "Size": "518, 30",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -4153,12 +4153,12 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
       },
       {
         "Offset": "0, 108, 0",
-        "Size": "916, 29",
+        "Size": "518, 29",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 29",
+            "Size": "518, 29",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -4172,12 +4172,12 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
       },
       {
         "Offset": "0, 137, 0",
-        "Size": "916, 30",
+        "Size": "518, 30",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 30",
+            "Size": "518, 30",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -4191,13 +4191,13 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
       },
       {
         "Offset": "0, 166, 0",
-        "Size": "916, 50",
+        "Size": "518, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Opacity": 0.800000011920929,
-            "Size": "916, 50",
+            "Size": "518, 50",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -4401,7 +4401,7 @@ exports[`View Tests Views can have outlines 1`] = `
   "Visual Tree": {
     "Comment": "view-test-outline",
     "Offset": "0, 0, 0",
-    "Size": "896, 185",
+    "Size": "498, 255",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5203,7 +5203,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "435, 10, 0",
+        "Offset": "10, 80, 0",
         "Size": "100, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -5368,7 +5368,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "555, 10, 0",
+        "Offset": "130, 80, 0",
         "Size": "50, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -5469,7 +5469,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "625, 10, 0",
+        "Offset": "200, 80, 0",
         "Size": "50, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -5530,7 +5530,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "699, 10, 0",
+        "Offset": "274, 80, 0",
         "Size": "50, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -5600,7 +5600,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "695, 68, 0",
+        "Offset": "270, 138, 0",
         "Size": "59, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -5619,7 +5619,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "783, 10, 0",
+        "Offset": "358, 80, 0",
         "Size": "50, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -5689,7 +5689,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "773, 68, 0",
+        "Offset": "348, 138, 0",
         "Size": "72, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -5708,7 +5708,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "19, 103, 0",
+        "Offset": "19, 173, 0",
         "Size": "50, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -5778,7 +5778,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "10, 161, 0",
+        "Offset": "10, 231, 0",
         "Size": "69, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -5797,7 +5797,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "107, 103, 0",
+        "Offset": "107, 173, 0",
         "Size": "50, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -5899,7 +5899,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "98, 161, 0",
+        "Offset": "98, 231, 0",
         "Size": "68, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -5918,7 +5918,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "201, 103, 0",
+        "Offset": "201, 173, 0",
         "Size": "50, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -5988,7 +5988,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "186, 161, 0",
+        "Offset": "186, 231, 0",
         "Size": "81, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -6007,7 +6007,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "299, 103, 0",
+        "Offset": "299, 173, 0",
         "Size": "50, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -6077,7 +6077,7 @@ exports[`View Tests Views can have outlines 1`] = `
         ],
       },
       {
-        "Offset": "285, 161, 0",
+        "Offset": "285, 231, 0",
         "Size": "78, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -6173,7 +6173,7 @@ exports[`View Tests Views can have overflow 1`] = `
   "Visual Tree": {
     "Comment": "view-test-overflow",
     "Offset": "0, 0, 0",
-    "Size": "916, 20",
+    "Size": "518, 20",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6481,7 +6481,7 @@ exports[`View Tests Views can have rounded borders 1`] = `
   "Visual Tree": {
     "Comment": "view-test-rounded-borders",
     "Offset": "0, 0, 0",
-    "Size": "916, 50",
+    "Size": "518, 50",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -7268,17 +7268,17 @@ exports[`View Tests Views can have tooltips 1`] = `
   "Visual Tree": {
     "Comment": "tool-tip",
     "Offset": "0, 0, 0",
-    "Size": "916, 43",
+    "Size": "518, 43",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 16",
+        "Size": "518, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 16",
+            "Size": "518, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -7292,22 +7292,22 @@ exports[`View Tests Views can have tooltips 1`] = `
       },
       {
         "Offset": "0, 15, 0",
-        "Size": "916, 15",
+        "Size": "518, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 15",
+            "Size": "518, 15",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 15",
+                "Size": "518, 15",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 15",
+                    "Size": "518, 15",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -7325,22 +7325,22 @@ exports[`View Tests Views can have tooltips 1`] = `
       },
       {
         "Offset": "0, 29, 0",
-        "Size": "916, 14",
+        "Size": "518, 14",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 14",
+            "Size": "518, 14",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 16",
+                "Size": "518, 16",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 16",
+                    "Size": "518, 16",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
@@ -7423,7 +7423,7 @@ exports[`View Tests Visual Snapshot of Views with shadows 1`] = `
   "Visual Tree": {
     "Comment": "view-test-box-shadow",
     "Offset": "0, 0, 0",
-    "Size": "916, 90",
+    "Size": "518, 170",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -7778,7 +7778,7 @@ exports[`View Tests Visual Snapshot of Views with shadows 1`] = `
         ],
       },
       {
-        "Offset": "500, 20, 0",
+        "Offset": "20, 100, 0",
         "Size": "50, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -7801,7 +7801,7 @@ exports[`View Tests Visual Snapshot of Views with shadows 1`] = `
         ],
       },
       {
-        "Offset": "580, 20, 0",
+        "Offset": "100, 100, 0",
         "Size": "50, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -7824,7 +7824,7 @@ exports[`View Tests Visual Snapshot of Views with shadows 1`] = `
         ],
       },
       {
-        "Offset": "660, 20, 0",
+        "Offset": "180, 100, 0",
         "Size": "50, 50",
         "Visual Type": "SpriteVisual",
         "__Children": [

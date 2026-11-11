@@ -140,6 +140,11 @@ export type AccessibilityActionName =
    */
   | 'decrement'
   /**
+   * Generated when an accessibility service sets an adjustable component to a specific value.
+   * @platform android
+   */
+  | 'setProgress'
+  /**
    * Generated when a TalkBack user places accessibility focus on the component and double taps and holds one finger on the screen.
    * @platform android
    */
@@ -158,6 +163,7 @@ export type AccessibilityActionName =
 export type AccessibilityActionEvent = NativeSyntheticEvent<
   Readonly<{
     actionName: string;
+    value?: number | undefined;
   }>
 >;
 

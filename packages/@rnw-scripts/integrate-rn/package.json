@@ -51,7 +51,7 @@
     "jest": "^29.7.0",
     "prettier": "^3.6.2",
     "react": "19.3.0",
-    "react-native": "0.89.0-nightly-20261002-cd2de187e",
+    "react-native": "0.89.0-nightly-20261102-47a9917ac",
     "typescript": "5.1.6"
   },
   "files": [

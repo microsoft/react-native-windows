@@ -41787,6 +41787,313 @@ exports[`snapshotAllPages Pressable 13`] = `
       Enabled Pressable
     </Text>
   </View>,
+  <View
+    style={
+      [
+        {
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        {
+          "padding": 10,
+        },
+      ]
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      disabled={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "borderColor": "#007AFF",
+            "borderRadius": 4,
+            "borderWidth": 0.5,
+            "marginHorizontal": 4,
+            "paddingHorizontal": 8,
+            "paddingVertical": 4,
+          },
+          {
+            "backgroundColor": "#cce4ff",
+          },
+        ]
+      }
+    >
+      <Text>
+        true
+      </Text>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      disabled={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "borderColor": "#007AFF",
+            "borderRadius": 4,
+            "borderWidth": 0.5,
+            "marginHorizontal": 4,
+            "paddingHorizontal": 8,
+            "paddingVertical": 4,
+          },
+          false,
+        ]
+      }
+    >
+      <Text>
+        false
+      </Text>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      disabled={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "borderColor": "#007AFF",
+            "borderRadius": 4,
+            "borderWidth": 0.5,
+            "marginHorizontal": 4,
+            "paddingHorizontal": 8,
+            "paddingVertical": 4,
+          },
+          false,
+        ]
+      }
+    >
+      <Text>
+        undefined
+      </Text>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      disabled={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "borderColor": "#007AFF",
+            "borderRadius": 4,
+            "borderWidth": 0.5,
+            "marginHorizontal": 4,
+            "paddingHorizontal": 8,
+            "paddingVertical": 4,
+          },
+          false,
+        ]
+      }
+    >
+      <Text>
+        null
+      </Text>
+    </View>
+  </View>,
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": true,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "opacity": 1,
+        },
+        {
+          "flexDirection": "row",
+          "justifyContent": "center",
+        },
+        {
+          "padding": 10,
+        },
+        {
+          "borderColor": "#007AFF",
+          "borderWidth": 0.5,
+          "padding": 20,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#007AFF",
+          "opacity": 0.5,
+        }
+      }
+    >
+      disabled={true}
+       pressed 
+      0
+       times
+    </Text>
+  </View>,
 ]
 `;
 
@@ -46672,6 +46979,9 @@ exports[`snapshotAllPages ScrollView 1`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -46690,6 +47000,9 @@ exports[`snapshotAllPages ScrollView 1`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -46708,6 +47021,9 @@ exports[`snapshotAllPages ScrollView 1`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -46726,6 +47042,9 @@ exports[`snapshotAllPages ScrollView 1`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -46744,6 +47063,9 @@ exports[`snapshotAllPages ScrollView 1`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -46762,6 +47084,9 @@ exports[`snapshotAllPages ScrollView 1`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -46780,6 +47105,9 @@ exports[`snapshotAllPages ScrollView 1`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -46798,6 +47126,9 @@ exports[`snapshotAllPages ScrollView 1`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -46816,6 +47147,9 @@ exports[`snapshotAllPages ScrollView 1`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -46834,6 +47168,9 @@ exports[`snapshotAllPages ScrollView 1`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -46852,6 +47189,9 @@ exports[`snapshotAllPages ScrollView 1`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -46870,6 +47210,9 @@ exports[`snapshotAllPages ScrollView 1`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -47094,6 +47437,9 @@ exports[`snapshotAllPages ScrollView 2`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47112,6 +47458,9 @@ exports[`snapshotAllPages ScrollView 2`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47130,6 +47479,9 @@ exports[`snapshotAllPages ScrollView 2`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47148,6 +47500,9 @@ exports[`snapshotAllPages ScrollView 2`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47166,6 +47521,9 @@ exports[`snapshotAllPages ScrollView 2`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47184,6 +47542,9 @@ exports[`snapshotAllPages ScrollView 2`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47202,6 +47563,9 @@ exports[`snapshotAllPages ScrollView 2`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47220,6 +47584,9 @@ exports[`snapshotAllPages ScrollView 2`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47238,6 +47605,9 @@ exports[`snapshotAllPages ScrollView 2`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47256,6 +47626,9 @@ exports[`snapshotAllPages ScrollView 2`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47274,6 +47647,9 @@ exports[`snapshotAllPages ScrollView 2`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47292,6 +47668,9 @@ exports[`snapshotAllPages ScrollView 2`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47464,6 +47843,9 @@ exports[`snapshotAllPages ScrollView 3`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47482,6 +47864,9 @@ exports[`snapshotAllPages ScrollView 3`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47500,6 +47885,9 @@ exports[`snapshotAllPages ScrollView 3`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47518,6 +47906,9 @@ exports[`snapshotAllPages ScrollView 3`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47536,6 +47927,9 @@ exports[`snapshotAllPages ScrollView 3`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47554,6 +47948,9 @@ exports[`snapshotAllPages ScrollView 3`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47572,6 +47969,9 @@ exports[`snapshotAllPages ScrollView 3`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47590,6 +47990,9 @@ exports[`snapshotAllPages ScrollView 3`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47608,6 +48011,9 @@ exports[`snapshotAllPages ScrollView 3`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47626,6 +48032,9 @@ exports[`snapshotAllPages ScrollView 3`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47644,6 +48053,9 @@ exports[`snapshotAllPages ScrollView 3`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47662,6 +48074,9 @@ exports[`snapshotAllPages ScrollView 3`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47836,6 +48251,9 @@ exports[`snapshotAllPages ScrollView 4`] = `
                 "padding": 5,
               },
               undefined,
+              {
+                "zIndex": undefined,
+              },
             ]
           }
         >
@@ -47980,6 +48398,9 @@ exports[`snapshotAllPages ScrollView 5`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -47998,6 +48419,9 @@ exports[`snapshotAllPages ScrollView 5`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48016,6 +48440,9 @@ exports[`snapshotAllPages ScrollView 5`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48034,6 +48461,9 @@ exports[`snapshotAllPages ScrollView 5`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48052,6 +48482,9 @@ exports[`snapshotAllPages ScrollView 5`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48070,6 +48503,9 @@ exports[`snapshotAllPages ScrollView 5`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48088,6 +48524,9 @@ exports[`snapshotAllPages ScrollView 5`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48106,6 +48545,9 @@ exports[`snapshotAllPages ScrollView 5`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48124,6 +48566,9 @@ exports[`snapshotAllPages ScrollView 5`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48142,6 +48587,9 @@ exports[`snapshotAllPages ScrollView 5`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48160,6 +48608,9 @@ exports[`snapshotAllPages ScrollView 5`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48178,6 +48629,9 @@ exports[`snapshotAllPages ScrollView 5`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48345,6 +48799,9 @@ exports[`snapshotAllPages ScrollView 6`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48363,6 +48820,9 @@ exports[`snapshotAllPages ScrollView 6`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48381,6 +48841,9 @@ exports[`snapshotAllPages ScrollView 6`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48399,6 +48862,9 @@ exports[`snapshotAllPages ScrollView 6`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48417,6 +48883,9 @@ exports[`snapshotAllPages ScrollView 6`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48435,6 +48904,9 @@ exports[`snapshotAllPages ScrollView 6`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48453,6 +48925,9 @@ exports[`snapshotAllPages ScrollView 6`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48471,6 +48946,9 @@ exports[`snapshotAllPages ScrollView 6`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48489,6 +48967,9 @@ exports[`snapshotAllPages ScrollView 6`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48507,6 +48988,9 @@ exports[`snapshotAllPages ScrollView 6`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48525,6 +49009,9 @@ exports[`snapshotAllPages ScrollView 6`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48543,6 +49030,9 @@ exports[`snapshotAllPages ScrollView 6`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48690,6 +49180,9 @@ exports[`snapshotAllPages ScrollView 7`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48708,6 +49201,9 @@ exports[`snapshotAllPages ScrollView 7`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48726,6 +49222,9 @@ exports[`snapshotAllPages ScrollView 7`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48744,6 +49243,9 @@ exports[`snapshotAllPages ScrollView 7`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48762,6 +49264,9 @@ exports[`snapshotAllPages ScrollView 7`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48780,6 +49285,9 @@ exports[`snapshotAllPages ScrollView 7`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48798,6 +49306,9 @@ exports[`snapshotAllPages ScrollView 7`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48816,6 +49327,9 @@ exports[`snapshotAllPages ScrollView 7`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48834,6 +49348,9 @@ exports[`snapshotAllPages ScrollView 7`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48852,6 +49369,9 @@ exports[`snapshotAllPages ScrollView 7`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48870,6 +49390,9 @@ exports[`snapshotAllPages ScrollView 7`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48888,6 +49411,9 @@ exports[`snapshotAllPages ScrollView 7`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -48994,6 +49520,9 @@ exports[`snapshotAllPages ScrollView 8`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49012,6 +49541,9 @@ exports[`snapshotAllPages ScrollView 8`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49030,6 +49562,9 @@ exports[`snapshotAllPages ScrollView 8`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49048,6 +49583,9 @@ exports[`snapshotAllPages ScrollView 8`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49066,6 +49604,9 @@ exports[`snapshotAllPages ScrollView 8`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49084,6 +49625,9 @@ exports[`snapshotAllPages ScrollView 8`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49102,6 +49646,9 @@ exports[`snapshotAllPages ScrollView 8`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49120,6 +49667,9 @@ exports[`snapshotAllPages ScrollView 8`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49138,6 +49688,9 @@ exports[`snapshotAllPages ScrollView 8`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49156,6 +49709,9 @@ exports[`snapshotAllPages ScrollView 8`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49174,6 +49730,9 @@ exports[`snapshotAllPages ScrollView 8`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49192,6 +49751,9 @@ exports[`snapshotAllPages ScrollView 8`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49348,6 +49910,9 @@ exports[`snapshotAllPages ScrollView 9`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49366,6 +49931,9 @@ exports[`snapshotAllPages ScrollView 9`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49384,6 +49952,9 @@ exports[`snapshotAllPages ScrollView 9`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49402,6 +49973,9 @@ exports[`snapshotAllPages ScrollView 9`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49420,6 +49994,9 @@ exports[`snapshotAllPages ScrollView 9`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49438,6 +50015,9 @@ exports[`snapshotAllPages ScrollView 9`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49456,6 +50036,9 @@ exports[`snapshotAllPages ScrollView 9`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49474,6 +50057,9 @@ exports[`snapshotAllPages ScrollView 9`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49492,6 +50078,9 @@ exports[`snapshotAllPages ScrollView 9`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49510,6 +50099,9 @@ exports[`snapshotAllPages ScrollView 9`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49528,6 +50120,9 @@ exports[`snapshotAllPages ScrollView 9`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49546,6 +50141,9 @@ exports[`snapshotAllPages ScrollView 9`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49756,6 +50354,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
             {
               "backgroundColor": "yellow",
             },
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49774,6 +50375,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49792,6 +50396,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49810,6 +50417,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49828,6 +50438,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49846,6 +50459,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49864,6 +50480,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49882,6 +50501,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49900,6 +50522,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49918,6 +50543,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49936,6 +50564,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49954,6 +50585,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49972,6 +50606,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -49991,6 +50628,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
             },
             {
               "backgroundColor": "yellow",
+            },
+            {
+              "zIndex": undefined,
             },
           ]
         }
@@ -50010,6 +50650,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50028,6 +50671,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50046,6 +50692,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50064,6 +50713,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50082,6 +50734,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50100,6 +50755,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50118,6 +50776,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50136,6 +50797,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50154,6 +50818,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50172,6 +50839,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50190,6 +50860,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50208,6 +50881,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50228,6 +50904,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
             {
               "backgroundColor": "yellow",
             },
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50246,6 +50925,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50264,6 +50946,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50282,6 +50967,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50300,6 +50988,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50318,6 +51009,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50336,6 +51030,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50354,6 +51051,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50372,6 +51072,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50390,6 +51093,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50408,6 +51114,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50426,6 +51135,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50444,6 +51156,9 @@ exports[`snapshotAllPages ScrollView 10`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -50934,7 +51649,8 @@ exports[`snapshotAllPages ScrollView 12`] = `
       {
         "borderColor": "gray",
         "borderWidth": 1,
-        "height": 40,
+        "height": 48,
+        "paddingHorizontal": 10,
       }
     }
     value="Tap to open Keyboard"
@@ -51019,6 +51735,9 @@ exports[`snapshotAllPages ScrollView 12`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51037,6 +51756,9 @@ exports[`snapshotAllPages ScrollView 12`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51055,6 +51777,9 @@ exports[`snapshotAllPages ScrollView 12`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51073,6 +51798,9 @@ exports[`snapshotAllPages ScrollView 12`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51091,6 +51819,9 @@ exports[`snapshotAllPages ScrollView 12`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51109,6 +51840,9 @@ exports[`snapshotAllPages ScrollView 12`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51127,6 +51861,9 @@ exports[`snapshotAllPages ScrollView 12`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51145,6 +51882,9 @@ exports[`snapshotAllPages ScrollView 12`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51163,6 +51903,9 @@ exports[`snapshotAllPages ScrollView 12`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51181,6 +51924,9 @@ exports[`snapshotAllPages ScrollView 12`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51199,6 +51945,9 @@ exports[`snapshotAllPages ScrollView 12`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51217,6 +51966,9 @@ exports[`snapshotAllPages ScrollView 12`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51581,6 +52333,9 @@ exports[`snapshotAllPages ScrollView 13`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51599,6 +52354,9 @@ exports[`snapshotAllPages ScrollView 13`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51617,6 +52375,9 @@ exports[`snapshotAllPages ScrollView 13`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51635,6 +52396,9 @@ exports[`snapshotAllPages ScrollView 13`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51653,6 +52417,9 @@ exports[`snapshotAllPages ScrollView 13`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51671,6 +52438,9 @@ exports[`snapshotAllPages ScrollView 13`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51689,6 +52459,9 @@ exports[`snapshotAllPages ScrollView 13`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51707,6 +52480,9 @@ exports[`snapshotAllPages ScrollView 13`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51725,6 +52501,9 @@ exports[`snapshotAllPages ScrollView 13`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51743,6 +52522,9 @@ exports[`snapshotAllPages ScrollView 13`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51761,6 +52543,9 @@ exports[`snapshotAllPages ScrollView 13`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51779,6 +52564,9 @@ exports[`snapshotAllPages ScrollView 13`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51886,6 +52674,9 @@ exports[`snapshotAllPages ScrollView 14`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51904,6 +52695,9 @@ exports[`snapshotAllPages ScrollView 14`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51922,6 +52716,9 @@ exports[`snapshotAllPages ScrollView 14`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51940,6 +52737,9 @@ exports[`snapshotAllPages ScrollView 14`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51958,6 +52758,9 @@ exports[`snapshotAllPages ScrollView 14`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51976,6 +52779,9 @@ exports[`snapshotAllPages ScrollView 14`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -51994,6 +52800,9 @@ exports[`snapshotAllPages ScrollView 14`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52012,6 +52821,9 @@ exports[`snapshotAllPages ScrollView 14`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52030,6 +52842,9 @@ exports[`snapshotAllPages ScrollView 14`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52048,6 +52863,9 @@ exports[`snapshotAllPages ScrollView 14`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52066,6 +52884,9 @@ exports[`snapshotAllPages ScrollView 14`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52084,6 +52905,9 @@ exports[`snapshotAllPages ScrollView 14`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52141,6 +52965,9 @@ exports[`snapshotAllPages ScrollView 15`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52159,6 +52986,9 @@ exports[`snapshotAllPages ScrollView 15`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52177,6 +53007,9 @@ exports[`snapshotAllPages ScrollView 15`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52195,6 +53028,9 @@ exports[`snapshotAllPages ScrollView 15`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52213,6 +53049,9 @@ exports[`snapshotAllPages ScrollView 15`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52231,6 +53070,9 @@ exports[`snapshotAllPages ScrollView 15`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52249,6 +53091,9 @@ exports[`snapshotAllPages ScrollView 15`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52267,6 +53112,9 @@ exports[`snapshotAllPages ScrollView 15`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52285,6 +53133,9 @@ exports[`snapshotAllPages ScrollView 15`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52303,6 +53154,9 @@ exports[`snapshotAllPages ScrollView 15`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52321,6 +53175,9 @@ exports[`snapshotAllPages ScrollView 15`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52339,6 +53196,9 @@ exports[`snapshotAllPages ScrollView 15`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52380,6 +53240,9 @@ exports[`snapshotAllPages ScrollView 16`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52398,6 +53261,9 @@ exports[`snapshotAllPages ScrollView 16`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52416,6 +53282,9 @@ exports[`snapshotAllPages ScrollView 16`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52434,6 +53303,9 @@ exports[`snapshotAllPages ScrollView 16`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52452,6 +53324,9 @@ exports[`snapshotAllPages ScrollView 16`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52470,6 +53345,9 @@ exports[`snapshotAllPages ScrollView 16`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52488,6 +53366,9 @@ exports[`snapshotAllPages ScrollView 16`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52506,6 +53387,9 @@ exports[`snapshotAllPages ScrollView 16`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52524,6 +53408,9 @@ exports[`snapshotAllPages ScrollView 16`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52542,6 +53429,9 @@ exports[`snapshotAllPages ScrollView 16`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52560,6 +53450,9 @@ exports[`snapshotAllPages ScrollView 16`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52578,6 +53471,9 @@ exports[`snapshotAllPages ScrollView 16`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52681,6 +53577,9 @@ exports[`snapshotAllPages ScrollView 17`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52699,6 +53598,9 @@ exports[`snapshotAllPages ScrollView 17`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52717,6 +53619,9 @@ exports[`snapshotAllPages ScrollView 17`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52735,6 +53640,9 @@ exports[`snapshotAllPages ScrollView 17`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52753,6 +53661,9 @@ exports[`snapshotAllPages ScrollView 17`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52771,6 +53682,9 @@ exports[`snapshotAllPages ScrollView 17`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52789,6 +53703,9 @@ exports[`snapshotAllPages ScrollView 17`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52807,6 +53724,9 @@ exports[`snapshotAllPages ScrollView 17`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52825,6 +53745,9 @@ exports[`snapshotAllPages ScrollView 17`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52843,6 +53766,9 @@ exports[`snapshotAllPages ScrollView 17`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52861,6 +53787,9 @@ exports[`snapshotAllPages ScrollView 17`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -52879,6 +53808,9 @@ exports[`snapshotAllPages ScrollView 17`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53080,6 +54012,9 @@ exports[`snapshotAllPages ScrollView 18`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53098,6 +54033,9 @@ exports[`snapshotAllPages ScrollView 18`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53116,6 +54054,9 @@ exports[`snapshotAllPages ScrollView 18`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53134,6 +54075,9 @@ exports[`snapshotAllPages ScrollView 18`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53152,6 +54096,9 @@ exports[`snapshotAllPages ScrollView 18`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53170,6 +54117,9 @@ exports[`snapshotAllPages ScrollView 18`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53188,6 +54138,9 @@ exports[`snapshotAllPages ScrollView 18`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53206,6 +54159,9 @@ exports[`snapshotAllPages ScrollView 18`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53224,6 +54180,9 @@ exports[`snapshotAllPages ScrollView 18`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53242,6 +54201,9 @@ exports[`snapshotAllPages ScrollView 18`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53260,6 +54222,9 @@ exports[`snapshotAllPages ScrollView 18`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53278,6 +54243,9 @@ exports[`snapshotAllPages ScrollView 18`] = `
               "padding": 5,
             },
             undefined,
+            {
+              "zIndex": undefined,
+            },
           ]
         }
       >
@@ -53531,6 +54499,9 @@ exports[`snapshotAllPages ScrollView 19`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -53549,6 +54520,9 @@ exports[`snapshotAllPages ScrollView 19`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -53567,6 +54541,9 @@ exports[`snapshotAllPages ScrollView 19`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -53585,6 +54562,9 @@ exports[`snapshotAllPages ScrollView 19`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -53603,6 +54583,9 @@ exports[`snapshotAllPages ScrollView 19`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -53621,6 +54604,9 @@ exports[`snapshotAllPages ScrollView 19`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -53639,6 +54625,9 @@ exports[`snapshotAllPages ScrollView 19`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -53657,6 +54646,9 @@ exports[`snapshotAllPages ScrollView 19`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -53675,6 +54667,9 @@ exports[`snapshotAllPages ScrollView 19`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -53693,6 +54688,9 @@ exports[`snapshotAllPages ScrollView 19`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -53711,6 +54709,9 @@ exports[`snapshotAllPages ScrollView 19`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -53729,6 +54730,9 @@ exports[`snapshotAllPages ScrollView 19`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -53769,7 +54773,13 @@ exports[`snapshotAllPages ScrollView 20`] = `
               "minWidth": 96,
               "padding": 5,
             },
-            undefined,
+            {
+              "paddingBottom": undefined,
+              "paddingTop": undefined,
+            },
+            {
+              "zIndex": -0,
+            },
           ]
         }
       >
@@ -53787,7 +54797,13 @@ exports[`snapshotAllPages ScrollView 20`] = `
               "minWidth": 96,
               "padding": 5,
             },
-            undefined,
+            {
+              "paddingBottom": undefined,
+              "paddingTop": undefined,
+            },
+            {
+              "zIndex": -1,
+            },
           ]
         }
       >
@@ -53805,7 +54821,13 @@ exports[`snapshotAllPages ScrollView 20`] = `
               "minWidth": 96,
               "padding": 5,
             },
-            undefined,
+            {
+              "paddingBottom": undefined,
+              "paddingTop": undefined,
+            },
+            {
+              "zIndex": -2,
+            },
           ]
         }
       >
@@ -53823,7 +54845,13 @@ exports[`snapshotAllPages ScrollView 20`] = `
               "minWidth": 96,
               "padding": 5,
             },
-            undefined,
+            {
+              "paddingBottom": undefined,
+              "paddingTop": undefined,
+            },
+            {
+              "zIndex": -3,
+            },
           ]
         }
       >
@@ -53841,7 +54869,13 @@ exports[`snapshotAllPages ScrollView 20`] = `
               "minWidth": 96,
               "padding": 5,
             },
-            undefined,
+            {
+              "paddingBottom": undefined,
+              "paddingTop": undefined,
+            },
+            {
+              "zIndex": -4,
+            },
           ]
         }
       >
@@ -53859,7 +54893,13 @@ exports[`snapshotAllPages ScrollView 20`] = `
               "minWidth": 96,
               "padding": 5,
             },
-            undefined,
+            {
+              "paddingBottom": undefined,
+              "paddingTop": undefined,
+            },
+            {
+              "zIndex": -5,
+            },
           ]
         }
       >
@@ -53901,7 +54941,13 @@ exports[`snapshotAllPages ScrollView 20`] = `
               "minWidth": 96,
               "padding": 5,
             },
-            null,
+            {
+              "paddingLeft": undefined,
+              "paddingRight": undefined,
+            },
+            {
+              "zIndex": -0,
+            },
           ]
         }
       >
@@ -53919,7 +54965,13 @@ exports[`snapshotAllPages ScrollView 20`] = `
               "minWidth": 96,
               "padding": 5,
             },
-            null,
+            {
+              "paddingLeft": undefined,
+              "paddingRight": undefined,
+            },
+            {
+              "zIndex": -1,
+            },
           ]
         }
       >
@@ -53937,7 +54989,13 @@ exports[`snapshotAllPages ScrollView 20`] = `
               "minWidth": 96,
               "padding": 5,
             },
-            null,
+            {
+              "paddingLeft": undefined,
+              "paddingRight": undefined,
+            },
+            {
+              "zIndex": -2,
+            },
           ]
         }
       >
@@ -53955,7 +55013,13 @@ exports[`snapshotAllPages ScrollView 20`] = `
               "minWidth": 96,
               "padding": 5,
             },
-            null,
+            {
+              "paddingLeft": undefined,
+              "paddingRight": undefined,
+            },
+            {
+              "zIndex": -3,
+            },
           ]
         }
       >
@@ -53973,7 +55037,13 @@ exports[`snapshotAllPages ScrollView 20`] = `
               "minWidth": 96,
               "padding": 5,
             },
-            null,
+            {
+              "paddingLeft": undefined,
+              "paddingRight": undefined,
+            },
+            {
+              "zIndex": -4,
+            },
           ]
         }
       >
@@ -53991,7 +55061,13 @@ exports[`snapshotAllPages ScrollView 20`] = `
               "minWidth": 96,
               "padding": 5,
             },
-            null,
+            {
+              "paddingLeft": undefined,
+              "paddingRight": undefined,
+            },
+            {
+              "zIndex": -5,
+            },
           ]
         }
       >
@@ -54331,6 +55407,86 @@ exports[`snapshotAllPages ScrollView 20`] = `
       </Text>
     </View>
   </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "justifyContent": "space-around",
+      }
+    }
+  >
+    <TextInput
+      keyboardType="number-pad"
+      onChangeText={[Function]}
+      placeholder="Id"
+      style={
+        {
+          "alignSelf": "center",
+          "backgroundColor": "#ffffff",
+          "borderColor": "#cccccc",
+          "borderRadius": 3,
+          "borderWidth": 1,
+          "flex": 1,
+          "margin": 5,
+          "padding": 5,
+          "textAlign": "center",
+        }
+      }
+      value="1"
+    />
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#cccccc",
+          "borderRadius": 3,
+          "margin": 5,
+          "opacity": 1,
+          "padding": 5,
+        }
+      }
+    >
+      <Text>
+        Change height at id
+      </Text>
+    </View>
+  </View>
 </View>
 `;
 
@@ -54365,6 +55521,9 @@ exports[`snapshotAllPages ScrollView 21`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54383,6 +55542,9 @@ exports[`snapshotAllPages ScrollView 21`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54401,6 +55563,9 @@ exports[`snapshotAllPages ScrollView 21`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54419,6 +55584,9 @@ exports[`snapshotAllPages ScrollView 21`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54437,6 +55605,9 @@ exports[`snapshotAllPages ScrollView 21`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54455,6 +55626,9 @@ exports[`snapshotAllPages ScrollView 21`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54473,6 +55647,9 @@ exports[`snapshotAllPages ScrollView 21`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54491,6 +55668,9 @@ exports[`snapshotAllPages ScrollView 21`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54509,6 +55689,9 @@ exports[`snapshotAllPages ScrollView 21`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54527,6 +55710,9 @@ exports[`snapshotAllPages ScrollView 21`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54545,6 +55731,9 @@ exports[`snapshotAllPages ScrollView 21`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54563,6 +55752,9 @@ exports[`snapshotAllPages ScrollView 21`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54606,6 +55798,9 @@ exports[`snapshotAllPages ScrollView 22`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54624,6 +55819,9 @@ exports[`snapshotAllPages ScrollView 22`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54642,6 +55840,9 @@ exports[`snapshotAllPages ScrollView 22`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54660,6 +55861,9 @@ exports[`snapshotAllPages ScrollView 22`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54678,6 +55882,9 @@ exports[`snapshotAllPages ScrollView 22`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54696,6 +55903,9 @@ exports[`snapshotAllPages ScrollView 22`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54714,6 +55924,9 @@ exports[`snapshotAllPages ScrollView 22`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54732,6 +55945,9 @@ exports[`snapshotAllPages ScrollView 22`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54750,6 +55966,9 @@ exports[`snapshotAllPages ScrollView 22`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54768,6 +55987,9 @@ exports[`snapshotAllPages ScrollView 22`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54786,6 +56008,9 @@ exports[`snapshotAllPages ScrollView 22`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54804,6 +56029,9 @@ exports[`snapshotAllPages ScrollView 22`] = `
             "padding": 5,
           },
           undefined,
+          {
+            "zIndex": undefined,
+          },
         ]
       }
     >
@@ -54920,6 +56148,382 @@ exports[`snapshotAllPages ScrollView 23`] = `
     </View>
   </View>
 </RCTScrollView>
+`;
+
+exports[`snapshotAllPages ScrollView 24`] = `
+<View>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 16,
+          "fontWeight": "bold",
+          "margin": 5,
+        },
+      ]
+    }
+    testID="vertical_status"
+  >
+    scrolled = 
+    false
+  </Text>
+  <RCTScrollView
+    contentContainerStyle={
+      {
+        "gap": 20,
+        "padding": 10,
+      }
+    }
+    nestedScrollEnabled={true}
+    onScroll={[Function]}
+    style={
+      {
+        "backgroundColor": "#eeeeee",
+        "height": 350,
+      }
+    }
+  >
+    <View>
+      <TextInput
+        placeholder="TextInput"
+        style={
+          {
+            "borderColor": "gray",
+            "borderWidth": 1,
+            "height": 48,
+            "paddingHorizontal": 10,
+          }
+        }
+        testID="text_input_vertical"
+      />
+      <TextInput
+        placeholder="TextInput (center)"
+        style={
+          {
+            "borderColor": "gray",
+            "borderWidth": 1,
+            "height": 48,
+            "paddingHorizontal": 10,
+          }
+        }
+        testID="text_input_vertical_center"
+        textAlign="center"
+      />
+      <TextInput
+        placeholder="TextInput (right)"
+        style={
+          {
+            "borderColor": "gray",
+            "borderWidth": 1,
+            "height": 48,
+            "paddingHorizontal": 10,
+          }
+        }
+        testID="text_input_vertical_right"
+        textAlign="right"
+      />
+      <TextInput
+        defaultValue="A TextInput with a value that overflows the input width so it can be scrolled horizontally."
+        placeholder="TextInput"
+        style={
+          {
+            "borderColor": "gray",
+            "borderWidth": 1,
+            "height": 48,
+            "paddingHorizontal": 10,
+          }
+        }
+        testID="text_input_vertical_overflow_width"
+      />
+      <TextInput
+        defaultValue="A multiline TextInput
+with a value that
+overflows the input
+height so it can be
+scrolled vertically."
+        multiline={true}
+        placeholder="TextInput"
+        style={
+          {
+            "borderColor": "gray",
+            "borderWidth": 1,
+            "height": 48,
+            "paddingHorizontal": 10,
+          }
+        }
+        testID="text_input_vertical_overflow_height"
+      />
+      <View
+        style={
+          [
+            {
+              "borderColor": "gray",
+              "borderWidth": 1,
+              "height": 48,
+              "paddingHorizontal": 10,
+            },
+            {
+              "backgroundColor": "#cccccc",
+              "height": 200,
+            },
+          ]
+        }
+      />
+    </View>
+  </RCTScrollView>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#cccccc",
+        "borderRadius": 3,
+        "margin": 5,
+        "opacity": 1,
+        "padding": 5,
+      }
+    }
+    testID="scroll_to_top_button"
+  >
+    <Text>
+      Scroll to top
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages ScrollView 25`] = `
+<View>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 16,
+          "fontWeight": "bold",
+          "margin": 5,
+        },
+      ]
+    }
+    testID="horizontal_status"
+  >
+    scrolled = 
+    false
+  </Text>
+  <RCTScrollView
+    contentContainerStyle={
+      {
+        "gap": 20,
+        "padding": 10,
+      }
+    }
+    horizontal={true}
+    nestedScrollEnabled={true}
+    onScroll={[Function]}
+    style={
+      {
+        "backgroundColor": "#eeeeee",
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          [
+            {
+              "borderColor": "gray",
+              "borderWidth": 1,
+              "height": 48,
+              "paddingHorizontal": 10,
+            },
+            {
+              "backgroundColor": "#cccccc",
+              "height": "100%",
+              "width": 100,
+            },
+          ]
+        }
+        testID="left_filler"
+      />
+      <View
+        style={
+          {
+            "gap": 20,
+          }
+        }
+      >
+        <TextInput
+          placeholder="TextInput"
+          style={
+            [
+              {
+                "borderColor": "gray",
+                "borderWidth": 1,
+                "height": 48,
+                "paddingHorizontal": 10,
+              },
+              {
+                "width": 200,
+              },
+            ]
+          }
+          testID="text_input_horizontal"
+        />
+        <TextInput
+          defaultValue="A TextInput with a value that overflows the input width so it can be scrolled horizontally."
+          placeholder="TextInput"
+          style={
+            [
+              {
+                "borderColor": "gray",
+                "borderWidth": 1,
+                "height": 48,
+                "paddingHorizontal": 10,
+              },
+              {
+                "width": 200,
+              },
+            ]
+          }
+          testID="text_input_horizontal_overflow_width"
+        />
+        <TextInput
+          defaultValue="A multiline TextInput
+with a value that
+overflows the input
+height so it can be
+scrolled vertically."
+          multiline={true}
+          placeholder="TextInput"
+          style={
+            [
+              {
+                "borderColor": "gray",
+                "borderWidth": 1,
+                "height": 48,
+                "paddingHorizontal": 10,
+              },
+              {
+                "width": 200,
+              },
+            ]
+          }
+          testID="text_input_horizontal_overflow_height"
+        />
+      </View>
+      <View
+        style={
+          [
+            {
+              "borderColor": "gray",
+              "borderWidth": 1,
+              "height": 48,
+              "paddingHorizontal": 10,
+            },
+            {
+              "backgroundColor": "#cccccc",
+              "height": "100%",
+              "width": 100,
+            },
+          ]
+        }
+      />
+    </View>
+  </RCTScrollView>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#cccccc",
+        "borderRadius": 3,
+        "margin": 5,
+        "opacity": 1,
+        "padding": 5,
+      }
+    }
+    testID="scroll_to_start_button"
+  >
+    <Text>
+      Scroll to start
+    </Text>
+  </View>
+</View>
 `;
 
 exports[`snapshotAllPages ScrollViewAnimated 1`] = `
@@ -71333,6 +72937,11 @@ exports[`snapshotAllPages Switch 2`] = `
   >
     <RCTSwitch
       accessibilityRole="switch"
+      accessibilityState={
+        {
+          "disabled": true,
+        }
+      }
       accessible={true}
       disabled={true}
       focusable={true}
@@ -71374,6 +72983,11 @@ exports[`snapshotAllPages Switch 2`] = `
   >
     <RCTSwitch
       accessibilityRole="switch"
+      accessibilityState={
+        {
+          "disabled": true,
+        }
+      }
       accessible={true}
       disabled={true}
       focusable={true}
@@ -72166,6 +73780,24 @@ exports[`snapshotAllPages Text 3`] = `
   </Text>
   <Text
     adjustsFontSizeToFit={true}
+    minimumFontScale={0.5}
+    numberOfLines={1}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 40,
+          "marginVertical": 6,
+        },
+      ]
+    }
+  >
+    Can limit how small the text becomes with minimumFontScale
+  </Text>
+  <Text
+    adjustsFontSizeToFit={true}
     numberOfLines={1}
     style={
       [
@@ -72745,6 +74377,257 @@ exports[`snapshotAllPages Text 6`] = `
 `;
 
 exports[`snapshotAllPages Text 7`] = `
+[
+  <View
+    style={
+      {
+        "marginBottom": 8,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "red",
+          },
+        ]
+      }
+    >
+      lineBreak="
+      auto
+      "
+    </Text>
+    <Text
+      lineBreak="auto"
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 16,
+            "width": 150,
+          },
+        ]
+      }
+    >
+      キャッシュをチェックしてショートカットからコンピューターのメモリーをクリーンアップします。
+    </Text>
+  </View>,
+  <View
+    style={
+      {
+        "marginBottom": 8,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "red",
+          },
+        ]
+      }
+    >
+      lineBreak="
+      loose
+      "
+    </Text>
+    <Text
+      lineBreak="loose"
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 16,
+            "width": 150,
+          },
+        ]
+      }
+    >
+      キャッシュをチェックしてショートカットからコンピューターのメモリーをクリーンアップします。
+    </Text>
+  </View>,
+  <View
+    style={
+      {
+        "marginBottom": 8,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "red",
+          },
+        ]
+      }
+    >
+      lineBreak="
+      normal
+      "
+    </Text>
+    <Text
+      lineBreak="normal"
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 16,
+            "width": 150,
+          },
+        ]
+      }
+    >
+      キャッシュをチェックしてショートカットからコンピューターのメモリーをクリーンアップします。
+    </Text>
+  </View>,
+  <View
+    style={
+      {
+        "marginBottom": 8,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "red",
+          },
+        ]
+      }
+    >
+      lineBreak="
+      strict
+      "
+    </Text>
+    <Text
+      lineBreak="strict"
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 16,
+            "width": 150,
+          },
+        ]
+      }
+    >
+      キャッシュをチェックしてショートカットからコンピューターのメモリーをクリーンアップします。
+    </Text>
+  </View>,
+  <View
+    style={
+      {
+        "marginBottom": 8,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "red",
+          },
+        ]
+      }
+    >
+      wordBreak="
+      normal
+      "
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 16,
+            "width": 150,
+          },
+        ]
+      }
+      wordBreak="normal"
+    >
+      キャッシュをチェックしてショートカットからコンピューターのメモリーをクリーンアップします。
+    </Text>
+  </View>,
+  <View
+    style={
+      {
+        "marginBottom": 8,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "red",
+          },
+        ]
+      }
+    >
+      wordBreak="
+      auto-phrase
+      "
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 16,
+            "width": 150,
+          },
+        ]
+      }
+      wordBreak="auto-phrase"
+    >
+      キャッシュをチェックしてショートカットからコンピューターのメモリーをクリーンアップします。
+    </Text>
+  </View>,
+]
+`;
+
+exports[`snapshotAllPages Text 8`] = `
 <Text
   style={
     [
@@ -72762,7 +74645,7 @@ exports[`snapshotAllPages Text 7`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 8`] = `
+exports[`snapshotAllPages Text 9`] = `
 <View>
   <View
     style={
@@ -73093,7 +74976,7 @@ exports[`snapshotAllPages Text 8`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 9`] = `
+exports[`snapshotAllPages Text 10`] = `
 <View>
   <Text
     onPress={[Function]}
@@ -74718,7 +76601,7 @@ exports[`snapshotAllPages Text 9`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 10`] = `
+exports[`snapshotAllPages Text 11`] = `
 <View
   testID="text-font-family"
 >
@@ -74827,7 +76710,7 @@ exports[`snapshotAllPages Text 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 11`] = `
+exports[`snapshotAllPages Text 12`] = `
 <View
   style={
     {
@@ -75054,7 +76937,7 @@ exports[`snapshotAllPages Text 11`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 12`] = `
+exports[`snapshotAllPages Text 13`] = `
 <View
   style={
     {
@@ -75195,7 +77078,7 @@ exports[`snapshotAllPages Text 12`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 13`] = `
+exports[`snapshotAllPages Text 14`] = `
 <View
   testID="text-font-size"
 >
@@ -75231,7 +77114,7 @@ exports[`snapshotAllPages Text 13`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 14`] = `
+exports[`snapshotAllPages Text 15`] = `
 <View
   testID="text-test-color"
 >
@@ -75257,7 +77140,7 @@ exports[`snapshotAllPages Text 14`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 15`] = `
+exports[`snapshotAllPages Text 16`] = `
 <View
   testID="text-font-weight"
 >
@@ -75544,7 +77427,7 @@ exports[`snapshotAllPages Text 15`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 16`] = `
+exports[`snapshotAllPages Text 17`] = `
 <View
   testID="text-font-style"
 >
@@ -75593,7 +77476,7 @@ exports[`snapshotAllPages Text 16`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 17`] = `
+exports[`snapshotAllPages Text 18`] = `
 <Text
   style={
     [
@@ -75611,7 +77494,7 @@ exports[`snapshotAllPages Text 17`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 18`] = `
+exports[`snapshotAllPages Text 19`] = `
 <View
   testID="text-text-decoration"
 >
@@ -75884,7 +77767,7 @@ exports[`snapshotAllPages Text 18`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 19`] = `
+exports[`snapshotAllPages Text 20`] = `
 <View
   testID="text-test-nested"
 >
@@ -76225,7 +78108,7 @@ exports[`snapshotAllPages Text 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 20`] = `
+exports[`snapshotAllPages Text 21`] = `
 <View
   testID="text-align"
 >
@@ -76314,7 +78197,7 @@ exports[`snapshotAllPages Text 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 21`] = `
+exports[`snapshotAllPages Text 22`] = `
 <View
   testID="text-unicode"
 >
@@ -76397,7 +78280,7 @@ exports[`snapshotAllPages Text 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 22`] = `
+exports[`snapshotAllPages Text 23`] = `
 <Text
   style={
     [
@@ -76417,7 +78300,7 @@ exports[`snapshotAllPages Text 22`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 23`] = `
+exports[`snapshotAllPages Text 24`] = `
 [
   <Text
     style={
@@ -76571,7 +78454,7 @@ exports[`snapshotAllPages Text 23`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 24`] = `
+exports[`snapshotAllPages Text 25`] = `
 <View
   testID="text-letter-spacing"
 >
@@ -76708,7 +78591,7 @@ exports[`snapshotAllPages Text 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 25`] = `
+exports[`snapshotAllPages Text 26`] = `
 <View
   testID="text-with-toggle-attributes"
 >
@@ -76808,7 +78691,7 @@ exports[`snapshotAllPages Text 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 26`] = `
+exports[`snapshotAllPages Text 27`] = `
 <View
   testID="text-bg-color-attr"
 >
@@ -76912,7 +78795,7 @@ exports[`snapshotAllPages Text 26`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 27`] = `
+exports[`snapshotAllPages Text 28`] = `
 [
   <View
     style={
@@ -76983,7 +78866,7 @@ exports[`snapshotAllPages Text 27`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 28`] = `
+exports[`snapshotAllPages Text 29`] = `
 <View
   testID="number-of-lines"
 >
@@ -77088,7 +78971,7 @@ exports[`snapshotAllPages Text 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 29`] = `
+exports[`snapshotAllPages Text 30`] = `
 [
   <Text
     style={
@@ -77156,7 +79039,7 @@ exports[`snapshotAllPages Text 29`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 30`] = `
+exports[`snapshotAllPages Text 31`] = `
 <View
   testID="max-font-size-multiplier"
 >
@@ -77208,10 +79091,24 @@ exports[`snapshotAllPages Text 30`] = `
       Ignore inherited max (no max)
     </Text>
   </Text>
+  <Text
+    allowFontScaling={true}
+    maxFontSizeMultiplier={1}
+    style={
+      {
+        "backgroundColor": "lightgray",
+        "letterSpacing": 1,
+        "lineHeight": 20,
+        "marginTop": 10,
+      }
+    }
+  >
+    lineHeight and letterSpacing are capped too (max 1x): these lines keep the same spacing at any system font size
+  </Text>
 </View>
 `;
 
-exports[`snapshotAllPages Text 31`] = `
+exports[`snapshotAllPages Text 32`] = `
 <Text
   selectable={true}
   style={
@@ -77228,7 +79125,7 @@ exports[`snapshotAllPages Text 31`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 32`] = `
+exports[`snapshotAllPages Text 33`] = `
 <Text
   selectable={true}
   selectionColor="orange"
@@ -77246,7 +79143,7 @@ exports[`snapshotAllPages Text 32`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 33`] = `
+exports[`snapshotAllPages Text 34`] = `
 <View
   testID="text-text-shadow"
 >
@@ -77274,7 +79171,7 @@ exports[`snapshotAllPages Text 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 34`] = `
+exports[`snapshotAllPages Text 35`] = `
 <View
   testID="text-ellipsize-mode"
 >
@@ -77344,7 +79241,7 @@ exports[`snapshotAllPages Text 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 35`] = `
+exports[`snapshotAllPages Text 36`] = `
 <View
   testID="text-font-variants"
 >
@@ -77487,7 +79384,7 @@ exports[`snapshotAllPages Text 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 36`] = `
+exports[`snapshotAllPages Text 37`] = `
 [
   <View
     style={
@@ -77599,7 +79496,7 @@ exports[`snapshotAllPages Text 36`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 37`] = `
+exports[`snapshotAllPages Text 38`] = `
 <View
   testID="text-transform"
 >
@@ -77859,7 +79756,7 @@ exports[`snapshotAllPages Text 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 38`] = `
+exports[`snapshotAllPages Text 39`] = `
 [
   <Text
     dataDetectorType="phoneNumber"
@@ -77929,7 +79826,7 @@ exports[`snapshotAllPages Text 38`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 39`] = `
+exports[`snapshotAllPages Text 40`] = `
 <View>
   <Text
     style={
@@ -78351,7 +80248,7 @@ exports[`snapshotAllPages Text 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 40`] = `
+exports[`snapshotAllPages Text 41`] = `
 <View>
   <Text
     style={
@@ -78370,7 +80267,7 @@ exports[`snapshotAllPages Text 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 41`] = `
+exports[`snapshotAllPages Text 42`] = `
 <View>
   <Text
     style={
@@ -78439,7 +80336,7 @@ exports[`snapshotAllPages Text 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 42`] = `
+exports[`snapshotAllPages Text 43`] = `
 <View>
   <Text
     style={
@@ -78464,7 +80361,7 @@ exports[`snapshotAllPages Text 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 43`] = `
+exports[`snapshotAllPages Text 44`] = `
 <View>
   <Text
     style={
@@ -78485,7 +80382,7 @@ exports[`snapshotAllPages Text 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 44`] = `
+exports[`snapshotAllPages Text 45`] = `
 <View>
   <Text
     disabled={true}
@@ -78504,7 +80401,7 @@ exports[`snapshotAllPages Text 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 45`] = `
+exports[`snapshotAllPages Text 46`] = `
 <Text
   style={
     [
@@ -78521,7 +80418,7 @@ exports[`snapshotAllPages Text 45`] = `
 />
 `;
 
-exports[`snapshotAllPages Text 46`] = `
+exports[`snapshotAllPages Text 47`] = `
 <View
   style={
     {
@@ -79099,7 +80996,7 @@ exports[`snapshotAllPages Text 46`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 47`] = `
+exports[`snapshotAllPages Text 48`] = `
 <View
   style={
     {
@@ -79474,7 +81371,7 @@ exports[`snapshotAllPages Text 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 48`] = `
+exports[`snapshotAllPages Text 49`] = `
 <View
   style={
     {
@@ -79661,7 +81558,7 @@ exports[`snapshotAllPages Text 48`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 49`] = `
+exports[`snapshotAllPages Text 50`] = `
 <View
   testID="text-with-link-role"
 >
@@ -79744,8 +81641,10 @@ exports[`snapshotAllPages Text 49`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 50`] = `
-<View>
+exports[`snapshotAllPages Text 51`] = `
+<View
+  testID="last-line-clipping-example"
+>
   <View
     style={
       {
@@ -79882,7 +81781,7 @@ exports[`snapshotAllPages Text 50`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 51`] = `
+exports[`snapshotAllPages Text 52`] = `
 <View
   accessible={true}
   testID="text-accessibility"
@@ -79900,7 +81799,7 @@ exports[`snapshotAllPages Text 51`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 52`] = `
+exports[`snapshotAllPages Text 53`] = `
 <View
   accessibilityLabel="Border Example"
   accessible={true}
@@ -79977,7 +81876,7 @@ exports[`snapshotAllPages Text 52`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 53`] = `
+exports[`snapshotAllPages Text 54`] = `
 <View
   accessibilityLabel="Advanced Border Example"
   accessible={true}
@@ -80033,7 +81932,7 @@ exports[`snapshotAllPages Text 53`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 54`] = `
+exports[`snapshotAllPages Text 55`] = `
 <View
   testID="text-opacity"
 >
@@ -80140,7 +82039,7 @@ exports[`snapshotAllPages Text 54`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 55`] = `
+exports[`snapshotAllPages Text 56`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -80158,7 +82057,7 @@ exports[`snapshotAllPages Text 55`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 56`] = `
+exports[`snapshotAllPages Text 57`] = `
 <View>
   <Text
     style={

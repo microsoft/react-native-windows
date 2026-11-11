@@ -39,17 +39,17 @@ exports[`Button Tests Buttons can be disabled 1`] = `
   "Visual Tree": {
     "Comment": "disabled_button",
     "Offset": "0, 0, 0",
-    "Size": "916, 37",
+    "Size": "518, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 37",
+        "Size": "518, 37",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 37",
+            "Size": "518, 37",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -76,7 +76,7 @@ exports[`Button Tests Buttons can be disabled 1`] = `
                   "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "4, 0, 0",
-                "Size": "908, 1",
+                "Size": "510, 1",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -112,7 +112,7 @@ exports[`Button Tests Buttons can be disabled 1`] = `
                   "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "4, -2, 0",
-                "Size": "908, 2",
+                "Size": "510, 2",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -139,12 +139,12 @@ exports[`Button Tests Buttons can be disabled 1`] = `
       },
       {
         "Offset": "9, 9, 0",
-        "Size": "898, 20",
+        "Size": "500, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "898, 20",
+            "Size": "500, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -199,17 +199,17 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
   "Visual Tree": {
     "Comment": "accessibilityLabel_button",
     "Offset": "0, 0, 0",
-    "Size": "916, 37",
+    "Size": "518, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 37",
+        "Size": "518, 37",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 37",
+            "Size": "518, 37",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -236,7 +236,7 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
                   "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "4, 0, 0",
-                "Size": "908, 1",
+                "Size": "510, 1",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -272,7 +272,7 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
                   "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "4, -2, 0",
-                "Size": "908, 2",
+                "Size": "510, 2",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -299,12 +299,12 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
       },
       {
         "Offset": "9, 9, 0",
-        "Size": "898, 20",
+        "Size": "500, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "898, 20",
+            "Size": "500, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -356,7 +356,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
   "Visual Tree": {
     "Comment": "accessibility_props",
     "Offset": "0, 0, 0",
-    "Size": "916, 37",
+    "Size": "518, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -383,7 +383,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
           "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, 0, 0",
-        "Size": "908, 1",
+        "Size": "510, 1",
         "Visual Type": "SpriteVisual",
       },
       {
@@ -419,7 +419,7 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
           "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, -2, 0",
-        "Size": "908, 2",
+        "Size": "510, 2",
         "Visual Type": "SpriteVisual",
       },
       {
@@ -442,12 +442,12 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
       },
       {
         "Offset": "9, 9, 0",
-        "Size": "898, 20",
+        "Size": "500, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "898, 20",
+            "Size": "500, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -503,17 +503,17 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
   "Visual Tree": {
     "Comment": "accessibilityState_button",
     "Offset": "0, 0, 0",
-    "Size": "916, 37",
+    "Size": "518, 38",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 37",
+        "Size": "518, 38",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 37",
+            "Size": "518, 38",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -540,7 +540,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
                   "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "4, 0, 0",
-                "Size": "908, 1",
+                "Size": "510, 1",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -558,7 +558,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
                   "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "-1, 4, 0",
-                "Size": "1, 28",
+                "Size": "1, 29",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -576,7 +576,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
                   "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "4, -2, 0",
-                "Size": "908, 2",
+                "Size": "510, 2",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -594,7 +594,7 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
                   "Color": "rgba(0, 0, 0, 15)",
                 },
                 "Offset": "0, 4, 0",
-                "Size": "1, 28",
+                "Size": "1, 29",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -603,12 +603,12 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
       },
       {
         "Offset": "9, 9, 0",
-        "Size": "898, 20",
+        "Size": "500, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "898, 20",
+            "Size": "500, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -663,17 +663,17 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
   "Visual Tree": {
     "Comment": "cancel_button",
     "Offset": "0, 0, 0",
-    "Size": "916, 37",
+    "Size": "518, 38",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 37",
+        "Size": "518, 38",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 37",
+            "Size": "518, 38",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -700,7 +700,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
                   "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "4, 0, 0",
-                "Size": "908, 1",
+                "Size": "510, 1",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -718,7 +718,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
                   "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "-1, 4, 0",
-                "Size": "1, 28",
+                "Size": "1, 29",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -736,7 +736,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
                   "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "4, -2, 0",
-                "Size": "908, 2",
+                "Size": "510, 2",
                 "Visual Type": "SpriteVisual",
               },
               {
@@ -754,7 +754,7 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
                   "Color": "rgba(0, 0, 0, 41)",
                 },
                 "Offset": "0, 4, 0",
-                "Size": "1, 28",
+                "Size": "1, 29",
                 "Visual Type": "SpriteVisual",
               },
             ],
@@ -763,12 +763,12 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
       },
       {
         "Offset": "9, 9, 0",
-        "Size": "898, 20",
+        "Size": "500, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "898, 20",
+            "Size": "500, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -804,7 +804,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
   "Visual Tree": {
     "Comment": "accessible_false_button",
     "Offset": "0, 0, 0",
-    "Size": "916, 37",
+    "Size": "518, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -831,7 +831,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
           "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, 0, 0",
-        "Size": "908, 1",
+        "Size": "510, 1",
         "Visual Type": "SpriteVisual",
       },
       {
@@ -867,7 +867,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
           "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, -2, 0",
-        "Size": "908, 2",
+        "Size": "510, 2",
         "Visual Type": "SpriteVisual",
       },
       {
@@ -890,12 +890,12 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
       },
       {
         "Offset": "9, 9, 0",
-        "Size": "898, 20",
+        "Size": "500, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "898, 20",
+            "Size": "500, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -946,7 +946,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
   "Visual Tree": {
     "Comment": "focusable_false_button",
     "Offset": "0, 0, 0",
-    "Size": "916, 37",
+    "Size": "518, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -973,7 +973,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
           "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, 0, 0",
-        "Size": "908, 1",
+        "Size": "510, 1",
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1009,7 +1009,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
           "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, -2, 0",
-        "Size": "908, 2",
+        "Size": "510, 2",
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1032,12 +1032,12 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
       },
       {
         "Offset": "9, 9, 0",
-        "Size": "898, 20",
+        "Size": "500, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "898, 20",
+            "Size": "500, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1073,7 +1073,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
   "Visual Tree": {
     "Comment": "accessible_focusable_false_button",
     "Offset": "0, 0, 0",
-    "Size": "916, 37",
+    "Size": "518, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1100,7 +1100,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
           "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, 0, 0",
-        "Size": "908, 1",
+        "Size": "510, 1",
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1136,7 +1136,7 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
           "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, -2, 0",
-        "Size": "908, 2",
+        "Size": "510, 2",
         "Visual Type": "SpriteVisual",
       },
       {
@@ -1159,12 +1159,12 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
       },
       {
         "Offset": "9, 9, 0",
-        "Size": "898, 20",
+        "Size": "500, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "898, 20",
+            "Size": "500, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1267,7 +1267,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
   "Visual Tree": {
     "Comment": "two_button_container",
     "Offset": "0, 0, 0",
-    "Size": "916, 37",
+    "Size": "518, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1400,7 +1400,7 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
         ],
       },
       {
-        "Offset": "854, 0, 0",
+        "Offset": "456, 0, 0",
         "Size": "62, 37",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1652,7 +1652,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
   "Visual Tree": {
     "Comment": "three_button_container",
     "Offset": "0, 0, 0",
-    "Size": "916, 37",
+    "Size": "518, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1785,7 +1785,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         ],
       },
       {
-        "Offset": "404, 0, 0",
+        "Offset": "205, 0, 0",
         "Size": "105, 37",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1914,7 +1914,7 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
         ],
       },
       {
-        "Offset": "854, 0, 0",
+        "Offset": "456, 0, 0",
         "Size": "62, 37",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -2081,7 +2081,7 @@ exports[`Button Tests Buttons have default styling 1`] = `
   "Visual Tree": {
     "Comment": "button_default_styling",
     "Offset": "0, 0, 0",
-    "Size": "916, 37",
+    "Size": "518, 37",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2108,7 +2108,7 @@ exports[`Button Tests Buttons have default styling 1`] = `
           "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, 0, 0",
-        "Size": "908, 1",
+        "Size": "510, 1",
         "Visual Type": "SpriteVisual",
       },
       {
@@ -2144,7 +2144,7 @@ exports[`Button Tests Buttons have default styling 1`] = `
           "Color": "rgba(0, 0, 0, 41)",
         },
         "Offset": "4, -2, 0",
-        "Size": "908, 2",
+        "Size": "510, 2",
         "Visual Type": "SpriteVisual",
       },
       {
@@ -2167,12 +2167,12 @@ exports[`Button Tests Buttons have default styling 1`] = `
       },
       {
         "Offset": "9, 9, 0",
-        "Size": "898, 20",
+        "Size": "500, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "898, 20",
+            "Size": "500, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {

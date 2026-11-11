@@ -98,9 +98,12 @@ Copy-Item -Force -Path $NodeApiJsiRoot\src\NodeApiJsiRuntime.h -Destination $MSR
 New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\CallInvoker.h -Destination $MSRNCxxTargetRoot\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\SchedulerPriority.h -Destination $MSRNCxxTargetRoot\ReactCommon\
+New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\callinvoker\React -Force
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\React\CallInvoker.h -Destination $MSRNCxxTargetRoot\ReactCommon\callinvoker\React\
 New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\bridging -Force
 New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\timing -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Array.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\ArrayBuffer.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\AString.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Base.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Bool.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\
@@ -126,6 +129,9 @@ Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\Reac
 New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\debug -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\debug\flags.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\debug\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\debug\react_native_assert.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\debug\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\debug\react_native_expect.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\debug\
+New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\debug\React -Force
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\debug\React\Debug.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\debug\React\
 # Vendored public headers include inert cxxstableapi guards. NuGet consumers do not have React Native's ReactCommon on the include path.
 New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\cxxstableapi -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\cxxstableapi\*.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\cxxstableapi\

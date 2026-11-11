@@ -211,7 +211,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
   "Visual Tree": {
     "Comment": "image-border-radius",
     "Offset": "0, 0, 0",
-    "Size": "916, 144",
+    "Size": "518, 216",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -545,7 +545,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "488, 4, 0",
+        "Offset": "4, 76, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -636,7 +636,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "586, 4, 0",
+        "Offset": "102, 76, 0",
         "Size": "64, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -727,7 +727,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "658, 4, 0",
+        "Offset": "174, 76, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -818,7 +818,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "756, 4, 0",
+        "Offset": "272, 76, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -909,7 +909,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "4, 76, 0",
+        "Offset": "370, 76, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -968,7 +968,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "102, 76, 0",
+        "Offset": "4, 148, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1027,7 +1027,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "200, 76, 0",
+        "Offset": "102, 148, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1118,7 +1118,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "298, 76, 0",
+        "Offset": "200, 148, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1209,7 +1209,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
         ],
       },
       {
-        "Offset": "396, 76, 0",
+        "Offset": "298, 148, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -1373,12 +1373,12 @@ exports[`Image Tests An Image can be nested inside of a component 1`] = `
       },
       {
         "Offset": "12, 20, 0",
-        "Size": "52, 20",
+        "Size": "52, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "52, 20",
+            "Size": "52, 19",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1567,7 +1567,7 @@ exports[`Image Tests An Image can have a background color 1`] = `
   "Visual Tree": {
     "Comment": "background-color-example",
     "Offset": "0, 0, 0",
-    "Size": "916, 72",
+    "Size": "518, 72",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1844,7 +1844,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
   "Visual Tree": {
     "Comment": "image-blur-radius",
     "Offset": "0, 0, 0",
-    "Size": "916, 72",
+    "Size": "518, 72",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2045,7 +2045,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2058,7 +2058,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2071,7 +2071,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2084,63 +2084,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2157,7 +2101,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2170,7 +2114,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2183,7 +2127,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2196,7 +2140,63 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2254,7 +2254,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
   "Visual Tree": {
     "Comment": "image-tint-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 233",
+    "Size": "518, 233",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2335,12 +2335,12 @@ exports[`Image Tests An Image can have a tint color 1`] = `
       },
       {
         "Offset": "0, 29, 0",
-        "Size": "916, 19",
+        "Size": "518, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "518, 19",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2430,12 +2430,12 @@ exports[`Image Tests An Image can have a tint color 1`] = `
       },
       {
         "Offset": "0, 82, 0",
-        "Size": "916, 20",
+        "Size": "518, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "518, 20",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2525,12 +2525,12 @@ exports[`Image Tests An Image can have a tint color 1`] = `
       },
       {
         "Offset": "0, 136, 0",
-        "Size": "916, 20",
+        "Size": "518, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "518, 19",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2776,7 +2776,7 @@ exports[`Image Tests An Image can have border colors 1`] = `
   "Visual Tree": {
     "Comment": "image-border-colors",
     "Offset": "0, 0, 0",
-    "Size": "916, 72",
+    "Size": "518, 144",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3075,7 +3075,7 @@ exports[`Image Tests An Image can have border colors 1`] = `
         ],
       },
       {
-        "Offset": "494, 4, 0",
+        "Offset": "4, 76, 0",
         "Size": "90, 64",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -3227,7 +3227,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
   "Visual Tree": {
     "Comment": "image-opacity",
     "Offset": "0, 0, 0",
-    "Size": "916, 72",
+    "Size": "518, 72",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3505,7 +3505,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -3518,7 +3518,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_thumb_selected@2x.png",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_thumb_selected@2x.png",
             },
           ],
         },
@@ -3531,7 +3531,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_comment_normal@2x.png",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_comment_normal@2x.png",
             },
           ],
         },
@@ -3544,7 +3544,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "<localOrBundlerUri>?unstable_path=_@react-native-windows/tester/js/assets/uie_comment_highlighted@2x.png",
+              "Uri": "<localOrBundlerUri>/[metro-watchFolders]/22/js/assets/uie_comment_highlighted@2x.png",
             },
           ],
         },
@@ -3554,7 +3554,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
   "Visual Tree": {
     "Comment": "image-static",
     "Offset": "0, 0, 0",
-    "Size": "916, 23",
+    "Size": "518, 23",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4011,17 +4011,17 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
   "Visual Tree": {
     "Comment": "image-object-fit",
     "Offset": "0, 0, 0",
-    "Size": "916, 466",
+    "Size": "518, 466",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -4094,12 +4094,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 0, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -5039,7 +5039,7 @@ exports[`Image Tests Images can be defined as a set using accessibilityPosInSet 
   "Visual Tree": {
     "Comment": "image-set",
     "Offset": "0, 0, 0",
-    "Size": "916, 144",
+    "Size": "518, 144",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5369,7 +5369,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
   "Visual Tree": {
     "Comment": "image-resize-mode",
     "Offset": "0, 0, 0",
-    "Size": "916, 466",
+    "Size": "518, 465",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5530,12 +5530,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "0, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -5608,12 +5608,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "100, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -5686,12 +5686,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "200, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -5764,12 +5764,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "0, 155, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {

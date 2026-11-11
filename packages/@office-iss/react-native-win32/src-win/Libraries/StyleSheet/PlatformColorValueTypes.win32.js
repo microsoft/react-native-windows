@@ -25,15 +25,15 @@ export type GradientColorValueWin32 = {|
 
 /** The actual type of the opaque NativeColorValue on Windows platform */
 type LocalNativeColorValue =
-  | $ReadOnly<GradientColorValueWin32>
-  | $ReadOnly<{|
+  | Readonly<GradientColorValueWin32>
+  | Readonly<{|
       resource_paths?: Array<string>,
     |}>;
 
 export const PlatformColor = (...names: Array<string>): ColorValue => {
   // $FlowExpectedError[incompatible-return] LocalNativeColorValue is the Windows LocalNativeColorValue type
   // $FlowExpectedError[incompatible-type]
-  return ({resource_paths: names}: LocalNativeColorValue);
+  return {resource_paths: names} as LocalNativeColorValue;
 };
 
 export const ColorGradientWin32Private = (
@@ -52,10 +52,10 @@ export const normalizeColorObject = (
   if (
     // $FlowExpectedError[incompatible-cast]
     // $FlowExpectedError[incompatible-type]
-    'resource_paths' in (color: LocalNativeColorValue) ||
+    'resource_paths' in (color as LocalNativeColorValue) ||
     // $FlowExpectedError[incompatible-cast]
     // $FlowExpectedError[incompatible-type]
-    'gradientDirection' in (color: LocalNativeColorValue)
+    'gradientDirection' in (color as LocalNativeColorValue)
   ) {
     return color;
   }

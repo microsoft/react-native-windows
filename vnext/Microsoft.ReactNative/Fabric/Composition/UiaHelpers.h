@@ -59,7 +59,7 @@ void UpdateUiaPropertiesForAnnotation(
     const std::optional<facebook::react::AccessibilityAnnotation> &oldAnnotation,
     const std::optional<facebook::react::AccessibilityAnnotation> &newAnnotation) noexcept;
 
-long GetLiveSetting(const std::string &liveRegion) noexcept;
+long GetLiveSetting(facebook::react::AccessibilityLiveRegion liveRegion) noexcept;
 
 long GetAnnotationTypeId(const std::string &annotationType) noexcept;
 

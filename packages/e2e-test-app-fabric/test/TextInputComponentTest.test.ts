@@ -23,26 +23,43 @@ afterEach(async () => {
 
 const searchBox = async (input: string) => {
   const searchBox = await app.findElementByTestID('example_search');
-  await app.waitUntil(
-    async () => {
-      // Clear before each attempt: WinAppDriver's setValue can fall back to
-      // synthesized keystrokes for custom RN TextInputs, which append rather
-      // than replace. Without the clear, a retry produces "onPressInonPressIn"
-      // and the comparison never converges.
-      await searchBox.clearValue();
+  const attempts: {text: string; focused: string | null}[] = [];
+  let shouldType = true;
+  await app
+    .waitUntil(
+      async () => {
+        if (shouldType) {
+          // Start each retry empty rather than appending to incorrect input.
+          await searchBox.clearValue();
 
-      // Do an extra wait here, since the autofocus textinput will move focus to itself and steal focus from the search box, causing the setValue to fail.
-      await new Promise((resolve) => setTimeout(resolve, 500));
+          // Clearing the filter remounts the autoFocus example.
+          await new Promise(resolve => setTimeout(resolve, 500));
 
-      await searchBox.setValue(input);
-      return (await searchBox.getText()) === input;
-    },
-    {
-      interval: 500,
-      timeout: 10000,
-      timeoutMsg: `Unable to enter correct search text into test searchbox.`,
-    },
-  );
+          await searchBox.click();
+          await searchBox.addValue(input);
+        }
+        const text = await searchBox.getText();
+        // Native input may still be arriving. Poll a matching prefix without
+        // clearing it and restarting the same input on every waitUntil tick.
+        shouldType = !input.startsWith(text);
+        attempts.push({
+          text,
+          focused: await searchBox.getAttribute('HasKeyboardFocus'),
+        });
+        return text === input;
+      },
+      {
+        interval: 500,
+        timeout: 10000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    )
+    .catch(error => {
+      process.stderr.write(
+        `TextInput search failed: ${JSON.stringify({input, attempts})}\n`,
+      );
+      throw error;
+    });
 };
 
 const setTextInputValue = async (

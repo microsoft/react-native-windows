@@ -27,7 +27,7 @@ export type AppThemeData = {|
 |};
 
 export interface Spec extends TurboModule {
-  +getConstants: () => AppThemeData;
+  readonly getConstants: () => AppThemeData;
 }
 
-export default (TurboModuleRegistry.get<Spec>('AppTheme'): ?Spec);
+export default TurboModuleRegistry.get<Spec>('AppTheme') as ?Spec;

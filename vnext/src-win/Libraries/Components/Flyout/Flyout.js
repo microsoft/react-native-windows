@@ -33,7 +33,7 @@ type ShowMode =
   | 'transient'
   | 'transient-with-dismiss-on-pointer-move-away';
 
-type Props = $ReadOnly<{
+type Props = Readonly<{
   ...ViewProps,
 
   // Props
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
 });
 
-type State = $ReadOnly<{
+type State = Readonly<{
   target?: number | null,
   targetRef?: React.ReactNode,
 }>;

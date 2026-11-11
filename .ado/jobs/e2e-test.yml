@@ -377,7 +377,7 @@ jobs:
             - task: CopyFiles@2
               displayName: Copy RNTesterApp artifacts
               inputs:
-                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabric/windows/${{ matrix.BuildPlatform }}/Release
+                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app-fabric/windows/RNTesterApp-Fabric.Package/bin/${{ matrix.BuildPlatform }}/Release
                 targetFolder: $(Build.StagingDirectory)/RNTesterApp-Fabric
                 contents: "**"
               condition: failed()

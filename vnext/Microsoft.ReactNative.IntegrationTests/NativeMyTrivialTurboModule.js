@@ -13,9 +13,9 @@ import * as TurboModuleRegistry from 'react-native/Libraries/TurboModule/TurboMo
 
 export interface Spec extends TurboModule {
   // Exported methods.
-  +startFromJS: () => void;
+  readonly startFromJS: () => void;
 }
 
-export default (TurboModuleRegistry.getEnforcing<Spec>(
+export default TurboModuleRegistry.getEnforcing<Spec>(
   'MyTrivialTurboModule',
-): Spec);
+) as Spec;

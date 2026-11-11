@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
 });
 
-type Props = $ReadOnly<{|
+type Props = Readonly<{|
   ...ViewProps,
 
   isOpen?: boolean,
@@ -46,7 +46,7 @@ type Props = $ReadOnly<{|
   testID?: string,
 |}>;
 
-type State = $ReadOnly<{|
+type State = Readonly<{|
   target?: number | null,
   targetRef?: React.ReactNode,
 |}>;

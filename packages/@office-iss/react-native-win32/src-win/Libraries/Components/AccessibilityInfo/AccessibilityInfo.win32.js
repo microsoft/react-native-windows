@@ -32,6 +32,7 @@ type AccessibilityEventDefinitionsIOS = {
   boldTextChanged: [boolean],
   darkerSystemColorsChanged: [boolean],
   reduceTransparencyChanged: [boolean],
+  showBordersChanged: [boolean],
 };
 
 type AccessibilityEventDefinitions = {
@@ -75,6 +76,7 @@ const EventNames: Map<keyof AccessibilityEventDefinitions, string> =
           ['reduceTransparencyChanged', 'reduceTransparencyChanged'],
           ['screenReaderChanged', 'screenReaderChanged'],
           ['darkerSystemColorsChanged', 'darkerSystemColorsChanged'],
+          ['showBordersChanged', 'showBordersChanged'],
         ]);
 
 /**
@@ -306,6 +308,36 @@ const AccessibilityInfo = {
   },
 
   /**
+   * Query whether Show Borders (called Button Shapes before iOS 26.1) is
+   * currently enabled.
+   *
+   * Returns a promise which resolves to a boolean.
+   * The result is `true` when show borders is enabled and `false` otherwise.
+   *
+   * @platform ios
+   */
+  isShowBordersEnabled(): Promise<boolean> {
+    if (Platform.OS === 'android' || Platform.OS === 'win32') {
+      return Promise.resolve(false);
+    } else {
+      return new Promise((resolve, reject) => {
+        if (NativeAccessibilityManagerIOS?.getCurrentShowBordersState != null) {
+          NativeAccessibilityManagerIOS.getCurrentShowBordersState(
+            resolve,
+            reject,
+          );
+        } else {
+          reject(
+            new Error(
+              'NativeAccessibilityManagerIOS.getCurrentShowBordersState is not available',
+            ),
+          );
+        }
+      });
+    }
+  },
+
+  /**
    * Query whether reduced transparency is currently enabled.
    *
    * Returns a promise which resolves to a boolean.
@@ -430,6 +462,10 @@ const AccessibilityInfo = {
    * - `darkerSystemColorsChanged`: iOS-only event. Fires when the state of the dark system colors
    *   toggle changes. The argument to the event handler is a boolean. The boolean is `true` when
    *   dark system colors is enabled and `false` otherwise.
+   *
+   * - `showBordersChanged`: iOS-only event. Fires when the state of the show borders toggle changes
+   *   (called Button Shapes before iOS 26.1).
+   *   The argument to the event handler is a boolean.
    *
    * These events are only supported on Android:
    *

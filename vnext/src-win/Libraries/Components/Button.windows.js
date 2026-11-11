@@ -326,8 +326,7 @@ const Button: component(
       <Touchable
         accessible={accessible}
         accessibilityLabel={
-          // $FlowFixMe[sketchy-null-string]
-          ariaLabel || accessibilityLabel
+          ariaLabel != null && ariaLabel !== '' ? ariaLabel : accessibilityLabel
         }
         accessibilityHint={accessibilityHint}
         accessibilityLanguage={accessibilityLanguage}
@@ -444,8 +443,7 @@ const Button: component(
         accessibilityActions={accessibilityActions}
         onAccessibilityAction={onAccessibilityAction}
         accessibilityLabel={
-          // $FlowFixMe[sketchy-null-string]
-          ariaLabel || accessibilityLabel
+          ariaLabel != null && ariaLabel !== '' ? ariaLabel : accessibilityLabel
         }
         accessibilityHint={accessibilityHint}
         accessibilityLanguage={accessibilityLanguage}

@@ -63,6 +63,7 @@ const TextImpl: component(
   'aria-expanded': ariaExpanded,
   'aria-hidden': ariaHidden,
   'aria-label': ariaLabel,
+  'aria-live': ariaLive,
   // #[Windows properties
   'aria-multiselectable': ariaMultiselectable,
   'aria-required': ariaRequired,
@@ -174,6 +175,11 @@ const TextImpl: component(
     if (ariaHidden === true) {
       processedProps.importantForAccessibility = 'no-hide-descendants';
     }
+  }
+
+  if (ariaLive !== undefined) {
+    processedProps.accessibilityLiveRegion =
+      ariaLive === 'off' ? 'none' : ariaLive;
   }
 
   const _accessible = Platform.select({

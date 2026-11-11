@@ -11,8 +11,8 @@
 'use strict';
 
 import type {ColorValue} from './StyleSheet';
-import type {GradientColorValueWin32} from './PlatformColorValueTypes';
-import {ColorGradientWin32Private} from './PlatformColorValueTypes';
+import type {GradientColorValueWin32} from './PlatformColorValueTypes.win32';
+import {ColorGradientWin32Private} from './PlatformColorValueTypes.win32';
 
 export const ColorGradientWin32 = (
   gradientColor: GradientColorValueWin32,

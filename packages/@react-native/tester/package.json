@@ -1,6 +1,6 @@
 {
   "name": "@react-native/tester",
-  "version": "0.89.0-nightly-20261002-cd2de187e",
+  "version": "0.89.0-nightly-20261102-47a9917ac",
   "private": true,
   "description": "React Native tester app.",
   "license": "MIT",
@@ -26,8 +26,8 @@
     "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
-    "@react-native/new-app-screen": "0.89.0-nightly-20261002-cd2de187e",
-    "@react-native/popup-menu-android": "0.89.0-nightly-20261002-cd2de187e",
+    "@react-native/new-app-screen": "0.89.0-nightly-20261102-47a9917ac",
+    "@react-native/popup-menu-android": "0.89.0-nightly-20261102-47a9917ac",
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"
@@ -52,18 +52,21 @@
       "components": {
         "RNTMyNativeView": {
           "className": "RNTMyNativeViewComponentView"
+        },
+        "RNTesterTabsIOS": {
+          "className": "RNTesterTabsIOSComponentView"
         }
       }
     }
   },
   "devDependencies": {
     "@react-native-community/cli": "21.0.0-alpha.1",
-    "@react-native/community-cli-plugin": "0.89.0-nightly-20261002-cd2de187e",
+    "@react-native/community-cli-plugin": "0.89.0-nightly-20261102-47a9917ac",
     "@react-native/core-cli-utils": "*",
     "commander": "^12.0.0",
     "listr2": "^6.4.1",
     "react": "19.3.0",
-    "react-native": "0.89.0-nightly-20261002-cd2de187e",
+    "react-native": "0.89.0-nightly-20261102-47a9917ac",
     "rxjs": "npm:@react-native-community/rxjs@6.5.4-custom"
   },
   "swiftpmConfig": {
@@ -86,6 +89,10 @@
       {
         "name": "MyNativeView",
         "path": "NativeComponentExample/ios"
+      },
+      {
+        "name": "RNTesterTabsIOS",
+        "path": "RNTesterTabsIOS/ios"
       },
       {
         "name": "NativeCxxModuleExample",

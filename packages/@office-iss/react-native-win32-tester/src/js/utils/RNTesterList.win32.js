@@ -105,6 +105,10 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   /*
   {
+    key: 'SafeAreaInsetsExample',
+    module: require('../examples/SafeAreaInsets/SafeAreaInsetsExample'),
+  },
+  {
     key: 'TouchableWin32Example',
     module: require('@office-iss/react-native-win32/Libraries/Components/Touchable/Tests/TouchableWin32Test'),
   },

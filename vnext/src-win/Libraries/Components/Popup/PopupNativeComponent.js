@@ -10,11 +10,11 @@ import {codegenNativeComponent} from 'react-native';
 import type {HostComponent} from '../../../src/private/types/HostComponent';
 import type {ViewProps} from '../View/ViewPropTypes';
 
-type DismissEvent = $ReadOnly<{|
+type DismissEvent = Readonly<{|
   isOpen?: boolean,
 |}>;
 
-type NativeProps = $ReadOnly<{|
+type NativeProps = Readonly<{|
   ...ViewProps,
 
   isOpen?: boolean,
@@ -44,6 +44,6 @@ type NativeProps = $ReadOnly<{|
 type NativeType = HostComponent<NativeProps>;
 
 // $FlowFixMe[nonpolymorphic-type-arg]
-export default (codegenNativeComponent<NativeProps>('RCTPopup', {
+export default codegenNativeComponent<NativeProps>('RCTPopup', {
   interfaceOnly: true,
-}): NativeType);
+}) as NativeType;

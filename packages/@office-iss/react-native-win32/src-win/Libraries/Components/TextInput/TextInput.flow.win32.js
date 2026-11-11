@@ -513,7 +513,7 @@ export type TextInputWindowsProps = Readonly<{|
    * Configures keys that can be used to submit editing for the TextInput.
    * @platform windows
    */
-  submitKeyEvents?: ?$ReadOnlyArray<SubmitKeyEvent>,
+  submitKeyEvents?: ?ReadonlyArray<SubmitKeyEvent>,
 |}>;
 
 // Windows]

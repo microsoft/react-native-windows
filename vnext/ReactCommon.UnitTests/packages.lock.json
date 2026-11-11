@@ -14,6 +14,12 @@
         "resolved": "1.8.1.8",
         "contentHash": "RHZUuFTnYzkHPRM5muZfw4SRL/EIHFz7nIkKl1mJKPISvzi1wWtK7k/oJIpw3pWVkdFyEfnBQP8vX1fFpe7Mpw=="
       },
+      "Microsoft.Windows.CppWinRT": {
+        "type": "Direct",
+        "requested": "[2.0.230706.1, )",
+        "resolved": "2.0.230706.1",
+        "contentHash": "l0D7oCw/5X+xIKHqZTi62TtV+1qeSz7KVluNFdrJ9hXsst4ghvqQ/Yhura7JqRdZWBXAuDS0G0KwALptdoxweQ=="
+      },
       "ReactNative.V8Jsi.Windows": {
         "type": "Direct",
         "requested": "[0.79.5, )",

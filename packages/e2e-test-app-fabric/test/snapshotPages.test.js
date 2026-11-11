@@ -20,6 +20,18 @@ type RNTesterList = {
 
 const testerList: RNTesterList = require('@react-native-windows/tester/js/utils/RNTesterList');
 
+test('Windows does not register unsupported safe-area inset examples', () => {
+  const keys = [...testerList.Components, ...testerList.APIs].map(
+    example => example.key,
+  );
+  expect(keys).not.toContain('SafeAreaInsetsExample');
+});
+
+test('upstream safe-area inset examples remain available', () => {
+  const safeAreaInsets = require('@react-native-windows/tester/js/examples/SafeAreaInsets/SafeAreaInsetsExample');
+  expect(safeAreaInsets.examples.length).toBeGreaterThan(0);
+});
+
 test('Component Control', () => {
   let tree;
   act(() => {
