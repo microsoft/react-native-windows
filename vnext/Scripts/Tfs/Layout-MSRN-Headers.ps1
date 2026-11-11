@@ -98,6 +98,8 @@ Copy-Item -Force -Path $NodeApiJsiRoot\src\NodeApiJsiRuntime.h -Destination $MSR
 New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\CallInvoker.h -Destination $MSRNCxxTargetRoot\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\SchedulerPriority.h -Destination $MSRNCxxTargetRoot\ReactCommon\
+New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\callinvoker\React -Force
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\React\CallInvoker.h -Destination $MSRNCxxTargetRoot\ReactCommon\callinvoker\React\
 New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\bridging -Force
 New-Item -ItemType Directory -Path $MSRNCxxTargetRoot\ReactCommon\react\timing -Force
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Array.h -Destination $MSRNCxxTargetRoot\ReactCommon\react\bridging\

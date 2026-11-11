@@ -23,26 +23,39 @@ afterEach(async () => {
 
 const searchBox = async (input: string) => {
   const searchBox = await app.findElementByTestID('example_search');
-  await app.waitUntil(
-    async () => {
-      // Start each retry empty rather than appending to a partial previous input.
-      await searchBox.clearValue();
+  const attempts: {text: string; focused: string | null}[] = [];
+  await app
+    .waitUntil(
+      async () => {
+        // Start each retry empty rather than appending to a partial previous input.
+        await searchBox.clearValue();
 
-      // Do an extra wait here, since the autofocus textinput will move focus to itself and steal focus from the search box, causing the setValue to fail.
-      await new Promise((resolve) => setTimeout(resolve, 500));
+        // Do an extra wait here, since the autofocus textinput will move focus to itself and steal focus from the search box, causing the setValue to fail.
+        await new Promise(resolve => setTimeout(resolve, 500));
 
-      // Restore focus after autoFocus runs, then type without setValue's
-      // implicit second clear.
-      await searchBox.click();
-      await searchBox.addValue(input);
-      return (await searchBox.getText()) === input;
-    },
-    {
-      interval: 500,
-      timeout: 10000,
-      timeoutMsg: `Unable to enter correct search text into test searchbox.`,
-    },
-  );
+        // Restore focus after autoFocus runs, then type without setValue's
+        // implicit second clear.
+        await searchBox.click();
+        await searchBox.addValue(input);
+        const text = await searchBox.getText();
+        attempts.push({
+          text,
+          focused: await searchBox.getAttribute('HasKeyboardFocus'),
+        });
+        return text === input;
+      },
+      {
+        interval: 500,
+        timeout: 10000,
+        timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+      },
+    )
+    .catch(error => {
+      process.stderr.write(
+        `TextInput search failed: ${JSON.stringify({input, attempts})}\n`,
+      );
+      throw error;
+    });
 };
 
 const setTextInputValue = async (

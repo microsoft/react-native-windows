@@ -12,7 +12,11 @@ const file = path.resolve(
   __dirname,
   '../../packages/e2e-test-app-fabric/test/TextInputComponentTest.test.ts',
 );
-const source = ts.createSourceFile(file, readFileSync(file, 'utf8'), ts.ScriptTarget.Latest);
+const source = ts.createSourceFile(
+  file,
+  readFileSync(file, 'utf8'),
+  ts.ScriptTarget.Latest,
+);
 const helper = source.statements
   .filter(ts.isVariableStatement)
   .flatMap(statement => [...statement.declarationList.declarations])
@@ -23,7 +27,11 @@ const compiled = ts.transpileModule(
   {compilerOptions: {target: ts.ScriptTarget.ES2020}},
 ).outputText;
 
-async function runSearch({partialFirstAttempt = false, rejectInput = false} = {}) {
+async function runSearch({
+  partialFirstAttempt = false,
+  rejectInput = false,
+  diagnostics = [],
+} = {}) {
   let text = 'Submit behavior';
   let focused = false;
   let attempts = 0;
@@ -53,8 +61,13 @@ async function runSearch({partialFirstAttempt = false, rejectInput = false} = {}
     async getText() {
       return text;
     },
+    async getAttribute(name) {
+      assert.equal(name, 'HasKeyboardFocus');
+      return String(focused);
+    },
   };
   const context = {
+    process: {stderr: {write: message => diagnostics.push(message)}},
     app: {
       async findElementByTestID(id) {
         assert.equal(id, 'example_search');
@@ -88,10 +101,27 @@ test('TextInput search restores focus after autoFocus remounts without clearing 
 
 test('TextInput search retries from an empty value instead of appending to partial input', async () => {
   assert.deepEqual(await runSearch({partialFirstAttempt: true}), [
-    'clear', 'click', 'type', 'clear', 'click', 'type',
+    'clear',
+    'click',
+    'type',
+    'clear',
+    'click',
+    'type',
   ]);
 });
 
 test('TextInput search still fails when the requested text cannot be entered', async () => {
-  await assert.rejects(runSearch({rejectInput: true}), /Unable to enter correct search text/);
+  const diagnostics = [];
+  await assert.rejects(
+    runSearch({rejectInput: true, diagnostics}),
+    /Unable to enter correct search text/,
+  );
+  assert.equal(diagnostics.length, 1);
+  assert.deepEqual(
+    JSON.parse(diagnostics[0].slice('TextInput search failed: '.length)),
+    {
+      input: 'onPressIn',
+      attempts: Array.from({length: 3}, () => ({text: '', focused: 'true'})),
+    },
+  );
 });
