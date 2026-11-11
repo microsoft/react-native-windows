@@ -25,16 +25,16 @@ const searchBox = async (input: string) => {
   const searchBox = await app.findElementByTestID('example_search');
   await app.waitUntil(
     async () => {
-      // Clear before each attempt: WinAppDriver's setValue can fall back to
-      // synthesized keystrokes for custom RN TextInputs, which append rather
-      // than replace. Without the clear, a retry produces "onPressInonPressIn"
-      // and the comparison never converges.
+      // Start each retry empty rather than appending to a partial previous input.
       await searchBox.clearValue();
 
       // Do an extra wait here, since the autofocus textinput will move focus to itself and steal focus from the search box, causing the setValue to fail.
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      await searchBox.setValue(input);
+      // Restore focus after autoFocus runs, then type without setValue's
+      // implicit second clear.
+      await searchBox.click();
+      await searchBox.addValue(input);
       return (await searchBox.getText()) === input;
     },
     {
