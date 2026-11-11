@@ -20,6 +20,8 @@ namespace RNTesterApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private static Task _serverTask;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -27,16 +29,19 @@ namespace RNTesterApp
             myRootView.ReactNativeHost = app.Host;
             myRootView.ComponentName = "RNTesterApp";
 
+            // Page construction is on the UI thread; keep one server across launch-time navigation.
+            if (_serverTask == null)
+            {
+                var handler = new CommandHandler();
+                handler.BindOperation("DumpVisualTree", DumpVisualTree);
+                handler.BindOperation("ListErrors", ListErrors);
 
-            var handler = new CommandHandler();
-            handler.BindOperation("DumpVisualTree", DumpVisualTree);
-            handler.BindOperation("ListErrors", ListErrors);
-
-            var server = new Server(handler);
-            var tsk = LoopServer(server);
+                var server = new Server(handler);
+                _serverTask = LoopServer(server);
+            }
         }
 
-        JsonObject ListErrors(JsonValue payload)
+        static JsonObject ListErrors(JsonValue payload)
         {
             JsonObject result = new JsonObject();
             var app = Application.Current as App;
@@ -70,7 +75,7 @@ namespace RNTesterApp
             };
         }
 
-        JsonObject DumpVisualTree(JsonValue payload)
+        static JsonObject DumpVisualTree(JsonValue payload)
         {
             var payloadObj = payload.GetObject();
             var accessibilityId = payloadObj.GetNamedString("accessibilityId");
@@ -98,10 +103,15 @@ namespace RNTesterApp
                 new AttachedProperty() { Name = "AccessibilityStateBusy", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateBusyProperty, ExcludeIfValueIsUnset = true },
                 new AttachedProperty() { Name = "AccessibilityStateExpanded", Property = Microsoft.ReactNative.DynamicAutomationProperties.AccessibilityStateExpandedProperty, ExcludeIfValueIsUnset = true },
             };
-            var rootDump = VisualTreeDumper.DumpTree(this, null, additionalProperties, attachedProperties);
-            var element = VisualTreeDumper.FindElementByAutomationId(JsonObject.Parse(rootDump), accessibilityId);
-            if (element != null)
-                return element;
+            var root = (Window.Current.Content as Frame)?.Content as UIElement ?? Window.Current.Content;
+            JsonObject element = null;
+            if (root != null)
+            {
+                var rootDump = VisualTreeDumper.DumpTree(root, null, additionalProperties, attachedProperties);
+                element = VisualTreeDumper.FindElementByAutomationId(JsonObject.Parse(rootDump), accessibilityId);
+                if (element != null)
+                    return element;
+            }
 
             if (accessibilityId.StartsWith("*"))
             {
@@ -127,7 +137,7 @@ namespace RNTesterApp
             return element;
         }
 
-        async Task LoopServer(Server server)
+        static async Task LoopServer(Server server)
         {
             while (true)
             {

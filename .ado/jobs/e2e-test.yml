@@ -60,7 +60,7 @@ jobs:
 
           variables: [template: ../variables/windows.yml]
           pool: ${{ parameters.AgentPool.Medium }}
-          timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+          timeoutInMinutes: 120 # CodeQL requires 3x usual build timeout
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
@@ -185,7 +185,7 @@ jobs:
 
           variables: [template: ../variables/windows.yml]
           pool: ${{ parameters.AgentPool.Medium }}
-          timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+          timeoutInMinutes: 120 # CodeQL requires 3x usual build timeout
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
