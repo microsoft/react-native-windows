@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add template keyword for dependent template calls flagged by MSVC C4864",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

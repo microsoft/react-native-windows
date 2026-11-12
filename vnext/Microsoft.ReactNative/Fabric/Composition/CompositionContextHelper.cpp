@@ -1796,7 +1796,7 @@ struct CompActivityVisual : winrt::implements<
     auto innerBrush = TTypeRedirects::CompositionContextHelper::InnerBrush(brush);
     if (brush) {
       _themeProperties.InsertVector4(
-          L"Foreground", ColorAsVector4(innerBrush.as<TTypeRedirects::CompositionColorBrush>().Color()));
+          L"Foreground", ColorAsVector4(innerBrush.template as<TTypeRedirects::CompositionColorBrush>().Color()));
     } else {
       _themeProperties.InsertVector4(L"Foreground", ColorAsVector4({0, 0, 0, 0}));
     }
