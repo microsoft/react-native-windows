@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Return false for unsupported Show Borders accessibility queries on Windows and win32.",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "anuagra@microsoft.com",
-  "dependentChangeType": "patch"
-}

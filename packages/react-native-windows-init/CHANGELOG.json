@@ -2,6 +2,33 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2026 22:36:45 GMT",
+      "version": "0.0.0-canary.1033",
+      "tag": "react-native-windows-init_v0.0.0-canary.1033",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows-init",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Integrate React Native 0.89.0-nightly-20261102-47a9917ac (November 2, 2026)"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Read the project name from app.json when package.json has none"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.296",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Nov 2026 19:50:01 GMT",
       "version": "0.0.0-canary.1032",
       "tag": "react-native-windows-init_v0.0.0-canary.1032",

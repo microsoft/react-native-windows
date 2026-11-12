@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Wed, 04 Nov 2026 19:50:02 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 12 Nov 2026 22:36:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.296
+
+Thu, 12 Nov 2026 22:36:46 GMT
+
+### Changes
+
+- Read the project name from app.json when package.json has none (vmorozov@microsoft.com)
+- Integrate React Native 0.89.0-nightly-20261102-47a9917ac (November 2, 2026)
 
 ## 0.0.0-canary.295
 

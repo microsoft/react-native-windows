@@ -2,6 +2,21 @@
   "name": "@react-native-windows/perf-testing",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2026 22:36:46 GMT",
+      "version": "0.0.0-canary.1042",
+      "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1042",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Integrate React Native 0.89.0-nightly-20261102-47a9917ac (November 2, 2026)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Nov 2026 19:50:01 GMT",
       "version": "0.0.0-canary.1041",
       "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1041",

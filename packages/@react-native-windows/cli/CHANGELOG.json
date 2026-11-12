@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2026 22:36:46 GMT",
+      "version": "0.0.0-canary.296",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.296",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Read the project name from app.json when package.json has none"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Integrate React Native 0.89.0-nightly-20261102-47a9917ac (November 2, 2026)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Nov 2026 19:50:02 GMT",
       "version": "0.0.0-canary.295",
       "tag": "@react-native-windows/cli_v0.0.0-canary.295",

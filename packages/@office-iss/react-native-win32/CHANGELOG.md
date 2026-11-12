@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Wed, 04 Nov 2026 19:50:02 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 12 Nov 2026 22:36:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.315
+
+Thu, 12 Nov 2026 22:36:45 GMT
+
+### Changes
+
+- Integrate React Native 0.89.0-nightly-20261102-47a9917ac (November 2, 2026)
+- Return false for unsupported Show Borders accessibility queries on Windows and win32. (anuagra@microsoft.com)
 
 ## 0.0.0-canary.314
 

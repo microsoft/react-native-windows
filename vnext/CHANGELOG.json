@@ -2,6 +2,75 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2026 22:36:45 GMT",
+      "version": "0.0.0-canary.1064",
+      "tag": "react-native-windows_v0.0.0-canary.1064",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Return false for unsupported Show Borders accessibility queries on Windows and win32."
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Fix the build with MSVC 14.52: add template keywords flagged by C4864 and work around an ARM64 internal compiler error in folly AtFork.cpp"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Update node-api-jsi to pick up the BigInt::toString fix for values larger than 64 bits"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Include ArrayBuffer bridging and transitive Debug and CallInvoker umbrella headers in the C++ NuGet package."
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Protect against null eventemitters"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Restrict RichEdit library load to the system folder and validate dev server bundle header length"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Fix crash when rendering zero sized text"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Integrate React Native 0.89.0-nightly-20261102-47a9917ac (November 2, 2026)"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Return redirect responses without Location as final and skip rebuilding dropped request bodies"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.296",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Nov 2026 22:12:49 GMT",
       "version": "0.0.0-canary.1063",
       "tag": "react-native-windows_v0.0.0-canary.1063",

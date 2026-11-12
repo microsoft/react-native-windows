@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2026 22:36:45 GMT",
+      "version": "0.0.0-canary.315",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.315",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Integrate React Native 0.89.0-nightly-20261102-47a9917ac (November 2, 2026)"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "a115ff1c51494faa6ba3ac421171b9877dcd050f",
+            "comment": "Return false for unsupported Show Borders accessibility queries on Windows and win32."
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Nov 2026 19:50:02 GMT",
       "version": "0.0.0-canary.314",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.314",

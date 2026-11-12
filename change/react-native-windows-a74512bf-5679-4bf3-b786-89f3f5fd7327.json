@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Include ArrayBuffer bridging and transitive Debug and CallInvoker umbrella headers in the C++ NuGet package.",
-  "packageName": "react-native-windows",
-  "email": "anuagra@microsoft.com",
-  "dependentChangeType": "patch"
-}

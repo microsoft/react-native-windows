@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update node-api-jsi to pick up the BigInt::toString fix for values larger than 64 bits",
-  "packageName": "react-native-windows",
-  "email": "anuagra@microsoft.com",
-  "dependentChangeType": "patch"
-}
