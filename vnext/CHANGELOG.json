@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2026 21:05:13 GMT",
+      "version": "0.81.40",
+      "tag": "react-native-windows_v0.81.40",
+      "comments": {
+        "patch": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "be0af08d662d3d6a0583d77541b6abab8233aeca",
+            "comment": "Restrict RichEdit library load to the system folder and validate dev server bundle header length"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "be0af08d662d3d6a0583d77541b6abab8233aeca",
+            "comment": "Fix the build with MSVC 14.52: add template keywords flagged by C4864 and work around an ARM64 internal compiler error in folly AtFork.cpp"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "be0af08d662d3d6a0583d77541b6abab8233aeca",
+            "comment": "Protect against null eventemitters"
+          },
+          {
+            "author": "tiagoma@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "be0af08d662d3d6a0583d77541b6abab8233aeca",
+            "comment": "Fail the load when a queue drops ReactInstanceWin's initialization task"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "be0af08d662d3d6a0583d77541b6abab8233aeca",
+            "comment": "Fix crash when rendering zero sized text"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "be0af08d662d3d6a0583d77541b6abab8233aeca",
+            "comment": "Use C++20 standard coroutines without the legacy /await flag"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.81.12",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.81.8",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.81.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Nov 2026 20:05:53 GMT",
       "version": "0.81.39",
       "tag": "react-native-windows_v0.81.39",

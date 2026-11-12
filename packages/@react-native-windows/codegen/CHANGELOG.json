@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2026 21:05:14 GMT",
+      "version": "0.81.8",
+      "tag": "@react-native-windows/codegen_v0.81.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "be0af08d662d3d6a0583d77541b6abab8233aeca",
+            "comment": "Remove @react-native-windows/fs and use Node's built-in fs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Aug 2026 02:25:42 GMT",
       "version": "0.81.7",
       "tag": "@react-native-windows/codegen_v0.81.7",

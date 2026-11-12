@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 04 Nov 2026 20:05:53 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 12 Nov 2026 21:05:13 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.40
+
+Thu, 12 Nov 2026 21:05:13 GMT
+
+### Patches
+
+- Restrict RichEdit library load to the system folder and validate dev server bundle header length (anuagra@microsoft.com)
+- Fix the build with MSVC 14.52: add template keywords flagged by C4864 and work around an ARM64 internal compiler error in folly AtFork.cpp (vmorozov@microsoft.com)
+- Protect against null eventemitters (30809111+acoates-ms@users.noreply.github.com)
+- Fail the load when a queue drops ReactInstanceWin's initialization task (tiagoma@microsoft.com)
+- Fix crash when rendering zero sized text (30809111+acoates-ms@users.noreply.github.com)
+- Use C++20 standard coroutines without the legacy /await flag (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.81.12
+- Bump @react-native-windows/codegen to v0.81.8
+- Bump react-native-platform-override to v0.81.4
 
 ## 0.81.39
 

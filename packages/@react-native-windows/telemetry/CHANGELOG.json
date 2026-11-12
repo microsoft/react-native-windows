@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2026 21:05:14 GMT",
+      "version": "0.81.6",
+      "tag": "@react-native-windows/telemetry_v0.81.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "be0af08d662d3d6a0583d77541b6abab8233aeca",
+            "comment": "Remove @react-native-windows/fs and use Node's built-in fs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Oct 2026 17:13:26 GMT",
       "version": "0.81.5",
       "tag": "@react-native-windows/telemetry_v0.81.5",

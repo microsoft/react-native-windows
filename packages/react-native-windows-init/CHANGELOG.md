@@ -1,8 +1,18 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Thu, 29 Oct 2026 17:13:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 12 Nov 2026 21:05:13 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.12
+
+Thu, 12 Nov 2026 21:05:13 GMT
+
+### Patches
+
+- Remove @react-native-windows/fs and use Node's built-in fs (vmorozov@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.81.6
+- Bump @react-native-windows/cli to v0.81.12
 
 ## 0.81.11
 

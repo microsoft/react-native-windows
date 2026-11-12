@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Wed, 04 Nov 2026 20:05:53 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 12 Nov 2026 21:05:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.40
+
+Thu, 12 Nov 2026 21:05:14 GMT
+
+### Patches
+
+- Remove @react-native-windows/fs and use Node's built-in fs (vmorozov@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.81.40
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.4
 
 ## 0.81.39
 
