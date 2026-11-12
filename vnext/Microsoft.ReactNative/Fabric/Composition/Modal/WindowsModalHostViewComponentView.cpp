@@ -77,10 +77,12 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       const winrt::Microsoft::ReactNative::Composition::PortalComponentView &portalComponentView) noexcept {
     m_reactContext = portalComponentView.ReactContext();
 
-    portalComponentView.Mounted(
-        [](const auto & /*sender*/, const auto &view) { view.UserData().as<ModalHostView>()->OnMounted(view); });
-    portalComponentView.Unmounted(
-        [](const auto & /*sender*/, const auto &view) { view.UserData().as<ModalHostView>()->OnUnmounted(view); });
+    portalComponentView.Mounted([](const auto & /*sender*/, const auto &view) {
+      view.UserData().template as<ModalHostView>()->OnMounted(view);
+    });
+    portalComponentView.Unmounted([](const auto & /*sender*/, const auto &view) {
+      view.UserData().template as<ModalHostView>()->OnUnmounted(view);
+    });
   }
 
   void UpdateProps(
