@@ -153,6 +153,16 @@
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Folly;$(ReactNativeWindowsDir)stubs;$(ExternalDir)folly;$(ExternalDir)fast-float\include;$(ExternalDir)fmt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemGroup>
+  <!-- Work around MSVC v145 ARM64 optimizer C1001 in AtForkListSingleton::init.
+       Disable PCH use so its Release optimization settings cannot override /Od.
+       Keep the forced pch.h include as an ordinary header. Remove when the compiler is fixed. -->
+  <ItemGroup>
+    <ClCompile Update="$(ExternalDir)folly\folly\system\AtFork.cpp" Condition="'$(Platform)' == 'ARM64' And '$(PlatformToolsetVersion)' != '' And $(PlatformToolsetVersion)&gt;=145">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Disabled</Optimization>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+    </ClCompile>
+  </ItemGroup>
   <!-- SysMman.cpp is Desktop-only and must not use folly's UWP pch; re-assert no-PCH after
        the blanket Update above, which would otherwise force pch.h onto it. -->
   <ItemGroup>
