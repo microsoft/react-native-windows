@@ -201,14 +201,14 @@ class ViewShadowNode : public ShadowNodeBase {
     auto contentControl = winrt::make<winrt::Microsoft::ReactNative::implementation::ViewControl>();
 
     m_contentControlGotFocusRevoker = contentControl.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
-      if (args.OriginalSource().try_as<xaml::UIElement>() == contentControl.as<xaml::UIElement>()) {
+      if (args.OriginalSource().template try_as<xaml::UIElement>() == contentControl.as<xaml::UIElement>()) {
         auto tag = m_tag;
         DispatchEvent("topFocus", std::move(folly::dynamic::object("target", tag)));
       }
     });
 
     m_contentControlLostFocusRevoker = contentControl.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&args) {
-      if (args.OriginalSource().try_as<xaml::UIElement>() == contentControl.as<xaml::UIElement>()) {
+      if (args.OriginalSource().template try_as<xaml::UIElement>() == contentControl.as<xaml::UIElement>()) {
         auto tag = m_tag;
         DispatchEvent("topBlur", std::move(folly::dynamic::object("target", tag)));
       }
