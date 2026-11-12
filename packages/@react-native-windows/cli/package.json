@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.81.11",
+  "version": "0.81.12",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,10 +17,10 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/codegen": "0.81.7",
-    "@react-native-windows/find-dotnet-tools": "0.0.0-canary.3",
-    "@react-native-windows/package-utils": "0.81.2",
-    "@react-native-windows/telemetry": "0.81.5",
+    "@react-native-windows/codegen": "0.81.8",
+    "@react-native-windows/find-dotnet-tools": "0.0.0-canary.4",
+    "@react-native-windows/package-utils": "0.81.3",
+    "@react-native-windows/telemetry": "0.81.6",
     "@xmldom/xmldom": "^0.8.15",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",

@@ -2,6 +2,33 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2026 21:05:14 GMT",
+      "version": "0.81.40",
+      "tag": "@react-native-windows/automation_v0.81.40",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "@react-native-windows/automation",
+            "commit": "be0af08d662d3d6a0583d77541b6abab8233aeca",
+            "comment": "Remove @react-native-windows/fs and use Node's built-in fs"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.81.40",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Nov 2026 20:05:53 GMT",
       "version": "0.81.39",
       "tag": "@react-native-windows/automation_v0.81.39",

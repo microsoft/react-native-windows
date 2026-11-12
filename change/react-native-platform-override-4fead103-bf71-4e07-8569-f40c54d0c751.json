@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Pin merge.conflictStyle in platform-override e2e Git repos",
-  "packageName": "react-native-platform-override",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "none"
-}
