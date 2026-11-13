@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 05 Nov 2026 01:38:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 12 Nov 2026 22:33:26 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.85.2
+
+Thu, 12 Nov 2026 22:33:26 GMT
+
+### Patches
+
+- Use C++20 standard coroutines without the legacy /await flag (vmorozov@microsoft.com)
+- Fix the build with MSVC 14.52: add template keywords flagged by C4864 and work around an ARM64 internal compiler error in folly AtFork.cpp (vmorozov@microsoft.com)
+- Restrict RichEdit library load to the system folder and validate dev server bundle header length (anuagra@microsoft.com)
+- Bump react-native-platform-override to v0.85.2
 
 ## 0.85.1
 

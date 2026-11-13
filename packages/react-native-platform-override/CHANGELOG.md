@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Thu, 05 Nov 2026 01:38:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 12 Nov 2026 22:33:26 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.85.2
+
+Thu, 12 Nov 2026 22:33:26 GMT
+
+### Patches
+
+- Update simple-git to 4.0.2 (anuagra@microsoft.com)
 
 ## 0.85.1
 

@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2026 22:33:26 GMT",
+      "version": "0.85.2",
+      "tag": "react-native-windows_v0.85.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fa2687b8e273be2ed4dfa9f5a92a12ab247c77a6",
+            "comment": "Use C++20 standard coroutines without the legacy /await flag"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fa2687b8e273be2ed4dfa9f5a92a12ab247c77a6",
+            "comment": "Fix the build with MSVC 14.52: add template keywords flagged by C4864 and work around an ARM64 internal compiler error in folly AtFork.cpp"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fa2687b8e273be2ed4dfa9f5a92a12ab247c77a6",
+            "comment": "Restrict RichEdit library load to the system folder and validate dev server bundle header length"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.85.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Nov 2026 01:38:55 GMT",
       "version": "0.85.1",
       "tag": "react-native-windows_v0.85.1",

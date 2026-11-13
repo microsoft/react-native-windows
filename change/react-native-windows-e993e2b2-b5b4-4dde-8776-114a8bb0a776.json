@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix the build with MSVC 14.52: add template keywords flagged by C4864 and work around an ARM64 internal compiler error in folly AtFork.cpp",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

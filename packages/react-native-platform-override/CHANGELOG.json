@@ -2,6 +2,29 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Thu, 12 Nov 2026 22:33:26 GMT",
+      "version": "0.85.2",
+      "tag": "react-native-platform-override_v0.85.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "fa2687b8e273be2ed4dfa9f5a92a12ab247c77a6",
+            "comment": "Update simple-git to 4.0.2"
+          }
+        ],
+        "none": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "fa2687b8e273be2ed4dfa9f5a92a12ab247c77a6",
+            "comment": "Pin merge.conflictStyle in platform-override e2e Git repos"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 05 Nov 2026 01:38:55 GMT",
       "version": "0.85.1",
       "tag": "react-native-platform-override_v0.85.1",
