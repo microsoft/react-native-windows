@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.1063",
+  "version": "0.0.0-canary.1064",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "@react-native-community/cli": "20.0.0",
     "@react-native-community/cli-platform-android": "20.0.0",
     "@react-native-community/cli-platform-ios": "20.0.0",
-    "@react-native-windows/cli": "0.0.0-canary.295",
+    "@react-native-windows/cli": "0.0.0-canary.296",
     "@react-native/asset-utils": "0.89.0-nightly-20261102-47a9917ac",
     "@react-native/assets": "1.0.0",
     "@react-native/codegen": "0.89.0-nightly-20261102-47a9917ac",

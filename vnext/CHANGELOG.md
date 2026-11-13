@@ -1,8 +1,25 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 05 Nov 2026 22:12:49 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 12 Nov 2026 22:36:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1064
+
+Thu, 12 Nov 2026 22:36:45 GMT
+
+### Changes
+
+- Return false for unsupported Show Borders accessibility queries on Windows and win32. (anuagra@microsoft.com)
+- Fix the build with MSVC 14.52: add template keywords flagged by C4864 and work around an ARM64 internal compiler error in folly AtFork.cpp (vmorozov@microsoft.com)
+- Update node-api-jsi to pick up the BigInt::toString fix for values larger than 64 bits (anuagra@microsoft.com)
+- Include ArrayBuffer bridging and transitive Debug and CallInvoker umbrella headers in the C++ NuGet package. (anuagra@microsoft.com)
+- Protect against null eventemitters (30809111+acoates-ms@users.noreply.github.com)
+- Restrict RichEdit library load to the system folder and validate dev server bundle header length (anuagra@microsoft.com)
+- Fix crash when rendering zero sized text (30809111+acoates-ms@users.noreply.github.com)
+- Integrate React Native 0.89.0-nightly-20261102-47a9917ac (November 2, 2026)
+- Return redirect responses without Location as final and skip rebuilding dropped request bodies (anuagra@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.296
 
 ## 0.0.0-canary.1063
 
