@@ -113,6 +113,9 @@
     <ClCompile Include="Modules\TestDevSettingsModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="Modules\TestImageLoaderModule.cpp" DisableSpecificWarnings="4996;%(DisableSpecificWarnings)" />
     <ClCompile Include="RNTesterHeadlessTests.cpp" />
+    <ClCompile Include="TurboModuleLifetimeTests.cpp" Condition="'$(EnableV8LifetimeTests)' == 'true'">
+      <AdditionalIncludeDirectories>$(V8LifetimeTestOutput)\build\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
     <ClCompile Include="TestReactNativeHostHolder.cpp" />
     <ClCompile Include="WinRTActivationShims.cpp" />
     <ClCompile Include="TestReactPackageProvider.cpp" />
@@ -157,6 +160,15 @@
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Target Name="ValidateV8LifetimeTestBuild" BeforeTargets="PrepareForBuild" Condition="'$(EnableV8LifetimeTests)' == 'true'">
+    <Error Condition="'$(V8LifetimeTestOutput)' == ''" Text="Set V8LifetimeTestOutput to the instrumented V8-JSI out directory." />
+    <Error Condition="!Exists('$(V8LifetimeTestOutput)\build\native\include\V8JsiRuntimeTest.h')" Text="Build V8-JSI with -EnableLifetimeTests before building the lifetime integration tests." />
+    <Error Condition="!Exists('$(V8LifetimeTestOutput)\lib\win32\$(Configuration)\$(V8Platform)\v8jsi.dll')" Text="The matching instrumented V8-JSI DLL is missing." />
+  </Target>
+  <Target Name="CopyV8LifetimeTestRuntime" AfterTargets="Build" Condition="'$(EnableV8LifetimeTests)' == 'true'">
+    <Copy SourceFiles="$(V8LifetimeTestOutput)\lib\win32\$(Configuration)\$(V8Platform)\v8jsi.dll" DestinationFolder="$(OutDir)" />
+    <Copy SourceFiles="$(V8LifetimeTestOutput)\lib\win32\$(Configuration)\$(V8Platform)\v8jsi.dll.pdb" DestinationFolder="$(OutDir)" />
+  </Target>
   <Target Name="Test">
     <Exec Command="$(OutDir)$(TargetFileName)" IgnoreStandardErrorWarningFormat="true" />
   </Target>
