@@ -157,7 +157,7 @@ export default class WinAppDeployTool {
       newSpinner(text),
       text,
       this.path,
-      `uninstall -package ${appName} -ip {$targetDevice.ip}`.split(' '),
+      ['uninstall', '-package', appName, '-ip', targetDevice.ip],
       verbose,
       'UninstallAppOnDeviceFailure',
     );

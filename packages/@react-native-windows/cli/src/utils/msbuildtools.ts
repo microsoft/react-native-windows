@@ -45,11 +45,11 @@ export default class MSBuildTools {
   }
 
   cleanProject(slnFile: string) {
-    const cmd = `"${path.join(
-      this.msbuildPath(),
-      'msbuild.exe',
-    )}" "${slnFile}" /t:Clean`;
-    const results = child_process.execSync(cmd).toString().split(EOL);
+    const msbuild = path.join(this.msbuildPath(), 'msbuild.exe');
+    const results = child_process
+      .execFileSync(msbuild, [slnFile, '/t:Clean'])
+      .toString()
+      .split(EOL);
     results.forEach(result => console.log(chalk.white(result)));
   }
 
