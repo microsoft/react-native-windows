@@ -38,7 +38,7 @@ export function InternalTextInputWithCustomType<NativeProps: {...}>(
   props: TextInputProps,
   NativeComponent: HostComponent<NativeProps>,
 ): React.Node {
-  return <TextInput {...props} />;
+  return <TextInput {...props} ref={props.forwardedRef} />;
 }
 
 export default TextInput;
