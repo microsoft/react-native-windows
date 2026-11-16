@@ -109,7 +109,8 @@ WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windo
 IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
     HttpMethod &&method,
     Uri &&uri,
-    winrt::Windows::Foundation::Collections::IMap<winrt::hstring, IInspectable> props) noexcept /*override*/ {
+    winrt::Windows::Foundation::Collections::IMap<winrt::hstring, IInspectable> props,
+    bool includeContent) noexcept /*override*/ {
   auto request = HttpRequestMessage{std::move(method), std::move(uri)};
   for (auto prop : props) {
     request.Properties().Insert(prop.Key(), prop.Value());
@@ -172,7 +173,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
   // Initialize content
   IHttpContent content{nullptr};
   auto &data = reqArgs->Data;
-  if (!data.empty()) {
+  if (includeContent && !data.empty()) {
     auto bodyHandler = self->m_requestBodyHandler.lock();
     if (bodyHandler && bodyHandler->Supports(data)) {
       auto contentTypeString = contentType ? winrt::to_string(contentType.ToString()) : "";
@@ -413,7 +414,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
   auto props = winrt::single_threaded_map<winrt::hstring, IInspectable>();
   props.Insert(L"RequestArgs", coArgs);
 
-  auto coRequestOp = CreateRequest(std::move(coMethod), std::move(coUri), props);
+  auto coRequestOp = CreateRequest(std::move(coMethod), std::move(coUri), props, /*includeContent*/ true);
   co_await lessthrow_await_adapter<IAsyncOperation<HttpRequestMessage>>{coRequestOp};
   auto coRequestOpHR = coRequestOp.ErrorCode();
   if (coRequestOpHR < 0) {

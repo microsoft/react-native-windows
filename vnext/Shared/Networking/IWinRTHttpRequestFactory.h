@@ -12,11 +12,12 @@ namespace Microsoft::React::Networking {
 struct IWinRTHttpRequestFactory {
   virtual ~IWinRTHttpRequestFactory() noexcept {}
 
+  // When includeContent is false, the request body is not built (e.g. after a redirect changed the method to GET).
   virtual winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Web::Http::HttpRequestMessage> CreateRequest(
       winrt::Windows::Web::Http::HttpMethod &&method,
       winrt::Windows::Foundation::Uri &&uri,
-      winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable>
-          props) noexcept = 0;
+      winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable> props,
+      bool includeContent) noexcept = 0;
 };
 
 } // namespace Microsoft::React::Networking
