@@ -3102,28 +3102,28 @@ __metadata:
   linkType: hard
 
 "@microsoft/1ds-core-js@npm:^4.3.0":
-  version: 4.4.5
-  resolution: "@microsoft/1ds-core-js@npm:4.4.5"
+  version: 4.4.6
+  resolution: "@microsoft/1ds-core-js@npm:4.4.6"
   dependencies:
-    "@microsoft/applicationinsights-core-js": "npm:3.4.5"
+    "@microsoft/applicationinsights-core-js": "npm:3.4.6"
     "@microsoft/applicationinsights-shims": "npm:3.0.1"
     "@microsoft/dynamicproto-js": "npm:^2.0.3"
     "@nevware21/ts-async": "npm:>= 0.5.5 < 0.6.0"
     "@nevware21/ts-utils": "npm:>= 0.14.0 < 2.x"
-  checksum: 10c0/5258f3bd38dcf3c1ec917766531f015017aecdfd016dafd131e8c5869a8612d68c643194586bf30c065598e7b75b9b737731d2b9c36bc84298afacb3369829fb
+  checksum: 10c0/78461d071e7d37a5b5863f966dfb72594eb30433420a625360153d5a0fce8feb83bf01cdf870f9a2d9e38d928f41fa90741da22a298d024784e92d5de2c3ea4a
   languageName: node
   linkType: hard
 
 "@microsoft/1ds-post-js@npm:^4.3.0":
-  version: 4.4.5
-  resolution: "@microsoft/1ds-post-js@npm:4.4.5"
+  version: 4.4.6
+  resolution: "@microsoft/1ds-post-js@npm:4.4.6"
   dependencies:
-    "@microsoft/applicationinsights-core-js": "npm:3.4.5"
+    "@microsoft/applicationinsights-core-js": "npm:3.4.6"
     "@microsoft/applicationinsights-shims": "npm:3.0.1"
     "@microsoft/dynamicproto-js": "npm:^2.0.3"
     "@nevware21/ts-async": "npm:>= 0.5.5 < 0.6.0"
     "@nevware21/ts-utils": "npm:>= 0.14.0 < 2.x"
-  checksum: 10c0/54b6d6b6394d10187570fdeddb98476262b5e3034a39a75adf6b61baf7d921d96b4684d00dcdd9620777063d8c37e7a16fb4076a05099d6863b1f7c41deab95a
+  checksum: 10c0/3ec6770dc228a589deb4dbcc0e6071e3fc80b047f3a93505e92677f310498857768c0edef3dd9bf7b8a2ee02d17aaa404ba5da6b140c3c3c1fbaec23d9bc39c9
   languageName: node
   linkType: hard
 
@@ -3161,9 +3161,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@microsoft/applicationinsights-core-js@npm:3.4.5":
-  version: 3.4.5
-  resolution: "@microsoft/applicationinsights-core-js@npm:3.4.5"
+"@microsoft/applicationinsights-core-js@npm:3.4.6":
+  version: 3.4.6
+  resolution: "@microsoft/applicationinsights-core-js@npm:3.4.6"
   dependencies:
     "@microsoft/applicationinsights-shims": "npm:3.0.1"
     "@microsoft/dynamicproto-js": "npm:^2.0.3"
@@ -3171,7 +3171,7 @@ __metadata:
     "@nevware21/ts-utils": "npm:>= 0.14.0 < 2.x"
   peerDependencies:
     tslib: ">= 1.0.0"
-  checksum: 10c0/0696916a12b67b3191cd28ceea203ae60a20cec2d0577294801f9f89f5db20460f15458b055dd42ffbeeb15c8814f95d6f8e443dbf849547d5a4c7c856614a32
+  checksum: 10c0/dba0b3338b809d97bb5f35b397de8f89c84e46ea7c5019db590dd4fb9012c5886746fdc3fd824f90deff8d837087aa5465610ed9e6c314093d45ebcc6d22ba96
   languageName: node
   linkType: hard
 
@@ -13830,8 +13830,8 @@ __metadata:
   linkType: hard
 
 "lage@npm:^2.7.1":
-  version: 2.17.0
-  resolution: "lage@npm:2.17.0"
+  version: 2.17.1
+  resolution: "lage@npm:2.17.1"
   dependencies:
     fsevents: "npm:~2.3.2"
     glob-hasher: "npm:^1.4.2"
@@ -13841,7 +13841,7 @@ __metadata:
   bin:
     lage: dist/lage.js
     lage-server: dist/lage-server.js
-  checksum: 10c0/c43a20a61c62f72ff76db3513189692da6053f2b3f4fdd3a233338a00c613ef89376acd4753908564625223f38c31b9ea6522b4099f968dfbed672fa74e8f319
+  checksum: 10c0/f72fd40cc2c0802e78c3c3759ddb6725d46eb5cda6c75cad20bb89544ddc5f8d26c5607f751718182324a327015e5b38c0540a205b691f75e764efb07f5d8134
   languageName: node
   linkType: hard
 
@@ -17553,11 +17553,11 @@ __metadata:
   linkType: hard
 
 "sanitize-filename@npm:^1.6.3":
-  version: 1.6.4
-  resolution: "sanitize-filename@npm:1.6.4"
+  version: 1.6.5
+  resolution: "sanitize-filename@npm:1.6.5"
   dependencies:
     truncate-utf8-bytes: "npm:^1.0.0"
-  checksum: 10c0/b56415a95e4f90dc992cd126b5f45c7b39d178662fbd0dc48f03203e35c58ab8e9eb3f5cebfaabc46f1438093d65a3a3cc96875e2b036a1474e19593bee9a540
+  checksum: 10c0/20479a6bb6e550a99b25e1e590cf985fe7e41363a363e7f27c0dd783fd91587846901763570d5e2ebdd53b3c63d37f8807671d654d87f1afd52b6a54819215f8
   languageName: node
   linkType: hard
 
