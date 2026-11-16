@@ -700,6 +700,27 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
   co_return {co_await m_innerFilter.SendRequestAsync(preflightRequest)};
 }
 
+OriginPolicy OriginPolicyHttpFilter::GetCrossOriginRedirectPolicy(HttpRequestMessage const &request) const {
+  auto configuredPolicy =
+      static_cast<OriginPolicy>(request.Properties().Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
+
+  switch (configuredPolicy) {
+    case OriginPolicy::SimpleCrossOriginResourceSharing:
+      if (!IsSimpleCorsRequest(request))
+        throw hresult_error{
+            E_INVALIDARG,
+            L"The redirected request does not meet the requirements for Simple Cross-Origin resource sharing"};
+      return OriginPolicy::SimpleCrossOriginResourceSharing;
+
+    case OriginPolicy::CrossOriginResourceSharing:
+      return IsSimpleCorsRequest(request) ? OriginPolicy::SimpleCrossOriginResourceSharing
+                                          : OriginPolicy::CrossOriginResourceSharing;
+
+    default:
+      throw hresult_error{E_INVALIDARG, L"SOP (same-origin policy) is enforced"};
+  }
+}
+
 #pragma region IRedirectEventSource
 
 bool OriginPolicyHttpFilter::OnRedirecting(
@@ -785,6 +806,15 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
     }
 
     auto response = co_await m_innerFilter.SendRequestAsync(coRequest);
+
+    // A same-origin request may have been redirected to a different origin.
+    // Validate the final response against the policy that applies to the origin it actually came from.
+    if (originPolicy == OriginPolicy::SameOrigin) {
+      auto finalRequest = response.RequestMessage();
+      if (finalRequest && !IsSameOrigin(m_origin, finalRequest.RequestUri())) {
+        originPolicy = GetCrossOriginRedirectPolicy(coRequest);
+      }
+    }
 
     ValidateResponse(response, originPolicy);
 

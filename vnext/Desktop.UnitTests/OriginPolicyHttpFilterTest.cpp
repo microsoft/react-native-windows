@@ -878,6 +878,86 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, true /*shouldSucceed*/);
   } // FullCorsSameOriginToCrossOriginRedirectSucceeds
 
+  // A same-origin request redirected to another origin must pass the CORS checks of the final origin.
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsSameOriginToCrossOriginRedirectWithoutCorsHeadersFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsSameOriginToCrossOriginRedirectWithoutCorsHeadersFails) {
+    ServerParams serverArgs(s_mockServerHost);
+    ServerParams redirServerArgs(s_redirectServerHost);
+
+    serverArgs.ResponseStatus = HttpStatusCode::MovedPermanently;
+    serverArgs.ResponseHeaders[s_location] = redirServerArgs.WideUrl;
+
+    // Server2 does not allow the original origin
+    redirServerArgs.ResponseStatus = HttpStatusCode::Accepted;
+
+    ClientParams clientArgs(L"GET", {{L"Content-Type", L"application/text"}});
+
+    SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, false /*shouldSucceed*/);
+  } // FullCorsSameOriginToCrossOriginRedirectWithoutCorsHeadersFails
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsSameOriginToCrossOriginRedirectWithoutCorsHeadersFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(SimpleCorsSameOriginToCrossOriginRedirectWithoutCorsHeadersFails) {
+    ServerParams serverArgs(s_mockServerHost);
+    ServerParams redirServerArgs(s_redirectServerHost);
+
+    serverArgs.ResponseStatus = HttpStatusCode::MovedPermanently;
+    serverArgs.ResponseHeaders[s_location] = redirServerArgs.WideUrl;
+
+    redirServerArgs.ResponseStatus = HttpStatusCode::Accepted;
+
+    ClientParams clientArgs(L"GET", {{L"Content-Type", L"text/plain"}});
+
+    SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
+
+    TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, false /*shouldSucceed*/);
+  } // SimpleCorsSameOriginToCrossOriginRedirectWithoutCorsHeadersFails
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsSameOriginToCrossOriginRedirectAllowedOriginSucceeds)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(SimpleCorsSameOriginToCrossOriginRedirectAllowedOriginSucceeds) {
+    ServerParams serverArgs(s_mockServerHost);
+    ServerParams redirServerArgs(s_redirectServerHost);
+
+    serverArgs.ResponseStatus = HttpStatusCode::MovedPermanently;
+    serverArgs.ResponseHeaders[s_location] = redirServerArgs.WideUrl;
+
+    redirServerArgs.ResponseStatus = HttpStatusCode::Accepted;
+    redirServerArgs.ResponseHeaders[s_accessControlAllowOrigin] = serverArgs.WideUrl;
+
+    ClientParams clientArgs(L"GET", {{L"Content-Type", L"text/plain"}});
+
+    SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
+
+    TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, true /*shouldSucceed*/);
+  } // SimpleCorsSameOriginToCrossOriginRedirectAllowedOriginSucceeds
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(SameOriginPolicyRedirectToCrossOriginFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(SameOriginPolicyRedirectToCrossOriginFails) {
+    ServerParams serverArgs(s_mockServerHost);
+    ServerParams redirServerArgs(s_redirectServerHost);
+
+    serverArgs.ResponseStatus = HttpStatusCode::MovedPermanently;
+    serverArgs.ResponseHeaders[s_location] = redirServerArgs.WideUrl;
+
+    redirServerArgs.ResponseStatus = HttpStatusCode::Accepted;
+    redirServerArgs.ResponseHeaders[s_accessControlAllowOrigin] = L"*";
+
+    ClientParams clientArgs(L"GET", {{L"Content-Type", L"text/plain"}});
+
+    SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SameOrigin));
+
+    TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, false /*shouldSucceed*/);
+  } // SameOriginPolicyRedirectToCrossOriginFails
+
   // Redirects a cross origin request to a cross origin request on the same server.
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToCrossOriginRedirectSucceeds)
   // Seems to redirect to exact same resource. Implement second resource in same server.

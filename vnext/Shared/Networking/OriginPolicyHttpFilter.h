@@ -91,6 +91,8 @@ class OriginPolicyHttpFilter
       winrt::Windows::Web::Http::HttpResponseMessage const &response,
       const OriginPolicy effectivePolicy) const;
 
+  OriginPolicy GetCrossOriginRedirectPolicy(winrt::Windows::Web::Http::HttpRequestMessage const &request) const;
+
   void ValidateAllowOrigin(
       winrt::hstring const &allowedOrigin,
       winrt::hstring const &allowCredentials,
