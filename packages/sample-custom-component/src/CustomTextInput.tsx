@@ -10,118 +10,138 @@ import CustomTextInputSpec, {
   Commands,
   CustomTextInputProps,
 } from './CustomTextInputSpec';
-import {unstable_TextAncestorContext} from 'react-native';
+import {
+  findNodeHandle,
+  InternalTextInputWithCustomType,
+} from 'react-native-windows';
 export {Commands as CustomTextInputCommands};
 
-const CustomTextInput = React.forwardRef<
-  React.ElementRef<typeof CustomTextInputSpec>,
-  CustomTextInputProps
->((props, ref) => {
-  const {
-    children,
-    value,
-    defaultValue,
-    onChange,
-    onChangeText,
-    onSelectionChange,
-    ...rest
-  } = props;
-  const inputRef = React.useRef<React.ElementRef<
-    typeof CustomTextInputSpec
-  > | null>(null);
-  const [mostRecentEventCount, setMostRecentEventCount] = React.useState(0);
-  const [lastNativeText, setLastNativeText] = React.useState(value);
-  const [lastNativeSelection, setLastNativeSelection] = React.useState({
-    start: -1,
-    end: -1,
-  });
-  const text = typeof value === 'string' ? value : defaultValue;
-  const selection = React.useMemo(
-    () =>
-      props.selection == null
-        ? null
-        : {
-            start: props.selection.start,
-            end: props.selection.end ?? props.selection.start,
-          },
-    [props.selection],
-  );
+export interface ICustomTextInput {
+  setFormattedText(delta: string): void;
+  setLightOn(value: boolean): void;
+}
 
-  const setRef = React.useCallback(
-    (instance: React.ElementRef<typeof CustomTextInputSpec> | null) => {
-      inputRef.current = instance;
-      if (typeof ref === 'function') {
-        ref(instance);
-      } else if (ref) {
-        ref.current = instance;
-      }
-    },
-    [ref],
-  );
+export type CustomTextInputInstance = React.ComponentRef<
+  typeof CustomTextInputSpec
+> &
+  ICustomTextInput;
 
+function useCustomTextInputNativeRefForwarded(
+  ref: React.ForwardedRef<CustomTextInputInstance>,
+  nativeRef: React.RefObject<any>,
+) {
+  const nativeRefHandle = React.useRef<number | null>(null);
   React.useLayoutEffect(() => {
-    const textChanged = typeof value === 'string' && lastNativeText !== value;
-    const selectionChanged =
-      selection != null &&
-      (selection.start !== lastNativeSelection.start ||
-        selection.end !== lastNativeSelection.end);
-    if (!textChanged && !selectionChanged) {
-      return;
-    }
-
-    if (textChanged) {
-      setLastNativeText(value);
-    }
-    if (selectionChanged) {
-      setLastNativeSelection(selection);
-    }
-    if (inputRef.current != null) {
-      Commands.setTextAndSelection(
-        inputRef.current,
-        mostRecentEventCount,
-        textChanged ? value : undefined,
-        selection?.start ?? -1,
-        selection?.end ?? -1,
+    if (nativeRef.current) {
+      nativeRefHandle.current = findNodeHandle(nativeRef.current);
+      if (!nativeRefHandle.current) {
+        console.warn(
+          'findNodeHandle returned null for nativeRef; imperative CustomTextInput methods will not work',
+        );
+      }
+    } else {
+      console.warn(
+        'nativeRef is not available to findNodeHandle; imperative CustomTextInput methods will not work',
       );
     }
-  }, [
-    lastNativeSelection,
-    lastNativeText,
-    mostRecentEventCount,
-    selection,
-    text,
-    value,
-  ]);
+  }, [nativeRef]);
 
-  return (
-    <CustomTextInputSpec
-      ref={setRef}
-      {...rest}
-      editable={props.readOnly !== undefined ? !props.readOnly : props.editable}
-      text={text}
-      selection={selection ?? undefined}
-      mostRecentEventCount={mostRecentEventCount}
-      onChange={event => {
-        onChange?.(event);
-        onChangeText?.(event.nativeEvent.text);
-        if (inputRef.current == null) {
-          return;
-        }
-        setLastNativeText(event.nativeEvent.text);
-        setMostRecentEventCount(event.nativeEvent.eventCount);
-      }}
-      onSelectionChange={event => {
-        onSelectionChange?.(event);
-        if (inputRef.current != null) {
-          setLastNativeSelection(event.nativeEvent.selection);
-        }
-      }}
-      focusable={props.focusable !== false}>
-      <unstable_TextAncestorContext.Provider value={true}>
-        {children}
-      </unstable_TextAncestorContext.Provider>
-    </CustomTextInputSpec>
+  React.useImperativeHandle(
+    ref,
+    () => {
+      if (!nativeRef.current) {
+        throw new Error(
+          'NativeCustomTextInput ref is not available to create the imperative handle',
+        );
+      }
+      return Object.assign(nativeRef.current, {
+        // PickerHost methods
+        setFormattedText: (delta: string) => {
+          if (nativeRefHandle.current) {
+            Commands.setFormattedText(nativeRef.current, delta);
+          }
+        },
+        setLightOn: (value: boolean) => {
+          if (nativeRefHandle.current) {
+            Commands.setLightOn(nativeRef.current, value);
+          }
+        },
+      });
+    },
+    [nativeRefHandle, nativeRef],
   );
-});
+}
+
+const InternalCustomTextInput = (
+  props: React.ComponentPropsWithRef<typeof CustomTextInputSpec>,
+) => InternalTextInputWithCustomType(props, CustomTextInputSpec);
+
+const CustomTextInput = React.forwardRef<
+  CustomTextInputInstance,
+  CustomTextInputProps
+>(
+  (
+    {
+      allowFontScaling = true,
+      rejectResponderTermination = true,
+      underlineColorAndroid = 'transparent',
+      readOnly,
+      editable,
+      enterKeyHint,
+      returnKeyType,
+      inputMode,
+      showSoftInputOnFocus,
+      keyboardType,
+      ...restProps
+    },
+    ref,
+  ) => {
+    const nativeRef = React.useRef(null);
+    useCustomTextInputNativeRefForwarded(ref, nativeRef);
+
+    return (
+      <InternalCustomTextInput
+        allowFontScaling={allowFontScaling}
+        rejectResponderTermination={rejectResponderTermination}
+        underlineColorAndroid={underlineColorAndroid}
+        editable={readOnly !== undefined ? !readOnly : editable}
+        returnKeyType={
+          enterKeyHint
+            ? enterKeyHintToReturnTypeMap[enterKeyHint]
+            : returnKeyType
+        }
+        keyboardType={
+          inputMode ? inputModeToKeyboardTypeMap[inputMode] : keyboardType
+        }
+        showSoftInputOnFocus={
+          inputMode == null ? showSoftInputOnFocus : inputMode !== 'none'
+        }
+        {...restProps}
+        forwardedRef={nativeRef}
+      />
+    );
+  },
+);
+
+const enterKeyHintToReturnTypeMap = {
+  enter: 'default',
+  done: 'done',
+  go: 'go',
+  next: 'next',
+  previous: 'previous',
+  search: 'search',
+  send: 'send',
+} as const;
+
+const inputModeToKeyboardTypeMap = {
+  none: 'default',
+  text: 'default',
+  decimal: 'decimal-pad',
+  numeric: 'number-pad',
+  tel: 'phone-pad',
+  search: 'default',
+  email: 'email-address',
+  url: 'url',
+} as const;
 
 export default CustomTextInput;

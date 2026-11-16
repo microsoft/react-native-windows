@@ -10,8 +10,7 @@
 import React from 'react';
 import {Button, View} from 'react-native';
 import {
-  CustomTextInput,
-  CustomTextInputCommands,
+  CustomTextInput
 } from '@rnw-scripts/sample-custom-component';
 import RNTesterText from '../../components/RNTesterText';
 
@@ -69,7 +68,7 @@ const CustomTextInputExample = () => {
           const json =
             '{ "ops" : [ { "insert" : "Medium text", "attributes" : { "size" : 10 } }, { "insert" : "Large text", "attributes" : { "size" : 15 } }, { "insert" : "Almost large text", "attributes" : { "size" : 24 } } ] }';
           inputRef.current &&
-            CustomTextInputCommands.setFormattedText(inputRef.current, json);
+            inputRef.current.setFormattedText(json);
         }}
       />
     </View>

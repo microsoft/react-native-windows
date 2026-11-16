@@ -374,6 +374,10 @@ module.exports = {
     return require('./Libraries/Components/TextInput/WindowsTextInputNativeComponent')
       .__INTERNAL_VIEW_CONFIG;
   },
+  get InternalTextInputWithCustomType() {
+    return require('./Libraries/Components/TextInput/TextInput')
+      .InternalTextInputWithCustomType;
+  },
 } as ReactNativePublicAPI;
 
 if (__DEV__) {
