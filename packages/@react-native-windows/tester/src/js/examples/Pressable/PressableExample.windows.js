@@ -10,6 +10,7 @@
 
 import type {RNTesterModule} from '../../types/RNTesterTypes';
 
+import RNTesterText from '../../components/RNTesterText';
 import * as PressableExampleFbInternal from './PressableExampleFbInternal';
 import * as React from 'react';
 import {
@@ -312,7 +313,12 @@ function PressableDisabled() {
               styles.disabledOption,
               disabled === option.value && styles.disabledOptionSelected,
             ]}>
-            <Text>{option.label}</Text>
+            <RNTesterText
+              style={
+                disabled === option.value && styles.disabledOptionSelectedText
+              }>
+              {option.label}
+            </RNTesterText>
           </Pressable>
         ))}
       </View>
@@ -333,6 +339,26 @@ function PressableDisabled() {
   );
 }
 
+<<<<<<< Upstream
+function RoundedPressableExample() {
+  return (
+    <View>
+      <Pressable
+        android_ripple={{color: 'red', borderless: false}}
+        style={styles.roundedPressable}>
+        <Text style={{alignSelf: 'center'}}>Background Ripple</Text>
+      </Pressable>
+      <Pressable
+        android_ripple={{color: 'red', borderless: false, foreground: true}}
+        style={styles.roundedPressable}>
+        <Text style={{alignSelf: 'center'}}>Foreground Ripple</Text>
+      </Pressable>
+    </View>
+  );
+}
+
+||||||| base
+=======
 function PressableHoverStyle() {
   const [hovered, setHovered] = useState(false);
   return (
@@ -499,6 +525,7 @@ function PressWithKeyCapture() {
   );
 }
 
+>>>>>>> Override
 const styles = StyleSheet.create({
   row: {
     justifyContent: 'center',
@@ -530,6 +557,9 @@ const styles = StyleSheet.create({
   },
   disabledOptionSelected: {
     backgroundColor: '#cce4ff',
+  },
+  disabledOptionSelectedText: {
+    color: 'black',
   },
   disabledToggleTarget: {
     padding: 20,
@@ -583,6 +613,12 @@ const styles = StyleSheet.create({
   image: {
     height: 100,
     width: 100,
+  },
+  roundedPressable: {
+    backgroundColor: '#eee',
+    borderRadius: 100,
+    padding: 16,
+    marginTop: 10,
   },
 });
 
@@ -748,7 +784,7 @@ const examples = [
                 style={styles.image}
               />
             </Pressable>
-            <Text>use foreground</Text>
+            <RNTesterText>use foreground</RNTesterText>
           </View>
         </View>
       );
@@ -900,6 +936,15 @@ const examples = [
           />
         </Pressable>
       );
+    },
+  },
+  {
+    title: 'Rounded Pressable with Ripple',
+    description:
+      'Ripple should clip to the border radius of the Pressable' as string,
+    platform: 'android',
+    render: function (): React.Node {
+      return <RoundedPressableExample />;
     },
   },
   ...PressableExampleFbInternal.examples,

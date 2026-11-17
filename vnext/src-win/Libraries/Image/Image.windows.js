@@ -59,7 +59,7 @@ function getSize(
 
 function getSizeWithHeaders(
   uri: string,
-  headers: {[string]: string, ...},
+  headers: {[key: string]: string, ...},
   success?: (width: number, height: number) => void,
   failure?: (error: unknown) => void,
 ): void | Promise<ImageSize> {
@@ -101,7 +101,7 @@ function prefetch(url: string): Promise<boolean> {
 
 async function queryCache(
   urls: Array<string>,
-): Promise<{[string]: 'memory' | 'disk' | 'disk/memory', ...}> {
+): Promise<{[key: string]: 'memory' | 'disk' | 'disk/memory', ...}> {
   return NativeImageLoaderIOS.queryCache(urls);
 }
 

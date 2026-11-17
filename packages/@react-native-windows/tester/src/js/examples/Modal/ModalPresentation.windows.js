@@ -19,7 +19,13 @@ import {RNTesterThemeContext} from '../../components/RNTesterTheme';
 import RNTOption from '../../components/RNTOption';
 import * as React from 'react';
 import {useCallback, useContext, useState} from 'react';
+<<<<<<< Upstream
+import {Modal, Platform, StyleSheet, Switch, View} from 'react-native';
+||||||| base
+import {Modal, Platform, StyleSheet, Switch, Text, View} from 'react-native';
+=======
 import {Modal, Platform, StyleSheet, Switch, Text, TextInput, View} from 'react-native';
+>>>>>>> Override
 
 const animationTypes = ['slide', 'none', 'fade'] as const;
 const presentationStyles = [
@@ -333,14 +339,14 @@ function ModalPresentation() {
         onOrientationChange={onOrientationChange}>
         <View style={styles.modalContainer}>
           <View style={[styles.modalInnerContainer, {backgroundColor}]}>
-            <Text testID="modal_animationType_text">
+            <RNTesterText testID="modal_animationType_text">
               This modal was presented with animationType: '
               {props.animationType}'
-            </Text>
+            </RNTesterText>
             {Platform.OS === 'ios' ? (
-              <Text>
+              <RNTesterText>
                 It is currently displayed in {currentOrientation} mode.
-              </Text>
+              </RNTesterText>
             ) : null}
             <RNTesterButton
               onPress={() => setProps(prev => ({...prev, visible: false}))}>

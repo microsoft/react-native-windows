@@ -74,7 +74,7 @@ function getSize(
 
 function getSizeWithHeaders(
   uri: string,
-  headers: {[string]: string, ...},
+  headers: {[key: string]: string, ...},
   success?: (width: number, height: number) => void,
   failure?: (error: unknown) => void,
   // $FlowFixMe[unclear-type]
@@ -116,8 +116,16 @@ function prefetch(url: string): Promise<boolean> {
 
 async function queryCache(
   urls: Array<string>,
+<<<<<<< Upstream
+): Promise<{[key: string]: 'memory' | 'disk' | 'disk/memory', ...}> {
+  return NativeImageLoaderIOS.queryCache(urls);
+||||||| base
+): Promise<{[string]: 'memory' | 'disk' | 'disk/memory', ...}> {
+  return NativeImageLoaderIOS.queryCache(urls);
+=======
 ): Promise<{[string]: 'memory' | 'disk' | 'disk/memory', ...}> {
   return NativeImageLoaderWin32.queryCache(urls);
+>>>>>>> Override
 }
 
 const EMPTY_IMAGE_SOURCE = {

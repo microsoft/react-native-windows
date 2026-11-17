@@ -188,9 +188,113 @@ class Alert {
     keyboardType?: string,
     options?: AlertOptions,
   ): void {
+<<<<<<< Upstream
+    if (Platform.OS === 'ios') {
+      let callbacks: Array<?(value: string) => unknown> = [];
+      const buttons = [];
+      let cancelButtonKey;
+      let destructiveButtonKey;
+      let preferredButtonKey;
+      if (typeof callbackOrButtons === 'function') {
+        callbacks = [callbackOrButtons];
+      } else if (Array.isArray(callbackOrButtons)) {
+        callbackOrButtons.forEach((btn, index) => {
+          callbacks[index] =
+            btn.onPress == null ? null : value => btn.onPress?.(value);
+          if (btn.style === 'cancel') {
+            cancelButtonKey = String(index);
+          } else if (btn.style === 'destructive') {
+            destructiveButtonKey = String(index);
+          }
+          if (btn.isPreferred === true) {
+            preferredButtonKey = String(index);
+          }
+          if (
+            (btn.text != null && btn.text !== '') ||
+            index < callbackOrButtons.length - 1
+          ) {
+            const btnDef: {[key: number]: string} = {};
+            btnDef[index] = btn.text || '';
+            buttons.push(btnDef);
+          }
+        });
+      }
+
+      alertWithArgs(
+        {
+          title: title || '',
+          message: message != null && message !== '' ? message : undefined,
+          buttons,
+          type: type || undefined,
+          defaultValue,
+          cancelButtonKey,
+          destructiveButtonKey,
+          preferredButtonKey,
+          keyboardType,
+          userInterfaceStyle: options?.userInterfaceStyle || undefined,
+        },
+        (id, value) => {
+          const cb = callbacks[id];
+          cb && cb(value);
+        },
+      );
+    }
+||||||| base
+    if (Platform.OS === 'ios') {
+      let callbacks: Array<?(value: string) => unknown> = [];
+      const buttons = [];
+      let cancelButtonKey;
+      let destructiveButtonKey;
+      let preferredButtonKey;
+      if (typeof callbackOrButtons === 'function') {
+        callbacks = [callbackOrButtons];
+      } else if (Array.isArray(callbackOrButtons)) {
+        callbackOrButtons.forEach((btn, index) => {
+          callbacks[index] =
+            btn.onPress == null ? null : value => btn.onPress?.(value);
+          if (btn.style === 'cancel') {
+            cancelButtonKey = String(index);
+          } else if (btn.style === 'destructive') {
+            destructiveButtonKey = String(index);
+          }
+          if (btn.isPreferred === true) {
+            preferredButtonKey = String(index);
+          }
+          if (
+            (btn.text != null && btn.text !== '') ||
+            index < callbackOrButtons.length - 1
+          ) {
+            const btnDef: {[number]: string} = {};
+            btnDef[index] = btn.text || '';
+            buttons.push(btnDef);
+          }
+        });
+      }
+
+      alertWithArgs(
+        {
+          title: title || '',
+          message: message != null && message !== '' ? message : undefined,
+          buttons,
+          type: type || undefined,
+          defaultValue,
+          cancelButtonKey,
+          destructiveButtonKey,
+          preferredButtonKey,
+          keyboardType,
+          userInterfaceStyle: options?.userInterfaceStyle || undefined,
+        },
+        (id, value) => {
+          const cb = callbacks[id];
+          cb && cb(value);
+        },
+      );
+    }
+=======
     throw new Error(
       'Alert.prompt not currently implemented in react-native-windows',
     );
+>>>>>>> Override
   }
 }
 
