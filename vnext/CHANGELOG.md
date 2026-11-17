@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 12 Nov 2026 22:36:45 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 17 Nov 2026 00:19:48 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1065
+
+Tue, 17 Nov 2026 00:19:48 GMT
+
+### Changes
+
+- Fix a use-after-free when a dispatch queue is destroyed while a task is being posted to it (tiagoma@microsoft.com)
 
 ## 0.0.0-canary.1064
 
