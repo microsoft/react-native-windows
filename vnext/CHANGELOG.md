@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 12 Nov 2026 22:33:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 17 Nov 2026 03:16:36 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.85.3
+
+Tue, 17 Nov 2026 03:16:36 GMT
+
+### Patches
+
+- Fix a use-after-free when a dispatch queue is destroyed while a task is being posted to it (tiagoma@microsoft.com)
+- Store the Hermes bytecode cache in an app-specific folder (anuagra@microsoft.com)
+- Update node-api-jsi to pick up the BigInt::toString fix for values larger than 64 bits (anuagra@microsoft.com)
+- Follow the Fetch standard when handling HTTP redirects (anuagra@microsoft.com)
 
 ## 0.85.2
 
