@@ -10,11 +10,62 @@ import CustomTextInputSpec, {
   Commands,
   CustomTextInputProps,
 } from './CustomTextInputSpec';
-import {
-  findNodeHandle,
-  InternalTextInputWithCustomType,
-} from 'react-native-windows';
+import {InternalTextInputWithCustomType} from 'react-native-windows';
 export {Commands as CustomTextInputCommands};
+
+function useRefEffect<Instance>(
+  refEffect: (current: Instance) => void | (() => void),
+): React.Ref<Instance> {
+  const cleanupRef = React.useRef<void | (() => void)>(undefined);
+  return React.useCallback(
+    (current: Instance) => {
+      cleanupRef.current?.();
+      cleanupRef.current = refEffect(current);
+      return () => {
+        cleanupRef.current?.();
+        cleanupRef.current = undefined;
+      };
+    },
+    [refEffect],
+  );
+}
+
+function useMergeRefs<Instance>(
+  // @ts-expect-error
+  ...refs
+): React.Ref<Instance> {
+  const refEffect = React.useCallback(
+    (current: Instance) => {
+      const cleanups: ReadonlyArray<void | (() => void)> = refs.map(ref => {
+        if (ref == null) {
+          return undefined;
+        } else {
+          if (typeof ref === 'function') {
+            const cleanup: void | (() => void) = ref(current);
+            return typeof cleanup === 'function'
+              ? cleanup
+              : () => {
+                  ref(null);
+                };
+          } else {
+            ref.current = current;
+            return () => {
+              ref.current = null;
+            };
+          }
+        }
+      });
+
+      return () => {
+        for (const cleanup of cleanups) {
+          cleanup?.();
+        }
+      };
+    },
+    [...refs], // eslint-disable-line react-hooks/exhaustive-deps
+  );
+  return useRefEffect(refEffect);
+}
 
 export interface ICustomTextInput {
   setFormattedText(delta: string): void;
@@ -25,52 +76,6 @@ export type CustomTextInputInstance = React.ComponentRef<
   typeof CustomTextInputSpec
 > &
   ICustomTextInput;
-
-function useCustomTextInputNativeRefForwarded(
-  ref: React.ForwardedRef<CustomTextInputInstance>,
-  nativeRef: React.RefObject<any>,
-) {
-  const nativeRefHandle = React.useRef<number | null>(null);
-  React.useLayoutEffect(() => {
-    if (nativeRef.current) {
-      nativeRefHandle.current = findNodeHandle(nativeRef.current);
-      if (!nativeRefHandle.current) {
-        console.warn(
-          'findNodeHandle returned null for nativeRef; imperative CustomTextInput methods will not work',
-        );
-      }
-    } else {
-      console.warn(
-        'nativeRef is not available to findNodeHandle; imperative CustomTextInput methods will not work',
-      );
-    }
-  }, [nativeRef]);
-
-  React.useImperativeHandle(
-    ref,
-    () => {
-      if (!nativeRef.current) {
-        throw new Error(
-          'NativeCustomTextInput ref is not available to create the imperative handle',
-        );
-      }
-      return Object.assign(nativeRef.current, {
-        // PickerHost methods
-        setFormattedText: (delta: string) => {
-          if (nativeRefHandle.current) {
-            Commands.setFormattedText(nativeRef.current, delta);
-          }
-        },
-        setLightOn: (value: boolean) => {
-          if (nativeRefHandle.current) {
-            Commands.setLightOn(nativeRef.current, value);
-          }
-        },
-      });
-    },
-    [nativeRefHandle, nativeRef],
-  );
-}
 
 const InternalCustomTextInput = (
   props: React.ComponentPropsWithRef<typeof CustomTextInputSpec>,
@@ -96,8 +101,29 @@ const CustomTextInput = React.forwardRef<
     },
     ref,
   ) => {
-    const nativeRef = React.useRef(null);
-    useCustomTextInputNativeRefForwarded(ref, nativeRef);
+    const nativeRef = React.useRef<CustomTextInputInstance>(null);
+
+    const setLocalRef = React.useCallback(
+      (instance: CustomTextInputInstance | null) => {
+        nativeRef.current = instance;
+        if (instance != null) {
+          Object.assign(instance, {
+            setFormattedText: (delta: string) => {
+              Commands.setFormattedText(instance, delta);
+            },
+            setLightOn: (value: boolean) => {
+              Commands.setLightOn(instance, value);
+            },
+          });
+        }
+      },
+      [],
+    );
+
+    const forwardedRef = useMergeRefs<CustomTextInputInstance>(
+      setLocalRef,
+      ref,
+    );
 
     return (
       <InternalCustomTextInput
@@ -117,7 +143,7 @@ const CustomTextInput = React.forwardRef<
           inputMode == null ? showSoftInputOnFocus : inputMode !== 'none'
         }
         {...restProps}
-        forwardedRef={nativeRef}
+        forwardedRef={forwardedRef}
       />
     );
   },
