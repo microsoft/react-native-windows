@@ -36,9 +36,12 @@ const TextInput = mockComponent(
 // [Windows] Mirror the named export added to the TextInput implementation.
 export function InternalTextInputWithCustomType<NativeProps: {...}>(
   props: TextInputProps,
-  NativeComponent: HostComponent<NativeProps>,
+  NativeComponent: HostComponent<any>,
 ): React.Node {
-  return <NativeComponent {...props} ref={props.forwardedRef} />;
+  return (
+    // $FlowFixMe[incompatible-type]
+    <NativeComponent {...props} ref={props.forwardedRef} />
+  );
 }
 
 export default TextInput;
