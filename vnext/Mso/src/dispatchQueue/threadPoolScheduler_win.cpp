@@ -116,9 +116,13 @@ ThreadPoolSchedulerWin::~ThreadPoolSchedulerWin() noexcept {
     _Inout_ PTP_CALLBACK_INSTANCE /*instance*/,
     _Inout_opt_ PVOID context,
     _Inout_ PTP_WORK /*work*/) {
-  // The ThreadPoolSchedulerWin is alive here because m_threadPoolWork must be completed before it is destroyed.
   ThreadPoolSchedulerWin *self = static_cast<ThreadPoolSchedulerWin *>(context);
   ThreadPoolSchedulerWinContext schedulerContext(self);
+
+  // Adopt the reference that Post() took for this callback: a callback can still be pending when the last other
+  // reference goes away, e.g. when an earlier callback destroys the queue and so the scheduler. Declared after
+  // schedulerContext so that a final release here sees CurrentScheduler() == self and doesn't wait for itself.
+  Mso::CntPtr<ThreadPoolSchedulerWin> keepAlive{self, Mso::AttachTag};
 
   if (auto queue = self->m_queue.GetStrongPtr()) {
     auto endTime = std::chrono::steady_clock::now() + 100ms;
@@ -162,6 +166,7 @@ void ThreadPoolSchedulerWin::Post() noexcept {
   } while (!m_usedThreads.compare_exchange_weak(
       usedThreads, usedThreads + 1, std::memory_order_release, std::memory_order_relaxed));
 
+  AddRef(); // Owned by the callback; see WorkCallback.
   ::SubmitThreadpoolWork(m_threadPoolWork.get());
 }
 
