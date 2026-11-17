@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 Nov 2026 03:20:33 GMT",
+      "version": "0.81.41",
+      "tag": "react-native-windows_v0.81.41",
+      "comments": {
+        "patch": [
+          {
+            "author": "tiagoma@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5b814351d5fb2b1f8c7d93b3ae5946653c5ef309",
+            "comment": "Fix a use-after-free when a dispatch queue is destroyed while a task is being posted to it"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5b814351d5fb2b1f8c7d93b3ae5946653c5ef309",
+            "comment": "Store the Hermes bytecode cache in an app-specific folder"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5b814351d5fb2b1f8c7d93b3ae5946653c5ef309",
+            "comment": "Follow the Fetch standard when handling HTTP redirects"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5b814351d5fb2b1f8c7d93b3ae5946653c5ef309",
+            "comment": "Update node-api-jsi to pick up the BigInt::toString fix"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Nov 2026 21:05:13 GMT",
       "version": "0.81.40",
       "tag": "react-native-windows_v0.81.40",
