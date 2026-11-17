@@ -311,11 +311,18 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
     }
 
     if (auto requestFactory = coRequestFactory.lock()) {
+      // The factory rebuilds headers from the original arguments. Keep the Origin header set by the origin policy.
+      auto origin = coRequest.Headers().TryLookup(L"Origin");
+
       coRequest = co_await requestFactory->CreateRequest(
           HttpMethod{method}, Uri{redirectUri}, coRequest.Properties(), /*includeContent*/ !removeBody);
 
       if (!coRequest) {
         throw winrt::hresult_error{E_INVALIDARG, L"Invalid request handle"};
+      }
+
+      if (origin) {
+        coRequest.Headers().Insert(L"Origin", *origin);
       }
     } else {
       coRequest.Method(method);

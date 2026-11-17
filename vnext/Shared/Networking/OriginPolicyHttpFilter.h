@@ -59,6 +59,13 @@ class OriginPolicyHttpFilter
 
   static bool IsSimpleCorsRequest(winrt::Windows::Web::Http::HttpRequestMessage const &request) noexcept;
 
+  // Like IsSimpleCorsRequest, but for a redirected hop: uses the given method, optionally ignores the body,
+  // and ignores the User-Agent and Origin headers added by the filter chain.
+  static bool IsSimpleCorsRedirectRequest(
+      winrt::Windows::Web::Http::HttpRequestMessage const &request,
+      winrt::Windows::Web::Http::HttpMethod const &method,
+      bool includeContent) noexcept;
+
   static bool AreSafeRequestHeaders(
       winrt::Windows::Web::Http::Headers::HttpRequestHeaderCollection const &headers) noexcept;
 
@@ -91,7 +98,18 @@ class OriginPolicyHttpFilter
       winrt::Windows::Web::Http::HttpResponseMessage const &response,
       const OriginPolicy effectivePolicy) const;
 
-  OriginPolicy GetCrossOriginRedirectPolicy(winrt::Windows::Web::Http::HttpRequestMessage const &request) const;
+  // Returns the policy (Simple CORS or CORS) for a request that a redirect moved off the original origin.
+  // Uses the method and body the next hop will be sent with. Throws if the configured policy does not allow it.
+  OriginPolicy GetCrossOriginRedirectPolicy(
+      winrt::Windows::Web::Http::HttpRequestMessage const &request,
+      winrt::Windows::Web::Http::HttpMethod const &method,
+      bool includeContent) const;
+
+  // Checks a redirect of a request that started on the original origin, before the next hop is sent.
+  // Throws if the redirect must not be followed.
+  void CheckRedirectFromOriginalOrigin(
+      winrt::Windows::Web::Http::HttpRequestMessage const &request,
+      winrt::Windows::Web::Http::HttpResponseMessage const &response) const;
 
   void ValidateAllowOrigin(
       winrt::hstring const &allowedOrigin,
