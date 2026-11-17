@@ -75,7 +75,7 @@ For a primer on our codebase, see ["Repository Contents"](https://github.com/mic
 
 ## 👨‍💻 Development
 
-> **System Requirements:** Contributing to this project requires a Windows machine, see [rnw-dependencies](https://microsoft.github.io/react-native-windows/docs/next/rnw-dependencies) for more info on this and the script for installing required dependencies.
+> **System Requirements:** Contributing to this project requires a Windows machine, see [rnw-dependencies](https://microsoft.github.io/react-native-windows/docs/rnw-dependencies) for more info on this and the script for installing required dependencies.
 
 ### 🚧 Fork, Clone, Branch and Create your PR
 
