@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix a use-after-free when a dispatch queue is destroyed while a task is being posted to it",
-  "packageName": "react-native-windows",
-  "email": "tiagoma@microsoft.com",
-  "dependentChangeType": "patch"
-}

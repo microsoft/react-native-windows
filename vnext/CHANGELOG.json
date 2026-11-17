@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 Nov 2026 00:19:48 GMT",
+      "version": "0.0.0-canary.1065",
+      "tag": "react-native-windows_v0.0.0-canary.1065",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tiagoma@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4463b281c499982056d89af02a6fc99794fd2111",
+            "comment": "Fix a use-after-free when a dispatch queue is destroyed while a task is being posted to it"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 Nov 2026 22:36:45 GMT",
       "version": "0.0.0-canary.1064",
       "tag": "react-native-windows_v0.0.0-canary.1064",
