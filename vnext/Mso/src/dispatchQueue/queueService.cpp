@@ -24,7 +24,11 @@ void QueueService::Post(DispatchTask &&task) noexcept {
   VerifyElseCrashSz(task, "The task is empty");
 
   bool isShutdown = false;
-  bool shouldSchedule = false;
+
+  // Once m_mutex is released, another thread can run the task, and the task can drop the last outside
+  // reference to this queue (e.g. ActiveObjectDeleter posts a task that destroys the queue's owner); the
+  // worker then destroys the queue. Don't touch members after the unlock: keep the scheduler alive in a local.
+  Mso::CntPtr<IDispatchQueueScheduler> scheduler;
 
   {
     std::lock_guard lock{m_mutex};
@@ -35,13 +39,15 @@ void QueueService::Post(DispatchTask &&task) noexcept {
       isShutdown = m_shutdownAction.has_value();
       if (!isShutdown) {
         m_queue.Enqueue(std::move(task));
-        shouldSchedule = (m_suspendCounter == 0);
+        if (m_suspendCounter == 0) {
+          scheduler = m_scheduler;
+        }
       }
     }
   }
 
-  if (shouldSchedule) {
-    m_scheduler->Post();
+  if (scheduler) {
+    scheduler->Post();
   } else if (isShutdown) {
     CancelTask(std::move(task));
   }
@@ -150,6 +156,7 @@ void QueueService::Suspend() noexcept {
 
 void QueueService::Resume() noexcept {
   size_t postCount{0};
+  Mso::CntPtr<IDispatchQueueScheduler> scheduler; // See Post: no member access after the unlock.
 
   {
     std::lock_guard lock{m_mutex};
@@ -157,11 +164,12 @@ void QueueService::Resume() noexcept {
 
     if (--m_suspendCounter == 0) {
       postCount = m_queue.Size();
+      scheduler = m_scheduler;
     }
   }
 
   for (size_t i = 0; i < postCount; ++i) {
-    m_scheduler->Post();
+    scheduler->Post();
   }
 }
 
