@@ -265,80 +265,24 @@ const Switch: component(
       />
     );
   } else {
-<<<<<<< Upstream
-||||||| base
-    const platformProps = {
-      accessibilityState: _accessibilityState,
-      disabled,
-      onTintColor: trackColorForTrue,
-      style: StyleSheet.compose(
-        {alignSelf: 'flex-start' as const},
-        StyleSheet.compose(
-          style,
-          ios_backgroundColor == null
-            ? null
-            : {
-                backgroundColor: ios_backgroundColor,
-                borderRadius: 16,
-              },
-        ),
-      ),
-      thumbTintColor: thumbColor,
-      tintColor: trackColorForFalse,
-      value: value === true,
-    };
-
-=======
-    const platformProps = {
-      accessibilityState: _accessibilityState,
-      disabled,
-      onTintColor: trackColorForTrue,
-      style: StyleSheet.compose(
-        {height: 31, width: 51}, //#Windows 15652
-        StyleSheet.compose(
-          style,
-          ios_backgroundColor == null
-            ? null
-            : {
-                backgroundColor: ios_backgroundColor,
-                borderRadius: 16,
-              },
-        ),
-      ),
-      thumbTintColor: thumbColor,
-      tintColor: trackColorForFalse,
-      value: value === true,
-    };
-
->>>>>>> Override
     return (
       <SwitchNativeComponent
         {...restProps}
-<<<<<<< Upstream
-||||||| base
-        {...platformProps}
-=======
-        {...platformProps}
         focusable={focusable === undefined ? true : focusable} // [Windows]
         accessible={accessible === undefined ? true : accessible} // [Windows]
->>>>>>> Override
         accessibilityRole={props.accessibilityRole ?? 'switch'}
-<<<<<<< Upstream
         accessibilityState={_accessibilityState}
         disabled={disabled}
-||||||| base
-=======
         accessibilityLevel={_accessibilityLevel} // [Windows]
         accessibilityPosInSet={_accessibilityPosInSet} // [Windows]
         accessibilitySetSize={_accessibilitySetSize} // [Windows]
->>>>>>> Override
         onChange={handleChange}
         onResponderTerminationRequest={returnsFalse}
         onStartShouldSetResponder={returnsTrue}
         onTintColor={trackColorForTrue}
         ref={ref}
         style={StyleSheet.compose(
-          {alignSelf: 'flex-start' as const},
+          {height: 31, width: 51}, //#Windows 15652
           StyleSheet.compose(
             style,
             ios_backgroundColor == null

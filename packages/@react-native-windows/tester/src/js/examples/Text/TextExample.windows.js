@@ -1983,100 +1983,6 @@ const examples = [
       );
     },
   },
-<<<<<<< Upstream
-  {
-    title: 'Inline views',
-    name: 'inlineViewsBasic',
-    render(): React.Node {
-      return <TextInlineView.Basic />;
-    },
-  },
-  {
-    title: 'Inline views with line height',
-    name: 'inlineViewsLineHeight',
-    render(): React.Node {
-      return <TextInlineView.ChangeLineHeight />;
-    },
-  },
-  {
-    title: 'Inline views with multiple nested texts',
-    name: 'inlineViewsMultiple',
-    render(): React.Node {
-      return <TextInlineView.NestedTexts />;
-    },
-  },
-  {
-    title: 'Inline image/view clipped by <Text>',
-    name: 'inlineViewsClipped',
-    render(): React.Node {
-      return <TextInlineView.ClippedByText />;
-    },
-  },
-  {
-    title: 'Relayout inline image',
-    name: 'relayoutInlineImage',
-    render(): React.Node {
-      return <TextInlineView.ChangeImageSize />;
-    },
-  },
-  {
-    title: 'Relayout inline view',
-    name: 'relayoutInlineView',
-    render(): React.Node {
-      return <TextInlineView.ChangeViewSize />;
-    },
-  },
-  {
-    title: 'Relayout nested inline view',
-    name: 'relayoutNestedInlineView',
-    render(): React.Node {
-      return <TextInlineView.ChangeInnerViewSize />;
-    },
-  },
-||||||| base
-  {
-    title: 'Inline views',
-    name: 'inlineViewsBasic',
-    render(): React.Node {
-      return <TextInlineView.Basic />;
-    },
-  },
-  {
-    title: 'Inline views with multiple nested texts',
-    name: 'inlineViewsMultiple',
-    render(): React.Node {
-      return <TextInlineView.NestedTexts />;
-    },
-  },
-  {
-    title: 'Inline image/view clipped by <Text>',
-    name: 'inlineViewsClipped',
-    render(): React.Node {
-      return <TextInlineView.ClippedByText />;
-    },
-  },
-  {
-    title: 'Relayout inline image',
-    name: 'relayoutInlineImage',
-    render(): React.Node {
-      return <TextInlineView.ChangeImageSize />;
-    },
-  },
-  {
-    title: 'Relayout inline view',
-    name: 'relayoutInlineView',
-    render(): React.Node {
-      return <TextInlineView.ChangeViewSize />;
-    },
-  },
-  {
-    title: 'Relayout nested inline view',
-    name: 'relayoutNestedInlineView',
-    render(): React.Node {
-      return <TextInlineView.ChangeInnerViewSize />;
-    },
-  },
-=======
   // [Windows - Paper doesn't support Views in Text while Fabric does
   ...(global.RN$Bridgeless === true
     ? [
@@ -2085,6 +1991,13 @@ const examples = [
           name: 'inlineViewsBasic',
           render(): React.Node {
             return <TextInlineView.Basic />;
+          },
+        },
+        {
+          title: 'Inline views with line height',
+          name: 'inlineViewsLineHeight',
+          render(): React.Node {
+            return <TextInlineView.ChangeLineHeight />;
           },
         },
         {
@@ -2126,7 +2039,6 @@ const examples = [
       ]
     : []),
   // Windows]
->>>>>>> Override
   {
     title: 'Text shadow',
     name: 'textShadow',

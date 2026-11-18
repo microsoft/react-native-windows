@@ -27,21 +27,13 @@ const ToggleDefaultPaddingExample = (): React.Node => {
 
   return (
     <View>
-<<<<<<< Upstream
-      <ExampleTextInput style={hasPadding ? {padding: 0} : null} />
-      <RNTesterText onPress={() => setHasPadding(!hasPadding)}>
-        Toggle padding
-      </RNTesterText>
-||||||| base
-      <ExampleTextInput style={hasPadding ? {padding: 0} : null} />
-      <Text onPress={() => setHasPadding(!hasPadding)}>Toggle padding</Text>
-=======
       <ExampleTextInput
         style={hasPadding ? {padding: 0} : null}
         testID="textinput-padding"
       />
-      <Text onPress={() => setHasPadding(!hasPadding)}>Toggle padding</Text>
->>>>>>> Override
+      <RNTesterText onPress={() => setHasPadding(!hasPadding)}>
+        Toggle padding
+      </RNTesterText>
     </View>
   );
 };

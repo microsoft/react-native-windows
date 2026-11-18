@@ -8,14 +8,8 @@
  * @format
  */
 
-<<<<<<< Upstream
-||||||| base
-import type {ViewProps} from '../../Components/View/ViewPropTypes';
-=======
 'use strict';
 
-import type {ViewProps} from '../../Components/View/ViewPropTypes';
->>>>>>> Override
 import type {LogLevel} from '../Data/LogBoxLog';
 
 import SafeAreaView from '../../../src/private/components/safeareaview/SafeAreaView_INTERNAL_DO_NOT_USE';

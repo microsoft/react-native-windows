@@ -339,7 +339,6 @@ function PressableDisabled() {
   );
 }
 
-<<<<<<< Upstream
 function RoundedPressableExample() {
   return (
     <View>
@@ -357,8 +356,6 @@ function RoundedPressableExample() {
   );
 }
 
-||||||| base
-=======
 function PressableHoverStyle() {
   const [hovered, setHovered] = useState(false);
   return (
@@ -525,7 +522,6 @@ function PressWithKeyCapture() {
   );
 }
 
->>>>>>> Override
 const styles = StyleSheet.create({
   row: {
     justifyContent: 'center',

@@ -19,13 +19,7 @@ import {RNTesterThemeContext} from '../../components/RNTesterTheme';
 import RNTOption from '../../components/RNTOption';
 import * as React from 'react';
 import {useCallback, useContext, useState} from 'react';
-<<<<<<< Upstream
-import {Modal, Platform, StyleSheet, Switch, View} from 'react-native';
-||||||| base
-import {Modal, Platform, StyleSheet, Switch, Text, View} from 'react-native';
-=======
-import {Modal, Platform, StyleSheet, Switch, Text, TextInput, View} from 'react-native';
->>>>>>> Override
+import {Modal, Platform, StyleSheet, Switch, TextInput, View} from 'react-native';
 
 const animationTypes = ['slide', 'none', 'fade'] as const;
 const presentationStyles = [

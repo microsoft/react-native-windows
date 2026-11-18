@@ -8,14 +8,6 @@
   "baseVersion": "0.90.0-nightly-20261110-9a3047391",
   "overrides": [
     {
-      "type": "copy",
-      "file": "js/examples/ContentURLAndroid/ContentURLAndroid.js",
-      "baseFile": "packages/rn-tester/js/examples/ContentURLAndroid/ContentURLAndroid.js",
-      "baseVersion": "0.89.0-nightly-20261102-47a9917ac",
-      "baseHash": "baffb5745f106aca0087c4d9e31881ca8b0066df",
-      "issue": 14844
-    },
-    {
       "type": "derived",
       "file": "src/js/components/TextInlineView.windows.js",
       "baseFile": "packages/rn-tester/js/components/TextInlineView.js",
