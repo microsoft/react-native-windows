@@ -11,8 +11,12 @@
 import type {ElementRef} from 'react';
 
 // @ts-ignore
-import {TextInputViewSpec, TextInputProps, HostComponent} from 'react-native';
-import {type NativeSyntheticEvent} from 'react-native';
+import {
+  TextInputViewSpec,
+  TextInputProps,
+  HostComponent,
+} from 'react-native-windows';
+import {type NativeSyntheticEvent} from 'react-native-windows';
 
 // @ts-ignore
 const NativeComponentRegistry = require('react-native/Libraries/NativeComponent/NativeComponentRegistry');
