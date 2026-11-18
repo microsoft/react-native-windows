@@ -358,6 +358,19 @@
       "file": "src-win/IntegrationTests/XHRTest.js"
     },
     {
+      "type": "patch",
+      "file": "src-win/jest/mocks/TextInput.js",
+      "baseFile": "packages/react-native/jest/mocks/TextInput.js",
+      "baseHash": "ac09e04652495b4f74bbb258b39b07e81d4bb903"
+    },
+    {
+      "type": "copy",
+      "file": "src-win/jest/setup.js",
+      "baseFile": "packages/react-native/jest/setup.js",
+      "baseHash": "ecbd0b61c05ec4e048a5850c7bacb8fa1689efdb",
+      "issue": 14929
+    },
+    {
       "type": "platform",
       "file": "src-win/Libraries/__tests__/ViewWindows-test.js"
     },
@@ -495,6 +508,12 @@
       "file": "src-win/Libraries/Components/TextInput/TextInput.flow.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.flow.js",
       "baseHash": "84abfdcd351d4ae44d38852a76d43297faa500a3"
+    },
+    {
+      "type": "patch",
+      "file": "src-win/Libraries/Components/TextInput/TextInput.d.ts",
+      "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.d.ts",
+      "baseHash": "4f2ccbba64474d2bad61eadcc0c843c21a0165af"
     },
     {
       "type": "patch",

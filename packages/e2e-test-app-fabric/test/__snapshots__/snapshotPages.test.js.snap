@@ -10985,10 +10985,11 @@ exports[`snapshotAllPages Custom TextInput component Example 1`] = `
   <CustomTextInput
     accessibilityLabel="Custom TextInput"
     accessible={true}
-    focusable={true}
-    mostRecentEventCount={0}
+    allowFontScaling={true}
+    forwardedRef={[Function]}
     onChange={[Function]}
-    onSelectionChange={[Function]}
+    onChangeText={[Function]}
+    rejectResponderTermination={true}
     style={
       {
         "borderWidth": 1,
@@ -10996,7 +10997,8 @@ exports[`snapshotAllPages Custom TextInput component Example 1`] = `
       }
     }
     testID="custom-textinput-1"
-    text="hello"
+    underlineColorAndroid="transparent"
+    value="hello"
   />
   <Text
     style={
@@ -11011,10 +11013,11 @@ exports[`snapshotAllPages Custom TextInput component Example 1`] = `
   />
   <CustomTextInput
     accessible={true}
-    focusable={true}
-    mostRecentEventCount={0}
-    onChange={[Function]}
-    onSelectionChange={[Function]}
+    allowFontScaling={true}
+    defaultValue="default value"
+    forwardedRef={[Function]}
+    onChangeText={[Function]}
+    rejectResponderTermination={true}
     style={
       {
         "borderWidth": 1,
@@ -11022,7 +11025,7 @@ exports[`snapshotAllPages Custom TextInput component Example 1`] = `
       }
     }
     testID="custom-textinput-default"
-    text="default value"
+    underlineColorAndroid="transparent"
   />
   <Text
     style={
@@ -11037,10 +11040,9 @@ exports[`snapshotAllPages Custom TextInput component Example 1`] = `
   />
   <CustomTextInput
     accessible={true}
-    focusable={true}
-    mostRecentEventCount={0}
-    onChange={[Function]}
-    onSelectionChange={[Function]}
+    allowFontScaling={true}
+    forwardedRef={[Function]}
+    rejectResponderTermination={true}
     style={
       {
         "borderWidth": 1,
@@ -11048,14 +11050,15 @@ exports[`snapshotAllPages Custom TextInput component Example 1`] = `
       }
     }
     testID="custom-textinput-fixed"
-    text="fixed"
+    underlineColorAndroid="transparent"
+    value="fixed"
   />
   <CustomTextInput
     accessible={true}
-    focusable={true}
-    mostRecentEventCount={0}
-    onChange={[Function]}
-    onSelectionChange={[Function]}
+    allowFontScaling={true}
+    defaultValue="set content with button"
+    forwardedRef={[Function]}
+    rejectResponderTermination={true}
     style={
       {
         "borderWidth": 1,
@@ -11063,7 +11066,7 @@ exports[`snapshotAllPages Custom TextInput component Example 1`] = `
       }
     }
     testID="custom-textinput-set-formatted-text"
-    text="set content with button"
+    underlineColorAndroid="transparent"
   />
   <View
     accessibilityRole="button"

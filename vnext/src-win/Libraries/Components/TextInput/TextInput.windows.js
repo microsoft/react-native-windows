@@ -8,6 +8,7 @@
  * @format
  */
 
+import type {HostComponent} from '../../../src/private/types/HostComponent'; // [Windows]
 import type {HostInstance} from '../../../src/private/types/HostInstance';
 import type {TextStyle} from '../../StyleSheet/StyleSheetTypes';
 import type {
@@ -260,7 +261,11 @@ function useTextInputStateSynchronization({
   return {setLastNativeSelection, setLastNativeText};
 }
 
-function InternalTextInput(props: TextInputProps): React.Node {
+// [Windows] Add NativeComponent arg, to make it easier to create TextInput overrides and rename function and add export
+export function InternalTextInputWithCustomType<NativeProps: {...}>(
+  props: TextInputProps,
+  NativeComponent: HostComponent<NativeProps>,
+): React.Node {
   const {
     'aria-busy': ariaBusy,
     'aria-checked': ariaChecked,
@@ -812,7 +817,7 @@ function InternalTextInput(props: TextInputProps): React.Node {
       /* $FlowFixMe[incompatible-type-arg] the types for WindowsTextInput don't
        * match up exactly with the props for TextInput. This will need to get
        * fixed */
-      <WindowsTextInput
+      <NativeComponent
         // $FlowFixMe[incompatible-type] - Figure out imperative + forward refs.
         ref={ref}
         {...props}
@@ -856,6 +861,10 @@ function InternalTextInput(props: TextInputProps): React.Node {
     <TextAncestor.Provider value={true}>{textInput}</TextAncestor.Provider>
   );
 }
+
+// [Windows] Use WindowsTextInput as the native component for InternalTextInput.
+const InternalTextInput = (props: TextInputProps): React.Node =>
+  InternalTextInputWithCustomType(props, WindowsTextInput);
 
 const enterKeyHintToReturnTypeMap = {
   done: 'done',

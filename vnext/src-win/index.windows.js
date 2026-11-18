@@ -450,6 +450,10 @@ module.exports = {
     return require('./Libraries/Components/TextInput/WindowsTextInputNativeComponent')
       .__INTERNAL_VIEW_CONFIG;
   },
+  get InternalTextInputWithCustomType() {
+    return require('./Libraries/Components/TextInput/TextInput')
+      .InternalTextInputWithCustomType;
+  },
 } as ReactNativePublicAPI;
 
 // `Touchable` has been removed from the public API types, but remains
