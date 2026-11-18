@@ -60,7 +60,8 @@ class OriginPolicyHttpFilter
   static bool IsSimpleCorsRequest(winrt::Windows::Web::Http::HttpRequestMessage const &request) noexcept;
 
   // Like IsSimpleCorsRequest, but for a redirected hop: uses the given method, optionally ignores the body,
-  // and ignores the User-Agent and Origin headers added by the filter chain.
+  // ignores the User-Agent and Origin headers added by the filter chain, and ignores the credential headers
+  // (Authorization, Cookie, Cookie2) the redirect filter removes before a cross-origin hop.
   static bool IsSimpleCorsRedirectRequest(
       winrt::Windows::Web::Http::HttpRequestMessage const &request,
       winrt::Windows::Web::Http::HttpMethod const &method,
@@ -104,6 +105,12 @@ class OriginPolicyHttpFilter
       winrt::Windows::Web::Http::HttpRequestMessage const &request,
       winrt::Windows::Web::Http::HttpMethod const &method,
       bool includeContent) const;
+
+  // Throws if a redirect to nextUri breaks the scheme rules ValidateRequest applies to direct requests.
+  void ValidateRedirectScheme(
+      winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable> const
+          &props,
+      winrt::Windows::Foundation::Uri const &nextUri) const;
 
   // Checks a redirect of a request that started on the original origin, before the next hop is sent.
   // Throws if the redirect must not be followed.

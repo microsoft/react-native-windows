@@ -719,6 +719,11 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
     if ((!callerSetUserAgent && boost::iequals(header.Key(), L"User-Agent")) || boost::iequals(header.Key(), L"Origin"))
       continue;
 
+    // The redirect filter removes these before sending a hop to another origin.
+    if (boost::iequals(header.Key(), L"Authorization") || boost::iequals(header.Key(), L"Cookie") ||
+        boost::iequals(header.Key(), L"Cookie2"))
+      continue;
+
     if (s_simpleCorsRequestHeaderNames.find(header.Key().c_str()) == s_simpleCorsRequestHeaderNames.cend())
       return false;
   }
@@ -762,6 +767,19 @@ OriginPolicy OriginPolicyHttpFilter::GetCrossOriginRedirectPolicy(
   }
 }
 
+void OriginPolicyHttpFilter::ValidateRedirectScheme(IMap<hstring, IInspectable> const &props, Uri const &nextUri)
+    const {
+  if (m_origin.SchemeName() == nextUri.SchemeName())
+    return;
+
+  // Same scheme rules as ValidateRequest applies to a direct request.
+  auto configuredPolicy = static_cast<OriginPolicy>(props.Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
+  if (configuredPolicy == OriginPolicy::CrossOriginResourceSharing ||
+      (configuredPolicy == OriginPolicy::SimpleCrossOriginResourceSharing &&
+       GetRuntimeOptionBool("Http.BlockMixedContentSimpleCors")))
+    throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
+}
+
 void OriginPolicyHttpFilter::CheckRedirectFromOriginalOrigin(
     HttpRequestMessage const &request,
     HttpResponseMessage const &response) const {
@@ -770,10 +788,18 @@ void OriginPolicyHttpFilter::CheckRedirectFromOriginalOrigin(
   auto props = request.Properties();
   auto nextUri = Uri{response.Headers().Location().AbsoluteUri()};
 
-  if (!IsSameOrigin(m_origin, request.RequestUri())) {
-    // This hop already left the original origin. Its redirect response must pass CORS before it is followed.
+  // RedirectHttpFilter does not follow these redirects and returns the response as is.
+  auto nextScheme = nextUri.SchemeName();
+  if ((nextScheme != L"http" && nextScheme != L"https") ||
+      (request.RequestUri().SchemeName() == L"https" && nextScheme == L"http"))
+    return;
+
+  if (props.HasKey(L"CrossOriginRedirect") || !IsSameOrigin(m_origin, request.RequestUri())) {
+    // The chain already left the original origin. Every later redirect response must pass CORS before it is
+    // followed, even when this hop is back on the original origin.
     auto controlValues = ExtractAccessControlValues(response.Headers());
     ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, props);
+    ValidateRedirectScheme(props, nextUri);
     return;
   }
 
@@ -795,6 +821,7 @@ void OriginPolicyHttpFilter::CheckRedirectFromOriginalOrigin(
   }
 
   GetCrossOriginRedirectPolicy(request, method, includeContent);
+  ValidateRedirectScheme(props, nextUri);
 
   props.Insert(L"CrossOriginRedirect", winrt::box_value(true));
 
