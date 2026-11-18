@@ -1282,6 +1282,56 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     Assert::AreEqual(size_t{1}, m_sentRequests.size());
   } // SameOriginPolicyHttpsToHttpRedirectIsReturnedAsIs
 
+  // A cross-origin hop is not allowed to a URL that includes credentials.
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsSameOriginToCrossOriginRedirectWithUrlCredentialsFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsSameOriginToCrossOriginRedirectWithUrlCredentialsFails) {
+    ServerParams serverArgs(s_mockServerHost);
+    ServerParams redirServerArgs(s_redirectServerHost);
+
+    serverArgs.ResponseStatus = HttpStatusCode::Found;
+    serverArgs.ResponseHeaders[s_location] = L"http://user:pass@" + redirServerArgs.Host;
+
+    redirServerArgs.ResponseStatus = HttpStatusCode::Accepted;
+    redirServerArgs.ResponseHeaders[s_accessControlAllowOrigin] = serverArgs.WideUrl;
+
+    ClientParams clientArgs(L"GET", {{L"Content-Type", L"text/plain"}});
+
+    SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, false /*shouldSucceed*/);
+    Assert::AreEqual(size_t{0}, CountSentRequests(redirServerArgs.Host));
+  } // FullCorsSameOriginToCrossOriginRedirectWithUrlCredentialsFails
+
+  // A redirect that is not followed must not change how the returned redirect response is validated.
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginHttpsToHttpRedirectIsReturnedAsIs)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginHttpsToHttpRedirectIsReturnedAsIs) {
+    ServerParams serverArgs(s_mockServerHost);
+    serverArgs.WideUrl = L"https://" + serverArgs.Host;
+    serverArgs.Url = winrt::to_string(serverArgs.WideUrl);
+    ServerParams redirServerArgs(s_redirectServerHost);
+    redirServerArgs.WideUrl = L"https://" + redirServerArgs.Host;
+    redirServerArgs.Url = winrt::to_string(redirServerArgs.WideUrl);
+
+    serverArgs.ResponseStatus = HttpStatusCode::Found;
+    serverArgs.ResponseHeaders[s_location] = redirServerArgs.WideUrl;
+
+    // https://B -> http://B is not followed, so B's redirect response is the final response.
+    redirServerArgs.ResponseStatus = HttpStatusCode::Found;
+    redirServerArgs.ResponseHeaders[s_location] = L"http://" + redirServerArgs.Host + L"/insecure";
+    redirServerArgs.ResponseHeaders[s_accessControlAllowOrigin] = serverArgs.WideUrl;
+
+    ClientParams clientArgs(L"GET", {{L"Content-Type", L"text/plain"}});
+
+    SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, true /*shouldSucceed*/);
+    Assert::AreEqual(size_t{1}, CountSentRequests(redirServerArgs.Host));
+  } // FullCorsCrossOriginHttpsToHttpRedirectIsReturnedAsIs
+
   // Redirects a cross origin request to a cross origin request on the same server.
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToCrossOriginRedirectSucceeds)
   // Seems to redirect to exact same resource. Implement second resource in same server.

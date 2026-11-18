@@ -794,6 +794,10 @@ void OriginPolicyHttpFilter::CheckRedirectFromOriginalOrigin(
       (request.RequestUri().SchemeName() == L"https" && nextScheme == L"http"))
     return;
 
+  // See https://fetch.spec.whatwg.org/#http-redirect-fetch
+  if (!IsSameOrigin(m_origin, nextUri) && (!nextUri.UserName().empty() || !nextUri.Password().empty()))
+    throw hresult_error{E_INVALIDARG, L"A cross-origin redirect URL can not include credentials"};
+
   if (props.HasKey(L"CrossOriginRedirect") || !IsSameOrigin(m_origin, request.RequestUri())) {
     // The chain already left the original origin. Every later redirect response must pass CORS before it is
     // followed, even when this hop is back on the original origin.
