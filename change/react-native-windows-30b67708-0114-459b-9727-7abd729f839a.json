@@ -1,5 +1,5 @@
 {
-  "type": "pre-release",
+  "type": "prerelease",
   "comment": "Export JS helpers to override TextInput component",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
