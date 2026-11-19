@@ -717,7 +717,7 @@ exports[`TextInput Tests TextInputs can autocomplete, address country 1`] = `
   "Visual Tree": {
     "Comment": "textinput-autocomplete-address-country",
     "Offset": "0, 0, 0",
-    "Size": "518, 28",
+    "Size": "518, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -873,7 +873,7 @@ exports[`TextInput Tests TextInputs can autocomplete, one-time-code 1`] = `
   "Visual Tree": {
     "Comment": "textinput-autocomplete-one-time-code",
     "Offset": "0, 0, 0",
-    "Size": "518, 29",
+    "Size": "518, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1158,12 +1158,12 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "518, 33",
+        "Size": "518, 32",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "518, 33",
+            "Size": "518, 32",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1761,7 +1761,7 @@ exports[`TextInput Tests TextInputs can be set to not editable 2 1`] = `
   "Visual Tree": {
     "Comment": "textinput-not-editable2",
     "Offset": "0, 0, 0",
-    "Size": "518, 28",
+    "Size": "518, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1836,7 +1836,7 @@ exports[`TextInput Tests TextInputs can clear on submit 1`] = `
   "Visual Tree": {
     "Comment": "textinput-clear-on-submit",
     "Offset": "0, 0, 0",
-    "Size": "518, 33",
+    "Size": "518, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1986,7 +1986,7 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
   "Visual Tree": {
     "Comment": "textinput-clear-on-submit-2",
     "Offset": "0, 0, 0",
-    "Size": "518, 32",
+    "Size": "518, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2757,7 +2757,7 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
   "Visual Tree": {
     "Comment": "textinput-carethidden",
     "Offset": "0, 0, 0",
-    "Size": "518, 33",
+    "Size": "518, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3147,7 +3147,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, next 1`] = 
   "Visual Tree": {
     "Comment": "textinput-return-next",
     "Offset": "0, 0, 0",
-    "Size": "518, 33",
+    "Size": "518, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3303,7 +3303,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, previous 1`
   "Visual Tree": {
     "Comment": "textinput-return-previous",
     "Offset": "0, 0, 0",
-    "Size": "518, 32",
+    "Size": "518, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3381,7 +3381,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, search 1`] 
   "Visual Tree": {
     "Comment": "textinput-return-search",
     "Offset": "0, 0, 0",
-    "Size": "518, 32",
+    "Size": "518, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3459,7 +3459,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = 
   "Visual Tree": {
     "Comment": "textinput-return-send",
     "Offset": "0, 0, 0",
-    "Size": "518, 33",
+    "Size": "518, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4105,7 +4105,7 @@ exports[`TextInput Tests TextInputs can have inline images 1`] = `
   "Visual Tree": {
     "Comment": "textinput-inline-images",
     "Offset": "0, 0, 0",
-    "Size": "518, 32",
+    "Size": "518, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4261,7 +4261,7 @@ exports[`TextInput Tests TextInputs can have inline images, drawableLeft and dra
   "Visual Tree": {
     "Comment": "textinput-inline-images-2",
     "Offset": "0, 0, 0",
-    "Size": "518, 33",
+    "Size": "518, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4339,7 +4339,7 @@ exports[`TextInput Tests TextInputs can have shadows 1`] = `
   "Visual Tree": {
     "Comment": "textinput-shadow",
     "Offset": "0, 0, 0",
-    "Size": "518, 32",
+    "Size": "518, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4951,7 +4951,7 @@ exports[`TextInput Tests TextInputs can select text on focus 1`] = `
   "Visual Tree": {
     "Comment": "select-text-on-focus",
     "Offset": "0, 0, 0",
-    "Size": "518, 33",
+    "Size": "518, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5029,7 +5029,7 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to false 1`] = `
   "Visual Tree": {
     "Comment": "textinput-readonly-false",
     "Offset": "0, 0, 0",
-    "Size": "518, 29",
+    "Size": "518, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5259,7 +5259,7 @@ exports[`TextInput Tests TextInputs have a custom background color 1`] = `
   "Visual Tree": {
     "Comment": "textinput-custom-background-color",
     "Offset": "0, 0, 0",
-    "Size": "518, 33",
+    "Size": "518, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5414,7 +5414,7 @@ exports[`TextInput Tests TextInputs have a custom placeholder text color 1`] = `
   "Visual Tree": {
     "Comment": "textinput-custom-placeholder-color",
     "Offset": "0, 0, 0",
-    "Size": "518, 33",
+    "Size": "518, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5569,7 +5569,7 @@ exports[`TextInput Tests TextInputs have a custom underline color 1`] = `
   "Visual Tree": {
     "Comment": "textinput-custom-underline-color",
     "Offset": "0, 0, 0",
-    "Size": "518, 32",
+    "Size": "518, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5647,7 +5647,7 @@ exports[`TextInput Tests TextInputs have a default placeholder text color 1`] = 
   "Visual Tree": {
     "Comment": "textinput-default-placeholder-color",
     "Offset": "0, 0, 0",
-    "Size": "518, 32",
+    "Size": "518, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5879,7 +5879,7 @@ exports[`TextInput Tests TextInputs support secure entry 1`] = `
   "Visual Tree": {
     "Comment": "textinput-password",
     "Offset": "0, 0, 0",
-    "Size": "518, 32",
+    "Size": "518, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5957,7 +5957,7 @@ exports[`TextInput Tests TextInputs support secure entry, with placeholder text 
   "Visual Tree": {
     "Comment": "textinput-password-placeholder",
     "Offset": "0, 0, 0",
-    "Size": "518, 33",
+    "Size": "518, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6052,12 +6052,12 @@ exports[`TextInput Tests TextInputs which have a searchbox role should also supp
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "518, 32",
+        "Size": "518, 33",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "518, 32",
+            "Size": "518, 33",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {

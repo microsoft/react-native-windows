@@ -406,7 +406,7 @@ jobs:
               artifactName: Snapshots - RNTesterApp-Fabric-${{ matrix.Name }}-$(System.JobAttempt)
             - output: pipelineArtifact
               displayName: 'Publish Artifact: Image Diffs'
-              condition: failed()
+              condition: and(failed(), eq(variables.DiffOutputExists, 'true'))
               targetPath: $(Build.StagingDirectory)/snapshots-image-diffs
               artifactName: Snapshots - RNTesterApp-Image-Diffs-${{ matrix.Name }}-$(System.JobAttempt)
             - output: pipelineArtifact
