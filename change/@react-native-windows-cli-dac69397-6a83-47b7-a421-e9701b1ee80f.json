@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate React Native November 10, 2026 nightly (0.90.0-nightly-20261110-9a3047391).",
-  "packageName": "@react-native-windows/cli",
-  "email": "anuagra@microsoft.com",
-  "dependentChangeType": "patch"
-}

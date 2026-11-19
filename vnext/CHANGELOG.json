@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 19 Nov 2026 22:06:43 GMT",
+      "version": "0.0.0-canary.1066",
+      "tag": "react-native-windows_v0.0.0-canary.1066",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6e8826d00b498c8a8a78fbca9d0daa53a4266973",
+            "comment": "Integrate React Native November 10, 2026 nightly (0.90.0-nightly-20261110-9a3047391)."
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.297",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Nov 2026 00:19:48 GMT",
       "version": "0.0.0-canary.1065",
       "tag": "react-native-windows_v0.0.0-canary.1065",
