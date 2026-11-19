@@ -10,10 +10,9 @@
 
 'use strict';
 
-import type {ViewProps} from '../../Components/View/ViewPropTypes';
 import type {LogLevel} from '../Data/LogBoxLog';
 
-import SafeAreaView from '../../Components/SafeAreaView/SafeAreaView';
+import SafeAreaView from '../../../src/private/components/safeareaview/SafeAreaView_INTERNAL_DO_NOT_USE';
 import View from '../../Components/View/View';
 import StyleSheet from '../../StyleSheet/StyleSheet';
 import Text from '../../Text/Text';
@@ -29,13 +28,10 @@ type Props = Readonly<{
   level: LogLevel,
 }>;
 
-const LogBoxInspectorHeaderSafeArea: React.ComponentType<ViewProps> =
-  Platform.OS === 'android' ? View : SafeAreaView;
-
 export default function LogBoxInspectorHeader(props: Props): React.Node {
   if (props.level === 'syntax') {
     return (
-      <LogBoxInspectorHeaderSafeArea style={styles[props.level]}>
+      <SafeAreaView style={styles[props.level]}>
         <View style={styles.header}>
           <View style={styles.title}>
             <Text
@@ -46,7 +42,7 @@ export default function LogBoxInspectorHeader(props: Props): React.Node {
             </Text>
           </View>
         </View>
-      </LogBoxInspectorHeaderSafeArea>
+      </SafeAreaView>
     );
   }
 
@@ -58,7 +54,7 @@ export default function LogBoxInspectorHeader(props: Props): React.Node {
   const titleText = `Log ${props.selectedIndex + 1} of ${props.total}`;
 
   return (
-    <LogBoxInspectorHeaderSafeArea style={styles[props.level]}>
+    <SafeAreaView style={styles[props.level]}>
       <View style={styles.header}>
         <LogBoxInspectorHeaderButton
           id="logbox_header_button_prev"
@@ -83,7 +79,7 @@ export default function LogBoxInspectorHeader(props: Props): React.Node {
           onPress={() => props.onSelectIndex(nextIndex)}
         />
       </View>
-    </LogBoxInspectorHeaderSafeArea>
+    </SafeAreaView>
   );
 }
 

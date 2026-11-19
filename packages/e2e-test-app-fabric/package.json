@@ -27,12 +27,12 @@
   "dependencies": {
     "@react-native-windows/automation-channel": "0.0.0-canary.1065",
     "@react-native-windows/tester": "0.0.1",
-    "@react-native/jest-preset": "0.89.0-nightly-20261102-47a9917ac",
+    "@react-native/jest-preset": "0.90.0-nightly-20261110-9a3047391",
     "@types/react": "^19.1.1",
     "@typescript-eslint/eslint-plugin": "^8.36.0",
     "@typescript-eslint/parser": "^8.36.0",
     "react": "^19.3.0",
-    "react-native": "0.89.0-nightly-20261102-47a9917ac",
+    "react-native": "0.90.0-nightly-20261110-9a3047391",
     "react-native-windows": "^0.0.0-canary.1065"
   },
   "devDependencies": {
@@ -41,11 +41,11 @@
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
-    "@react-native-community/cli": "20.0.0",
+    "@react-native-community/cli": "21.0.0-alpha.1",
     "@react-native-windows/automation": "0.0.0-canary.1065",
     "@react-native-windows/automation-commands": "0.0.0-canary.1066",
     "@react-native-windows/perf-testing": "0.0.0-canary.1042",
-    "@react-native/metro-config": "0.89.0-nightly-20261102-47a9917ac",
+    "@react-native/metro-config": "0.90.0-nightly-20261110-9a3047391",
     "@rnw-scripts/babel-node-config": "2.3.3",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.38",
