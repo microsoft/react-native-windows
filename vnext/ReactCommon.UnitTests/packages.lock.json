@@ -14,6 +14,12 @@
         "resolved": "1.8.1.8",
         "contentHash": "8ERSAJiqTgn9EEwGqWR0Sj9Pt7Cm9eYsqnjRDTj/ihopPmZsOsrLnwgGMLe9VV9+uDoKeJ1Y46WJ9zAizSkQ8g=="
       },
+      "Microsoft.JavaScript.V8.win-x64": {
+        "type": "Direct",
+        "requested": "[26.1.2, )",
+        "resolved": "26.1.2",
+        "contentHash": "fw1N9j/uj4bL/0auXpCwvK3npNfBR2Xnlb6ecxH1CUsetSguS8kVZOrdWAG/83xGeTugpkQOANEc7ZeT/p1PyA=="
+      },
       "ReactNative.V8Jsi.Windows": {
         "type": "Direct",
         "requested": "[0.79.5, )",
@@ -180,6 +186,12 @@
       }
     },
     "native,Version=v0.0/win": {
+      "Microsoft.JavaScript.V8.win-x64": {
+        "type": "Direct",
+        "requested": "[26.1.2, )",
+        "resolved": "26.1.2",
+        "contentHash": "fw1N9j/uj4bL/0auXpCwvK3npNfBR2Xnlb6ecxH1CUsetSguS8kVZOrdWAG/83xGeTugpkQOANEc7ZeT/p1PyA=="
+      },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
         "resolved": "1.0.3179.45",
@@ -196,6 +208,12 @@
       }
     },
     "native,Version=v0.0/win-arm64": {
+      "Microsoft.JavaScript.V8.win-x64": {
+        "type": "Direct",
+        "requested": "[26.1.2, )",
+        "resolved": "26.1.2",
+        "contentHash": "fw1N9j/uj4bL/0auXpCwvK3npNfBR2Xnlb6ecxH1CUsetSguS8kVZOrdWAG/83xGeTugpkQOANEc7ZeT/p1PyA=="
+      },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
         "resolved": "1.0.3179.45",
@@ -212,6 +230,12 @@
       }
     },
     "native,Version=v0.0/win-x64": {
+      "Microsoft.JavaScript.V8.win-x64": {
+        "type": "Direct",
+        "requested": "[26.1.2, )",
+        "resolved": "26.1.2",
+        "contentHash": "fw1N9j/uj4bL/0auXpCwvK3npNfBR2Xnlb6ecxH1CUsetSguS8kVZOrdWAG/83xGeTugpkQOANEc7ZeT/p1PyA=="
+      },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
         "resolved": "1.0.3179.45",
@@ -228,6 +252,12 @@
       }
     },
     "native,Version=v0.0/win-x86": {
+      "Microsoft.JavaScript.V8.win-x64": {
+        "type": "Direct",
+        "requested": "[26.1.2, )",
+        "resolved": "26.1.2",
+        "contentHash": "fw1N9j/uj4bL/0auXpCwvK3npNfBR2Xnlb6ecxH1CUsetSguS8kVZOrdWAG/83xGeTugpkQOANEc7ZeT/p1PyA=="
+      },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
         "resolved": "1.0.3179.45",

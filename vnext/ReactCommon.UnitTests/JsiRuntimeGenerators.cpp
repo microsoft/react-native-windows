@@ -2,7 +2,10 @@
 #include <JSI/ChakraRuntimeFactory.h>
 #include <jsi/jsi/test/testlib.h>
 #if defined(USE_V8)
+#include <JSI/V8AbiRuntimeHolder.h>
 #include <V8JsiRuntime.h>
+#include <stdexcept>
+#include "V8AbiTestUtils.h"
 #endif
 
 // TODO: #2730 Introduces a vcxitem for shared test code and move this
@@ -24,11 +27,20 @@ using Microsoft::ReactNative::MakeJSQueueThread;
 namespace facebook::jsi {
 std::vector<RuntimeFactory> runtimeGenerators() {
 #if defined(USE_V8)
-  return {[]() -> std::unique_ptr<Runtime> {
-    v8runtime::V8RuntimeArgs args;
+  return {
+      []() -> std::unique_ptr<Runtime> {
+        v8runtime::V8RuntimeArgs args;
 
-    return v8runtime::makeV8Runtime(std::move(args));
-  }};
+        return v8runtime::makeV8Runtime(std::move(args));
+      },
+      []() -> std::unique_ptr<Runtime> {
+        std::string error;
+        auto runtime = Microsoft::ReactNative::MakeV8AbiRuntime(LoadV8JsiAbiForTesting(), {}, error);
+        if (!runtime) {
+          throw std::runtime_error(error);
+        }
+        return runtime;
+      }};
 #else
   return {[]() -> std::unique_ptr<Runtime> {
     ChakraRuntimeArgs args{};

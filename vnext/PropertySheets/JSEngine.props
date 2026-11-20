@@ -22,6 +22,20 @@
     <V8PackageName Condition="'$(V8AppPlatform)' != 'win32'">$(V8PackageName).UWP</V8PackageName>
     <V8Package>$(NuGetPackageRoot)\$(V8PackageName).$(V8Version)</V8Package>
     <V8Platform Condition="'$(Platform)' == 'ARM64EC'">x64</V8Platform>
+
+    <!--
+      Microsoft.JavaScript.V8 provides the V8 JSI ABI (v8_jsi_abi_* C functions), selected only by the
+      ReactNative.ReactOptions/JSIEngineV8Abi property to load v8jsi2.dll. We use only its headers and consumer-side
+      sources: the functions are resolved at runtime with GetProcAddress, so the package's build targets (import lib,
+      DLL copy, source injection) are excluded.
+      The headers are identical in all RID packages, so the win-x64 package is used for all platforms.
+    -->
+    <V8AbiPackageName>Microsoft.JavaScript.V8.win-x64</V8AbiPackageName>
+    <V8AbiVersion Condition="'$(V8AbiVersion)' == ''">26.1.2</V8AbiVersion>
+    <V8AbiPackage Condition="'$(V8AbiPackage)' == '' And Exists('$(PkgMicrosoft_JavaScript_V8_win-x64)')">$(PkgMicrosoft_JavaScript_V8_win-x64)</V8AbiPackage>
+    <V8AbiPackage Condition="'$(V8AbiPackage)' == ''">$(NuGetPackageRoot)\microsoft.javascript.v8.win-x64\$(V8AbiVersion)</V8AbiPackage>
+    <V8AbiJsiDir>$(V8AbiPackage)\build\native\jsi\</V8AbiJsiDir>
+    <V8AbiIncludeDir>$(V8AbiPackage)\build\native\include\</V8AbiIncludeDir>
   </PropertyGroup>
 
 </Project>

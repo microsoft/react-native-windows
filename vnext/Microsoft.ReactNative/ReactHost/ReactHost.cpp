@@ -54,6 +54,11 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> JSIEngineV8NodeApiProperty(
   return propId;
 }
 
+winrt::Microsoft::ReactNative::ReactPropertyId<bool> JSIEngineV8AbiProperty() noexcept {
+  static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{L"ReactNative.ReactOptions", L"JSIEngineV8Abi"};
+  return propId;
+}
+
 winrt::Microsoft::ReactNative::IReactPropertyName LiveReloadEnabledProperty() noexcept {
   static winrt::Microsoft::ReactNative::IReactPropertyName propName =
       winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
@@ -163,6 +168,15 @@ void ReactOptions::SetJsiEngine(JSIEngine value) noexcept {
 
 bool ReactOptions::JsiEngineV8NodeApi() const noexcept {
   return JsiEngineV8NodeApi(Properties);
+}
+
+/*static*/ bool ReactOptions::JsiEngineV8Abi(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
+  return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(JSIEngineV8AbiProperty()).value_or(false);
+}
+
+bool ReactOptions::JsiEngineV8Abi() const noexcept {
+  return JsiEngineV8Abi(Properties);
 }
 
 /*static*/ void ReactOptions::SetUseFastRefresh(
