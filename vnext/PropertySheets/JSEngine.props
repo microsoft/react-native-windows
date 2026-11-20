@@ -29,6 +29,8 @@
       sources: the functions are resolved at runtime with GetProcAddress, so the package's build targets (import lib,
       DLL copy, source injection) are excluded.
       The headers are identical in all RID packages, so the win-x64 package is used for all platforms.
+      The V8 JSI ABI is still experimental and not yet binary-compatible across package versions: hosts must ship the
+      v8jsi2.dll from the same Microsoft.JavaScript.V8 version as V8AbiVersion.
     -->
     <V8AbiPackageName>Microsoft.JavaScript.V8.win-x64</V8AbiPackageName>
     <V8AbiVersion Condition="'$(V8AbiVersion)' == ''">26.1.2</V8AbiVersion>
