@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 20 Nov 2026 02:36:33 GMT",
+      "version": "0.81.43",
+      "tag": "react-native-windows_v0.81.43",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a4015ecb26a830dd9bf396b6ce810955125e45fd",
+            "comment": "Load v8jsi2.dll from Microsoft.JavaScript.V8 for the V8 JSI ABI mode selected by the JSIEngineV8Abi property"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Nov 2026 16:28:19 GMT",
       "version": "0.81.42",
       "tag": "react-native-windows_v0.81.42",

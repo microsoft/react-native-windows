@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Load v8jsi2.dll from Microsoft.JavaScript.V8 for the V8 JSI ABI mode selected by the JSIEngineV8Abi property",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
