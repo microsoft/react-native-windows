@@ -107,6 +107,7 @@
 #endif
 
 #if defined(USE_V8)
+#include "JSI/V8AbiRuntimeHolder.h"
 #include "JSI/V8RuntimeHolder.h"
 #include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
@@ -981,7 +982,10 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
                 enableMultiThreadSupport = Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties());
 #endif // USE_FABRIC
 
-                if (m_options.JsiEngineV8NodeApi()) {
+                if (m_options.JsiEngineV8Abi()) {
+                  devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8AbiRuntimeHolder>(
+                      devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
+                } else if (m_options.JsiEngineV8NodeApi()) {
                   devSettings->jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::V8RuntimeHolder>(
                       devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore), enableMultiThreadSupport);
                 } else {

@@ -105,9 +105,11 @@
       <Filter>jsi\jsi\test</Filter>
     </ClCompile>
     <ClCompile Include="JsiRuntimeGenerators.cpp" />
+    <ClCompile Include="V8AbiRuntimeTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="V8AbiTestUtils.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\test\testlib.h">
       <Filter>jsi\jsi\test</Filter>
     </ClInclude>

@@ -635,6 +635,7 @@
     <PackageReference Include="$(HermesPackageName)" Version="$(HermesVersion)" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
+    <PackageReference Include="$(V8AbiPackageName)" Version="$(V8AbiVersion)" Condition="'$(UseV8)' == 'true'" ExcludeAssets="all" PrivateAssets="all" GeneratePathProperty="true" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">

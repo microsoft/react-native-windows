@@ -286,6 +286,14 @@ struct ReactOptions {
   bool JsiEngineV8NodeApi() const noexcept;
   static bool JsiEngineV8NodeApi(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
 
+  //! Use the V8 JSI ABI (v8jsi2.dll from Microsoft.JavaScript.V8) when the JSI engine is V8.
+  //! Selected only by ReactNative.ReactOptions/JSIEngineV8Abi; takes precedence over JsiEngineV8NodeApi.
+  //! Ignored unless the JSI engine is V8 and the legacy (bridge) architecture is used.
+  //! The V8 JSI ABI is still experimental: ship the v8jsi2.dll from the Microsoft.JavaScript.V8 version that
+  //! react-native-win32.dll was built with (V8AbiVersion in JSEngine.props).
+  bool JsiEngineV8Abi() const noexcept;
+  static bool JsiEngineV8Abi(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
+
   //! Enable live reload to load the source bundle from the React Native packager.
   //! When the file is saved, the packager will trigger reloading.
   void SetUseLiveReload(bool enable) noexcept;

@@ -14,6 +14,12 @@
         "resolved": "0.0.0-2608.12001-35d34796",
         "contentHash": "6EirG0swfzCbfajtXtUUUFJJqi0yYzYOMRjkx0XcLB1a8qYjAhRcFdAfsNDvxPbs0ErI+6++EjBZquf3YFQZDA=="
       },
+      "Microsoft.JavaScript.V8.win-x64": {
+        "type": "Direct",
+        "requested": "[26.1.2, )",
+        "resolved": "26.1.2",
+        "contentHash": "fw1N9j/uj4bL/0auXpCwvK3npNfBR2Xnlb6ecxH1CUsetSguS8kVZOrdWAG/83xGeTugpkQOANEc7ZeT/p1PyA=="
+      },
       "Microsoft.SourceLink.GitHub": {
         "type": "Direct",
         "requested": "[1.1.1, )",
@@ -49,9 +55,9 @@
       },
       "ReactNative.V8Jsi.Windows": {
         "type": "Direct",
-        "requested": "[0.71.8, )",
-        "resolved": "0.71.8",
-        "contentHash": "ksHjshj05AMAQ/v7Wet5Dwcwn9Up2BTOIrTv1yEW7+D23FQX0yILW5Zw0bmlWtV8MEtdY611z+06U3Xvu2ygSA=="
+        "requested": "[0.79.5, )",
+        "resolved": "0.79.5",
+        "contentHash": "vALvfthnspzQRibFCGk+MgaYroVt0VHFAajjFuBIrPrLjjUp/7qynU3sJPjBoYecQVZh9YG3w1PGQUwJlxJD8w=="
       },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
@@ -171,6 +177,12 @@
       }
     },
     "native,Version=v0.0/win": {
+      "Microsoft.JavaScript.V8.win-x64": {
+        "type": "Direct",
+        "requested": "[26.1.2, )",
+        "resolved": "26.1.2",
+        "contentHash": "fw1N9j/uj4bL/0auXpCwvK3npNfBR2Xnlb6ecxH1CUsetSguS8kVZOrdWAG/83xGeTugpkQOANEc7ZeT/p1PyA=="
+      },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
         "resolved": "1.0.3179.45",
@@ -187,6 +199,12 @@
       }
     },
     "native,Version=v0.0/win-arm64": {
+      "Microsoft.JavaScript.V8.win-x64": {
+        "type": "Direct",
+        "requested": "[26.1.2, )",
+        "resolved": "26.1.2",
+        "contentHash": "fw1N9j/uj4bL/0auXpCwvK3npNfBR2Xnlb6ecxH1CUsetSguS8kVZOrdWAG/83xGeTugpkQOANEc7ZeT/p1PyA=="
+      },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
         "resolved": "1.0.3179.45",
@@ -203,6 +221,12 @@
       }
     },
     "native,Version=v0.0/win-x64": {
+      "Microsoft.JavaScript.V8.win-x64": {
+        "type": "Direct",
+        "requested": "[26.1.2, )",
+        "resolved": "26.1.2",
+        "contentHash": "fw1N9j/uj4bL/0auXpCwvK3npNfBR2Xnlb6ecxH1CUsetSguS8kVZOrdWAG/83xGeTugpkQOANEc7ZeT/p1PyA=="
+      },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
         "resolved": "1.0.3179.45",
@@ -219,6 +243,12 @@
       }
     },
     "native,Version=v0.0/win-x86": {
+      "Microsoft.JavaScript.V8.win-x64": {
+        "type": "Direct",
+        "requested": "[26.1.2, )",
+        "resolved": "26.1.2",
+        "contentHash": "fw1N9j/uj4bL/0auXpCwvK3npNfBR2Xnlb6ecxH1CUsetSguS8kVZOrdWAG/83xGeTugpkQOANEc7ZeT/p1PyA=="
+      },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
         "resolved": "1.0.3179.45",
