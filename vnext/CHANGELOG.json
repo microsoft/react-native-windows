@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 20 Nov 2026 23:52:30 GMT",
+      "version": "0.0.0-canary.1067",
+      "tag": "react-native-windows_v0.0.0-canary.1067",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "aea3f3ad1793f2bfc612244496fc76bd58b86a9e",
+            "comment": "Apply origin policy checks when a same-origin request is redirected to another origin"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Nov 2026 22:06:43 GMT",
       "version": "0.0.0-canary.1066",
       "tag": "react-native-windows_v0.0.0-canary.1066",
