@@ -138,7 +138,7 @@ const BlobImage = ({url}: BlobImageProps): React.Node => {
       accessible
     />
   ) : (
-    <Text>Object URL not created yet</Text>
+    <RNTesterText>Object URL not created yet</RNTesterText>
   );
 };
 

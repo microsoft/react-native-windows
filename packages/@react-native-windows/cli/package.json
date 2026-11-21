@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.296",
+  "version": "0.0.0-canary.297",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -41,8 +41,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
-    "@react-native-community/cli-doctor": "20.0.0",
-    "@react-native-community/cli-types": "20.0.0",
+    "@react-native-community/cli-doctor": "21.0.0-alpha.1",
+    "@react-native-community/cli-types": "21.0.0-alpha.1",
     "@rnw-scripts/eslint-config": "1.2.38",
     "@rnw-scripts/jest-unittest-config": "1.5.12",
     "@rnw-scripts/just-task": "2.3.58",
@@ -65,7 +65,7 @@
     "jest": "^29.7.0",
     "prettier": "^3.6.2",
     "react": "19.3.0",
-    "react-native": "0.89.0-nightly-20261102-47a9917ac",
+    "react-native": "0.90.0-nightly-20261110-9a3047391",
     "typescript": "^6.0.3"
   },
   "peerDependencies": {

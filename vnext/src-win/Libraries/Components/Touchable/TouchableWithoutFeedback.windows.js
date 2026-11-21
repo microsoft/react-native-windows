@@ -164,6 +164,7 @@ const PASSTHROUGH_PROPS = [
   'onBlur',
   'onFocus',
   'onLayout',
+  'role',
   'testID',
   'accessibilityPosInSet', // [Windows]
   'accessibilitySetSize', // [Windows]
@@ -281,7 +282,7 @@ export default function TouchableWithoutFeedback(
   // adopting `Pressability`, so preserve that behavior.
   const {onBlur, onFocus, ...eventHandlersWithoutBlurAndFocus} = eventHandlers;
 
-  const elementProps: {[string]: unknown, ...} = {
+  const elementProps: {[key: string]: unknown, ...} = {
     ...eventHandlersWithoutBlurAndFocus,
     accessible: props.accessible !== false,
     accessibilityState:
@@ -311,6 +312,11 @@ export default function TouchableWithoutFeedback(
     if (props[prop] !== undefined) {
       elementProps[prop] = props[prop];
     }
+  }
+
+  const accessibilityLabel = props['aria-label'] ?? props.accessibilityLabel;
+  if (accessibilityLabel !== undefined) {
+    elementProps.accessibilityLabel = accessibilityLabel;
   }
 
   // $FlowFixMe[incompatible-type]

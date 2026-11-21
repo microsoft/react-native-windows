@@ -214,21 +214,21 @@ function TextWithLinkRoleExample(): React.Node {
         Link Text
       </Text>
 
-      <Text>
+      <RNTesterText>
         <Text role="link" style={styles.link} onPress={handlePress}>
           Nested Link
         </Text>
-      </Text>
+      </RNTesterText>
 
-      <Text>
+      <RNTesterText>
         Before{' '}
         <Text role="link" style={styles.link} onPress={handlePress}>
           Nested Link
         </Text>
         {' After'}
-      </Text>
+      </RNTesterText>
 
-      <Text>
+      <RNTesterText>
         <Text role="link" style={styles.link} onPress={handlePress}>
           Nested Link 1
         </Text>
@@ -236,7 +236,7 @@ function TextWithLinkRoleExample(): React.Node {
         <Text role="link" style={styles.link} onPress={handlePress}>
           Nested Link 2
         </Text>
-      </Text>
+      </RNTesterText>
     </View>
   );
 }
@@ -258,11 +258,11 @@ function LastLineClippingExample(): React.Node {
         <View
           key={fontSize}
           style={{borderWidth: 1, borderColor: '#999999', marginBottom: 6}}>
-          <Text style={{fontSize}}>
+          <RNTesterText style={{fontSize}}>
             {`(${fontSize}px) This sentence wraps across multiple lines so the ` +
               'final line sits near a pixel boundary and must render fully, ' +
               'without being cut off.'}
-          </Text>
+          </RNTesterText>
         </View>
       ))}
     </View>

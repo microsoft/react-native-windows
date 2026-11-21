@@ -368,6 +368,10 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
             accessibilityRole="button"
             accessibilityState={
               {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
                 "selected": false,
               }
             }
@@ -418,6 +422,10 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
             accessibilityRole="button"
             accessibilityState={
               {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
                 "selected": false,
               }
             }
@@ -468,6 +476,10 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
             accessibilityRole="button"
             accessibilityState={
               {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
                 "selected": false,
               }
             }
@@ -3405,10 +3417,15 @@ exports[`snapshotAllPages Animated 2`] = `
   </View>
   <Text
     style={
-      {
-        "fontSize": 20,
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 20,
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     <Text>
@@ -7193,9 +7210,6 @@ exports[`snapshotAllPages Animated 13`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -7626,9 +7640,6 @@ exports[`snapshotAllPages Animated 14`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -8625,9 +8636,6 @@ exports[`snapshotAllPages Button 1`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
-      "multiselectable": undefined,
-      "readOnly": undefined,
-      "required": undefined,
       "selected": undefined,
     }
   }
@@ -8715,9 +8723,6 @@ exports[`snapshotAllPages Button 2`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
-      "multiselectable": undefined,
-      "readOnly": undefined,
-      "required": undefined,
       "selected": undefined,
     }
   }
@@ -8822,9 +8827,6 @@ exports[`snapshotAllPages Button 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -8917,9 +8919,6 @@ exports[`snapshotAllPages Button 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9025,9 +9024,6 @@ exports[`snapshotAllPages Button 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9119,9 +9115,6 @@ exports[`snapshotAllPages Button 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9213,9 +9206,6 @@ exports[`snapshotAllPages Button 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9311,9 +9301,6 @@ exports[`snapshotAllPages Button 5`] = `
       "checked": undefined,
       "disabled": true,
       "expanded": undefined,
-      "multiselectable": undefined,
-      "readOnly": undefined,
-      "required": undefined,
       "selected": undefined,
     }
   }
@@ -9429,9 +9416,6 @@ exports[`snapshotAllPages Button 6`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
-      "multiselectable": undefined,
-      "readOnly": undefined,
-      "required": undefined,
       "selected": undefined,
     }
   }
@@ -9526,9 +9510,6 @@ exports[`snapshotAllPages Button 7`] = `
       "checked": undefined,
       "disabled": true,
       "expanded": undefined,
-      "multiselectable": undefined,
-      "readOnly": undefined,
-      "required": undefined,
       "selected": undefined,
     }
   }
@@ -9645,9 +9626,6 @@ exports[`snapshotAllPages Button 8`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
-      "multiselectable": undefined,
-      "readOnly": undefined,
-      "required": undefined,
       "selected": undefined,
     }
   }
@@ -9738,9 +9716,6 @@ exports[`snapshotAllPages Button 9`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9825,9 +9800,6 @@ exports[`snapshotAllPages Button 9`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9912,9 +9884,6 @@ exports[`snapshotAllPages Button 9`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9999,9 +9968,6 @@ exports[`snapshotAllPages Button 9`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -10852,9 +10818,6 @@ exports[`snapshotAllPages Crash 1`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
-      "multiselectable": undefined,
-      "readOnly": undefined,
-      "required": undefined,
       "selected": undefined,
     }
   }
@@ -11076,9 +11039,6 @@ exports[`snapshotAllPages Custom TextInput component Example 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -11166,9 +11126,6 @@ exports[`snapshotAllPages DevSettings 1`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
-      "multiselectable": undefined,
-      "readOnly": undefined,
-      "required": undefined,
       "selected": undefined,
     }
   }
@@ -11254,9 +11211,6 @@ exports[`snapshotAllPages DevSettings 2`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
-      "multiselectable": undefined,
-      "readOnly": undefined,
-      "required": undefined,
       "selected": undefined,
     }
   }
@@ -11403,9 +11357,6 @@ exports[`snapshotAllPages Dimensions 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -11510,9 +11461,6 @@ exports[`snapshotAllPages Dimensions 5`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -12598,9 +12546,6 @@ exports[`snapshotAllPages Fast Path Texts 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -12691,9 +12636,6 @@ exports[`snapshotAllPages Fast Path Texts 5`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -12803,9 +12745,6 @@ exports[`snapshotAllPages Fast Path Texts 7`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -14226,9 +14165,6 @@ exports[`snapshotAllPages Filter 11`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -16414,9 +16350,6 @@ exports[`snapshotAllPages FlatList 2`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -16993,9 +16926,6 @@ exports[`snapshotAllPages FlatList 3`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -17886,9 +17816,6 @@ exports[`snapshotAllPages FlatList 4`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -18758,9 +18685,6 @@ exports[`snapshotAllPages FlatList 5`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -26964,9 +26888,6 @@ exports[`snapshotAllPages Flyout 1`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -27059,9 +26980,6 @@ exports[`snapshotAllPages Flyout 1`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -27154,9 +27072,6 @@ exports[`snapshotAllPages Flyout 1`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -30460,9 +30375,6 @@ exports[`snapshotAllPages LegacyControlStyleTest 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -30578,9 +30490,6 @@ exports[`snapshotAllPages LegacyImageTest 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -30664,9 +30573,6 @@ exports[`snapshotAllPages LegacyImageTest 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -30786,9 +30692,6 @@ exports[`snapshotAllPages LegacyLoginTest 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -30971,9 +30874,6 @@ exports[`snapshotAllPages LegacySelectableTextTest 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -31057,9 +30957,6 @@ exports[`snapshotAllPages LegacySelectableTextTest 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -31417,9 +31314,6 @@ or click here.
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -31977,9 +31871,6 @@ exports[`snapshotAllPages Linking 2`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
-      "multiselectable": undefined,
-      "readOnly": undefined,
-      "required": undefined,
       "selected": undefined,
     }
   }
@@ -34087,9 +33978,6 @@ exports[`snapshotAllPages Mouse Click Events 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -34193,9 +34081,6 @@ exports[`snapshotAllPages Mouse Click Events 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -34441,9 +34326,6 @@ exports[`snapshotAllPages Moving Light Example 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -36110,9 +35992,6 @@ exports[`snapshotAllPages Performance API Examples 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -36244,9 +36123,6 @@ exports[`snapshotAllPages Performance API Examples 2`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -36390,9 +36266,6 @@ exports[`snapshotAllPages Performance API Examples 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -36487,9 +36360,6 @@ exports[`snapshotAllPages Performance API Examples 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -37616,9 +37486,6 @@ exports[`snapshotAllPages PixelRatio 1`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -37725,9 +37592,6 @@ exports[`snapshotAllPages PixelRatio 2`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -38613,9 +38477,6 @@ exports[`snapshotAllPages PlatformColor 6`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -40112,9 +39973,6 @@ exports[`snapshotAllPages Popup 1`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -40211,9 +40069,6 @@ exports[`snapshotAllPages Popup 2`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -40309,9 +40164,6 @@ exports[`snapshotAllPages Popup 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -41085,7 +40937,16 @@ exports[`snapshotAllPages Pressable 6`] = `
         }
       />
     </View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       use foreground
     </Text>
   </View>
@@ -41856,7 +41717,18 @@ exports[`snapshotAllPages Pressable 13`] = `
         ]
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "color": "black",
+            },
+          ]
+        }
+      >
         true
       </Text>
     </View>
@@ -41911,7 +41783,16 @@ exports[`snapshotAllPages Pressable 13`] = `
         ]
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            false,
+          ]
+        }
+      >
         false
       </Text>
     </View>
@@ -41966,7 +41847,16 @@ exports[`snapshotAllPages Pressable 13`] = `
         ]
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            false,
+          ]
+        }
+      >
         undefined
       </Text>
     </View>
@@ -42021,7 +41911,16 @@ exports[`snapshotAllPages Pressable 13`] = `
         ]
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            false,
+          ]
+        }
+      >
         null
       </Text>
     </View>
@@ -42279,6 +42178,123 @@ exports[`snapshotAllPages Pressable 15`] = `
 `;
 
 exports[`snapshotAllPages Pressable 16`] = `
+<View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#eee",
+        "borderRadius": 100,
+        "marginTop": 10,
+        "padding": 16,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "alignSelf": "center",
+        }
+      }
+    >
+      Background Ripple
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "backgroundColor": "#eee",
+        "borderRadius": 100,
+        "marginTop": 10,
+        "padding": 16,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "alignSelf": "center",
+        }
+      }
+    >
+      Foreground Ripple
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Pressable 17`] = `
 [
   <View
     style={
@@ -42391,7 +42407,7 @@ exports[`snapshotAllPages Pressable 16`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 17`] = `
+exports[`snapshotAllPages Pressable 18`] = `
 [
   <View
     style={
@@ -42486,7 +42502,7 @@ exports[`snapshotAllPages Pressable 17`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 18`] = `
+exports[`snapshotAllPages Pressable 19`] = `
 [
   <View
     onKeyDown={[Function]}
@@ -42575,7 +42591,7 @@ exports[`snapshotAllPages Pressable 18`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 19`] = `
+exports[`snapshotAllPages Pressable 20`] = `
 <View>
   <View
     accessibilityState={
@@ -42635,7 +42651,7 @@ exports[`snapshotAllPages Pressable 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 20`] = `
+exports[`snapshotAllPages Pressable 21`] = `
 <View
   accessible={true}
   testID="opacity_pressable"
@@ -43149,7 +43165,7 @@ exports[`snapshotAllPages Pressable 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 21`] = `
+exports[`snapshotAllPages Pressable 22`] = `
 <View
   accessible={true}
   testID="accessible_pressable"
@@ -43345,7 +43361,7 @@ exports[`snapshotAllPages Pressable 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 22`] = `
+exports[`snapshotAllPages Pressable 23`] = `
 <View>
   <View
     accessibilityState={
@@ -43400,7 +43416,7 @@ exports[`snapshotAllPages Pressable 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 23`] = `
+exports[`snapshotAllPages Pressable 24`] = `
 <View>
   <View
     accessibilityHint="Button"
@@ -43492,7 +43508,7 @@ exports[`snapshotAllPages Pressable 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 24`] = `
+exports[`snapshotAllPages Pressable 25`] = `
 <View
   accessible={true}
   testID="backface_pressable"
@@ -43753,7 +43769,7 @@ exports[`snapshotAllPages Pressable 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 25`] = `
+exports[`snapshotAllPages Pressable 26`] = `
 <View
   accessible={true}
   testID="pressable_set"
@@ -43990,9 +44006,6 @@ exports[`snapshotAllPages RTLExample 2`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -44296,9 +44309,6 @@ exports[`snapshotAllPages RTLExample 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -44444,9 +44454,6 @@ exports[`snapshotAllPages RTLExample 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -44607,9 +44614,6 @@ exports[`snapshotAllPages RTLExample 5`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -44770,9 +44774,6 @@ exports[`snapshotAllPages RTLExample 6`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -44901,9 +44902,6 @@ exports[`snapshotAllPages RTLExample 7`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -45088,9 +45086,6 @@ exports[`snapshotAllPages RTLExample 8`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -45342,9 +45337,6 @@ exports[`snapshotAllPages RTLExample 9`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -45531,9 +45523,6 @@ exports[`snapshotAllPages RTLExample 10`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -45703,9 +45692,6 @@ exports[`snapshotAllPages RTLExample 11`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -45871,9 +45857,6 @@ exports[`snapshotAllPages RTLExample 11`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -46040,9 +46023,6 @@ exports[`snapshotAllPages RTLExample 12`] = `
               "checked": undefined,
               "disabled": undefined,
               "expanded": undefined,
-              "multiselectable": undefined,
-              "readOnly": undefined,
-              "required": undefined,
               "selected": undefined,
             }
           }
@@ -46213,9 +46193,6 @@ exports[`snapshotAllPages RTLExample 13`] = `
               "checked": undefined,
               "disabled": undefined,
               "expanded": undefined,
-              "multiselectable": undefined,
-              "readOnly": undefined,
-              "required": undefined,
               "selected": undefined,
             }
           }
@@ -46411,9 +46388,6 @@ exports[`snapshotAllPages RTLExample 14`] = `
               "checked": undefined,
               "disabled": undefined,
               "expanded": undefined,
-              "multiselectable": undefined,
-              "readOnly": undefined,
-              "required": undefined,
               "selected": undefined,
             }
           }
@@ -46609,9 +46583,6 @@ exports[`snapshotAllPages RTLExample 15`] = `
               "checked": undefined,
               "disabled": undefined,
               "expanded": undefined,
-              "multiselectable": undefined,
-              "readOnly": undefined,
-              "required": undefined,
               "selected": undefined,
             }
           }
@@ -46858,9 +46829,6 @@ exports[`snapshotAllPages RTLExample 16`] = `
               "checked": undefined,
               "disabled": undefined,
               "expanded": undefined,
-              "multiselectable": undefined,
-              "readOnly": undefined,
-              "required": undefined,
               "selected": undefined,
             }
           }
@@ -51308,9 +51276,6 @@ exports[`snapshotAllPages ScrollView 11`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -51394,9 +51359,6 @@ exports[`snapshotAllPages ScrollView 11`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -57160,9 +57122,6 @@ exports[`snapshotAllPages ScrollViewMaintainVisibleContentPositionExample 1`] = 
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -57245,9 +57204,6 @@ exports[`snapshotAllPages ScrollViewMaintainVisibleContentPositionExample 1`] = 
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -57340,9 +57296,6 @@ exports[`snapshotAllPages ScrollViewMaintainVisibleContentPositionExample 1`] = 
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -57425,9 +57378,6 @@ exports[`snapshotAllPages ScrollViewMaintainVisibleContentPositionExample 1`] = 
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -57520,9 +57470,6 @@ exports[`snapshotAllPages ScrollViewMaintainVisibleContentPositionExample 1`] = 
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -57605,9 +57552,6 @@ exports[`snapshotAllPages ScrollViewMaintainVisibleContentPositionExample 1`] = 
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -64554,9 +64498,6 @@ exports[`snapshotAllPages SectionList 1`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -65198,9 +65139,6 @@ exports[`snapshotAllPages SectionList 2`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -67085,9 +67023,6 @@ exports[`snapshotAllPages SectionList 5`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -67718,9 +67653,6 @@ exports[`snapshotAllPages SectionList 6`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -71911,9 +71843,6 @@ exports[`snapshotAllPages Share 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -72037,9 +71966,6 @@ exports[`snapshotAllPages Share 2`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -72176,9 +72102,6 @@ exports[`snapshotAllPages Share 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -73999,9 +73922,6 @@ exports[`snapshotAllPages Text 4`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -74093,9 +74013,6 @@ exports[`snapshotAllPages Text 4`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -74187,9 +74104,6 @@ exports[`snapshotAllPages Text 4`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
-          "multiselectable": undefined,
-          "readOnly": undefined,
-          "required": undefined,
           "selected": undefined,
         }
       }
@@ -74288,6 +74202,608 @@ exports[`snapshotAllPages Text 5`] = `
 `;
 
 exports[`snapshotAllPages Text 6`] = `
+<View
+  testID="text-fit-content-whole-pixel-width"
+>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": -0.25,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": -0.2222222222222222,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": -0.19444444444444445,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": -0.16666666666666669,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": -0.1388888888888889,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": -0.1111111111111111,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": -0.08333333333333334,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": -0.05555555555555555,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": -0.02777777777777779,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": 0,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": 0.02777777777777779,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": 0.05555555555555558,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": 0.08333333333333331,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": 0.1111111111111111,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": 0.1388888888888889,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": 0.16666666666666669,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "#E4E6EB",
+        "flexDirection": "row",
+        "justifyContent": "center",
+        "marginBottom": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "paddingHorizontal": 60.15,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "fontSize": 15,
+              "maxWidth": "100%",
+            },
+            {
+              "letterSpacing": 0.19444444444444442,
+            },
+          ]
+        }
+      >
+        Add payment method
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Text 7`] = `
 [
   <Text
     android_hyphenationFrequency="normal"
@@ -74379,7 +74895,7 @@ exports[`snapshotAllPages Text 6`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 7`] = `
+exports[`snapshotAllPages Text 8`] = `
 [
   <View
     style={
@@ -74630,7 +75146,7 @@ exports[`snapshotAllPages Text 7`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 8`] = `
+exports[`snapshotAllPages Text 9`] = `
 <Text
   style={
     [
@@ -74648,7 +75164,7 @@ exports[`snapshotAllPages Text 8`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 9`] = `
+exports[`snapshotAllPages Text 10`] = `
 <View>
   <View
     style={
@@ -74674,11 +75190,16 @@ exports[`snapshotAllPages Text 9`] = `
       <Text
         allowFontScaling={false}
         style={
-          {
-            "fontFamily": "cursive",
-            "fontSize": 18,
-            "lineHeight": 27,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontFamily": "cursive",
+              "fontSize": 18,
+              "lineHeight": 27,
+            },
+          ]
         }
       >
         Enjoy your
@@ -74709,10 +75230,15 @@ exports[`snapshotAllPages Text 9`] = `
       <Text
         allowFontScaling={false}
         style={
-          {
-            "fontSize": 18,
-            "lineHeight": 27,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 18,
+              "lineHeight": 27,
+            },
+          ]
         }
       >
         Enjoy your
@@ -74752,11 +75278,16 @@ exports[`snapshotAllPages Text 9`] = `
       <Text
         allowFontScaling={false}
         style={
-          {
-            "fontFamily": "cursive",
-            "fontSize": 18,
-            "lineHeight": 27,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontFamily": "cursive",
+              "fontSize": 18,
+              "lineHeight": 27,
+            },
+          ]
         }
       >
         Enjoy your coffee
@@ -74787,10 +75318,15 @@ exports[`snapshotAllPages Text 9`] = `
       <Text
         allowFontScaling={false}
         style={
-          {
-            "fontSize": 18,
-            "lineHeight": 27,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 18,
+              "lineHeight": 27,
+            },
+          ]
         }
       >
         Enjoy your coffee
@@ -74830,11 +75366,16 @@ exports[`snapshotAllPages Text 9`] = `
       <Text
         allowFontScaling={false}
         style={
-          {
-            "fontFamily": "cursive",
-            "fontSize": 18,
-            "lineHeight": 27,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontFamily": "cursive",
+              "fontSize": 18,
+              "lineHeight": 27,
+            },
+          ]
         }
       >
         Enjoy your coffee, my
@@ -74865,10 +75406,15 @@ exports[`snapshotAllPages Text 9`] = `
       <Text
         allowFontScaling={false}
         style={
-          {
-            "fontSize": 18,
-            "lineHeight": 27,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 18,
+              "lineHeight": 27,
+            },
+          ]
         }
       >
         Enjoy your coffee, my
@@ -74908,11 +75454,16 @@ exports[`snapshotAllPages Text 9`] = `
       <Text
         allowFontScaling={false}
         style={
-          {
-            "fontFamily": "cursive",
-            "fontSize": 18,
-            "lineHeight": 27,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontFamily": "cursive",
+              "fontSize": 18,
+              "lineHeight": 27,
+            },
+          ]
         }
       >
         Enjoy your morning coffee, my friend
@@ -74943,10 +75494,15 @@ exports[`snapshotAllPages Text 9`] = `
       <Text
         allowFontScaling={false}
         style={
-          {
-            "fontSize": 18,
-            "lineHeight": 27,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 18,
+              "lineHeight": 27,
+            },
+          ]
         }
       >
         Enjoy your morning coffee, my friend
@@ -74979,7 +75535,7 @@ exports[`snapshotAllPages Text 9`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 10`] = `
+exports[`snapshotAllPages Text 11`] = `
 <View>
   <Text
     onPress={[Function]}
@@ -76604,7 +77160,7 @@ exports[`snapshotAllPages Text 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 11`] = `
+exports[`snapshotAllPages Text 12`] = `
 <View
   testID="text-font-family"
 >
@@ -76713,7 +77269,7 @@ exports[`snapshotAllPages Text 11`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 12`] = `
+exports[`snapshotAllPages Text 13`] = `
 <View
   style={
     {
@@ -76940,7 +77496,7 @@ exports[`snapshotAllPages Text 12`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 13`] = `
+exports[`snapshotAllPages Text 14`] = `
 <View
   style={
     {
@@ -77081,7 +77637,7 @@ exports[`snapshotAllPages Text 13`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 14`] = `
+exports[`snapshotAllPages Text 15`] = `
 <View
   testID="text-font-size"
 >
@@ -77117,7 +77673,7 @@ exports[`snapshotAllPages Text 14`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 15`] = `
+exports[`snapshotAllPages Text 16`] = `
 <View
   testID="text-test-color"
 >
@@ -77143,7 +77699,7 @@ exports[`snapshotAllPages Text 15`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 16`] = `
+exports[`snapshotAllPages Text 17`] = `
 <View
   testID="text-font-weight"
 >
@@ -77430,7 +77986,7 @@ exports[`snapshotAllPages Text 16`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 17`] = `
+exports[`snapshotAllPages Text 18`] = `
 <View
   testID="text-font-style"
 >
@@ -77479,7 +78035,7 @@ exports[`snapshotAllPages Text 17`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 18`] = `
+exports[`snapshotAllPages Text 19`] = `
 <Text
   style={
     [
@@ -77497,7 +78053,7 @@ exports[`snapshotAllPages Text 18`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 19`] = `
+exports[`snapshotAllPages Text 20`] = `
 <View
   testID="text-text-decoration"
 >
@@ -77770,7 +78326,7 @@ exports[`snapshotAllPages Text 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 20`] = `
+exports[`snapshotAllPages Text 21`] = `
 <View
   testID="text-test-nested"
 >
@@ -78111,7 +78667,7 @@ exports[`snapshotAllPages Text 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 21`] = `
+exports[`snapshotAllPages Text 22`] = `
 <View
   testID="text-align"
 >
@@ -78200,7 +78756,7 @@ exports[`snapshotAllPages Text 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 22`] = `
+exports[`snapshotAllPages Text 23`] = `
 <View
   testID="text-unicode"
 >
@@ -78283,7 +78839,7 @@ exports[`snapshotAllPages Text 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 23`] = `
+exports[`snapshotAllPages Text 24`] = `
 <Text
   style={
     [
@@ -78303,7 +78859,7 @@ exports[`snapshotAllPages Text 23`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 24`] = `
+exports[`snapshotAllPages Text 25`] = `
 [
   <Text
     style={
@@ -78457,7 +79013,7 @@ exports[`snapshotAllPages Text 24`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 25`] = `
+exports[`snapshotAllPages Text 26`] = `
 <View
   testID="text-letter-spacing"
 >
@@ -78594,7 +79150,7 @@ exports[`snapshotAllPages Text 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 26`] = `
+exports[`snapshotAllPages Text 27`] = `
 <View
   testID="text-with-toggle-attributes"
 >
@@ -78694,7 +79250,7 @@ exports[`snapshotAllPages Text 26`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 27`] = `
+exports[`snapshotAllPages Text 28`] = `
 <View
   testID="text-bg-color-attr"
 >
@@ -78798,7 +79354,7 @@ exports[`snapshotAllPages Text 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 28`] = `
+exports[`snapshotAllPages Text 29`] = `
 [
   <View
     style={
@@ -78869,7 +79425,7 @@ exports[`snapshotAllPages Text 28`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 29`] = `
+exports[`snapshotAllPages Text 30`] = `
 <View
   testID="number-of-lines"
 >
@@ -78974,7 +79530,7 @@ exports[`snapshotAllPages Text 29`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 30`] = `
+exports[`snapshotAllPages Text 31`] = `
 [
   <Text
     style={
@@ -79042,20 +79598,34 @@ exports[`snapshotAllPages Text 30`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 31`] = `
+exports[`snapshotAllPages Text 32`] = `
 <View
   testID="max-font-size-multiplier"
 >
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     When allowFontScaling is enabled, you can use the maxFontSizeMultiplier prop to set an upper limit on how much the font size will be scaled.
   </Text>
   <Text
     allowFontScaling={true}
     maxFontSizeMultiplier={1}
     style={
-      {
-        "marginTop": 10,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "marginTop": 10,
+        },
+      ]
     }
   >
     This text will not scale up (max 1x)
@@ -79063,12 +79633,28 @@ exports[`snapshotAllPages Text 31`] = `
   <Text
     allowFontScaling={true}
     maxFontSizeMultiplier={1.5}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     This text will scale up (max 1.5x)
   </Text>
   <Text
     allowFontScaling={true}
     maxFontSizeMultiplier={1}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     <Text>
       Inherit max (max 1x)
@@ -79077,6 +79663,14 @@ exports[`snapshotAllPages Text 31`] = `
   <Text
     allowFontScaling={true}
     maxFontSizeMultiplier={1}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     <Text
       maxFontSizeMultiplier={1.5}
@@ -79087,6 +79681,14 @@ exports[`snapshotAllPages Text 31`] = `
   <Text
     allowFontScaling={true}
     maxFontSizeMultiplier={1}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     <Text
       maxFontSizeMultiplier={0}
@@ -79111,7 +79713,7 @@ exports[`snapshotAllPages Text 31`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 32`] = `
+exports[`snapshotAllPages Text 33`] = `
 <Text
   selectable={true}
   style={
@@ -79128,7 +79730,7 @@ exports[`snapshotAllPages Text 32`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 33`] = `
+exports[`snapshotAllPages Text 34`] = `
 <Text
   selectable={true}
   selectionColor="orange"
@@ -79146,7 +79748,7 @@ exports[`snapshotAllPages Text 33`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 34`] = `
+exports[`snapshotAllPages Text 35`] = `
 <View
   testID="text-text-shadow"
 >
@@ -79174,7 +79776,7 @@ exports[`snapshotAllPages Text 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 35`] = `
+exports[`snapshotAllPages Text 36`] = `
 <View
   testID="text-ellipsize-mode"
 >
@@ -79244,7 +79846,7 @@ exports[`snapshotAllPages Text 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 36`] = `
+exports[`snapshotAllPages Text 37`] = `
 <View
   testID="text-font-variants"
 >
@@ -79387,7 +79989,7 @@ exports[`snapshotAllPages Text 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 37`] = `
+exports[`snapshotAllPages Text 38`] = `
 [
   <View
     style={
@@ -79499,7 +80101,7 @@ exports[`snapshotAllPages Text 37`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 38`] = `
+exports[`snapshotAllPages Text 39`] = `
 <View
   testID="text-transform"
 >
@@ -79759,7 +80361,7 @@ exports[`snapshotAllPages Text 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 39`] = `
+exports[`snapshotAllPages Text 40`] = `
 [
   <Text
     dataDetectorType="phoneNumber"
@@ -79829,7 +80431,7 @@ exports[`snapshotAllPages Text 39`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 40`] = `
+exports[`snapshotAllPages Text 41`] = `
 <View>
   <Text
     style={
@@ -80251,7 +80853,7 @@ exports[`snapshotAllPages Text 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 41`] = `
+exports[`snapshotAllPages Text 42`] = `
 <View>
   <Text
     style={
@@ -80270,7 +80872,7 @@ exports[`snapshotAllPages Text 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 42`] = `
+exports[`snapshotAllPages Text 43`] = `
 <View>
   <Text
     style={
@@ -80339,7 +80941,7 @@ exports[`snapshotAllPages Text 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 43`] = `
+exports[`snapshotAllPages Text 44`] = `
 <View>
   <Text
     style={
@@ -80364,7 +80966,7 @@ exports[`snapshotAllPages Text 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 44`] = `
+exports[`snapshotAllPages Text 45`] = `
 <View>
   <Text
     style={
@@ -80385,7 +80987,7 @@ exports[`snapshotAllPages Text 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 45`] = `
+exports[`snapshotAllPages Text 46`] = `
 <View>
   <Text
     disabled={true}
@@ -80404,7 +81006,7 @@ exports[`snapshotAllPages Text 45`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 46`] = `
+exports[`snapshotAllPages Text 47`] = `
 <Text
   style={
     [
@@ -80421,7 +81023,7 @@ exports[`snapshotAllPages Text 46`] = `
 />
 `;
 
-exports[`snapshotAllPages Text 47`] = `
+exports[`snapshotAllPages Text 48`] = `
 <View
   style={
     {
@@ -80999,7 +81601,7 @@ exports[`snapshotAllPages Text 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 48`] = `
+exports[`snapshotAllPages Text 49`] = `
 <View
   style={
     {
@@ -81374,7 +81976,7 @@ exports[`snapshotAllPages Text 48`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 49`] = `
+exports[`snapshotAllPages Text 50`] = `
 <View
   style={
     {
@@ -81561,7 +82163,7 @@ exports[`snapshotAllPages Text 49`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 50`] = `
+exports[`snapshotAllPages Text 51`] = `
 <View
   testID="text-with-link-role"
 >
@@ -81583,7 +82185,16 @@ exports[`snapshotAllPages Text 50`] = `
   >
     Link Text
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     <Text
       onPress={[Function]}
       role="link"
@@ -81597,7 +82208,16 @@ exports[`snapshotAllPages Text 50`] = `
       Nested Link
     </Text>
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Before
      
     <Text
@@ -81614,7 +82234,16 @@ exports[`snapshotAllPages Text 50`] = `
     </Text>
      After
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     <Text
       onPress={[Function]}
       role="link"
@@ -81644,7 +82273,7 @@ exports[`snapshotAllPages Text 50`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 51`] = `
+exports[`snapshotAllPages Text 52`] = `
 <View
   testID="last-line-clipping-example"
 >
@@ -81659,9 +82288,14 @@ exports[`snapshotAllPages Text 51`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 11,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
       }
     >
       (11px) This sentence wraps across multiple lines so the final line sits near a pixel boundary and must render fully, without being cut off.
@@ -81678,9 +82312,14 @@ exports[`snapshotAllPages Text 51`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+          },
+        ]
       }
     >
       (12px) This sentence wraps across multiple lines so the final line sits near a pixel boundary and must render fully, without being cut off.
@@ -81697,9 +82336,14 @@ exports[`snapshotAllPages Text 51`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 13,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 13,
+          },
+        ]
       }
     >
       (13px) This sentence wraps across multiple lines so the final line sits near a pixel boundary and must render fully, without being cut off.
@@ -81716,9 +82360,14 @@ exports[`snapshotAllPages Text 51`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 14,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 14,
+          },
+        ]
       }
     >
       (14px) This sentence wraps across multiple lines so the final line sits near a pixel boundary and must render fully, without being cut off.
@@ -81735,9 +82384,14 @@ exports[`snapshotAllPages Text 51`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 15,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 15,
+          },
+        ]
       }
     >
       (15px) This sentence wraps across multiple lines so the final line sits near a pixel boundary and must render fully, without being cut off.
@@ -81754,9 +82408,14 @@ exports[`snapshotAllPages Text 51`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 16,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 16,
+          },
+        ]
       }
     >
       (16px) This sentence wraps across multiple lines so the final line sits near a pixel boundary and must render fully, without being cut off.
@@ -81773,9 +82432,14 @@ exports[`snapshotAllPages Text 51`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 17,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 17,
+          },
+        ]
       }
     >
       (17px) This sentence wraps across multiple lines so the final line sits near a pixel boundary and must render fully, without being cut off.
@@ -81784,7 +82448,7 @@ exports[`snapshotAllPages Text 51`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 52`] = `
+exports[`snapshotAllPages Text 53`] = `
 <View
   accessible={true}
   testID="text-accessibility"
@@ -81802,7 +82466,7 @@ exports[`snapshotAllPages Text 52`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 53`] = `
+exports[`snapshotAllPages Text 54`] = `
 <View
   accessibilityLabel="Border Example"
   accessible={true}
@@ -81879,7 +82543,7 @@ exports[`snapshotAllPages Text 53`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 54`] = `
+exports[`snapshotAllPages Text 55`] = `
 <View
   accessibilityLabel="Advanced Border Example"
   accessible={true}
@@ -81935,7 +82599,7 @@ exports[`snapshotAllPages Text 54`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 55`] = `
+exports[`snapshotAllPages Text 56`] = `
 <View
   testID="text-opacity"
 >
@@ -82042,7 +82706,7 @@ exports[`snapshotAllPages Text 55`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 56`] = `
+exports[`snapshotAllPages Text 57`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -82060,7 +82724,7 @@ exports[`snapshotAllPages Text 56`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 57`] = `
+exports[`snapshotAllPages Text 58`] = `
 <View>
   <Text
     style={
@@ -82417,9 +83081,6 @@ exports[`snapshotAllPages TextInput 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -86865,9 +87526,6 @@ exports[`snapshotAllPages TextInput 20`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -87121,6 +87779,33 @@ exports[`snapshotAllPages TextInput 21`] = `
 exports[`snapshotAllPages TextInput 22`] = `
 <View>
   <TextInput
+    multiline={true}
+    numberOfLines={10}
+    placeholder="height should grow up to 10 lines"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 23`] = `
+<View>
+  <TextInput
     experimental_acceptDragAndDropTypes={[]}
     placeholder="Does not accept drag drops"
     style={
@@ -87219,7 +87904,7 @@ exports[`snapshotAllPages TextInput 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 23`] = `
+exports[`snapshotAllPages TextInput 24`] = `
 <View>
   <Text>
     Do not clear text on focus:
@@ -87275,7 +87960,7 @@ exports[`snapshotAllPages TextInput 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 24`] = `
+exports[`snapshotAllPages TextInput 25`] = `
 <View>
   <Text>
     Select text on focus:
@@ -87333,7 +88018,7 @@ exports[`snapshotAllPages TextInput 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 25`] = `
+exports[`snapshotAllPages TextInput 26`] = `
 <View>
   <TextInput
     defaultValue="Default color text"
@@ -87593,7 +88278,7 @@ exports[`snapshotAllPages TextInput 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 26`] = `
+exports[`snapshotAllPages TextInput 27`] = `
 <View>
   <TextInput
     defaultValue="Font Weight (default)"
@@ -87931,7 +88616,7 @@ exports[`snapshotAllPages TextInput 26`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 27`] = `
+exports[`snapshotAllPages TextInput 28`] = `
 <View
   testID="style-fontFamily"
 >
@@ -88159,7 +88844,7 @@ exports[`snapshotAllPages TextInput 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 28`] = `
+exports[`snapshotAllPages TextInput 29`] = `
 <TextInput
   placeholder="If you set height, beware of padding set from themes"
   style={
@@ -88187,7 +88872,7 @@ exports[`snapshotAllPages TextInput 28`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 29`] = `
+exports[`snapshotAllPages TextInput 30`] = `
 <View>
   <TextInput
     placeholder="letterSpacing = 0"
@@ -88304,7 +88989,7 @@ exports[`snapshotAllPages TextInput 29`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 30`] = `
+exports[`snapshotAllPages TextInput 31`] = `
 <View>
   <TextInput
     defaultValue="iloveturtles"
@@ -88363,7 +89048,7 @@ exports[`snapshotAllPages TextInput 30`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 31`] = `
+exports[`snapshotAllPages TextInput 32`] = `
 <TextInput
   defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
   editable={false}
@@ -88390,7 +89075,7 @@ exports[`snapshotAllPages TextInput 31`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 32`] = `
+exports[`snapshotAllPages TextInput 33`] = `
 <View>
   <TextInput
     autoCorrect={true}
@@ -88507,7 +89192,7 @@ exports[`snapshotAllPages TextInput 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 33`] = `
+exports[`snapshotAllPages TextInput 34`] = `
 <View>
   <TextInput
     editable={true}
@@ -88600,7 +89285,7 @@ exports[`snapshotAllPages TextInput 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 34`] = `
+exports[`snapshotAllPages TextInput 35`] = `
 <View
   style={
     {
@@ -88699,9 +89384,18 @@ exports[`snapshotAllPages TextInput 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 35`] = `
+exports[`snapshotAllPages TextInput 36`] = `
 <View>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     By default, text will respect Text Size accessibility setting on Android. It means that all font sizes will be increased or decreased depending on the value of the Text Size setting in the OS's Settings app.
   </Text>
   <TextInput
@@ -88751,11 +89445,20 @@ exports[`snapshotAllPages TextInput 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 36`] = `
+exports[`snapshotAllPages TextInput 37`] = `
 <View
   testID="max-font-size-multiplier"
 >
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     When allowFontScaling is enabled, you can use the maxFontSizeMultiplier prop to set an upper limit on how much the font size will be scaled.
   </Text>
   <TextInput
@@ -88811,7 +89514,7 @@ exports[`snapshotAllPages TextInput 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 37`] = `
+exports[`snapshotAllPages TextInput 38`] = `
 <View
   style={
     {
@@ -88929,7 +89632,7 @@ exports[`snapshotAllPages TextInput 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 38`] = `
+exports[`snapshotAllPages TextInput 39`] = `
 <View>
   <TextInput
     autoComplete="country"
@@ -89295,7 +89998,7 @@ exports[`snapshotAllPages TextInput 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 39`] = `
+exports[`snapshotAllPages TextInput 40`] = `
 <View>
   <TextInput
     placeholder="returnKeyType: none"
@@ -89516,7 +90219,7 @@ exports[`snapshotAllPages TextInput 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 40`] = `
+exports[`snapshotAllPages TextInput 41`] = `
 <View>
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -89593,7 +90296,7 @@ exports[`snapshotAllPages TextInput 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 41`] = `
+exports[`snapshotAllPages TextInput 42`] = `
 <View>
   <TextInput
     style={
@@ -89617,15 +90320,32 @@ exports[`snapshotAllPages TextInput 41`] = `
   />
   <Text
     onPress={[Function]}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     Toggle padding
   </Text>
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 42`] = `
+exports[`snapshotAllPages TextInput 43`] = `
 <View>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     accessibilityLabel prop
   </Text>
   <TextInput
@@ -89648,7 +90368,16 @@ exports[`snapshotAllPages TextInput 42`] = `
       ]
     }
   />
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     aria-label prop
   </Text>
   <TextInput
@@ -89674,7 +90403,7 @@ exports[`snapshotAllPages TextInput 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 43`] = `
+exports[`snapshotAllPages TextInput 44`] = `
 <View>
   <Text
     testID="textinput-state-display-in"
@@ -89741,7 +90470,7 @@ exports[`snapshotAllPages TextInput 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 44`] = `
+exports[`snapshotAllPages TextInput 45`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -89877,7 +90606,7 @@ exports[`snapshotAllPages TextInput 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 45`] = `
+exports[`snapshotAllPages TextInput 46`] = `
 [
   <View
     focusable={true}
@@ -89943,7 +90672,7 @@ exports[`snapshotAllPages TextInput 45`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 46`] = `
+exports[`snapshotAllPages TextInput 47`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -89992,7 +90721,7 @@ exports[`snapshotAllPages TextInput 46`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 47`] = `
+exports[`snapshotAllPages TextInput 48`] = `
 <View>
   <Text>
     CaretHidden
@@ -90024,7 +90753,7 @@ exports[`snapshotAllPages TextInput 47`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 48`] = `
+exports[`snapshotAllPages TextInput 49`] = `
 <View>
   <Text>
     Cursorcolor
@@ -90056,7 +90785,7 @@ exports[`snapshotAllPages TextInput 48`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 49`] = `
+exports[`snapshotAllPages TextInput 50`] = `
 <View>
   <Text>
     Shadow
@@ -90094,7 +90823,7 @@ exports[`snapshotAllPages TextInput 49`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 50`] = `
+exports[`snapshotAllPages TextInput 51`] = `
 <View
   accessible={true}
   testID="textinput-set"
@@ -90177,7 +90906,7 @@ exports[`snapshotAllPages TextInput 50`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 51`] = `
+exports[`snapshotAllPages TextInput 52`] = `
 <View
   accessible={true}
   testID="textinput-searchbox"
@@ -93519,9 +94248,6 @@ exports[`snapshotAllPages TransferProperties 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -93713,9 +94439,6 @@ exports[`snapshotAllPages TransferProperties 2`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -93798,9 +94521,6 @@ exports[`snapshotAllPages TransferProperties 2`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -93929,7 +94649,16 @@ exports[`snapshotAllPages TransparentHitTestExample 1`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       HELLO!
     </Text>
   </View>
@@ -99542,9 +100271,6 @@ exports[`snapshotAllPages XMLHttpRequest 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -99782,9 +100508,6 @@ exports[`snapshotAllPages XMLHttpRequest 6`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -99867,9 +100590,6 @@ exports[`snapshotAllPages XMLHttpRequest 6`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
-        "multiselectable": undefined,
-        "readOnly": undefined,
-        "required": undefined,
         "selected": undefined,
       }
     }
@@ -99967,9 +100687,6 @@ exports[`snapshotAllPages Xaml WinUI3 (Experimental, for Fabric) 1`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }
@@ -100066,9 +100783,6 @@ exports[`snapshotAllPages Xaml WinUI3 (Experimental, for Fabric) 1`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
-            "multiselectable": undefined,
-            "readOnly": undefined,
-            "required": undefined,
             "selected": undefined,
           }
         }

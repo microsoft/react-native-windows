@@ -5,20 +5,13 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.89.0-nightly-20261102-47a9917ac",
+  "baseVersion": "0.90.0-nightly-20261110-9a3047391",
   "overrides": [
-    {
-      "type": "copy",
-      "file": "js/examples/ContentURLAndroid/ContentURLAndroid.js",
-      "baseFile": "packages/rn-tester/js/examples/ContentURLAndroid/ContentURLAndroid.js",
-      "baseHash": "baffb5745f106aca0087c4d9e31881ca8b0066df",
-      "issue": 14844
-    },
     {
       "type": "derived",
       "file": "src/js/components/TextInlineView.windows.js",
       "baseFile": "packages/rn-tester/js/components/TextInlineView.js",
-      "baseHash": "eb6acf659f499dfb8e0c49414c81554973b70aaa"
+      "baseHash": "073622329b33a45371558000b227150b39bf53da"
     },
     {
       "type": "derived",
@@ -50,7 +43,7 @@
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-basic.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-basic.js",
-      "baseHash": "a0c1221da66d97bdc7a0c08f8528d3b2646c5071",
+      "baseHash": "bb9abf2e34c4190e80793971434afb1701c8c3fd",
       "issue": 12869
     },
     {
@@ -64,7 +57,7 @@
       "type": "patch",
       "file": "src/js/examples/FlatList/FlatList-nested.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-nested.js",
-      "baseHash": "3bce7a22e10cdf0b12040e5955258ced3921cbf2",
+      "baseHash": "8c19e4cb4eaa11ccc0a1861a86a9c2d95ab5f5e9",
       "issue": 12869
     },
     {
@@ -85,46 +78,46 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "0b0f2ad3bdf0878da7f33ff00369f3b71cf8ce32",
+      "baseHash": "a6057f909a9a92da48e103a16e3e19a720a5b258",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/Modal/ModalOnShow.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalOnShow.js",
-      "baseHash": "4c695e7f73e9c3e71482e1993a3107168cb7955d"
+      "baseHash": "1ad9944d3c672eb071a127d6b345bae0f83d8000"
     },
     {
       "type": "patch",
       "file": "src/js/examples/Modal/ModalPresentation.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalPresentation.js",
-      "baseHash": "361308f1e6362f42be2d04c02995c227d8f947e7"
+      "baseHash": "8976e7b2dfe8afb544b9485a7948cfd8e023679b"
     },
     {
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "ffada5e799c95ac06616e10b3e3ff471958e87e9",
+      "baseHash": "93f13c6eab243363213f4bf70988b33732db8919",
       "issue": 6240
     },
     {
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "64de0a3eac1601500f8f8baa3512d8e220a77b13"
+      "baseHash": "abd94461ec002dc0f8159eac8df7678d4be7474a"
     },
     {
       "type": "patch",
       "file": "src/js/examples/Text/TextSharedExamples.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextSharedExamples.js",
-      "baseHash": "3e061344f8c8f9f60c790ee113eeb89040d13d70",
+      "baseHash": "3977e6b1d9bdeba9afc26684b9800a94756afc2e",
       "issue": 15125
     },
     {
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "3cc8ea65c4cd7b5fb2c0c96a1352ea2dab43b732",
+      "baseHash": "36034082115b8e5733ee2da2e6eb582118173d35",
       "issue": 5688
     },
     {
@@ -137,7 +130,7 @@
       "type": "patch",
       "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "6e2d506e4a362931d6a22a9b3d96349037f9a16c"
+      "baseHash": "1c06c403c850d36060dc83196ff6ef9fb426ad2d"
     },
     {
       "type": "patch",

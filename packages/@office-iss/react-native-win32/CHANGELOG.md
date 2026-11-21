@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Thu, 12 Nov 2026 22:36:45 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 19 Nov 2026 22:06:43 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.316
+
+Thu, 19 Nov 2026 22:06:43 GMT
+
+### Changes
+
+- Integrate React Native November 10, 2026 nightly (0.90.0-nightly-20261110-9a3047391). (anuagra@microsoft.com)
 
 ## 0.0.0-canary.315
 
