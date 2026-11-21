@@ -22,9 +22,7 @@ const RN_GITHUB_URL = 'https://github.com/react/react-native.git';
  * Retrieves React Native files using the React Native Github repo. Switching
  * between getting file contents of different versions may be slow.
  */
-export default class GitReactFileRepository
-  implements VersionedReactFileRepository
-{
+export default class GitReactFileRepository implements VersionedReactFileRepository {
   private readonly fileRepo: FileSystemRepository;
   private readonly gitClient: SimpleGit;
   private checkedOutVersion?: string;
@@ -226,7 +224,12 @@ export default class GitReactFileRepository
 
     try {
       await this.gitClient.fetch([RN_GITHUB_URL, gitRef, '--depth=1']);
-      await this.gitClient.checkout(['-b', reactNativeVersion, 'FETCH_HEAD']);
+      await this.gitClient.checkout([
+        '-b',
+        reactNativeVersion,
+        'FETCH_HEAD',
+        '--force',
+      ]);
     } catch (ex) {
       throw new Error(
         `Failed to fetch '${gitRef}'. Does it exist? (${

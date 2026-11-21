@@ -46,7 +46,7 @@ AppThemeHolder::AppThemeHolder(const Mso::React::IReactContext &context) : m_con
       });
 }
 
-ReactNativeSpecs::AppThemeSpec_AppThemeData AppThemeHolder::GetConstants() noexcept {
+ReactNativeSpecs::AppThemeSpec_IHighContrastChangedEvent AppThemeHolder::GetConstants() noexcept {
   return m_appThemeData;
 }
 
@@ -106,7 +106,7 @@ void AppTheme::Initialize(React::ReactContext const &reactContext) noexcept {
       });
 }
 
-ReactNativeSpecs::AppThemeSpec_AppThemeData AppTheme::GetConstants() noexcept {
+ReactNativeSpecs::AppThemeSpec_IHighContrastChangedEvent AppTheme::GetConstants() noexcept {
   winrt::Microsoft::ReactNative::ReactPropertyBag pb{m_context.Properties()};
   return (*pb.Get(AppThemeHolderPropertyId()))->GetConstants();
 }

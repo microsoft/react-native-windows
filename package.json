@@ -48,6 +48,8 @@
     "beachball": "^2.20.0",
     "eslint": "^8.19.0",
     "fast-glob": "^3.2.11",
+    "flow-api-translator": "0.336.0",
+    "flow-transform": "0.336.0",
     "husky": "^4.2.5",
     "lage": "^2.7.1",
     "lodash": "^4.17.15",
@@ -56,7 +58,7 @@
     "react": "19.3.0",
     "react-native": "0.90.0-nightly-20261110-9a3047391",
     "react-native-platform-override": "workspace:*",
-    "typescript": "5.1.6"
+    "typescript": "^6.0.3"
   },
   "resolutions": {
     "react": "19.3.0",

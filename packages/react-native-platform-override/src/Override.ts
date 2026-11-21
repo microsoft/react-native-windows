@@ -11,7 +11,7 @@ import path from 'path';
 import DiffStrategy, {DiffStrategies} from './DiffStrategy';
 import UpgradeStrategy, {UpgradeStrategies} from './UpgradeStrategy';
 import ValidationStrategy, {ValidationStrategies} from './ValidationStrategy';
-import {normalizePath, unixPath} from './PathUtils';
+import {isFileExcluded, normalizePath, unixPath} from './PathUtils';
 import OverrideFactory from './OverrideFactory';
 
 export type SerializeOpts = {defaultBaseVersion?: string};
@@ -337,6 +337,7 @@ export class DirectoryCopyOverride implements Override {
   private readonly baseVersion: string;
   private readonly baseHash: string;
   private readonly issue?: number;
+  private readonly excludePatterns?: string[];
 
   constructor(args: {
     directory: string;
@@ -344,12 +345,14 @@ export class DirectoryCopyOverride implements Override {
     baseVersion: string;
     baseHash: string;
     issue?: number;
+    excludePatterns?: string[];
   }) {
     this.directory = normalizePath(args.directory);
     this.baseDirectory = normalizePath(args.baseDirectory);
     this.baseVersion = args.baseVersion;
     this.baseHash = args.baseHash;
     this.issue = args.issue;
+    this.excludePatterns = args.excludePatterns?.map(unixPath);
   }
 
   static fromSerialized(
@@ -364,6 +367,9 @@ export class DirectoryCopyOverride implements Override {
       type: 'copy',
       directory: unixPath(this.directory),
       baseDirectory: unixPath(this.baseDirectory),
+      ...(this.excludePatterns !== undefined
+        ? {excludePatterns: [...this.excludePatterns]}
+        : {}),
       baseVersion:
         opts?.defaultBaseVersion === this.baseVersion
           ? undefined
@@ -383,7 +389,10 @@ export class DirectoryCopyOverride implements Override {
       normalizePath(filename),
     );
 
-    return relativeToDir.split(path.sep)[0] !== '..';
+    return (
+      relativeToDir.split(path.sep)[0] !== '..' &&
+      !isFileExcluded(filename, this.directory, this.excludePatterns)
+    );
   }
 
   async createUpdated(factory: OverrideFactory): Promise<Override> {
@@ -391,11 +400,16 @@ export class DirectoryCopyOverride implements Override {
       this.directory,
       this.baseDirectory,
       this.issue,
+      this.excludePatterns,
     );
   }
 
   upgradeStrategy(): UpgradeStrategy {
-    return UpgradeStrategies.copyDirectory(this.directory, this.baseDirectory);
+    return UpgradeStrategies.copyDirectory(
+      this.directory,
+      this.baseDirectory,
+      this.excludePatterns,
+    );
   }
 
   validationStrategies(): ValidationStrategy[] {
@@ -409,10 +423,12 @@ export class DirectoryCopyOverride implements Override {
         this.directory,
         this.baseDirectory,
         this.baseHash,
+        this.excludePatterns,
       ),
       ValidationStrategies.overrideCopyOfBase(
         this.directory,
         this.baseDirectory,
+        this.excludePatterns,
       ),
     ];
   }

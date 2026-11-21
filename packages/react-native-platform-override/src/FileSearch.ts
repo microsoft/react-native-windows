@@ -31,8 +31,8 @@ export async function findManifest(cwd?: string): Promise<string> {
 
 /**
  * Enumerate the override manifests reachable from CWD, preferring the local
- * package if run within a package with an override manifest, otherwise
- * searching for packages in a monorepo
+ * package unless it is a workspace root, where both root and workspace
+ * manifests are included.
  */
 export async function findAllManifests(): Promise<string[]> {
   const packagePath = await findFileAbove(process.cwd(), 'package.json');
@@ -41,15 +41,25 @@ export async function findAllManifests(): Promise<string[]> {
   }
 
   const packageDir = path.dirname(packagePath);
-  if (fs.existsSync(path.join(packageDir, 'overrides.json'))) {
-    return [path.join(packageDir, 'overrides.json')];
+  const manifestPath = path.join(packageDir, 'overrides.json');
+  const hasLocalManifest = fs.existsSync(manifestPath);
+  if (hasLocalManifest) {
+    const packageJson: {workspaces?: unknown} = JSON.parse(
+      fs.readFileSync(packagePath, 'utf8'),
+    );
+    if (!packageJson.workspaces) {
+      return [manifestPath];
+    }
   }
 
   const localPackages = await enumerateRepoPackages(async pkg =>
     fs.existsSync(path.join(pkg.path, 'overrides.json')),
   );
 
-  return localPackages.map(pkg => path.join(pkg.path, 'overrides.json'));
+  return [
+    ...(hasLocalManifest ? [manifestPath] : []),
+    ...localPackages.map(pkg => path.join(pkg.path, 'overrides.json')),
+  ];
 }
 
 /**

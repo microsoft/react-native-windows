@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Align custom TextInput helper declarations with current autoComplete and textAlign props",
+  "packageName": "react-native-windows",
+  "email": "223556219+Copilot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

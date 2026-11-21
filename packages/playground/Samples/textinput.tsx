@@ -70,7 +70,7 @@ export default class Bootstrap extends React.Component<{}, any> {
   };
 
   render() {
-    let textInputRef: TextInput | null;
+    let textInputRef: React.ComponentRef<typeof TextInput> | null = null;
     return (
       <TouchableWithoutFeedback>
         <ScrollView>
@@ -186,8 +186,9 @@ export default class Bootstrap extends React.Component<{}, any> {
               placeholder={'Text aligned to the right'}
             />
             <TextInput
-              // @ts-ignore
-              ref={ref => (textInputRef = ref)}
+              ref={ref => {
+                textInputRef = ref;
+              }}
               onFocus={() => setTimeout(() => textInputRef?.blur(), 5000)}
               placeholder={'blurs after 5 seconds'}
               style={styles.input}

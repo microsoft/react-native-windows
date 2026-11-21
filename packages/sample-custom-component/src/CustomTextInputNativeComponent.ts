@@ -3,28 +3,22 @@
 // Changes to this file should be reflected in CustomTextInputSpec.ts which 
 // provides the view spec and actual component implementation
 
-import { codegenNativeComponent, codegenNativeCommands } from 'react-native';
+import { codegenNativeComponent, codegenNativeCommands, CodegenTypes } from 'react-native';
 import type { HostComponent, ViewProps } from 'react-native';
-
-import type {
-  DirectEventHandler,
-  Int32,
-  WithDefault,
-} from 'react-native/Libraries/Types/CodegenTypes';
 
 export type SomethingEvent = {
   value: string,
-  target: Int32,
+  target: CodegenTypes.Int32,
 };
 
 export type IDelta = string;
 
 export interface CustomTextInputProps extends ViewProps {
   // Props
-  test?: WithDefault<boolean, false>;
+  test?: CodegenTypes.WithDefault<boolean, false>;
 
   // Events
-  onSomething?: DirectEventHandler<SomethingEvent>,
+  onSomething?: CodegenTypes.DirectEventHandler<SomethingEvent>,
 }
 
 type ComponentType = HostComponent<CustomTextInputProps>;

@@ -45,6 +45,7 @@ export default interface OverrideFactory {
     directory: string,
     baseDirectory: string,
     issue?: number,
+    excludePatterns?: string[],
   ): Promise<DirectoryCopyOverride>;
 }
 
@@ -111,13 +112,15 @@ export class OverrideFactoryImpl implements OverrideFactory {
     directory: string,
     baseDirectory: string,
     issue?: number,
+    excludePatterns?: string[],
   ): Promise<DirectoryCopyOverride> {
     await this.checkOverrideExists(directory, 'directory');
     return new DirectoryCopyOverride({
       directory,
       baseDirectory,
       issue,
-      ...(await this.getBaseInfo(baseDirectory)),
+      excludePatterns,
+      ...(await this.getBaseInfo(baseDirectory, excludePatterns)),
     });
   }
 
@@ -140,6 +143,7 @@ export class OverrideFactoryImpl implements OverrideFactory {
 
   private async getBaseInfo(
     basePath: string,
+    excludePatterns?: string[],
   ): Promise<{baseVersion: string; baseHash: string}> {
     if (path.isAbsolute(basePath)) {
       throw new Error(
@@ -153,7 +157,9 @@ export class OverrideFactoryImpl implements OverrideFactory {
     }
 
     const baseVersion = this.reactRepo.getVersion();
-    const baseHash = (await hashFileOrDirectory(basePath, this.reactRepo))!;
+    const baseHash = (await hashFileOrDirectory(basePath, this.reactRepo, {
+      excludePatterns,
+    }))!;
 
     return {baseVersion, baseHash};
   }

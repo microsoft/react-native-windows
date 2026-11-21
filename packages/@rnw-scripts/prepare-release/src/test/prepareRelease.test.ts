@@ -7,11 +7,11 @@
 
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {afterEach, beforeEach, it, mock} from 'node:test';
+import {after, afterEach, beforeEach, it, mock} from 'node:test';
 import {isDeepStrictEqual} from 'node:util';
+import os from 'node:os';
 import path from 'path';
 import {runInNewContext} from 'vm';
-import * as repoRoot from '@react-native-windows/find-repo-root';
 import {GitRepo} from '../git';
 import * as github from '../github';
 import * as beachball from '../beachballBump';
@@ -23,7 +23,10 @@ const commitMessage =
   'RELEASE: Releasing 1 package(s) (0.85-stable)\n\nRNW-Release-Branch: 0.85-stable';
 const sentinel = new Error('process.exit sentinel');
 const argv = process.argv;
-const rootPackageJsonPath = path.join('repo root', 'package.json');
+const originalCwd = process.cwd();
+const repoDir = fs.mkdtempSync(path.join(os.tmpdir(), 'prepare-release-test-'));
+fs.mkdirSync(path.join(repoDir, '.git'));
+const rootPackageJsonPath = path.join(repoDir, 'package.json');
 const realReadFileSync = fs.readFileSync;
 function setupMocks() {
   const git = GitRepo.prototype;
@@ -33,7 +36,6 @@ function setupMocks() {
     }),
     log: mock.method(console, 'log', () => {}),
     error: mock.method(console, 'error', () => {}),
-    root: mock.method(repoRoot, 'default', async () => 'repo root'),
     // The real fs module is shared with Node's module loader, so only the
     // root package.json read is faked.
     read: mock.method(fs, 'readFileSync', ((
@@ -83,6 +85,7 @@ function calledWith(fn: Calls, ...args: unknown[]) {
   assert.ok(calls(fn).some(actual => isDeepStrictEqual(actual, args)));
 }
 beforeEach(() => {
+  process.chdir(repoDir);
   process.argv = [
     'node',
     'prepare-release',
@@ -93,8 +96,13 @@ beforeEach(() => {
   mocks = setupMocks();
 });
 afterEach(() => {
+  process.chdir(originalCwd);
   process.argv = argv;
   mock.restoreAll();
+});
+after(() => {
+  fs.rmdirSync(path.join(repoDir, '.git'));
+  fs.rmdirSync(repoDir);
 });
 
 // Alias edge cases prove only one trailing suffix is removed; counts cover grammar.
@@ -129,7 +137,7 @@ for (const existing of [false, true]) {
     const common = {
       title: '🚀 [0.85]: Release 1 package',
       body: 'PR body',
-      cwd: 'repo root',
+      cwd: repoDir,
       repo: 'owner/repo',
     };
     calledWith(
@@ -245,7 +253,7 @@ void it('is inert on import', () => {
   } finally {
     require.cache[modulePath] = cached;
   }
-  assert.equal(mocks.root.mock.callCount(), 0);
+  assert.ok(calls(mocks.read).every(([file]) => file !== rootPackageJsonPath));
   assert.equal(mocks.log.mock.callCount(), 0);
   assert.equal(mocks.exit.mock.callCount(), 0);
 });

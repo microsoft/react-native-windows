@@ -21,13 +21,13 @@ export type HighContrastColors = {|
   WindowTextColor: string,
 |};
 
-export type AppThemeData = {|
+export type IHighContrastChangedEvent = {|
   isHighContrast: boolean,
   highContrastColors: HighContrastColors,
 |};
 
 export interface Spec extends TurboModule {
-  readonly getConstants: () => AppThemeData;
+  readonly getConstants: () => IHighContrastChangedEvent;
 }
 
 export default TurboModuleRegistry.get<Spec>('AppTheme') as ?Spec;

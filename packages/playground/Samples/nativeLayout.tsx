@@ -3,7 +3,6 @@
  * Licensed under the MIT License.
  * @format
  */
-import React from 'react';
 import {AppRegistry, View, Text, requireNativeComponent} from 'react-native';
 
 const GridView: any = requireNativeComponent('PlaygroundGridView');

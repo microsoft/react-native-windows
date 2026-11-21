@@ -1,6 +1,10 @@
 {
   "extends": "@rnw-scripts/ts-config",
   "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "rootDir": "src",
+    "types": ["node", "jest"],
     // Not clean
     "strictFunctionTypes": false,
   },

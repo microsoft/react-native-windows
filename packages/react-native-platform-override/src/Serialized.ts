@@ -58,14 +58,17 @@ const CopyOverrideType = t.type({
 /**
  * Serialized form of {@see DirectoryCopyOverride}
  */
-const DirectoryCopyOverrideType = t.type({
-  type: t.literal('copy'),
-  directory: t.string,
-  baseDirectory: t.string,
-  baseVersion: t.union([t.undefined, t.string]),
-  baseHash: t.string,
-  issue: t.union([t.undefined, t.number]),
-});
+const DirectoryCopyOverrideType = t.intersection([
+  t.type({
+    type: t.literal('copy'),
+    directory: t.string,
+    baseDirectory: t.string,
+    baseVersion: t.union([t.undefined, t.string]),
+    baseHash: t.string,
+    issue: t.union([t.undefined, t.number]),
+  }),
+  t.partial({excludePatterns: t.array(t.string)}),
+]);
 
 /**
  * Union of all serialized override types

@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react'
-import { Button, Text, View, ViewWin32 } from 'react-native';
+import { Button, TextWin32 as Text, View, ViewWin32 } from '@office-iss/react-native-win32';
 
 // Disabling no-jsx-lambda so functional components are more convenient to use
 

@@ -31,12 +31,6 @@ exports.copyTask = baseDir => {
   return series(
     exports.cleanTask(baseDir),
 
-    // For the TS compiler to be able to reference the files and create
-    // correct output the imported .d.ts files must be within our src-win dir
-    copyTask({
-      paths: reactNative('types_DEPRECATED/**/*.d.ts'),
-      dest: base('types'),
-    }),
     copyTask({
       paths: reactNative('flow/**'),
       dest: base('flow'),
@@ -74,138 +68,8 @@ exports.copyTask = baseDir => {
     copyTask({paths: src('**/*+(.d.ts|.js|.png|.flow)'), dest: base('.')}),
 
     () => {
-      const typesPath = path.resolve(baseDir, 'types/index.d.ts');
-      types = fs.readFileSync(typesPath);
-      types =
-        types +
-        "\n// Export platform specific types\nexport * from '../Libraries/platform-types';\n";
-      fs.writeFileSync(typesPath, types);
-      exports.applyWindowsTypeExtensions(baseDir);
       exports.applyWindowsFlowFixes(baseDir);
     },
-  );
-};
-
-// types_DEPRECATED is the public component surface, but it no longer carries
-// the Windows accessibility/focus extensions that live in src-win. Splice
-// those deltas into the copied declarations so imports resolved to this
-// package accept the Windows props.
-exports.applyWindowsTypeExtensions = baseDir => {
-  const viewA11y = path.join(
-    baseDir,
-    'types/Libraries/Components/View/ViewAccessibility.d.ts',
-  );
-  const viewProps = path.join(
-    baseDir,
-    'types/Libraries/Components/View/ViewPropTypes.d.ts',
-  );
-
-  replaceOnce(
-    viewA11y,
-    "  'aria-label'?: string | undefined;\n",
-    "  'aria-label'?: string | undefined;\n" +
-      '\n' +
-      '  accessibilityLevel?: number | undefined; // Windows\n' +
-      "  'aria-level'?: number | undefined; // Windows\n" +
-      '  accessibilityPosInSet?: number | undefined; // Windows\n' +
-      "  'aria-posinset'?: number | undefined; // Windows\n" +
-      '  accessibilitySetSize?: number | undefined; // Windows\n' +
-      "  'aria-setsize'?: number | undefined; // Windows\n" +
-      '  accessibilityAnnotation?: AccessibilityAnnotationInfo | undefined; // Windows\n' +
-      '  accessibilityItemType?: string | undefined; // Windows\n' +
-      '  accessibilityAccessKey?: string | undefined; // Windows\n' +
-      '  accessibilityDescription?: string | undefined; // Windows\n' +
-      "  'aria-description'?: string | undefined; // Windows\n",
-  );
-  replaceOnce(
-    viewA11y,
-    "  | 'iconmenu';\n",
-    "  | 'iconmenu'\n" +
-      "  | 'group' // Windows\n" +
-      "  | 'tree' // Windows\n" +
-      "  | 'treeitem' // Windows\n" +
-      "  | 'listitem'; // Windows\n",
-  );
-  replaceOnce(
-    viewA11y,
-    '  expanded?: boolean | undefined;\n}',
-    '  expanded?: boolean | undefined;\n' +
-      '  /** @platform windows */\n' +
-      '  readOnly?: boolean | undefined;\n' +
-      '  /** @platform windows */\n' +
-      '  multiselectable?: boolean | undefined;\n' +
-      '  /** @platform windows */\n' +
-      '  required?: boolean | undefined;\n}',
-  );
-  if (
-    !fs.readFileSync(viewA11y, 'utf8').includes('export type AnnotationType')
-  ) {
-    fs.appendFileSync(
-      viewA11y,
-      '\n// [Windows]\n' +
-        'export type AnnotationType =\n' +
-        "  | 'AdvanceProofingIssue'\n" +
-        "  | 'Author'\n" +
-        "  | 'CircularReferenceError'\n" +
-        "  | 'Comment'\n" +
-        "  | 'ConflictingChange'\n" +
-        "  | 'DataValidationError'\n" +
-        "  | 'DeletionChange'\n" +
-        "  | 'EditingLockedChange'\n" +
-        "  | 'Endnote'\n" +
-        "  | 'ExternalChange'\n" +
-        "  | 'Footer'\n" +
-        "  | 'Footnote'\n" +
-        "  | 'FormatChange'\n" +
-        "  | 'FormulaError'\n" +
-        "  | 'GrammarError'\n" +
-        "  | 'Header'\n" +
-        "  | 'Highlighted'\n" +
-        "  | 'InsertionChange'\n" +
-        "  | 'Mathematics'\n" +
-        "  | 'MoveChange'\n" +
-        "  | 'SpellingError'\n" +
-        "  | 'TrackChanges'\n" +
-        "  | 'Unknown'\n" +
-        "  | 'UnsyncedChange';\n" +
-        '\n' +
-        'export type AccessibilityAnnotationInfo = Readonly<{\n' +
-        '  typeID: AnnotationType;\n' +
-        '  typeName?: string;\n' +
-        '  author?: string;\n' +
-        '  dateTime?: string;\n' +
-        '  target?: string;\n' +
-        '}>;\n',
-    );
-  }
-
-  // Windows focus uses the full HTML tabIndex range, not just 0 | -1.
-  replaceOnce(
-    viewProps,
-    '  tabIndex?: 0 | -1 | undefined;',
-    '  tabIndex?: number | undefined; // Windows',
-  );
-
-  const buttonProps = path.join(
-    baseDir,
-    'types/Libraries/Components/Button.d.ts',
-  );
-  replaceOnce(
-    buttonProps,
-    "  | 'accessibilityState'\n  | 'nextFocusDown'\n",
-    "  | 'accessibilityState'\n  | 'accessibilityValue' // Windows\n  | 'nextFocusDown'\n",
-  );
-  replaceOnce(
-    buttonProps,
-    '  color?: ColorValue | undefined;\n}',
-    '  color?: ColorValue | undefined;\n\n  /** @platform windows */\n  onAccessibilityTap?: () => void;\n}',
-  );
-
-  const textProps = path.join(baseDir, 'types/Libraries/Text/Text.d.ts');
-  replaceOnce(
-    textProps,
-    'export interface TextProps\n  extends TextPropsIOS, TextPropsAndroid, AccessibilityProps {\n',
-    'export interface TextProps\n  extends TextPropsIOS, TextPropsAndroid, AccessibilityProps {\n  /**\n   * The tooltip to show when the text is clicked.\n   * @platform windows\n   */\n  tooltip?: string | undefined;\n\n',
   );
 };
 
@@ -288,6 +152,7 @@ exports.cleanTask = baseDir => {
       base('rn-get-polyfills.js'),
       base('src-win/rntypes'),
       base('types'),
+      base('types_generated'),
 
       // Remove TS compiled gunk in our root
       ...glob.sync(

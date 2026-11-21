@@ -28,10 +28,6 @@
       "baseHash": "52a5a67f2959d169c4665a09ecd62f55325285e7"
     },
     {
-      "type": "platform",
-      "file": "src-win/Libraries/__tests__/ButtonWin32-test.js"
-    },
-    {
       "type": "patch",
       "file": "src-win/Libraries/Alert/Alert.win32.js",
       "baseFile": "packages/react-native/Libraries/Alert/Alert.js",
@@ -71,14 +67,6 @@
       "file": "src-win/Libraries/Components/Button.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
       "baseHash": "8c280b19399ad3379f4c46b555907a7b90831a8d"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Button/ButtonWin32.Props.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Button/ButtonWin32.tsx"
     },
     {
       "type": "copy",
@@ -341,18 +329,6 @@
       "baseFile": "packages/react-native/Libraries/Network/RCTNetworking.ios.js",
       "baseHash": "503b37bca6d7abfc7a05929b05f16e4246ff67fc",
       "issue": 4318
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/PersonaCoin/PersonaCoin.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/PersonaCoin/PersonaCoinPropTypes.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/PersonaCoin/PersonaCoinTypes.ts"
     },
     {
       "type": "platform",

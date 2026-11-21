@@ -19,7 +19,7 @@ class AppThemeHolder {
   AppThemeHolder(const Mso::React::IReactContext &reactContext);
 
   static void InitAppThemeHolder(const Mso::React::IReactContext &context) noexcept;
-  ReactNativeSpecs::AppThemeSpec_AppThemeData GetConstants() noexcept;
+  ReactNativeSpecs::AppThemeSpec_IHighContrastChangedEvent GetConstants() noexcept;
   static void SetCallback(
       const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag,
       Mso::Functor<void(winrt::Microsoft::ReactNative::JSValueObject &&)> &&callback) noexcept;
@@ -31,7 +31,7 @@ class AppThemeHolder {
 
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
   Mso::Functor<void(winrt::Microsoft::ReactNative::JSValueObject &&)> m_notifyCallback;
-  ReactNativeSpecs::AppThemeSpec_AppThemeData m_appThemeData;
+  ReactNativeSpecs::AppThemeSpec_IHighContrastChangedEvent m_appThemeData;
   winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{};
   winrt::Microsoft::ReactNative::ReactNotificationSubscription m_wmSubscription;
 };
@@ -41,7 +41,7 @@ struct AppTheme : public std::enable_shared_from_this<AppTheme> {
   using ModuleSpec = ReactNativeSpecs::AppThemeSpec;
 
   REACT_GET_CONSTANTS(GetConstants)
-  ReactNativeSpecs::AppThemeSpec_AppThemeData GetConstants() noexcept;
+  ReactNativeSpecs::AppThemeSpec_IHighContrastChangedEvent GetConstants() noexcept;
 
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;

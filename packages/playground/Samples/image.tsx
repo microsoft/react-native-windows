@@ -40,12 +40,7 @@ export default class Bootstrap extends React.Component<
   {},
   {
     selectedResizeMode:
-      | 'center'
-      | 'stretch'
-      | 'cover'
-      | 'contain'
-      | 'repeat'
-      | undefined;
+      'center' | 'stretch' | 'cover' | 'contain' | 'repeat' | undefined;
     includeBorder: boolean;
     blurRadius: number;
     selectedSource: string;
@@ -243,8 +238,8 @@ export default class Bootstrap extends React.Component<
                 this.state.tintColor === 'accentDark1'
                   ? styles.imageWithPlatformColor
                   : this.state.tintColor === 'textFillColorPrimary'
-                  ? styles.imageWithPlatformColorPrimary
-                  : {tintColor: this.state.tintColor},
+                    ? styles.imageWithPlatformColorPrimary
+                    : {tintColor: this.state.tintColor},
               ]}
               defaultSource={{uri: this.state.defaultImageUri}}
             />
@@ -256,8 +251,8 @@ export default class Bootstrap extends React.Component<
                 this.state.tintColor === 'accentDark1'
                   ? styles.imageWithPlatformColor
                   : this.state.tintColor === 'textFillColorPrimary'
-                  ? styles.imageWithPlatformColorPrimary
-                  : {tintColor: this.state.tintColor},
+                    ? styles.imageWithPlatformColorPrimary
+                    : {tintColor: this.state.tintColor},
               ]}
               defaultSource={{uri: this.state.defaultImageUri}}
               source={{uri: this.state.imageUri, body: 'test'}}

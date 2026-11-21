@@ -9,7 +9,39 @@
   },
   "description": "React Native for Windows",
   "main": "./index.windows.js",
-  "types": "types",
+  "exports": {
+    ".": {
+      "types": "./types_generated/index.d.ts",
+      "default": "./index.windows.js"
+    },
+    "./Libraries/*": {
+      "types": null,
+      "default": "./Libraries/*.js"
+    },
+    "./Libraries/*.js": {
+      "types": null,
+      "default": "./Libraries/*.js"
+    },
+    "./scripts/*": "./scripts/*.js",
+    "./scripts/*.sh": "./scripts/*.sh",
+    "./scripts/*.rb": "./scripts/*.rb",
+    "./asset-registry": {
+      "types": null,
+      "default": "./src/asset-registry.js"
+    },
+    "./react-private-interface": {
+      "types": null,
+      "default": "./src/react-private-interface.js"
+    },
+    "./setup-env": "./src/setup-env.js",
+    "./unstable-internals-do-not-use": {
+      "react-native-unstable-internals": "./src/unstable-internals-do-not-use.d.ts",
+      "types": null,
+      "default": "./src/unstable-internals-do-not-use.js"
+    },
+    "./src/fb_internal/*": "./src/fb_internal/*",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",
@@ -94,7 +126,7 @@
     "react-native": "0.90.0-nightly-20261110-9a3047391",
     "react-native-platform-override": "0.0.0-canary.1025",
     "react-refresh": "^0.14.0",
-    "typescript": "5.1.6"
+    "typescript": "^6.0.3"
   },
   "peerDependencies": {
     "@react-native/jest-preset": "0.90.0-nightly-20261110-9a3047391",
@@ -139,7 +171,7 @@
     "/stubs",
     "/template",
     "/templates",
-    "/types",
+    "/types_generated",
     "/.flowconfig",
     "/Directory.Build.props",
     "/Directory.Build.targets",
@@ -159,6 +191,6 @@
   ],
   "promoteRelease": true,
   "engines": {
-    "node": ">= 22"
+    "node": ">=22"
   }
 }

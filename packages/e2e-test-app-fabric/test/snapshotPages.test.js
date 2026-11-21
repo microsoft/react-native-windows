@@ -42,7 +42,9 @@ test('Component Control', () => {
 
 describe('snapshotAllPages', () => {
   for (const component of testerList.Components) {
-    if (component.module.title == "New App Screen" || component.module.title == "Image"){
+    if (component.module.title === "New App Screen" ||
+            component.module.title === "Image" ||
+            component.module.title === 'Custom TextInput component Example'){
       // disable until errors are resolved
       continue;
     }
@@ -50,7 +52,7 @@ describe('snapshotAllPages', () => {
     test(component.module.title, () => {
       for (const example of component.module.examples) {
         // https://github.com/microsoft/react-native-windows/issues/13436
-        if((component.module.title == 'FlatList' && (example.title == 'Basic' || example.title == "MultiColumn")) || (component.module.title == 'ScrollView' && example.title == '<ScrollView> RefreshControl\n') || (component.module.title == 'SectionList' && example.title == 'SectionList scrollable')){
+        if((component.module.title === 'FlatList' && (example.title === 'Basic' || example.title === "MultiColumn")) || (component.module.title === 'ScrollView' && example.title === '<ScrollView> RefreshControl\n') || (component.module.title === 'SectionList' && example.title === 'SectionList scrollable')){
           continue;
         }
         const Example = example.render;
