@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Force checkout of fetched React Native versions over stale files in the override cache",
+  "packageName": "react-native-platform-override",
+  "email": "223556219+Copilot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

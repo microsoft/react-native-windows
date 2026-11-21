@@ -78,8 +78,10 @@ export type CustomTextInputInstance = React.ComponentRef<
   ICustomTextInput;
 
 const InternalCustomTextInput = (
-  props: React.ComponentPropsWithRef<typeof CustomTextInputSpec>,
-) => InternalTextInputWithCustomType(props, CustomTextInputSpec);
+  props: CustomTextInputProps & {
+    forwardedRef?: React.Ref<CustomTextInputInstance>;
+  },
+) => InternalTextInputWithCustomType(props, CustomTextInputSpec as any);
 
 const CustomTextInput = React.forwardRef<
   CustomTextInputInstance,
@@ -143,7 +145,7 @@ const CustomTextInput = React.forwardRef<
           inputMode == null ? showSoftInputOnFocus : inputMode !== 'none'
         }
         {...restProps}
-        forwardedRef={forwardedRef}
+        forwardedRef={forwardedRef as any}
       />
     );
   },

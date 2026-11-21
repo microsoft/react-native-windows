@@ -1,33 +1,24 @@
 import { codegenNativeComponent, codegenNativeCommands } from 'react-native';
-import type { ColorValue, HostComponent, ViewProps } from 'react-native';
-
-import type {
-  DirectEventHandler,
-  Float,
-  Double,
-  Int32,
-  WithDefault,
-  UnsafeMixed,
-} from 'react-native/Libraries/Types/CodegenTypes';
+import type { CodegenTypes, ColorValue, HostComponent, ViewProps } from 'react-native';
 
 export type SomethingEvent = {
   value: string,
-  target: Int32,
+  target: CodegenTypes.Int32,
 };
 
 export interface MovingLightProps extends ViewProps {
   // Props
-  size?: WithDefault<Float, 42>;
+  size?: CodegenTypes.WithDefault<CodegenTypes.Float, 42>;
   color?: ColorValue;
-  testMixed?: UnsafeMixed;
+  testMixed?: CodegenTypes.UnsafeMixed;
   eventParam?: string;
-  objectProp?: { number: Double, string: string };
+  objectProp?: { number: CodegenTypes.Double, string: string };
 
   // Events
-  onSomething?: DirectEventHandler<SomethingEvent>,
-  onTestObjectEvent?: DirectEventHandler<{ target: Int32; testObject: UnsafeMixed }>;
-  onEventWithInlineTypes?: DirectEventHandler<{ target: Int32; contentInset: { top: Double; bottom: Double; left: Double; right: Double }; contentOffset: { x: Double; y: Double }; contentSize: { width: Double; height: Double }; layoutMeasurement: { width: Double; height: Double }; velocity: { x: Double; y: Double }; isUserTriggered: boolean }>;
-  onEventWithMultipleAliasTypes?: DirectEventHandler<{ target: Int32; contentInset: { top: Double; bottom: Double; left: Double; right: Double }; contentOffset: { x: Double; y: Double }; contentSize: { width: Double; height: Double }; layoutMeasurement: { width: Double; height: Double }; velocity: { x: Double; y: Double }; isUserTriggered: boolean }>;
+  onSomething?: CodegenTypes.DirectEventHandler<SomethingEvent>,
+  onTestObjectEvent?: CodegenTypes.DirectEventHandler<{ target: CodegenTypes.Int32; testObject: CodegenTypes.UnsafeMixed }>;
+  onEventWithInlineTypes?: CodegenTypes.DirectEventHandler<{ target: CodegenTypes.Int32; contentInset: { top: CodegenTypes.Double; bottom: CodegenTypes.Double; left: CodegenTypes.Double; right: CodegenTypes.Double }; contentOffset: { x: CodegenTypes.Double; y: CodegenTypes.Double }; contentSize: { width: CodegenTypes.Double; height: CodegenTypes.Double }; layoutMeasurement: { width: CodegenTypes.Double; height: CodegenTypes.Double }; velocity: { x: CodegenTypes.Double; y: CodegenTypes.Double }; isUserTriggered: boolean }>;
+  onEventWithMultipleAliasTypes?: CodegenTypes.DirectEventHandler<{ target: CodegenTypes.Int32; contentInset: { top: CodegenTypes.Double; bottom: CodegenTypes.Double; left: CodegenTypes.Double; right: CodegenTypes.Double }; contentOffset: { x: CodegenTypes.Double; y: CodegenTypes.Double }; contentSize: { width: CodegenTypes.Double; height: CodegenTypes.Double }; layoutMeasurement: { width: CodegenTypes.Double; height: CodegenTypes.Double }; velocity: { x: CodegenTypes.Double; y: CodegenTypes.Double }; isUserTriggered: boolean }>;
 }
 
 

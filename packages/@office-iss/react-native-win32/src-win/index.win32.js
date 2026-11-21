@@ -430,27 +430,10 @@ module.exports = {
     // Legacy export
     return require('./Libraries/Text/Text').default;
   },
-  get ButtonWin32() {
-    /* $FlowFixMe[untyped-import] ButtonWin32 defined in TS not flow */
-    return require('./Libraries/Components/Button/ButtonWin32').ButtonWin32;
-  },
   get TouchableWin32() {
     /* $FlowFixMe[untyped-import] TouchableWin32 defined in TS not flow */
     return require('./Libraries/Components/Touchable/TouchableWin32')
       .TouchableWin32;
-  },
-  get PersonaCoin() {
-    /* $FlowFixMe[untyped-import] PersonaCoin defined in TS not flow */
-    return require('./Libraries/PersonaCoin/PersonaCoin').PersonaCoin;
-  },
-  get PersonaCoinSize() {
-    /* $FlowFixMe[untyped-import] PersonaCoinTypes defined in TS not flow */
-    return require('./Libraries/PersonaCoin/PersonaCoinTypes').PersonaCoinSize;
-  },
-  get PersonaCoinPresence() {
-    /* $FlowFixMe[untyped-import] PersonaCoinTypes defined in TS not flow */
-    return require('./Libraries/PersonaCoin/PersonaCoinTypes')
-      .PersonaCoinPresence;
   },
 } as ReactNativePublicAPI;
 

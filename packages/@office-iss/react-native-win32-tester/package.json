@@ -34,7 +34,7 @@
     "react": "19.3.0",
     "react-native": "0.89.0-nightly-20261102-47a9917ac",
     "react-native-platform-override": "0.0.0-canary.1025",
-    "typescript": "5.1.6"
+    "typescript": "^6.0.3"
   },
   "engines": {
     "node": ">= 22"

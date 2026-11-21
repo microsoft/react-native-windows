@@ -1,0 +1,55 @@
+{
+  "includePatterns": [
+    "scripts/shared/**",
+    "scripts/js-api/**"
+  ],
+  "baseVersion": "0.89.0-nightly-20261102-47a9917ac",
+  "overrides": [
+    {
+      "type": "copy",
+      "directory": "scripts/js-api",
+      "baseDirectory": "scripts/js-api",
+      "excludePatterns": [
+        "scripts/js-api/build-types/buildGeneratedTypes.js",
+        "scripts/js-api/build-types/transforms/typescript/replaceDefaultExportName.js"
+      ],
+      "baseHash": "345c40e7e3c2ca9428018b2c61d13bd191a01b31"
+    },
+    {
+      "type": "patch",
+      "file": "scripts/js-api/build-types/buildGeneratedTypes.js",
+      "baseFile": "scripts/js-api/build-types/buildGeneratedTypes.js",
+      "baseHash": "bf31cae0faf51adb165426975c29a7c10416d82a"
+    },
+    {
+      "type": "patch",
+      "file": "scripts/js-api/build-types/transforms/typescript/replaceDefaultExportName.js",
+      "baseFile": "scripts/js-api/build-types/transforms/typescript/replaceDefaultExportName.js",
+      "baseHash": "800801edd75aac7be3f64e4d965456dc242fb4bc"
+    },
+    {
+      "type": "copy",
+      "file": "scripts/shared/babelRegister.js",
+      "baseFile": "scripts/shared/babelRegister.js",
+      "baseHash": "edc490819f3593d3263c4f56f8f6ca1c72ca954e"
+    },
+    {
+      "type": "derived",
+      "file": "scripts/shared/consts.js",
+      "baseFile": "scripts/shared/consts.js",
+      "baseHash": "adc1e2e8702597d80e7a81de1f40b968197712e6"
+    },
+    {
+      "type": "copy",
+      "file": "scripts/shared/isGitRepo.js",
+      "baseFile": "scripts/shared/isGitRepo.js",
+      "baseHash": "915da8722352736819f03b702c9458af0b2b9809"
+    },
+    {
+      "type": "derived",
+      "file": "scripts/shared/monorepoUtils.js",
+      "baseFile": "scripts/shared/monorepoUtils.js",
+      "baseHash": "ebbb59eb4ec107a19030ddb7e7d5bd87bae983de"
+    }
+  ]
+}

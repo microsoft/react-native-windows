@@ -5,7 +5,8 @@
  */
 
 import React from 'react';
-import {Text, TouchableHighlight, View, ViewStyle} from 'react-native';
+import {Text, TouchableHighlight, View, ViewStyle, ViewProps} from 'react-native';
+import {ViewProps as WindowsViewProps} from 'react-native-windows';
 import {Picker} from '@react-native-picker/picker';
 
 class TabStopExample extends React.Component {
@@ -87,13 +88,13 @@ class TabStopExample extends React.Component {
             flexDirection: 'row',
             justifyContent: 'space-between',
           }}>
-          <Picker style={pickerStyle} {...{tabIndex: 11}}>
+          <Picker style={pickerStyle} {...{tabIndex: 11} as WindowsViewProps as unknown as ViewProps}>
             <Picker.Item label="tabIndex 11" />
           </Picker>
-          <Picker style={pickerStyle} {...{tabIndex: 13}}>
+          <Picker style={pickerStyle} {...{tabIndex: 13} as WindowsViewProps as unknown as ViewProps}>
             <Picker.Item label="tabIndex 13" />
           </Picker>
-          <Picker style={pickerStyle} {...{tabIndex: 12}}>
+          <Picker style={pickerStyle} {...{tabIndex: 12} as WindowsViewProps as unknown as ViewProps}>
             <Picker.Item label="tabIndex 12" />
           </Picker>
         </View>

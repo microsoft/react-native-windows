@@ -415,33 +415,6 @@ module.exports = {
   // #endregion
 
   // Additional windows exports (Typescript components exported as flow any)
-  get Flyout() {
-    /* $FlowFixMe[untyped-import] Flyout defined in TS not flow*/
-    return require('./Libraries/Components/Flyout/Flyout').Flyout;
-  },
-  get Glyph() {
-    return require('./Libraries/Components/Glyph/Glyph').Glyph;
-  },
-  get Popup() {
-    /* $FlowFixMe[untyped-import] Popup defined in TS not flow*/
-    return require('./Libraries/Components/Popup/Popup').Popup;
-  },
-  get supportKeyboard() {
-    /* $FlowFixMe[untyped-import] supportKeyboard defined in TS not flow*/
-    return require('./Libraries/Components/Keyboard/KeyboardExt')
-      .supportKeyboard;
-  },
-  get EventPhase() {
-    return require('./Libraries/Components/View/ViewPropTypes')
-      .HandledEventPhase;
-  },
-  get HandledEventPhase() {
-    return require('./Libraries/Components/View/ViewPropTypes')
-      .HandledEventPhase;
-  },
-  get ViewWindows() {
-    return require('./Libraries/Components/View/View').default;
-  },
   get AppTheme() {
     return require('./Libraries/AppTheme/AppTheme').AppTheme;
   },

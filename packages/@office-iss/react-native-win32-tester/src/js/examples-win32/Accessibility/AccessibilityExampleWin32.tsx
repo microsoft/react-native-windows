@@ -2,14 +2,12 @@
 import React from 'react'
 import {
   View,
-  AccessibilityInfo,
   FlatList,
   StyleSheet,
-  Text,
   TouchableHighlight,
   ListRenderItemInfo,
 } from 'react-native';
-import { ViewWin32 } from '@office-iss/react-native-win32';
+import { AccessibilityInfo, TextWin32 as Text, ViewWin32 } from '@office-iss/react-native-win32';
 import { IHandledKeyboardEvent, Pressable } from '@office-iss/react-native-win32';
 
 const styles = StyleSheet.create({
@@ -479,7 +477,7 @@ const AccessibilityInfoExample: React.FunctionComponent<{}> =() => {
     setTimeout(() => {
       AccessibilityInfo.announceForAccessibilityWithOptions(
         'AccessibilityInfo announcement succeeded!',
-        { nativeID: 'AnnouncementTarget' });
+        { nativeID: 'AnnouncementTarget' } as any);
       }, 3000);
   }, []);
 

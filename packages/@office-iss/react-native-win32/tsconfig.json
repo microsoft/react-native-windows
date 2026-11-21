@@ -4,6 +4,7 @@
     "baseUrl": ".",
     "outDir": ".",
     "rootDir": "src-win",
+    "types": ["node"],
     "moduleSuffixes": [".win32", ".native", ""],
     // Not clean
     "strict": false,

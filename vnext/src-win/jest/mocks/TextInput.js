@@ -22,6 +22,7 @@ const MockNativeMethods = jest.requireActual<TMockNativeMethods>(
   '../MockNativeMethods',
 ).default;
 
+// $FlowFixMe[incompatible-type]
 const TextInput = mockComponent(
   '../Libraries/Components/TextInput/TextInput',
   {
@@ -34,7 +35,7 @@ const TextInput = mockComponent(
 ) as TTextInput;
 
 // [Windows] Mirror the named export added to the TextInput implementation.
-export function InternalTextInputWithCustomType<NativeProps: {...}>(
+export function InternalTextInputWithCustomType<NativeProps extends {...}>(
   props: TextInputProps,
   // $FlowFixMe[unclear-type]
   NativeComponent: HostComponent<any>,

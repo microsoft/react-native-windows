@@ -11,6 +11,7 @@ import {WritableFileRepository, bindVersion} from './FileRepository';
 import GitReactFileRepository from './GitReactFileRepository';
 import {hashFileOrDirectory} from './Hash';
 import isUtf8 from 'isutf8';
+import {isFileExcluded, unixPath} from './PathUtils';
 
 export interface UpgradeResult {
   overrideName: string;
@@ -116,15 +117,23 @@ export const UpgradeStrategies = {
   copyDirectory: (
     overrideDirectory: string,
     baseDirectory: string,
+    excludePatterns?: readonly string[],
   ): UpgradeStrategy => ({
     upgrade: async (gitReactRepo, overrideRepo, newVersion) => {
       const baseFiles = (
-        await gitReactRepo.listFiles([`${baseDirectory}/**`], newVersion)
-      ).map(f => path.relative(baseDirectory, f));
+        await gitReactRepo.listFiles(
+          [`${unixPath(baseDirectory)}/**`],
+          newVersion,
+        )
+      )
+        .filter(f => !isFileExcluded(f, baseDirectory, excludePatterns))
+        .map(f => path.relative(baseDirectory, f));
 
       const overrideFiles = (
-        await overrideRepo.listFiles([`${overrideDirectory}/**`])
-      ).map(f => path.relative(overrideDirectory, f));
+        await overrideRepo.listFiles([`${unixPath(overrideDirectory)}/**`])
+      )
+        .filter(f => !isFileExcluded(f, overrideDirectory, excludePatterns))
+        .map(f => path.relative(overrideDirectory, f));
 
       // Note that this logic can leave empty directories. This shouldn't
       // matter in practice as Git won't track them.

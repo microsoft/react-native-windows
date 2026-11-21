@@ -2,11 +2,8 @@
   "extends": "@rnw-scripts/ts-config",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": ".",
-    "paths": {
-      "react-native": ["../../../vnext"], // this mapping is relative to "baseUrl"
-      "react-native/types/*": ["../../../node_modules/react-native/types_DEPRECATED/*"]
-    },
+    "types": ["node"],
+    "outDir": "."
   },
   "include": ["src"],
   "exclude": ["node_modules"],

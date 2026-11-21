@@ -11,7 +11,7 @@ import EventEmitter, {
 } from '../vendor/emitter/EventEmitter';
 import NativeEventEmitter from '../EventEmitter/NativeEventEmitter';
 import NativeAppTheme, {
-  type AppThemeData,
+  type IHighContrastChangedEvent,
   type HighContrastColors,
 } from './NativeAppTheme';
 
@@ -28,13 +28,13 @@ let _highContrastColors = {
   WindowTextColor: '',
 };
 
-type AppThemeEvent = (nativeEvent: AppThemeData) => void;
+type AppThemeEvent = (nativeEvent: IHighContrastChangedEvent) => void;
 const eventEmitter = new EventEmitter<{
-  highContrastChanged: [AppThemeData],
+  highContrastChanged: [IHighContrastChangedEvent],
 }>();
 
 type NativeAppThemeEventDefinitions = {
-  highContrastChanged: [AppThemeData],
+  highContrastChanged: [IHighContrastChangedEvent],
 };
 
 // $FlowFixMe[underconstrained-implicit-instantiation]
@@ -48,7 +48,7 @@ if (NativeAppTheme) {
     new NativeEventEmitter<NativeAppThemeEventDefinitions>(null);
   nativeEventEmitter.addListener(
     'highContrastChanged',
-    (newAppTheme: AppThemeData) => {
+    (newAppTheme: IHighContrastChangedEvent) => {
       _isHighContrast = newAppTheme.isHighContrast;
       _highContrastColors = newAppTheme.highContrastColors;
       eventEmitter.emit('highContrastChanged', newAppTheme);

@@ -18,7 +18,12 @@ export type OverridePromptAnswers =
   | {type: 'patch'; baseFile: string; issue: number}
   | {type: 'platform'}
   | {type: 'copy'; baseFile: string; issue: number}
-  | {type: 'directoryCopy'; baseDirectory: string; issue: number};
+  | {
+      type: 'directoryCopy';
+      baseDirectory: string;
+      issue: number;
+      excludePatterns?: string[];
+    };
 
 export async function overrideFromDetails(
   overridePath: string,
@@ -55,12 +60,15 @@ export async function overrideFromDetails(
         overrideName,
         answers.baseDirectory,
         answers.issue,
+        answers.excludePatterns,
       );
   }
 }
 
 export async function promptForOverrideDetails(): Promise<OverridePromptAnswers> {
-  return inquirer.prompt([
+  const answers = await inquirer.prompt<
+    OverridePromptAnswers & {excludePatternsJson?: string}
+  >([
     {
       type: 'list',
       name: 'type',
@@ -123,7 +131,38 @@ export async function promptForOverrideDetails(): Promise<OverridePromptAnswers>
       name: 'baseDirectory',
       message: 'What directory are you copying from?',
     },
+    {
+      when: res => res.type === 'directoryCopy',
+      type: 'input',
+      name: 'excludePatternsJson',
+      message:
+        'Exclude patterns relative to the copied directory (JSON array):',
+      default: '[]',
+      validate: validateExcludePatterns,
+    },
   ]);
+
+  if (answers.type === 'directoryCopy') {
+    return {
+      ...answers,
+      excludePatterns: JSON.parse(answers.excludePatternsJson || '[]'),
+    };
+  }
+  return answers;
+}
+
+function validateExcludePatterns(answer: string): boolean | string {
+  const message = 'Enter a JSON array of glob pattern strings';
+  try {
+    const patterns: unknown = JSON.parse(answer);
+    return (
+      (Array.isArray(patterns) &&
+        patterns.every(pattern => typeof pattern === 'string')) ||
+      message
+    );
+  } catch {
+    return message;
+  }
 }
 
 function filterIssueNumber(answer: string): number | string {

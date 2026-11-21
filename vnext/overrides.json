@@ -239,6 +239,10 @@
     },
     {
       "type": "platform",
+      "file": "ReactCopies/IntegrationTests/blue_square.png"
+    },
+    {
+      "type": "platform",
       "file": "ReactCopies/IntegrationTests/GlobalEvalWithSourceUrlTest.js"
     },
     {
@@ -259,6 +263,10 @@
     },
     {
       "type": "platform",
+      "file": "ReactCopies/IntegrationTests/launchWebSocketServer.sh"
+    },
+    {
+      "type": "platform",
       "file": "ReactCopies/IntegrationTests/LayoutEventsTest.js"
     },
     {
@@ -268,6 +276,10 @@
     {
       "type": "platform",
       "file": "ReactCopies/IntegrationTests/PromiseTest.js"
+    },
+    {
+      "type": "platform",
+      "file": "ReactCopies/IntegrationTests/red_square.png"
     },
     {
       "type": "platform",
@@ -287,23 +299,11 @@
     },
     {
       "type": "platform",
-      "file": "ReactCopies/IntegrationTests/WebSocketTest.js"
-    },
-    {
-      "type": "platform",
-      "file": "ReactCopies/IntegrationTests/blue_square.png"
-    },
-    {
-      "type": "platform",
-      "file": "ReactCopies/IntegrationTests/launchWebSocketServer.sh"
-    },
-    {
-      "type": "platform",
-      "file": "ReactCopies/IntegrationTests/red_square.png"
-    },
-    {
-      "type": "platform",
       "file": "ReactCopies/IntegrationTests/websocket_integration_test_server.js"
+    },
+    {
+      "type": "platform",
+      "file": "ReactCopies/IntegrationTests/WebSocketTest.js"
     },
     {
       "type": "derived",
@@ -358,17 +358,10 @@
       "file": "src-win/IntegrationTests/XHRTest.js"
     },
     {
-      "type": "patch",
+      "type": "derived",
       "file": "src-win/jest/mocks/TextInput.js",
-      "baseFile": "packages/react-native/jest/mocks/TextInput.js",
-      "baseHash": "ac09e04652495b4f74bbb258b39b07e81d4bb903"
-    },
-    {
-      "type": "copy",
-      "file": "src-win/jest/setup.js",
-      "baseFile": "packages/react-native/jest/setup.js",
-      "baseHash": "ecbd0b61c05ec4e048a5850c7bacb8fa1689efdb",
-      "issue": 14929
+      "baseFile": "packages/jest-preset/jest/mocks/TextInput.js",
+      "baseHash": "485aa93991a5f90da6523d55f482354c5481dbc3"
     },
     {
       "type": "platform",
@@ -393,15 +386,15 @@
       "file": "src-win/Libraries/AppTheme/NativeAppTheme.js"
     },
     {
+      "type": "platform",
+      "file": "src-win/Libraries/Components/AccessibilityInfo/__tests__/AccessibilityInfoWindows-test.js"
+    },
+    {
       "type": "patch",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
       "baseHash": "5ca2e219d1870e10afb377da5686e2b30a8b7006",
       "issue": 4578
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/AccessibilityInfo/__tests__/AccessibilityInfoWindows-test.js"
     },
     {
       "type": "copy",
@@ -505,19 +498,13 @@
     },
     {
       "type": "derived",
-      "file": "src-win/Libraries/Components/TextInput/TextInput.flow.windows.js",
+      "file": "src-win/Libraries/Components/TextInput/TextInput.flow.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.flow.js",
       "baseHash": "84abfdcd351d4ae44d38852a76d43297faa500a3"
     },
     {
       "type": "patch",
-      "file": "src-win/Libraries/Components/TextInput/TextInput.d.ts",
-      "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.d.ts",
-      "baseHash": "4f2ccbba64474d2bad61eadcc0c843c21a0165af"
-    },
-    {
-      "type": "patch",
-      "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
+      "file": "src-win/Libraries/Components/TextInput/TextInput.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
       "baseHash": "0e65ebb2de391a143711f95cca629134f7a8746f"
     },
@@ -577,7 +564,7 @@
     },
     {
       "type": "patch",
-      "file": "src-win/Libraries/Components/View/ViewAccessibility.windows.js",
+      "file": "src-win/Libraries/Components/View/ViewAccessibility.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.js",
       "baseHash": "7dc23648a6626ef839eb6869a26a037c9b0d2363"
     },
@@ -589,7 +576,7 @@
     },
     {
       "type": "patch",
-      "file": "src-win/Libraries/Components/View/ViewPropTypes.windows.js",
+      "file": "src-win/Libraries/Components/View/ViewPropTypes.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
       "baseHash": "ca888b50ac400134502646a4c3b1c26dad431bbd"
     },
@@ -727,19 +714,19 @@
     },
     {
       "type": "derived",
-      "file": "src-win/Libraries/Text/Text.windows.js",
+      "file": "src-win/Libraries/Text/Text.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
       "baseHash": "fdb168fdcdb50119f42cbc9bb6c27b9cd3f855bc"
     },
     {
       "type": "derived",
-      "file": "src-win/Libraries/Text/TextProps.windows.js",
+      "file": "src-win/Libraries/Text/TextProps.js",
       "baseFile": "packages/react-native/Libraries/Text/TextProps.js",
       "baseHash": "b5ec6ea570d9993ad46da64576f9a0d26e1728c4"
     },
     {
       "type": "patch",
-      "file": "src-win/Libraries/Types/CoreEventTypes.windows.js",
+      "file": "src-win/Libraries/Types/CoreEventTypes.js",
       "baseFile": "packages/react-native/Libraries/Types/CoreEventTypes.js",
       "baseHash": "e1ce0323d942d6a8e692b6118779f83b6d9e450d"
     },

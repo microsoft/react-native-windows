@@ -15,7 +15,7 @@ import {
   findNodeHandle,
   TouchableHighlight,
 } from 'react-native';
-import {ViewWindows} from 'react-native-windows';
+import {View as ViewWindows} from 'react-native-windows';
 
 export default class Bootstrap extends React.Component<
   {},
@@ -30,7 +30,8 @@ export default class Bootstrap extends React.Component<
     };
   }
 
-  myElement = React.createRef<TextInput>();
+  myElement: React.RefObject<React.ComponentRef<typeof TextInput> | null> =
+    React.createRef();
 
   render() {
     return (
