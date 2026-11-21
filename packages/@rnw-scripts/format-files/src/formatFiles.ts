@@ -103,7 +103,7 @@ function spawnClangFormat(
     return;
   }
 
-  let files = listAllTrackedFiles(path.resolve(__dirname, '../..'));
+  let files = listAllTrackedFiles(path.resolve(import.meta.dirname, '../..'));
 
   // Apply file filters from constants
   files = files.filter(
