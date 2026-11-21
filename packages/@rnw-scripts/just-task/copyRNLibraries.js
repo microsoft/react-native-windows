@@ -152,6 +152,7 @@ exports.cleanTask = baseDir => {
       base('rn-get-polyfills.js'),
       base('src-win/rntypes'),
       base('types'),
+      base('types_generated'),
 
       // Remove TS compiled gunk in our root
       ...glob.sync(

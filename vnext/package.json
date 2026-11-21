@@ -11,7 +11,7 @@
   "main": "./index.windows.js",
   "exports": {
     ".": {
-      "types": "./types_generated/index.windows.d.ts",
+      "types": "./types_generated/index.d.ts",
       "default": "./index.windows.js"
     },
     "./Libraries/*": {
