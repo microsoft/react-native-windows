@@ -161,7 +161,9 @@ function getBuildPath(file: string): string {
     packageDir,
     file
       .replace(packageDir, TYPES_OUTPUT_DIR)
+      .replace(/\.windows\.js\.flow$/, '.js') // [Windows]
       .replace(/\.js\.flow$/, '.js')
+      .replace(/\.windows\.js$/, '.d.ts') // [Windows]
       .replace(/\.js$/, '.d.ts'),
   );
 }
