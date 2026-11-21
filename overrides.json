@@ -3,17 +3,19 @@
     "scripts/shared/**",
     "scripts/js-api/**"
   ],
-  "baseVersion": "0.89.0-nightly-20261102-47a9917ac",
+  "baseVersion": "0.90.0-nightly-20261110-9a3047391",
   "overrides": [
     {
       "type": "copy",
       "directory": "scripts/js-api",
       "baseDirectory": "scripts/js-api",
       "excludePatterns": [
-        "scripts/js-api/build-types/buildGeneratedTypes.js",
-        "scripts/js-api/build-types/transforms/typescript/replaceDefaultExportName.js"
+        "build-types/buildGeneratedTypes.js",
+        "build-types/resolution/simpleResolve.js",
+        "build-types/transforms/typescript/replaceDefaultExportName.js",
+        "config.js"
       ],
-      "baseHash": "345c40e7e3c2ca9428018b2c61d13bd191a01b31"
+      "baseHash": "1232e59650ea6be3a35b58d635c6be6403359f7f"
     },
     {
       "type": "patch",
@@ -23,9 +25,21 @@
     },
     {
       "type": "patch",
+      "file": "scripts/js-api/build-types/resolution/simpleResolve.js",
+      "baseFile": "scripts/js-api/build-types/resolution/simpleResolve.js",
+      "baseHash": "0c9921df08411e2d787b5c2c6f003d1ff8ddc758"
+    },
+    {
+      "type": "patch",
       "file": "scripts/js-api/build-types/transforms/typescript/replaceDefaultExportName.js",
       "baseFile": "scripts/js-api/build-types/transforms/typescript/replaceDefaultExportName.js",
       "baseHash": "800801edd75aac7be3f64e4d965456dc242fb4bc"
+    },
+    {
+      "type": "patch",
+      "file": "scripts/js-api/config.js",
+      "baseFile": "scripts/js-api/config.js",
+      "baseHash": "295dc3a8cc7ce05cfbd29d68cb1627323131cb7c"
     },
     {
       "type": "copy",
@@ -49,7 +63,7 @@
       "type": "derived",
       "file": "scripts/shared/monorepoUtils.js",
       "baseFile": "scripts/shared/monorepoUtils.js",
-      "baseHash": "ebbb59eb4ec107a19030ddb7e7d5bd87bae983de"
+      "baseHash": "9e77d37663c8b4090b1cafb8086d5cb1441b4882"
     }
   ]
 }

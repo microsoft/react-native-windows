@@ -417,50 +417,6 @@
       "baseHash": "8c280b19399ad3379f4c46b555907a7b90831a8d"
     },
     {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Flyout/Flyout.d.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Flyout/Flyout.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Flyout/FlyoutNativeComponent.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Glyph/Glyph.d.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Glyph/Glyph.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Glyph/GlyphNativeComponent.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Keyboard/KeyboardExt.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Keyboard/KeyboardExtProps.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Popup/Popup.d.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Popup/Popup.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Popup/PopupNativeComponent.js"
-    },
-    {
       "type": "derived",
       "file": "src-win/Libraries/Components/Pressable/Pressable.d.ts",
       "baseFile": "packages/react-native/types_DEPRECATED/Libraries/Components/Pressable/Pressable.d.ts",
@@ -567,12 +523,6 @@
       "file": "src-win/Libraries/Components/View/ViewAccessibility.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.js",
       "baseHash": "7dc23648a6626ef839eb6869a26a037c9b0d2363"
-    },
-    {
-      "type": "derived",
-      "file": "src-win/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseFile": "packages/react-native/types_DEPRECATED/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "c12b1c168659d91fef0a29ef8d9a453a8e1880f1"
     },
     {
       "type": "patch",

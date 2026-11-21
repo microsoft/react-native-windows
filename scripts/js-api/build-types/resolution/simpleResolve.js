@@ -69,7 +69,7 @@ async function simpleResolve(
         return resolvedPath;
       }
 
-      for (const ext of ['.js.flow', '.js']) {
+      for (const ext of ['.windows.js.flow', '.js.flow', '.windows.js', '.js']) { // [Windows]
         if (existsSync(resolvedPath + ext)) {
           return resolvedPath + ext;
         }

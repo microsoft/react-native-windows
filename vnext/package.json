@@ -11,12 +11,10 @@
   "main": "./index.windows.js",
   "exports": {
     ".": {
-      "react-native-legacy-deep-imports": "./types_DEPRECATED/index.d.ts",
       "types": "./types_generated/index.windows.d.ts",
       "default": "./index.windows.js"
     },
     "./Libraries/*": {
-      "react-native-legacy-deep-imports": "./types_DEPRECATED/Libraries/*.d.ts",
       "types": null,
       "default": "./Libraries/*.js"
     },

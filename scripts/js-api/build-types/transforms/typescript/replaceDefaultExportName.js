@@ -14,7 +14,7 @@ function createDefaultExportNameReplacer(filePath: string): PluginObj<unknown> {
   return {
     visitor: {
       Identifier(node) {
-        const fileName = filePath.split('\\').pop() ?? ''; // [Windows - handle windows path seperator ]
+        const fileName = filePath.split(/[\\/]/).pop() ?? ''; // [Windows - handle windows path seperator ]
         const moduleName = fileName.split('.')[0];
 
         if (node.node.name === '$$EXPORT_DEFAULT_DECLARATION$$') {
