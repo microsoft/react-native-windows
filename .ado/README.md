@@ -89,6 +89,8 @@ On `main`, PR and CI use Windows images defined in
 
 ARM64 pools declare `os: windows` and `hostArchitecture: arm64`. Jobs on these
 pools run `templates/ensure-node10-shim.yml` before their build and test steps.
+ARM64 pools running E2E tests must allow interactive sessions because WinAppDriver
+requires an interactive desktop.
 Universal ARM64 native suites, Desktop ARM64EC unit and integration tests, and
 ARM64 Hermes E2E tests run on ARM64 agents. The CLI ARM64 job remains a cross-build
 on the default x64 pool.
