@@ -515,6 +515,10 @@
       "baseHash": "ce408d56232b390a25b0eff2169f5676b0ba2fda"
     },
     {
+      "type": "platform",
+      "file": "src-win/Libraries/Components/Touchable/__tests__/TouchableHighlightWindows-test.js"
+    },
+    {
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/Touchable.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/Touchable.js",
