@@ -63,13 +63,26 @@ Depends on Build (needs the NuGet packages). Runs `react-native init` + `react-n
 
 ## Agent Pools
 
-| Pool | Used By |
-|------|---------|
-| `fabric-internal-pool-large` | CI: all jobs |
-| `rnw-pool-4` | PR: most jobs (default) |
-| `rnw-pool-8` | PR: native builds |
+On `main`, PR and CI use `windows-2025-1espt` for Windows x64 agents and
+`windows-2025-1espt-arm64` for Windows ARM64 agents. The image definitions live in
+[`microsoft/v8-jsi`'s `.ado/image` folder](https://github.com/microsoft/v8-jsi/tree/main/.ado/image).
 
-PR uses public pools (no `-microsoft` suffix). The PR entry point overrides the pool defaults.
+| Pool | Architecture | Used By |
+|------|--------------|---------|
+| `fabric-internal-pool-large` | x64 | CI: default and native builds |
+| `windows-2025-1espt-arm64` | ARM64 | CI: ARM64 native builds and tests |
+| `rnw-pool-4` | x64 | PR: most jobs (default) |
+| `rnw-pool-8` | x64 | PR: native builds |
+| `rnw-pool-8-arm64` | ARM64 | PR: ARM64 native builds and tests |
+
+PR uses public pools. The PR and CI entry points define the pool mappings.
+ARM64 pools declare `os: windows` and `hostArchitecture: arm64`; jobs on these
+pools run the node10 shim before their build and test steps.
+
+Universal ARM64 native suites, Desktop ARM64EC unit and integration tests, and
+ARM64 Hermes E2E tests run on ARM64 agents. The CLI ARM64 job remains a cross-build
+on the default x64 pool. RNW's own [`.ado/image` recipes](../.ado/image/) remain for
+stable branches.
 
 ## SDL & Compliance
 

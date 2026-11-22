@@ -78,9 +78,22 @@ All repository resources pin `ref: refs/tags/release`.
 
 ## Agent pools
 
-- **CI:** `fabric-internal-pool-large` (ISS), with image `rnw-img-vs2026-node24`
-  selected via `demands: ImageOverride`.
-- **PR:** public `rnw-pool-4` (default) and `rnw-pool-8` (native builds), same image.
+On `main`, PR and CI use Windows images defined in
+[`microsoft/v8-jsi`'s `.ado/image` folder](https://github.com/microsoft/v8-jsi/tree/main/.ado/image):
+`windows-2025-1espt` for x64 and `windows-2025-1espt-arm64` for ARM64.
+
+- **CI:** `fabric-internal-pool-large` (ISS) for x64, with the image selected via
+  `demands: ImageOverride`; `windows-2025-1espt-arm64` for ARM64.
+- **PR:** public `rnw-pool-4` (default) and `rnw-pool-8` (native builds) for x64,
+  with the image selected via `demands: ImageOverride`; `rnw-pool-8-arm64` for ARM64.
+
+ARM64 pools declare `os: windows` and `hostArchitecture: arm64`. Jobs on these
+pools run `templates/ensure-node10-shim.yml` before their build and test steps.
+Universal ARM64 native suites, Desktop ARM64EC unit and integration tests, and
+ARM64 Hermes E2E tests run on ARM64 agents. The CLI ARM64 job remains a cross-build
+on the default x64 pool.
+
+RNW's own [`.ado/image` recipes](./image/) remain for stable branches.
 
 ## Package feed and network isolation
 
@@ -126,11 +139,9 @@ attempts that green builds would otherwise hide:
 - **React Native DevTools:** `RNDT_DEV: 1` stops DevTools from fetching its
   standalone shell binary from a Facebook CDN when Metro starts. The debugger is
   never opened in CI, so this has no effect on tests.
-- **VS Installer:** the `rnw-img-vs2026-node24` agent image sets the
-  `BackgroundDownloadDisabled` policy so the VS Installer's background auto-update
-  never contacts the Microsoft CDN mid-build. `templates/prepare-build-env.yml`
-  reapplies the same policy per job as an interim belt until the updated image
-  ships; it can be dropped once a rebuilt image is confirmed clean.
+- **VS Installer:** `templates/prepare-build-env.yml` applies the
+  `BackgroundDownloadDisabled` policy per job to prevent the VS Installer's
+  background auto-update from contacting the Microsoft CDN mid-build.
 
 npm/Yarn restores through PackageFeedProxy are **anonymous** and do not depend on
 the RNW feed warm-up. Anonymous NuGet restores and the authenticated CI Verdaccio

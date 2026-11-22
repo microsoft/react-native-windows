@@ -32,8 +32,8 @@ parameters:
 
 steps:
   # VS Installer's background auto-update (BackgroundDownload.exe) fetches VS updates from the MS
-  # CDN mid-build and trips network isolation. Interim belt; the durable fix is BackgroundDownloadDisabled=1
-  # baked into the agent image JSON (.ado/image/rnw-img-vs2026-node24.json) — remove once that image ships.
+  # CDN mid-build and trips network isolation. Apply BackgroundDownloadDisabled=1 per job
+  # regardless of the agent image's policy settings.
   - pwsh: |
       foreach ($key in @(
           'HKLM:\SOFTWARE\Microsoft\VisualStudio\Setup',
