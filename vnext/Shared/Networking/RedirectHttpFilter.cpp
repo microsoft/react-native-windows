@@ -276,8 +276,9 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
       throw winrt::hresult_error{HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_FAILED), L"Too many redirects"};
     }
 
-    // Call event source's OnRedirecting before modifying request parameters.
-    if (coEventSrc && !coEventSrc->OnRedirecting(coRequest, response)) {
+    // Check whether the redirect will be followed before notifying the event source, so it only sees hops that are
+    // actually sent.
+    if (!coAllowAutoRedirect) {
       break;
     }
 
@@ -292,6 +293,11 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
 
     // Do not "downgrade" from HTTPS to HTTP
     if (coRequest.RequestUri().SchemeName() == L"https" && redirectUri.SchemeName() == L"http") {
+      break;
+    }
+
+    // Call event source's OnRedirecting before modifying request parameters.
+    if (coEventSrc && !coEventSrc->OnRedirecting(coRequest, response)) {
       break;
     }
 
@@ -311,11 +317,18 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
     }
 
     if (auto requestFactory = coRequestFactory.lock()) {
+      // The factory rebuilds headers from the original arguments. Keep the Origin header set by the origin policy.
+      auto origin = coRequest.Headers().TryLookup(L"Origin");
+
       coRequest = co_await requestFactory->CreateRequest(
           HttpMethod{method}, Uri{redirectUri}, coRequest.Properties(), /*includeContent*/ !removeBody);
 
       if (!coRequest) {
         throw winrt::hresult_error{E_INVALIDARG, L"Invalid request handle"};
+      }
+
+      if (origin) {
+        coRequest.Headers().Insert(L"Origin", *origin);
       }
     } else {
       coRequest.Method(method);
