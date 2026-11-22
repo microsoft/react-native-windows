@@ -28,12 +28,16 @@ parameters:
             BuildPlatform: x64
           - Name: X86Hermes
             BuildPlatform: x86
+          - Name: Arm64Hermes
+            BuildPlatform: ARM64
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Hermes
             BuildPlatform: x64
           - Name: X86Hermes
             BuildPlatform: x86
+          - Name: Arm64Hermes
+            BuildPlatform: ARM64
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
@@ -43,12 +47,18 @@ jobs:
           displayName: E2E Test App Fabric ${{ matrix.Name }}
 
           variables: [template: ../variables/windows.yml]
-          pool: ${{ parameters.AgentPool.Medium }}
+          ${{ if eq(matrix.BuildPlatform, 'ARM64') }}:
+            pool: ${{ parameters.AgentPool.Arm64 }}
+          ${{ else }}:
+            pool: ${{ parameters.AgentPool.Medium }}
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
             - template: ../templates/checkout-shallow.yml
+
+            - ${{ if eq(matrix.BuildPlatform, 'ARM64') }}:
+              - template: ../templates/ensure-node10-shim.yml
 
             - template: ../templates/prepare-js-env.yml
               parameters:
@@ -84,6 +94,18 @@ jobs:
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildLogDirectory: $(BuildLogDirectory)
                 workingDirectory: packages/e2e-test-app-fabric
+
+            - ${{ if eq(matrix.BuildPlatform, 'ARM64') }}:
+              - pwsh: |
+                  Import-Module Appx -WarningAction SilentlyContinue
+                  $packages = @(Get-AppxPackage -Name 'RNTesterApp-Fabric')
+                  if ($packages.Count -ne 1) { throw 'Expected one deployed RNTesterApp-Fabric package.' }
+                  $manifest = Get-AppxPackageManifest -Package $packages[0].PackageFullName
+                  $executable = $manifest.Package.Applications.Application.Executable
+                  if (-not $executable) { throw 'Deployed app manifest has no executable.' }
+                  $appExe = Join-Path $packages[0].InstallLocation $executable
+                  & "$(Build.SourcesDirectory)\.ado\scripts\Assert-PeArchitecture.ps1" -Expected ARM64 -Path $appExe
+                displayName: Check deployed Fabric app is ARM64
 
             - script: |
                 echo ##vso[task.setvariable variable=StartedFabricTests]true
@@ -175,7 +197,7 @@ jobs:
             # behavior deletes them — Defender, a 1ES cleanup script, or a
             # side-effect of `yarn e2etest -u` — but a subfolder evades it.
             - pwsh: |
-                $procDump = Join-Path "$(ProcDumpPath)" 'procdump64.exe'
+                $procDump = Join-Path "$(ProcDumpPath)" "$(ProcDumpExe)"
                 if (-not (Test-Path $procDump)) {
                   Write-Host "ProcDump not found at $procDump; skipping live-process dump capture."
                   exit 0
@@ -280,7 +302,7 @@ jobs:
 
                 ## What is in here
 
-                - `hang/` -- full-memory dumps captured by procdump64 from
+                - `hang/` -- full-memory dumps captured by ProcDump from
                   RNTesterApp-Fabric / node processes that were still alive when
                   the test step timed out.
                 - `in-process/` -- full-memory minidumps written by

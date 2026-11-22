@@ -21,9 +21,10 @@ steps:
       targetType: inline # filePath | inline
       pwsh: true
       script: |
-        Write-Host "Looking for procdump64 processes...";
+        $procDumpProcessName = [System.IO.Path]::GetFileNameWithoutExtension('$(ProcDumpExe)')
+        Write-Host "Looking for $procDumpProcessName processes...";
         Get-Process | ForEach-Object {
-          if ($_.ProcessName -eq 'procdump64') {
+          if ($_.ProcessName -eq $procDumpProcessName) {
             try {
               Write-Host "Waiting on process $($_.Id)...";
               Wait-Process -Id $_.Id -Timeout 360;
@@ -32,7 +33,7 @@ steps:
         }
         if (Test-Path '$(ProcDumpPath)') {
           Write-Host "Uninstalling ProcDump as AeDebug";
-          & $(ProcDumpPath)\procdump64.exe -u
+          & "$(ProcDumpPath)\$(ProcDumpExe)" -u
         }
   
   - task: PowerShell@2

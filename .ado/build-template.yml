@@ -237,7 +237,10 @@ extends:
         - ${{ each matrix in parameters.desktopBuildMatrix }}:
           - job: Desktop${{ matrix.Name }}
             displayName: Desktop ${{ matrix.Name }}
-            pool: ${{ parameters.AgentPool.Large }}
+            ${{ if eq(matrix.BuildPlatform, 'ARM64EC') }}:
+              pool: ${{ parameters.AgentPool.Arm64 }}
+            ${{ else }}:
+              pool: ${{ parameters.AgentPool.Large }}
             timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
             variables:
               - template: .ado/variables/windows.yml@self
