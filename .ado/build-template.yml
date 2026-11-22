@@ -237,10 +237,7 @@ extends:
         - ${{ each matrix in parameters.desktopBuildMatrix }}:
           - job: Desktop${{ matrix.Name }}
             displayName: Desktop ${{ matrix.Name }}
-            ${{ if eq(matrix.BuildPlatform, 'ARM64EC') }}:
-              pool: ${{ parameters.AgentPool.Arm64 }}
-            ${{ else }}:
-              pool: ${{ parameters.AgentPool.Large }}
+            pool: ${{ parameters.AgentPool[iif(eq(matrix.BuildPlatform, 'ARM64EC'), 'Arm64', 'Large')] }}
             timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
             variables:
               - template: .ado/variables/windows.yml@self
@@ -319,10 +316,7 @@ extends:
         - ${{ each matrix in parameters.universalBuildMatrix }}:
           - job: Universal${{ matrix.Name }}
             displayName: Universal ${{ matrix.Name }}
-            ${{ if eq(matrix.BuildPlatform, 'ARM64') }}:
-              pool: ${{ parameters.AgentPool.Arm64 }}
-            ${{ else }}:
-              pool: ${{ parameters.AgentPool.Large }}
+            pool: ${{ parameters.AgentPool[iif(eq(matrix.BuildPlatform, 'ARM64'), 'Arm64', 'Large')] }}
             timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
             variables:
               - template: .ado/variables/windows.yml@self

@@ -75,14 +75,8 @@ On `main`, PR and CI use `windows-2025-1espt` for Windows x64 agents and
 | `rnw-pool-8` | x64 | PR: native builds |
 | `rnw-pool-8-arm64` | ARM64 | PR: ARM64 native builds and tests |
 
-PR uses public pools. The PR and CI entry points define the pool mappings.
-ARM64 pools declare `os: windows` and `hostArchitecture: arm64`; jobs on these
-pools run the node10 shim before their build and test steps.
-
-Universal ARM64 native suites, Desktop ARM64EC unit and integration tests, and
-ARM64 Hermes E2E tests run on ARM64 agents. The CLI ARM64 job remains a cross-build
-on the default x64 pool. RNW's own [`.ado/image` recipes](../.ado/image/) remain for
-stable branches.
+See [Agent pools](../.ado/README.md#agent-pools) for pool mappings, ARM64 job
+requirements, cross-build exceptions, and stable-branch images.
 
 ## SDL & Compliance
 

@@ -1,19 +1,7 @@
 # Copied from microsoft/v8-jsi .ado/ensure-node10-shim.yml (MIT).
-# TEMPORARY workaround for the 1ES "Retain Build Artifacts"
-# (BuildArtifactRetentionPolicyTask@1) post-job, which targets the Node 10 task
-# handler. Recent agents (>= 5.276) no longer ship `externals\node10`, and the
-# ARM64 agent has none at all, so the mandatory retention post-job fails with:
-#   "This step requires a node version that does not exist in the agent
-#    filesystem. Path: ...\externals\node10\bin\node.exe"
-#
-# This shims node10 to the image's installed Node.js (our image installs Node 24
-# at C:\Program Files\nodejs), falling back to the agent's own bundled node if
-# that is ever absent. Azure Pipelines task handlers are forward-compatible in
-# practice (node6->10->16->20), and the retention task is simple. If a future
-# task genuinely needs a real node10, we would instead bake node10 into the image.
-#
-# Reference it from a job's steps BEFORE its work so node10 exists by the time
-# the post-job runs on the same agent.
+# Temporary workaround: the mandatory 1ES retention post-job uses the Node 10 task handler, which
+# ARM64 agents lack. Run immediately after checkout, before build preparation,
+# so node10 exists when the post-job runs on the same agent.
 steps:
 - pwsh: |
     $ErrorActionPreference = 'Stop'

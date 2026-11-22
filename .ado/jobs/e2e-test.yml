@@ -22,35 +22,20 @@ parameters:
   - name: buildMatrix
     type: object
     default:
-      - BuildEnvironment: PullRequest
-        Matrix:
-          - Name: X64Hermes
-            BuildPlatform: x64
-          - Name: X86Hermes
-            BuildPlatform: x86
-          - Name: Arm64Hermes
-            BuildPlatform: ARM64
-      - BuildEnvironment: Continuous
-        Matrix:
-          - Name: X64Hermes
-            BuildPlatform: x64
-          - Name: X86Hermes
-            BuildPlatform: x86
-          - Name: Arm64Hermes
-            BuildPlatform: ARM64
+      - Name: X64Hermes
+        BuildPlatform: x64
+      - Name: X86Hermes
+        BuildPlatform: x86
+      - Name: Arm64Hermes
+        BuildPlatform: ARM64
 
 jobs:
-  - ${{ each config in parameters.buildMatrix }}:
-    - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
-      - ${{ each matrix in config.Matrix }}:
+  - ${{ each matrix in parameters.buildMatrix }}:
         - job: E2ETestFabric${{ matrix.Name }}
           displayName: E2E Test App Fabric ${{ matrix.Name }}
 
           variables: [template: ../variables/windows.yml]
-          ${{ if eq(matrix.BuildPlatform, 'ARM64') }}:
-            pool: ${{ parameters.AgentPool.Arm64 }}
-          ${{ else }}:
-            pool: ${{ parameters.AgentPool.Medium }}
+          pool: ${{ parameters.AgentPool[iif(eq(matrix.BuildPlatform, 'ARM64'), 'Arm64', 'Medium')] }}
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
@@ -68,7 +53,7 @@ jobs:
               parameters:
                 platform: ${{ matrix.BuildPlatform }}
                 configuration: Release
-                buildEnvironment: ${{ config.buildEnvironment }}
+                buildEnvironment: ${{ parameters.buildEnvironment }}
                 # Capture crash dumps for the E2E test app (packaged UWP) and
                 # the Metro bundler. ProcDump-as-AeDebug does not reliably fire
                 # for packaged apps; WER LocalDumps does.
