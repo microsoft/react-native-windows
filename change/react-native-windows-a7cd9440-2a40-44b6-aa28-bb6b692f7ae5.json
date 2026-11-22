@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Build and run the Universal native test suites for ARM64",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

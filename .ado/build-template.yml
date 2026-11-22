@@ -17,13 +17,6 @@ parameters:
 
 - name: AgentPool
   type: object
-  default:
-    Medium:
-      name: rnw-pool-4-microsoft
-      demands: ImageOverride -equals rnw-img-vs2026-node24
-    Large:
-      name: rnw-pool-8-microsoft
-      demands: ImageOverride -equals rnw-img-vs2026-node24
 
 - name: desktopBuildMatrix
   type: object
@@ -323,7 +316,10 @@ extends:
         - ${{ each matrix in parameters.universalBuildMatrix }}:
           - job: Universal${{ matrix.Name }}
             displayName: Universal ${{ matrix.Name }}
-            pool: ${{ parameters.AgentPool.Large }}
+            ${{ if eq(matrix.BuildPlatform, 'ARM64') }}:
+              pool: ${{ parameters.AgentPool.Arm64 }}
+            ${{ else }}:
+              pool: ${{ parameters.AgentPool.Large }}
             timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
             variables:
               - template: .ado/variables/windows.yml@self

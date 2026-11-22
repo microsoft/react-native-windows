@@ -18,6 +18,9 @@ parameters:
 steps:
   - template: ../templates/checkout-shallow.yml
 
+  - ${{ if eq(parameters.buildPlatform, 'ARM64') }}:
+    - template: ../templates/ensure-node10-shim.yml
+
   - template: ../templates/prepare-js-env.yml
     parameters:
       buildEnvironment: ${{ parameters.buildEnvironment }}
@@ -50,25 +53,35 @@ steps:
       pwsh: true
 
   # --- Tests (run against the just-built binaries, no download/restore needed) ---
+  - ${{ if eq(parameters.buildPlatform, 'ARM64') }}:
+    - pwsh: |
+        $root = '$(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}'
+        $paths = @(
+          "$root/Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe",
+          "$root/Microsoft.ReactNative.IntegrationTests/Microsoft.ReactNative.IntegrationTests.exe",
+          "$root/Mso.UnitTests/Mso.UnitTests.exe"
+        )
+        & '$(Build.SourcesDirectory)/.ado/scripts/Assert-PeArchitecture.ps1' -Expected ARM64 -Path $paths
+      displayName: Verify Universal test PE architecture
+
   - template: ../templates/discover-google-test-adapter.yml
 
-  - task: VSTest@3
-    displayName: Run Universal Unit Tests (Native)
-    timeoutInMinutes: 5 # Set smaller timeout, due to hangs
-    inputs:
-      testSelector: testAssemblies
-      testAssemblyVer2: |
-        Microsoft.ReactNative.Cxx.UnitTests/Microsoft.ReactNative.Cxx.UnitTests.exe
-        Microsoft.ReactNative.IntegrationTests/Microsoft.ReactNative.IntegrationTests.exe
-        Mso.UnitTests/Mso.UnitTests.exe
-      pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-      searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
-      runTestsInIsolation: true
-      platform: ${{ parameters.buildPlatform }}
-      configuration: ${{ parameters.buildConfiguration }}
-      publishRunAttachments: true
-      collectDumpOn: onAbortOnly
-      vsTestVersion: latest
-      vstestLocation: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
-      failOnMinTestsNotRun: true
-    condition: and(succeeded(), not(eq('${{ parameters.buildPlatform }}', 'ARM64')))
+  - ${{ each suite in split('Microsoft.ReactNative.Cxx.UnitTests,Microsoft.ReactNative.IntegrationTests,Mso.UnitTests', ',') }}:
+    - task: VSTest@3
+      displayName: Run ${{ suite }} (Native)
+      condition: succeededOrFailed()
+      timeoutInMinutes: 5 # Set smaller timeout, due to hangs
+      inputs:
+        testSelector: testAssemblies
+        testAssemblyVer2: ${{ suite }}/${{ suite }}.exe
+        pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+        searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+        runTestsInIsolation: true
+        platform: ${{ parameters.buildPlatform }}
+        configuration: ${{ parameters.buildConfiguration }}
+        publishRunAttachments: true
+        collectDumpOn: onAbortOnly
+        vsTestVersion: latest
+        vstestLocation: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
+        minimumExpectedTests: '1'
+        failOnMinTestsNotRun: true

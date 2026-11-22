@@ -1,0 +1,42 @@
+# Copied from microsoft/v8-jsi .ado/ensure-node10-shim.yml (MIT).
+# TEMPORARY workaround for the 1ES "Retain Build Artifacts"
+# (BuildArtifactRetentionPolicyTask@1) post-job, which targets the Node 10 task
+# handler. Recent agents (>= 5.276) no longer ship `externals\node10`, and the
+# ARM64 agent has none at all, so the mandatory retention post-job fails with:
+#   "This step requires a node version that does not exist in the agent
+#    filesystem. Path: ...\externals\node10\bin\node.exe"
+#
+# This shims node10 to the image's installed Node.js (our image installs Node 24
+# at C:\Program Files\nodejs), falling back to the agent's own bundled node if
+# that is ever absent. Azure Pipelines task handlers are forward-compatible in
+# practice (node6->10->16->20), and the retention task is simple. If a future
+# task genuinely needs a real node10, we would instead bake node10 into the image.
+#
+# Reference it from a job's steps BEFORE its work so node10 exists by the time
+# the post-job runs on the same agent.
+steps:
+- pwsh: |
+    $ErrorActionPreference = 'Stop'
+    $ext = Join-Path $env:AGENT_HOMEDIRECTORY 'externals'
+    $node10Exe = Join-Path $ext 'node10\bin\node.exe'
+    if (Test-Path $node10Exe) {
+        Write-Host "node10 already present: $node10Exe"
+    } else {
+        # Prefer the image's Node.js (our image installs Node 24); fall back to
+        # the agent's own bundled node.
+        $srcExe = @(
+            (Join-Path $env:ProgramFiles 'nodejs\node.exe'),
+            (Join-Path $ext 'node\bin\node.exe')
+        ) | Where-Object { Test-Path $_ } | Select-Object -First 1
+        if (-not $srcExe) { throw "No Node.js found to shim node10 (checked Program Files\nodejs and agent externals\node)." }
+        Write-Host "Shimming node10 -> $srcExe"
+        New-Item -ItemType Directory -Force -Path (Split-Path $node10Exe) | Out-Null
+        try {
+            New-Item -ItemType SymbolicLink -Path $node10Exe -Target $srcExe -ErrorAction Stop | Out-Null
+        } catch {
+            Write-Warning "Symlink failed ($($_.Exception.Message)); copying instead."
+            Copy-Item $srcExe $node10Exe -Force
+        }
+        & $node10Exe --version
+    }
+  displayName: Shim node10 handler (agent lacks externals\node10)

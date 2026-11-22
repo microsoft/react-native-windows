@@ -51,11 +51,15 @@ extends:
   parameters:
     buildEnvironment: Continuous
     isReleaseBuild: ${{ parameters.isReleaseBuild }}
-    # ISS x64 pool with the react-native-windows VM image.
     AgentPool:
       Medium:
         name: fabric-internal-pool-large
-        demands: ImageOverride -equals rnw-img-vs2026-node24
+        demands: ImageOverride -equals windows-2025-1espt
       Large:
         name: fabric-internal-pool-large
-        demands: ImageOverride -equals rnw-img-vs2026-node24
+        demands: ImageOverride -equals windows-2025-1espt
+      Arm64:
+        name: windows-2025-1espt-arm64
+        image: windows-2025-1espt-arm64
+        os: windows
+        hostArchitecture: arm64
