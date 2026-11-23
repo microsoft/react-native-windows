@@ -39,6 +39,8 @@
       "types": null,
       "default": "./src/unstable-internals-do-not-use.js"
     },
+    "./jest/*": "./jest/*.js",
+    "./jest/*.js": "./jest/*.js",
     "./src/fb_internal/*": "./src/fb_internal/*",
     "./package.json": "./package.json"
   },
