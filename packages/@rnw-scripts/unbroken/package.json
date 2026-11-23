@@ -2,6 +2,7 @@
   "name": "@rnw-scripts/unbroken",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "description": "Detect broken links in markdown files. Forked from https://github.com/asklar/unbroken",
   "license": "MIT",
   "repository": {
