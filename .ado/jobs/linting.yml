@@ -15,6 +15,11 @@ jobs:
     timeoutInMinutes: 40
     variables: [template: ../variables/windows.yml]
     pool: ${{ parameters.AgentPool.Medium }}
+    templateContext:
+      sdl:
+        codeql:
+          compiled:
+            enabled: false
     steps:
       - ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
         - template: ../templates/checkout-shallow.yml

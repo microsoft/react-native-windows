@@ -145,6 +145,10 @@ jobs:
                 useExperimentalWinUI3: ${{ coalesce(matrix.useExperimentalWinUI3, false) }}
 
           templateContext:
+            sdl:
+              codeql:
+                compiled:
+                  enabled: false
             outputs:
             - output: pipelineArtifact
               displayName: 'Upload traces'

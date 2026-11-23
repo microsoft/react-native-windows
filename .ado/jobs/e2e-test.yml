@@ -388,6 +388,10 @@ jobs:
                 buildLogDirectory: '$(BuildLogDirectory)'
 
           templateContext:
+            sdl:
+              codeql:
+                compiled:
+                  enabled: false
             outputs:
             - output: pipelineArtifact
               displayName: 'Upload traces'
