@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 20 Nov 2026 02:36:33 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 23 Nov 2026 06:09:39 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.81.44
+
+Mon, 23 Nov 2026 06:09:39 GMT
+
+### Patches
+
+- Apply origin policy checks when a same-origin request is redirected to another origin (anuagra@microsoft.com)
 
 ## 0.81.43
 

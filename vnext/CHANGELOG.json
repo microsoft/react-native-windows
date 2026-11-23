@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 23 Nov 2026 06:09:39 GMT",
+      "version": "0.81.44",
+      "tag": "react-native-windows_v0.81.44",
+      "comments": {
+        "patch": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ffa1bfd18ba4f2b8928491a674ef7b2717c7872a",
+            "comment": "Apply origin policy checks when a same-origin request is redirected to another origin"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Nov 2026 02:36:33 GMT",
       "version": "0.81.43",
       "tag": "react-native-windows_v0.81.43",
