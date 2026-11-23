@@ -700,11 +700,159 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
   co_return {co_await m_innerFilter.SendRequestAsync(preflightRequest)};
 }
 
+/*static*/ bool OriginPolicyHttpFilter::IsSimpleCorsRedirectRequest(
+    HttpRequestMessage const &request,
+    HttpMethod const &method,
+    bool includeContent) noexcept {
+  bool callerSetUserAgent = false;
+  if (auto reqArgs = request.Properties().TryLookup(L"RequestArgs")) {
+    for (auto const &header : reqArgs.as<RequestArgs>()->Headers) {
+      if (boost::iequals(header.first, "User-Agent")) {
+        callerSetUserAgent = true;
+        break;
+      }
+    }
+  }
+
+  for (const auto &header : request.Headers()) {
+    // The redirect filter adds a default User-Agent and this filter manages Origin. Neither comes from the caller.
+    if ((!callerSetUserAgent && boost::iequals(header.Key(), L"User-Agent")) || boost::iequals(header.Key(), L"Origin"))
+      continue;
+
+    // The redirect filter removes these before sending a hop to another origin.
+    if (boost::iequals(header.Key(), L"Authorization") || boost::iequals(header.Key(), L"Cookie") ||
+        boost::iequals(header.Key(), L"Cookie2"))
+      continue;
+
+    if (s_simpleCorsRequestHeaderNames.find(header.Key().c_str()) == s_simpleCorsRequestHeaderNames.cend())
+      return false;
+  }
+
+  if (auto content = request.Content(); content && includeContent) {
+    for (const auto &header : content.Headers()) {
+      if (s_simpleCorsRequestHeaderNames.find(header.Key().c_str()) == s_simpleCorsRequestHeaderNames.cend() &&
+          !boost::iequals(header.Key(), "Content-Length"))
+        return false;
+
+      if (boost::iequals(header.Key(), L"Content-Type") &&
+          s_simpleCorsContentTypeValues.find(header.Value().c_str()) == s_simpleCorsContentTypeValues.cend())
+        return false;
+    }
+  }
+
+  return s_simpleCorsMethods.find(method.ToString().c_str()) != s_simpleCorsMethods.cend();
+}
+
+OriginPolicy OriginPolicyHttpFilter::GetCrossOriginRedirectPolicy(
+    HttpRequestMessage const &request,
+    HttpMethod const &method,
+    bool includeContent) const {
+  auto configuredPolicy =
+      static_cast<OriginPolicy>(request.Properties().Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
+  bool isSimple = IsSimpleCorsRedirectRequest(request, method, includeContent);
+
+  switch (configuredPolicy) {
+    case OriginPolicy::SimpleCrossOriginResourceSharing:
+      if (!isSimple)
+        throw hresult_error{
+            E_INVALIDARG,
+            L"The redirected request does not meet the requirements for Simple Cross-Origin resource sharing"};
+      return OriginPolicy::SimpleCrossOriginResourceSharing;
+
+    case OriginPolicy::CrossOriginResourceSharing:
+      return isSimple ? OriginPolicy::SimpleCrossOriginResourceSharing : OriginPolicy::CrossOriginResourceSharing;
+
+    default:
+      throw hresult_error{E_INVALIDARG, L"SOP (same-origin policy) is enforced"};
+  }
+}
+
+void OriginPolicyHttpFilter::ValidateRedirectScheme(IMap<hstring, IInspectable> const &props, Uri const &nextUri)
+    const {
+  if (m_origin.SchemeName() == nextUri.SchemeName())
+    return;
+
+  // Same scheme rules as ValidateRequest applies to a direct request.
+  auto configuredPolicy = static_cast<OriginPolicy>(props.Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
+  if (configuredPolicy == OriginPolicy::CrossOriginResourceSharing ||
+      (configuredPolicy == OriginPolicy::SimpleCrossOriginResourceSharing &&
+       GetRuntimeOptionBool("Http.BlockMixedContentSimpleCors")))
+    throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
+}
+
+void OriginPolicyHttpFilter::CheckRedirectFromOriginalOrigin(
+    HttpRequestMessage const &request,
+    HttpResponseMessage const &response) const {
+  using winrt::Windows::Web::Http::HttpStatusCode;
+
+  auto props = request.Properties();
+  auto nextUri = Uri{response.Headers().Location().AbsoluteUri()};
+
+  // RedirectHttpFilter does not follow these redirects and returns the response as is.
+  auto nextScheme = nextUri.SchemeName();
+  if ((nextScheme != L"http" && nextScheme != L"https") ||
+      (request.RequestUri().SchemeName() == L"https" && nextScheme == L"http"))
+    return;
+
+  // See https://fetch.spec.whatwg.org/#http-redirect-fetch
+  if (!IsSameOrigin(m_origin, nextUri) && (!nextUri.UserName().empty() || !nextUri.Password().empty()))
+    throw hresult_error{E_INVALIDARG, L"A cross-origin redirect URL can not include credentials"};
+
+  if (props.HasKey(L"CrossOriginRedirect") || !IsSameOrigin(m_origin, request.RequestUri())) {
+    // The chain already left the original origin. Every later redirect response must pass CORS before it is
+    // followed, even when this hop is back on the original origin.
+    auto controlValues = ExtractAccessControlValues(response.Headers());
+    ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, props);
+    ValidateRedirectScheme(props, nextUri);
+    return;
+  }
+
+  if (IsSameOrigin(m_origin, nextUri))
+    return;
+
+  // The next hop leaves the original origin. Check it with the method and body it will actually be sent with.
+  // See https://fetch.spec.whatwg.org/#http-redirect-fetch
+  auto status = response.StatusCode();
+  auto method = request.Method();
+  auto methodName = method.ToString();
+  bool includeContent = true;
+  if (((status == HttpStatusCode::MovedPermanently || status == HttpStatusCode::Found) &&
+       boost::iequals(methodName, L"POST")) ||
+      (status == HttpStatusCode::SeeOther && !boost::iequals(methodName, L"GET") &&
+       !boost::iequals(methodName, L"HEAD"))) {
+    method = HttpMethod::Get();
+    includeContent = false;
+  }
+
+  GetCrossOriginRedirectPolicy(request, method, includeContent);
+  ValidateRedirectScheme(props, nextUri);
+
+  props.Insert(L"CrossOriginRedirect", winrt::box_value(true));
+
+  auto taintedOriginProp = props.TryLookup(L"TaintedOrigin");
+  if (!(taintedOriginProp && winrt::unbox_value<bool>(taintedOriginProp))) {
+    request.Headers().Insert(L"Origin", GetOrigin(m_origin));
+  }
+}
+
 #pragma region IRedirectEventSource
 
 bool OriginPolicyHttpFilter::OnRedirecting(
     HttpRequestMessage const &request,
     HttpResponseMessage const &response) noexcept {
+  // A request that started on the original origin is checked here, before the next hop is sent.
+  if (request.Properties().HasKey(L"CheckRedirectFromOriginalOrigin")) {
+    try {
+      CheckRedirectFromOriginalOrigin(request, response);
+    } catch (hresult_error const &e) {
+      request.Properties().Insert(L"RedirectError", winrt::box_value(e.message()));
+      return false;
+    } catch (...) {
+      request.Properties().Insert(L"RedirectError", winrt::box_value(L"Unspecified error processing redirect"));
+      return false;
+    }
+  }
+
   // Consider the following scenario.
   // User signs in to http://a.com and visits a page that makes CORS request to http://b.com with origin=http://a.com.
   // Http://b.com responds with a redirect to http://a.com. The browser follows the redirect to http://a.com with
@@ -782,9 +930,26 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
     if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
         originPolicy == OriginPolicy::CrossOriginResourceSharing) {
       coRequest.Headers().Insert(L"Origin", GetOrigin(m_origin));
+    } else if (originPolicy == OriginPolicy::SameOrigin) {
+      coRequest.Properties().Insert(L"CheckRedirectFromOriginalOrigin", winrt::box_value(true));
     }
 
     auto response = co_await m_innerFilter.SendRequestAsync(coRequest);
+
+    // A same-origin request may have been redirected to a different origin, possibly coming back afterwards.
+    // Validate the final response against the cross-origin policy if any hop left the original origin.
+    if (originPolicy == OriginPolicy::SameOrigin) {
+      if (auto finalRequest = response.RequestMessage()) {
+        auto finalProps = finalRequest.Properties();
+        if (auto redirectError = finalProps.TryLookup(L"RedirectError")) {
+          throw hresult_error{E_INVALIDARG, winrt::unbox_value<hstring>(redirectError)};
+        }
+
+        if (finalProps.HasKey(L"CrossOriginRedirect") || !IsSameOrigin(m_origin, finalRequest.RequestUri())) {
+          originPolicy = GetCrossOriginRedirectPolicy(finalRequest, finalRequest.Method(), true /*includeContent*/);
+        }
+      }
+    }
 
     ValidateResponse(response, originPolicy);
 
