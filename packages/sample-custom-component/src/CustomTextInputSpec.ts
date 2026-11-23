@@ -10,18 +10,18 @@
 
 import type {ElementRef} from 'react';
 
-// @ts-ignore
 import {
+  NativeComponentRegistry,
   TextInputViewSpec,
   TextInputProps,
   HostComponent,
 } from 'react-native-windows';
 import {type NativeSyntheticEvent} from 'react-native-windows';
 
+import {
+  dispatchCommand
 // @ts-ignore
-const NativeComponentRegistry = require('react-native/Libraries/NativeComponent/NativeComponentRegistry');
-const dispatchCommand =
-  require('react-native/Libraries/ReactNative/RendererProxy').dispatchCommand;
+} from 'react-native/unstable-internals-do-not-use';
 
 export type SomethingEvent = {
   value: string;
