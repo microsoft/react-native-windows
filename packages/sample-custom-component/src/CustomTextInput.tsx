@@ -7,11 +7,11 @@
 
 import React from 'react';
 import CustomTextInputSpec, {
-  Commands,
+  CustomTextInputCommands,
   CustomTextInputProps,
 } from './CustomTextInputSpec';
 import {InternalTextInputWithCustomType} from 'react-native-windows';
-export {Commands as CustomTextInputCommands};
+export {CustomTextInputCommands};
 
 function useRefEffect<Instance>(
   refEffect: (current: Instance) => void | (() => void),
@@ -111,10 +111,10 @@ const CustomTextInput = React.forwardRef<
         if (instance != null) {
           Object.assign(instance, {
             setFormattedText: (delta: string) => {
-              Commands.setFormattedText(instance, delta);
+              CustomTextInputCommands.setFormattedText(instance, delta);
             },
             setLightOn: (value: boolean) => {
-              Commands.setLightOn(instance, value);
+              CustomTextInputCommands.setLightOn(instance, value);
             },
           });
         }

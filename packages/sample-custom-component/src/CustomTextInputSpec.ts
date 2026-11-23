@@ -65,7 +65,7 @@ export default NativeComponentRegistry.get(nativeComponentName, () => {
   return spec;
 }) as CustomTextInputComponent;
 
-export const Commands = {
+export const CustomTextInputCommands = {
   setTextAndSelection(
     ref: ElementRef<CustomTextInputComponent>,
     mostRecentEventCount: number,
