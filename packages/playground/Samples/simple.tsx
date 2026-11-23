@@ -3,7 +3,6 @@
  * Licensed under the MIT License.
  * @format
  */
-import React from 'react';
 import {AppRegistry, View} from 'react-native';
 
 const Bootstrap = () => {

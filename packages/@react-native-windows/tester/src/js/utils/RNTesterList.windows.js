@@ -56,16 +56,6 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples-win/FastText/FastTextExample'),
   },
-  {
-    key: 'FlyoutExample',
-    category: 'UI',
-    module: require('../examples-win/Flyout/FlyoutExample'),
-  },
-  {
-    key: 'GlyphExample',
-    category: 'UI',
-    module: require('../examples-win/Glyph/GlyphExample'),
-  },
   /*{
     key: 'KeyEvents',
     module: require('../examples/KeyboardEventsExample/KeyboardEventsExample')
@@ -108,16 +98,6 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'PressableExample',
     category: 'UI',
     module: require('../examples/Pressable/PressableExample'),
-  },
-  {
-    key: 'PopupExample',
-    category: 'UI',
-    module: require('../examples-win/Popup/PopupExample'),
-  },
-  {
-    key: 'KeyboardExtensionExample',
-    category: 'Basic',
-    module: require('../examples-win/Keyboard/KeyboardExtensionExample'),
   },
   {
     key: 'ScrollViewExample',

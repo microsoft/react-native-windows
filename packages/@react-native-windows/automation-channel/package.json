@@ -35,7 +35,7 @@
     "react": "19.3.0",
     "react-native": "0.90.0-nightly-20261110-9a3047391",
     "react-native-windows": "^0.0.0-canary.1066",
-    "typescript": "5.1.6"
+    "typescript": "^6.0.3"
   },
   "files": [
     "lib-commonjs",

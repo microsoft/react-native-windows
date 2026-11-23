@@ -13,9 +13,9 @@ import type {EdgeInsetsOrSizeProp} from '../../StyleSheet/EdgeInsetsPropType';
 import type {
   BlurEvent,
   FocusEvent,
+  GestureResponderEvent,
   LayoutChangeEvent,
   MouseEvent, // [Windows]
-  GestureResponderEvent,
 } from '../../Types/CoreEventTypes';
 
 import View from '../../Components/View/View';
@@ -25,7 +25,6 @@ import usePressability from '../../Pressability/usePressability';
 import {type ViewStyleProp} from '../../StyleSheet/StyleSheet';
 import * as React from 'react';
 import {cloneElement, useMemo} from 'react';
-import Animated from '../../Animated/Animated'; // Windows
 
 export type TouchableWithoutFeedbackPropsIOS = {};
 
@@ -131,7 +130,6 @@ export type TouchableWithoutFeedbackPropsWindows = {
   onMouseLeave?: ?(event: MouseEvent) => void,
   tabIndex?: ?number,
   tooltip?: ?Stringish,
-  hostRef?: React.RefSetter<React.ElementRef<typeof Animated.View>>,
 };
 // Windows]
 
@@ -184,14 +182,8 @@ const PASSTHROUGH_PROPS = [
  *
  * @see https://reactnative.dev/docs/touchablewithoutfeedback
  */
-// [Windows
-// $FlowFixMe[prop-missing]
-const TouchableWithoutFeedback: React.AbstractComponent<
-  TouchableWithoutFeedbackProps,
-  React.ElementRef<typeof Animated.View>,
-> = React.forwardRef(function TouchableWithoutFeedback(
+export default function TouchableWithoutFeedback(
   props: TouchableWithoutFeedbackProps,
-  ref: React.RefSetter<React.ElementRef<typeof Animated.View>>,
 ): React.Node {
   const {
     disabled,
@@ -328,8 +320,5 @@ const TouchableWithoutFeedback: React.AbstractComponent<
   }
 
   // $FlowFixMe[incompatible-type]
-  return cloneElement(element, {...elementProps, ref}, ...children);
-});
-
-export default TouchableWithoutFeedback;
-// Windows]
+  return cloneElement(element, elementProps, ...children);
+}

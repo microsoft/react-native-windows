@@ -551,16 +551,8 @@ export {DEFAULT_INITIAL_NUM_TO_RENDER as unstable_DEFAULT_INITIAL_NUM_TO_RENDER}
 export {ColorGradientWin32} from './Libraries/StyleSheet/PlatformColorValueTypesWin32';
 /* $FlowFixMe[untyped-import] ViewWin32 defined in TS not flow */
 export {default as ViewWin32} from './Libraries/Components/View/ViewWin32';
-/* $FlowFixMe[untyped-import] ButtonWin32 defined in TS not flow */
-export {ButtonWin32} from './Libraries/Components/Button/ButtonWin32';
 /* $FlowFixMe[untyped-import] TouchableWin32 defined in TS not flow */
 export {TouchableWin32} from './Libraries/Components/Touchable/TouchableWin32';
-/* $FlowFixMe[untyped-import] PersonaCoin defined in TS not flow */
-export {PersonaCoin} from './Libraries/PersonaCoin/PersonaCoin';
-/* $FlowFixMe[untyped-import] PersonaCoinSize defined in TS not flow */
-export {PersonaCoinSize} from './Libraries/PersonaCoin/PersonaCoinTypes';
-/* $FlowFixMe[untyped-import] PersonaCoinPresence defined in TS not flow */
-export {PersonaCoinPresence} from './Libraries/PersonaCoin/PersonaCoinTypes';
 // TextWin32 is a legacy export that maps to Text
 export {default as TextWin32} from './Libraries/Text/Text';
 /* $FlowFixMe[untyped-import] FocusManager defined in TS not flow */

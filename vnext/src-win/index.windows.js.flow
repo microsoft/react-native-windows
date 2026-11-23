@@ -542,21 +542,11 @@ export {default as unstable_VirtualColumnGenerator} from './src/private/componen
 export {default as unstable_VirtualRow} from './src/private/components/virtualcollection/row/VirtualRow';
 export {DEFAULT_INITIAL_NUM_TO_RENDER as unstable_DEFAULT_INITIAL_NUM_TO_RENDER} from './src/private/components/virtualcollection/FlingConstants';
 // Windows Specific exports
-/* $FlowFixMe[untyped-import] Flyout defined in TS not flow*/
-export {Flyout} from './Libraries/Components/Flyout/Flyout';
-export {Glyph} from './Libraries/Components/Glyph/Glyph';
-/* $FlowFixMe[untyped-import] Popup defined in TS not flow*/
-export {Popup} from './Libraries/Components/Popup/Popup';
-/* $FlowFixMe[untyped-import] supportKeyboard defined in TS not flow*/
-export {supportKeyboard} from './Libraries/Components/Keyboard/KeyboardExt';
-
-export {HandledEventPhase as EventPhase} from './Libraries/Components/View/ViewPropTypes';
-export {HandledEventPhase} from './Libraries/Components/View/ViewPropTypes';
-
-export {default as ViewWindows} from './Libraries/Components/View/View';
 export {AppTheme} from './Libraries/AppTheme/AppTheme';
+export type {IHighContrastChangedEvent} from './Libraries/AppTheme/NativeAppTheme';
 
 export {__INTERNAL_VIEW_CONFIG as TextInputViewSpec} from './Libraries/Components/TextInput/WindowsTextInputNativeComponent';
+export {InternalTextInputWithCustomType} from './Libraries/Components/TextInput/TextInput';
 // End Windows Specific exports
 
 // #endregion

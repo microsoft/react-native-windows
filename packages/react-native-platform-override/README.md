@@ -2,11 +2,20 @@
 Tools to manage "platform overrides" for out of tree React Native platforms.
 Facilities for inventorying changes and integrating new upstream changes are included.
 
+Upstream React Native versions are checked out in a temporary Git repository
+under the OS temporary directory (`react-native-platform-override/git`).
+This is a tool-managed cache: switching versions can overwrite conflicting files
+there. Do not use it to store local changes.
+
 ## Override Manifests
 
 `react-native-platform-override` operates on a JSON "override manifest" placed
 at the root of an npm package. It is expected that these are named
 `overrides.json`.
+
+At a Yarn workspace root, validation and upgrades include both the root manifest
+and manifests in workspace packages. Inside an individual package, its local
+manifest takes precedence. Use `--manifest` to target a single manifest.
 
 An example override manifest
 ```json
@@ -47,7 +56,37 @@ Overrides can be registered as different types, each with differing behavior.
 | Patch    | An upstream file with changes made to it. Changes to the original file will be merged into the override.         |
 | Copy     | An exact copy of an upstream file or directory. Overrides of this type will remain identical to their originals. |
 
+## Directory copy exclusions
+
+A directory `copy` override can specify `excludePatterns`: glob patterns relative
+to both the local `directory` and upstream `baseDirectory`. For example:
+
+```json
+{
+  "type": "copy",
+  "directory": "scripts/js-api",
+  "baseDirectory": "scripts/js-api",
+  "excludePatterns": ["config.js", "build-types/templates/**"],
+  "baseVersion": "<react-native-version>",
+  "baseHash": "<hash-generated-by-the-override-factory>"
+}
+```
+
+Excluded files do not contribute to the base hash or copy comparison and are
+neither copied nor deleted during upgrades. Existing local excluded files still
+need separate override entries (for example `derived` or `platform`) unless the
+manifest's own patterns exclude them. Globs match dotfiles and use `/` separators;
+they are exclusion patterns, not negated include patterns.
+
+The directory-copy CLI prompt accepts exclusions as a JSON array. Programmatic
+callers can pass them as the fourth argument to
+`createDirectoryCopyOverride(directory, baseDirectory, issue, excludePatterns)`.
+When adding or changing exclusions on an existing entry, recreate it through the
+CLI or factory so its `baseHash` is recalculated. Omitting exclusions preserves
+existing directory-copy behavior and hashes.
+
 ## CLI
+
 `react-native-platform-override` offers multiple commands to manipulate and verify the override manifest.
 
 ### `validate`
@@ -95,6 +134,9 @@ react-native is installed.
 parameter or setting the PLATFORM_OVERRIDE_GITHUB_TOKEN environment variable.
 
 ## Programmatic Use
+The package's local TypeScript configuration emits CommonJS for Node.js CLI and
+build-script consumers, independently of the shared repository module settings.
+
 `react-native-platform-override` offers a programmatic API with similar capabilities to the CLI. Take a look [here](./src/APi.ts) for details.
 
 E.g.

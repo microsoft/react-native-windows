@@ -5,7 +5,8 @@
  */
 
 import React from 'react';
-import {AppRegistry, StyleSheet, Switch, Text, View} from 'react-native';
+import {AppRegistry, StyleSheet, Switch, Text} from 'react-native';
+import {View} from 'react-native-windows';
 
 export default class Bootstrap extends React.Component<
   {},
@@ -174,9 +175,13 @@ export default class Bootstrap extends React.Component<
             backgroundColor: 'azure',
           }}>
           <View
-            focusable={this.state.focusable ? true : false}
-            accessible={this.state.accessible ? true : false}
-            {...{onClick: this.state.pressable}}
+            focusable={this.state.focusable}
+            accessible={this.state.accessible}
+            onClick={
+              this.state.pressable
+                ? () => console.log('View clicked')
+                : undefined
+            }
             style={
               this.state.hasStyle
                 ? this.state.hasBorder
@@ -184,8 +189,8 @@ export default class Bootstrap extends React.Component<
                     ? styles.outerBorder
                     : styles.innerBorder
                   : this.state.radius
-                  ? styles.radial
-                  : styles.noBorder
+                    ? styles.radial
+                    : styles.noBorder
                 : null
             }>
             <Text style={styles.child}>The Text</Text>

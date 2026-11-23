@@ -9,11 +9,9 @@
  */
 
 import {parseArgs} from 'node:util';
-import * as path from 'path';
-
 import fs from 'node:fs';
 
-import {Checker, Options} from './checker';
+import {Checker, Options} from './checker.js';
 
 // ---------------------------------------------------------------------------
 // CLI help
@@ -21,7 +19,7 @@ import {Checker, Options} from './checker';
 
 function showHelp(): void {
   const version = JSON.parse(
-    fs.readFileSync(path.join(__dirname, '../package.json')).toString(),
+    fs.readFileSync(new URL('../package.json', import.meta.url)).toString(),
   ).version;
 
   console.log(`

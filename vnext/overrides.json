@@ -358,6 +358,12 @@
       "file": "src-win/IntegrationTests/XHRTest.js"
     },
     {
+      "type": "derived",
+      "file": "src-win/jest/mocks/TextInput.js",
+      "baseFile": "packages/jest-preset/jest/mocks/TextInput.js",
+      "baseHash": "485aa93991a5f90da6523d55f482354c5481dbc3"
+    },
+    {
       "type": "platform",
       "file": "src-win/Libraries/__tests__/ViewWindows-test.js"
     },
@@ -411,50 +417,6 @@
       "baseHash": "8c280b19399ad3379f4c46b555907a7b90831a8d"
     },
     {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Flyout/Flyout.d.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Flyout/Flyout.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Flyout/FlyoutNativeComponent.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Glyph/Glyph.d.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Glyph/Glyph.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Glyph/GlyphNativeComponent.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Keyboard/KeyboardExt.tsx"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Keyboard/KeyboardExtProps.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Popup/Popup.d.ts"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Popup/Popup.js"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/Popup/PopupNativeComponent.js"
-    },
-    {
       "type": "derived",
       "file": "src-win/Libraries/Components/Pressable/Pressable.d.ts",
       "baseFile": "packages/react-native/types_DEPRECATED/Libraries/Components/Pressable/Pressable.d.ts",
@@ -492,13 +454,13 @@
     },
     {
       "type": "derived",
-      "file": "src-win/Libraries/Components/TextInput/TextInput.flow.windows.js",
+      "file": "src-win/Libraries/Components/TextInput/TextInput.flow.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.flow.js",
       "baseHash": "84abfdcd351d4ae44d38852a76d43297faa500a3"
     },
     {
       "type": "patch",
-      "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
+      "file": "src-win/Libraries/Components/TextInput/TextInput.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
       "baseHash": "96527f72f42e417a1cd4c464bf65753a2e185f69"
     },
@@ -562,19 +524,13 @@
     },
     {
       "type": "patch",
-      "file": "src-win/Libraries/Components/View/ViewAccessibility.windows.js",
+      "file": "src-win/Libraries/Components/View/ViewAccessibility.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.js",
       "baseHash": "7dc23648a6626ef839eb6869a26a037c9b0d2363"
     },
     {
-      "type": "derived",
-      "file": "src-win/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseFile": "packages/react-native/types_DEPRECATED/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "c12b1c168659d91fef0a29ef8d9a453a8e1880f1"
-    },
-    {
       "type": "patch",
-      "file": "src-win/Libraries/Components/View/ViewPropTypes.windows.js",
+      "file": "src-win/Libraries/Components/View/ViewPropTypes.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
       "baseHash": "ca888b50ac400134502646a4c3b1c26dad431bbd"
     },
@@ -712,19 +668,19 @@
     },
     {
       "type": "derived",
-      "file": "src-win/Libraries/Text/Text.windows.js",
+      "file": "src-win/Libraries/Text/Text.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
       "baseHash": "fdb168fdcdb50119f42cbc9bb6c27b9cd3f855bc"
     },
     {
       "type": "derived",
-      "file": "src-win/Libraries/Text/TextProps.windows.js",
+      "file": "src-win/Libraries/Text/TextProps.js",
       "baseFile": "packages/react-native/Libraries/Text/TextProps.js",
       "baseHash": "b5ec6ea570d9993ad46da64576f9a0d26e1728c4"
     },
     {
       "type": "patch",
-      "file": "src-win/Libraries/Types/CoreEventTypes.windows.js",
+      "file": "src-win/Libraries/Types/CoreEventTypes.js",
       "baseFile": "packages/react-native/Libraries/Types/CoreEventTypes.js",
       "baseHash": "e1ce0323d942d6a8e692b6118779f83b6d9e450d"
     },

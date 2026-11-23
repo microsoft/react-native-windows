@@ -7,7 +7,7 @@
 
 import crypto from 'crypto';
 import path from 'path';
-import {normalizePath, unixPath} from './PathUtils';
+import {isFileExcluded, normalizePath, unixPath} from './PathUtils';
 import FileRepository from './FileRepository';
 import isUtf8 from 'isutf8';
 
@@ -17,6 +17,8 @@ export type HashOpts = {
    * a hash? Defaults to line-ending insensitivity
    */
   insensitivity?: 'none' | 'line-ending' | 'whitespace';
+  /** Globs relative to the directory being hashed. Ignored for single files. */
+  excludePatterns?: readonly string[];
 };
 
 /**
@@ -92,6 +94,9 @@ export async function hashFileOrDirectory(
     const subfiles = await repo.listFiles([`${unixPath(name)}/**`]);
 
     for (const file of subfiles.sort()) {
+      if (isFileExcluded(file, name, opts?.excludePatterns)) {
+        continue;
+      }
       const contents = await repo.readFile(file);
       hasher.feedContent(contents!);
 

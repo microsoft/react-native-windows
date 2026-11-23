@@ -1,0 +1,69 @@
+{
+  "includePatterns": [
+    "scripts/shared/**",
+    "scripts/js-api/**"
+  ],
+  "baseVersion": "0.90.0-nightly-20261110-9a3047391",
+  "overrides": [
+    {
+      "type": "copy",
+      "directory": "scripts/js-api",
+      "baseDirectory": "scripts/js-api",
+      "excludePatterns": [
+        "build-types/buildGeneratedTypes.js",
+        "build-types/resolution/simpleResolve.js",
+        "build-types/transforms/typescript/replaceDefaultExportName.js",
+        "config.js"
+      ],
+      "baseHash": "1232e59650ea6be3a35b58d635c6be6403359f7f"
+    },
+    {
+      "type": "patch",
+      "file": "scripts/js-api/build-types/buildGeneratedTypes.js",
+      "baseFile": "scripts/js-api/build-types/buildGeneratedTypes.js",
+      "baseHash": "bf31cae0faf51adb165426975c29a7c10416d82a"
+    },
+    {
+      "type": "patch",
+      "file": "scripts/js-api/build-types/resolution/simpleResolve.js",
+      "baseFile": "scripts/js-api/build-types/resolution/simpleResolve.js",
+      "baseHash": "0c9921df08411e2d787b5c2c6f003d1ff8ddc758"
+    },
+    {
+      "type": "patch",
+      "file": "scripts/js-api/build-types/transforms/typescript/replaceDefaultExportName.js",
+      "baseFile": "scripts/js-api/build-types/transforms/typescript/replaceDefaultExportName.js",
+      "baseHash": "800801edd75aac7be3f64e4d965456dc242fb4bc"
+    },
+    {
+      "type": "patch",
+      "file": "scripts/js-api/config.js",
+      "baseFile": "scripts/js-api/config.js",
+      "baseHash": "295dc3a8cc7ce05cfbd29d68cb1627323131cb7c"
+    },
+    {
+      "type": "copy",
+      "file": "scripts/shared/babelRegister.js",
+      "baseFile": "scripts/shared/babelRegister.js",
+      "baseHash": "edc490819f3593d3263c4f56f8f6ca1c72ca954e"
+    },
+    {
+      "type": "derived",
+      "file": "scripts/shared/consts.js",
+      "baseFile": "scripts/shared/consts.js",
+      "baseHash": "adc1e2e8702597d80e7a81de1f40b968197712e6"
+    },
+    {
+      "type": "copy",
+      "file": "scripts/shared/isGitRepo.js",
+      "baseFile": "scripts/shared/isGitRepo.js",
+      "baseHash": "915da8722352736819f03b702c9458af0b2b9809"
+    },
+    {
+      "type": "derived",
+      "file": "scripts/shared/monorepoUtils.js",
+      "baseFile": "scripts/shared/monorepoUtils.js",
+      "baseHash": "9e77d37663c8b4090b1cafb8086d5cb1441b4882"
+    }
+  ]
+}

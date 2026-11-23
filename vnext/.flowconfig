@@ -16,14 +16,11 @@ Libraries/Alert/Alert.js
 Libraries/Components/Button.js
 Libraries/Components/Picker/RCTPickerNativeComponent.js
 Libraries/Components/RefreshControl/RefreshControl.js
-Libraries/Components/TextInput/TextInput.js
 Libraries/Components/TextInput/TextInputState.js
 Libraries/Components/Touchable/Touchable.js
 Libraries/Components/Touchable/TouchableHighlight.js
 Libraries/Components/Touchable/TouchableOpacity.js
 Libraries/Components/Touchable/TouchableWithoutFeedback.js
-Libraries/Components/View/ViewAccessibility.js
-Libraries/Components/View/ViewPropTypes.js
 Libraries/Components/View/View.js
 Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js
 Libraries/Image/resolveAssetSource.js
@@ -33,8 +30,6 @@ Libraries/Components/Pressable/Pressable.js
 Libraries/Image/Image.android.js
 
 Libraries/Renderer/shims/ReactNativeTypes.js
-Libraries/Text/TextProps.js
-Libraries/Types/CoreEventTypes.js
 Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js
 Libraries/LogBox/UI/LogBoxInspectorHeader.js
 Libraries/LogBox/UI/LogBoxInspectorStackFrame.js

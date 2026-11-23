@@ -53,6 +53,7 @@ node_modules
 /src-win/rntypes
 /rntypes
 /types
+/types_generated
 /typings-index.*
 /rn-get-polyfills.js
 

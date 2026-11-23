@@ -10,7 +10,6 @@ import {
   StyleSheet,
   Button,
 } from 'react-native';
-import * as React from 'react'
 import { useState } from 'react';
 
 const styles = StyleSheet.create({

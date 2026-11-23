@@ -118,9 +118,12 @@ export const ValidationStrategies = {
     overrideName: string,
     base: string,
     expectedBaseHash: string,
+    excludePatterns?: readonly string[],
   ): ValidationStrategy => ({
     validate: async (_, reactRepo) => {
-      const hash = await hashFileOrDirectory(base, reactRepo);
+      const hash = await hashFileOrDirectory(base, reactRepo, {
+        excludePatterns,
+      });
       if (!hash) {
         return [];
       }
@@ -138,6 +141,7 @@ export const ValidationStrategies = {
   overrideCopyOfBase: (
     overrideName: string,
     base: string,
+    excludePatterns?: readonly string[],
   ): ValidationStrategy => ({
     validate: async (overrideRepo, reactRepo) => {
       if (
@@ -150,8 +154,11 @@ export const ValidationStrategies = {
       const overrideHash = await hashFileOrDirectory(
         overrideName,
         overrideRepo,
+        {excludePatterns},
       );
-      const baseHash = await hashFileOrDirectory(base, reactRepo);
+      const baseHash = await hashFileOrDirectory(base, reactRepo, {
+        excludePatterns,
+      });
       return overrideHash === baseHash
         ? []
         : [{type: 'overrideDifferentFromBase', overrideName}];

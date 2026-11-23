@@ -9,4 +9,4 @@
  */
 
 process.setSourceMapsEnabled(true);
-require('./lib-commonjs/unbroken');
+import('./lib-commonjs/unbroken.js');

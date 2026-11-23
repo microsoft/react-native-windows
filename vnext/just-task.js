@@ -12,7 +12,6 @@ const {
   condition,
   option,
   argv,
-  tscTask,
 } = require('just-scripts');
 
 // Use the shared base configuration
@@ -45,6 +44,10 @@ function codegen(test) {
   );
 }
 
+function generateTypesFromFlow() {
+  execSync(`node scripts/js-api/build-types --skip-snapshot`, {env: process.env, cwd: path.resolve(__dirname, '..')});
+}
+
 function layoutMSRNCxx() {
   if (require('os').platform() === 'win32') {
     const powershell = findPowerShell();
@@ -73,7 +76,7 @@ task('copyReadmeAndLicenseFromRoot', () => {
   );
 });
 
-task('compileTsPlatformOverrides', tscTask());
+task('generateTypesFromFlow', generateTypesFromFlow);
 
 registerNuGetRestoreTask({
   taskName: 'restoreNuGetPackages',
@@ -102,7 +105,7 @@ task(
     'copyReadmeAndLicenseFromRoot',
     condition('installDotnetTools', () => !process.env.TF_BUILD),
     'layoutMSRNCxx',
-    'compileTsPlatformOverrides',
+    'generateTypesFromFlow',
     'restoreNuGetPackages',
     'codegen',
   ),

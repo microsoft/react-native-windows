@@ -1,4 +1,4 @@
-import React, { useState, FC } from 'react';
+import { useState, FC } from 'react';
 import { AppRegistry, StyleSheet, Text, View, Modal, TouchableOpacity, FlatList } from 'react-native';
 
 interface PickerProps {

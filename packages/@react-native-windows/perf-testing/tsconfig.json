@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "lib-commonjs",
     "rootDir": "src",
-    "composite": true
+    "composite": true,
+    "types": ["node", "jest"]
   },
   "include": ["src"],
   "exclude": ["node_modules"]

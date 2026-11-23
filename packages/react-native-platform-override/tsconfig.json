@@ -3,6 +3,10 @@
   "include": ["src"],
   "exclude": ["node_modules"],
   "compilerOptions": {
+    "rootDir": "src",
+    "types": ["node", "jest"],
+    "module": "commonjs",
+    "moduleResolution": "node",
     // Not clean
     "isolatedModules": false
   }

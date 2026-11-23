@@ -1,5 +1,9 @@
 {
   "extends": "@rnw-scripts/ts-config",
+  "compilerOptions": {
+    "rootDir": "src",
+    "types": ["node"]
+  },
   "include": ["src"],
   "exclude": ["node_modules"]
 }

@@ -11,8 +11,7 @@
 // Remove when we get react-native-xaml working well for Fabric
 
 import {codegenNativeComponent} from 'react-native';
-import type {ViewProps} from 'react-native';
-import type {DirectEventHandler} from 'react-native/Libraries/Types/CodegenTypes';
+import type {CodegenTypes, ViewProps} from 'react-native';
 
 type SelectedDatesChangedEvent = Readonly<{
   value: boolean;
@@ -21,7 +20,7 @@ type SelectedDatesChangedEvent = Readonly<{
 
 export interface CalendarViewProps extends ViewProps {
   label: string;
-  onSelectedDatesChanged?: DirectEventHandler<SelectedDatesChangedEvent>;
+  onSelectedDatesChanged?: CodegenTypes.DirectEventHandler<SelectedDatesChangedEvent>;
 }
 
 export default codegenNativeComponent<CalendarViewProps>('CalendarView');

@@ -16,46 +16,6 @@ import TextAncestorContext from '../../Text/TextAncestorContext';
 import ViewNativeComponent from './ViewNativeComponent';
 import * as React from 'react';
 import {use} from 'react';
-import invariant from 'invariant'; // [Windows]
-// [Windows
-import type {KeyEvent} from '../../Types/CoreEventTypes';
-// Windows]
-
-// [Windows
-// $FlowFixMe[recursive-definition] - children typing
-const childrenWithImportantForAccessibility: (
-  // $FlowFixMe[unclear-type] - children typing requires any
-  children: any,
-  // $FlowFixMe[unclear-type] - return type requires any
-) => any = children => {
-  if (children == null) {
-    return children;
-  }
-  const updatedChildren = React.Children.map(children, child => {
-    if (React.isValidElement(child)) {
-      // $FlowFixMe[incompatible-use]
-      if (child.props.children) {
-        // $FlowFixMe[incompatible-call]
-        // $FlowFixMe[incompatible-type]
-        return React.cloneElement(child, {
-          accessible: false,
-          children: childrenWithImportantForAccessibility(child.props.children),
-        });
-      } else {
-        // $FlowFixMe[incompatible-call]
-        // $FlowFixMe[incompatible-type]
-        return React.cloneElement(child, {accessible: false});
-      }
-    }
-    return child;
-  });
-  if (updatedChildren.length === 1) {
-    return updatedChildren[0];
-  } else {
-    return updatedChildren;
-  }
-};
-// Windows]
 
 const warnOnRepeatedSafeAreaInsetsChanges: (
   onSafeAreaInsetsChange: (event: SafeAreaInsetsChangeEvent) => unknown,
@@ -79,7 +39,6 @@ export type ViewInstance = HostInstance;
 component View(ref?: React.RefSetter<ViewInstance>, ...props: ViewProps) {
   const hasTextAncestor = use(TextAncestorContext);
 
-  let actualView;
   const {
     accessibilityState,
     accessibilityValue,
@@ -109,57 +68,56 @@ component View(ref?: React.RefSetter<ViewInstance>, ...props: ViewProps) {
     ...otherProps
   } = props;
 
-  // Since we destructured props, we can now treat it as mutable
-  const processedProps = otherProps as {...ViewProps};
+  const resolvedProps = otherProps as {...ViewProps};
 
   const parsedAriaLabelledBy = ariaLabelledBy?.split(/\s*,\s*/g);
   if (parsedAriaLabelledBy !== undefined) {
-    processedProps.accessibilityLabelledBy = parsedAriaLabelledBy;
+    resolvedProps.accessibilityLabelledBy = parsedAriaLabelledBy;
   }
 
   if (ariaLabel !== undefined) {
-    processedProps.accessibilityLabel = ariaLabel;
+    resolvedProps.accessibilityLabel = ariaLabel;
   }
 
   if (ariaLive !== undefined) {
-    processedProps.accessibilityLiveRegion =
+    resolvedProps.accessibilityLiveRegion =
       ariaLive === 'off' ? 'none' : ariaLive;
   }
 
   if (ariaModal !== undefined) {
-    processedProps.accessibilityViewIsModal = ariaModal;
+    resolvedProps.accessibilityViewIsModal = ariaModal;
   }
 
   if (ariaHidden !== undefined) {
-    processedProps.accessibilityElementsHidden = ariaHidden;
+    resolvedProps.accessibilityElementsHidden = ariaHidden;
     if (ariaHidden === true) {
-      processedProps.importantForAccessibility = 'no-hide-descendants';
+      resolvedProps.importantForAccessibility = 'no-hide-descendants';
     }
   }
 
   // Windows accessibility properties
   if (ariaLevel !== undefined) {
-    processedProps.accessibilityLevel = ariaLevel;
+    resolvedProps.accessibilityLevel = ariaLevel;
   }
 
   if (ariaDescription !== undefined) {
-    processedProps.accessibilityDescription = ariaDescription;
+    resolvedProps.accessibilityDescription = ariaDescription;
   }
 
   if (ariaPosinset !== undefined) {
-    processedProps.accessibilityPosInSet = ariaPosinset;
+    resolvedProps.accessibilityPosInSet = ariaPosinset;
   }
 
   if (ariaSetsize !== undefined) {
-    processedProps.accessibilitySetSize = ariaSetsize;
+    resolvedProps.accessibilitySetSize = ariaSetsize;
   }
 
   if (id !== undefined) {
-    processedProps.nativeID = id;
+    resolvedProps.nativeID = id;
   }
 
   if (tabIndex !== undefined) {
-    processedProps.focusable = !tabIndex;
+    resolvedProps.focusable = !tabIndex;
   }
 
   if (
@@ -173,7 +131,7 @@ component View(ref?: React.RefSetter<ViewInstance>, ...props: ViewProps) {
     ariaMultiselectable != null || // Windows
     ariaRequired != null // Windows
   ) {
-    processedProps.accessibilityState = {
+    resolvedProps.accessibilityState = {
       busy: ariaBusy ?? accessibilityState?.busy,
       checked: ariaChecked ?? accessibilityState?.checked,
       disabled: ariaDisabled ?? accessibilityState?.disabled,
@@ -193,7 +151,7 @@ component View(ref?: React.RefSetter<ViewInstance>, ...props: ViewProps) {
     ariaValueNow != null ||
     ariaValueText != null
   ) {
-    processedProps.accessibilityValue = {
+    resolvedProps.accessibilityValue = {
       max: ariaValueMax ?? accessibilityValue?.max,
       min: ariaValueMin ?? accessibilityValue?.min,
       now: ariaValueNow ?? accessibilityValue?.now,
@@ -203,7 +161,7 @@ component View(ref?: React.RefSetter<ViewInstance>, ...props: ViewProps) {
   // [Windows key event processing and accessible property
   if (otherProps.keyDownEvents || otherProps.onKeyDown) {
     const keydownLocal = otherProps.onKeyDown;
-    processedProps.onKeyDown = event => {
+    resolvedProps.onKeyDown = event => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
@@ -225,7 +183,7 @@ component View(ref?: React.RefSetter<ViewInstance>, ...props: ViewProps) {
 
   if (otherProps.keyUpEvents || otherProps.onKeyUp) {
     const keyupLocal = otherProps.onKeyUp;
-    processedProps.onKeyUp = event => {
+    resolvedProps.onKeyUp = event => {
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
@@ -247,7 +205,7 @@ component View(ref?: React.RefSetter<ViewInstance>, ...props: ViewProps) {
 
   if (otherProps.keyDownEvents || otherProps.onKeyDownCapture) {
     const keydownCaptureLocal = otherProps.onKeyDownCapture;
-    processedProps.onKeyDownCapture = event => {
+    resolvedProps.onKeyDownCapture = event => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe[incompatible-type] - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
@@ -269,7 +227,7 @@ component View(ref?: React.RefSetter<ViewInstance>, ...props: ViewProps) {
 
   if (otherProps.keyUpEvents || otherProps.onKeyUpCapture) {
     const keyupCaptureLocal = otherProps.onKeyUpCapture;
-    processedProps.onKeyUpCapture = event => {
+    resolvedProps.onKeyUpCapture = event => {
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe[incompatible-type] - keyUpEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
@@ -291,27 +249,27 @@ component View(ref?: React.RefSetter<ViewInstance>, ...props: ViewProps) {
 
   // Windows accessible property
   const computedAccessible =
-    processedProps.importantForAccessibility === 'no-hide-descendants'
+    resolvedProps.importantForAccessibility === 'no-hide-descendants'
       ? false
       : otherProps.accessible;
   if (computedAccessible !== undefined) {
-    processedProps.accessible = computedAccessible;
+    resolvedProps.accessible = computedAccessible;
   }
 
   if (__DEV__) {
     const onSafeAreaInsetsChange =
-      processedProps.experimental_onSafeAreaInsetsChange;
+      resolvedProps.experimental_onSafeAreaInsetsChange;
     if (onSafeAreaInsetsChange != null) {
-      processedProps.experimental_onSafeAreaInsetsChange =
+      resolvedProps.experimental_onSafeAreaInsetsChange =
         warnOnRepeatedSafeAreaInsetsChanges(onSafeAreaInsetsChange);
     }
   }
 
-  actualView =
+  const actualView =
     ref == null ? (
-      <ViewNativeComponent {...processedProps} />
+      <ViewNativeComponent {...resolvedProps} />
     ) : (
-      <ViewNativeComponent {...processedProps} ref={ref} />
+      <ViewNativeComponent {...resolvedProps} ref={ref} />
     );
 
   if (hasTextAncestor) {
@@ -322,7 +280,6 @@ component View(ref?: React.RefSetter<ViewInstance>, ...props: ViewProps) {
   return actualView;
 }
 
- 
 View.displayName = 'View';
 
 export default View;

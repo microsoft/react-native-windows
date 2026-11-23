@@ -8,12 +8,10 @@ import React from 'react';
 import {
   FlatList,
   Text,
-  TouchableHighlight,
-  View,
   StyleSheet,
 } from 'react-native';
 
-import {AppTheme, IHighContrastChangedEvent} from 'react-native-windows';
+import {AppTheme, IHighContrastChangedEvent, TouchableHighlight, View} from 'react-native-windows';
 
 class AccessibilityBaseExample extends React.Component {
   public render() {

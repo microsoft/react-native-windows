@@ -14,16 +14,14 @@ import {
   View,
   Image,
   Linking,
-  NativeSyntheticEvent,
-  TextInputSelectionChangeEventData,
-  TextInputEndEditingEventData,
-  TextInputContentSizeChangeEventData,
-  NativeTouchEvent,
+  TextInputSelectionChangeEvent,
+  TextInputEndEditingEvent,
+  TextInputContentSizeChangeEvent,
   TextInput,
   TouchableHighlight,
   ActivityIndicator,
 } from 'react-native';
-import {Button, Popup} from 'react-native-windows';
+import {Button} from 'react-native-windows';
 
 class TicTacButton extends React.Component<{}, {text: string}> {
   constructor(props: {}) {
@@ -38,104 +36,17 @@ class TicTacButton extends React.Component<{}, {text: string}> {
         onPress={this._onPress}
         title={this.state.text}
         accessibilityLabel={this.state.text}
-        accessibilityValue={{text: this.state.text}}
-        onAccessibilityTap={() => this._onPress()}
       />
     );
   }
 
-  _onPress = (_event?: NativeSyntheticEvent<NativeTouchEvent>) => {
+  _onPress = () => {
     if (this.state.text === 'X') {
       this.setState({text: 'o'});
     } else {
       this.setState({text: 'X'});
     }
   };
-}
-
-class PopupButton extends React.Component<
-  {},
-  {
-    buttonTitle: string;
-    isFlyoutVisible: boolean;
-    popupSwitchState: boolean;
-    isLightDismissEnabled: boolean;
-  }
-> {
-  constructor(props: {}) {
-    super(props);
-    this._onPress = this._onPress.bind(this);
-    this._onPopupButtonPressed = this._onPopupButtonPressed.bind(this);
-    this._onPopupDismissed = this._onPopupDismissed.bind(this);
-    this.state = {
-      buttonTitle: 'Open Flyout',
-      isFlyoutVisible: false,
-      popupSwitchState: true,
-      isLightDismissEnabled: false,
-    };
-  }
-
-  render() {
-    return (
-      <View style={{flexDirection: 'row', padding: 20}}>
-        <Text style={{padding: 5}}>isLightDismissEnabled: </Text>
-        <Switch
-          value={this.state.isLightDismissEnabled}
-          onValueChange={value => this.setState({isLightDismissEnabled: value})}
-          aria-level={1}
-          aria-posinset={1}
-          aria-setsize={30}
-        />
-        <Button
-          onPress={this._onPress}
-          title={this.state.buttonTitle}
-          accessibilityLabel={this.state.buttonTitle}
-        />
-        <Popup
-          isOpen={this.state.isFlyoutVisible}
-          isLightDismissEnabled={this.state.isLightDismissEnabled}
-          verticalOffset={50}
-          horizontalOffset={350}
-          onDismiss={this._onPopupDismissed}>
-          <View style={{backgroundColor: 'lightgray', width: 200, height: 300}}>
-            <Text style={{justifyContent: 'center', paddingTop: 10}}>
-              This is a flyout
-            </Text>
-            <Switch
-              style={{justifyContent: 'center', padding: 20}}
-              value={this.state.popupSwitchState}
-              onValueChange={value => this.setState({popupSwitchState: value})}
-            />
-            <Button onPress={this._onPopupButtonPressed} title="Close" />
-          </View>
-        </Popup>
-      </View>
-    );
-  }
-
-  openPopup() {
-    this.setState({buttonTitle: 'Close Flyout', isFlyoutVisible: true});
-  }
-
-  closePopup() {
-    this.setState({buttonTitle: 'Open Flyout', isFlyoutVisible: false});
-  }
-
-  _onPress(_event: NativeSyntheticEvent<NativeTouchEvent>) {
-    if (this.state.isFlyoutVisible) {
-      this.closePopup();
-    } else {
-      this.openPopup();
-    }
-  }
-
-  _onPopupButtonPressed(_event: NativeSyntheticEvent<NativeTouchEvent>) {
-    this.closePopup();
-  }
-
-  _onPopupDismissed() {
-    this.closePopup();
-  }
 }
 
 export default class Bootstrap extends React.Component<
@@ -160,7 +71,7 @@ export default class Bootstrap extends React.Component<
     };
   }
 
-  inputRef: React.RefObject<TextInput | null>;
+  inputRef: React.RefObject<React.ComponentRef<typeof TextInput> | null>;
 
   toggleAnimation = () => {
     this.setState(prevState => ({
@@ -633,11 +544,6 @@ export default class Bootstrap extends React.Component<
             />
           </View>
 
-          <View style={{alignItems: 'center', padding: 10}}>
-            <Text>Test Popup: </Text>
-            <PopupButton />
-          </View>
-
           <View style={{backgroundColor: 'blue', marginTop: 15}}>
             <Image
               style={{width: 50, height: 50}}
@@ -762,15 +668,15 @@ export default class Bootstrap extends React.Component<
   };
 
   focusTextInputPressed = () => {
-    this.inputRef!.current!.focus();
+    this.inputRef.current?.focus();
   };
 
   blurTextInputPressed = () => {
-    this.inputRef!.current!.blur();
+    this.inputRef.current?.blur();
   };
 
   clearTextInputPressed = () => {
-    this.inputRef!.current!.clear();
+    this.inputRef.current?.clear();
   };
 
   changeTextHandler = (text: string) => {
@@ -785,9 +691,7 @@ export default class Bootstrap extends React.Component<
     console.log('textbox blurred');
   };
 
-  selectionChangeTextInputHandler = (
-    event: NativeSyntheticEvent<TextInputSelectionChangeEventData>,
-  ) => {
+  selectionChangeTextInputHandler = (event: TextInputSelectionChangeEvent) => {
     console.log(
       'selection start: ' +
         event.nativeEvent.selection.start +
@@ -796,14 +700,12 @@ export default class Bootstrap extends React.Component<
     );
   };
 
-  endEditingTextInputHandler = (
-    event: NativeSyntheticEvent<TextInputEndEditingEventData>,
-  ) => {
+  endEditingTextInputHandler = (event: TextInputEndEditingEvent) => {
     console.log(event.nativeEvent.text);
   };
 
   contentSizeChangeTextInputHandler = (
-    event: NativeSyntheticEvent<TextInputContentSizeChangeEventData>,
+    event: TextInputContentSizeChangeEvent,
   ) => {
     console.log(
       'new size width: ' +
