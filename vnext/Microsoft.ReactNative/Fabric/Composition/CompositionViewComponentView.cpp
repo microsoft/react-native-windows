@@ -1222,10 +1222,24 @@ void ViewComponentView::MountChildComponentView(
 
   ensureVisual();
 
-  // When children are in Visual() directly, offset past border visuals.
-  // When children are in m_childrenContainer, no offset needed.
+  // When children are in Visual() directly, offset past the background visual and the
+  // border/outline visuals, which all sit below the children in Visual() (see the tree at
+  // the top of this file; the outline primitive and m_childrenContainer insertions already
+  // count m_backgroundVisual). Without the background term, a child mounted at index 0
+  // after the background exists was inserted UNDER the background and never painted:
+  // e.g. screen content mounted into an already-coloured container in a later commit.
+  // When children are in m_childrenContainer, no offset is needed.
+  // The offset is kept apart from `index`, which stays a child index for the
+  // non-visual-children walk below.
+  uint32_t visualOffset = 0;
   if (!m_childrenContainer) {
-    indexOffsetForBorder(index);
+    // The background only lives in Visual(); a builder-provided mount target is a
+    // different visual.
+    const bool mountsIntoVisual = !(m_builder && m_builder->VisualToMountChildrenIntoHandler());
+    if (mountsIntoVisual && m_backgroundVisual) {
+      visualOffset += 1;
+    }
+    indexOffsetForBorder(visualOffset);
   }
 
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
@@ -1240,7 +1254,7 @@ void ViewComponentView::MountChildComponentView(
       }
     }
 
-    VisualToMountChildrenInto().InsertAt(compositionChild->OuterVisual(), visualIndex);
+    VisualToMountChildrenInto().InsertAt(compositionChild->OuterVisual(), visualIndex + visualOffset);
   } else {
     m_hasNonVisualChildren = true;
   }
