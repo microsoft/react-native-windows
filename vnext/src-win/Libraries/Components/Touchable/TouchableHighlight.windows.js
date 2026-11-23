@@ -116,9 +116,9 @@ class TouchableHighlightImpl extends React.Component<
     return {
       cancelable: !this.props.rejectResponderTermination,
       disabled:
-        this.props.disabled != null
-          ? this.props.disabled
-          : this.props.accessibilityState?.disabled,
+        this.props.disabled ??
+        this.props['aria-disabled'] ??
+        this.props.accessibilityState?.disabled,
       hitSlop: this.props.hitSlop,
       delayLongPress: this.props.delayLongPress,
       delayPressIn: this.props.delayPressIn,
@@ -266,6 +266,7 @@ class TouchableHighlightImpl extends React.Component<
       ariaSelected != null
     ) {
       _accessibilityState = {
+        ...accessibilityState, // [Windows]
         busy: ariaBusy ?? accessibilityState?.busy,
         checked: ariaChecked ?? accessibilityState?.checked,
         disabled: ariaDisabled ?? accessibilityState?.disabled,
