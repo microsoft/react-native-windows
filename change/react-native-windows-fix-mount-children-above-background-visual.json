@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fabric: mount child visuals above a View's background visual, so children mounted after the background exists are no longer drawn underneath it",
+  "packageName": "react-native-windows",
+  "email": "27441618+FaithfulAudio@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
