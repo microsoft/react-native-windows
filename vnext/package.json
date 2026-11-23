@@ -42,6 +42,7 @@
     "./jest/*": "./jest/*.js",
     "./jest/*.js": "./jest/*.js",
     "./src/fb_internal/*": "./src/fb_internal/*",
+    "./generate": "./generate.js",
     "./package.json": "./package.json"
   },
   "scripts": {
