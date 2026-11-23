@@ -7210,6 +7210,9 @@ exports[`snapshotAllPages Animated 13`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
           "selected": undefined,
         }
       }
@@ -7640,6 +7643,9 @@ exports[`snapshotAllPages Animated 14`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -8636,6 +8642,9 @@ exports[`snapshotAllPages Button 1`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
+      "multiselectable": undefined,
+      "readOnly": undefined,
+      "required": undefined,
       "selected": undefined,
     }
   }
@@ -8723,6 +8732,9 @@ exports[`snapshotAllPages Button 2`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
+      "multiselectable": undefined,
+      "readOnly": undefined,
+      "required": undefined,
       "selected": undefined,
     }
   }
@@ -8827,6 +8839,9 @@ exports[`snapshotAllPages Button 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -8919,6 +8934,9 @@ exports[`snapshotAllPages Button 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9024,6 +9042,9 @@ exports[`snapshotAllPages Button 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9115,6 +9136,9 @@ exports[`snapshotAllPages Button 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9206,6 +9230,9 @@ exports[`snapshotAllPages Button 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9301,6 +9328,9 @@ exports[`snapshotAllPages Button 5`] = `
       "checked": undefined,
       "disabled": true,
       "expanded": undefined,
+      "multiselectable": undefined,
+      "readOnly": undefined,
+      "required": undefined,
       "selected": undefined,
     }
   }
@@ -9416,6 +9446,9 @@ exports[`snapshotAllPages Button 6`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
+      "multiselectable": undefined,
+      "readOnly": undefined,
+      "required": undefined,
       "selected": undefined,
     }
   }
@@ -9510,6 +9543,9 @@ exports[`snapshotAllPages Button 7`] = `
       "checked": undefined,
       "disabled": true,
       "expanded": undefined,
+      "multiselectable": undefined,
+      "readOnly": undefined,
+      "required": undefined,
       "selected": undefined,
     }
   }
@@ -9626,6 +9662,9 @@ exports[`snapshotAllPages Button 8`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
+      "multiselectable": undefined,
+      "readOnly": undefined,
+      "required": undefined,
       "selected": undefined,
     }
   }
@@ -9716,6 +9755,9 @@ exports[`snapshotAllPages Button 9`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9800,6 +9842,9 @@ exports[`snapshotAllPages Button 9`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9884,6 +9929,9 @@ exports[`snapshotAllPages Button 9`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -9968,6 +10016,9 @@ exports[`snapshotAllPages Button 9`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -10818,6 +10869,9 @@ exports[`snapshotAllPages Crash 1`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
+      "multiselectable": undefined,
+      "readOnly": undefined,
+      "required": undefined,
       "selected": undefined,
     }
   }
@@ -10927,196 +10981,6 @@ exports[`snapshotAllPages Custom Native Accessibility Example 1`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Custom TextInput component Example 1`] = `
-<View
-  accessibilityLabel="example root"
-  accessible={true}
-  testID="custom-textinput-root-1"
->
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-  >
-    The below text input is a custom text input component
-  </Text>
-  <CustomTextInput
-    accessibilityLabel="Custom TextInput"
-    accessible={true}
-    allowFontScaling={true}
-    forwardedRef={[Function]}
-    onChange={[Function]}
-    onChangeText={[Function]}
-    rejectResponderTermination={true}
-    style={
-      {
-        "borderWidth": 1,
-        "width": 500,
-      }
-    }
-    testID="custom-textinput-1"
-    underlineColorAndroid="transparent"
-    value="hello"
-  />
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-    testID="custom-textinput-change"
-  />
-  <CustomTextInput
-    accessible={true}
-    allowFontScaling={true}
-    defaultValue="default value"
-    forwardedRef={[Function]}
-    onChangeText={[Function]}
-    rejectResponderTermination={true}
-    style={
-      {
-        "borderWidth": 1,
-        "width": 500,
-      }
-    }
-    testID="custom-textinput-default"
-    underlineColorAndroid="transparent"
-  />
-  <Text
-    style={
-      [
-        {
-          "color": "#000000ff",
-        },
-        undefined,
-      ]
-    }
-    testID="custom-textinput-default-change"
-  />
-  <CustomTextInput
-    accessible={true}
-    allowFontScaling={true}
-    forwardedRef={[Function]}
-    rejectResponderTermination={true}
-    style={
-      {
-        "borderWidth": 1,
-        "width": 500,
-      }
-    }
-    testID="custom-textinput-fixed"
-    underlineColorAndroid="transparent"
-    value="fixed"
-  />
-  <CustomTextInput
-    accessible={true}
-    allowFontScaling={true}
-    defaultValue="set content with button"
-    forwardedRef={[Function]}
-    rejectResponderTermination={true}
-    style={
-      {
-        "borderWidth": 1,
-        "width": 500,
-      }
-    }
-    testID="custom-textinput-set-formatted-text"
-    underlineColorAndroid="transparent"
-  />
-  <View
-    accessibilityRole="button"
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "backgroundColor": {
-            "windowsbrush": [
-              "ButtonBackground",
-            ],
-          },
-          "borderBottomWidth": 1.5,
-          "borderColor": {
-            "windowsbrush": [
-              "ButtonBorderBrush",
-            ],
-          },
-          "borderRadius": 3,
-          "borderWidth": 1,
-        },
-      ]
-    }
-    testID="custom-textinput-set-formatted-text-button"
-  >
-    <View
-      style={{}}
-    >
-      <View
-        style={{}}
-      >
-        <Text
-          style={
-            [
-              {
-                "color": {
-                  "windowsbrush": [
-                    "ButtonForeground",
-                  ],
-                },
-                "fontSize": 14,
-                "fontWeight": "400",
-                "margin": 8,
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          Set Formatted Text
-        </Text>
-      </View>
-    </View>
-  </View>
-</View>
-`;
-
 exports[`snapshotAllPages DevSettings 1`] = `
 <View
   accessibilityRole="button"
@@ -11126,6 +10990,9 @@ exports[`snapshotAllPages DevSettings 1`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
+      "multiselectable": undefined,
+      "readOnly": undefined,
+      "required": undefined,
       "selected": undefined,
     }
   }
@@ -11211,6 +11078,9 @@ exports[`snapshotAllPages DevSettings 2`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
+      "multiselectable": undefined,
+      "readOnly": undefined,
+      "required": undefined,
       "selected": undefined,
     }
   }
@@ -11357,6 +11227,9 @@ exports[`snapshotAllPages Dimensions 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -11461,6 +11334,9 @@ exports[`snapshotAllPages Dimensions 5`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -12546,6 +12422,9 @@ exports[`snapshotAllPages Fast Path Texts 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -12636,6 +12515,9 @@ exports[`snapshotAllPages Fast Path Texts 5`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -12745,6 +12627,9 @@ exports[`snapshotAllPages Fast Path Texts 7`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -14165,6 +14050,9 @@ exports[`snapshotAllPages Filter 11`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -16350,6 +16238,9 @@ exports[`snapshotAllPages FlatList 2`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
           "selected": undefined,
         }
       }
@@ -16926,6 +16817,9 @@ exports[`snapshotAllPages FlatList 3`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
           "selected": undefined,
         }
       }
@@ -17816,6 +17710,9 @@ exports[`snapshotAllPages FlatList 4`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -18685,6 +18582,9 @@ exports[`snapshotAllPages FlatList 5`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
           "selected": undefined,
         }
       }
@@ -26749,501 +26649,6 @@ exports[`snapshotAllPages FlatList 15`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Flyout 1`] = `
-<View
-  testID="flyout"
->
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "paddingTop": 20,
-      }
-    }
-  >
-    <Text
-      style={
-        {
-          "padding": 10,
-        }
-      }
-    >
-      Placement Options: 
-    </Text>
-    <RNCPicker
-      items={
-        [
-          {
-            "label": "top",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "top",
-          },
-          {
-            "label": "bottom",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "bottom",
-          },
-          {
-            "label": "left",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "left",
-          },
-          {
-            "label": "right",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "right",
-          },
-          {
-            "label": "full",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "full",
-          },
-          {
-            "label": "top-edge-aligned-left",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "top-edge-aligned-left",
-          },
-          {
-            "label": "top-edge-aligned-right",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "top-edge-aligned-right",
-          },
-          {
-            "label": "bottom-edge-aligned-left",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "bottom-edge-aligned-left",
-          },
-          {
-            "label": "bottom-edge-aligned-right",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "bottom-edge-aligned-right",
-          },
-          {
-            "label": "left-edge-aligned-top",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "left-edge-aligned-top",
-          },
-          {
-            "label": "right-edge-aligned-top",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "right-edge-aligned-top",
-          },
-          {
-            "label": "left-edge-aligned-bottom",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "left-edge-aligned-bottom",
-          },
-          {
-            "label": "right-edge-aligned-bottom",
-            "testID": undefined,
-            "textColor": undefined,
-            "value": "right-edge-aligned-bottom",
-          },
-        ]
-      }
-      onChange={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      selectedIndex={0}
-      style={
-        [
-          {
-            "height": 32,
-          },
-          {
-            "height": 35,
-            "width": 200,
-          },
-          undefined,
-        ]
-      }
-    />
-  </View>
-  <View
-    style={
-      {
-        "justifyContent": "center",
-        "padding": 20,
-        "width": 200,
-      }
-    }
-  >
-    <View
-      accessibilityRole="button"
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      focusable={true}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        [
-          {
-            "backgroundColor": {
-              "windowsbrush": [
-                "ButtonBackground",
-              ],
-            },
-            "borderBottomWidth": 1.5,
-            "borderColor": {
-              "windowsbrush": [
-                "ButtonBorderBrush",
-              ],
-            },
-            "borderRadius": 3,
-            "borderWidth": 1,
-          },
-        ]
-      }
-    >
-      <View
-        style={{}}
-      >
-        <View
-          style={{}}
-        >
-          <Text
-            style={
-              [
-                {
-                  "color": {
-                    "windowsbrush": [
-                      "ButtonForeground",
-                    ],
-                  },
-                  "fontSize": 14,
-                  "fontWeight": "400",
-                  "margin": 8,
-                  "textAlign": "center",
-                },
-              ]
-            }
-          >
-            Open Flyout
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-  <View
-    style={
-      {
-        "justifyContent": "center",
-        "padding": 20,
-        "width": 200,
-      }
-    }
-  >
-    <View
-      accessibilityRole="button"
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      focusable={true}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        [
-          {
-            "backgroundColor": {
-              "windowsbrush": [
-                "ButtonBackground",
-              ],
-            },
-            "borderBottomWidth": 1.5,
-            "borderColor": {
-              "windowsbrush": [
-                "ButtonBorderBrush",
-              ],
-            },
-            "borderRadius": 3,
-            "borderWidth": 1,
-          },
-        ]
-      }
-    >
-      <View
-        style={{}}
-      >
-        <View
-          style={{}}
-        >
-          <Text
-            style={
-              [
-                {
-                  "color": {
-                    "windowsbrush": [
-                      "ButtonForeground",
-                    ],
-                  },
-                  "fontSize": 14,
-                  "fontWeight": "400",
-                  "margin": 8,
-                  "textAlign": "center",
-                },
-              ]
-            }
-          >
-            Open Flyout without Target
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-  <View
-    style={
-      {
-        "justifyContent": "center",
-        "padding": 20,
-        "width": 200,
-      }
-    }
-  >
-    <View
-      accessibilityRole="button"
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      focusable={true}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        [
-          {
-            "backgroundColor": {
-              "windowsbrush": [
-                "ButtonBackground",
-              ],
-            },
-            "borderBottomWidth": 1.5,
-            "borderColor": {
-              "windowsbrush": [
-                "ButtonBorderBrush",
-              ],
-            },
-            "borderRadius": 3,
-            "borderWidth": 1,
-          },
-        ]
-      }
-    >
-      <View
-        style={{}}
-      >
-        <View
-          style={{}}
-        >
-          <Text
-            style={
-              [
-                {
-                  "color": {
-                    "windowsbrush": [
-                      "ButtonForeground",
-                    ],
-                  },
-                  "fontSize": 14,
-                  "fontWeight": "400",
-                  "margin": 8,
-                  "textAlign": "center",
-                },
-              ]
-            }
-          >
-            Open Flyout with Offset
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-  <View
-    style={
-      {
-        "flexDirection": "row",
-        "paddingTop": 200,
-      }
-    }
-  >
-    <Text
-      style={
-        {
-          "height": 32,
-          "padding": 10,
-          "width": 300,
-        }
-      }
-    >
-      Text Input to Anchor flyout to:
-       
-    </Text>
-    <TextInput
-      style={
-        {
-          "height": 32,
-          "width": 250,
-        }
-      }
-    />
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages Glyph UWP 1`] = `
-<View>
-  <Text>
-    Glyph: default Accent color
-  </Text>
-  <PLYIcon
-    emSize={24}
-    fontUri="ms-appx:///Assets/seguiemj.ttf"
-    glyph="300"
-    style={
-      {
-        "height": 32,
-        "width": 32,
-      }
-    }
-  />
-  <Text>
-    Glyph: red
-  </Text>
-  <PLYIcon
-    emSize={24}
-    fontUri="ms-appx:///Assets/seguiemj.ttf"
-    glyph="300"
-    style={
-      {
-        "color": "red",
-        "height": 32,
-        "width": 32,
-      }
-    }
-  />
-  <Text>
-    Multiple glyphs: red
-  </Text>
-  <PLYIcon
-    emSize={24}
-    fontUri="ms-appx:///Assets/seguiemj.ttf"
-    glyph="300;304;703;802;803"
-    style={
-      {
-        "color": "red",
-        "height": 32,
-        "width": 150,
-      }
-    }
-  />
-  <Text>
-    Multiple glyphs
-  </Text>
-  <PLYIcon
-    colorEnabled={true}
-    emSize={24}
-    fontUri="ms-appx:///Assets/seguiemj.ttf"
-    glyph="804;805;806;807;808;809"
-    style={
-      {
-        "color": "red",
-        "height": 32,
-        "width": 150,
-      }
-    }
-  />
-</View>
-`;
-
 exports[`snapshotAllPages Hit Testing 1`] = `
 <View>
   <Text>
@@ -27997,8 +27402,7 @@ exports[`snapshotAllPages Keyboard Focus Example 1`] = `
       />
     </View>
     <Text>
-      Last focus event for TouchableHighlight:
-       
+      Last focus event for TouchableHighlight: 
     </Text>
     <View
       accessibilityState={
@@ -28054,186 +27458,8 @@ exports[`snapshotAllPages Keyboard Focus Example 1`] = `
       />
     </View>
     <Text>
-      Last focus event for TouchableOpacity:
-       
+      Last focus event for TouchableOpacity: 
     </Text>
-    <View
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "multiselectable": undefined,
-          "readonly": undefined,
-          "required": undefined,
-          "selected": undefined,
-        }
-      }
-      accessible={true}
-      focusable={false}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        {
-          "backgroundColor": "green",
-          "height": 50,
-          "width": 50,
-        }
-      }
-    />
-    <Text>
-      Last focus event for TouchableWithoutFeedback:
-       
-    </Text>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages Keyboard extension Example 1`] = `
-<View>
-  <View
-    keyDownEvents={
-      [
-        {
-          "code": "KeyA",
-          "handledEventPhase": 1,
-        },
-        {
-          "code": "KeyB",
-        },
-        {
-          "code": "Digit1",
-          "handledEventPhase": 3,
-        },
-        {
-          "code": "Tab",
-          "handledEventPhase": 1,
-        },
-      ]
-    }
-    keyUpEvents={
-      [
-        {
-          "code": "KeyA",
-          "handledEventPhase": 1,
-        },
-        {
-          "code": "KeyB",
-        },
-        {
-          "code": "Digit1",
-          "handledEventPhase": 3,
-        },
-        {
-          "code": "Tab",
-          "handledEventPhase": 1,
-        },
-      ]
-    }
-    onKeyDown={[Function]}
-    onKeyDownCapture={[Function]}
-    onKeyUp={[Function]}
-    onKeyUpCapture={[Function]}
-    style={
-      {
-        "backgroundColor": "whitesmoke",
-        "borderWidth": 2,
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-        "marginVertical": 5,
-      }
-    }
-  >
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "margin": 5,
-          "minHeight": 30,
-          "minWidth": 100,
-        }
-      }
-    >
-      <Text>
-        OnKeyDown Key and Code
-      </Text>
-      <Text>
-         
-      </Text>
-      <Text>
-         
-      </Text>
-      <Text>
-        OnKeyDownCapture Key and Code
-      </Text>
-      <Text>
-         
-      </Text>
-      <Text>
-         
-      </Text>
-    </View>
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "margin": 5,
-          "minHeight": 30,
-          "minWidth": 100,
-        }
-      }
-    >
-      <Text>
-        OnKeyUp Key and Code
-      </Text>
-      <Text>
-         
-      </Text>
-      <Text>
-         
-      </Text>
-      <Text>
-        OnKeyUpCapture Key and Code
-      </Text>
-      <Text>
-         
-      </Text>
-      <Text>
-         
-      </Text>
-    </View>
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "margin": 5,
-          "minHeight": 30,
-          "minWidth": 100,
-        }
-      }
-    >
-      <TextInput
-        placeholder="I got focus"
-        style={
-          {
-            "height": 32,
-            "width": 100,
-          }
-        }
-      />
-    </View>
   </View>
 </View>
 `;
@@ -30375,6 +29601,9 @@ exports[`snapshotAllPages LegacyControlStyleTest 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -30490,6 +29719,9 @@ exports[`snapshotAllPages LegacyImageTest 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -30573,6 +29805,9 @@ exports[`snapshotAllPages LegacyImageTest 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -30692,6 +29927,9 @@ exports[`snapshotAllPages LegacyLoginTest 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -30874,6 +30112,9 @@ exports[`snapshotAllPages LegacySelectableTextTest 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -30957,6 +30198,9 @@ exports[`snapshotAllPages LegacySelectableTextTest 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -31314,6 +30558,9 @@ or click here.
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -31871,6 +31118,9 @@ exports[`snapshotAllPages Linking 2`] = `
       "checked": undefined,
       "disabled": undefined,
       "expanded": undefined,
+      "multiselectable": undefined,
+      "readOnly": undefined,
+      "required": undefined,
       "selected": undefined,
     }
   }
@@ -33978,6 +33228,9 @@ exports[`snapshotAllPages Mouse Click Events 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -34081,6 +33334,9 @@ exports[`snapshotAllPages Mouse Click Events 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -34326,6 +33582,9 @@ exports[`snapshotAllPages Moving Light Example 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -35992,6 +35251,9 @@ exports[`snapshotAllPages Performance API Examples 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -36123,6 +35385,9 @@ exports[`snapshotAllPages Performance API Examples 2`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -36266,6 +35531,9 @@ exports[`snapshotAllPages Performance API Examples 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -36360,6 +35628,9 @@ exports[`snapshotAllPages Performance API Examples 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -37486,6 +36757,9 @@ exports[`snapshotAllPages PixelRatio 1`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
           "selected": undefined,
         }
       }
@@ -37592,6 +36866,9 @@ exports[`snapshotAllPages PixelRatio 2`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
           "selected": undefined,
         }
       }
@@ -38477,6 +37754,9 @@ exports[`snapshotAllPages PlatformColor 6`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -39911,331 +39191,6 @@ exports[`snapshotAllPages Pointer Events 8`] = `
           }
         }
       />
-    </View>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages Popup 1`] = `
-<View
-  testID="anchor-popup"
->
-  <Text
-    style={
-      {
-        "width": 250,
-      }
-    }
-  >
-    The following tests popup Anchor
-  </Text>
-  <View
-    style={
-      {
-        "flexDirection": "row",
-      }
-    }
-  >
-    <Text
-      style={
-        {
-          "height": 32,
-          "padding": 10,
-          "width": 300,
-        }
-      }
-    >
-      Text Input to Anchor popup to:
-       
-    </Text>
-    <TextInput
-      style={
-        {
-          "height": 32,
-          "width": 300,
-        }
-      }
-    />
-  </View>
-  <View
-    style={
-      {
-        "justifyContent": "center",
-        "padding": 50,
-      }
-    }
-  >
-    <View
-      accessibilityRole="button"
-      accessibilityState={
-        {
-          "busy": undefined,
-          "checked": undefined,
-          "disabled": undefined,
-          "expanded": undefined,
-          "selected": undefined,
-        }
-      }
-      accessibilityValue={
-        {
-          "max": undefined,
-          "min": undefined,
-          "now": undefined,
-          "text": undefined,
-        }
-      }
-      accessible={true}
-      focusable={true}
-      onBlur={[Function]}
-      onClick={[Function]}
-      onFocus={[Function]}
-      onKeyDown={[Function]}
-      onKeyUp={[Function]}
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        [
-          {
-            "backgroundColor": {
-              "windowsbrush": [
-                "ButtonBackground",
-              ],
-            },
-            "borderBottomWidth": 1.5,
-            "borderColor": {
-              "windowsbrush": [
-                "ButtonBorderBrush",
-              ],
-            },
-            "borderRadius": 3,
-            "borderWidth": 1,
-          },
-        ]
-      }
-    >
-      <View
-        style={{}}
-      >
-        <View
-          style={{}}
-        >
-          <Text
-            style={
-              [
-                {
-                  "color": {
-                    "windowsbrush": [
-                      "ButtonForeground",
-                    ],
-                  },
-                  "fontSize": 14,
-                  "fontWeight": "400",
-                  "margin": 8,
-                  "textAlign": "center",
-                },
-              ]
-            }
-          >
-            Open Popup
-          </Text>
-        </View>
-      </View>
-    </View>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages Popup 2`] = `
-<View
-  style={
-    {
-      "height": 500,
-      "width": 500,
-    }
-  }
-  testID="popup-placement"
->
-  <View
-    accessibilityRole="button"
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "backgroundColor": {
-            "windowsbrush": [
-              "ButtonBackground",
-            ],
-          },
-          "borderBottomWidth": 1.5,
-          "borderColor": {
-            "windowsbrush": [
-              "ButtonBorderBrush",
-            ],
-          },
-          "borderRadius": 3,
-          "borderWidth": 1,
-        },
-      ]
-    }
-  >
-    <View
-      style={{}}
-    >
-      <View
-        style={{}}
-      >
-        <Text
-          style={
-            [
-              {
-                "color": {
-                  "windowsbrush": [
-                    "ButtonForeground",
-                  ],
-                },
-                "fontSize": 14,
-                "fontWeight": "400",
-                "margin": 8,
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          Toggle popup
-        </Text>
-      </View>
-    </View>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages Popup 3`] = `
-<View
-  style={
-    {
-      "height": 500,
-      "width": 500,
-    }
-  }
-  testID="popup-accessibility"
->
-  <View
-    accessibilityRole="button"
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onKeyDown={[Function]}
-    onKeyUp={[Function]}
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      [
-        {
-          "backgroundColor": {
-            "windowsbrush": [
-              "ButtonBackground",
-            ],
-          },
-          "borderBottomWidth": 1.5,
-          "borderColor": {
-            "windowsbrush": [
-              "ButtonBorderBrush",
-            ],
-          },
-          "borderRadius": 3,
-          "borderWidth": 1,
-        },
-      ]
-    }
-  >
-    <View
-      style={{}}
-    >
-      <View
-        style={{}}
-      >
-        <Text
-          style={
-            [
-              {
-                "color": {
-                  "windowsbrush": [
-                    "ButtonForeground",
-                  ],
-                },
-                "fontSize": 14,
-                "fontWeight": "400",
-                "margin": 8,
-                "textAlign": "center",
-              },
-            ]
-          }
-        >
-          Toggle popup
-        </Text>
-      </View>
     </View>
   </View>
 </View>
@@ -44006,6 +42961,9 @@ exports[`snapshotAllPages RTLExample 2`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -44309,6 +43267,9 @@ exports[`snapshotAllPages RTLExample 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -44454,6 +43415,9 @@ exports[`snapshotAllPages RTLExample 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -44614,6 +43578,9 @@ exports[`snapshotAllPages RTLExample 5`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -44774,6 +43741,9 @@ exports[`snapshotAllPages RTLExample 6`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -44902,6 +43872,9 @@ exports[`snapshotAllPages RTLExample 7`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -45086,6 +44059,9 @@ exports[`snapshotAllPages RTLExample 8`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -45337,6 +44313,9 @@ exports[`snapshotAllPages RTLExample 9`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -45523,6 +44502,9 @@ exports[`snapshotAllPages RTLExample 10`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -45692,6 +44674,9 @@ exports[`snapshotAllPages RTLExample 11`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -45857,6 +44842,9 @@ exports[`snapshotAllPages RTLExample 11`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -46023,6 +45011,9 @@ exports[`snapshotAllPages RTLExample 12`] = `
               "checked": undefined,
               "disabled": undefined,
               "expanded": undefined,
+              "multiselectable": undefined,
+              "readOnly": undefined,
+              "required": undefined,
               "selected": undefined,
             }
           }
@@ -46193,6 +45184,9 @@ exports[`snapshotAllPages RTLExample 13`] = `
               "checked": undefined,
               "disabled": undefined,
               "expanded": undefined,
+              "multiselectable": undefined,
+              "readOnly": undefined,
+              "required": undefined,
               "selected": undefined,
             }
           }
@@ -46388,6 +45382,9 @@ exports[`snapshotAllPages RTLExample 14`] = `
               "checked": undefined,
               "disabled": undefined,
               "expanded": undefined,
+              "multiselectable": undefined,
+              "readOnly": undefined,
+              "required": undefined,
               "selected": undefined,
             }
           }
@@ -46583,6 +45580,9 @@ exports[`snapshotAllPages RTLExample 15`] = `
               "checked": undefined,
               "disabled": undefined,
               "expanded": undefined,
+              "multiselectable": undefined,
+              "readOnly": undefined,
+              "required": undefined,
               "selected": undefined,
             }
           }
@@ -46829,6 +45829,9 @@ exports[`snapshotAllPages RTLExample 16`] = `
               "checked": undefined,
               "disabled": undefined,
               "expanded": undefined,
+              "multiselectable": undefined,
+              "readOnly": undefined,
+              "required": undefined,
               "selected": undefined,
             }
           }
@@ -51276,6 +50279,9 @@ exports[`snapshotAllPages ScrollView 11`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -51359,6 +50365,9 @@ exports[`snapshotAllPages ScrollView 11`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -57122,6 +56131,9 @@ exports[`snapshotAllPages ScrollViewMaintainVisibleContentPositionExample 1`] = 
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -57204,6 +56216,9 @@ exports[`snapshotAllPages ScrollViewMaintainVisibleContentPositionExample 1`] = 
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -57296,6 +56311,9 @@ exports[`snapshotAllPages ScrollViewMaintainVisibleContentPositionExample 1`] = 
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -57378,6 +56396,9 @@ exports[`snapshotAllPages ScrollViewMaintainVisibleContentPositionExample 1`] = 
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -57470,6 +56491,9 @@ exports[`snapshotAllPages ScrollViewMaintainVisibleContentPositionExample 1`] = 
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -57552,6 +56576,9 @@ exports[`snapshotAllPages ScrollViewMaintainVisibleContentPositionExample 1`] = 
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -64498,6 +63525,9 @@ exports[`snapshotAllPages SectionList 1`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -65139,6 +64169,9 @@ exports[`snapshotAllPages SectionList 2`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
           "selected": undefined,
         }
       }
@@ -67023,6 +66056,9 @@ exports[`snapshotAllPages SectionList 5`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
           "selected": undefined,
         }
       }
@@ -67653,6 +66689,9 @@ exports[`snapshotAllPages SectionList 6`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
           "selected": undefined,
         }
       }
@@ -71843,6 +70882,9 @@ exports[`snapshotAllPages Share 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -71966,6 +71008,9 @@ exports[`snapshotAllPages Share 2`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -72102,6 +71147,9 @@ exports[`snapshotAllPages Share 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -73922,6 +72970,9 @@ exports[`snapshotAllPages Text 4`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
           "selected": undefined,
         }
       }
@@ -74013,6 +73064,9 @@ exports[`snapshotAllPages Text 4`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
           "selected": undefined,
         }
       }
@@ -74104,6 +73158,9 @@ exports[`snapshotAllPages Text 4`] = `
           "checked": undefined,
           "disabled": undefined,
           "expanded": undefined,
+          "multiselectable": undefined,
+          "readOnly": undefined,
+          "required": undefined,
           "selected": undefined,
         }
       }
@@ -83081,6 +82138,9 @@ exports[`snapshotAllPages TextInput 4`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -87526,6 +86586,9 @@ exports[`snapshotAllPages TextInput 20`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -94248,6 +93311,9 @@ exports[`snapshotAllPages TransferProperties 1`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -94439,6 +93505,9 @@ exports[`snapshotAllPages TransferProperties 2`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -94521,6 +93590,9 @@ exports[`snapshotAllPages TransferProperties 2`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -100271,6 +99343,9 @@ exports[`snapshotAllPages XMLHttpRequest 3`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -100508,6 +99583,9 @@ exports[`snapshotAllPages XMLHttpRequest 6`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -100590,6 +99668,9 @@ exports[`snapshotAllPages XMLHttpRequest 6`] = `
         "checked": undefined,
         "disabled": undefined,
         "expanded": undefined,
+        "multiselectable": undefined,
+        "readOnly": undefined,
+        "required": undefined,
         "selected": undefined,
       }
     }
@@ -100687,6 +99768,9 @@ exports[`snapshotAllPages Xaml WinUI3 (Experimental, for Fabric) 1`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
@@ -100783,6 +99867,9 @@ exports[`snapshotAllPages Xaml WinUI3 (Experimental, for Fabric) 1`] = `
             "checked": undefined,
             "disabled": undefined,
             "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
             "selected": undefined,
           }
         }
