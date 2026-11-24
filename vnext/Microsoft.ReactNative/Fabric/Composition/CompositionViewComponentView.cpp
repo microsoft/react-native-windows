@@ -1222,10 +1222,15 @@ void ViewComponentView::MountChildComponentView(
 
   ensureVisual();
 
-  // When children are in Visual() directly, offset past border visuals.
+  // When children are in Visual() directly, offset past the background and border visuals.
   // When children are in m_childrenContainer, no offset needed.
+  uint32_t visualOffset = 0;
   if (!m_childrenContainer) {
-    indexOffsetForBorder(index);
+    const bool mountsIntoVisual = !(m_builder && m_builder->VisualToMountChildrenIntoHandler());
+    if (mountsIntoVisual && m_backgroundVisual) {
+      visualOffset += 1;
+    }
+    indexOffsetForBorder(visualOffset);
   }
 
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
@@ -1240,7 +1245,7 @@ void ViewComponentView::MountChildComponentView(
       }
     }
 
-    VisualToMountChildrenInto().InsertAt(compositionChild->OuterVisual(), visualIndex);
+    VisualToMountChildrenInto().InsertAt(compositionChild->OuterVisual(), visualIndex + visualOffset);
   } else {
     m_hasNonVisualChildren = true;
   }
