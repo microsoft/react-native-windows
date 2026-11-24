@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/package-utils
 
-<!-- This log was last generated on Wed, 04 Nov 2026 19:50:01 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 24 Nov 2026 18:11:38 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.101
+
+Tue, 24 Nov 2026 18:11:38 GMT
+
+### Changes
+
+- Update to TypeScript 6 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.104
 
 ## 0.0.0-canary.100
 

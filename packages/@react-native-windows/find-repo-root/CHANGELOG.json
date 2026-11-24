@@ -2,6 +2,21 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2026 18:11:38 GMT",
+      "version": "0.0.0-canary.104",
+      "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.104",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/find-repo-root",
+            "commit": "d1f9d2de93b602e899a643300f3f50f64a9ec22a",
+            "comment": "Update to TypeScript 6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Nov 2026 19:50:01 GMT",
       "version": "0.0.0-canary.103",
       "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.103",

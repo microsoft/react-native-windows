@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Thu, 19 Nov 2026 22:06:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 24 Nov 2026 18:11:38 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.317
+
+Tue, 24 Nov 2026 18:11:38 GMT
+
+### Changes
+
+- Update to TypeScript 6, and remove ButtonWin32, and PersonaCoin (30809111+acoates-ms@users.noreply.github.com)
+- Bump react-native-platform-override to v0.0.0-canary.1026
 
 ## 0.0.0-canary.316
 

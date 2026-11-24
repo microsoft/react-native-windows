@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-canary.316",
+  "version": "0.0.0-canary.317",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "repository": {
     "type": "git",
@@ -95,7 +95,7 @@
     "prettier": "^3.6.2",
     "react": "19.3.0",
     "react-native": "0.90.0-nightly-20261110-9a3047391",
-    "react-native-platform-override": "0.0.0-canary.1025",
+    "react-native-platform-override": "0.0.0-canary.1026",
     "typescript": "^6.0.3"
   },
   "peerDependencies": {

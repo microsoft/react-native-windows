@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2026 18:11:38 GMT",
+      "version": "0.0.0-canary.317",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.317",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "d1f9d2de93b602e899a643300f3f50f64a9ec22a",
+            "comment": "Update to TypeScript 6, and remove ButtonWin32, and PersonaCoin"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1026",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Nov 2026 22:06:43 GMT",
       "version": "0.0.0-canary.316",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.316",

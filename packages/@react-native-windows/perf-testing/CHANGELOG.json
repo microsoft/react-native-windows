@@ -2,6 +2,21 @@
   "name": "@react-native-windows/perf-testing",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2026 18:11:38 GMT",
+      "version": "0.0.0-canary.1044",
+      "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1044",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/perf-testing",
+            "commit": "d1f9d2de93b602e899a643300f3f50f64a9ec22a",
+            "comment": "Update to TypeScript 6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Nov 2026 22:06:43 GMT",
       "version": "0.0.0-canary.1043",
       "tag": "@react-native-windows/perf-testing_v0.0.0-canary.1043",

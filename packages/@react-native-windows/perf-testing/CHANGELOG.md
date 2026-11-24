@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/perf-testing
 
-<!-- This log was last generated on Thu, 19 Nov 2026 22:06:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 24 Nov 2026 18:11:38 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1044
+
+Tue, 24 Nov 2026 18:11:38 GMT
+
+### Changes
+
+- Update to TypeScript 6 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.1043
 

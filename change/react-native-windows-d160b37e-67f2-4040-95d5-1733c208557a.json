@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Preserve Windows TouchableHighlight accessibility states and align disabled-state precedence with Pressability",
-  "packageName": "react-native-windows",
-  "email": "anuagra@microsoft.com",
-  "dependentChangeType": "patch"
-}
