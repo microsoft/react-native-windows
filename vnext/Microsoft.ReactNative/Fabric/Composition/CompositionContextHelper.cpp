@@ -91,6 +91,7 @@ struct CompositionTypeTraits<WindowsTypeTag> {
 
   using ICompositionDrawingSurfaceInterop = ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop;
   using ICompositorInterop = ABI::Windows::UI::Composition::ICompositorInterop;
+  using ICompositionGraphicsDeviceInterop = ABI::Windows::UI::Composition::ICompositionGraphicsDeviceInterop;
 
   using IInnerCompositionCompositor = IWindowsCompositionCompositor;
   using IInnerCompositionDropShadow = IWindowsCompositionDropShadow;
@@ -164,6 +165,7 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
 
   using ICompositionDrawingSurfaceInterop = winrt::Microsoft::UI::Composition::ICompositionDrawingSurfaceInterop;
   using ICompositorInterop = winrt::Microsoft::UI::Composition::ICompositorInterop;
+  using ICompositionGraphicsDeviceInterop = winrt::Microsoft::UI::Composition::ICompositionGraphicsDeviceInterop;
 
   using IInnerCompositionCompositor = IMicrosoftCompositionCompositor;
   using IInnerCompositionDropShadow = IMicrosoftCompositionDropShadow;
@@ -2169,9 +2171,9 @@ struct CompContext : winrt::implements<
 
   // A removed D3D device (driver reset, adapter change) never works again, so creating surfaces on
   // the cached devices would keep failing after the adapter is back. If the cached device was
-  // removed and a new one can be created, switch to it and return true. The graphics device is
-  // dropped too and created again from the new D2D device on next use. Surfaces made on the old
-  // devices are not redrawn here.
+  // removed and a new one can be created, switch to it and return true. The existing graphics
+  // device is pointed at the new D2D device, so surfaces created before the loss can be drawn to
+  // again. Their old content is gone, and nothing here redraws them.
   bool ReplaceRemovedDevice() noexcept {
     if (!m_d3dDevice || SUCCEEDED(m_d3dDevice->GetDeviceRemovedReason())) {
       return false;
@@ -2189,17 +2191,30 @@ struct CompContext : winrt::implements<
       return false;
     }
 
+    if (m_compositionGraphicsDevice) {
+      auto graphicsDeviceInterop =
+          m_compositionGraphicsDevice.template try_as<typename TTypeRedirects::ICompositionGraphicsDeviceInterop>();
+      if (!graphicsDeviceInterop || FAILED(graphicsDeviceInterop->SetRenderingDevice(d2dDevice.get()))) {
+        // Can't move the existing graphics device over; make a new one on next use instead.
+        m_compositionGraphicsDevice = nullptr;
+      }
+    }
+
     m_d3dDevice = std::move(d3dDevice);
     m_d2dDevice = std::move(d2dDevice);
-    m_compositionGraphicsDevice = nullptr;
     return true;
   }
 
-  winrt::com_ptr<ID2D1Device> D2DDevice() noexcept {
+  // Throws when a device can't be created. Only call where the exception is caught.
+  winrt::com_ptr<ID2D1Device> D2DDevice() {
     if (!m_d2dDevice) {
+      auto d3dDevice = D3DDevice();
+      if (!d3dDevice) {
+        winrt::throw_hresult(DXGI_ERROR_DEVICE_REMOVED);
+      }
       winrt::com_ptr<IDXGIDevice> dxgiDevice;
       // Obtain the underlying DXGI device of the Direct3D11 device.
-      D3DDevice().as(dxgiDevice);
+      d3dDevice.as(dxgiDevice);
 
       // Obtain the Direct2D device for 2-D rendering.
       winrt::check_hresult(D2DFactory()->CreateDevice(dxgiDevice.get(), m_d2dDevice.put()));
@@ -2230,7 +2245,8 @@ struct CompContext : winrt::implements<
 
   winrt::Microsoft::ReactNative::Composition::Experimental::IFocusVisual CreateFocusVisual() noexcept;
 
-  typename TTypeRedirects::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept;
+  // Throws when the graphics device can't be created. Only call where the exception is caught.
+  typename TTypeRedirects::CompositionGraphicsDevice CompositionGraphicsDevice();
 
   typename TTypeRedirects::Compositor InnerCompositor() const noexcept {
     return m_compositor;
@@ -2279,9 +2295,10 @@ CompContext<WindowsTypeRedirects>::CreateDrawingSurfaceBrush(
     winrt::Windows::Foundation::Size surfaceSize,
     winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
     winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept {
-  // CreateDrawingSurface throws when the graphics device is lost or being reset (display change,
-  // remote session, driver reset). This function is noexcept, so an escaping exception terminates the
-  // process. Return null instead; callers skip drawing and the next layout or redraw creates the surface again.
+  // CreateDrawingSurface, and creating the devices behind it, throw when the graphics device is lost or
+  // being reset (display change, remote session, driver reset). This function is noexcept, so an
+  // escaping exception terminates the process. Return null instead; callers skip drawing and the next
+  // layout or redraw creates the surface again.
   // If the failure was a removed device, replace it and try once more on the new one.
   for (int attempt = 0; attempt < 2; ++attempt) {
     try {
@@ -2308,7 +2325,7 @@ CompContext<WindowsTypeRedirects>::CreateFocusVisual() noexcept {
 
 template <>
 winrt::Windows::UI::Composition::CompositionGraphicsDevice
-CompContext<WindowsTypeRedirects>::CompositionGraphicsDevice() noexcept {
+CompContext<WindowsTypeRedirects>::CompositionGraphicsDevice() {
   if (!m_compositionGraphicsDevice) {
     // To create a composition graphics device, we need to QI for another interface
 
@@ -2393,7 +2410,7 @@ CompContext<MicrosoftTypeRedirects>::CreateFocusVisual() noexcept {
 
 template <>
 winrt::Microsoft::UI::Composition::CompositionGraphicsDevice
-CompContext<MicrosoftTypeRedirects>::CompositionGraphicsDevice() noexcept {
+CompContext<MicrosoftTypeRedirects>::CompositionGraphicsDevice() {
   if (!m_compositionGraphicsDevice) {
     winrt::check_hresult(m_compositor.as<winrt::Microsoft::UI::Composition::ICompositorInterop>()->CreateGraphicsDevice(
         D2DDevice().get(), &m_compositionGraphicsDevice));

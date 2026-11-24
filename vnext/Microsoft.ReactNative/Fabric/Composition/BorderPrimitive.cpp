@@ -305,8 +305,8 @@ void DrawShape(
 }
 
 template <typename TShape>
-// Returns false only when the drawing surface could not be created (graphics device lost), so the
-// caller keeps the border marked for drawing. Nothing to draw (empty rect, no visible color) is success.
+// Returns false only when the drawing surface could not be created or drawn to (graphics device lost),
+// so the caller keeps the border marked for drawing. Nothing to draw (empty rect, no visible color) is success.
 bool SetBorderLayerPropertiesCommon(
     winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
     winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
@@ -394,7 +394,8 @@ bool SetBorderLayerPropertiesCommon(
 
     pRT->SetTransform(originalTransform);
   }
-  return true;
+  // BeginDraw can fail on a surface that was created fine (device lost in between): nothing was drawn.
+  return autoDraw.IsValid();
 }
 
 template <typename TShape>

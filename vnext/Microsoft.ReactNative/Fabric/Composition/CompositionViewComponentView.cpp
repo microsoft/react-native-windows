@@ -67,6 +67,8 @@ ComponentView::ComponentView(
 }
 
 ComponentView::~ComponentView() {
+  // The retry timer repeats and keeps running after its last reference is released, so stop it here.
+  cancelDrawingSurfaceRetry();
   if (m_tooltipTracked) {
     TooltipService::GetCurrent(m_reactContext.Properties())->StopTracking(*this);
     m_tooltipTracked = false;
@@ -855,6 +857,7 @@ void ComponentView::hostFocusVisual(bool show, winrt::com_ptr<ComponentView> vie
           outerFocusMetrics, view->focusBorderMetrics(false /*inner*/, outerFocusMetrics));
       if (!focusDrawn) {
         // The focused view finalizes the focus primitives it is shown in, so it owns the retry.
+        view->resetDrawingSurfaceRetryBudget();
         view->scheduleDrawingSurfaceRetry();
       }
     } else if (!show && view->m_componentHostingFocusVisual && m_focusPrimitive) {

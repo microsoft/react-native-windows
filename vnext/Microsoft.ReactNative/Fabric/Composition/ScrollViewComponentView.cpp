@@ -904,7 +904,9 @@ void ScrollViewComponentView::updateContentVisualSize() noexcept {
   m_scrollVisual.ContentSize(contentSize);
 }
 
-void ScrollViewComponentView::prepareForRecycle() noexcept {}
+void ScrollViewComponentView::prepareForRecycle() noexcept {
+  Super::prepareForRecycle();
+}
 
 void ScrollViewComponentView::updateChildrenClippingPath(
     facebook::react::LayoutMetrics const & /*layoutMetrics*/,

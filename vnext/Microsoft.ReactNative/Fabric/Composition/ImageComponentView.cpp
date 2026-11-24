@@ -293,7 +293,12 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
       return;
     }
 
-    DrawImage();
+    if (!DrawImage()) {
+      // Don't keep or show a surface that was never drawn; the retry starts over with a new one.
+      m_drawingSurface = nullptr;
+      scheduleDrawingSurfaceRetry();
+      return;
+    }
 
     switch (imgProps.resizeMode) {
       case facebook::react::ImageResizeMode::Stretch:
@@ -338,26 +343,30 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
     }
   } else if (m_requiresImageRedraw) {
     m_requiresImageRedraw = false;
-    DrawImage();
+    if (!DrawImage()) {
+      // The surface is blank now. Drop it so the retry creates and draws a new one.
+      m_drawingSurface = nullptr;
+      scheduleDrawingSurfaceRetry();
+    }
   }
 }
 
-void ImageComponentView::DrawImage() noexcept {
+bool ImageComponentView::DrawImage() noexcept {
   // Begin our update of the surface pixels. If this is our first update, we are required
   // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
   // any time we make an update we touch the entire surface, so we always pass nullptr).
   POINT offset;
 
   if (!m_drawingSurface) {
-    return;
+    return true;
   }
 
   if (themeEffectsImage() && theme()->IsEmpty()) {
-    return;
+    return true;
   }
 
   if (!m_imageResponseImage->m_wicbmp) {
-    return;
+    return true;
   }
 
   assert(m_reactContext.UIDispatcher().HasThreadAccess());
@@ -443,6 +452,8 @@ void ImageComponentView::DrawImage() noexcept {
       d2dDeviceContext->DrawBitmap(bitmap.get(), rect);
     }
   }
+  // BeginDraw can fail on a surface that was created fine (device lost in between): nothing was drawn.
+  return autoDraw.IsValid();
 }
 
 std::string ImageComponentView::DefaultControlType() const noexcept {
