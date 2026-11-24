@@ -71,6 +71,13 @@ struct ScrollBarComponent {
     UpdateColorForScrollBarRegions();
   }
 
+  void OnRenderingDeviceLost() noexcept {
+    m_arrowFirstDrawingSurface = nullptr;
+    m_arrowLastDrawingSurface = nullptr;
+    updateHighlight(ScrollbarHitRegion::ArrowFirst);
+    updateHighlight(ScrollbarHitRegion::ArrowLast);
+  }
+
   void UpdateColorForScrollBarRegions() noexcept {
     updateHighlight(ScrollbarHitRegion::ArrowFirst);
     updateHighlight(ScrollbarHitRegion::ArrowLast);
@@ -963,6 +970,12 @@ void ScrollViewComponentView::onThemeChanged() noexcept {
   m_verticalScrollbarComponent->UpdateColorForScrollBarRegions();
   m_horizontalScrollbarComponent->UpdateColorForScrollBarRegions();
   Super::onThemeChanged();
+}
+
+void ScrollViewComponentView::OnRenderingDeviceLost() noexcept {
+  Super::OnRenderingDeviceLost();
+  m_verticalScrollbarComponent->OnRenderingDeviceLost();
+  m_horizontalScrollbarComponent->OnRenderingDeviceLost();
 }
 
 void ScrollViewComponentView::OnPointerWheelChanged(

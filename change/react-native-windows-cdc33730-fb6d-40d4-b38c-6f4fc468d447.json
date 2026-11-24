@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Redraw composition drawing surfaces after a lost graphics device is replaced: ICompositionContext raises RenderingDeviceReplaced and root views redraw their tree",
+  "packageName": "react-native-windows",
+  "email": "gordomacmaster@gmail.com",
+  "dependentChangeType": "patch"
+}

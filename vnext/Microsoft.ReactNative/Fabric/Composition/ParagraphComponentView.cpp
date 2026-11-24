@@ -296,7 +296,11 @@ std::optional<int32_t> ParagraphComponentView::GetClampedTextPosition(facebook::
 }
 
 void ParagraphComponentView::OnRenderingDeviceLost() noexcept {
-  DrawText();
+  Super::OnRenderingDeviceLost();
+  // Start over with a new surface: the old one may be null (creation failed while the device was
+  // lost) or belong to a graphics device that could not be moved to the new rendering device.
+  m_drawingSurface = nullptr;
+  updateVisualBrush();
 }
 
 void ParagraphComponentView::updateVisualBrush() noexcept {

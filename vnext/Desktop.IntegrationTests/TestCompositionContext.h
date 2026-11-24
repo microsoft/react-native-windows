@@ -211,6 +211,11 @@ struct TestCompositionContext : winrt::implements<TestCompositionContext, Exp::I
       winrt::Windows::Graphics::DirectX::DirectXAlphaMode) {
     return winrt::make<TestDrawingSurfaceBrush>();
   }
+  winrt::event_token RenderingDeviceReplaced(
+      winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &) {
+    return {};
+  }
+  void RenderingDeviceReplaced(winrt::event_token const &) noexcept {}
 };
 
 } // namespace Microsoft::React::Test

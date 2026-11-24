@@ -1970,7 +1970,12 @@ void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
 }
 
 void WindowsTextInputComponentView::OnRenderingDeviceLost() noexcept {
-  DrawText();
+  Super::OnRenderingDeviceLost();
+  if (m_mounted) {
+    // Start over with a new surface; see ParagraphComponentView::OnRenderingDeviceLost.
+    m_drawingSurface = nullptr;
+    ensureDrawingSurface();
+  }
 }
 
 void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {

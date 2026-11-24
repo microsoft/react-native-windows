@@ -53,6 +53,8 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   uint32_t overlayIndex() noexcept;
   void start(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept;
   void stop() noexcept;
+  // The composition context replaced a lost rendering device: redraw every view in this tree.
+  void OnRenderingDeviceReplaced() noexcept;
 
   void ReactNativeIsland(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept;
   winrt::Microsoft::ReactNative::ReactNativeIsland ReactNativeIsland() noexcept;
@@ -105,6 +107,7 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView{nullptr};
   winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::PortalComponentView> m_wkPortal{nullptr};
   bool m_visualAddedToIsland{false};
+  winrt::event_token m_renderingDeviceReplacedToken;
   bool m_useKeyboardForProgrammaticFocus{true};
 
   ::Microsoft::ReactNative::ReactTaggedView m_viewWithTextSelection{

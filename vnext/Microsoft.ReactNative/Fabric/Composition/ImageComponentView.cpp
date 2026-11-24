@@ -221,6 +221,7 @@ winrt::Microsoft::ReactNative::ViewProps ImageComponentView::ViewPropsInner() no
 }
 
 void ImageComponentView::OnRenderingDeviceLost() noexcept {
+  Super::OnRenderingDeviceLost();
   m_drawingSurface = nullptr;
   ensureDrawingSurface();
 }

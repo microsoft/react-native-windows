@@ -23,6 +23,8 @@
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Composition.interactions.h>
 #include <winrt/Microsoft.UI.Composition.interop.h>
+#include <winrt/Microsoft.UI.Dispatching.h>
+#include <winrt/Windows.System.h>
 
 namespace Microsoft::ReactNative::Composition::Experimental {
 
@@ -92,6 +94,8 @@ struct CompositionTypeTraits<WindowsTypeTag> {
   using ICompositionDrawingSurfaceInterop = ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop;
   using ICompositorInterop = ABI::Windows::UI::Composition::ICompositorInterop;
   using ICompositionGraphicsDeviceInterop = ABI::Windows::UI::Composition::ICompositionGraphicsDeviceInterop;
+  using DispatcherQueue = winrt::Windows::System::DispatcherQueue;
+  using DispatcherQueueTimer = winrt::Windows::System::DispatcherQueueTimer;
 
   using IInnerCompositionCompositor = IWindowsCompositionCompositor;
   using IInnerCompositionDropShadow = IWindowsCompositionDropShadow;
@@ -166,6 +170,8 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
   using ICompositionDrawingSurfaceInterop = winrt::Microsoft::UI::Composition::ICompositionDrawingSurfaceInterop;
   using ICompositorInterop = winrt::Microsoft::UI::Composition::ICompositorInterop;
   using ICompositionGraphicsDeviceInterop = winrt::Microsoft::UI::Composition::ICompositionGraphicsDeviceInterop;
+  using DispatcherQueue = winrt::Microsoft::UI::Dispatching::DispatcherQueue;
+  using DispatcherQueueTimer = winrt::Microsoft::UI::Dispatching::DispatcherQueueTimer;
 
   using IInnerCompositionCompositor = IMicrosoftCompositionCompositor;
   using IInnerCompositionDropShadow = IMicrosoftCompositionDropShadow;
@@ -2106,6 +2112,21 @@ struct CompContext : winrt::implements<
                          ICompositionContextInterop> {
   CompContext(typename TTypeRedirects::Compositor const &compositor) : m_compositor(compositor) {}
 
+  ~CompContext() noexcept {
+    if (m_deviceRetryTimer) {
+      m_deviceRetryTimer.Stop();
+    }
+  }
+
+  winrt::event_token RenderingDeviceReplaced(
+      winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const &handler) {
+    return m_renderingDeviceReplacedEvent.add(handler);
+  }
+
+  void RenderingDeviceReplaced(winrt::event_token const &token) noexcept {
+    m_renderingDeviceReplacedEvent.remove(token);
+  }
+
   winrt::com_ptr<ID2D1Factory1> D2DFactory() noexcept {
     if (!m_d2dFactory) {
       // Initialize Direct2D resources.
@@ -2173,7 +2194,7 @@ struct CompContext : winrt::implements<
   // the cached devices would keep failing after the adapter is back. If the cached device was
   // removed and a new one can be created, switch to it and return true. The existing graphics
   // device is pointed at the new D2D device, so surfaces created before the loss can be drawn to
-  // again. Their old content is gone, and nothing here redraws them.
+  // again. Their old content is gone; RenderingDeviceReplaced tells the root views to redraw.
   bool ReplaceRemovedDevice() noexcept {
     if (!m_d3dDevice || SUCCEEDED(m_d3dDevice->GetDeviceRemovedReason())) {
       return false;
@@ -2203,6 +2224,92 @@ struct CompContext : winrt::implements<
     m_d3dDevice = std::move(d3dDevice);
     m_d2dDevice = std::move(d2dDevice);
     return true;
+  }
+
+  bool IsDeviceUsable() noexcept {
+    return m_d3dDevice && SUCCEEDED(m_d3dDevice->GetDeviceRemovedReason());
+  }
+
+  // Called when a drawing surface couldn't be created. Returns true when the removed device was
+  // replaced, so creating the surface is worth one more try.
+  bool OnDrawingSurfaceError() noexcept {
+    if (IsDeviceUsable()) {
+      // Not a device problem (bad size, out of memory), so there is nothing to wait for.
+      return false;
+    }
+    m_deviceLost = true;
+    if (ReplaceRemovedDevice()) {
+      // Everything drawn before the loss is blank now. The views are told from the timer, not from
+      // inside whichever view is drawing right now.
+      m_deviceRetryAttempts = 0;
+      ScheduleDeviceRetry();
+      return true;
+    }
+    ScheduleDeviceRetry();
+    return false;
+  }
+
+  void OnDrawingSurfaceCreated() noexcept {
+    if (m_deviceLost && !m_deviceRetryTimer) {
+      // The retries ran out while the device was gone, and it is back now. Views that failed to draw
+      // in the meantime are still waiting to be told.
+      m_deviceRetryAttempts = 0;
+      ScheduleDeviceRetry();
+    }
+  }
+
+  // A lost device (display change, remote session, driver reset) usually comes back within seconds.
+  // One timer for the whole context waits for it with a growing delay (250 ms, 500 ms, ... about 14 s
+  // over 10 attempts), then RenderingDeviceReplaced tells every root view to redraw its tree.
+  static constexpr uint8_t kMaxDeviceRetries = 10;
+
+  void ScheduleDeviceRetry() noexcept {
+    if (m_deviceRetryTimer || m_deviceRetryAttempts >= kMaxDeviceRetries) {
+      return;
+    }
+    try {
+      auto queue = TTypeRedirects::DispatcherQueue::GetForCurrentThread();
+      if (!queue) {
+        return;
+      }
+      auto timer = queue.CreateTimer();
+      ++m_deviceRetryAttempts;
+      timer.IsRepeating(false);
+      timer.Interval(std::chrono::milliseconds(250 * m_deviceRetryAttempts));
+      timer.Tick([wkThis = this->get_weak()](
+                     typename TTypeRedirects::DispatcherQueueTimer const &,
+                     winrt::Windows::Foundation::IInspectable const &) {
+        if (auto strongThis = wkThis.get()) {
+          strongThis->OnDeviceRetryTick();
+        }
+      });
+      timer.Start();
+      m_deviceRetryTimer = std::move(timer);
+    } catch (winrt::hresult_error const &) {
+    }
+  }
+
+  void OnDeviceRetryTick() noexcept {
+    // Hold the timer while its own Tick runs; clearing the member lets a failed redraw schedule the next one.
+    auto timer = std::exchange(m_deviceRetryTimer, nullptr);
+
+    bool deviceUsable = m_d3dDevice ? (IsDeviceUsable() || ReplaceRemovedDevice()) : (D3DDevice() != nullptr);
+    if (!deviceUsable) {
+      ScheduleDeviceRetry();
+      return;
+    }
+
+    m_deviceLost = false;
+    try {
+      m_renderingDeviceReplacedEvent(*this, nullptr);
+    } catch (winrt::hresult_error const &) {
+    }
+
+    // The handlers redraw before returning. If the device was lost again while they did, a new retry
+    // is pending and keeps counting against the same budget.
+    if (!m_deviceRetryTimer) {
+      m_deviceRetryAttempts = 0;
+    }
   }
 
   // Throws when a device can't be created. Only call where the exception is caught.
@@ -2258,6 +2365,11 @@ struct CompContext : winrt::implements<
   winrt::com_ptr<ID3D11Device> m_d3dDevice;
   winrt::com_ptr<ID2D1Device> m_d2dDevice;
   typename TTypeRedirects::CompositionGraphicsDevice m_compositionGraphicsDevice{nullptr};
+  typename TTypeRedirects::DispatcherQueueTimer m_deviceRetryTimer{nullptr};
+  uint8_t m_deviceRetryAttempts{0};
+  bool m_deviceLost{false};
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable>>
+      m_renderingDeviceReplacedEvent;
 };
 
 winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual
@@ -2299,13 +2411,16 @@ CompContext<WindowsTypeRedirects>::CreateDrawingSurfaceBrush(
   // being reset (display change, remote session, driver reset). This function is noexcept, so an
   // escaping exception terminates the process. Return null instead; callers skip drawing and the next
   // layout or redraw creates the surface again.
-  // If the failure was a removed device, replace it and try once more on the new one.
+  // If the failure was a removed device, replace it and try once more on the new one. If it can't be
+  // replaced yet, OnDrawingSurfaceError starts the retry that ends in RenderingDeviceReplaced.
   for (int attempt = 0; attempt < 2; ++attempt) {
     try {
-      return winrt::make<Composition::Experimental::WindowsCompDrawingSurfaceBrush>(
+      auto brush = winrt::make<Composition::Experimental::WindowsCompDrawingSurfaceBrush>(
           m_compositor, CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode));
+      OnDrawingSurfaceCreated();
+      return brush;
     } catch (winrt::hresult_error const &) {
-      if (attempt > 0 || !ReplaceRemovedDevice()) {
+      if (attempt > 0 || !OnDrawingSurfaceError()) {
         break;
       }
     }
@@ -2383,14 +2498,16 @@ CompContext<MicrosoftTypeRedirects>::CreateDrawingSurfaceBrush(
   // CreateDrawingSurface throw, which would terminate the process from this noexcept function.
   for (int attempt = 0; attempt < 2; ++attempt) {
     try {
-      return winrt::make<Composition::Experimental::MicrosoftCompDrawingSurfaceBrush>(
+      auto brush = winrt::make<Composition::Experimental::MicrosoftCompDrawingSurfaceBrush>(
           m_compositor,
           CompositionGraphicsDevice().CreateDrawingSurface(
               surfaceSize,
               static_cast<winrt::Microsoft::Graphics::DirectX::DirectXPixelFormat>(pixelFormat),
               static_cast<winrt::Microsoft::Graphics::DirectX::DirectXAlphaMode>(alphaMode)));
+      OnDrawingSurfaceCreated();
+      return brush;
     } catch (winrt::hresult_error const &) {
-      if (attempt > 0 || !ReplaceRemovedDevice()) {
+      if (attempt > 0 || !OnDrawingSurfaceError()) {
         break;
       }
     }
