@@ -140,18 +140,6 @@ struct ComponentView : public ComponentViewT<
       facebook::react::Point &ptContent,
       facebook::react::Point &localPt) const noexcept;
 
-  // CreateDrawingSurfaceBrush returns null while the graphics device is lost, and nothing redraws a
-  // view that isn't otherwise updating. A view that got no surface calls scheduleDrawingSurfaceRetry,
-  // which calls retryDrawingSurfaces on a UI timer with a growing delay, for a bounded number of attempts.
-  void scheduleDrawingSurfaceRetry() noexcept;
-  // Stops a pending retry and restores the retry budget.
-  void cancelDrawingSurfaceRetry() noexcept;
-  // Restores the retry budget without touching a pending retry. Call when new work arrives from
-  // outside the retry timer (mount update, theme change, new image).
-  void resetDrawingSurfaceRetryBudget() noexcept;
-  // Redoes the drawing that failed. Overrides must call the base, which redraws borders.
-  virtual void retryDrawingSurfaces() noexcept;
-
   // Most access should be through EnsureUIAProvider, instead of direct access to this.
   winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>
       m_innerAutomationProvider;
@@ -162,7 +150,6 @@ struct ComponentView : public ComponentViewT<
 
  private:
   void updateFocusLayoutMetrics() noexcept;
-  void finalizeBorderUpdates() noexcept;
   void updateClippingPath(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
@@ -192,8 +179,6 @@ struct ComponentView : public ComponentViewT<
   std::shared_ptr<BorderPrimitive> m_borderPrimitive;
   std::shared_ptr<BorderPrimitive> m_outlinePrimitive;
   std::unique_ptr<FocusPrimitive> m_focusPrimitive{nullptr};
-  winrt::Microsoft::ReactNative::ITimer m_drawingSurfaceRetryTimer{nullptr};
-  uint8_t m_drawingSurfaceRetryAttempts{0};
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_outerVisual{nullptr};
   winrt::event<winrt::Windows::Foundation::EventHandler<winrt::IInspectable>> m_themeChangedEvent;
 };

@@ -787,7 +787,7 @@ bool BorderPrimitive::finalize(
   }
   if (drawingSurfaceFailed) {
     // A layer got no drawing surface (graphics device lost). Keep the border marked so the next
-    // finalize draws it again, and report it so the owning view schedules that finalize.
+    // finalize draws it again.
     m_needsUpdate = true;
     return false;
   }

@@ -95,7 +95,6 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
   void setStateAndResubscribeImageResponseObserver(
       facebook::react::ImageShadowNode::ConcreteState::Shared const &state) noexcept;
   bool themeEffectsImage() const noexcept;
-  void retryDrawingSurfaces() noexcept override;
 
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface;
   std::shared_ptr<ImageResponseImage> m_imageResponseImage;

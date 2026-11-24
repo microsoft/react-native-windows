@@ -131,7 +131,6 @@ void ImageComponentView::didReceiveImage(const std::shared_ptr<ImageResponseImag
 
   m_imageResponseImage = imageResponseImage;
   m_requiresImageRedraw = true;
-  resetDrawingSurfaceRetryBudget();
   ensureDrawingSurface();
 }
 
@@ -202,7 +201,6 @@ void ImageComponentView::setStateAndResubscribeImageResponseObserver(
 }
 
 void ImageComponentView::prepareForRecycle() noexcept {
-  cancelDrawingSurfaceRetry();
   setStateAndResubscribeImageResponseObserver(nullptr);
 }
 
@@ -227,11 +225,6 @@ void ImageComponentView::OnRenderingDeviceLost() noexcept {
   ensureDrawingSurface();
 }
 
-void ImageComponentView::retryDrawingSurfaces() noexcept {
-  Super::retryDrawingSurfaces();
-  ensureDrawingSurface();
-}
-
 bool ImageComponentView::themeEffectsImage() const noexcept {
   return viewProps()->backgroundColor ||
       isColorMeaningful(imageProps().tintColor.value_or(facebook::react::SharedColor{}));
@@ -240,7 +233,6 @@ bool ImageComponentView::themeEffectsImage() const noexcept {
 void ImageComponentView::onThemeChanged() noexcept {
   if (themeEffectsImage()) {
     m_drawingSurface = nullptr;
-    resetDrawingSurfaceRetryBudget();
     ensureDrawingSurface();
   }
   Super::onThemeChanged();
@@ -287,16 +279,13 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
     if (!m_drawingSurface) {
-      // The graphics device is lost. Nothing else re-runs this for an image once its response has
-      // arrived (no layout hook, and OnRenderingDeviceLost is never called), so retry on a timer.
-      scheduleDrawingSurfaceRetry();
+      // The graphics device is lost. The surface is created again the next time this runs.
       return;
     }
 
     if (!DrawImage()) {
-      // Don't keep or show a surface that was never drawn; the retry starts over with a new one.
+      // Don't keep or show a surface that was never drawn; the next call starts over with a new one.
       m_drawingSurface = nullptr;
-      scheduleDrawingSurfaceRetry();
       return;
     }
 
@@ -334,19 +323,13 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
 
     Visual().as<Experimental::ISpriteVisual>().Brush(m_drawingSurface);
   } else if (m_imageResponseImage->m_brushFactory) {
-    auto brush = m_imageResponseImage->m_brushFactory(m_reactContext.Handle(), m_compContext);
-    Visual().as<Experimental::ISpriteVisual>().Brush(brush);
-    if (!brush) {
-      // The factory draws into its own drawing surface (SVG data uris, custom image providers) and
-      // returns null when it can't get one, so it needs the same retry as the bitmap path.
-      scheduleDrawingSurfaceRetry();
-    }
+    Visual().as<Experimental::ISpriteVisual>().Brush(
+        m_imageResponseImage->m_brushFactory(m_reactContext.Handle(), m_compContext));
   } else if (m_requiresImageRedraw) {
     m_requiresImageRedraw = false;
     if (!DrawImage()) {
-      // The surface is blank now. Drop it so the retry creates and draws a new one.
+      // The surface is blank now. Drop it so the next call creates and draws a new one.
       m_drawingSurface = nullptr;
-      scheduleDrawingSurfaceRetry();
     }
   }
 }
