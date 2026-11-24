@@ -147,6 +147,10 @@ jobs:
             # App Package publish moved to templateContext.outputs (1ES compliance)
 
           templateContext:
+            sdl:
+              codeql:
+                compiled:
+                  enabled: false
             outputs:
             - ${{ if eq(matrix.UploadAppx, true) }}:
               - output: pipelineArtifact

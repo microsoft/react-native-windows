@@ -164,6 +164,11 @@ Replace the patch with an upstream release once available and validated.
 The Office template runs SDL (CredScan, BinSkim, CodeQL, Component Governance,
 ESLint). PREfast, SpotBugs, and Bandit are disabled (no actionable findings for
 this repo). `guardian/sdl/.gdnsuppress` is an **empty** suppression set.
+In `build-template.yml`, compiled-language CodeQL (C++/C#) tracing runs only in
+the Desktop and Universal jobs that build shipped binaries, because tracing slows
+native builds about 3x on CodeQL cadence runs. Every other job sets
+`templateContext.sdl.codeql.compiled.enabled: false`; new non-shipping jobs
+should do the same.
 Dependency remediations, including root `package.json` resolutions, do not by
 themselves establish scanner clearance; track the corresponding CG alerts separately.
 

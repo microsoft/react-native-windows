@@ -110,7 +110,7 @@ extends:
           displayName: Setup
           variables: [template: .ado/variables/shared.yml@self]
           pool: ${{ parameters.AgentPool.Medium }}
-          timeoutInMinutes: 60 # CodeQL requires 3x usual build timeout
+          timeoutInMinutes: 60
           steps:
           # 1. Full checkout (needed for beachball bump on developer builds;
           #    harmless ~1 min overhead on release builds where bump is skipped)
@@ -189,8 +189,11 @@ extends:
 
           templateContext:
             sdl:
+              # Only shipping Desktop/Universal builds need compiled tracing;
+              # tracing other native builds adds ~3x build time.
               codeql:
-                enabled: false
+                compiled:
+                  enabled: false
             outputs:
               - output: pipelineArtifact
                 displayName: 'Publish version variables'
@@ -210,7 +213,7 @@ extends:
           displayName: Create NPM packages
           variables: [template: .ado/variables/shared.yml@self]
           pool: ${{ parameters.AgentPool.Medium }}
-          timeoutInMinutes: 120 # CodeQL requires 3x usual build timeout
+          timeoutInMinutes: 120
           cancelTimeoutInMinutes: 5
           steps:
           - template: .ado/templates/checkout-shallow.yml@self
@@ -227,6 +230,10 @@ extends:
             displayName: Show created npm packages
 
           templateContext:
+            sdl:
+              codeql:
+                compiled:
+                  enabled: false
             outputs:
               - output: pipelineArtifact
                 displayName: 'Publish npm pack artifacts'
@@ -475,6 +482,9 @@ extends:
 
           templateContext:
             sdl:
+              codeql:
+                compiled:
+                  enabled: false
               binskim:
                 analyzeTargetGlob: '$(System.DefaultWorkingDirectory)\NugetRoot\**\Microsoft.ReactNative\Microsoft.ReactNative.dll;$(System.DefaultWorkingDirectory)\NugetRoot\**\React.Windows.Desktop.DLL\react-native-win32.dll'
             outputs:
