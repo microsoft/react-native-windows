@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 19 Nov 2026 22:06:43 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 24 Nov 2026 18:11:37 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1067
+
+Tue, 24 Nov 2026 18:11:37 GMT
+
+### Changes
+
+- Apply origin policy checks when a same-origin request is redirected to another origin (anuagra@microsoft.com)
+- Export JS helpers to override TextInput component (30809111+acoates-ms@users.noreply.github.com)
+- Align custom TextInput helper declarations with current autoComplete and textAlign props (223556219+Copilot@users.noreply.github.com)
+- Preserve Windows TouchableHighlight accessibility states and align disabled-state precedence with Pressability (anuagra@microsoft.com)
+- Fabric: mount child visuals above a View's background visual, so children mounted after the background exists are no longer drawn underneath it (27441618+FaithfulAudio@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.298
+- Bump @react-native-windows/codegen to v0.0.0-canary.136
+- Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.5
+- Bump react-native-platform-override to v0.0.0-canary.1026
 
 ## 0.0.0-canary.1066
 

@@ -2,6 +2,39 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2026 18:11:37 GMT",
+      "version": "0.0.0-canary.1026",
+      "tag": "react-native-platform-override_v0.0.0-canary.1026",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "223556219+Copilot@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "d1f9d2de93b602e899a643300f3f50f64a9ec22a",
+            "comment": "Support directory-relative exclusion globs for directory copy overrides across creation, validation, hashing, and upgrades"
+          },
+          {
+            "author": "223556219+Copilot@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "d1f9d2de93b602e899a643300f3f50f64a9ec22a",
+            "comment": "Force checkout of fetched React Native versions over stale files in the override cache"
+          },
+          {
+            "author": "223556219+Copilot@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "d1f9d2de93b602e899a643300f3f50f64a9ec22a",
+            "comment": "Include root and workspace override manifests when validating or upgrading from a workspace root"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.101",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Nov 2026 19:50:01 GMT",
       "version": "0.0.0-canary.1025",
       "tag": "react-native-platform-override_v0.0.0-canary.1025",

@@ -1,8 +1,19 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Wed, 04 Nov 2026 19:50:01 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 24 Nov 2026 18:11:37 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.1026
+
+Tue, 24 Nov 2026 18:11:37 GMT
+
+### Changes
+
+- Support directory-relative exclusion globs for directory copy overrides across creation, validation, hashing, and upgrades (223556219+Copilot@users.noreply.github.com)
+- Force checkout of fetched React Native versions over stale files in the override cache (223556219+Copilot@users.noreply.github.com)
+- Include root and workspace override manifests when validating or upgrading from a workspace root (223556219+Copilot@users.noreply.github.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.101
 
 ## 0.0.0-canary.1025
 

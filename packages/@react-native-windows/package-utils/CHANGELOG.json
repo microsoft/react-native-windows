@@ -2,6 +2,27 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2026 18:11:38 GMT",
+      "version": "0.0.0-canary.101",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.101",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "d1f9d2de93b602e899a643300f3f50f64a9ec22a",
+            "comment": "Update to TypeScript 6"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.104",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Nov 2026 19:50:01 GMT",
       "version": "0.0.0-canary.100",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.100",

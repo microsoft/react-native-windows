@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 24 Nov 2026 18:11:37 GMT",
+      "version": "0.0.0-canary.1067",
+      "tag": "react-native-windows_v0.0.0-canary.1067",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d1f9d2de93b602e899a643300f3f50f64a9ec22a",
+            "comment": "Apply origin policy checks when a same-origin request is redirected to another origin"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d1f9d2de93b602e899a643300f3f50f64a9ec22a",
+            "comment": "Export JS helpers to override TextInput component"
+          },
+          {
+            "author": "223556219+Copilot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d1f9d2de93b602e899a643300f3f50f64a9ec22a",
+            "comment": "Align custom TextInput helper declarations with current autoComplete and textAlign props"
+          },
+          {
+            "author": "anuagra@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d1f9d2de93b602e899a643300f3f50f64a9ec22a",
+            "comment": "Preserve Windows TouchableHighlight accessibility states and align disabled-state precedence with Pressability"
+          },
+          {
+            "author": "27441618+FaithfulAudio@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d1f9d2de93b602e899a643300f3f50f64a9ec22a",
+            "comment": "Fabric: mount child visuals above a View's background visual, so children mounted after the background exists are no longer drawn underneath it"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.298",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.136",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/find-dotnet-tools to v0.0.0-canary.5",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v0.0.0-canary.1026",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 19 Nov 2026 22:06:43 GMT",
       "version": "0.0.0-canary.1066",
       "tag": "react-native-windows_v0.0.0-canary.1066",

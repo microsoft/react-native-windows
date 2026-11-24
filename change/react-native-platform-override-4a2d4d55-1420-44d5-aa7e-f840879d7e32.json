@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Include root and workspace override manifests when validating or upgrading from a workspace root",
-  "packageName": "react-native-platform-override",
-  "email": "223556219+Copilot@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

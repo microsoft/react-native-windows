@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Apply origin policy checks when a same-origin request is redirected to another origin",
-  "packageName": "react-native-windows",
-  "email": "anuagra@microsoft.com",
-  "dependentChangeType": "patch"
-}
