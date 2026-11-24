@@ -1,5 +1,8 @@
 #
 parameters:
+  - name: nativeArm64Tests
+    type: boolean
+    default: false
   - name: buildEnvironment
     type: string
     default : PullRequest
@@ -31,6 +34,7 @@ parameters:
 
 jobs:
   - ${{ each matrix in parameters.buildMatrix }}:
+    - ${{ if or(parameters.nativeArm64Tests, ne(matrix.BuildPlatform, 'ARM64')) }}:
         - job: E2ETestFabric${{ matrix.Name }}
           displayName: E2E Test App Fabric ${{ matrix.Name }}
 

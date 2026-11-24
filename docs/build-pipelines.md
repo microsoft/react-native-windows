@@ -47,7 +47,7 @@ Runs in parallel for each platform/configuration in the build matrix:
 - **NPM Pack** — creates npm tarballs
 - **NuGet Pack** — downloads all build artifacts, packs NuGet packages, ESRP signs them (CI)
 
-Each build job uses `*-single.yml` step templates that build the full `.sln`, run tests, and stage shipping artifacts — we test what we ship.
+Each build job uses `*-single.yml` step templates that build the full `.sln`, run native tests except for PR ARM64/ARM64EC cross-builds, and stage shipping artifacts.
 
 ### Tests
 
@@ -63,8 +63,8 @@ Depends on Build (needs the NuGet packages). Runs `react-native init` + `react-n
 
 ## Agent Pools
 
-On `main`, PR and CI use `windows-2025-1espt` for Windows x64 agents and
-`windows-2025-1espt-arm64` for Windows ARM64 agents. The image definitions live in
+On `main`, x64/x86 jobs in PR and CI use the `windows-2025-1espt` image.
+CI native ARM64 jobs use the shared `windows-2025-1espt-arm64` pool. The image definitions live in
 [`microsoft/v8-jsi`'s `.ado/image` folder](https://github.com/microsoft/v8-jsi/tree/main/.ado/image).
 
 | Pool | Architecture | Used By |
@@ -73,7 +73,10 @@ On `main`, PR and CI use `windows-2025-1espt` for Windows x64 agents and
 | `windows-2025-1espt-arm64` | ARM64 | CI: ARM64 native builds and tests |
 | `rnw-pool-4` | x64 | PR: most jobs (default) |
 | `rnw-pool-8` | x64 | PR: native builds |
-| `rnw-pool-8-arm64` | ARM64 | PR: ARM64 native builds and tests |
+
+CI runs Universal ARM64, Desktop ARM64EC, and ARM64 Hermes E2E tests natively.
+PR has no ARM64 pool: its ARM64/ARM64EC builds remain cross-builds on x64
+without native ARM64 tests, and its Hermes E2E matrix includes only x64/x86.
 
 See [Agent pools](../.ado/README.md#agent-pools) for pool mappings, ARM64 job
 requirements, cross-build exceptions, and stable-branch images.

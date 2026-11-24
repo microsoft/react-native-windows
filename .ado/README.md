@@ -80,20 +80,20 @@ All repository resources pin `ref: refs/tags/release`.
 
 On `main`, PR and CI use Windows images defined in
 [`microsoft/v8-jsi`'s `.ado/image` folder](https://github.com/microsoft/v8-jsi/tree/main/.ado/image):
-`windows-2025-1espt` for x64 and `windows-2025-1espt-arm64` for ARM64.
+`windows-2025-1espt` for x64/x86 jobs in both pipelines and
+`windows-2025-1espt-arm64` for CI native ARM64 jobs.
 
 - **CI:** `fabric-internal-pool-large` (ISS) for x64, with the image selected via
   `demands: ImageOverride`; `windows-2025-1espt-arm64` for ARM64.
 - **PR:** public `rnw-pool-4` (default) and `rnw-pool-8` (native builds) for x64,
-  with the image selected via `demands: ImageOverride`; `rnw-pool-8-arm64` for ARM64.
+  with the image selected via `demands: ImageOverride`. PR has no ARM64 pool;
+  ARM64/ARM64EC builds remain cross-builds on x64 without native ARM64 tests.
 
-ARM64 pools declare `os: windows` and `hostArchitecture: arm64`. Jobs on these
-pools run `templates/ensure-node10-shim.yml` before their build and test steps.
-ARM64 pools running E2E tests must allow interactive sessions because WinAppDriver
-requires an interactive desktop.
-Universal ARM64 native suites, Desktop ARM64EC unit and integration tests, and
-ARM64 Hermes E2E tests run on ARM64 agents. The CLI ARM64 job remains a cross-build
-on the default x64 pool.
+The shared CI ARM64 pool declares `os: windows` and `hostArchitecture: arm64`.
+Jobs on this pool run `templates/ensure-node10-shim.yml` before their build and test steps.
+CI runs Universal ARM64 native suites, Desktop ARM64EC unit and integration tests,
+and ARM64 Hermes E2E tests natively. PR runs only x64/x86 Hermes E2E tests. The CLI
+ARM64 job remains a cross-build on the default x64 pool.
 
 RNW's own [`.ado/image` recipes](./image/) remain for stable branches.
 

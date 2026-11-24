@@ -9,6 +9,9 @@
 #
 
 parameters:
+  - name: nativeArm64Tests
+    type: boolean
+    default: false
   - name: buildPlatform
     type: string
   - name: buildConfiguration
@@ -23,7 +26,7 @@ parameters:
 steps:
   - template: ../templates/checkout-shallow.yml
 
-  - ${{ if eq(parameters.buildPlatform, 'ARM64EC') }}:
+  - ${{ if and(parameters.nativeArm64Tests, eq(parameters.buildPlatform, 'ARM64EC')) }}:
     - template: ../templates/ensure-node10-shim.yml
 
   # Set up IIS for integration tests
@@ -84,35 +87,36 @@ steps:
   # --- Tests ---
   - template: ../templates/discover-google-test-adapter.yml
 
-  - ${{ if eq(parameters.buildPlatform, 'ARM64EC') }}:
+  - ${{ if and(parameters.nativeArm64Tests, eq(parameters.buildPlatform, 'ARM64EC')) }}:
     - pwsh: |
         & "$(Build.SourcesDirectory)\.ado\scripts\Assert-PeArchitecture.ps1" -Expected ARM64EC `
           -Path "$(Build.SourcesDirectory)\vnext\target\ARM64EC\${{ parameters.buildConfiguration }}\React.Windows.Desktop.UnitTests\React.Windows.Desktop.UnitTests.dll"
       displayName: Check Desktop Unit Tests are ARM64EC
 
-  - task: VSTest@3
-    displayName: Run Desktop Unit Tests
-    timeoutInMinutes: 5 # Set smaller timeout, due to hangs
-    inputs:
-      testSelector: testAssemblies
-      testAssemblyVer2: |
-        React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
-      # Bug #8000: Tracks fixing the tests
-      # ReactCommon.UnitTests/ReactCommon.UnitTests.exe
-      pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-      searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
-      testFiltercriteria: $(Desktop.UnitTests.Filter)
-      runTestsInIsolation: true
-      platform: ${{ parameters.buildPlatform }}
-      configuration: ${{ parameters.buildConfiguration }}
-      publishRunAttachments: true
-      collectDumpOn: onAbortOnly
-      vsTestVersion: latest
-      vstestLocation: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
-      failOnMinTestsNotRun: true
+  - ${{ if or(parameters.nativeArm64Tests, ne(parameters.buildPlatform, 'ARM64EC')) }}:
+    - task: VSTest@3
+      displayName: Run Desktop Unit Tests
+      timeoutInMinutes: 5 # Set smaller timeout, due to hangs
+      inputs:
+        testSelector: testAssemblies
+        testAssemblyVer2: |
+          React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
+        # Bug #8000: Tracks fixing the tests
+        # ReactCommon.UnitTests/ReactCommon.UnitTests.exe
+        pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+        searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+        testFiltercriteria: $(Desktop.UnitTests.Filter)
+        runTestsInIsolation: true
+        platform: ${{ parameters.buildPlatform }}
+        configuration: ${{ parameters.buildConfiguration }}
+        publishRunAttachments: true
+        collectDumpOn: onAbortOnly
+        vsTestVersion: latest
+        vstestLocation: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe
+        failOnMinTestsNotRun: true
 
     # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
-  - ${{ if and(eq(parameters.buildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true)) }}:
+  - ${{ if and(eq(parameters.buildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true), or(parameters.nativeArm64Tests, ne(parameters.buildPlatform, 'ARM64EC'))) }}:
     - ${{ if eq(parameters.buildPlatform, 'ARM64EC') }}:
       - pwsh: |
           & "$(Build.SourcesDirectory)\.ado\scripts\Assert-PeArchitecture.ps1" -Expected ARM64EC `
