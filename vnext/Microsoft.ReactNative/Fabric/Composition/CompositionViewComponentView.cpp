@@ -85,24 +85,29 @@ void ComponentView::onThemeChanged() noexcept {
   if (m_backgroundVisual)
     m_backgroundVisual.Brush(theme()->Brush(*viewProps()->backgroundColor));
 
+  resetDrawingSurfaceRetryBudget();
+  bool bordersDrawn = true;
   if (m_borderPrimitive) {
-    m_borderPrimitive->onThemeChanged(
+    bordersDrawn &= m_borderPrimitive->onThemeChanged(
         m_layoutMetrics, BorderPrimitive::resolveAndAlignBorderMetrics(m_layoutMetrics, *viewProps()));
   }
   if (m_outlinePrimitive) {
-    m_outlinePrimitive->onThemeChanged(outlineLayoutMetrics(), outlineBorderMetrics());
+    bordersDrawn &= m_outlinePrimitive->onThemeChanged(outlineLayoutMetrics(), outlineBorderMetrics());
   }
   if (m_componentHostingFocusVisual) {
     if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive) {
       auto innerFocusMetrics = focusLayoutMetrics(true /*inner*/);
-      m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive->onThemeChanged(
+      bordersDrawn &= m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive->onThemeChanged(
           innerFocusMetrics, focusBorderMetrics(true /*inner*/, innerFocusMetrics));
     }
     if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive) {
       auto outerFocusMetrics = focusLayoutMetrics(true /*inner*/);
-      m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive->onThemeChanged(
+      bordersDrawn &= m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive->onThemeChanged(
           outerFocusMetrics, focusBorderMetrics(false /*inner*/, outerFocusMetrics));
     }
+  }
+  if (!bordersDrawn) {
+    scheduleDrawingSurfaceRetry();
   }
 
   if ((m_flags & ComponentViewFeatures::ShadowProps) == ComponentViewFeatures::ShadowProps) {
@@ -315,6 +320,18 @@ void ComponentView::FinalizeTransform(
 }
 
 void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
+  resetDrawingSurfaceRetryBudget();
+  finalizeBorderUpdates();
+
+  if (m_FinalizeTransform) {
+    FinalizeTransform(m_layoutMetrics, *viewProps());
+  }
+
+  base_type::FinalizeUpdates(updateMask);
+}
+
+void ComponentView::finalizeBorderUpdates() noexcept {
+  bool bordersDrawn = true;
   if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
     auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(m_layoutMetrics, *viewProps());
     if (!m_borderPrimitive && BorderPrimitive::requiresBorder(borderMetrics, theme())) {
@@ -322,7 +339,7 @@ void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentView
     }
 
     if (m_borderPrimitive) {
-      m_borderPrimitive->finalize(m_layoutMetrics, borderMetrics);
+      bordersDrawn &= m_borderPrimitive->finalize(m_layoutMetrics, borderMetrics);
     }
 
     auto outlineMetrics = outlineBorderMetrics();
@@ -339,28 +356,78 @@ void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentView
       m_outlinePrimitive->RootVisual().Offset({-offset, -offset, 0.0f});
       m_outlinePrimitive->RootVisual().RelativeSizeWithOffset({offset * 2, offset * 2}, {1.0f, 1.0f});
 
-      m_outlinePrimitive->finalize(outlineLayoutMetrics(), outlineMetrics);
+      bordersDrawn &= m_outlinePrimitive->finalize(outlineLayoutMetrics(), outlineMetrics);
     }
   }
 
   if (m_componentHostingFocusVisual) {
     if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive) {
       auto innerFocusMetrics = focusLayoutMetrics(true /*inner*/);
-      m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive->finalize(
+      bordersDrawn &= m_componentHostingFocusVisual->m_focusPrimitive->m_focusInnerPrimitive->finalize(
           innerFocusMetrics, focusBorderMetrics(true /*inner*/, innerFocusMetrics));
     }
     if (m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive) {
       auto outerFocusMetrics = focusLayoutMetrics(false /*inner*/);
-      m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive->finalize(
+      bordersDrawn &= m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive->finalize(
           outerFocusMetrics, focusBorderMetrics(false /*inner*/, outerFocusMetrics));
     }
   }
 
-  if (m_FinalizeTransform) {
-    FinalizeTransform(m_layoutMetrics, *viewProps());
+  if (!bordersDrawn) {
+    // Marking the border isn't enough: a view is only finalized again when it gets another mount
+    // update, so a static screen would keep the missing border after the device comes back.
+    scheduleDrawingSurfaceRetry();
   }
+}
 
-  base_type::FinalizeUpdates(updateMask);
+// A lost graphics device (display change, remote session, driver reset) usually comes back within
+// seconds. Retry with a growing delay (250 ms, 500 ms, ... about 14 s over 10 attempts), one timer at a
+// time, then stop until resetDrawingSurfaceRetryBudget or cancelDrawingSurfaceRetry restores the budget.
+static constexpr uint8_t kMaxDrawingSurfaceRetries = 10;
+
+void ComponentView::scheduleDrawingSurfaceRetry() noexcept {
+  if (m_drawingSurfaceRetryTimer || m_drawingSurfaceRetryAttempts >= kMaxDrawingSurfaceRetries) {
+    return;
+  }
+  ++m_drawingSurfaceRetryAttempts;
+  try {
+    m_drawingSurfaceRetryTimer = winrt::Microsoft::ReactNative::Timer::Create(m_reactContext.Properties().Handle());
+  } catch (winrt::hresult_error const &) {
+    m_drawingSurfaceRetryTimer = nullptr;
+    return;
+  }
+  m_drawingSurfaceRetryTimer.Interval(std::chrono::milliseconds(250 * m_drawingSurfaceRetryAttempts));
+  m_drawingSurfaceRetryTimer.Tick(
+      [wkThis = get_weak(), wkTimer = winrt::make_weak(m_drawingSurfaceRetryTimer)](
+          winrt::Windows::Foundation::IInspectable const &, winrt::Windows::Foundation::IInspectable const &) {
+        if (auto strongThis = wkThis.get()) {
+          // Hold the timer while its own Tick runs; clearing the member lets a failed retry schedule the next one.
+          auto timer = std::exchange(strongThis->m_drawingSurfaceRetryTimer, nullptr);
+          if (timer) {
+            timer.Stop();
+          }
+          strongThis->retryDrawingSurfaces();
+        } else if (auto timer = wkTimer.get()) {
+          timer.Stop();
+        }
+      });
+  m_drawingSurfaceRetryTimer.Start();
+}
+
+void ComponentView::cancelDrawingSurfaceRetry() noexcept {
+  if (m_drawingSurfaceRetryTimer) {
+    m_drawingSurfaceRetryTimer.Stop();
+    m_drawingSurfaceRetryTimer = nullptr;
+  }
+  m_drawingSurfaceRetryAttempts = 0;
+}
+
+void ComponentView::resetDrawingSurfaceRetryBudget() noexcept {
+  m_drawingSurfaceRetryAttempts = 0;
+}
+
+void ComponentView::retryDrawingSurfaces() noexcept {
+  finalizeBorderUpdates();
 }
 
 void ComponentView::onLostFocus(
@@ -781,11 +848,15 @@ void ComponentView::hostFocusVisual(bool show, winrt::com_ptr<ComponentView> vie
       }
       updateFocusLayoutMetrics();
       auto innerFocusMetrics = view->focusLayoutMetrics(true /*inner*/);
-      m_focusPrimitive->m_focusInnerPrimitive->finalize(
+      bool focusDrawn = m_focusPrimitive->m_focusInnerPrimitive->finalize(
           innerFocusMetrics, view->focusBorderMetrics(true /*inner*/, innerFocusMetrics));
       auto outerFocusMetrics = view->focusLayoutMetrics(false /*inner*/);
-      m_focusPrimitive->m_focusOuterPrimitive->finalize(
+      focusDrawn &= m_focusPrimitive->m_focusOuterPrimitive->finalize(
           outerFocusMetrics, view->focusBorderMetrics(false /*inner*/, outerFocusMetrics));
+      if (!focusDrawn) {
+        // The focused view finalizes the focus primitives it is shown in, so it owns the retry.
+        view->scheduleDrawingSurfaceRetry();
+      }
     } else if (!show && view->m_componentHostingFocusVisual && m_focusPrimitive) {
       m_focusPrimitive->m_focusVisualComponent = nullptr;
       m_focusPrimitive->m_focusVisual.IsVisible(false);
@@ -1527,7 +1598,9 @@ void ViewComponentView::updateChildrenClippingPath(
   }
 }
 
-void ViewComponentView::prepareForRecycle() noexcept {}
+void ViewComponentView::prepareForRecycle() noexcept {
+  cancelDrawingSurfaceRetry();
+}
 
 const facebook::react::SharedViewProps &ViewComponentView::viewProps() const noexcept {
   return m_props;

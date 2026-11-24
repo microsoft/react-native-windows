@@ -131,6 +131,7 @@ void ImageComponentView::didReceiveImage(const std::shared_ptr<ImageResponseImag
 
   m_imageResponseImage = imageResponseImage;
   m_requiresImageRedraw = true;
+  resetDrawingSurfaceRetryBudget();
   ensureDrawingSurface();
 }
 
@@ -202,7 +203,6 @@ void ImageComponentView::setStateAndResubscribeImageResponseObserver(
 
 void ImageComponentView::prepareForRecycle() noexcept {
   cancelDrawingSurfaceRetry();
-  m_drawingSurfaceRetryAttempts = 0;
   setStateAndResubscribeImageResponseObserver(nullptr);
 }
 
@@ -227,43 +227,9 @@ void ImageComponentView::OnRenderingDeviceLost() noexcept {
   ensureDrawingSurface();
 }
 
-// A lost graphics device (display change, remote session, driver reset) usually comes back within
-// seconds. Retry with a growing delay (250 ms, 500 ms, ... about 14 s over 10 attempts), one timer at a
-// time, then stop: a new image response, theme change or recycle starts over.
-static constexpr uint8_t kMaxDrawingSurfaceRetries = 10;
-
-void ImageComponentView::scheduleDrawingSurfaceRetry() noexcept {
-  if (m_drawingSurfaceRetryTimer || m_drawingSurfaceRetryAttempts >= kMaxDrawingSurfaceRetries) {
-    return;
-  }
-  ++m_drawingSurfaceRetryAttempts;
-  try {
-    m_drawingSurfaceRetryTimer = winrt::Microsoft::ReactNative::Timer::Create(m_reactContext.Properties().Handle());
-  } catch (winrt::hresult_error const &) {
-    m_drawingSurfaceRetryTimer = nullptr;
-    return;
-  }
-  m_drawingSurfaceRetryTimer.Interval(std::chrono::milliseconds(250 * m_drawingSurfaceRetryAttempts));
-  m_drawingSurfaceRetryTimer.Tick(
-      [wkThis = get_weak(), wkTimer = winrt::make_weak(m_drawingSurfaceRetryTimer)](
-          winrt::Windows::Foundation::IInspectable const &, winrt::Windows::Foundation::IInspectable const &) {
-        if (auto strongThis = wkThis.get()) {
-          // Hold the timer while its own Tick runs; cancel releases the member reference.
-          auto keepAlive = strongThis->m_drawingSurfaceRetryTimer;
-          strongThis->cancelDrawingSurfaceRetry();
-          strongThis->ensureDrawingSurface();
-        } else if (auto timer = wkTimer.get()) {
-          timer.Stop();
-        }
-      });
-  m_drawingSurfaceRetryTimer.Start();
-}
-
-void ImageComponentView::cancelDrawingSurfaceRetry() noexcept {
-  if (m_drawingSurfaceRetryTimer) {
-    m_drawingSurfaceRetryTimer.Stop();
-    m_drawingSurfaceRetryTimer = nullptr;
-  }
+void ImageComponentView::retryDrawingSurfaces() noexcept {
+  Super::retryDrawingSurfaces();
+  ensureDrawingSurface();
 }
 
 bool ImageComponentView::themeEffectsImage() const noexcept {
@@ -274,6 +240,7 @@ bool ImageComponentView::themeEffectsImage() const noexcept {
 void ImageComponentView::onThemeChanged() noexcept {
   if (themeEffectsImage()) {
     m_drawingSurface = nullptr;
+    resetDrawingSurfaceRetryBudget();
     ensureDrawingSurface();
   }
   Super::onThemeChanged();
@@ -325,8 +292,6 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
       scheduleDrawingSurfaceRetry();
       return;
     }
-    cancelDrawingSurfaceRetry();
-    m_drawingSurfaceRetryAttempts = 0;
 
     DrawImage();
 
@@ -364,8 +329,13 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
 
     Visual().as<Experimental::ISpriteVisual>().Brush(m_drawingSurface);
   } else if (m_imageResponseImage->m_brushFactory) {
-    Visual().as<Experimental::ISpriteVisual>().Brush(
-        m_imageResponseImage->m_brushFactory(m_reactContext.Handle(), m_compContext));
+    auto brush = m_imageResponseImage->m_brushFactory(m_reactContext.Handle(), m_compContext);
+    Visual().as<Experimental::ISpriteVisual>().Brush(brush);
+    if (!brush) {
+      // The factory draws into its own drawing surface (SVG data uris, custom image providers) and
+      // returns null when it can't get one, so it needs the same retry as the bitmap path.
+      scheduleDrawingSurfaceRetry();
+    }
   } else if (m_requiresImageRedraw) {
     m_requiresImageRedraw = false;
     DrawImage();

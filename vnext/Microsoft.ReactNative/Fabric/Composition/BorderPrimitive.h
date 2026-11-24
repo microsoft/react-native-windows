@@ -38,10 +38,12 @@ struct BorderPrimitive {
   void updateProps(
       const facebook::react::ViewProps &oldViewProps,
       const facebook::react::ViewProps &newViewProps) noexcept;
-  void finalize(
+  // Both return false when a border layer got no drawing surface (graphics device lost). The border
+  // stays marked for drawing, but nothing calls finalize again on its own, so the owner has to retry.
+  bool finalize(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::BorderMetrics &borderMetrics) noexcept;
-  void onThemeChanged(
+  bool onThemeChanged(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::BorderMetrics &borderMetrics) noexcept;
 

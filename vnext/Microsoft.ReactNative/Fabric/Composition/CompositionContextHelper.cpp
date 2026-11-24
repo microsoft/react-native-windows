@@ -2123,7 +2123,7 @@ struct CompContext : winrt::implements<
     D2DFactory().copy_to(outD2DFactory);
   }
 
-  winrt::com_ptr<ID3D11Device> D3DDevice() noexcept {
+  static winrt::com_ptr<ID3D11Device> CreateD3DDevice() noexcept {
     // This flag adds support for surfaces with a different color channel ordering than the API default.
     // You need it for compatibility with Direct2D.
     UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
@@ -2144,21 +2144,55 @@ struct CompContext : winrt::implements<
         D3D_FEATURE_LEVEL_9_3,
         D3D_FEATURE_LEVEL_9_2,
         D3D_FEATURE_LEVEL_9_1};
+    winrt::com_ptr<ID3D11Device> d3dDevice;
+    D3D11CreateDevice(
+        nullptr, // specify null to use the default adapter
+        D3D_DRIVER_TYPE_HARDWARE,
+        0,
+        creationFlags, // optionally set debug and Direct2D compatibility flags
+        featureLevels, // list of feature levels this app can support
+        ARRAYSIZE(featureLevels), // number of possible feature levels
+        D3D11_SDK_VERSION,
+        d3dDevice.put(), // returns the Direct3D device created
+        nullptr /*&m_featureLevel*/, // returns feature level of device created
+        nullptr /*&context*/ // returns the device immediate context
+    );
+    return d3dDevice;
+  }
+
+  winrt::com_ptr<ID3D11Device> D3DDevice() noexcept {
     if (!m_d3dDevice) {
-      D3D11CreateDevice(
-          nullptr, // specify null to use the default adapter
-          D3D_DRIVER_TYPE_HARDWARE,
-          0,
-          creationFlags, // optionally set debug and Direct2D compatibility flags
-          featureLevels, // list of feature levels this app can support
-          ARRAYSIZE(featureLevels), // number of possible feature levels
-          D3D11_SDK_VERSION,
-          m_d3dDevice.put(), // returns the Direct3D device created
-          nullptr /*&m_featureLevel*/, // returns feature level of device created
-          nullptr /*&context*/ // returns the device immediate context
-      );
+      m_d3dDevice = CreateD3DDevice();
     }
     return m_d3dDevice;
+  }
+
+  // A removed D3D device (driver reset, adapter change) never works again, so creating surfaces on
+  // the cached devices would keep failing after the adapter is back. If the cached device was
+  // removed and a new one can be created, switch to it and return true. The graphics device is
+  // dropped too and created again from the new D2D device on next use. Surfaces made on the old
+  // devices are not redrawn here.
+  bool ReplaceRemovedDevice() noexcept {
+    if (!m_d3dDevice || SUCCEEDED(m_d3dDevice->GetDeviceRemovedReason())) {
+      return false;
+    }
+
+    // Build the replacements before touching the members: creation fails while the adapter is still
+    // gone, and the accessors above assume device creation succeeded.
+    auto d3dDevice = CreateD3DDevice();
+    if (!d3dDevice) {
+      return false;
+    }
+    auto dxgiDevice = d3dDevice.try_as<IDXGIDevice>();
+    winrt::com_ptr<ID2D1Device> d2dDevice;
+    if (!dxgiDevice || FAILED(D2DFactory()->CreateDevice(dxgiDevice.get(), d2dDevice.put())) || !d2dDevice) {
+      return false;
+    }
+
+    m_d3dDevice = std::move(d3dDevice);
+    m_d2dDevice = std::move(d2dDevice);
+    m_compositionGraphicsDevice = nullptr;
+    return true;
   }
 
   winrt::com_ptr<ID2D1Device> D2DDevice() noexcept {
@@ -2248,12 +2282,18 @@ CompContext<WindowsTypeRedirects>::CreateDrawingSurfaceBrush(
   // CreateDrawingSurface throws when the graphics device is lost or being reset (display change,
   // remote session, driver reset). This function is noexcept, so an escaping exception terminates the
   // process. Return null instead; callers skip drawing and the next layout or redraw creates the surface again.
-  try {
-    return winrt::make<Composition::Experimental::WindowsCompDrawingSurfaceBrush>(
-        m_compositor, CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode));
-  } catch (winrt::hresult_error const &) {
-    return nullptr;
+  // If the failure was a removed device, replace it and try once more on the new one.
+  for (int attempt = 0; attempt < 2; ++attempt) {
+    try {
+      return winrt::make<Composition::Experimental::WindowsCompDrawingSurfaceBrush>(
+          m_compositor, CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode));
+    } catch (winrt::hresult_error const &) {
+      if (attempt > 0 || !ReplaceRemovedDevice()) {
+        break;
+      }
+    }
   }
+  return nullptr;
 }
 
 winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual
@@ -2324,16 +2364,21 @@ CompContext<MicrosoftTypeRedirects>::CreateDrawingSurfaceBrush(
     winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept {
   // See the WindowsTypeRedirects overload above: a lost or resetting graphics device makes
   // CreateDrawingSurface throw, which would terminate the process from this noexcept function.
-  try {
-    return winrt::make<Composition::Experimental::MicrosoftCompDrawingSurfaceBrush>(
-        m_compositor,
-        CompositionGraphicsDevice().CreateDrawingSurface(
-            surfaceSize,
-            static_cast<winrt::Microsoft::Graphics::DirectX::DirectXPixelFormat>(pixelFormat),
-            static_cast<winrt::Microsoft::Graphics::DirectX::DirectXAlphaMode>(alphaMode)));
-  } catch (winrt::hresult_error const &) {
-    return nullptr;
+  for (int attempt = 0; attempt < 2; ++attempt) {
+    try {
+      return winrt::make<Composition::Experimental::MicrosoftCompDrawingSurfaceBrush>(
+          m_compositor,
+          CompositionGraphicsDevice().CreateDrawingSurface(
+              surfaceSize,
+              static_cast<winrt::Microsoft::Graphics::DirectX::DirectXPixelFormat>(pixelFormat),
+              static_cast<winrt::Microsoft::Graphics::DirectX::DirectXAlphaMode>(alphaMode)));
+    } catch (winrt::hresult_error const &) {
+      if (attempt > 0 || !ReplaceRemovedDevice()) {
+        break;
+      }
+    }
   }
+  return nullptr;
 }
 
 winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual

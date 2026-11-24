@@ -760,16 +760,16 @@ void BorderPrimitive::markNeedsUpdate() noexcept {
   m_needsUpdate = true;
 }
 
-void BorderPrimitive::finalize(
+bool BorderPrimitive::finalize(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::BorderMetrics &borderMetrics) noexcept {
   if (!m_needsUpdate) {
-    return;
+    return true;
   }
 
   auto theme = m_outer->theme();
   if (!theme || theme->IsEmpty()) {
-    return;
+    return true;
   }
 
   m_needsUpdate = false;
@@ -786,16 +786,18 @@ void BorderPrimitive::finalize(
   }
   if (drawingSurfaceFailed) {
     // A layer got no drawing surface (graphics device lost). Keep the border marked so the next
-    // finalize draws it again, instead of leaving that edge missing until props, layout or theme change.
+    // finalize draws it again, and report it so the owning view schedules that finalize.
     m_needsUpdate = true;
+    return false;
   }
+  return true;
 }
 
-void BorderPrimitive::onThemeChanged(
+bool BorderPrimitive::onThemeChanged(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::BorderMetrics &borderMetrics) noexcept {
   m_needsUpdate = true;
-  finalize(layoutMetrics, borderMetrics);
+  return finalize(layoutMetrics, borderMetrics);
 }
 
 std::array<
