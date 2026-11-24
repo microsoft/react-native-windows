@@ -6,11 +6,15 @@ updates:
 # main branch - all dependency updates (minor + patch), daily
 - package-ecosystem: npm
   directory: "/"
-  target-branch: "main"
+  # Omit target-branch so security updates inherit this default-branch entry's options.
   cooldown:
     default-days: 8
   groups:
     all-dependencies:
+      patterns:
+        - '*'
+    security-updates:
+      applies-to: security-updates
       patterns:
         - '*'
   ignore:
@@ -133,6 +137,9 @@ updates:
   directory: "/"
   groups:
     github-actions:
+      patterns: ["*"]
+    security-updates:
+      applies-to: security-updates
       patterns: ["*"]
   schedule:
     interval: "weekly"
