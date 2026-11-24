@@ -82,6 +82,9 @@ void DebuggerUIIsland::Redraw() noexcept {
       surfaceSize,
       winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
       winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+  if (!drawingSurface) {
+    return;
+  }
 
   POINT offset;
   {

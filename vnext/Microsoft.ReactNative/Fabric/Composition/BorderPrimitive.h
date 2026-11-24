@@ -71,7 +71,8 @@ struct BorderPrimitive {
       std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
           &spBorderVisuals,
       facebook::react::LayoutMetrics const &layoutMetrics,
-      const facebook::react::BorderMetrics &borderMetrics) noexcept;
+      const facebook::react::BorderMetrics &borderMetrics,
+      bool &drawingSurfaceFailed) noexcept;
 
   uint8_t m_numBorderVisuals{0};
   winrt::Microsoft::ReactNative::Composition::implementation::ComponentView *m_outer;

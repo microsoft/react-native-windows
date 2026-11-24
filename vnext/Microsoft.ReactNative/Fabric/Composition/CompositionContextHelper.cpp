@@ -2245,8 +2245,15 @@ CompContext<WindowsTypeRedirects>::CreateDrawingSurfaceBrush(
     winrt::Windows::Foundation::Size surfaceSize,
     winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
     winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept {
-  return winrt::make<Composition::Experimental::WindowsCompDrawingSurfaceBrush>(
-      m_compositor, CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode));
+  // CreateDrawingSurface throws when the graphics device is lost or being reset (display change,
+  // remote session, driver reset). This function is noexcept, so an escaping exception terminates the
+  // process. Return null instead; callers skip drawing and the next layout or redraw creates the surface again.
+  try {
+    return winrt::make<Composition::Experimental::WindowsCompDrawingSurfaceBrush>(
+        m_compositor, CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode));
+  } catch (winrt::hresult_error const &) {
+    return nullptr;
+  }
 }
 
 winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual
@@ -2315,12 +2322,18 @@ CompContext<MicrosoftTypeRedirects>::CreateDrawingSurfaceBrush(
     winrt::Windows::Foundation::Size surfaceSize,
     winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
     winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept {
-  return winrt::make<Composition::Experimental::MicrosoftCompDrawingSurfaceBrush>(
-      m_compositor,
-      CompositionGraphicsDevice().CreateDrawingSurface(
-          surfaceSize,
-          static_cast<winrt::Microsoft::Graphics::DirectX::DirectXPixelFormat>(pixelFormat),
-          static_cast<winrt::Microsoft::Graphics::DirectX::DirectXAlphaMode>(alphaMode)));
+  // See the WindowsTypeRedirects overload above: a lost or resetting graphics device makes
+  // CreateDrawingSurface throw, which would terminate the process from this noexcept function.
+  try {
+    return winrt::make<Composition::Experimental::MicrosoftCompDrawingSurfaceBrush>(
+        m_compositor,
+        CompositionGraphicsDevice().CreateDrawingSurface(
+            surfaceSize,
+            static_cast<winrt::Microsoft::Graphics::DirectX::DirectXPixelFormat>(pixelFormat),
+            static_cast<winrt::Microsoft::Graphics::DirectX::DirectXAlphaMode>(alphaMode)));
+  } catch (winrt::hresult_error const &) {
+    return nullptr;
+  }
 }
 
 winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual

@@ -201,6 +201,8 @@ void ImageComponentView::setStateAndResubscribeImageResponseObserver(
 }
 
 void ImageComponentView::prepareForRecycle() noexcept {
+  cancelDrawingSurfaceRetry();
+  m_drawingSurfaceRetryAttempts = 0;
   setStateAndResubscribeImageResponseObserver(nullptr);
 }
 
@@ -223,6 +225,45 @@ winrt::Microsoft::ReactNative::ViewProps ImageComponentView::ViewPropsInner() no
 void ImageComponentView::OnRenderingDeviceLost() noexcept {
   m_drawingSurface = nullptr;
   ensureDrawingSurface();
+}
+
+// A lost graphics device (display change, remote session, driver reset) usually comes back within
+// seconds. Retry with a growing delay (250 ms, 500 ms, ... about 14 s over 10 attempts), one timer at a
+// time, then stop: a new image response, theme change or recycle starts over.
+static constexpr uint8_t kMaxDrawingSurfaceRetries = 10;
+
+void ImageComponentView::scheduleDrawingSurfaceRetry() noexcept {
+  if (m_drawingSurfaceRetryTimer || m_drawingSurfaceRetryAttempts >= kMaxDrawingSurfaceRetries) {
+    return;
+  }
+  ++m_drawingSurfaceRetryAttempts;
+  try {
+    m_drawingSurfaceRetryTimer = winrt::Microsoft::ReactNative::Timer::Create(m_reactContext.Properties().Handle());
+  } catch (winrt::hresult_error const &) {
+    m_drawingSurfaceRetryTimer = nullptr;
+    return;
+  }
+  m_drawingSurfaceRetryTimer.Interval(std::chrono::milliseconds(250 * m_drawingSurfaceRetryAttempts));
+  m_drawingSurfaceRetryTimer.Tick(
+      [wkThis = get_weak(), wkTimer = winrt::make_weak(m_drawingSurfaceRetryTimer)](
+          winrt::Windows::Foundation::IInspectable const &, winrt::Windows::Foundation::IInspectable const &) {
+        if (auto strongThis = wkThis.get()) {
+          // Hold the timer while its own Tick runs; cancel releases the member reference.
+          auto keepAlive = strongThis->m_drawingSurfaceRetryTimer;
+          strongThis->cancelDrawingSurfaceRetry();
+          strongThis->ensureDrawingSurface();
+        } else if (auto timer = wkTimer.get()) {
+          timer.Stop();
+        }
+      });
+  m_drawingSurfaceRetryTimer.Start();
+}
+
+void ImageComponentView::cancelDrawingSurfaceRetry() noexcept {
+  if (m_drawingSurfaceRetryTimer) {
+    m_drawingSurfaceRetryTimer.Stop();
+    m_drawingSurfaceRetryTimer = nullptr;
+  }
 }
 
 bool ImageComponentView::themeEffectsImage() const noexcept {
@@ -278,6 +319,14 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
         drawingSurfaceSize,
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+    if (!m_drawingSurface) {
+      // The graphics device is lost. Nothing else re-runs this for an image once its response has
+      // arrived (no layout hook, and OnRenderingDeviceLost is never called), so retry on a timer.
+      scheduleDrawingSurfaceRetry();
+      return;
+    }
+    cancelDrawingSurfaceRetry();
+    m_drawingSurfaceRetryAttempts = 0;
 
     DrawImage();
 
@@ -328,6 +377,10 @@ void ImageComponentView::DrawImage() noexcept {
   // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
   // any time we make an update we touch the entire surface, so we always pass nullptr).
   POINT offset;
+
+  if (!m_drawingSurface) {
+    return;
+  }
 
   if (themeEffectsImage() && theme()->IsEmpty()) {
     return;

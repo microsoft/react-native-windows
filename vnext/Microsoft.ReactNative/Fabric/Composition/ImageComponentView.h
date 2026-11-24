@@ -94,8 +94,13 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
   void setStateAndResubscribeImageResponseObserver(
       facebook::react::ImageShadowNode::ConcreteState::Shared const &state) noexcept;
   bool themeEffectsImage() const noexcept;
+  void scheduleDrawingSurfaceRetry() noexcept;
+  void cancelDrawingSurfaceRetry() noexcept;
 
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface;
+  // Retries creating m_drawingSurface after the graphics device was lost; see scheduleDrawingSurfaceRetry.
+  winrt::Microsoft::ReactNative::ITimer m_drawingSurfaceRetryTimer{nullptr};
+  uint8_t m_drawingSurfaceRetryAttempts{0};
   std::shared_ptr<ImageResponseImage> m_imageResponseImage;
   std::shared_ptr<WindowsImageResponseObserver> m_imageResponseObserver;
   bool m_requiresImageRedraw{true};
