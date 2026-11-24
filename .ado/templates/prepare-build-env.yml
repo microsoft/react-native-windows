@@ -32,8 +32,8 @@ parameters:
 
 steps:
   # VS Installer's background auto-update (BackgroundDownload.exe) fetches VS updates from the MS
-  # CDN mid-build and trips network isolation. Interim belt; the durable fix is BackgroundDownloadDisabled=1
-  # baked into the agent image JSON (.ado/image/rnw-img-vs2026-node24.json) — remove once that image ships.
+  # CDN mid-build and trips network isolation. Apply BackgroundDownloadDisabled=1 per job
+  # regardless of the agent image's policy settings.
   - pwsh: |
       foreach ($key in @(
           'HKLM:\SOFTWARE\Microsoft\VisualStudio\Setup',
@@ -107,10 +107,14 @@ steps:
 
   - pwsh: |
         Write-Host "##vso[task.setvariable variable=ProcDumpPath]$(Build.StagingDirectory)\Procdump"
+        $osArchitecture = [System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture
+        $procDumpExe = if ($osArchitecture -eq 'Arm64') { 'procdump64a.exe' } else { 'procdump64.exe' }
+        Write-Host "ProcDump for ${osArchitecture}: $procDumpExe"
+        Write-Host "##vso[task.setvariable variable=ProcDumpExe]$procDumpExe"
     displayName: Set ProcDumpPath
 
   - pwsh: |
-      & $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1 -ProcDumpArgs @("-mm", "-i", "$(CrashDumpRootPath)") -ProcDumpInstallPath "$(ProcDumpPath)" -Verbose
+      & $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1 -ProcDumpArgs @("-mm", "-i", "$(CrashDumpRootPath)") -ProcDumpInstallPath "$(ProcDumpPath)" -ProcDumpExe "$(ProcDumpExe)" -Verbose
     displayName: Setup ProcDump as AeDebug
 
   # Register WER LocalDumps for any executables the caller cares about.

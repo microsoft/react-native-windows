@@ -41,7 +41,7 @@ extends:
     AgentPool:
       Medium:
         name: rnw-pool-4
-        demands: ImageOverride -equals rnw-img-vs2026-node24
+        demands: ImageOverride -equals windows-2025-1espt
       Large:
         name: rnw-pool-8
-        demands: ImageOverride -equals rnw-img-vs2026-node24
+        demands: ImageOverride -equals windows-2025-1espt

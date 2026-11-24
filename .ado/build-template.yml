@@ -17,13 +17,6 @@ parameters:
 
 - name: AgentPool
   type: object
-  default:
-    Medium:
-      name: rnw-pool-4-microsoft
-      demands: ImageOverride -equals rnw-img-vs2026-node24
-    Large:
-      name: rnw-pool-8-microsoft
-      demands: ImageOverride -equals rnw-img-vs2026-node24
 
 - name: desktopBuildMatrix
   type: object
@@ -251,7 +244,10 @@ extends:
         - ${{ each matrix in parameters.desktopBuildMatrix }}:
           - job: Desktop${{ matrix.Name }}
             displayName: Desktop ${{ matrix.Name }}
-            pool: ${{ parameters.AgentPool.Large }}
+            pool: >-
+              ${{ parameters.AgentPool[iif(
+              and(ne('', parameters.AgentPool.Arm64.name), eq(matrix.BuildPlatform, 'ARM64EC')),
+              'Arm64', 'Large')] }}
             timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
             variables:
               - template: .ado/variables/windows.yml@self
@@ -279,6 +275,7 @@ extends:
             # Build and test
             - template: .ado/jobs/desktop-single.yml@self
               parameters:
+                nativeArm64Tests: ${{ ne('', parameters.AgentPool.Arm64.name) }}
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 buildEnvironment: ${{ parameters.buildEnvironment }}
@@ -330,7 +327,10 @@ extends:
         - ${{ each matrix in parameters.universalBuildMatrix }}:
           - job: Universal${{ matrix.Name }}
             displayName: Universal ${{ matrix.Name }}
-            pool: ${{ parameters.AgentPool.Large }}
+            pool: >-
+              ${{ parameters.AgentPool[iif(
+              and(ne('', parameters.AgentPool.Arm64.name), eq(matrix.BuildPlatform, 'ARM64')),
+              'Arm64', 'Large')] }}
             timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
             variables:
               - template: .ado/variables/windows.yml@self
@@ -342,6 +342,7 @@ extends:
             # Build and test
             - template: .ado/jobs/universal-single.yml@self
               parameters:
+                nativeArm64Tests: ${{ ne('', parameters.AgentPool.Arm64.name) }}
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 buildEnvironment: ${{ parameters.buildEnvironment }}
@@ -514,6 +515,7 @@ extends:
 
         - template: .ado/jobs/e2e-test.yml@self
           parameters:
+            nativeArm64Tests: ${{ ne('', parameters.AgentPool.Arm64.name) }}
             buildEnvironment: ${{ parameters.buildEnvironment }}
             AgentPool: ${{ parameters.AgentPool }}
 

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Run Universal ARM64, Desktop ARM64EC, and ARM64 Hermes E2E tests natively in CI while keeping PR ARM64 builds as cross-builds on x64",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

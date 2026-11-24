@@ -1,0 +1,30 @@
+# Copied from microsoft/v8-jsi .ado/ensure-node10-shim.yml (MIT).
+# Temporary workaround: the mandatory 1ES retention post-job uses the Node 10 task handler, which
+# ARM64 agents lack. Run immediately after checkout, before build preparation,
+# so node10 exists when the post-job runs on the same agent.
+steps:
+- pwsh: |
+    $ErrorActionPreference = 'Stop'
+    $ext = Join-Path $env:AGENT_HOMEDIRECTORY 'externals'
+    $node10Exe = Join-Path $ext 'node10\bin\node.exe'
+    if (Test-Path $node10Exe) {
+        Write-Host "node10 already present: $node10Exe"
+    } else {
+        # Prefer the image's Node.js (our image installs Node 24); fall back to
+        # the agent's own bundled node.
+        $srcExe = @(
+            (Join-Path $env:ProgramFiles 'nodejs\node.exe'),
+            (Join-Path $ext 'node\bin\node.exe')
+        ) | Where-Object { Test-Path $_ } | Select-Object -First 1
+        if (-not $srcExe) { throw "No Node.js found to shim node10 (checked Program Files\nodejs and agent externals\node)." }
+        Write-Host "Shimming node10 -> $srcExe"
+        New-Item -ItemType Directory -Force -Path (Split-Path $node10Exe) | Out-Null
+        try {
+            New-Item -ItemType SymbolicLink -Path $node10Exe -Target $srcExe -ErrorAction Stop | Out-Null
+        } catch {
+            Write-Warning "Symlink failed ($($_.Exception.Message)); copying instead."
+            Copy-Item $srcExe $node10Exe -Force
+        }
+        & $node10Exe --version
+    }
+  displayName: Shim node10 handler (agent lacks externals\node10)
