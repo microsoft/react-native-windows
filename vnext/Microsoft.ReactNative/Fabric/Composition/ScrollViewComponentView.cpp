@@ -71,6 +71,13 @@ struct ScrollBarComponent {
     UpdateColorForScrollBarRegions();
   }
 
+  void OnRenderingDeviceLost() noexcept {
+    m_arrowFirstDrawingSurface = nullptr;
+    m_arrowLastDrawingSurface = nullptr;
+    updateHighlight(ScrollbarHitRegion::ArrowFirst);
+    updateHighlight(ScrollbarHitRegion::ArrowLast);
+  }
+
   void UpdateColorForScrollBarRegions() noexcept {
     updateHighlight(ScrollbarHitRegion::ArrowFirst);
     updateHighlight(ScrollbarHitRegion::ArrowLast);
@@ -462,6 +469,10 @@ struct ScrollBarComponent {
             {m_arrowSize, m_arrowSize},
             winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
             winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+        if (!drawingSurface) {
+          // The graphics device is lost; the arrow is created again on the next draw.
+          return;
+        }
       }
 
       if (winrt::get_self<ScrollViewComponentView>(outer)->theme()->IsEmpty()) {
@@ -959,6 +970,12 @@ void ScrollViewComponentView::onThemeChanged() noexcept {
   m_verticalScrollbarComponent->UpdateColorForScrollBarRegions();
   m_horizontalScrollbarComponent->UpdateColorForScrollBarRegions();
   Super::onThemeChanged();
+}
+
+void ScrollViewComponentView::OnRenderingDeviceLost() noexcept {
+  Super::OnRenderingDeviceLost();
+  m_verticalScrollbarComponent->OnRenderingDeviceLost();
+  m_horizontalScrollbarComponent->OnRenderingDeviceLost();
 }
 
 void ScrollViewComponentView::OnPointerWheelChanged(

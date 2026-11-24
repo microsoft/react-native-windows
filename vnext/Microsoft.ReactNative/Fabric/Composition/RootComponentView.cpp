@@ -266,9 +266,38 @@ void RootComponentView::start(const winrt::Microsoft::ReactNative::ReactNativeIs
       OuterVisual());
   m_visualAddedToIsland = true;
   ReactNativeIsland(island);
+
+  if (!m_renderingDeviceReplacedToken) {
+    m_renderingDeviceReplacedToken = m_compContext.RenderingDeviceReplaced(
+        [wkThis = get_weak()](
+            const winrt::Windows::Foundation::IInspectable & /*sender*/,
+            const winrt::Windows::Foundation::IInspectable & /*args*/) {
+          if (auto strongThis = wkThis.get()) {
+            strongThis->OnRenderingDeviceReplaced();
+          }
+        });
+  }
+}
+
+void RootComponentView::OnRenderingDeviceReplaced() noexcept {
+  Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
+      [](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+        if (auto compView =
+                view.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()) {
+          compView->OnRenderingDeviceLost();
+        }
+        return false;
+      };
+
+  winrt::Microsoft::ReactNative::Composition::RootComponentView self = *this;
+  winrt::Microsoft::ReactNative::implementation::walkTree(self, true, fn);
 }
 
 void RootComponentView::stop() noexcept {
+  if (m_renderingDeviceReplacedToken) {
+    m_compContext.RenderingDeviceReplaced(m_renderingDeviceReplacedToken);
+    m_renderingDeviceReplacedToken = {};
+  }
   SetFocusedComponent(
       nullptr,
       winrt::Microsoft::ReactNative::FocusNavigationDirection::None,

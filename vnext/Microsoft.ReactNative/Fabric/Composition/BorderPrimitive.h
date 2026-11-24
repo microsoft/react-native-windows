@@ -38,10 +38,12 @@ struct BorderPrimitive {
   void updateProps(
       const facebook::react::ViewProps &oldViewProps,
       const facebook::react::ViewProps &newViewProps) noexcept;
-  void finalize(
+  // Both return false when a border layer got no drawing surface (graphics device lost). The border
+  // stays marked for drawing, so the next finalize (the view's next mount update) draws it again.
+  bool finalize(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::BorderMetrics &borderMetrics) noexcept;
-  void onThemeChanged(
+  bool onThemeChanged(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::BorderMetrics &borderMetrics) noexcept;
 
@@ -71,7 +73,8 @@ struct BorderPrimitive {
       std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
           &spBorderVisuals,
       facebook::react::LayoutMetrics const &layoutMetrics,
-      const facebook::react::BorderMetrics &borderMetrics) noexcept;
+      const facebook::react::BorderMetrics &borderMetrics,
+      bool &drawingSurfaceFailed) noexcept;
 
   uint8_t m_numBorderVisuals{0};
   winrt::Microsoft::ReactNative::Composition::implementation::ComponentView *m_outer;

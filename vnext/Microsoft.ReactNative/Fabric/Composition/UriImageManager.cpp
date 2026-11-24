@@ -100,6 +100,9 @@ struct SvgDataImageHandler
                 size,
                 winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
                 winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+            if (!drawingBrush) {
+              return nullptr;
+            }
             POINT pt;
             ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingBrush, 1.0, &pt);
             auto renderTarget = autoDraw.GetRenderTarget();

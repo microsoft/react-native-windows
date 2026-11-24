@@ -179,8 +179,9 @@ enum SnapPointsAlignment {
       Windows.Graphics.DirectX.DirectXPixelFormat pixelFormat,
       Windows.Graphics.DirectX.DirectXAlphaMode alphaMode);
 
-  // TODO Add and hook up to rootnode - to notify the tree
-  // event Windows.Foundation.EventHandler<RenderingDeviceReplacedArgs> RenderingDeviceReplaced;
+  // Raised on the UI thread after a lost rendering device has been replaced. Drawing surfaces created
+  // before the loss have lost their content and need to be created and drawn again.
+  event Windows.Foundation.EventHandler<Object> RenderingDeviceReplaced;
 }
 
 } // namespace Microsoft.ReactNative.Composition. Experimental

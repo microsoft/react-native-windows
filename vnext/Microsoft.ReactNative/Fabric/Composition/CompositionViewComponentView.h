@@ -150,6 +150,7 @@ struct ComponentView : public ComponentViewT<
 
  private:
   void updateFocusLayoutMetrics() noexcept;
+  void redrawBorders() noexcept;
   void updateClippingPath(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;

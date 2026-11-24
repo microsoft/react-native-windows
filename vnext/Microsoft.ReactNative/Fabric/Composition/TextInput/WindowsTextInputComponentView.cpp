@@ -1970,7 +1970,12 @@ void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
 }
 
 void WindowsTextInputComponentView::OnRenderingDeviceLost() noexcept {
-  DrawText();
+  Super::OnRenderingDeviceLost();
+  if (m_mounted) {
+    // Start over with a new surface; see ParagraphComponentView::OnRenderingDeviceLost.
+    m_drawingSurface = nullptr;
+    ensureDrawingSurface();
+  }
 }
 
 void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
@@ -1981,6 +1986,10 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
         {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+    if (!m_drawingSurface) {
+      // The graphics device is lost; m_drawingSurface stays null so the next call sets it up again.
+      return;
+    }
 
     auto rc = getClientRect();
     winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rc));

@@ -80,6 +80,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   facebook::react::Point getClientOffset() const noexcept override;
 
   void onThemeChanged() noexcept override;
+  void OnRenderingDeviceLost() noexcept override;
   void OnPointerReleased(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
   void OnPointerPressed(

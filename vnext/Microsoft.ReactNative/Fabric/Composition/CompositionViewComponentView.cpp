@@ -85,6 +85,21 @@ void ComponentView::onThemeChanged() noexcept {
   if (m_backgroundVisual)
     m_backgroundVisual.Brush(theme()->Brush(*viewProps()->backgroundColor));
 
+  redrawBorders();
+
+  if ((m_flags & ComponentViewFeatures::ShadowProps) == ComponentViewFeatures::ShadowProps) {
+    applyShadowProps(*viewProps());
+  }
+
+  base_type::onThemeChanged();
+
+  if (m_themeChangedEvent) {
+    m_themeChangedEvent(*this, *this);
+  }
+}
+
+// Draws the border, outline and focus layers again, whether or not their metrics changed.
+void ComponentView::redrawBorders() noexcept {
   if (m_borderPrimitive) {
     m_borderPrimitive->onThemeChanged(
         m_layoutMetrics, BorderPrimitive::resolveAndAlignBorderMetrics(m_layoutMetrics, *viewProps()));
@@ -103,16 +118,6 @@ void ComponentView::onThemeChanged() noexcept {
       m_componentHostingFocusVisual->m_focusPrimitive->m_focusOuterPrimitive->onThemeChanged(
           outerFocusMetrics, focusBorderMetrics(false /*inner*/, outerFocusMetrics));
     }
-  }
-
-  if ((m_flags & ComponentViewFeatures::ShadowProps) == ComponentViewFeatures::ShadowProps) {
-    applyShadowProps(*viewProps());
-  }
-
-  base_type::onThemeChanged();
-
-  if (m_themeChangedEvent) {
-    m_themeChangedEvent(*this, *this);
   }
 }
 
@@ -1043,7 +1048,9 @@ void ComponentView::indexOffsetForBorder(uint32_t &index) const noexcept {
   }
 }
 
-void ComponentView::OnRenderingDeviceLost() noexcept {}
+void ComponentView::OnRenderingDeviceLost() noexcept {
+  redrawBorders();
+}
 
 std::vector<facebook::react::ComponentDescriptorProvider>
 ComponentView::supplementalComponentDescriptorProviders() noexcept {
