@@ -679,6 +679,11 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
         "Visual Type": "SpriteVisual",
       },
       {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
         "Offset": "11, 11, 0",
         "Size": "476, 19",
         "Visual Type": "SpriteVisual",
@@ -715,11 +720,6 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
             ],
           },
         ],
-      },
-      {
-        "Offset": "0, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
       },
     ],
   },
@@ -867,6 +867,11 @@ exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
         "Visual Type": "SpriteVisual",
       },
       {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
         "Offset": "11, 11, 0",
         "Size": "476, 19",
         "Visual Type": "SpriteVisual",
@@ -884,11 +889,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover 2`] = `
             ],
           },
         ],
-      },
-      {
-        "Offset": "0, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
       },
     ],
   },
@@ -1080,6 +1080,11 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 2`]
         "Visual Type": "SpriteVisual",
       },
       {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
         "Offset": "11, 11, 0",
         "Size": "476, 19",
         "Visual Type": "SpriteVisual",
@@ -1173,11 +1178,6 @@ exports[`Pressable Tests Pressables can have event handlers, hover and click 2`]
             ],
           },
         ],
-      },
-      {
-        "Offset": "0, 1, 0",
-        "Size": "1, -2",
-        "Visual Type": "SpriteVisual",
       },
     ],
   },
