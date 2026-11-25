@@ -562,10 +562,9 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
         if (timeoutDeadline == std::chrono::steady_clock::time_point::max()) {
           timeoutDeadline = std::chrono::steady_clock::now() + std::chrono::milliseconds{reqArgs->Timeout};
         }
-        auto remainingTimeout =
-            std::chrono::duration_cast<std::chrono::milliseconds>(timeoutDeadline - std::chrono::steady_clock::now())
-                .count();
-        if (remainingTimeout <= 0) {
+        auto remainingTimeout = std::chrono::duration_cast<winrt::Windows::Foundation::TimeSpan>(
+            timeoutDeadline - std::chrono::steady_clock::now());
+        if (remainingTimeout.count() <= 0) {
           sendRequestOp.Cancel();
           if (self->m_onError) {
             self->m_onError(reqArgs->RequestId, Utilities::HResultToString(HRESULT_FROM_WIN32(ERROR_TIMEOUT)), true);
@@ -575,9 +574,8 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
         // See https://devblogs.microsoft.com/oldnewthing/20220415-00/?p=106486
         auto timedOut = std::make_shared<bool>(false);
-        auto sendRequestTimeout = [](auto timedOut, auto milliseconds) -> ResponseOperation {
-          // Convert milliseconds to "ticks" (10^-7 seconds)
-          co_await winrt::resume_after(winrt::Windows::Foundation::TimeSpan{milliseconds * 10000});
+        auto sendRequestTimeout = [](auto timedOut, auto ticks) -> ResponseOperation {
+          co_await winrt::resume_after(ticks);
           *timedOut = true;
           co_return nullptr;
         }(timedOut, remainingTimeout);
