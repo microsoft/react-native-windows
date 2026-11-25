@@ -166,9 +166,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
       return m_hostObjectWrapper->get(runtime, propName);
     }
 
-    // it is not safe to assume that "runtime" never changes, so members are not cached here
     std::string key = propName.utf8(runtime);
-
     if (key == "getConstants" && !m_moduleBuilder->ConstantProviders().empty()) {
       // try to find getConstants if there is any constant
       return facebook::jsi::Function::createFromHostFunction(
