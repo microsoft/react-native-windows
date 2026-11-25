@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Don't terminate the app when a drawing surface can't be created (graphics device lost or reset): CreateDrawingSurfaceBrush returns null and callers skip drawing",
+  "packageName": "react-native-windows",
+  "email": "gordomacmaster@gmail.com",
+  "dependentChangeType": "patch"
+}

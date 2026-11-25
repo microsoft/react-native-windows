@@ -84,7 +84,8 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
   };
 
   void ensureDrawingSurface() noexcept;
-  void DrawImage() noexcept;
+  // Returns false when the drawing surface couldn't be drawn to (graphics device lost).
+  bool DrawImage() noexcept;
 
   void ImageLoadStart() noexcept;
   void ImageLoaded() noexcept;

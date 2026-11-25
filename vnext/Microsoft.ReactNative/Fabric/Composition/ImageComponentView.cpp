@@ -278,8 +278,16 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
         drawingSurfaceSize,
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+    if (!m_drawingSurface) {
+      // The graphics device is lost. The surface is created again the next time this runs.
+      return;
+    }
 
-    DrawImage();
+    if (!DrawImage()) {
+      // Don't keep or show a surface that was never drawn; the next call starts over with a new one.
+      m_drawingSurface = nullptr;
+      return;
+    }
 
     switch (imgProps.resizeMode) {
       case facebook::react::ImageResizeMode::Stretch:
@@ -319,22 +327,29 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
         m_imageResponseImage->m_brushFactory(m_reactContext.Handle(), m_compContext));
   } else if (m_requiresImageRedraw) {
     m_requiresImageRedraw = false;
-    DrawImage();
+    if (!DrawImage()) {
+      // The surface is blank now. Drop it so the next call creates and draws a new one.
+      m_drawingSurface = nullptr;
+    }
   }
 }
 
-void ImageComponentView::DrawImage() noexcept {
+bool ImageComponentView::DrawImage() noexcept {
   // Begin our update of the surface pixels. If this is our first update, we are required
   // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
   // any time we make an update we touch the entire surface, so we always pass nullptr).
   POINT offset;
 
+  if (!m_drawingSurface) {
+    return true;
+  }
+
   if (themeEffectsImage() && theme()->IsEmpty()) {
-    return;
+    return true;
   }
 
   if (!m_imageResponseImage->m_wicbmp) {
-    return;
+    return true;
   }
 
   assert(m_reactContext.UIDispatcher().HasThreadAccess());
@@ -420,6 +435,8 @@ void ImageComponentView::DrawImage() noexcept {
       d2dDeviceContext->DrawBitmap(bitmap.get(), rect);
     }
   }
+  // BeginDraw can fail on a surface that was created fine (device lost in between): nothing was drawn.
+  return autoDraw.IsValid();
 }
 
 std::string ImageComponentView::DefaultControlType() const noexcept {

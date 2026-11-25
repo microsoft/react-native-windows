@@ -69,6 +69,10 @@ struct EllipseImageHandler
           POINT pt;
           Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingBrush, scale, &pt);
           auto renderTarget = autoDraw.GetRenderTarget();
+          // Null when the drawing surface couldn't be created or drawn to (graphics device lost).
+          if (!renderTarget) {
+            return nullptr;
+          }
 
           winrt::com_ptr<ID2D1SolidColorBrush> brush;
           renderTarget->CreateSolidColorBrush({1.0f, 0.0f, 0.0f, 1.0f}, brush.put());

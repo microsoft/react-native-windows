@@ -462,6 +462,10 @@ struct ScrollBarComponent {
             {m_arrowSize, m_arrowSize},
             winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
             winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+        if (!drawingSurface) {
+          // The graphics device is lost; the arrow is created again on the next draw.
+          return;
+        }
       }
 
       if (winrt::get_self<ScrollViewComponentView>(outer)->theme()->IsEmpty()) {

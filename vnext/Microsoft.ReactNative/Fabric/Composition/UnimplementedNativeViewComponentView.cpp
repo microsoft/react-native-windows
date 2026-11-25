@@ -60,6 +60,11 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
         surfaceSize,
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+    if (!drawingSurface) {
+      // The graphics device is lost: skip the label, but the base layout update must still run.
+      base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
+      return;
+    }
 
     drawingSurface.HorizontalAlignmentRatio(0.f);
     drawingSurface.VerticalAlignmentRatio(0.f);

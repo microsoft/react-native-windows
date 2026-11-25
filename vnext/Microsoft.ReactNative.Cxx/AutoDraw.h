@@ -14,6 +14,11 @@ class AutoDrawDrawingSurface {
       winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush &drawingSurface,
       float scaleFactor,
       POINT *offset) noexcept {
+    // CreateDrawingSurfaceBrush returns null when the graphics device is lost; leave the render
+    // target null so GetRenderTarget() / IsValid() report nothing to draw.
+    if (!drawingSurface) {
+      return;
+    }
     drawingSurface.as(m_drawingSurfaceInterop);
     auto dpi = scaleFactor * 96.0f;
     auto hr = m_drawingSurfaceInterop->BeginDraw(m_d2dDeviceContext.put(), dpi, dpi, offset);

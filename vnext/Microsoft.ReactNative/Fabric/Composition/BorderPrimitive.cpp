@@ -305,7 +305,9 @@ void DrawShape(
 }
 
 template <typename TShape>
-void SetBorderLayerPropertiesCommon(
+// Returns false only when the drawing surface could not be created or drawn to (graphics device lost),
+// so the caller keeps the border marked for drawing. Nothing to draw (empty rect, no visible color) is success.
+bool SetBorderLayerPropertiesCommon(
     winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
     winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual &layer,
@@ -325,12 +327,16 @@ void SetBorderLayerPropertiesCommon(
   layer.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
 
   if ((textureRect.right - textureRect.left) <= 0 || (textureRect.bottom - textureRect.top) <= 0)
-    return;
+    return true;
 
   auto surface = compContext.CreateDrawingSurfaceBrush(
       {(textureRect.right - textureRect.left), (textureRect.bottom - textureRect.top)},
       winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
       winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+  if (!surface) {
+    // The graphics device is lost: report it so finalize() keeps the border marked for drawing.
+    return false;
+  }
   surface.as(borderTexture);
 
   layer.Brush(surface);
@@ -343,20 +349,20 @@ void SetBorderLayerPropertiesCommon(
     pRT->Clear();
 
     if (!facebook::react::isColorMeaningful(borderColor)) {
-      return;
+      return true;
     }
 
     winrt::com_ptr<ID2D1Factory> spFactory;
     pRT->GetFactory(spFactory.put());
     assert(spFactory);
     if (spFactory == nullptr)
-      return;
+      return true;
 
     winrt::com_ptr<ID2D1SolidColorBrush> spBorderBrush;
     pRT->CreateSolidColorBrush(theme->D2DColor(*borderColor), spBorderBrush.put());
     assert(spBorderBrush);
     if (spBorderBrush == nullptr)
-      return;
+      return true;
 
     winrt::com_ptr<ID2D1StrokeStyle> spStrokeStyle;
 
@@ -388,10 +394,12 @@ void SetBorderLayerPropertiesCommon(
 
     pRT->SetTransform(originalTransform);
   }
+  // BeginDraw can fail on a surface that was created fine (device lost in between): nothing was drawn.
+  return autoDraw.IsValid();
 }
 
 template <typename TShape>
-void SetBorderLayerProperties(
+bool SetBorderLayerProperties(
     winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
     winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual &layer,
@@ -407,7 +415,7 @@ void SetBorderLayerProperties(
     const facebook::react::SharedColor &borderColor,
     facebook::react::BorderStyle borderStyle) {
   if constexpr (!std::is_base_of_v<ID2D1GeometryGroup, TShape>) {
-    SetBorderLayerPropertiesCommon(
+    return SetBorderLayerPropertiesCommon(
         theme,
         compContext,
         layer,
@@ -450,6 +458,7 @@ void SetBorderLayerProperties(
                 }
     */
   }
+  return true;
 }
 
 namespace AnchorPosition {
@@ -461,7 +470,8 @@ const float Bottom = 1.0;
 } // namespace AnchorPosition
 
 template <typename TShape>
-void DrawAllBorderLayers(
+// Returns false if any layer could not get a drawing surface; see SetBorderLayerPropertiesCommon.
+bool DrawAllBorderLayers(
     winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
     winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     std::array<
@@ -474,13 +484,14 @@ void DrawAllBorderLayers(
     float textureHeight,
     const facebook::react::BorderColors &borderColors,
     facebook::react::BorderStyle borderStyle) {
+  bool drawn = true;
   // Now that we've drawn our nice border in one layer, split it into its component layers
   winrt::com_ptr<::Microsoft::ReactNative::Composition::Experimental::ICompositionDrawingSurfaceInterop>
       spTextures[BorderPrimitive::SpecialBorderLayerCount];
 
   // Set component border properties
   // Top Left Corner
-  SetBorderLayerProperties(
+  drawn &= SetBorderLayerProperties(
       theme,
       compContext,
       spBorderLayers[0],
@@ -499,7 +510,7 @@ void DrawAllBorderLayers(
       borderStyle);
 
   // Top Edge Border
-  SetBorderLayerProperties(
+  drawn &= SetBorderLayerProperties(
       theme,
       compContext,
       spBorderLayers[1],
@@ -519,7 +530,7 @@ void DrawAllBorderLayers(
       borderStyle);
 
   // Top Right Corner Border
-  SetBorderLayerProperties(
+  drawn &= SetBorderLayerProperties(
       theme,
       compContext,
       spBorderLayers[2],
@@ -538,7 +549,7 @@ void DrawAllBorderLayers(
       borderStyle);
 
   // Right Edge Border
-  SetBorderLayerProperties(
+  drawn &= SetBorderLayerProperties(
       theme,
       compContext,
       spBorderLayers[3],
@@ -559,7 +570,7 @@ void DrawAllBorderLayers(
       borderStyle);
 
   // Bottom Right Corner Border
-  SetBorderLayerProperties(
+  drawn &= SetBorderLayerProperties(
       theme,
       compContext,
       spBorderLayers[4],
@@ -579,7 +590,7 @@ void DrawAllBorderLayers(
       borderStyle);
 
   // Bottom Edge Border
-  SetBorderLayerProperties(
+  drawn &= SetBorderLayerProperties(
       theme,
       compContext,
       spBorderLayers[5],
@@ -600,7 +611,7 @@ void DrawAllBorderLayers(
       borderStyle);
 
   // Bottom Left Corner Border
-  SetBorderLayerProperties(
+  drawn &= SetBorderLayerProperties(
       theme,
       compContext,
       spBorderLayers[6],
@@ -619,7 +630,7 @@ void DrawAllBorderLayers(
       borderStyle);
 
   // Left Edge Border
-  SetBorderLayerProperties(
+  drawn &= SetBorderLayerProperties(
       theme,
       compContext,
       spBorderLayers[7],
@@ -637,6 +648,7 @@ void DrawAllBorderLayers(
       borderWidths.left,
       borderColors.left,
       borderStyle);
+  return drawn;
 }
 
 winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
@@ -749,35 +761,44 @@ void BorderPrimitive::markNeedsUpdate() noexcept {
   m_needsUpdate = true;
 }
 
-void BorderPrimitive::finalize(
+bool BorderPrimitive::finalize(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::BorderMetrics &borderMetrics) noexcept {
   if (!m_needsUpdate) {
-    return;
+    return true;
   }
 
   auto theme = m_outer->theme();
   if (!theme || theme->IsEmpty()) {
-    return;
+    return true;
   }
 
   m_needsUpdate = false;
   auto spBorderLayers = FindSpecialBorderLayers();
 
-  if (!TryUpdateSpecialBorderLayers(m_outer->theme(), spBorderLayers, layoutMetrics, borderMetrics)) {
+  bool drawingSurfaceFailed = false;
+  if (!TryUpdateSpecialBorderLayers(
+          m_outer->theme(), spBorderLayers, layoutMetrics, borderMetrics, drawingSurfaceFailed)) {
     for (auto &spBorderLayer : spBorderLayers) {
       if (spBorderLayer) {
         spBorderLayer.as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Brush(nullptr);
       }
     }
   }
+  if (drawingSurfaceFailed) {
+    // A layer got no drawing surface (graphics device lost). Keep the border marked so the next
+    // finalize draws it again.
+    m_needsUpdate = true;
+    return false;
+  }
+  return true;
 }
 
-void BorderPrimitive::onThemeChanged(
+bool BorderPrimitive::onThemeChanged(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::BorderMetrics &borderMetrics) noexcept {
   m_needsUpdate = true;
-  finalize(layoutMetrics, borderMetrics);
+  return finalize(layoutMetrics, borderMetrics);
 }
 
 std::array<
@@ -813,7 +834,9 @@ bool BorderPrimitive::TryUpdateSpecialBorderLayers(
     std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
         &spBorderVisuals,
     facebook::react::LayoutMetrics const &layoutMetrics,
-    const facebook::react::BorderMetrics &borderMetrics) noexcept {
+    const facebook::react::BorderMetrics &borderMetrics,
+    bool &drawingSurfaceFailed) noexcept {
+  drawingSurfaceFailed = false;
   // We only handle a single borderStyle for now
   auto borderStyle = borderMetrics.borderStyles.left;
 
@@ -856,7 +879,7 @@ bool BorderPrimitive::TryUpdateSpecialBorderLayers(
           GenerateRoundedRectPathGeometry(compContext, borderMetrics.borderRadii, {0, 0, 0, 0}, rectPathGeometry);
 
       if (pathGeometry) {
-        DrawAllBorderLayers(
+        drawingSurfaceFailed |= !DrawAllBorderLayers(
             theme,
             compContext,
             spBorderVisuals,
@@ -880,7 +903,7 @@ bool BorderPrimitive::TryUpdateSpecialBorderLayers(
           borderMetrics.borderWidths,
           rectPathGeometry);
 
-      DrawAllBorderLayers(
+      drawingSurfaceFailed |= !DrawAllBorderLayers(
           theme,
           compContext,
           spBorderVisuals,
@@ -901,7 +924,7 @@ bool BorderPrimitive::TryUpdateSpecialBorderLayers(
         borderMetrics.borderWidths.top / 2.0f,
         extentWidth - (borderMetrics.borderWidths.right / 2.0f),
         extentHeight - (borderMetrics.borderWidths.bottom / 2.0f)};
-    DrawAllBorderLayers(
+    drawingSurfaceFailed |= !DrawAllBorderLayers(
         theme,
         compContext,
         spBorderVisuals,
