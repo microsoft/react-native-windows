@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add opt-in HTTP client recovery for transient network errors",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
