@@ -77,9 +77,7 @@ class WinRTHttpResource : public IHttpResource,
 
   WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient &&client) noexcept;
 
-  WinRTHttpResource(
-      winrt::Windows::Web::Http::IHttpClient &&client,
-      HttpClientFactory clientFactory) noexcept;
+  WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient &&client, HttpClientFactory clientFactory) noexcept;
 
   void InitializeHttpClient();
 

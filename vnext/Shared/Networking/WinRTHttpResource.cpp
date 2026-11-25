@@ -551,8 +551,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
         sendRequestOp = clientSnapshot.Client.SendRequestAsync(coRequest);
         self->TrackResponse(reqArgs->RequestId, sendRequestOp);
       } else {
-        sendRequestOp =
-            self->TryStartRetry(reqArgs->RequestId, trackedRequestOp, clientSnapshot.Client, coRequest);
+        sendRequestOp = self->TryStartRetry(reqArgs->RequestId, trackedRequestOp, clientSnapshot.Client, coRequest);
         if (!sendRequestOp) {
           co_return;
         }
@@ -609,8 +608,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       }
 
       if (attempt == 0 && retryOnTransientNetworkError && IsRetryableMethod(coMethod) &&
-          IsRetryableTransportError(result) &&
-          self->TryReplaceHttpClient(clientSnapshot.Generation)) {
+          IsRetryableTransportError(result) && self->TryReplaceHttpClient(clientSnapshot.Generation)) {
         continue;
       }
 
@@ -790,19 +788,20 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
 
   auto originPolicy = static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy"));
   auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
-  auto createClient = [defaultUserAgent, originPolicy, globalOrigin](weak_ptr<IWinRTHttpRequestFactory> requestFactory) {
-    auto redirFilter = winrt::make<RedirectHttpFilter>(defaultUserAgent);
-    redirFilter.as<RedirectHttpFilter>()->SetRequestFactory(std::move(requestFactory));
+  auto createClient =
+      [defaultUserAgent, originPolicy, globalOrigin](weak_ptr<IWinRTHttpRequestFactory> requestFactory) {
+        auto redirFilter = winrt::make<RedirectHttpFilter>(defaultUserAgent);
+        redirFilter.as<RedirectHttpFilter>()->SetRequestFactory(std::move(requestFactory));
 
-    if (originPolicy == OriginPolicy::None) {
-      return HttpClient{redirFilter};
-    }
+        if (originPolicy == OriginPolicy::None) {
+          return HttpClient{redirFilter};
+        }
 
-    auto opFilter = winrt::make<OriginPolicyHttpFilter>(string{globalOrigin}, redirFilter);
-    redirFilter.as<RedirectHttpFilter>()->SetRedirectSource(opFilter.as<IRedirectEventSource>());
+        auto opFilter = winrt::make<OriginPolicyHttpFilter>(string{globalOrigin}, redirFilter);
+        redirFilter.as<RedirectHttpFilter>()->SetRedirectSource(opFilter.as<IRedirectEventSource>());
 
-    return HttpClient{opFilter};
-  };
+        return HttpClient{opFilter};
+      };
 
   auto requestFactory = std::make_shared<weak_ptr<IWinRTHttpRequestFactory>>();
   auto clientFactory = [createClient = std::move(createClient), requestFactory]() {

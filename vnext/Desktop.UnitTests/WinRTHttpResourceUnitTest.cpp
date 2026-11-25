@@ -37,13 +37,9 @@ struct RequestResult {
   bool IsTimeout{false};
 };
 
-RequestResult SendRequest(
-    std::string method,
-    WinRTHttpResource::HttpClientFactory clientFactory,
-    int64_t timeout = 0) {
+RequestResult SendRequest(std::string method, WinRTHttpResource::HttpClientFactory clientFactory, int64_t timeout = 0) {
   auto initialClient = clientFactory();
-  auto resource =
-      std::make_shared<WinRTHttpResource>(std::move(initialClient), std::move(clientFactory));
+  auto resource = std::make_shared<WinRTHttpResource>(std::move(initialClient), std::move(clientFactory));
   auto result = std::make_shared<RequestResult>();
   auto completionCount = std::make_shared<std::atomic<int>>(0);
   auto completed = std::make_shared<std::promise<void>>();
@@ -83,8 +79,8 @@ RequestResult SendRequest(
 
 HttpClient MakeFailingClient(std::shared_ptr<std::atomic<int>> attempts, HRESULT error) {
   auto filter = winrt::make<MockHttpBaseFilter>();
-  filter.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
-      [attempts, error](HttpRequestMessage const &) -> ResponseOperation {
+  filter.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync = [attempts,
+                                                             error](HttpRequestMessage const &) -> ResponseOperation {
     ++(*attempts);
     throw winrt::hresult_error{error};
     co_return nullptr;
@@ -93,7 +89,9 @@ HttpClient MakeFailingClient(std::shared_ptr<std::atomic<int>> attempts, HRESULT
   return HttpClient{filter};
 }
 
-HttpClient MakeSuccessfulClient(std::shared_ptr<std::atomic<int>> attempts, HttpStatusCode status = HttpStatusCode::Ok) {
+HttpClient MakeSuccessfulClient(
+    std::shared_ptr<std::atomic<int>> attempts,
+    HttpStatusCode status = HttpStatusCode::Ok) {
   auto filter = winrt::make<MockHttpBaseFilter>();
   filter.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
       [attempts, status](HttpRequestMessage const &request) -> ResponseOperation {
@@ -107,10 +105,8 @@ HttpClient MakeSuccessfulClient(std::shared_ptr<std::atomic<int>> attempts, Http
   return HttpClient{filter};
 }
 
-HttpClient MakeDelayedFailingClient(
-    std::shared_ptr<std::atomic<int>> attempts,
-    HRESULT error,
-    std::chrono::milliseconds delay) {
+HttpClient
+MakeDelayedFailingClient(std::shared_ptr<std::atomic<int>> attempts, HRESULT error, std::chrono::milliseconds delay) {
   auto filter = winrt::make<MockHttpBaseFilter>();
   filter.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
       [attempts, error, delay](HttpRequestMessage const &) -> ResponseOperation {
@@ -123,9 +119,7 @@ HttpClient MakeDelayedFailingClient(
   return HttpClient{filter};
 }
 
-HttpClient MakeDelayedSuccessfulClient(
-    std::shared_ptr<std::atomic<int>> attempts,
-    std::chrono::milliseconds delay) {
+HttpClient MakeDelayedSuccessfulClient(std::shared_ptr<std::atomic<int>> attempts, std::chrono::milliseconds delay) {
   auto filter = winrt::make<MockHttpBaseFilter>();
   filter.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
       [attempts, delay](HttpRequestMessage const &request) -> ResponseOperation {
@@ -313,11 +307,9 @@ TEST_CLASS (WinRTHttpResourceUnitTest) {
         };
 
     auto initialClient = clientFactory();
-    auto resource =
-        std::make_shared<WinRTHttpResource>(std::move(initialClient), std::move(clientFactory));
-    resource->SetOnResponse([callbackCount](int64_t, Microsoft::React::Networking::IHttpResource::Response &&) {
-      ++(*callbackCount);
-    });
+    auto resource = std::make_shared<WinRTHttpResource>(std::move(initialClient), std::move(clientFactory));
+    resource->SetOnResponse(
+        [callbackCount](int64_t, Microsoft::React::Networking::IHttpResource::Response &&) { ++(*callbackCount); });
     resource->SetOnData([callbackCount](int64_t, std::string &&) { ++(*callbackCount); });
     resource->SetOnResponseComplete([callbackCount](int64_t) { ++(*callbackCount); });
     resource->SetOnError([callbackCount](int64_t, std::string &&, bool) { ++(*callbackCount); });
@@ -371,8 +363,7 @@ TEST_CLASS (WinRTHttpResourceUnitTest) {
     };
 
     auto initialClient = clientFactory();
-    auto resource =
-        std::make_shared<WinRTHttpResource>(std::move(initialClient), std::move(clientFactory));
+    auto resource = std::make_shared<WinRTHttpResource>(std::move(initialClient), std::move(clientFactory));
     resource->SetOnResponse([](int64_t, Microsoft::React::Networking::IHttpResource::Response &&) {});
     resource->SetOnData([](int64_t, std::string &&) {});
     resource->SetOnResponseComplete([completions, completed](int64_t) {
